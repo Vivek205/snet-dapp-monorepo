@@ -1,0 +1,15 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.19.0"
+  },
+  "scripts": {
+    "build": "lerna exec --scope shared -- babel src -d dist --copy-files",
+    "start:dapp": "cd packages/snet-dapp && yarn start",
+    "start:rfai": "cd packages/snet-rfai-services && yarn start"
+  }
+}
