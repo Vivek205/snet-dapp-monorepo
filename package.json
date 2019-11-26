@@ -5,11 +5,27 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.19.0"
+    "lerna": "^3.19.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.7.0",
+    "lint-staged": "^8.2.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.0"
   },
   "scripts": {
     "build": "lerna exec --scope shared -- babel src -d dist --copy-files",
     "start:dapp": "cd packages/snet-dapp && yarn start",
-    "start:rfai": "cd packages/snet-rfai-services && yarn start"
+    "start:rfai": "cd packages/snet-rfai-services && yarn start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "nuke": "rm -r node_modules; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
