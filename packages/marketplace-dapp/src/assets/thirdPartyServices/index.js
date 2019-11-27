@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import AlertBox from "../../components/common/AlertBox";
+import AlertBox from "shared/dist/components/AlertBox";
 
 const ExampleService = lazy(() => import("./snet/example_service"));
 const CNTKImageRecognition = lazy(() => import("./snet/cntk_image_recon"));
