@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "snet-dapp",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -19,9 +19,11 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "build": "lerna exec --scope shared -- babel src -d dist --copy-files",
-    "start:dapp": "cd packages/snet-dapp && yarn start",
-    "start:rfai": "cd packages/snet-rfai-dapp && yarn start",
+    "start:marketplace": "cd packages/marketplace-dapp && yarn start",
+    "start:rfai": "cd packages/rfai-dapp && yarn start",
+    "build:marketplace": "cd packages/marketplace-dapp && yarn build",
+    "build:rfai": "cd packages/rfai-dapp && yarn build",
+    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "nuke": "rm -r node_modules yarn.lock; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
