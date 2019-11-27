@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import removeSvg from "../assets/remove.svg";
 import addSvg from "../assets/add.svg";
 import filterSvg from "../assets/filter.svg";
