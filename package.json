@@ -21,7 +21,7 @@
   "scripts": {
     "build": "lerna exec --scope shared -- babel src -d dist --copy-files",
     "start:dapp": "cd packages/snet-dapp && yarn start",
-    "start:rfai": "cd packages/snet-rfai-services && yarn start",
+    "start:rfai": "cd packages/snet-rfai-dapp && yarn start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "nuke": "rm -r node_modules yarn.lock; for d in packages/*/node_modules; do echo $d; rm -r $d; done"

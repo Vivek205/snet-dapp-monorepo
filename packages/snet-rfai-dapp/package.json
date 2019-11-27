@@ -1,0 +1,50 @@
+{
+  "name": "rfai-dapp",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singnet/snet-rfai-dapp.git"
+  },
+  "author": "SingularityNET Foundation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/singnet/snet-rfai-dapp/issues"
+  },
+  "homepage": "https://github.com/",
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "aws-sdk": "^2.414.0",
+    "drizzle": "1.2.6",
+    "drizzle-react": "^1.2.0",
+    "drizzle-react-components": "^1.2.1",
+    "ipfs-http-client": "^29.1.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^5.0.0",
+    "react-router-redux": "^4.0.8",
+    "react-toastify": "^4.5.2",
+    "redux-thunk": "^2.3.0",
+    "web3": "1.0.0-beta.37"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "node scripts/deploy.js rfai.singularitynet.io us-east-1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "peerDependencies": {
+    "react-scripts": "2.1.5"
+  }
+}
