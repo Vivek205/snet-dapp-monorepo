@@ -5,6 +5,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { connect } from "react-redux";
 import ReactGA from "react-ga";
 import { createBrowserHistory } from "history";
+import AppLoader from "shared/dist/components/AppLoader";
 
 import Routes from "./utility/constants/Routes";
 import { aws_config } from "./config/aws_config";
@@ -14,7 +15,6 @@ import { headerData } from "./utility/constants/Header";
 import withInAppWrapper from "./components/HOC/WithInAppHeader";
 import { userActions } from "./Redux/actionCreators";
 import PrivateRoute from "./components/common/PrivateRoute";
-import AppLoader from "./components/common/AppLoader";
 import { CircularProgress } from "@material-ui/core";
 import NetworkChangeOverlay from "./components/common/NetworkChangeOverlay";
 import initHotjar from "./assets/externalScripts/hotjar";
