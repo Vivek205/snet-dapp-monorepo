@@ -1,4 +1,4 @@
-
+"use strict";
 
 var _react = _interopRequireDefault(require("react"));
 
