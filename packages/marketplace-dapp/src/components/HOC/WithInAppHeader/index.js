@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
+import Footer from "shared/dist/components/Footer";
 
 import Header from "../../common/Header";
-import Footer from "../../common/Footer";
 import { useStyles } from "./styles";
 
 const withInAppWrapper = InputComponent => {
