@@ -12,10 +12,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
+import BulletPoint from "shared/dist/components/BulletPoint";
 
 import { useStyles } from "./styles";
 import StyledButton from "../../../common/StyledButton";
-import BulletPoint from "../../../common/BulletPoint";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const warningMessage = [

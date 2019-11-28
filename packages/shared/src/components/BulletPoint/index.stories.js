@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 
-import BulletPoint from "./";
+import BulletPoint from ".";
 import { alertTypes } from "shared/dist/components/AlertBox";
 
 storiesOf("Bullet Point", module)
