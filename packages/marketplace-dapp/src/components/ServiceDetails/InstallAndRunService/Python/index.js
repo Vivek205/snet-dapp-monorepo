@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
+import CodeSnippet from "shared/dist/components/CodeSnippet";
 
 import { useStyles } from "./styles";
-import CodeSnippet from "../../../common/CodeSnippet";
 
 const Python = ({ classes }) => {
   return (

@@ -1,6 +1,5 @@
 import React from "react";
-
-import CodeSnippet from "../../../common/CodeSnippet";
+import CodeSnippet from "shared/dist/components/CodeSnippet";
 
 const Javascript = ({ classes }) => {
   return (
