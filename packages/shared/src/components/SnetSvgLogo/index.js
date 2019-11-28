@@ -1,6 +1,6 @@
 import React from "react";
 
-import Logo from "../../../assets/images/BlackLogo.svg";
+import Logo from "../../assets/images/BlackLogo.svg";
 import "./styles.css";
 
 const SnetSvgLogo = () => {
