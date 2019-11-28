@@ -4,8 +4,8 @@ import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import SnetSvgLogo from "shared/dist/components/SnetSvgLogo";
 
-import SnetSvgLogo from "../SnetSvgLogo";
 import Routes from "../../../utility/constants/Routes";
 import { headerData as masterHeaderData } from "../../../utility/constants/Header";
 import { useStyles } from "./styles";
