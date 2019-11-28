@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 
-import StyledButton from "../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import ServiceDemo from "./ServiceDemo";
 import Routes from "../../../utility/constants/Routes";
 import { useStyles } from "./styles";

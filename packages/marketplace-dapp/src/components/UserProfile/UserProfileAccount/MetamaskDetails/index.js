@@ -13,7 +13,7 @@ import { loaderActions } from "../../../../Redux/actionCreators";
 import { LoaderContent } from "../../../../utility/constants/LoaderContent";
 import { useStyles } from "./styles";
 import StyledTextField from "../../../common/StyledTextField";
-import StyledButton from "../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { Networks } from "../../../../config/Networks";
 
 class MetamaskDetails extends Component {

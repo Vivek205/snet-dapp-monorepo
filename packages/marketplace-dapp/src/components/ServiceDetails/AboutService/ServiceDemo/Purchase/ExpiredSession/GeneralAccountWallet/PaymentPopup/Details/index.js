@@ -11,7 +11,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import PaymentInfoCard from "../../../../PaymentInfoCard";
 import StyledDropdown from "../../../../../../../../common/StyledDropdown";
-import StyledButton from "../../../../../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import SingularityLogo from "../../../../../../../../../assets/images/avatar.png";
 import { useStyles } from "./styles";
 import snetValidator from "../../../../../../../../../utility/snetValidator";

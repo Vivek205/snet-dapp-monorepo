@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../common/StyledButton";
 import MainSection from "./MainSection";
 import { useStyles } from "./styles";
 import Routes from "../../utility/constants/Routes";

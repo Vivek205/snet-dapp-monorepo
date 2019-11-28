@@ -4,8 +4,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 import { WebServiceClient as ServiceClient } from "snet-sdk-web";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../../../../../common/StyledButton";
 import PaymentInfoCard from "../../PaymentInfoCard";
 import PurchaseDialog from "../../PurchaseDialog";
 import ChannelSelectionBox from "../../ChannelSelectionBox";

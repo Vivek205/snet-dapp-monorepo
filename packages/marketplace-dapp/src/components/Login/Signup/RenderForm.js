@@ -6,8 +6,8 @@ import { Icon } from "@material-ui/core";
 import isEmpty from "lodash/isEmpty";
 import AlertText from "shared/dist/components/AlertText";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 import { PasswordCriteria } from "../../../utility/constants/ValidtionMessages";
 import { signupFormConstraints, passwordInlineConstraints } from "./validationConstraints";

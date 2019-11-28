@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import StyledButton from "../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import UserFeedback from "../UserFeedback";
 

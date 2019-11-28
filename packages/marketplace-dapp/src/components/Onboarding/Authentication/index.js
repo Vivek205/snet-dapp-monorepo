@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AlertText from "shared/dist/components/AlertText";
 
-import StyledButton from "../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { isValidNumber } from "../../../utility/Validation";
 import { parseError } from "../../../utility/ErrorHandling";
 import { useStyles } from "./styles";

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
 
-import StyledButton from "../../../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import NextAction from "./NextAction";
 import { channelInfo, anyGeneralWallet } from "../../../../../../../Redux/reducers/UserReducer";

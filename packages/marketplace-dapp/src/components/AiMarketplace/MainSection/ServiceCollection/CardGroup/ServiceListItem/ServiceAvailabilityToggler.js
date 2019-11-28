@@ -1,6 +1,7 @@
 import React from "react";
+import StyledButton from "shared/dist/components/StyledButton";
+
 import OfflineIndicator from "../../../../../common/OfflineIndicator";
-import StyledButton from "../../../../../common/StyledButton";
 
 const ServiceAvailabilityToggler = ({ isAvailable }) => {
   if (!isAvailable) {

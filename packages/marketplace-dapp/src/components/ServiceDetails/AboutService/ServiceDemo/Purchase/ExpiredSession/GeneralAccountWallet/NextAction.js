@@ -1,7 +1,6 @@
 import React from "react";
 import isEmpty from "lodash/isEmpty";
-
-import StyledButton from "../../../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 
 const NextAction = props => {
   const {

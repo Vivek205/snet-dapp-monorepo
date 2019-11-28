@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 
-import StyledButton from "../../../../../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import StyledTable from "../../../../../../../../common/StyledTable";
 import InfoIcon from "@material-ui/icons/Info";

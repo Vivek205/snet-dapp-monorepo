@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import AlertBox from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../common/StyledButton";
 import Routes from "../../utility/constants/Routes";
 import { useStyles } from "./styles";
 import { userActions } from "../../Redux/actionCreators";

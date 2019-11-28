@@ -13,9 +13,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import BulletPoint from "shared/dist/components/BulletPoint";
+import StyledButton from "shared/dist/components/StyledButton";
 
 import { useStyles } from "./styles";
-import StyledButton from "../../../common/StyledButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const warningMessage = [

@@ -10,8 +10,8 @@ import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import InfoIcon from "@material-ui/icons/Info";
 import Avatar from "@material-ui/core/Avatar";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../../../components/common/StyledButton";
 import { GENGPT2 } from "./ntg_pb_service";
 import { useStyles } from "./styles";
 import AnchorLink from "../../../../components/common/AnchorLink";

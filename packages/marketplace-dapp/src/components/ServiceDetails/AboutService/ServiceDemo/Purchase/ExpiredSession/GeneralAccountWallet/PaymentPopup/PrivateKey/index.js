@@ -4,8 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import AlertText from "shared/dist/components/AlertText";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../../../../../../../common/StyledButton";
 import { useStyles } from "./styles";
 
 const PrivateKey = ({ classes, privateKey, handleNextSection }) => {

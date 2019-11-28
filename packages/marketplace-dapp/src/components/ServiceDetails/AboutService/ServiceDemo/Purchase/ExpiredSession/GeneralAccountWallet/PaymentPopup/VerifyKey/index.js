@@ -7,7 +7,7 @@ import AlertText from "shared/dist/components/AlertText";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import BulletPoint from "shared/dist/components/BulletPoint";
 
-import StyledButton from "../../../../../../../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 
 const warningMessage = [

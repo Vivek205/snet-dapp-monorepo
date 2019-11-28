@@ -6,8 +6,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 import { userActions, loaderActions } from "../../../Redux/actionCreators";
 import Routes from "../../../utility/constants/Routes";

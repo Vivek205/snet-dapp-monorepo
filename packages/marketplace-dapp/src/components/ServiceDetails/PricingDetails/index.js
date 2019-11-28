@@ -2,8 +2,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 import Price from "./Price";
 import { PricingStrategy } from "../../../utility/PricingStrategy";

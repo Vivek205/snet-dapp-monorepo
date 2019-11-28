@@ -9,10 +9,10 @@ import CardActions from "@material-ui/core/CardActions";
 import StarRatingComponent from "react-star-rating-component";
 import { connect } from "react-redux";
 import AlertBox from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
 import StyledTextField from "../../../../common/StyledTextField";
 import { useStyles } from "./styles";
-import StyledButton from "../../../../common/StyledButton";
 import { serviceActions } from "../../../../../Redux/actionCreators";
 
 const UserFeedback = ({ open, handleClose, feedback, submitFeedback, orgId, serviceId, refetchFeedback }) => {

@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
 import AlertBox from "shared/dist/components/AlertBox";
 
-import StyledButton from "../../common/StyledButton";
+import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 
 const RenderOTP = ({ classes, otp, handleOTP, handleResendOTP, handleConfirmSignup, alert }) => {

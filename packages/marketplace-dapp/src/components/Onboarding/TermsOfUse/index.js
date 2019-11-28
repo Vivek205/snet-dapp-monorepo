@@ -5,8 +5,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
-import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 import { userActions } from "../../../Redux/actionCreators";

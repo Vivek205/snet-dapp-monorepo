@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
+import StyledButton from "shared/dist/components/StyledButton";
 
 import Routes from "../../../utility/constants/Routes";
-import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 
 const GetStartedDescription = ({ classes, title, description, button, btnText, btnType, history }) => {

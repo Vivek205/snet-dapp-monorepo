@@ -4,11 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import AlertBox from "shared/dist/components/AlertBox";
+import StyledButton from "shared/dist/components/StyledButton";
 
 import Routes from "../../../utility/constants/Routes";
 import { userActions, errorActions } from "../../../Redux/actionCreators";
 import { useStyles } from "./styles";
-import StyledButton from "../../common/StyledButton";
 import snetValidator from "../../../utility/snetValidator";
 import { forgotPassworSubmitConstraints } from "./validationConstraints";
 
