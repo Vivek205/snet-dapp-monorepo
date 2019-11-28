@@ -7,7 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _WhiteLogo = _interopRequireDefault(require("./../../../../assets/images/WhiteLogo.svg"));
+var _WhiteLogo = _interopRequireDefault(require("../../../assets/images/WhiteLogo.svg"));
 
 var _styles = require("./styles");
 

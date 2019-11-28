@@ -1,6 +1,6 @@
 import React from "react";
 
-import Logo from "./../../../../assets/images/WhiteLogo.svg";
+import Logo from "../../../assets/images/WhiteLogo.svg";
 
 import { useStyles } from "./styles";
 
