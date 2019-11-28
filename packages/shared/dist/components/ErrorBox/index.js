@@ -11,7 +11,7 @@ var _styles = require("@material-ui/styles");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _error = _interopRequireDefault(require("../../../assets/images/error.svg"));
+var _error = _interopRequireDefault(require("../../assets/images/error.svg"));
 
 var _styles2 = require("./styles");
 
