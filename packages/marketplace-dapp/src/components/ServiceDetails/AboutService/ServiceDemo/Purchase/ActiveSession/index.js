@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Tooltip from "@material-ui/core/Tooltip";
-
 import AlertBox from "shared/dist/components/AlertBox";
+
 import StyledButton from "../../../../../common/StyledButton";
 import StyledLinearProgress from "../../../../../common/StyledLinearProgress";
 import { useStyles } from "./styles";

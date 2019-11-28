@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
-
 import AlertBox from "shared/dist/components/AlertBox";
+
 import StyledButton from "../../../../../../../../common/StyledButton";
 import { useStyles } from "./styles";
 

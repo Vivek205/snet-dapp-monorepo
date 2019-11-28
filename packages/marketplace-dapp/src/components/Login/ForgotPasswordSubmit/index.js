@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
+import AlertBox from "shared/dist/components/AlertBox";
 
 import Routes from "../../../utility/constants/Routes";
 import { userActions, errorActions } from "../../../Redux/actionCreators";
-import AlertBox from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 import StyledButton from "../../common/StyledButton";
 import snetValidator from "../../../utility/snetValidator";

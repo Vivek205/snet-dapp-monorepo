@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
 import AlertText from "shared/dist/components/AlertText";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 import StyledButton from "../../../../../../../../common/StyledButton";
 import { useStyles } from "./styles";
 

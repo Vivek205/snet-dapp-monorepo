@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
+import { alertTypes } from "shared/dist/components/AlertBox";
 
 import Routes from "../../../utility/constants/Routes";
 import { useStyles } from "./styles";
@@ -10,7 +11,6 @@ import RenderForm from "./RenderForm";
 import RenderOTP from "./RenderOTP";
 import { userActions, loaderActions } from "../../../Redux/actionCreators";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";
-import { alertTypes } from "shared/dist/components/AlertBox";
 import { signupFormConstraints, singupOtpContraints } from "./validationConstraints";
 import snetValidator from "../../../utility/snetValidator";
 

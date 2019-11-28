@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import Web3 from "web3";
 import isEmpty from "lodash/isEmpty";
 import MPEContract from "singularitynet-platform-contracts/networks/MultiPartyEscrow";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import PaymentInfoCard from "../../../../PaymentInfoCard";
 import StyledDropdown from "../../../../../../../../common/StyledDropdown";
@@ -15,7 +16,6 @@ import SingularityLogo from "../../../../../../../../../assets/images/avatar.png
 import { useStyles } from "./styles";
 import snetValidator from "../../../../../../../../../utility/snetValidator";
 import { paymentGatewayConstraints } from "./validationConstraints";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { tenYearBlockOffset } from "../../../../../../../../../utility/PricingStrategy";
 import { groupInfo, currentServiceDetails } from "../../../../../../../../../Redux/reducers/ServiceDetailsReducer";
 import { decodeGroupId } from "../../../../../../../../../utility/sdk";

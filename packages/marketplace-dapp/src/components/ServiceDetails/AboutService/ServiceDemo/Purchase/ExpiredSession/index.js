@@ -4,8 +4,8 @@ import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 import { useStyles } from "./styles";
 import { walletTypes } from "../../../../../../Redux/actionCreators/UserActions";
 import StyledDropdown from "../../../../../common/StyledDropdown";

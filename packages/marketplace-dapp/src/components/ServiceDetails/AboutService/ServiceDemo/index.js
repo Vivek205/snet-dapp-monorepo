@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import ProgressBar from "../../../common/ProgressBar";
 import { useStyles } from "./styles";
@@ -10,7 +11,6 @@ import { serviceDetailsActions, loaderActions, userActions, paymentActions } fro
 import PurchaseToggler from "./PurchaseToggler";
 import { freeCalls, groupInfo } from "../../../../Redux/reducers/ServiceDetailsReducer";
 import { LoaderContent } from "../../../../utility/constants/LoaderContent";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import Routes from "../../../../utility/constants/Routes";
 import { initSdk, initPaypalSdk } from "../../../../utility/sdk";
 import { walletTypes } from "../../../../Redux/actionCreators/UserActions";

@@ -4,12 +4,12 @@ import { Auth } from "aws-amplify";
 import { withStyles } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import AlertText from "shared/dist/components/AlertText";
 
 import StyledButton from "../../common/StyledButton";
 import { isValidNumber } from "../../../utility/Validation";
 import { parseError } from "../../../utility/ErrorHandling";
 import { useStyles } from "./styles";
-import AlertText from "shared/dist/components/AlertText";
 import InlineLoader from "../../common/InlineLoader";
 import Routes from "../../../utility/constants/Routes";
 

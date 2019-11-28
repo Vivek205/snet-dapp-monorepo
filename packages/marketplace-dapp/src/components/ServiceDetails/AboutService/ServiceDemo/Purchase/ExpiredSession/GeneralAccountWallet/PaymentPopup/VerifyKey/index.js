@@ -4,8 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import Web3 from "web3";
 import { connect } from "react-redux";
 import AlertText from "shared/dist/components/AlertText";
-
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 import StyledButton from "../../../../../../../../common/StyledButton";
 import BulletPoint from "../../../../../../../../common/BulletPoint";
 import { useStyles } from "./styles";

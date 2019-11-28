@@ -3,10 +3,10 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import isEmpty from "lodash/isEmpty";
+import { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 import PurchaseAlert from "./PurchaseAlert";
-import { alertTypes } from "shared/dist/components/AlertBox";
 
 class Purchase extends Component {
   state = { alert: {} };

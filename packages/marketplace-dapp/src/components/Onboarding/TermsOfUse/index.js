@@ -4,13 +4,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import StyledButton from "../../common/StyledButton";
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 import { userActions } from "../../../Redux/actionCreators";
 import Routes from "../../../utility/constants/Routes";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 class TermsOfUse extends Component {
   state = {

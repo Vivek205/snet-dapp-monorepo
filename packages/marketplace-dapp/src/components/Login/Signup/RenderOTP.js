@@ -2,9 +2,9 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
+import AlertBox from "shared/dist/components/AlertBox";
 
 import StyledButton from "../../common/StyledButton";
-import AlertBox from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 
 const RenderOTP = ({ classes, otp, handleOTP, handleResendOTP, handleConfirmSignup, alert }) => {

@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
+import AlertBox from "shared/dist/components/AlertBox";
 
 import StyledButton from "../common/StyledButton";
 import Routes from "../../utility/constants/Routes";
@@ -11,7 +12,6 @@ import { useStyles } from "./styles";
 import { userActions } from "../../Redux/actionCreators";
 import snetValidator from "../../utility/snetValidator";
 import { loginConstraints } from "./validationConstraints";
-import AlertBox from "shared/dist/components/AlertBox";
 
 class Login extends Component {
   state = {

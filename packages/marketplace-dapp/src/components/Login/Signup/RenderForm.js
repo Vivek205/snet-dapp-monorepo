@@ -4,11 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
 import { Icon } from "@material-ui/core";
 import isEmpty from "lodash/isEmpty";
+import AlertText from "shared/dist/components/AlertText";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import StyledButton from "../../common/StyledButton";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
-import AlertText from "shared/dist/components/AlertText";
 import { PasswordCriteria } from "../../../utility/constants/ValidtionMessages";
 import { signupFormConstraints, passwordInlineConstraints } from "./validationConstraints";
 import snetValidator from "../../../utility/snetValidator";

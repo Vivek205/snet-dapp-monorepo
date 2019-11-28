@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import map from "lodash/map";
 import find from "lodash/find";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import StyledDropdown from "../../common/StyledDropdown";
 import { useStyles } from "./styles";
@@ -16,7 +17,6 @@ import { userActions } from "../../../Redux/actionCreators";
 import MetamaskDetails from "./MetamaskDetails";
 import { initSdk } from "../../../utility/sdk";
 import ProviderBalance from "./ProviderBalance";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import ProvidersLinkedCount from "./ProvidersLinkedCount";
 import { startAppLoader, stopAppLoader } from "../../../Redux/actionCreators/LoaderActions";
 import { LoaderContent } from "../../../utility/constants/LoaderContent";

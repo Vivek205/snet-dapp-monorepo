@@ -2,8 +2,8 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
 import AlertText from "shared/dist/components/AlertText";
+
 import { useStyles } from "./styles";
 
 const PaymentData = ({

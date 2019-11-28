@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 class ThirdPartyServiceErrorBoundary extends Component {
   state = {
     error: undefined,
