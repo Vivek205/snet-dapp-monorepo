@@ -4,7 +4,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _react2 = require("@storybook/react");
 
-var _ = _interopRequireDefault(require("./"));
+var _ = _interopRequireDefault(require("."));
 
 var _AlertBox = require("shared/dist/components/AlertBox");
 
