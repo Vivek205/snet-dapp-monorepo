@@ -3,12 +3,12 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Web3 from "web3";
 import { connect } from "react-redux";
+import AlertText from "shared/dist/components/AlertText";
 
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import StyledButton from "../../../../../../../../common/StyledButton";
 import BulletPoint from "../../../../../../../../common/BulletPoint";
 import { useStyles } from "./styles";
-import AlertText from "../../../../../../../../common/AlertText";
 
 const warningMessage = [
   `You will still be able to top up your wallet and use it with all providers that you have already opened payment channels to.`,

@@ -8,7 +8,7 @@ import isEmpty from "lodash/isEmpty";
 import StyledButton from "../../common/StyledButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
-import AlertText from "../../common/AlertText";
+import AlertText from "shared/dist/components/AlertText";
 import { PasswordCriteria } from "../../../utility/constants/ValidtionMessages";
 import { signupFormConstraints, passwordInlineConstraints } from "./validationConstraints";
 import snetValidator from "../../../utility/snetValidator";
