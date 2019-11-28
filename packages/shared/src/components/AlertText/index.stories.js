@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import withLiveEditScope from "storybook-addon-react-live-edit/dist/withLiveEditScope";
 
-import AlertText from "./";
+import AlertText from ".";
 
 storiesOf("Alerts | AlertText", module)
   .addParameters({ props: { propTables: [AlertText] } })
