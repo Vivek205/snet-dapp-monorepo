@@ -6,7 +6,7 @@ var _react2 = require("@storybook/react");
 
 var _withLiveEditScope = _interopRequireDefault(require("storybook-addon-react-live-edit/dist/withLiveEditScope"));
 
-var _ = _interopRequireDefault(require("./"));
+var _ = _interopRequireDefault(require("."));
 
 var _Function = _interopRequireDefault(require("./Function"));
 

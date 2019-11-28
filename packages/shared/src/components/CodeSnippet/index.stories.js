@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import withLiveEditScope from "storybook-addon-react-live-edit/dist/withLiveEditScope";
 
-import CodeSnippet from "./";
+import CodeSnippet from ".";
 import Function from "./Function";
 import Key from "./Key";
 import ValueString from "./ValueString";
