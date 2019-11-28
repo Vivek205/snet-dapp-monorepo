@@ -61,7 +61,7 @@ packages/marketplace-dapp/.env
 packages/marketplace-dapp/.next
 
 #build to be deployed
-packages/marketplace-dapp/build/
+packages/*/build/
 
 #deploy Paths
 packages/marketplace-dapp/scripts/path.js
@@ -89,3 +89,6 @@ packages/marketplace-dapp/src/assets/thirdPartyServices/*
 
 #utility
 packages/marketplace-dapp/src/utility/*
+
+#transpiled dist folder
+packages/*/dist
