@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import truncate from "lodash/truncate";
 
-import RatingsCount from "../../../../../common/RatingsCount";
+import RatingsCount from "shared/dist/components/RatingsCount";
 import CardImg from "../../../../../../assets/images/SnetDefaultServiceImage.png";
 import SingularityLogo from "../../../../../../assets/images/avatar.png";
 import { useStyles } from "./styles";
