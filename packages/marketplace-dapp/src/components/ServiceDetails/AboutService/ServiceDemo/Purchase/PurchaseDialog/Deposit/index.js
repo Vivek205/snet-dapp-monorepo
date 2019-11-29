@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
+import StyledTextField from "shared/dist/components/StyledTextField";
 
-import StyledTextField from "../../../../../../common/StyledTextField";
 import { useStyles } from "./styles";
 
 const Deposit = ({ classes }) => {
