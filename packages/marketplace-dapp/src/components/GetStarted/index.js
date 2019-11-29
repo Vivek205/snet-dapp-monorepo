@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import GetStartedDescription from "./GetStartedDescription";
 
 import { GetStartedCategoriesData } from "../../utility/constants/GetStarted";
-import SNETAudioUpload from "../common/SNETAudioUpload";
+import SNETAudioUpload from "shared/dist/components/SNETAudioUpload";
 import Category from "./Category";
 import { useStyles } from "./styles";
 
