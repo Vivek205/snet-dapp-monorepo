@@ -5,10 +5,10 @@ import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 
 import { useStyles } from "./styles";
 import { walletTypes } from "../../../../../../Redux/actionCreators/UserActions";
-import StyledDropdown from "../../../../../common/StyledDropdown";
 import PaymentInfoCard from "../PaymentInfoCard";
 import { initSdk } from "../../../../../../utility/sdk";
 import isEmpty from "lodash/isEmpty";

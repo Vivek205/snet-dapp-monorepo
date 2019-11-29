@@ -3,11 +3,10 @@ import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styles";
 import { withStyles } from "@material-ui/styles";
 import StyledButton from "shared/dist/components/StyledButton";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 
 import { Recognizer } from "./image_recon_pb_service";
-
 import SNETImageUpload from "../../standardComponents/SNETImageUpload";
-import StyledDropdown from "../../../../components/common/StyledDropdown";
 
 const initialUserInput = {
   methodName: "Select a method",

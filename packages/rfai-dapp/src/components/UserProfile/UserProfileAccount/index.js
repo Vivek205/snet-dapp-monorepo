@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 
 import { useStyles } from "./styles";
 import AccountBalance from "../../common/AccountBalance";
 import AlertBox from "../../common/AlertBox";
-import StyledDropdown from "../../common/StyledDropdown";
 
 const UserProfileAccount = ({ classes }) => {
   const [alert] = useState({});
