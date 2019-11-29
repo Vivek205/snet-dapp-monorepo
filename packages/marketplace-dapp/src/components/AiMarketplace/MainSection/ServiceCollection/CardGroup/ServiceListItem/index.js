@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 import { useStyles } from "./styles";
-import RatingsCount from "../../../../../common/RatingsCount";
+import RatingsCount from "shared/dist/components/RatingsCount";
 import CardImg from "../../../../../../assets/images/SnetDefaultServiceImage.png";
 import SingularityLogo from "../../../../../../assets/images/avatar.png";
 import ServiceAvailabilityToggler from "./ServiceAvailabilityToggler";
