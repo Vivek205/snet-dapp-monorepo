@@ -1,8 +1,8 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/styles";
+import UserProfileCard from "shared/dist/components/UserProfileCard";
 
-import UserProfileCard from "../../common/UserProfileCard";
 import { useStyles } from "./styles";
 
 const UserProfilePopUpHeader = ({ classes, nickName, remainingCredits, usedCredits, onClose, email }) => {

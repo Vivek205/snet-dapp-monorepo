@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
 import StyledButton from "shared/dist/components/StyledButton";
+import UserProfileCard from "shared/dist/components/UserProfileCard";
 
-import UserProfileCard from "../../common/UserProfileCard";
 import { useStyles } from "./styles";
 
 const UserProfileHeader = ({ classes, nickname, email }) => {
