@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import ProgressBar from "shared/dist/components/ProgressBar";
 
-import ProgressBar from "../../../common/ProgressBar";
 import { useStyles } from "./styles";
 import { serviceDetailsActions, loaderActions, userActions, paymentActions } from "../../../../Redux/actionCreators";
 import PurchaseToggler from "./PurchaseToggler";
