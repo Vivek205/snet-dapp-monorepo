@@ -2,11 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-
+import StyledTable from "shared/dist/components/StyledTable";
 import StyledButton from "shared/dist/components/StyledButton";
-import { useStyles } from "./styles";
-import StyledTable from "../../../../../../../../common/StyledTable";
 import InfoIcon from "@material-ui/icons/Info";
+
+import { useStyles } from "./styles";
 import { agiInDecimal } from "../../../../../../../../../utility/PricingStrategy";
 
 const Summary = props => {
