@@ -6,29 +6,23 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { useStyles } from "./styles";
+import StyledTextField from "shared/dist/components/StyledTextField";
+import StyledButton from "shared/dist/components/StyledButton";
 
-//components
-import StyledButton from "../../StyledButton";
-import StyledTextField from "../../StyledTextField";
 import AlertBox, { alertTypes } from "../../AlertBox";
-
+import { useStyles } from "./styles";
 import { tokenActions } from "../../../../Redux/actionCreators";
 import { rfaiContractActions } from "../../../../Redux/actionCreators";
 import { NetworkNames } from "../../../../utility/constants/NetworkNames";
-
 import { loaderActions } from "../../../../Redux/actionCreators";
 import { LoaderContent } from "../../../../utility/constants/LoaderContent";
-
 import {
   waitForTransaction,
   approveToken,
   depositTokenToEscrow,
   withdrawTokenFromEscrow,
 } from "../../../../utility/BlockchainHelper";
-
 import { toWei, fromWei, isValidInputAmount } from "../../../../utility/GenHelperFunctions";
-
 import web3 from "web3";
 
 const BN = web3.utils.BN;

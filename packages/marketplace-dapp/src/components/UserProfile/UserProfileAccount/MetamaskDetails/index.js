@@ -6,14 +6,14 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { connect } from "react-redux";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledTextField from "shared/dist/components/StyledTextField";
+import StyledButton from "shared/dist/components/StyledButton";
 
 import { cogsToAgi, txnTypes, agiToCogs } from "../../../../utility/PricingStrategy";
 import { initSdk } from "../../../../utility/sdk";
 import { loaderActions } from "../../../../Redux/actionCreators";
 import { LoaderContent } from "../../../../utility/constants/LoaderContent";
 import { useStyles } from "./styles";
-import StyledTextField from "../../../common/StyledTextField";
-import StyledButton from "shared/dist/components/StyledButton";
 import { Networks } from "../../../../config/Networks";
 
 class MetamaskDetails extends Component {
