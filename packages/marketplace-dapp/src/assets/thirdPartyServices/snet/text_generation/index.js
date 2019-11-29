@@ -14,7 +14,7 @@ import StyledButton from "shared/dist/components/StyledButton";
 
 import { GENGPT2 } from "./ntg_pb_service";
 import { useStyles } from "./styles";
-import AnchorLink from "../../../../components/common/AnchorLink";
+import AnchorLink from "shared/dist/components/AnchorLink";
 
 const imgPath = (name, extension = "jpg") => {
   const trimmedName = name.replace(/[\s\.\'']/g, "");

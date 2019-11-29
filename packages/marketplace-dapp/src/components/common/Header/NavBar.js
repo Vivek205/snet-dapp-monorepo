@@ -1,9 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import StyledMenu from "shared/dist/components/StyledMenu";
 
 import { useStyles } from "./styles";
 import NavItem from "./NavItem";
-import StyledMenu from "../StyledMenu";
 
 const NavBar = ({ data, history }) => {
   const classes = useStyles();

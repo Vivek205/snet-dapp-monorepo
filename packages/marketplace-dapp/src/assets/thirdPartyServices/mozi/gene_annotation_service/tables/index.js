@@ -19,7 +19,7 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownloadOutlined";
 import { downloadCSVFile } from "../service";
 import * as papa from "papaparse";
 import "./style.css";
-import AnchorLink from "../../../../../components/common/AnchorLink";
+import AnchorLink from "shared/dist/components/AnchorLink";
 
 const parseTable = tableData => papa.parse(tableData);
 const width = document.body.clientWidth || window.screen.width;
