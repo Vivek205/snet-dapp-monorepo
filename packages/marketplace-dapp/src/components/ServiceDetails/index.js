@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import isEmpty from "lodash/isEmpty";
 import ErrorBox from "shared/dist/components/ErrorBox";
+import NotificationBar, { notificationBarTypes } from "shared/dist/components/NotificationBar";
 
 import TitleCard from "./TitleCard";
 import PricingDetails from "./PricingDetails";
@@ -12,7 +13,6 @@ import StyledTabs from "./StyledTabs";
 import AboutService from "./AboutService";
 import InstallAndRunService from "./InstallAndRunService";
 import { useStyles } from "./styles";
-import NotificationBar, { notificationBarTypes } from "../common/NotificationBar";
 import { serviceDetailsActions } from "../../Redux/actionCreators";
 import { pricing, serviceDetails } from "../../Redux/reducers/ServiceDetailsReducer";
 
