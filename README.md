@@ -1,4 +1,4 @@
-### Singularity Frontend Monorepo
+# Singularity Frontend Monorepo
 
 ## Prerequisites
 - Node >= 10.16.0
