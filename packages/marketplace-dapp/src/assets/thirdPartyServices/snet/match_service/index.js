@@ -1,13 +1,12 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
+import { withStyles } from "@material-ui/styles";
 
 import { MatchApi } from "./MatchingAPI_pb_service";
 import MethodNamesDropDown from "../../common/MethodNamesDropDown";
 import SNETImageUpload from "../../standardComponents/SNETImageUpload";
-import StyledDropdown from "../../../../components/common/StyledDropdown/index";
-
 import { useStyles } from "./styles";
-import { withStyles } from "@material-ui/styles";
 
 const initialUserInput = {
   methodName: "Select a method",

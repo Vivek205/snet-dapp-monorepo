@@ -10,7 +10,7 @@ import MPEContract from "singularitynet-platform-contracts/networks/MultiPartyEs
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import PaymentInfoCard from "../../../../PaymentInfoCard";
-import StyledDropdown from "../../../../../../../../common/StyledDropdown";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 import StyledButton from "shared/dist/components/StyledButton";
 import SingularityLogo from "../../../../../../../../../assets/images/avatar.png";
 import { useStyles } from "./styles";

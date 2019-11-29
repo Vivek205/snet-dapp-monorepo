@@ -5,8 +5,8 @@ import { withStyles } from "@material-ui/styles";
 import map from "lodash/map";
 import find from "lodash/find";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 
-import StyledDropdown from "../../common/StyledDropdown";
 import { useStyles } from "./styles";
 import {
   fetchAvailableUserWallets,

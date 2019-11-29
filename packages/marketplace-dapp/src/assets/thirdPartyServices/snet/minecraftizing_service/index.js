@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import { Grid, IconButton, MuiThemeProvider, Tooltip } from "@material-ui/core";
 import { MinecraftizingService } from "./MinecraftizingService_pb_service";
 import MethodNamesDropDown from "../../common/MethodNamesDropDown";
-import StyledDropdown from "../../../../components/common/StyledDropdown/index";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 import SNETImageUpload from "../../standardComponents/SNETImageUpload";
 import { useStyles } from "./styles";
 import { withStyles } from "@material-ui/styles";
