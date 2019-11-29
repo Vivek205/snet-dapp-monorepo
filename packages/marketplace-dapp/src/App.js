@@ -20,11 +20,11 @@ import NetworkChangeOverlay from "./components/common/NetworkChangeOverlay";
 import initHotjar from "./assets/externalScripts/hotjar";
 import initGDPRNotification from "./assets/externalScripts/gdpr";
 import PaymentCancelled from "./components/ServiceDetails/PaymentCancelled";
+import PageNotFound from "shared/dist/components/PageNotFound";
 
 const ForgotPassword = lazy(() => import("./components/Login/ForgotPassword"));
 const ForgotPasswordSubmit = lazy(() => import("./components/Login/ForgotPasswordSubmit"));
 const Onboarding = lazy(() => import("./components/Onboarding"));
-const PageNotFound = lazy(() => import("./components/PageNotFound"));
 const AiMarketplace = lazy(() => import("./components/AiMarketplace"));
 const SignUp = lazy(() => import("./components/Login/Signup"));
 const Login = lazy(() => import("./components/Login"));
