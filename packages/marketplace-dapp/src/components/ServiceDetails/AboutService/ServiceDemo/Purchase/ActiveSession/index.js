@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import AlertBox from "shared/dist/components/AlertBox";
-
 import StyledButton from "shared/dist/components/StyledButton";
-import StyledLinearProgress from "../../../../../common/StyledLinearProgress";
+import StyledLinearProgress from "shared/dist/components/StyledLinearProgress";
+
 import { useStyles } from "./styles";
 
 const ActiveSession = ({ classes, freeCallsRemaining, handleComplete, freeCallsAllowed, isServiceAvailable }) => {
