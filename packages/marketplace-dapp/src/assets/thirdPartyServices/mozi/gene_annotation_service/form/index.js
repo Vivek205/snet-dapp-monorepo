@@ -21,7 +21,7 @@ import Dropzone from "react-dropzone";
 import { useSnackbar } from "notistack";
 import { Annotate } from "../proto/annotation_pb_service";
 import { AnnotationRequest, Annotation, Gene, Filter } from "../proto/annotation_pb";
-import AnchorLink from "../../../../../components/common/AnchorLink";
+import AnchorLink from "shared/dist/components/AnchorLink";
 import "./style.css";
 const grpc = require("@improbable-eng/grpc-web").grpc;
 
