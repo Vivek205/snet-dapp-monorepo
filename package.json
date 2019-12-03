@@ -21,6 +21,7 @@
   "scripts": {
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
     "start:rfai": "cd packages/rfai-dapp && yarn start",
+    "start:publisher": "cd packages/publisher-dapp && yarn start",
     "build:marketplace": "cd packages/marketplace-dapp && yarn build",
     "build:rfai": "cd packages/rfai-dapp && yarn build",
     "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
@@ -28,7 +29,7 @@
     "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "nuke": "rm -r node_modules yarn.lock; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
   },
   "lint-staged": {
     "*.{js,jsx}": [
