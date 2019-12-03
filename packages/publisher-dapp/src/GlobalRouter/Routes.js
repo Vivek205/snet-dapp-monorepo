@@ -1,27 +1,35 @@
 import { lazy } from "react";
-import withLightHeader from "../HOC/withLightHeader";
+import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const GetStarted = lazy(() => import("../Pages/GetStarted"));
+const Login = lazy(()=> import("../Pages/Login"));
+const Signup = (()=> import("../Pages/Signup"));
+const Overview = (() =>  import("../Pages/Overview"))
 
-const EnrollComponent = withLightHeader(Enroll);
-const GetStartedComponent = withLightHeader(GetStarted);
+
+
+const EnrollComponent = withLightHeaderAndFooter(Enroll);
+const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
+const LoginComponent = withLightHeaderAndFooter(Login);
+const SignupComponent = withLightHeaderAndFooter(Signup);
+const OverviewComponent = withLightHeaderAndFooter(Overview);
 
 export const GlobalRoutes = {
   LOGIN: {
     name: "login",
     path: "/login",
-    component: "",
+    component: LoginComponent,
   },
   SIGNUP: {
     name: "signup",
     path: "/signup",
-    component: "",
+    component: SignupComponent,
   },
   OVERVIEW: {
     name: "overview",
     path: "/overview",
-    component: "",
+    component: OverviewComponent,
   },
   ENROLL: {
     name: "enroll",

@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
 import Footer from "shared/dist/components/Footer";
 
-const withDarkHeaderAndFooter = ({ children }) => {
+const withLightHeaderAndFooter = ({ children }) => {
   return (
     <Fragment>
-      <header>Dark Header</header>
+      <header>Light Header</header>
       {children}
       <Footer />
     </Fragment>
   );
 };
 
-export default withDarkHeaderAndFooter;
+export default withLightHeaderAndFooter;
