@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Footer from "shared/dist/components/Footer";
 
-const withDarkHeaderAndFooter = ({ children }) => {
-  return (
-    <Fragment>
+const withDarkHeaderAndFooter = Component => {
+  return props => (
+    <div>
       <header>Dark Header</header>
-      {children}
+      <Component {...props} />
       <Footer />
-    </Fragment>
+    </div>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import Footer from "shared/dist/components/Footer";
 
-const withLightHeaderAndFooter = ({ children }) => {
-  return (
+const withLightHeaderAndFooter = Component => {
+  return props => (
     <Fragment>
       <header>Light Header</header>
-      {children}
+      <Component {...props} />
       <Footer />
     </Fragment>
   );

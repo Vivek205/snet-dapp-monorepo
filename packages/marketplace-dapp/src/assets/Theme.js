@@ -130,6 +130,9 @@ const theme = createMuiTheme({
       outlinedBtnHoverBg,
       informationBarBg,
     },
+    background: {
+      footer: footerBgColor,
+    },
   },
   backgroundColor: {
     blue: customBlue,

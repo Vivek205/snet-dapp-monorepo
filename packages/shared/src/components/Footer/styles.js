@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 export const useStyles = makeStyles(theme => ({
   footer: {
     padding: "23px 0",
-    backgroundColor: theme.backgroundColor.footerBgColor,
+    backgroundColor: theme.palette.background.footer,
     color: theme.palette.text.offWhite,
     "@media (max-width:767px)": { padding: "21px 0 52px" },
   },

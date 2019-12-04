@@ -4,8 +4,8 @@ import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const GetStarted = lazy(() => import("../Pages/GetStarted"));
 const Login = lazy(()=> import("../Pages/Login"));
-const Signup = (()=> import("../Pages/Signup"));
-const Overview = (() =>  import("../Pages/Overview"))
+const Signup = lazy(()=> import("../Pages/Signup"));
+const Overview = lazy(() =>  import("../Pages/Overview"))
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
