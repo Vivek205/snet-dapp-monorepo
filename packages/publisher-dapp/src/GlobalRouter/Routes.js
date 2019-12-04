@@ -7,8 +7,6 @@ const Login = lazy(()=> import("../Pages/Login"));
 const Signup = (()=> import("../Pages/Signup"));
 const Overview = (() =>  import("../Pages/Overview"))
 
-
-
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
 const LoginComponent = withLightHeaderAndFooter(Login);
