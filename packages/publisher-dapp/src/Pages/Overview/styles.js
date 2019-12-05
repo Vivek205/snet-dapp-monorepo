@@ -19,24 +19,9 @@ export const useStyles = MUITheme => ({
 			}
 		},
 		'& .MuiListItemIcon-root':{ minWidth: 'auto' },
-		'& button':{ marginTop: 32 }
-	},
-	codeToCustomer: { 
-		padding: '40px 60px !important',
-		display: 'flex',
-		background: MUITheme.palette.background.mainContent,
-		[MUITheme.breakpoints.down('sm')]: { 
-			padding: '40px 20px !important',
-			flexDirection: 'column'
-		},
-	},
-	codeToCustomerContent: { 
-		marginRight: 24,
-		[MUITheme.breakpoints.down('sm')]: {
-      marginRight: 0,
-      marginBottom: 25
-    },
-	},
+		'& button':{ marginTop: 32 },
+		'& img':{ width: '100%' }
+	},	
 	checkCircleIcon:{
 		width: 20,
 		marginRight: 16,
@@ -52,7 +37,11 @@ export const useStyles = MUITheme => ({
 		},
 	},
 	featuresContent:{
-		[MUITheme.breakpoints.down('sm')]: { marginTop: 25 },
+		marginRight: 24,
+		[MUITheme.breakpoints.down('sm')]: { 
+			marginTop: 25,
+			marginRight: 0
+		},
 	},
 	programMemDetails:{
 		padding: '40px 60px !important',
