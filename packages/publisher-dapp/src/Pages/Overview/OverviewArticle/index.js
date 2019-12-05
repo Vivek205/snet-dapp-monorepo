@@ -19,7 +19,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
         <Typography variant="body1">{description}</Typography>
         <List>
           {list.map((item, index) => (
-          <ListItem>
+          <ListItem key={index}>
             <ListItemIcon>
               <CheckIcon className={classes.checkCircleIcon} />
             </ListItemIcon>

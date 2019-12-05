@@ -30,12 +30,12 @@ const Overview = ({ classes }) => {
   		))}  		
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.programMemDetails}>      	
       {ProgramMemberShipDetailsList.map((item, index) => (
-      	<div>
+      	<React.Fragment> key={item.title}>
 	      	<Typography variant="h2">{item.title}</Typography>
 	        <Typography variant="body1">{item.description}</Typography>
 	        <List>	        	
 	        {item.list.map((list, index) => (
-	        	<ListItem>
+	        	<ListItem key={index}>
           		<ListItemIcon>
               	<CheckIcon className={classes.checkCircleIcon} />
             	</ListItemIcon>
@@ -46,7 +46,7 @@ const Overview = ({ classes }) => {
 	        <div className={classes.btnContainer}>
 	        	<StyledButton btnText={item.btnDetails.text} type={item.btnDetails.type} />
 	        </div>
-	      </div>
+	      </React.Fragment>
 	    ))}
       </Grid>
       <GetInTouch/>
