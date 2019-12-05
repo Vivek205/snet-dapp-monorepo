@@ -9,11 +9,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _StyledMenu = _interopRequireDefault(require("shared/dist/components/StyledMenu"));
+
 var _styles = require("./styles");
 
 var _NavItem = _interopRequireDefault(require("./NavItem"));
-
-var _StyledMenu = _interopRequireDefault(require("../StyledMenu"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
