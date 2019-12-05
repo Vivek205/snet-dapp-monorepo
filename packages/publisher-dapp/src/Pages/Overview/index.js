@@ -30,7 +30,7 @@ const Overview = ({ classes }) => {
   		))}  		
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.programMemDetails}>      	
       {ProgramMemberShipDetailsList.map((item, index) => (
-      	<React.Fragment> key={item.title}>
+      	<React.Fragment key={item.title}>
 	      	<Typography variant="h2">{item.title}</Typography>
 	        <Typography variant="body1">{item.description}</Typography>
 	        <List>	        	
