@@ -12,12 +12,12 @@ import { useStyles } from "./styles";
 import StyledButton from "shared/dist/components/StyledButton";
 import GetInTouch from "./GetInTouch";
 import OverviewArticle from "./OverviewArticle";
-import { overViewArticle, ProgramMemberShipDetailsList } from "./content";
+import { overViewArticles, ProgramMemberShipDetailsList } from "./content";
 
 const Overview = ({ classes }) => {
   return (
   	<Grid container className={classes.overiewMainContainer}>
-  		{overViewArticle.map((item, index) => (
+  		{overViewArticles.map((item, index) => (
   			<OverviewArticle 
   				key={item.title}
   				title={item.title}

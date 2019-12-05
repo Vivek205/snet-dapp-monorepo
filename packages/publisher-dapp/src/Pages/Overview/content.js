@@ -1,4 +1,4 @@
-export const overViewArticle = [
+export const overViewArticles= [
 	{ 
 		title: "From Code to Customer",
 		description: "Join the Singularity Dev Publisher Program to reach customers around the world on the AI Marketplace for any platform,. You’ll also get access to beta software, advanced app capabilities, extensive beta testing tools, and app analytics.",
