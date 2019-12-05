@@ -27,7 +27,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     blueBg: {
       backgroundColor: theme.palette.primary.main,
       "&:hover": {
-        backgroundColor: theme.palette.background.blue
+        backgroundColor: theme.palette.text.hover.blue
       }
     },
     blackBg: {
@@ -37,7 +37,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         marginRight: 5
       },
       "&:hover": {
-        backgroundColor: theme.backgroundColor.white,
+        backgroundColor: theme.palette.background.white,
         borderColor: theme.palette.background.black,
         color: theme.palette.text.hover.black
       }
@@ -71,9 +71,9 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       }
     },
     transparentBlueBorder: {
-      borderColor: theme.palette.text.primary,
+      borderColor: theme.palette.primary.main,
       backgroundColor: "transparent !important",
-      color: theme.palette.text.primary,
+      color: theme.palette.primary.main,
       "&:hover": {
         borderColor: theme.palette.text.hover.blue,
         backgroundColor: "".concat(theme.palette.background.hover.transparentBlue, " !important"),

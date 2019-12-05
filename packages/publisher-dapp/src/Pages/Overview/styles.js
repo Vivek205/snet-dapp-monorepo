@@ -8,7 +8,6 @@ export const useStyles = MUITheme => ({
 		'& li':{ 
 			padding: 0,
 			marginBottom: 16,
-			display: 'flex',
 			alignItems: 'flex-start',
 			'&:last-of-type':{ marginBottom: 0 }
 		},
@@ -19,7 +18,8 @@ export const useStyles = MUITheme => ({
 				lineHeight: '24px'
 			}
 		},
-		'& .MuiListItemIcon-root':{ minWidth: 'auto' }
+		'& .MuiListItemIcon-root':{ minWidth: 'auto' },
+		'& button':{ marginTop: 32 }
 	},
 	codeToCustomer: { 
 		padding: '40px 60px !important',
@@ -46,19 +46,9 @@ export const useStyles = MUITheme => ({
 			'& h2':{ textAlign: 'center'} 
 		},
 		'& ul':{ 
-			display: 'flex',
+			columnCount: 2,
 			'& > div':{ padding: 0 }
 		}
 	},
-	getInTouch:{
-		maxWidth: 1175,
-		padding: '40px 60px !important',
-		margin: '0 auto',
-		textAlign: 'center',
-		'& p':{ textAlign: 'initial' },
-		'& form':{ 
-			margin: '32px 0 19px', 
-		},
-		'& input':{ width: 411 }
-	}
+	btnContainer: { textAlign: 'center' }
 })	

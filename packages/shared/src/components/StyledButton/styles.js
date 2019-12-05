@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme => ({
   },
   blueBg: {
     backgroundColor: theme.palette.primary.main,
-    "&:hover": { backgroundColor: theme.palette.background.blue },
+    "&:hover": { backgroundColor: theme.palette.text.hover.blue },
   },
   blackBg: {
     backgroundColor: theme.palette.background.black,
@@ -27,7 +27,7 @@ export const useStyles = makeStyles(theme => ({
       marginRight: 5,
     },
     "&:hover": {
-      backgroundColor: theme.backgroundColor.white,
+      backgroundColor: theme.palette.background.white,
       borderColor: theme.palette.background.black,
       color: theme.palette.text.hover.black,
     },
@@ -61,9 +61,9 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   transparentBlueBorder: {
-    borderColor: theme.palette.text.primary,
+    borderColor: theme.palette.primary.main,
     backgroundColor: "transparent !important",
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     "&:hover": {
       borderColor: theme.palette.text.hover.blue,
       backgroundColor: `${theme.palette.background.hover.transparentBlue} !important`,
