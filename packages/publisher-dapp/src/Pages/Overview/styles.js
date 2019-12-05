@@ -25,8 +25,18 @@ export const useStyles = MUITheme => ({
 		padding: '40px 60px !important',
 		display: 'flex',
 		background: MUITheme.palette.background.mainContent,
+		[MUITheme.breakpoints.down('sm')]: { 
+			padding: '40px 20px !important',
+			flexDirection: 'column'
+		},
 	},
-	codeToCustomerContent: { marginRight: 24 },
+	codeToCustomerContent: { 
+		marginRight: 24,
+		[MUITheme.breakpoints.down('sm')]: {
+      marginRight: 0,
+      marginBottom: 25
+    },
+	},
 	checkCircleIcon:{
 		width: 20,
 		marginRight: 16,
@@ -36,6 +46,13 @@ export const useStyles = MUITheme => ({
 		padding: '40px 60px !important',
 		display: 'flex',
 		background: MUITheme.palette.background.white,
+		[MUITheme.breakpoints.down('sm')]: { 
+			flexDirection: 'column',
+			padding: '40px 20px !important'
+		},
+	},
+	featuresContent:{
+		[MUITheme.breakpoints.down('sm')]: { marginTop: 25 },
 	},
 	programMemDetails:{
 		padding: '40px 60px !important',
@@ -43,12 +60,15 @@ export const useStyles = MUITheme => ({
 		'& > div':{
 			width: 845,
 			margin: '0 auto',
+			[MUITheme.breakpoints.down('sm')]: { width: 'auto' },
 			'& h2':{ textAlign: 'center'} 
 		},
 		'& ul':{ 
 			columnCount: 2,
+			[MUITheme.breakpoints.down('sm')]: { columnCount: 1 },
 			'& > div':{ padding: 0 }
-		}
+		},
+		[MUITheme.breakpoints.down('sm')]: { padding: '40px 20px !important' },
 	},
 	btnContainer: { textAlign: 'center' }
 })	

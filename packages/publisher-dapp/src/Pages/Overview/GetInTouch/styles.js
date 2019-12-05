@@ -14,7 +14,12 @@ export const useStyles = MUITheme => ({
 		'& input':{ 
 			width: 411,
 			display: 'block',
+			[MUITheme.breakpoints.down('xs')]: { width: 300 },
 		},
-		'& button':{ marginTop: '19px !important' }
+		'& button':{ marginTop: '19px !important' },
+		[MUITheme.breakpoints.down('sm')]: { 
+			maxWidth: '100%',
+			padding: '40px 20px !important',
+		},
 	}
 })	

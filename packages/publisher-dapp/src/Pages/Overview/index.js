@@ -17,7 +17,7 @@ const Overview = ({ classes }) => {
   return (
   	<Grid container className={classes.overiewMainContainer}>
   		<Grid item xs={12} sm={12} md={12} lg={12} className={classes.codeToCustomer}>
-        <Grid item xs={5} className={classes.codeToCustomerContent}>
+        <Grid item xs={12} sm={12} md={5} lg={5} className={classes.codeToCustomerContent}>
         	<Typography variant="h2">From Code to Customer</Typography>
         	<Typography variant="body1">Join the Singularity Dev Publisher Program to reach customers around the world on the AI Marketplace for any platform,. You’ll also get access to beta software, advanced app capabilities, extensive beta testing tools, and app analytics.</Typography>
         	<List>
@@ -32,15 +32,15 @@ const Overview = ({ classes }) => {
           </List>
           <StyledButton btnText="start your enroll" type="blue" />
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={12} sm={12} md={7} lg={7}>
 					<img src="http://placehold.it/736X416" alt="media" />
         </Grid>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.features}>
-      	<Grid item xs={7}>
+      	<Grid item xs={12} sm={12} md={12} lg={5}>
 					<img src="http://placehold.it/736X416" alt="media" />
         </Grid>
-      	<Grid item xs={5}>
+      	<Grid item xs={12} sm={12} md={12} lg={7} className={classes.featuresContent}>
         	<Typography variant="h2">Key Features</Typography>
         	<Typography variant="body1">Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque, graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in, elitr latine sed te. His simul inimicus neglegentur ex, an vix praesent iracundia.</Typography>
         	<List>
