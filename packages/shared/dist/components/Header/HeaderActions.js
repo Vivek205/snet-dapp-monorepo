@@ -1,62 +1,42 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
-var _reactRouterDom = require("react-router-dom");
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _styles = require("./styles");
-
-var _Routes = _interopRequireDefault(require("../../../utility/constants/Routes"));
-
-var _UserProfileToggler = _interopRequireDefault(require("../../UserProfilePopUp/UserProfileToggler"));
+var _SNETButton = _interopRequireDefault(require("../SNETButton"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var HeaderActions = function HeaderActions(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
-      history = _ref.history;
-  var classes = (0, _styles.useStyles)();
+      actions = _ref.actions;
 
-  var handleRedirection = function handleRedirection(redirectTo) {
-    var sourcePath = history.location.pathname;
-    history.push({
-      pathname: redirectTo,
-      state: {
-        sourcePath: sourcePath
-      }
-    });
-  };
+  if (isLoggedIn) {
+    return null;
+  }
 
-  return _react.default.createElement("ul", {
-    className: classes.loginBtnsUl
-  }, isLoggedIn ? _react.default.createElement(_UserProfileToggler.default, null) : _react.default.createElement(_react.Fragment, null, _react.default.createElement("li", {
-    className: classes.loginBtnsLi
-  }, _react.default.createElement("span", {
-    className: "".concat(classes.loginBtnsAnchor, " ").concat(classes.loginBtn),
-    onClick: function onClick() {
-      return handleRedirection("/".concat(_Routes.default.LOGIN));
-    }
-  }, "Login")), _react.default.createElement("li", {
-    className: "".concat(classes.signupBtn, " ").concat(classes.loginBtnsLi)
-  }, _react.default.createElement("span", {
-    className: "".concat(classes.loginBtnsAnchor, " ").concat(classes.UppercaseText, " ").concat(classes.signupBtnText),
-    onClick: function onClick() {
-      return handleRedirection("/".concat(_Routes.default.SIGNUP));
-    }
-  }, "Sign Up Free"))));
+  return actions.map(function (action) {
+    return _react.default.createElement(_SNETButton.default, _extends({
+      key: action.children
+    }, action));
+  });
 };
 
-var _default = (0, _reactRouterDom.withRouter)(HeaderActions);
-
+HeaderActions.propTypes = {
+  actions: _propTypes.default.arrayOf(_propTypes.default.shape({
+    label: _propTypes.default.string,
+    color: _propTypes.default.string,
+    vaiant: _propTypes.default.string,
+    handler: _propTypes.default.func
+  }))
+};
+var _default = HeaderActions;
 exports.default = _default;

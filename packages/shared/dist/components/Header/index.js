@@ -17,24 +17,25 @@ var _CardMedia = _interopRequireDefault(require("@material-ui/core/CardMedia"));
 
 var _Container = _interopRequireDefault(require("@material-ui/core/Container"));
 
-var _SNETButton = _interopRequireDefault(require("../SNETButton"));
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _styles = require("./styles");
 
+var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
+
+var _Navbar = _interopRequireDefault(require("./Navbar"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { connect } from "react-redux";
-// import NavBar from "./NavBar";
-// import HeaderActions from "./HeaderActions";
-// import Title from "./Title";
-// import MobileHeader from "./MobileHeader";
-// import { NavData } from "../../../utility/constants/Header";
 var Header = function Header(_ref) {
-  var isLoggedIn = _ref.isLoggedIn;
+  var isLoggedIn = _ref.isLoggedIn,
+      color = _ref.color,
+      navbar = _ref.navbar,
+      actions = _ref.actions;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
-    color: "error"
+    color: "default"
   }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
     className: classes.logoContainer
   }, _react.default.createElement(_CardMedia.default, {
@@ -43,19 +44,63 @@ var Header = function Header(_ref) {
     alt: "SingularityNET"
   })), _react.default.createElement(_Container.default, {
     className: classes.navContainer
-  }, "menus"), _react.default.createElement(_Container.default, {
+  }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
     className: classes.actionsContainer
-  }, _react.default.createElement(_SNETButton.default, {
-    color: "primary",
-    children: "login"
-  }), _react.default.createElement(_SNETButton.default, {
-    color: "primary",
-    children: "enroll",
-    variant: "contained"
+  }, _react.default.createElement(_HeaderActions.default, {
+    actions: actions,
+    isLoggedIn: isLoggedIn
   }))))));
-}; // const mapStateToProps = state => ({ isLoggedIn: state.userReducer.login.isLoggedIn });
-// export default connect(mapStateToProps)(Header);
+};
 
-
+Header.defaultProps = {
+  color: "white",
+  navbar: {
+    navbarItems: [{
+      label: "Overview",
+      type: "link",
+      openInNewTab: false,
+      activeLinks: ["/", "/overview"],
+      to: "/"
+    }, {
+      label: "How It Works",
+      type: "link",
+      openInNewTab: true,
+      activeLinks: ["/enroll"],
+      to: "/"
+    }]
+  },
+  actions: [{
+    children: "login",
+    color: "primary",
+    onClick: function onClick() {
+      return console.log("clicked");
+    }
+  }, {
+    children: "enroll",
+    color: "primary",
+    onClick: function onClick() {
+      return console.log("clicked");
+    },
+    variant: "contained"
+  }]
+};
+Header.propTypes = {
+  color: _propTypes.default.string,
+  navbar: _propTypes.default.shape({
+    navbarItems: _propTypes.default.arrayOf(_propTypes.default.shape({
+      type: _propTypes.default.string,
+      activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
+      label: _propTypes.default.string,
+      openInNewTab: _propTypes.default.bool,
+      to: _propTypes.default.oneOf(_propTypes.default.string, _propTypes.default.object)
+    }))
+  }),
+  actions: _propTypes.default.arrayOf(_propTypes.default.shape({
+    label: _propTypes.default.string,
+    color: _propTypes.default.string,
+    vaiant: _propTypes.default.string,
+    handler: _propTypes.default.func
+  }))
+};
 var _default = Header;
 exports.default = _default;

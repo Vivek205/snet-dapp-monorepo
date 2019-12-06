@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { useStyles } from "./styles";
+import { useStyles } from "../styles";
 import Routes from "../../../utility/constants/Routes";
 
 const NavItem = ({ title, link }) => {
