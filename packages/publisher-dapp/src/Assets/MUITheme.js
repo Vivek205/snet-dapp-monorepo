@@ -54,19 +54,30 @@ const MUITheme = createMuiTheme({
     checkCircle: "#00C48C",
   },
   typography: {
-    fontFamily: "Muli",
-    h2: {
-      color: "rgba(0,0,0,0.87)",
-      fontSize: 36,
+  	fontFamily: 'Muli',
+  	h2:{
+  		color: 'rgba(0,0,0,0.87)',
+  		fontSize: 36,
+  		fontWeight: 600,
+  		lineHeight: '45px'
+  	},
+    h3:{
+      color: 'rgba(0,0,0,0.87)',
+      fontSize: 24,
       fontWeight: 600,
-      lineHeight: "45px",
+      lineHeight: '30px'
     },
-    body1: {
-      color: "#616161",
-      fontSize: 18,
-      lineHeight: "28px",
-    },
-  },
+  	body1:{
+  		color: '#616161',
+  		fontSize: 18,
+  		lineHeight: '28px'
+  	},
+    subtitle1:{
+      color: '#9b9b9b',
+      fontSize: 24,
+      lineHeight: '30px'
+    }
+  }
 });
 
 export default MUITheme;

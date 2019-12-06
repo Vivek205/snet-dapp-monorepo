@@ -11,81 +11,43 @@ import CheckIcon from "@material-ui/icons/CheckCircle";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import GetInTouch from "./GetInTouch";
-import { FromCodeToCustomerList, KeyFeaturesList, ProgramMemberShipDetailsList } from "./content";
+import OverviewArticle from "./OverviewArticle";
+import { overViewArticles, ProgramMemberShipDetailsList } from "./content";
 
 const Overview = ({ classes }) => {
   return (
-    <Grid container className={classes.overiewMainContainer}>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.codeToCustomer}>
-        <Grid item xs={12} sm={12} md={5} lg={5} className={classes.codeToCustomerContent}>
-          <Typography variant="h2">From Code to Customer</Typography>
-          <Typography variant="body1">
-            Join the Singularity Dev Publisher Program to reach customers around the world on the AI Marketplace for any
-            platform,. You’ll also get access to beta software, advanced app capabilities, extensive beta testing tools,
-            and app analytics.
-          </Typography>
-          <List>
-            {FromCodeToCustomerList.map((item, index) => (
-              <ListItem>
-                <ListItemIcon>
-                  <CheckIcon className={classes.checkCircleIcon} />
-                </ListItemIcon>
-                <ListItemText primary={item.list} />
-              </ListItem>
-            ))}
-          </List>
-          <SNETButton btnText="start your enroll" type="blue" />
-        </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7}>
-          <img src="http://placehold.it/736X416" alt="media" />
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.features}>
-        <Grid item xs={12} sm={12} md={12} lg={5}>
-          <img src="http://placehold.it/736X416" alt="media" />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={7} className={classes.featuresContent}>
-          <Typography variant="h2">Key Features</Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque,
-            graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in,
-            elitr latine sed te. His simul inimicus neglegentur ex, an vix praesent iracundia.
-          </Typography>
-          <List>
-            {KeyFeaturesList.map((item, index) => (
-              <ListItem>
-                <ListItemIcon>
-                  <CheckIcon className={classes.checkCircleIcon} />
-                </ListItemIcon>
-                <ListItemText primary={item.list} />
-              </ListItem>
-            ))}
-          </List>
-          <SNETButton btnText="see how it works" type="transparentBlueBorder" />
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.programMemDetails}>
-        <div>
-          <Typography variant="h2">Program Memberships Details</Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque,
-            graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in,
-            elitr latine sed te. His simul inimicus neglegentur ex, an vix praesent iracundia.
-          </Typography>
-          <List>
-            {ProgramMemberShipDetailsList.map((item, index) => (
-              <ListItem>
-                <ListItemIcon>
-                  <CheckIcon className={classes.checkCircleIcon} />
-                </ListItemIcon>
-                <ListItemText primary={item.list} />
-              </ListItem>
-            ))}
-          </List>
-          <div className={classes.btnContainer}>
-            <SNETButton children="start your enroll" color="secondary" variant="contained" />
-          </div>
-        </div>
+  	<Grid container className={classes.overiewMainContainer}>
+  		{overViewArticles.map((item, index) => (
+  			<OverviewArticle 
+  				key={item.title}
+  				title={item.title}
+  				description={item.description}
+  				list={item.list}
+  				media={item.media}
+  				btnDetails={item.btnDetails}
+  				rightAlign={(index + 1) % 2 === 0}
+  			/>
+  		))}  		
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.programMemDetails}>      	
+      {ProgramMemberShipDetailsList.map((item, index) => (
+      	<React.Fragment key={item.title}>
+	      	<Typography variant="h2">{item.title}</Typography>
+	        <Typography variant="body1">{item.description}</Typography>
+	        <List>	        	
+	        {item.list.map((list, index) => (
+	        	<ListItem key={index}>
+          		<ListItemIcon>
+              	<CheckIcon className={classes.checkCircleIcon} />
+            	</ListItemIcon>
+          		<ListItemText primary={list} />          
+          	</ListItem>		
+        	))}
+	        </List>
+	        <div className={classes.btnContainer}>
+	        <SNETButton children="start your enroll" color="secondary" variant="contained" />
+	        </div>
+	      </React.Fragment>
+	    ))}
       </Grid>
       <GetInTouch />
     </Grid>

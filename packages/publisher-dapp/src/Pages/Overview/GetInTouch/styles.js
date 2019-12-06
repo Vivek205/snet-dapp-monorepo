@@ -22,4 +22,4 @@ export const useStyles = MUITheme => ({
 			padding: '40px 20px !important',
 		},
 	}
-})	
+})
