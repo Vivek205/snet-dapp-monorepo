@@ -1,0 +1,40 @@
+{
+  "name": "snet-dapp",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.19.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.7.0",
+    "lint-staged": "^8.2.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.0",
+    "@material-ui/core": "^4.7.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.2.0"
+  },
+  "scripts": {
+    "start:marketplace": "cd packages/marketplace-dapp && yarn start",
+    "start:rfai": "cd packages/rfai-dapp && yarn start",
+    "start:publisher": "cd packages/publisher-dapp && yarn start",
+    "build:marketplace": "cd packages/marketplace-dapp && yarn build",
+    "build:rfai": "cd packages/rfai-dapp && yarn build",
+    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
+    "storybook": "lerna exec --scope shared  -- yarn run storybook",
+    "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
