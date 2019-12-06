@@ -50,7 +50,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         backgroundColor: "transparent"
       },
       "&:hover": {
-        backgroundColor: theme.palette.background.hover.transparentBlue,
+        backgroundColor: theme.palette.background.hover.blue,
         color: theme.palette.text.hover.blue
       }
     },
@@ -76,7 +76,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       color: theme.palette.primary.main,
       "&:hover": {
         borderColor: theme.palette.text.hover.blue,
-        backgroundColor: "".concat(theme.palette.background.hover.transparentBlue, " !important"),
+        backgroundColor: "".concat(theme.palette.background.hover.blue, " !important"),
         color: theme.palette.text.hover.blue
       },
       "&:disabled": {

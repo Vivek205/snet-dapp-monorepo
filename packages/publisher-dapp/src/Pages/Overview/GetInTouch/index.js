@@ -12,7 +12,7 @@ const GetInTouch = ({ classes }) => {
   	<Grid container>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.getInTouch}>
       	<Typography variant="h2">More Questions? Get in Touch.</Typography>
-        <Typography variant="body1">Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque, graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in, elitr latine sed te. His simul inimicus negle ge ntur ex, an vix praesent iracundia.</Typography>
+        <Typography variant="body2">Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque, graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in, elitr latine sed te. His simul inimicus negle ge ntur ex, an vix praesent iracundia.</Typography>
       	<form>
 	        <TextField
 	          id="outlined-number"

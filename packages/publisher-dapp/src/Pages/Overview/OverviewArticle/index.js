@@ -16,7 +16,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
     <Grid item xs={12} sm={12} md={12} lg={12} className={`${classes.overviewArticleContainer} ${rightAlign ? classes.reverseDirection : null}`}>
     	<Grid item xs={12} sm={12} md={12} lg={5} className={classes.overviewArticleContent}>
         <Typography variant="h2">{title}</Typography>
-        <Typography variant="body1">{description}</Typography>
+        <Typography variant="body2">{description}</Typography>
         <List>
           {list.map((item, index) => (
           <ListItem key={index}>

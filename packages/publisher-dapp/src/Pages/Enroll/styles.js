@@ -8,11 +8,7 @@ export const useStyles = MUITheme => ({
 			borderTopStyle: 'solid',
 			'&:last-of-type, &:first-of-type': { borderTop: 'none' },
 			'& > p':{
-				'&:first-of-type': { marginBottom: 15 },
-				'& span':{
-					color: MUITheme.palette.text.darkGray,
-					fontWeight: 'bold'
-				}
+				'&:first-of-type': { marginBottom: 15 },				
 			},
 			'& a':{ 
 				color: MUITheme.palette.primary.main,
@@ -24,5 +20,12 @@ export const useStyles = MUITheme => ({
 		[MUITheme.breakpoints.down('sm')]: { padding: '0 35px' },
 	},
 	topSectionContainer:{ textAlign: 'center' },
+	identityProofContainer: {
+		'& span':{
+			color: MUITheme.palette.text.darkGray,
+			fontSize: 18,
+			fontWeight: 'bold'
+		}
+	},
 	btnContainer:{ textAlign: 'center' }
 })

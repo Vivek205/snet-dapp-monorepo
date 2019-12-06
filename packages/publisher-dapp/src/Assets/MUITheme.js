@@ -33,8 +33,7 @@ const MUITheme = createMuiTheme({
     		gray: '#D6D6D6',
     	},
     	hover:{
-    		blue: 'rgba(0,90,203,0.05)',
-    		transparentBlue: 'rgba(64,134,255,0.1)',
+    		blue: '#ecf3fe',
     		red: "#D0021B",
     		black: '#333',
   		},
@@ -44,31 +43,36 @@ const MUITheme = createMuiTheme({
       black: '#333',
       red: "#D0021B"
     },
-    checkCircle: '#00C48C'
+    success: '#00C48C'
   },
   typography:{
   	fontFamily: 'Muli',
   	h2:{
-  		color: 'rgba(0,0,0,0.87)',
+  		color: '#212121',
   		fontSize: 36,
   		fontWeight: 600,
   		lineHeight: '45px'
   	},
     h3:{
-      color: 'rgba(0,0,0,0.87)',
+      color: '#212121',
       fontSize: 24,
       fontWeight: 600,
       lineHeight: '30px'
-    },
-  	body1:{
-  		color: '#616161',
-  		fontSize: 18,
-  		lineHeight: '28px'
-  	},
-    subtitle1:{
+    },  	
+    body1:{
       color: '#9b9b9b',
       fontSize: 24,
       lineHeight: '30px'
+    },
+    body2:{
+      color: '#616161',
+      fontSize: 18,
+      lineHeight: '28px'
+    },
+    subtitle1:{
+      color: '#212121',
+      fontSize: 18,
+      fontWeight: 'bold'
     }
   }
 });
