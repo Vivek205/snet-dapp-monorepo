@@ -55,6 +55,13 @@ const MUITheme = createMuiTheme({
   	},
     h3:{
       color: '#212121',
+      fontSize: 32,
+      fontWeight: 600,
+      letterSpacing: -0.5,
+      lineHeight: '32px'
+    }, 
+    h4:{
+      color: '#212121',
       fontSize: 24,
       fontWeight: 600,
       lineHeight: '30px'

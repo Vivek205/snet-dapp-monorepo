@@ -16,7 +16,7 @@ export const useStyles = MUITheme => ({
 				fontWeight: 600
 			}
 		},
-		'& h3':{ marginBottom: 12 },
+		'& h4':{ marginBottom: 12 },
 		[MUITheme.breakpoints.down('sm')]: { padding: '0 35px' },
 	},
 	topSectionContainer:{ textAlign: 'center' },
