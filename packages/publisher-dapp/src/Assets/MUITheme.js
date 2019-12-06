@@ -12,22 +12,29 @@ const MUITheme = createMuiTheme({
     },
   },
   palette: {
-  	text:{
-  		primary: '#666',
-  		secondary: '#fff',
-  		disabled: '#D6D6D6',
-  		red: "#D0021B",
-      darkGray: '#212121',
-      lightGray: '#9b9b9b',
-  		hover:{
-  			blue: "#005ACB",
-  			red: "#D0021B",
-  			black: '#333',
-  		},
-  	},
-  	primary:{
-  		main: '#4086ff',
-  	},
+    text: {
+      primary: "#666",
+      secondary: "#fff",
+      disabled: "#D6D6D6",
+      red: "#D0021B",
+      hover: {
+        blue: "#005ACB",
+        red: "#D0021B",
+        black: "#333",
+      },
+    },
+    primary: {
+      main: "#4086ff",
+      dark: "#005ACB",
+    },
+    secondary: {
+      main: "#E67381",
+      dark: "#D0021B",
+    },
+    purple:{
+      main: "#220D3A",
+      light: "#412f55"
+    },
     background: {
     	disabled:{
     		gray: '#D6D6D6',
@@ -39,13 +46,13 @@ const MUITheme = createMuiTheme({
   		},
     	mainContent: '#fafafa',
       footer: "#211D24",
-      white: '#fff',
-      black: '#333',
-      red: "#D0021B"
+      white: "#fff",
+      black: "#333",
+      red: "#D0021B",
     },
     success: '#00C48C'
   },
-  typography:{
+  typography: {
   	fontFamily: 'Muli',
   	h2:{
   		color: '#212121',

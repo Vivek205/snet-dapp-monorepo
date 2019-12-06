@@ -1,12 +1,20 @@
 import React, { Fragment } from "react";
 import Footer from "shared/dist/components/Footer";
 
+import Header from "../Components/Header";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+
 const withLightHeaderAndFooter = Component => {
   return props => (
     <Fragment>
-      <header>Light Header</header>
-      <Component {...props} />
-      <Footer />
+      <Header />
+      <Container>
+        <Box my={8}>
+          <Component {...props} />
+          <Footer />
+        </Box>
+      </Container>
     </Fragment>
   );
 };

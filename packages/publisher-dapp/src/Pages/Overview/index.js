@@ -1,15 +1,15 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { withStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/CheckCircle";
 
 import { useStyles } from "./styles";
-import StyledButton from "shared/dist/components/StyledButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import GetInTouch from "./GetInTouch";
 import OverviewArticle from "./OverviewArticle";
 import { overViewArticles, ProgramMemberShipDetailsList } from "./content";
@@ -44,13 +44,13 @@ const Overview = ({ classes }) => {
         	))}
 	        </List>
 	        <div className={classes.btnContainer}>
-	        	<StyledButton btnText={item.btnDetails.text} type={item.btnDetails.type} />
+	        <SNETButton children="start your enroll" color="secondary" variant="contained" />
 	        </div>
 	      </React.Fragment>
 	    ))}
       </Grid>
-      <GetInTouch/>
-  	</Grid>
+      <GetInTouch />
+    </Grid>
   );
 };
 
