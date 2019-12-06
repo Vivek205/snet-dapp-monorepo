@@ -20,12 +20,5 @@ export const useStyles = MUITheme => ({
 		[MUITheme.breakpoints.down('sm')]: { padding: '0 35px' },
 	},
 	topSectionContainer:{ textAlign: 'center' },
-	identityProofContainer: {
-		'& span':{
-			color: MUITheme.palette.text.darkGray,
-			fontSize: 18,
-			fontWeight: 'bold'
-		}
-	},
 	btnContainer:{ textAlign: 'center' }
 })
