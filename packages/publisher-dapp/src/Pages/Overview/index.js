@@ -32,7 +32,7 @@ const Overview = ({ classes }) => {
       {ProgramMemberShipDetailsList.map((item, index) => (
       	<React.Fragment key={item.title}>
 	      	<Typography variant="h2">{item.title}</Typography>
-	        <Typography variant="body1">{item.description}</Typography>
+	        <Typography variant="body2">{item.description}</Typography>
 	        <List>	        	
 	        {item.list.map((list, index) => (
 	        	<ListItem key={index}>
