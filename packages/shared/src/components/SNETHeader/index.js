@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 
-const Header = ({ isLoggedIn, color, navbar, actions }) => {
+const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
   const classes = useStyles();
   return (
     <div>
@@ -33,7 +33,7 @@ const Header = ({ isLoggedIn, color, navbar, actions }) => {
   );
 };
 
-Header.defaultProps = {
+SNETHeader.defaultProps = {
   color: "white",
   navbar: {
     navbarItems: [
@@ -47,7 +47,7 @@ Header.defaultProps = {
   ],
 };
 
-Header.propTypes = {
+SNETHeader.propTypes = {
   color: PropTypes.string,
   navbar: PropTypes.shape({
     navbarItems: PropTypes.arrayOf(
@@ -70,4 +70,4 @@ Header.propTypes = {
   ),
 };
 
-export default Header;
+export default SNETHeader;

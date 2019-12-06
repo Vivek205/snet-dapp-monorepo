@@ -27,7 +27,7 @@ var _Navbar = _interopRequireDefault(require("./Navbar"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Header = function Header(_ref) {
+var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
       color = _ref.color,
       navbar = _ref.navbar,
@@ -52,7 +52,7 @@ var Header = function Header(_ref) {
   }))))));
 };
 
-Header.defaultProps = {
+SNETHeader.defaultProps = {
   color: "white",
   navbar: {
     navbarItems: [{
@@ -84,7 +84,7 @@ Header.defaultProps = {
     variant: "contained"
   }]
 };
-Header.propTypes = {
+SNETHeader.propTypes = {
   color: _propTypes.default.string,
   navbar: _propTypes.default.shape({
     navbarItems: _propTypes.default.arrayOf(_propTypes.default.shape({
@@ -102,5 +102,5 @@ Header.propTypes = {
     handler: _propTypes.default.func
   }))
 };
-var _default = Header;
+var _default = SNETHeader;
 exports.default = _default;
