@@ -37,8 +37,8 @@ Header.defaultProps = {
   color: "white",
   navbar: {
     navbarItems: [
-      { label: "Overview", type: "link", openInNewTab: false, activeLinks: ["/", "/overview"], to: "/" },
-      { label: "How It Works", type: "link", openInNewTab: true, activeLinks: ["/enroll"], to: "/" },
+      { label: "Overview", type: "link", openInNewTab: false, activeLinks: ["/", "/overview"], to: "/overview" },
+      { label: "How It Works", type: "link", openInNewTab: false, activeLinks: ["/enroll"], to: "/enroll" },
     ],
   },
   actions: [

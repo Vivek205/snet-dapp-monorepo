@@ -60,13 +60,13 @@ Header.defaultProps = {
       type: "link",
       openInNewTab: false,
       activeLinks: ["/", "/overview"],
-      to: "/"
+      to: "/overview"
     }, {
       label: "How It Works",
       type: "link",
-      openInNewTab: true,
+      openInNewTab: false,
       activeLinks: ["/enroll"],
-      to: "/"
+      to: "/enroll"
     }]
   },
   actions: [{
