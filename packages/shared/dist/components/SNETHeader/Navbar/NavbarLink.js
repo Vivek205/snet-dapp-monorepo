@@ -15,15 +15,15 @@ var _styles = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NavbarLink = function NavbarLink(_ref) {
-  var activeLinks = _ref.activeLinks,
-      label = _ref.label,
-      openInNewTab = _ref.openInNewTab,
-      to = _ref.to;
-  var classes = (0, _styles.useStyles)();
+var NavbarLink = function NavbarLink(props) {
+  var activeLinks = props.activeLinks,
+      label = props.label,
+      openInNewTab = props.openInNewTab,
+      to = props.to;
+  var classes = (0, _styles.useStyles)(props);
 
-  var isActive = function isActive(unused, _ref2) {
-    var pathname = _ref2.pathname;
+  var isActive = function isActive(unused, _ref) {
+    var pathname = _ref.pathname;
     return activeLinks.includes(pathname);
   };
 
@@ -42,7 +42,7 @@ NavbarLink.propTypes = {
   activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
   label: _propTypes.default.string,
   openInNewTab: _propTypes.default.bool,
-  to: _propTypes.default.oneOf([_propTypes.default.string, _propTypes.default.object])
+  to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
 };
 var _default = NavbarLink;
 exports.default = _default;

@@ -1,31 +1,30 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
-import CardMedia from "@material-ui/core/CardMedia";
 import Container from "@material-ui/core/Container";
 import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
+import SNETAppBar from "../SNETAppBar";
+import Logo from "./Logo";
 
 const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
   const classes = useStyles();
   return (
-    <AppBar position="fixed" color={color}>
+    <SNETAppBar position="fixed" color={color}>
       <Toolbar>
         <Container className={classes.logoContainer}>
-          <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
+          <Logo headerColor={color} />
         </Container>
         <Container className={classes.navContainer}>
-          <Navbar {...navbar} />
+          <Navbar {...navbar} headerColor={color}/>
         </Container>
         <Container className={classes.actionsContainer}>
-          <HeaderActions actions={actions} isLoggedIn={isLoggedIn} />
+          <HeaderActions actions={actions} isLoggedIn={isLoggedIn} headerColor={color} />
         </Container>
       </Toolbar>
-    </AppBar>
+    </SNETAppBar>
   );
 };
 
@@ -38,7 +37,7 @@ SNETHeader.defaultProps = {
     ],
   },
   actions: [
-    { children: "login", color: "primary", onClick: () => console.log("clicked") },
+    { children: "login", color: "primary", onClick: () => console.log("clicked"), component: "a" },
     { children: "enroll", color: "primary", onClick: () => console.log("clicked"), variant: "contained" },
   ],
 };
@@ -52,7 +51,7 @@ SNETHeader.propTypes = {
         activeLinks: PropTypes.arrayOf(PropTypes.string),
         label: PropTypes.string,
         openInNewTab: PropTypes.bool,
-        to: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+        to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       })
     ),
   }),
@@ -60,7 +59,7 @@ SNETHeader.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       color: PropTypes.string,
-      vaiant: PropTypes.string,
+      variant: PropTypes.string,
       handler: PropTypes.func,
     })
   ),

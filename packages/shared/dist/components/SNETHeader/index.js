@@ -7,13 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _AppBar = _interopRequireDefault(require("@material-ui/core/AppBar"));
-
 var _Toolbar = _interopRequireDefault(require("@material-ui/core/Toolbar"));
-
-var _BlackLogo = _interopRequireDefault(require("../../assets/images/BlackLogo.svg"));
-
-var _CardMedia = _interopRequireDefault(require("@material-ui/core/CardMedia"));
 
 var _Container = _interopRequireDefault(require("@material-ui/core/Container"));
 
@@ -25,7 +19,13 @@ var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 
 var _Navbar = _interopRequireDefault(require("./Navbar"));
 
+var _SNETAppBar = _interopRequireDefault(require("../SNETAppBar"));
+
+var _Logo = _interopRequireDefault(require("./Logo"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
@@ -33,22 +33,23 @@ var SNETHeader = function SNETHeader(_ref) {
       navbar = _ref.navbar,
       actions = _ref.actions;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement(_AppBar.default, {
+  return _react.default.createElement(_SNETAppBar.default, {
     position: "fixed",
     color: color
   }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
     className: classes.logoContainer
-  }, _react.default.createElement(_CardMedia.default, {
-    component: "img",
-    image: _BlackLogo.default,
-    alt: "SingularityNET"
+  }, _react.default.createElement(_Logo.default, {
+    headerColor: color
   })), _react.default.createElement(_Container.default, {
     className: classes.navContainer
-  }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
+  }, _react.default.createElement(_Navbar.default, _extends({}, navbar, {
+    headerColor: color
+  }))), _react.default.createElement(_Container.default, {
     className: classes.actionsContainer
   }, _react.default.createElement(_HeaderActions.default, {
     actions: actions,
-    isLoggedIn: isLoggedIn
+    isLoggedIn: isLoggedIn,
+    headerColor: color
   }))));
 };
 
@@ -74,7 +75,8 @@ SNETHeader.defaultProps = {
     color: "primary",
     onClick: function onClick() {
       return console.log("clicked");
-    }
+    },
+    component: "a"
   }, {
     children: "enroll",
     color: "primary",
@@ -92,13 +94,13 @@ SNETHeader.propTypes = {
       activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
       label: _propTypes.default.string,
       openInNewTab: _propTypes.default.bool,
-      to: _propTypes.default.oneOf([_propTypes.default.string, _propTypes.default.object])
+      to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
     }))
   }),
   actions: _propTypes.default.arrayOf(_propTypes.default.shape({
     label: _propTypes.default.string,
     color: _propTypes.default.string,
-    vaiant: _propTypes.default.string,
+    variant: _propTypes.default.string,
     handler: _propTypes.default.func
   }))
 };

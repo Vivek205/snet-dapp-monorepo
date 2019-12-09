@@ -15,9 +15,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+var buttonColor = {
+  white: "primary",
+  purple: "purple"
+};
+
 var HeaderActions = function HeaderActions(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
-      actions = _ref.actions;
+      actions = _ref.actions,
+      headerColor = _ref.headerColor;
 
   if (isLoggedIn) {
     return null;
@@ -26,7 +32,9 @@ var HeaderActions = function HeaderActions(_ref) {
   return actions.map(function (action) {
     return _react.default.createElement(_SNETButton.default, _extends({
       key: action.children
-    }, action));
+    }, action, {
+      color: buttonColor[headerColor]
+    }));
   });
 };
 
@@ -36,7 +44,8 @@ HeaderActions.propTypes = {
     color: _propTypes.default.string,
     vaiant: _propTypes.default.string,
     handler: _propTypes.default.func
-  }))
+  })),
+  headerColor: _propTypes.default.string
 };
 var _default = HeaderActions;
 exports.default = _default;

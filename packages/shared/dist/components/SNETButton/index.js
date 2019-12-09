@@ -21,7 +21,7 @@ var SNETButton = (0, _styles.withStyles)(function (MuiTheme) {
         lineHeight: "16px"
       };
 
-      if (props.color === "purple" && props.variant === "contained-inverted") {
+      if (props.color === "purple" && props.variant === "contained") {
         rootStyles.color = MuiTheme.palette.text.secondary;
         rootStyles.backgroundColor = MuiTheme.palette.purple.main;
         rootStyles.border = "1px solid";
