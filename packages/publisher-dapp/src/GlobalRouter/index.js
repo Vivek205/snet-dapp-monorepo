@@ -10,7 +10,7 @@ const GlobalRouter = () => {
     <ReactRouter>
       <Suspense fallback={<CircularProgress />}>
         <Switch>
-          <Route path="/" component={GlobalRoutes.ENROLL.component} />
+          <Route path="/" exact component={GlobalRoutes.ENROLL.component} />
           {Object.values(GlobalRoutes).map(route => (
             <Route key={route.name} path={route.path} component={route.component} />
           ))}
