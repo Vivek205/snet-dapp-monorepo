@@ -7,6 +7,8 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _styles = require("@material-ui/core/styles");
 
 var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
@@ -17,12 +19,15 @@ var _StyledButton = _interopRequireDefault(require("shared/dist/components/Style
 
 var _pageNotFound = _interopRequireDefault(require("../../assets/images/pageNotFound.png"));
 
+var _AnchorLink = _interopRequireDefault(require("../AnchorLink"));
+
 var _styles2 = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PageNotFound = function PageNotFound(_ref) {
-  var classes = _ref.classes;
+  var classes = _ref.classes,
+      handleGoToHome = _ref.handleGoToHome;
   return _react.default.createElement(_Grid.default, {
     container: true,
     className: classes.pageNotFoundContainer
@@ -54,7 +59,8 @@ var PageNotFound = function PageNotFound(_ref) {
     variant: "h3"
   }, "Page not found!"), _react.default.createElement(_Typography.default, null, "The page that you are trying to access is moved, currently down or never existed. Please check the URL."), _react.default.createElement(_StyledButton.default, {
     type: "transparentBlueBorder",
-    btnText: "go to home"
+    btnText: "go to home",
+    onClick: handleGoToHome
   }))), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
@@ -62,10 +68,14 @@ var PageNotFound = function PageNotFound(_ref) {
     md: 12,
     lg: 12,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", " ", _react.default.createElement("a", {
-    href: "/",
-    alt: "support singularity"
-  }, "support@singularitynet.io"), " ", "and we will look into it.")));
+  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", _react.default.createElement(_AnchorLink.default, {
+    label: "support@singularitynet.io",
+    href: "/"
+  }), "and we will look into it.")));
+};
+
+PageNotFound.propTypes = {
+  handleGoToHome: _propTypes.default.func
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(PageNotFound);
