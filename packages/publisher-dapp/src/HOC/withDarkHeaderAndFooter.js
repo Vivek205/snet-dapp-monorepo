@@ -1,10 +1,12 @@
 import React from "react";
 import Footer from "shared/dist/components/Footer";
 
+import Header from "../Components/Header";
+
 const withDarkHeaderAndFooter = Component => {
   return props => (
     <div>
-      <header>Dark Header</header>
+      <Header />
       <Component {...props} />
       <Footer />
     </div>

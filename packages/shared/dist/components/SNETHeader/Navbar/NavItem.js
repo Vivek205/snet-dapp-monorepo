@@ -9,7 +9,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _styles = require("./styles");
+var _styles = require("../styles");
 
 var _Routes = _interopRequireDefault(require("../../../utility/constants/Routes"));
 
