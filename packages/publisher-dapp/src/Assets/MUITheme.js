@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const MUITheme = createMuiTheme({
+export const MUITheme = createMuiTheme({
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
     values: {
@@ -17,6 +17,8 @@ const MUITheme = createMuiTheme({
       secondary: "#fff",
       disabled: "#D6D6D6",
       red: "#D0021B",
+      darkGrey: '#212121',
+      lightGrey: '#9b9b9b',
       hover: {
         blue: "#005ACB",
         red: "#D0021B",
