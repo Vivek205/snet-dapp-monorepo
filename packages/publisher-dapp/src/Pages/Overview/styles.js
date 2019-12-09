@@ -15,6 +15,7 @@ export const useStyles = MUITheme => ({
 			margin: 0,
 			'& span':{ 
 				color: '#666',
+				fontSize: 18,
 				lineHeight: '24px'
 			}
 		},
