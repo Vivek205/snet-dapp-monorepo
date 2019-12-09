@@ -43,7 +43,7 @@ Navbar.propTypes = {
     activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
     label: _propTypes.default.string,
     openInNewTab: _propTypes.default.bool,
-    to: _propTypes.default.oneOf(_propTypes.default.string, _propTypes.default.object)
+    to: _propTypes.default.oneOf([_propTypes.default.string, _propTypes.default.object])
   }))
 };
 var _default = Navbar;

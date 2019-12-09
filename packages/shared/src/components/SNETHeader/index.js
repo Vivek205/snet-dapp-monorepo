@@ -13,7 +13,7 @@ import Navbar from "./Navbar";
 const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
   const classes = useStyles();
   return (
-    <AppBar position="fixed" color="default">
+    <AppBar position="fixed" color={color}>
       <Toolbar>
         <Container className={classes.logoContainer}>
           <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
@@ -52,7 +52,7 @@ SNETHeader.propTypes = {
         activeLinks: PropTypes.arrayOf(PropTypes.string),
         label: PropTypes.string,
         openInNewTab: PropTypes.bool,
-        to: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+        to: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
       })
     ),
   }),

@@ -11,7 +11,7 @@ var _styles = require("@material-ui/core/styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SNETButton = (0, _styles.withStyles)(function (theme) {
+var SNETButton = (0, _styles.withStyles)(function (MuiTheme) {
   return {
     root: function root(props) {
       var rootStyles = {
@@ -22,14 +22,14 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
       };
 
       if (props.color === "purple" && props.variant === "contained-inverted") {
-        rootStyles.color = theme.palette.text.secondary;
-        rootStyles.backgroundColor = theme.palette.purple.main;
+        rootStyles.color = MuiTheme.palette.text.secondary;
+        rootStyles.backgroundColor = MuiTheme.palette.purple.main;
         rootStyles.border = "1px solid";
         rootStyles["&:hover"] = {
-          backgroundColor: theme.palette.purple.light,
+          backgroundColor: MuiTheme.palette.purple.light,
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
-            backgroundColor: theme.palette.purple.main
+            backgroundColor: MuiTheme.palette.purple.main
           }
         };
       }
@@ -37,7 +37,7 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
       return rootStyles;
     },
     containedSecondary: {
-      color: theme.palette.text.secondary
+      color: MuiTheme.palette.text.secondary
     }
   };
 })(_Button.default);
