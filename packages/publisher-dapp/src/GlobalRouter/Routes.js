@@ -2,16 +2,16 @@ import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
-const GetStarted = lazy(() => import("../Pages/GetStarted"));
 const Login = lazy(()=> import("../Pages/Login"));
 const Signup = lazy(()=> import("../Pages/Signup"));
 const Overview = lazy(() =>  import("../Pages/Overview"))
+const HowItWorks = lazy(() =>import("../Pages/HowItWorks"))
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
-const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
 const LoginComponent = withLightHeaderAndFooter(Login);
 const SignupComponent = withLightHeaderAndFooter(Signup);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
+const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks)
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -34,9 +34,9 @@ export const GlobalRoutes = {
     path: "/enroll",
     component: EnrollComponent,
   },
-  GET_STARTED: {
+  HOW_IT_WORKS: {
     name: "get started",
     path: "/getstarted",
-    component: GetStartedComponent,
+    component: HowItWorksComponent,
   },
 };
