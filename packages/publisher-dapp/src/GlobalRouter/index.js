@@ -3,7 +3,6 @@ import { BrowserRouter as ReactRouter, Route, Switch } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PageNotFound from "shared/dist/components/PageNotFound";
 
-
 import { GlobalRoutes } from "./Routes";
 
 const GlobalRouter = () => {

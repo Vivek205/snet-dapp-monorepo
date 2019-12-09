@@ -15,7 +15,7 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _StyledButton = _interopRequireDefault(require("shared/dist/components/StyledButton"));
 
-var _pageNotFound = require("../../assets/images/pageNotFound.png");
+var _pageNotFound = _interopRequireDefault(require("../../assets/images/pageNotFound.png"));
 
 var _styles2 = require("./styles");
 
@@ -41,7 +41,7 @@ var PageNotFound = function PageNotFound(_ref) {
     lg: 6,
     className: classes.mediaContiner
   }, _react.default.createElement("img", {
-    src: _pageNotFound.PageNotFoundImage,
+    src: _pageNotFound.default,
     title: "Page Not Found"
   })), _react.default.createElement(_Grid.default, {
     item: true,
@@ -62,10 +62,10 @@ var PageNotFound = function PageNotFound(_ref) {
     md: 12,
     lg: 12,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at ", _react.default.createElement("a", {
+  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", " ", _react.default.createElement("a", {
     href: "/",
     alt: "support singularity"
-  }, "support@singularitynet.io"), " and we will look into it.")));
+  }, "support@singularitynet.io"), " ", "and we will look into it.")));
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(PageNotFound);
