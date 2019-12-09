@@ -14,7 +14,7 @@ const PageNotFound = ({ classes, handleGoToHome }) => {
     <Grid container className={classes.pageNotFoundContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.mediaContentContainer}>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.mediaContiner}>
-          <img src={PageNotFoundImage} title="Page Not Found" />
+          <img src={PageNotFoundImage} title="Page Not Found" alt="Page not found" />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.contentContainer}>
           <Typography variant="h3">Page not found!</Typography>
@@ -27,10 +27,7 @@ const PageNotFound = ({ classes, handleGoToHome }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
         <Typography>
           If you are seeing this message repeatedly, let us know at
-          <AnchorLink 
-            label="support@singularitynet.io"
-            href="/"
-          />
+          <AnchorLink label="support@singularitynet.io" href="/" />
           and we will look into it.
         </Typography>
       </Grid>
@@ -39,7 +36,7 @@ const PageNotFound = ({ classes, handleGoToHome }) => {
 };
 
 PageNotFound.propTypes = {
-  handleGoToHome: PropTypes.func
+  handleGoToHome: PropTypes.func,
 };
 
 export default withStyles(useStyles)(PageNotFound);
