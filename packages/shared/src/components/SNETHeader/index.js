@@ -13,23 +13,19 @@ import Navbar from "./Navbar";
 const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
   const classes = useStyles();
   return (
-    <div>
-      <header>
-        <AppBar position="fixed" color="default">
-          <Toolbar>
-            <Container className={classes.logoContainer}>
-              <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
-            </Container>
-            <Container className={classes.navContainer}>
-              <Navbar {...navbar} />
-            </Container>
-            <Container className={classes.actionsContainer}>
-              <HeaderActions actions={actions} isLoggedIn={isLoggedIn} />
-            </Container>
-          </Toolbar>
-        </AppBar>
-      </header>
-    </div>
+    <AppBar position="fixed" color="default">
+      <Toolbar>
+        <Container className={classes.logoContainer}>
+          <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
+        </Container>
+        <Container className={classes.navContainer}>
+          <Navbar {...navbar} />
+        </Container>
+        <Container className={classes.actionsContainer}>
+          <HeaderActions actions={actions} isLoggedIn={isLoggedIn} />
+        </Container>
+      </Toolbar>
+    </AppBar>
   );
 };
 

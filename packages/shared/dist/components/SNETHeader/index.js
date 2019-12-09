@@ -33,7 +33,7 @@ var SNETHeader = function SNETHeader(_ref) {
       navbar = _ref.navbar,
       actions = _ref.actions;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
+  return _react.default.createElement(_AppBar.default, {
     position: "fixed",
     color: "default"
   }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
@@ -49,7 +49,7 @@ var SNETHeader = function SNETHeader(_ref) {
   }, _react.default.createElement(_HeaderActions.default, {
     actions: actions,
     isLoggedIn: isLoggedIn
-  }))))));
+  }))));
 };
 
 SNETHeader.defaultProps = {
