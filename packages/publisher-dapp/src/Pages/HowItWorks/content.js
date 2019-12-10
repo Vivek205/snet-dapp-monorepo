@@ -1,7 +1,12 @@
 const imgPath = (directory = "RateReviewImprove", file = "RatingAIServices", extension = "png") =>
   `${process.env.REACT_APP_SNET_CDN}/assets/images/GetStarted/${directory}/${file}.${extension}`;
 
-export const GetStartedCategoriesData = [
+export const GetStartedDetails = {
+    title: "How the AI Publishing Works",
+    description: "Have a sneak peak at what we have in our offering"
+  }
+
+export const GetStartedCategories = [
   {
     title: "Getting Started",
     media: imgPath("RateReviewImprove", "RatingAIServices"),

@@ -9,10 +9,7 @@ var useStyles = function useStyles(MUITheme) {
   return {
     GetStartedMainContaienr: {
       padding: "40px 0 60px",
-      flexDirection: "column",
-      "@media(max-width:360px)": {
-        padding: "15px 15px 40px"
-      }
+      flexDirection: "column"
     },
     TopSection: {
       textAlign: "center"

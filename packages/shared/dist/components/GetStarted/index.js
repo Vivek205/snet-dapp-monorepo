@@ -27,10 +27,11 @@ var GetStarted = function GetStarted(_ref) {
   var classes = _ref.classes,
       title = _ref.title,
       description = _ref.description,
-      pageBtnType = _ref.pageBtnType,
-      pageBtnTitle = _ref.pageBtnTitle,
+      CTATitle = _ref.CTATitle,
+      CTAType = _ref.CTAType,
       pageBtnRoute = _ref.pageBtnRoute,
-      GetStartedCategoriesData = _ref.GetStartedCategoriesData;
+      GetStartedDetails = _ref.GetStartedDetails,
+      GetStartedCategories = _ref.GetStartedCategories;
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
@@ -43,9 +44,9 @@ var GetStarted = function GetStarted(_ref) {
     lg: 12,
     className: classes.TopSection
   }, _react.default.createElement(_GetStartedDescription.default, {
-    title: title,
-    description: description
-  })), GetStartedCategoriesData.map(function (item, index) {
+    title: GetStartedDetails.title,
+    description: GetStartedDetails.description
+  })), GetStartedCategories.map(function (item, index) {
     return _react.default.createElement(_Category.default, {
       key: item.categoryTitle,
       title: item.title,
@@ -53,7 +54,7 @@ var GetStarted = function GetStarted(_ref) {
       media: item.media,
       rightAlign: (index + 1) % 2 === 0
     });
-  }), pageBtnTitle ? _react.default.createElement(_Grid.default, {
+  }), CTAType ? _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,

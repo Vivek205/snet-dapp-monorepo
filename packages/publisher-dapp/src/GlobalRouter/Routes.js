@@ -35,8 +35,8 @@ export const GlobalRoutes = {
     component: EnrollComponent,
   },
   HOW_IT_WORKS: {
-    name: "get started",
-    path: "/getstarted",
+    name: "how it works",
+    path: "/howitworks",
     component: HowItWorksComponent,
   },
 };

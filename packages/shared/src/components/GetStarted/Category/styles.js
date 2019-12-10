@@ -1,10 +1,10 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   CategoryWrapper: {
     width: "80%",
     padding: "32px 0",
     borderTopWidth: 1,
     borderTopStyle: "solid",
-    borderTopColor: theme.palette.text.lightGrey,
+    borderTopColor: MUITheme.palette.text.lightGrey,
     margin: "0 auto",
     justifyContent: "space-between",
     "@media(max-width:1280px)": { width: "95%" },
@@ -15,14 +15,14 @@ export const useStyles = theme => ({
     "& h3": {
       margin: 0,
       display: "inline-block",
-      color: theme.palette.text.darkGrey,
+      color: MUITheme.palette.text.darkGrey,
       fontSize: 24,
       fontWeight: 600,
       lineHeight: "30px",
     },
     "& p, & > span, & li": {
       margin: "17px 0 0",
-      color: theme.palette.text.primary,
+      color: MUITheme.palette.text.primary,
       fontSize: 16,
       lineHeight: "28px",
       "@media(max-width:960px)": { marginTop: 10 },
@@ -50,7 +50,7 @@ export const useStyles = theme => ({
       },
     },
     "& a": {
-      color: theme.palette.primary.main,
+      color: MUITheme.palette.primary.main,
       textDecoration: "none",
     },
     "& button": { marginTop: 20 },
