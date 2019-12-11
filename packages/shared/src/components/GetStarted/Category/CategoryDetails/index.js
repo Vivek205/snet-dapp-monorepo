@@ -18,17 +18,17 @@ const List = ({ items }) => (
 );
 
 const CategoriesSubComponents = {
-  "description": props => <Description {...props}/>,
-  "subheading": props => <Subheading {...props} />,
-  "listHeading": props => <ListHeading {...props} />,
-  "list": props => <List {...props} />,
-  "button": props => <StyledButton {...props} />
-}
+  description: props => <Description {...props} />,
+  subheading: props => <Subheading {...props} />,
+  listHeading: props => <ListHeading {...props} />,
+  list: props => <List {...props} />,
+  button: props => <StyledButton {...props} />,
+};
 
-const CategoryDetails = ({ classes, type, value }) => {   
-  const CategorySubComponent = CategoriesSubComponents[type]
-  if(CategorySubComponent){
-    return <CategoriesSubComponents content={value} key={type}/>
+const CategoryDetails = ({ type, value }) => {
+  const CategorySubComponent = CategoriesSubComponents[type];
+  if (CategorySubComponent) {
+    return CategorySubComponent({ content: value, key: value });
   }
   return null;
 };

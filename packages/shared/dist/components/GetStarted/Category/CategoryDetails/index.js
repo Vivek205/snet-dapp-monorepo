@@ -38,33 +38,32 @@ var List = function List(_ref4) {
 };
 
 var CategoriesSubComponents = {
-  "description": function description(props) {
+  description: function description(props) {
     return _react.default.createElement(Description, props);
   },
-  "subheading": function subheading(props) {
+  subheading: function subheading(props) {
     return _react.default.createElement(Subheading, props);
   },
-  "listHeading": function listHeading(props) {
+  listHeading: function listHeading(props) {
     return _react.default.createElement(ListHeading, props);
   },
-  "list": function list(props) {
+  list: function list(props) {
     return _react.default.createElement(List, props);
   },
-  "button": function button(props) {
+  button: function button(props) {
     return _react.default.createElement(_StyledButton.default, props);
   }
 };
 
 var CategoryDetails = function CategoryDetails(_ref5) {
-  var classes = _ref5.classes,
-      type = _ref5.type,
+  var type = _ref5.type,
       value = _ref5.value;
   var CategorySubComponent = CategoriesSubComponents[type];
 
   if (CategorySubComponent) {
-    return _react.default.createElement(CategoriesSubComponents, {
+    return CategorySubComponent({
       content: value,
-      key: type
+      key: value
     });
   }
 
