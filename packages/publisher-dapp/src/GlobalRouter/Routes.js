@@ -6,14 +6,14 @@ const GetStarted = lazy(() => import("../Pages/GetStarted"));
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
 const Overview = lazy(() => import("../Pages/Overview"));
-// const Onboarding = lazy(() => import("../Pages/Onboarding/OnboardingRouter"));
+const Onboarding = lazy(() => import("../Pages/Onboarding/OnboardingRouter"));
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
 const LoginComponent = withLightHeaderAndFooter(Login);
 const SignupComponent = withLightHeaderAndFooter(Signup);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
-// const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
+const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -41,9 +41,9 @@ export const GlobalRoutes = {
     path: "/getstarted",
     component: GetStartedComponent,
   },
-  // ONBOARDING: {
-  //   name: "onboarding",
-  //   path: "/onboarding",
-  //   component: OnboardingComponent,
-  // },
+  ONBOARDING: {
+    name: "onboarding",
+    path: "/onboarding",
+    component: OnboardingComponent,
+  },
 };
