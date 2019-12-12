@@ -22,4 +22,15 @@ export const stepsToKeys = {
   AUTHENTICATE: 3,
 };
 
+export const keysToSteps = {
+  1: "ENTITY",
+  2: "TNC",
+  3: "AUTHENTICATE",
+};
+
+export const stepsLimit = {
+    FIRST: 1,
+    LAST: 3
+}
+
 export const progressText = ["entity", "terms of use", "authenticate"];
