@@ -47,7 +47,8 @@ var PageNotFound = function PageNotFound(_ref) {
     className: classes.mediaContiner
   }, _react.default.createElement("img", {
     src: _pageNotFound.default,
-    title: "Page Not Found"
+    title: "Page Not Found",
+    alt: "Page not found"
   })), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
