@@ -51,8 +51,17 @@ export const MUITheme = createMuiTheme({
       white: "#fff",
       black: "#333",
       red: "#D0021B",
+      succesBox: "#E7FFF8",
+      alertBox: "#FDE5E8",
+      warningBox: "#FDF3E5",
+      infoBox: "#DEEAFF"
     },
-    success: '#00C48C'
+    border:{
+      alertBox: "#E67381",
+      warningBox: "#F18D5A"
+    },
+    success: '#00C48C',
+    infoBoxLink: "#067AD7"
   },
   typography: {
   	fontFamily: 'Muli',
