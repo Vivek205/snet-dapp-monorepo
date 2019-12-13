@@ -13,7 +13,7 @@ var useStyles = function useStyles(MUITheme) {
       borderRadius: 4,
       padding: "13px 20px",
       marginTop: "20px ",
-      color: MUITheme.palette.text.alertBoxColor,
+      color: MUITheme.palette.text.darkGrey,
       fontSize: "14px !important",
       lineHeight: "20px",
       letterSpacing: 0.25,
@@ -21,26 +21,26 @@ var useStyles = function useStyles(MUITheme) {
       wordBreak: "break-all"
     },
     error: {
-      borderColor: MUITheme.palette.text.alertBoxBorder,
-      backgroundColor: MUITheme.palette.text.alertBoxBackgroundColor
+      borderColor: MUITheme.palette.border.alertBox,
+      backgroundColor: MUITheme.palette.background.alertBox
     },
     success: {
-      borderColor: MUITheme.palette.text.successBoxBorder,
+      borderColor: MUITheme.palette.success,
       backgroundColor: MUITheme.palette.background.succesBox
     },
     warning: {
-      borderColor: MUITheme.palette.text.warningBoxBorder,
-      backgroundColor: MUITheme.palette.text.warningBoxBg,
+      borderColor: MUITheme.palette.border.warningBox,
+      backgroundColor: MUITheme.palette.background.warningBox,
       "& a": {
-        color: MUITheme.palette.text.infoBoxLink,
+        color: MUITheme.palette.infoBoxLink,
         fontWeight: 600
       }
     },
     info: {
-      borderColor: MUITheme.palette.text.primary,
-      backgroundColor: MUITheme.palette.text.infoBoxBg,
+      borderColor: MUITheme.palette.primary.main,
+      backgroundColor: MUITheme.palette.background.infoBox,
       "& a": {
-        color: MUITheme.palette.text.infoBoxLink,
+        color: MUITheme.palette.infoBoxLink,
         fontWeight: 600
       }
     }
