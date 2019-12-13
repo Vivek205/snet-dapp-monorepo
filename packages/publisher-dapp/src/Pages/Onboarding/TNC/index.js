@@ -4,14 +4,8 @@ import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 const TNC = () => {
   return (
     <TermsAndConditions 
-    	title="Title"
-    	checkboxChecked={true}
-    	formLabel="Form Label"
-    	CTAType="blue"
-    	CTAText="Button"
-    	CTADisabled={false}
-    	alertType="error"
-    	alertMsg="Alert Msg"
+    	title="Review and Accept Terms of Service"
+    	formLabel="I agree to the Terms of Service" 
     />
   );
 };

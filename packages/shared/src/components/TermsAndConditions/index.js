@@ -8,7 +8,7 @@ import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 
-const TermsAndConditions = ({ classes, title, checkboxChecked, formLabel, CTAType, CTAText, CTADisabled, handleCTA, alertType, alertMsg  }) => {
+const TermsAndConditions = ({ classes, title, checkboxChecked, handleChange, formLabel, CTAType, CTAText, CTADisabled, handleCTA, alertType, alertMsg  }) => {
   return (
     <div className={classes.onboardingContainer}>
       <div className={classes.termsAndConditionsContainer}>
@@ -18,10 +18,10 @@ const TermsAndConditions = ({ classes, title, checkboxChecked, formLabel, CTATyp
         </div>
         <div className={classes.checkboxAndButton}>
           <FormControlLabel
-            control={<Checkbox checked={checkboxChecked} onChange={this.handleChange} color="primary" />}
+            control={<Checkbox checked={checkboxChecked} onChange={handleChange} color="primary" />}
             label={formLabel}
           />
-          <StyledButton type={CTAType} btnText={CTAText} disabled={CTADisabled} onClick={handleCTA} />
+          <StyledButton btnText="accept" />
         </div>
         <AlertBox type={alertType} message={alertMsg} />
       </div>

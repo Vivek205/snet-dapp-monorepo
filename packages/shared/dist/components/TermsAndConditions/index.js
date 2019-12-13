@@ -21,14 +21,13 @@ var _styles2 = require("./styles");
 
 var _PrivacyTerms = _interopRequireDefault(require("./PrivacyTerms"));
 
-var _this = void 0;
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TermsAndConditions = function TermsAndConditions(_ref) {
   var classes = _ref.classes,
       title = _ref.title,
       checkboxChecked = _ref.checkboxChecked,
+      handleChange = _ref.handleChange,
       formLabel = _ref.formLabel,
       CTAType = _ref.CTAType,
       CTAText = _ref.CTAText,
@@ -47,15 +46,12 @@ var TermsAndConditions = function TermsAndConditions(_ref) {
   }, _react.default.createElement(_FormControlLabel.default, {
     control: _react.default.createElement(_Checkbox.default, {
       checked: checkboxChecked,
-      onChange: _this.handleChange,
+      onChange: handleChange,
       color: "primary"
     }),
     label: formLabel
   }), _react.default.createElement(_StyledButton.default, {
-    type: CTAType,
-    btnText: CTAText,
-    disabled: CTADisabled,
-    onClick: handleCTA
+    btnText: "accept"
   })), _react.default.createElement(_AlertBox.default, {
     type: alertType,
     message: alertMsg
