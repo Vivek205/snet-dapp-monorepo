@@ -6,7 +6,7 @@ const GetStarted = lazy(() => import("../Pages/GetStarted"));
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
 const Overview = lazy(() => import("../Pages/Overview"));
-const Onboarding = lazy(() => import("../Pages/Onboarding/OnboardingRouter"));
+const Onboarding = lazy(() => import("../Pages/Onboarding"));
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const GetStartedComponent = withLightHeaderAndFooter(GetStarted);
@@ -43,7 +43,8 @@ export const GlobalRoutes = {
   },
   ONBOARDING: {
     name: "onboarding",
-    path: "/onboarding",
+    basePath: "/onboarding",
+    path: "/onboarding/:step",
     component: OnboardingComponent,
   },
 };
