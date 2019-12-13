@@ -24,7 +24,7 @@ const Login = () => {
       //   TODO : create a page for forgotPassword and pass the link here
       //   forgotPasswordLink={}
       loginError={error}
-      handleSubmit={handleSubmit}
+      onSubmit={handleSubmit}
     />
   );
 };

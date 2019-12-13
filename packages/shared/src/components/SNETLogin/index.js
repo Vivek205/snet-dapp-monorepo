@@ -59,7 +59,7 @@ const SNETLogin = props => {
             <Link to={forgotPasswordLink}>Forgot password?</Link>
           </div>
           <AlertBox type="error" message={validationErr || loginError} />
-          <SNETButton type="blue" btnText="login" onClick={handleSubmit} btnType="submit" />
+          <SNETButton color="primary" variant="contained" children="login" onClick={handleSubmit} type="submit" />
         </form>
       </Grid>
     </Grid>

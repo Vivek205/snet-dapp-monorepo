@@ -126,10 +126,11 @@ var SNETLogin = function SNETLogin(props) {
     type: "error",
     message: validationErr || loginError
   }), _react.default.createElement(_SNETButton.default, {
-    type: "blue",
-    btnText: "login",
+    color: "primary",
+    variant: "contained",
+    children: "login",
     onClick: handleSubmit,
-    btnType: "submit"
+    type: "submit"
   }))));
 };
 
