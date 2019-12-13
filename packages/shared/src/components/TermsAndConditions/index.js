@@ -8,10 +8,10 @@ import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 
-const TermsOfUse = ({ classes, title, checkboxChecked, formLabel, CTAType, CTAText, CTADisabled, handleCTA, alertType, alertMsg  }) => {
+const TermsAndConditions = ({ classes, title, checkboxChecked, formLabel, CTAType, CTAText, CTADisabled, handleCTA, alertType, alertMsg  }) => {
   return (
     <div className={classes.onboardingContainer}>
-      <div className={classes.termsOfUseContainer}>
+      <div className={classes.termsAndConditionsContainer}>
         <h3>{title}</h3>
         <div className={classes.termsAndConditions}>
           <PrivacyTerms />
@@ -29,4 +29,4 @@ const TermsOfUse = ({ classes, title, checkboxChecked, formLabel, CTAType, CTATe
   );
 }
 
-export default withStyles(useStyles)(TermsOfUse);
+export default withStyles(useStyles)(TermsAndConditions);
