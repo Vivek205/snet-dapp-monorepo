@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
@@ -8,16 +8,16 @@ import { useStyles } from "./styles";
 
 const SNETSignup = props => {
   const classes = useStyles();
-  const { info, onSubmit } = props;
+  const { info, onSubmit, signupError } = props;
   return (
-    <Fragment>
+    <Grid container>
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.signupInfo}>
         <Info {...info} />
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.signupFormWrapper}>
-        <Form onSubmit={onSubmit} />
+        <Form onSubmit={onSubmit} signupError={signupError} />
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };
 
@@ -28,6 +28,7 @@ SNETSignup.propTypes = {
     list: PropTypes.arrayOf(PropTypes.string),
   }),
   onSubmit: PropTypes.func,
+  signupError: PropTypes.string,
 };
 
 export default SNETSignup;

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Icon from "@material-ui/core/Icon";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const Info = props => {
   const { title, description, list } = props;
@@ -11,7 +11,7 @@ const Info = props => {
       <ul>
         {list.map(item => (
           <li key={item}>
-            <Icon className="fas fa-check-circle" />
+            <CheckCircleIcon />
             <p>{item}</p>
           </li>
         ))}

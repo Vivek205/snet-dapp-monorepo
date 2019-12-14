@@ -28,7 +28,7 @@ const Form = props => {
       return isNotValid[0];
     }
     return null;
-  }
+  };
 
   return (
     <form noValidate autoComplete="off" className={classes.signupForm}>
@@ -81,6 +81,7 @@ const Form = props => {
 
 Form.propTypes = {
   onSubmit: PropTypes.func,
+  signupError: PropTypes.string,
 };
 
 export default Form;

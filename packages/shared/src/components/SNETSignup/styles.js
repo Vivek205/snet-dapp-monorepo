@@ -28,9 +28,9 @@ export const useStyles = makeStyles(MuiTheme => ({
       display: "flex",
       alignItems: "baseline",
       listStyle: "none",
-      "& span": {
+      "& svg": {
         marginRight: 15,
-        color: MuiTheme.palette.text.green,
+        color: MuiTheme.palette.success,
         fontSize: 20,
       },
       "& p": {

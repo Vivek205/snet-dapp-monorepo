@@ -140,7 +140,8 @@ var Form = function Form(props) {
 };
 
 Form.propTypes = {
-  onSubmit: _propTypes.default.func
+  onSubmit: _propTypes.default.func,
+  signupError: _propTypes.default.string
 };
 var _default = Form;
 exports.default = _default;

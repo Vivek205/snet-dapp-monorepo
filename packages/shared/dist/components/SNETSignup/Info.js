@@ -11,7 +11,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Icon = _interopRequireDefault(require("@material-ui/core/Icon"));
+var _CheckCircle = _interopRequireDefault(require("@material-ui/icons/CheckCircle"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,9 +26,7 @@ var Info = function Info(props) {
   return _react.default.createElement(_react.Fragment, null, _react.default.createElement("h2", null, title), _react.default.createElement("p", null, description), _react.default.createElement("ul", null, list.map(function (item) {
     return _react.default.createElement("li", {
       key: item
-    }, _react.default.createElement(_Icon.default, {
-      className: "fas fa-check-circle"
-    }), _react.default.createElement("p", null, item));
+    }, _react.default.createElement(_CheckCircle.default, null), _react.default.createElement("p", null, item));
   })));
 };
 
