@@ -16,6 +16,7 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
     root: function root(props) {
       var rootStyles = {
         fontWeight: 600,
+        fontSize: 14,
         letterSpacing: 1.25,
         padding: "13px 28px 11px",
         lineHeight: "16px"
