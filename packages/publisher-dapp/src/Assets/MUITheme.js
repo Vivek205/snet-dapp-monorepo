@@ -38,35 +38,40 @@ export const MUITheme = createMuiTheme({
       light: "#412f55"
     },
     background: {
-    	disabled:{
-    		gray: '#D6D6D6',
-    	},
-    	hover:{
-    		blue: '#ecf3fe',
-    		red: "#D0021B",
-    		black: '#333',
-  		},
-    	mainContent: '#fafafa',
+      disabled:{
+        gray: '#D6D6D6',
+      },
+      hover:{
+        blue: '#ecf3fe',
+        red: "#D0021B",
+        black: '#333',
+      },
+      mainContent: '#fafafa',
       footer: "#211D24",
       white: "#fff",
       black: "#333",
       red: "#D0021B",
+      succesBox: "#E7FFF8",
+      alertBox: "#FDE5E8",
+      warningBox: "#FDF3E5",
+      infoBox: "#DEEAFF"
     },
     border:{
-      main: '#f5f7f8',
+       main: '#f5f7f8',
       alertBox: "#E67381",
       warningBox: "#F18D5A"
     },
-    success: '#00C48C'
+    success: '#00C48C',
+    infoBoxLink: "#067AD7"
   },
   typography: {
-  	fontFamily: 'Muli',
-  	h2:{
-  		color: '#212121',
-  		fontSize: 36,
-  		fontWeight: 600,
-  		lineHeight: '45px'
-  	},
+    fontFamily: 'Muli',
+    h2:{
+      color: '#212121',
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: '45px'
+    },
     h3:{
       color: '#212121',
       fontSize: 32,
@@ -84,7 +89,7 @@ export const MUITheme = createMuiTheme({
       color: '#212121',
       fontSize: 20,
       lineHeight: '50px'
-    },  	
+    }, 
     body1:{
       color: '#9b9b9b',
       fontSize: 24,
