@@ -1,6 +1,7 @@
 export const useStyles =  (MUITheme) => ({
 	entityContainer:{ marginTop: 44 },
 	box:{
+		paddingBottom: 37,
 		borderRadius: 4,
 		marginBottom: 27,
 		backgroundColor: MUITheme.palette.background.white,
@@ -14,22 +15,27 @@ export const useStyles =  (MUITheme) => ({
 	},
 	entityDescription:{
 		padding: '0 23px',
-		margin: '7px 0 18px',
+		margin: '7px 0 34px',
 		color: MUITheme.palette.text.primary,
 		fontSize: 16,
 		lineHeight: '24px'
 	},
-	signInBtns:{ marginTop: 15 },
+	signInBtns:{ 
+		marginTop: 15,
+		[MUITheme.breakpoints.down('xs')]: { textAlign: 'center' },
+	},
 	signInContent: { 
 		padding: '7px 30px',
-		display: 'flex' 
+		display: 'flex',
+		[MUITheme.breakpoints.down('xs')]: { flexDirection: 'column' },
 	},
 	signInMedia: { textAlign: 'center' },
 	signInRightContent:{
 		'& p':{
 			fontSize: 14,
 			lineHeight: '21px'
-		}
+		},
+		[MUITheme.breakpoints.down('xs')]: { marginTop: 25 },
 	},
 	signInSubtitle:{ 
 		marginBottom: 25,
@@ -50,6 +56,7 @@ export const useStyles =  (MUITheme) => ({
 		}				
 	},
 	btnContainer:{
+		width:'100%',
 		display: 'flex',
 		justifyContent: 'center'
 	}

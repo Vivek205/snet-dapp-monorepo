@@ -7,7 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import { emailPreferencesList } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
-// import StyledDropdown from "shared/src/components/StyledDropdown";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 
 const Entity = ({ classes }) => {
@@ -16,7 +16,7 @@ const Entity = ({ classes }) => {
        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
        		<Typography variant="h5">Entity Type</Typography>
        		<Typography className={classes.entityDescription}>You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single Person Business or join an existing approved entity with an invitation.  The first two options require certain amount of information to proceed. </Typography>
-        { /* <StyledDropdown labelTxt="Please Select" inputLabel="Entity Type"/> */ }
+        <StyledDropdown labelTxt="Please Select" inputLabel="Entity Type"/>
        </Grid>
 
        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
