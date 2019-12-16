@@ -44,7 +44,8 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Form = function Form(props) {
-  var onSubmit = props.onSubmit;
+  var onSubmit = props.onSubmit,
+      signupError = props.signupError;
   var classes = (0, _styles.useStyles)();
 
   var _useState = (0, _react.useState)(""),
@@ -129,8 +130,7 @@ var Form = function Form(props) {
   }, _react.default.createElement("p", null, "Include:"), _react.default.createElement(_PasswordInlineValidation.default, {
     password: password
   })), _react.default.createElement(_AlertBox.default, {
-    type: alert.type,
-    message: alert.message
+    message: signupError
   }), _react.default.createElement("div", null), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",

@@ -12,7 +12,7 @@ import validator from "../../SNETUtils/validator";
 import { signupFormConstraints } from "./validationConstraints";
 
 const Form = props => {
-  const { onSubmit } = props;
+  const { onSubmit, signupError } = props;
   const classes = useStyles();
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -73,7 +73,7 @@ const Form = props => {
         <p>Include:</p>
         <PasswordInlineValidation password={password} />
       </div>
-      <AlertBox type={alert.type} message={alert.message} />
+      <AlertBox message={signupError} />
       <div />
       <SNETButton color="primary" variant="contained" children="Create Account" onClick={handleSubmit} type="submit" />
     </form>
