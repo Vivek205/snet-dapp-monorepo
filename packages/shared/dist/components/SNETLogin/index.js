@@ -81,7 +81,7 @@ var SNETLogin = function SNETLogin(props) {
 
   return _react.default.createElement(_Grid.default, {
     container: true,
-    spacing: 24
+    spacing: 12
   }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,

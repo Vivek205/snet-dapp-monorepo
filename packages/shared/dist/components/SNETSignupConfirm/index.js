@@ -69,7 +69,7 @@ var SNETSignupConfirm = function SNETSignupConfirm(props) {
       return setValidationErr(isNotValid[0]);
     }
 
-    onSubmit();
+    onSubmit(otp);
   };
 
   var alert = function alert() {
