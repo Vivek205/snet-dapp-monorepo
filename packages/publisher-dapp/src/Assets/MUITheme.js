@@ -52,6 +52,11 @@ export const MUITheme = createMuiTheme({
       black: "#333",
       red: "#D0021B",
     },
+    border:{
+      main: '#f5f7f8',
+      alertBox: "#E67381",
+      warningBox: "#F18D5A"
+    },
     success: '#00C48C'
   },
   typography: {
@@ -74,6 +79,11 @@ export const MUITheme = createMuiTheme({
       fontSize: 24,
       fontWeight: 600,
       lineHeight: '30px'
+    },  
+    h5:{
+      color: '#212121',
+      fontSize: 20,
+      lineHeight: '50px'
     },  	
     body1:{
       color: '#9b9b9b',
@@ -89,7 +99,7 @@ export const MUITheme = createMuiTheme({
       color: '#212121',
       fontSize: 18,
       fontWeight: 'bold'
-    }
+    },
   }
 });
 
