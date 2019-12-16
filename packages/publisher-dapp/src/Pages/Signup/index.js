@@ -13,7 +13,11 @@ const Signup = () => {
     try {
       await dispatch(signupActions.signup(nickname, email, password));
     } catch (error) {
-      setSignupError("Signup Failed");
+      if (error.name === "AuthError") {
+        setSignupError(error.message);
+        return;
+      }
+      setSignupError("Singup Failed");
     }
   };
   return <SNETSignup info={signupInfo} onSubmit={handleSubmit} signupError={signupError} />;
