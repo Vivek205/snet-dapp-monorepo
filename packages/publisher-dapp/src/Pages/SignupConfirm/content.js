@@ -3,3 +3,8 @@ export const info = {
   description: `Please enter the verification code below to confirm your email address. Check your spam, or junk folders if
     you encounter any delays. The email should be from otp@singularitynet.io.`,
 };
+
+export const alertMsg = {
+  resend_success: "code resent successfully",
+  resend_error: "unable to resend otp. please try later"
+}

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETSignupConfirm from "shared/dist/components/SNETSignupConfirm";
-import { info } from "./content";
+import { info, alertMsg } from "./content";
 import { signupActions } from "../../Services/Redux/actionCreators/userActions";
+import { alertTypes } from "shared/dist/components/AlertBox";
 
 const SignupConfirm = () => {
   const [signupAlert, setSignupAlert] = useState({});
@@ -11,22 +12,25 @@ const SignupConfirm = () => {
   const dispatch = useDispatch();
 
   const handleResendOTP = async () => {
-    await dispatch(signupActions.resendOTP(email));
-    // TODO handle resend OTP flow
+    try {
+      await dispatch(signupActions.resendOTP(email));
+      setSignupAlert({ type: alertTypes.SUCCESS, message: alertMsg.resend_success });
+    } catch (error) {
+      setSignupAlert({ type: alertTypes.ERROR, message: alertMsg.resend_error });
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (otp) => {
+    try {
+      await dispatch(signupActions.signupConfirm(email, otp))
+    } catch (error) {
+      
+    }
     // TODO handle submit otp flow
   };
 
   return (
-    <SNETSignupConfirm
-      info={info}
-      onResendOtp={handleResendOTP}
-      onSubmit={handleSubmit}
-      sing
-      // TODO signupError = pass error message
-    />
+    <SNETSignupConfirm info={info} onResendOtp={handleResendOTP} onSubmit={handleSubmit} signupAlert={signupAlert} />
   );
 };
 

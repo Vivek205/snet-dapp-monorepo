@@ -9,16 +9,16 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case userActions.login.SET_USER_LOGGED_IN: {
+    case userActions.loginActions.SET_USER_LOGGED_IN: {
       return { ...state, isLoggedIn: action.payload };
     }
-    case userActions.login.SET_USER_EMAIL: {
+    case userActions.loginActions.SET_USER_EMAIL: {
       return { ...state, email: action.payload };
     }
-    case userActions.login.SET_USER_NICKNAME: {
+    case userActions.loginActions.SET_USER_NICKNAME: {
       return { ...state, nickname: action.payload };
     }
-    case userActions.login.SET_USER_EMAIL_VERIFIED: {
+    case userActions.loginActions.SET_USER_EMAIL_VERIFIED: {
       return { ...state, isEmailVerified: action.payload };
     }
     default:

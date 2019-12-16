@@ -23,7 +23,7 @@ const SNETSignupConfirm = props => {
     if (isNotValid) {
       return setValidationErr(isNotValid[0]);
     }
-    onSubmit();
+    onSubmit(otp);
   };
 
   const alert = () => ({
