@@ -38,15 +38,15 @@ export const MUITheme = createMuiTheme({
       light: "#412f55"
     },
     background: {
-    	disabled:{
-    		gray: '#D6D6D6',
-    	},
-    	hover:{
-    		blue: '#ecf3fe',
-    		red: "#D0021B",
-    		black: '#333',
-  		},
-    	mainContent: '#fafafa',
+      disabled:{
+        gray: '#D6D6D6',
+      },
+      hover:{
+        blue: '#ecf3fe',
+        red: "#D0021B",
+        black: '#333',
+      },
+      mainContent: '#fafafa',
       footer: "#211D24",
       white: "#fff",
       black: "#333",
@@ -64,13 +64,13 @@ export const MUITheme = createMuiTheme({
     infoBoxLink: "#067AD7"
   },
   typography: {
-  	fontFamily: 'Muli',
-  	h2:{
-  		color: '#212121',
-  		fontSize: 36,
-  		fontWeight: 600,
-  		lineHeight: '45px'
-  	},
+    fontFamily: 'Muli',
+    h2:{
+      color: '#212121',
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: '45px'
+    },
     h3:{
       color: '#212121',
       fontSize: 32,
@@ -83,7 +83,12 @@ export const MUITheme = createMuiTheme({
       fontSize: 24,
       fontWeight: 600,
       lineHeight: '30px'
-    },  	
+    },  
+    h5:{
+      color: '#212121',
+      fontSize: 20,
+      lineHeight: '50px'
+    }, 
     body1:{
       color: '#9b9b9b',
       fontSize: 24,
@@ -98,7 +103,7 @@ export const MUITheme = createMuiTheme({
       color: '#212121',
       fontSize: 18,
       fontWeight: 'bold'
-    }
+    },
   }
 });
 
