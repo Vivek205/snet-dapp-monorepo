@@ -63,8 +63,23 @@ var Form = function Form(props) {
       password = _useState6[0],
       setPassword = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(""),
+      _useState8 = _slicedToArray(_useState7, 2),
+      validationErr = _useState8[0],
+      setValidationErr = _useState8[1];
+
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
+    var isNotValid = (0, _validator.default)({
+      nickname: nickname,
+      email: email,
+      password: password
+    }, _validationConstraints.signupFormConstraints);
+
+    if (isNotValid) {
+      return setValidationErr(isNotValid[0]);
+    }
+
     onSubmit(nickname, email, password);
   };
 
@@ -130,7 +145,7 @@ var Form = function Form(props) {
   }, _react.default.createElement("p", null, "Include:"), _react.default.createElement(_PasswordInlineValidation.default, {
     password: password
   })), _react.default.createElement(_AlertBox.default, {
-    message: signupError
+    message: signupError || validationErr
   }), _react.default.createElement("div", null), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",

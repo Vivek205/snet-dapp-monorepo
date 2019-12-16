@@ -17,9 +17,14 @@ const Form = props => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationErr, setValidationErr] = useState("");
 
   const handleSubmit = e => {
     e.preventDefault();
+    const isNotValid = validator({ nickname, email, password }, signupFormConstraints);
+    if (isNotValid) {
+      return setValidationErr(isNotValid[0]);
+    }
     onSubmit(nickname, email, password);
   };
 
@@ -73,7 +78,7 @@ const Form = props => {
         <p>Include:</p>
         <PasswordInlineValidation password={password} />
       </div>
-      <AlertBox message={signupError} />
+      <AlertBox message={signupError || validationErr} />
       <div />
       <SNETButton color="primary" variant="contained" children="Create Account" onClick={handleSubmit} type="submit" />
     </form>
