@@ -27,16 +27,16 @@ var PasswordInlineValidation = function PasswordInlineValidation(props) {
   var password = props.password;
   var validationInputs = [{
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.upperCase)),
-    message: _constants.passwordValidationMsgs.UPPER_CASE
+    message: "".concat(_constants.passwordValidationMsgs.UPPER_CASE, ", ")
   }, {
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.lowerCase)),
-    message: _constants.passwordValidationMsgs.LOWER_CASE
+    message: "".concat(_constants.passwordValidationMsgs.LOWER_CASE, ", ")
   }, {
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.length)),
-    message: _constants.passwordValidationMsgs.LENGTH
+    message: "".concat(_constants.passwordValidationMsgs.LENGTH, ", ")
   }, {
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.AWSSplChars)),
-    message: _constants.passwordValidationMsgs.SPECIAL_CHAR
+    message: "".concat(_constants.passwordValidationMsgs.SPECIAL_CHAR, ", ")
   }, {
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.number)),
     message: _constants.passwordValidationMsgs.NUMBER

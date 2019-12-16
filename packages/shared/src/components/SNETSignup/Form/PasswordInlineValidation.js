@@ -13,19 +13,19 @@ const PasswordInlineValidation = props => {
   const validationInputs = [
     {
       condition: isEmpty(validator.single(password, passwordInlineConstraints.upperCase)),
-      message: passwordValidationMsgs.UPPER_CASE,
+      message: `${passwordValidationMsgs.UPPER_CASE}, `,
     },
     {
       condition: isEmpty(validator.single(password, passwordInlineConstraints.lowerCase)),
-      message: passwordValidationMsgs.LOWER_CASE,
+      message: `${passwordValidationMsgs.LOWER_CASE}, `,
     },
     {
       condition: isEmpty(validator.single(password, passwordInlineConstraints.length)),
-      message: passwordValidationMsgs.LENGTH,
+      message: `${passwordValidationMsgs.LENGTH}, `,
     },
     {
       condition: isEmpty(validator.single(password, passwordInlineConstraints.AWSSplChars)),
-      message: passwordValidationMsgs.SPECIAL_CHAR,
+      message: `${passwordValidationMsgs.SPECIAL_CHAR}, `,
     },
     {
       condition: isEmpty(validator.single(password, passwordInlineConstraints.number)),
