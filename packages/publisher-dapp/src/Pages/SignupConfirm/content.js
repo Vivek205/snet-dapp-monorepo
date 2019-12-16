@@ -5,6 +5,7 @@ export const info = {
 };
 
 export const alertMsg = {
-  resend_success: "code resent successfully",
-  resend_error: "unable to resend otp. please try later"
-}
+  resendSuccess: "code resent successfully",
+  resendError: "unable to resend otp. please try later",
+  confirmError: "OTP confirmation failed. Please try again later",
+};

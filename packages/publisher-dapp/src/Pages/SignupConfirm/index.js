@@ -5,8 +5,10 @@ import SNETSignupConfirm from "shared/dist/components/SNETSignupConfirm";
 import { info, alertMsg } from "./content";
 import { signupActions } from "../../Services/Redux/actionCreators/userActions";
 import { alertTypes } from "shared/dist/components/AlertBox";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
-const SignupConfirm = () => {
+const SignupConfirm = props => {
+  const { history } = props;
   const [signupAlert, setSignupAlert] = useState({});
   const email = useSelector(state => state.user.email);
   const dispatch = useDispatch();
@@ -14,19 +16,19 @@ const SignupConfirm = () => {
   const handleResendOTP = async () => {
     try {
       await dispatch(signupActions.resendOTP(email));
-      setSignupAlert({ type: alertTypes.SUCCESS, message: alertMsg.resend_success });
+      setSignupAlert({ type: alertTypes.SUCCESS, message: alertMsg.resendSuccess });
     } catch (error) {
-      setSignupAlert({ type: alertTypes.ERROR, message: alertMsg.resend_error });
+      setSignupAlert({ type: alertTypes.ERROR, message: alertMsg.resendError });
     }
   };
 
-  const handleSubmit = async (otp) => {
+  const handleSubmit = async otp => {
     try {
-      await dispatch(signupActions.signupConfirm(email, otp))
+      await dispatch(signupActions.signupConfirm(email, otp));
+      history.push(GlobalRoutes.LOGIN.path);
     } catch (error) {
-      
+      setSignupAlert({ type: alertTypes.ERROR, message: alertMsg.confirmError });
     }
-    // TODO handle submit otp flow
   };
 
   return (
