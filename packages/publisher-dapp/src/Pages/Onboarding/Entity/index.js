@@ -4,18 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import PropTypes from "prop-types";
 
 import { emailPreferencesList } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
+import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 
-const Entity = ({ classes, handleNext }) => {
+const Entity = ({ classes, history }) => {
   const handleContinue = () => {
-    handleNext();
+    history.push(OnboardingRoutes.TNC);
   };
-  
+
   return (
     <Grid container className={classes.entityContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -64,10 +64,6 @@ const Entity = ({ classes, handleNext }) => {
       </Grid>
     </Grid>
   );
-};
-
-Entity.prototypes = {
-  handleNext: PropTypes.func,
 };
 
 export default withStyles(useStyles)(Entity);

@@ -12,11 +12,12 @@ import { OnboardingRoutes } from "../Onboarding/OnboardingRouter/Routes";
 const Enroll = ({ classes, history }) => {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
-	const onContinue = () => {
-		if(isLoggedIn){
-			history.push(`${GlobalRoutes.ONBOARDING.basePath}/${OnboardingRoutes.ENTITY.path}`)
-		}
-	}
+  const handleContinue = () => {
+    if (isLoggedIn) {
+      return history.push(`${GlobalRoutes.ONBOARDING.basePath}/${OnboardingRoutes.ENTITY.path}`);
+    }
+    history.push(GlobalRoutes.LOGIN.path);
+  };
 
   return (
     <Grid container className={classes.enrollMainContainer}>
@@ -85,7 +86,7 @@ const Enroll = ({ classes, history }) => {
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <StyledButton btnText="continue your enroll" type="blue" />
+        <StyledButton btnText="continue your enroll" type="blue" onClick={handleContinue} />
       </Grid>
     </Grid>
   );
