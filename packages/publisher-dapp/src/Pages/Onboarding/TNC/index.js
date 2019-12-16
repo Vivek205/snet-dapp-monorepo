@@ -1,12 +1,14 @@
 import React from 'react';
+import { TermsAndConditionsDetails } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 
 const TNC = () => {
   return (
-    <TermsAndConditions 
-    	title="Review and Accept Terms of Service"
-    	formLabel="I agree to the Terms of Service" 
-    />
+  	<TermsAndConditions 
+    	title={TermsAndConditionsDetails.title}
+    	formLabel={TermsAndConditionsDetails.formLabel}
+    	checkboxChecked={true}
+    />    
   );
 };
 
