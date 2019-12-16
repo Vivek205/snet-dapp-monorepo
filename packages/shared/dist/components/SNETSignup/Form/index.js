@@ -62,7 +62,8 @@ var Form = function Form(props) {
       password = _useState6[0],
       setPassword = _useState6[1];
 
-  var handleSubmit = function handleSubmit() {
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
     onSubmit(nickname, email, password);
   };
 

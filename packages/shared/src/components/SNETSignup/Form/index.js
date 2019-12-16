@@ -18,7 +18,8 @@ const Form = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     onSubmit(nickname, email, password);
   };
 
