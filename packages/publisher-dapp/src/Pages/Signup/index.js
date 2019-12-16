@@ -3,15 +3,18 @@ import { useDispatch } from "react-redux";
 
 import SNETSignup from "shared/dist/components/SNETSignup";
 import { signupInfo } from "./content";
-import { signup as signupActions } from "../../Services/Redux/actionCreators/userActions";
+import { signupActions } from "../../Services/Redux/actionCreators/userActions";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
-const Signup = () => {
+const Signup = props => {
+  const { history } = props;
   const [signupError, setSignupError] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async (nickname, email, password) => {
     try {
       await dispatch(signupActions.signup(nickname, email, password));
+      history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
     } catch (error) {
       if (error.name === "AuthError") {
         setSignupError(error.message);
