@@ -38,12 +38,16 @@ export const useStyles =  (MUITheme) => ({
 	},
 	checkboxContainer:{
 		padding: '32px 58px',
-		'& span':{ 
-			color: MUITheme.palette.text.primary,
-			fontSize: 14,
-			letterSpacing: 0.25,
-			lineHeight: '20px',
-		}
+		'& label':{
+			'& span':{ 			
+				fontSize: 14,
+				letterSpacing: 0.25,
+				lineHeight: '20px',
+				'&:last-of-type':{ color: MUITheme.palette.text.primary },
+				'&.MuiCheckbox-colorPrimary':{ color: MUITheme.palette.text.primary },
+				'&.MuiCheckbox-colorPrimary.Mui-checked':{ color: `${MUITheme.palette.primary.main} !important` },			
+			},
+		}				
 	},
 	btnContainer:{
 		display: 'flex',

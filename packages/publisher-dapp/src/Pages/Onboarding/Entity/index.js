@@ -5,14 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { emailPreferencesList } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
+// import StyledDropdown from "shared/src/components/StyledDropdown";
 import { useStyles } from "./styles";
-
-const emailPreferencesList = [
-	'I’d like to get new feature annoucements and tips to help imporve my AI services',
-	'I’d like to get weekly summary reports of my AI services and account acitivty.',
-	'I’d like to get email notifications when users leave comments or send messages '
-] 
 
 const Entity = ({ classes }) => {
   return (
@@ -20,6 +16,7 @@ const Entity = ({ classes }) => {
        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
        		<Typography variant="h5">Entity Type</Typography>
        		<Typography className={classes.entityDescription}>You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single Person Business or join an existing approved entity with an invitation.  The first two options require certain amount of information to proceed. </Typography>
+        { /* <StyledDropdown labelTxt="Please Select" inputLabel="Entity Type"/> */ }
        </Grid>
 
        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -32,8 +29,8 @@ const Entity = ({ classes }) => {
        			<Typography className={classes.signInSubtitle}>Please Login or Signup into Singularitynet to use the portal.</Typography>
        			<Typography className={classes.signInDescription}>To use the portal, please sign up. Lorem ipsum dolor sit amet, per odio adipi scing ea, est an purto libris fastidii, dolor laboramus consectetuer ut eum. An debet expetendis scriptorem ius. Dolorem detracto accusamus mea cu. Nam hendrerit theophrastus ex, vix aeque solet cu.</Typography>
        			<div className={classes.signInBtns}>
-       				<SNETButton color="transparent" children="Login to singularitynet" />
-       				<SNETButton color="transparent" children="Create new account" />
+       				<SNETButton color="primary" children="Login to singularitynet" variant="text"/>
+       				<SNETButton color="primary" children="Create new account" variant="text"/>
        			</div>
        		</Grid>
        	</Grid>
@@ -56,7 +53,7 @@ const Entity = ({ classes }) => {
 	      </div> 	 
        </Grid>
        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-       	<SNETButton color="transparentBlueBorder" children="cancel" variant="contained" />
+       	<SNETButton color="primary" children="cancel" variant="text"/>
        	<SNETButton color="transparent" children="continue" variant="contained" />
        </Grid>
     </Grid>
