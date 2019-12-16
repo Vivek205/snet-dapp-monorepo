@@ -4,13 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import PropTypes from "prop-types";
 
 import { emailPreferencesList } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 
-const Entity = ({ classes }) => {
+const Entity = ({ classes, handleNext }) => {
+  const handleContinue = () => {
+    handleNext();
+  };
+  
   return (
     <Grid container className={classes.entityContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -18,7 +23,7 @@ const Entity = ({ classes }) => {
         <Typography className={classes.entityDescription}>
           You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single
           Person Business or join an existing approved entity with an invitation. The first two options require certain
-          amount of information to proceed.{" "}
+          amount of information to proceed.
         </Typography>
         <StyledDropdown labelTxt="Please Select" inputLabel="Entity Type" />
       </Grid>
@@ -55,10 +60,14 @@ const Entity = ({ classes }) => {
       </Grid>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton color="primary" children="cancel" variant="text" />
-        <SNETButton color="transparent" children="continue" variant="contained" />
+        <SNETButton color="transparent" children="continue" variant="contained" onClick={handleContinue} />
       </Grid>
     </Grid>
   );
+};
+
+Entity.prototypes = {
+  handleNext: PropTypes.func,
 };
 
 export default withStyles(useStyles)(Entity);

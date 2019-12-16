@@ -8,19 +8,39 @@ import TNC from "./TNC";
 import Authenticate from "./Authenticate";
 import { useStyles } from "./styles";
 import Navigation from "./Navigation";
+import { OnboardingRoutes } from "./OnboardingRouter/Routes";
+import OnboardingRouter from "./OnboardingRouter";
 
-const Onboarding = ({ match, classes }) => {
+const Onboarding = ({ match, classes, history }) => {
   const [currentStep, setCurrentStep] = useState(steps.ENTITY);
 
   useEffect(() => {
     const { step } = match.params;
+    if (!step) {
+      return;
+    }
     setCurrentStep(step.toUpperCase());
   }, [match]);
 
   const onboardingSections = {
-    ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
-    TNC: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
-    AUTHENTICATE: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: <Authenticate /> },
+    ENTITY: {
+      title: titles.ENTITY,
+      description: descriptions.ENTITY,
+      component: <Entity />,
+      path: OnboardingRoutes.ENTITY.path,
+    },
+    TNC: {
+      title: titles.TNC,
+      description: descriptions.TNC,
+      component: <TNC />,
+      path: OnboardingRoutes.TNC.path,
+    },
+    AUTHENTICATE: {
+      title: titles.AUTHENTICATE,
+      description: descriptions.AUTHENTICATE,
+      component: <Authenticate />,
+      path: OnboardingRoutes.AUTHENTICATE.path,
+    },
   };
 
   const activeStep = onboardingSections[currentStep];
@@ -31,6 +51,7 @@ const Onboarding = ({ match, classes }) => {
     }
     return () => {
       const nextStep = keysToSteps[stepsToKeys[currentStep] + 1];
+      history.push(onboardingSections[nextStep].path);
       setCurrentStep(nextStep);
     };
   };
@@ -40,8 +61,9 @@ const Onboarding = ({ match, classes }) => {
       return undefined;
     }
     return () => {
-      const nextStep = keysToSteps[stepsToKeys[currentStep] - 1];
-      setCurrentStep(nextStep);
+      const prevStep = keysToSteps[stepsToKeys[currentStep] - 1];
+      history.push(onboardingSections[prevStep].path);
+      setCurrentStep(prevStep);
     };
   };
 
@@ -52,7 +74,7 @@ const Onboarding = ({ match, classes }) => {
         <span> {activeStep.description}</span>
       </div>
       <ProgressBar activeSection={stepsToKeys[currentStep]} progressText={progressText} />
-      {activeStep.component}
+      <OnboardingRouter handleNext={handleNext()} handlePrev={handlePrev()} />
       <Navigation handleNext={handleNext()} handlePrev={handlePrev()} />
     </Fragment>
   );

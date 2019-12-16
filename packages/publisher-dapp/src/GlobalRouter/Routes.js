@@ -44,7 +44,7 @@ export const GlobalRoutes = {
   ONBOARDING: {
     name: "onboarding",
     basePath: "/onboarding",
-    path: "/onboarding/:step",
+    path: "/onboarding/",
     component: OnboardingComponent,
   },
 };
