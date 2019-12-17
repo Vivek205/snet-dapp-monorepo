@@ -13,7 +13,7 @@ import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 
 const Entity = ({ classes, history }) => {
   const handleContinue = () => {
-    history.push(OnboardingRoutes.TNC);
+    history.push(OnboardingRoutes.TNC.path);
   };
 
   return (

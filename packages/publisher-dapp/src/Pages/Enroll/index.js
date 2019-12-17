@@ -14,7 +14,7 @@ const Enroll = ({ classes, history }) => {
 
   const handleContinue = () => {
     if (isLoggedIn) {
-      return history.push(`${GlobalRoutes.ONBOARDING.basePath}/${OnboardingRoutes.ENTITY.path}`);
+      return history.push(OnboardingRoutes.ENTITY.path);
     }
     history.push(GlobalRoutes.LOGIN.path);
   };

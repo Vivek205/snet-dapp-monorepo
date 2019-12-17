@@ -1,5 +1,3 @@
-import React from "react";
-
 import Entity from "../Entity";
 import TNC from "../TNC";
 import Authenticate from "../Authenticate";
