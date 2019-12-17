@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import AlertBox from "shared/dist/components/AlertBox";
 import StyledButton from "shared/dist/components/StyledButton";
-
-import Routes from "../../../utility/constants/Routes";
-import { userActions, errorActions } from "../../../Redux/actionCreators";
 import { useStyles } from "./styles";
 import snetValidator from "../../../utility/snetValidator";
 import { forgotPassworSubmitConstraints } from "./validationConstraints";
@@ -21,8 +17,6 @@ const SNETForgotPasswordSubmit = props => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  
 
   const handleCode = event => {
     setCode(event.currentTarget.value);
