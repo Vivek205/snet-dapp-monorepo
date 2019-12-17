@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useStyles } from "./styles";
 
 const StyledDropdown = ({ labelTxt, list, value, onChange, formControlProps, inputLabel, disabled }) => {
-  const classes = useStyles();
+const classes = useStyles();
 
   return (
     <FormControl variant="outlined" className={classes.formControl} {...formControlProps}>
@@ -22,12 +22,11 @@ const StyledDropdown = ({ labelTxt, list, value, onChange, formControlProps, inp
         disabled={disabled}
       >
         <MenuItem value="default">{labelTxt || "Select a value"}</MenuItem>
-        {list &&
-          list.map(item => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
+        {list && list.map(item => (
+          <MenuItem key={item.value} value={item.value}>
+            {item.label}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
