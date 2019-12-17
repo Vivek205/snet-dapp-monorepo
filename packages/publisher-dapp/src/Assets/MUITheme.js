@@ -19,6 +19,8 @@ export const MUITheme = createMuiTheme({
       red: "#D0021B",
       darkGrey: "#212121",
       lightGrey: "#9b9b9b",
+      footerText: "#FFFFE1",
+      white: "#fff",
       hover: {
         blue: "#005ACB",
         red: "#D0021B",
@@ -38,15 +40,15 @@ export const MUITheme = createMuiTheme({
       light: "#412f55",
     },
     background: {
-      disabled:{
-        gray: '#D6D6D6',
+      disabled: {
+        gray: "#D6D6D6",
       },
-      hover:{
-        blue: '#ecf3fe',
+      hover: {
+        blue: "#ecf3fe",
         red: "#D0021B",
-        black: '#333',
+        black: "#333",
       },
-      mainContent: '#fafafa',
+      mainContent: "#fafafa",
       footer: "#211D24",
       white: "#fff",
       black: "#333",
@@ -56,8 +58,8 @@ export const MUITheme = createMuiTheme({
       warningBox: "#FDF3E5",
       infoBox: "#DEEAFF",
     },
-    border:{
-      mainContent: '#fafafa',
+    border: {
+      mainContent: "#fafafa",
       alertBox: "#E67381",
       warningBox: "#F18D5A",
     },
@@ -67,15 +69,15 @@ export const MUITheme = createMuiTheme({
     warning: "#F18D5A",
   },
   typography: {
-    fontFamily: 'Muli',
-    h2:{
-      color: '#212121',
+    fontFamily: "Muli",
+    h2: {
+      color: "#212121",
       fontSize: 36,
       fontWeight: 600,
-      lineHeight: '45px'
+      lineHeight: "45px",
     },
-    h3:{
-      color: '#212121',
+    h3: {
+      color: "#212121",
       fontSize: 32,
       fontWeight: 600,
       letterSpacing: -0.5,
