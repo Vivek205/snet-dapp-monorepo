@@ -11,19 +11,21 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
-
 var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
 
-var _reactRouterDom = require("react-router-dom");
+var _isEmpty = _interopRequireDefault(require("lodash/isEmpty"));
+
+var _AlertText = _interopRequireDefault(require("../../AlertText"));
+
+var _AlertBox = _interopRequireWildcard(require("../../AlertBox"));
+
+var _SNETButton = _interopRequireDefault(require("../../SNETButton"));
+
+var _PasswordInlineValidation = _interopRequireDefault(require("./PasswordInlineValidation"));
 
 var _styles = require("./styles");
 
-var _SNETButton = _interopRequireDefault(require("../SNETButton"));
-
-var _AlertBox = _interopRequireDefault(require("../AlertBox"));
-
-var _validator = _interopRequireDefault(require("../SNETUtils/validator"));
+var _validator = _interopRequireDefault(require("../../SNETUtils/validator"));
 
 var _validationConstraints = require("./validationConstraints");
 
@@ -41,70 +43,92 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var SNETLogin = function SNETLogin(props) {
+var Form = function Form(props) {
+  var onSubmit = props.onSubmit,
+      signupError = props.signupError;
   var classes = (0, _styles.useStyles)();
-  var title = props.title,
-      forgotPasswordLink = props.forgotPasswordLink,
-      onSubmit = props.onSubmit,
-      loginError = props.loginError;
 
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
-      email = _useState2[0],
-      setEmail = _useState2[1];
+      nickname = _useState2[0],
+      setNickname = _useState2[1];
 
   var _useState3 = (0, _react.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
-      password = _useState4[0],
-      setPassword = _useState4[1];
+      email = _useState4[0],
+      setEmail = _useState4[1];
 
   var _useState5 = (0, _react.useState)(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      validationErr = _useState6[0],
-      setValidationErr = _useState6[1];
+      password = _useState6[0],
+      setPassword = _useState6[1];
 
-  var handleSubmit = function handleSubmit(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  var _useState7 = (0, _react.useState)(""),
+      _useState8 = _slicedToArray(_useState7, 2),
+      validationErr = _useState8[0],
+      setValidationErr = _useState8[1];
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
     var isNotValid = (0, _validator.default)({
+      nickname: nickname,
       email: email,
       password: password
-    }, _validationConstraints.validationConstraints);
+    }, _validationConstraints.signupFormConstraints);
 
     if (isNotValid) {
-      setValidationErr(isNotValid[0]);
-      return;
+      return setValidationErr(isNotValid[0]);
     }
 
-    onSubmit(email, password);
+    onSubmit(nickname, email, password);
   };
 
-  return _react.default.createElement(_Grid.default, {
-    container: true,
-    spacing: 12
-  }, _react.default.createElement(_Grid.default, {
-    item: true,
-    xs: 12,
-    sm: 12,
-    md: 12,
-    lg: 12,
-    className: classes.loginDetails
-  }, _react.default.createElement("h2", null, title), _react.default.createElement("form", {
+  var emailValidationMsg = function emailValidationMsg() {
+    var isNotValid = (0, _validator.default)({
+      email: email
+    }, {
+      email: _validationConstraints.signupFormConstraints.email
+    });
+
+    if (isNotValid && !(0, _isEmpty.default)(email)) {
+      return isNotValid[0];
+    }
+
+    return null;
+  };
+
+  return _react.default.createElement("form", {
     noValidate: true,
     autoComplete: "off",
-    className: classes.loginForm
+    className: classes.signupForm
   }, _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
+    label: "Nickname",
+    className: classes.textField,
+    value: nickname,
+    onChange: function onChange(e) {
+      return setNickname(e.target.value);
+    },
+    margin: "normal",
+    variant: "outlined",
+    autoFocus: true
+  }), _react.default.createElement("div", null, _react.default.createElement(_TextField.default, {
+    id: "outlined-email-input",
     label: "Email",
     className: classes.textField,
+    type: "email",
+    name: "email",
+    autoComplete: "email",
     margin: "normal",
     variant: "outlined",
     value: email,
-    autoFocus: true,
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  }), _react.default.createElement(_TextField.default, {
+  }), _react.default.createElement(_AlertText.default, {
+    type: _AlertBox.alertTypes.ERROR,
+    message: emailValidationMsg()
+  })), _react.default.createElement(_TextField.default, {
     id: "outlined-password-input",
     label: "Password",
     className: classes.textField,
@@ -117,28 +141,23 @@ var SNETLogin = function SNETLogin(props) {
       return setPassword(e.target.value);
     }
   }), _react.default.createElement("div", {
-    className: classes.checkboxSection
-  }, _react.default.createElement("div", {
-    className: classes.checkbox
-  }), _react.default.createElement(_reactRouterDom.Link, {
-    to: forgotPasswordLink
-  }, "Forgot password?")), _react.default.createElement(_AlertBox.default, {
-    type: "error",
-    message: validationErr || loginError
-  }), _react.default.createElement(_SNETButton.default, {
+    className: classes.passwordCriteriaContainer
+  }, _react.default.createElement("p", null, "Include:"), _react.default.createElement(_PasswordInlineValidation.default, {
+    password: password
+  })), _react.default.createElement(_AlertBox.default, {
+    message: signupError || validationErr
+  }), _react.default.createElement("div", null), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",
-    children: "login",
+    children: "Create Account",
     onClick: handleSubmit,
     type: "submit"
-  }))));
+  }));
 };
 
-SNETLogin.propTypes = {
-  title: _propTypes.default.string,
-  forgotPasswordLink: _propTypes.default.string,
-  loginError: _propTypes.default.string,
-  onSubmit: _propTypes.default.func
+Form.propTypes = {
+  onSubmit: _propTypes.default.func,
+  signupError: _propTypes.default.string
 };
-var _default = SNETLogin;
+var _default = Form;
 exports.default = _default;
