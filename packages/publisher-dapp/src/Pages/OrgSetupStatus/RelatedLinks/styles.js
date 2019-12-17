@@ -1,17 +1,7 @@
 export const useStyles = MUITheme => ({
-	OrgSetupStatusContainer: {
-		padding: '40px 0 0',
-	},
-	description:{
-		'& p':{
-			marginTop: 8,
-			color: MUITheme.palette.text.darkGrey,
-			fontSize: 22,
-			fontWeight: 200,
-			lineHeight: '28px'
-		}
-	},	
 	relatedLinksContainer:{
+		display: 'flex',
+		flexDirection: 'column',
 		'& a':{ 
 			marginBottom: 10,
 			display: 'block',
