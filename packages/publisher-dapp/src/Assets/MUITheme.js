@@ -19,6 +19,8 @@ export const MUITheme = createMuiTheme({
       red: "#D0021B",
       darkGrey: "#212121",
       lightGrey: "#9b9b9b",
+      footerText: "#FFFFE1",
+      white: "#fff",
       hover: {
         blue: "#005ACB",
         red: "#D0021B",
@@ -57,7 +59,7 @@ export const MUITheme = createMuiTheme({
       infoBox: "#DEEAFF",
     },
     border: {
-      main: "#f5f7f8",
+      mainContent: "#fafafa",
       alertBox: "#E67381",
       warningBox: "#F18D5A",
     },

@@ -17,7 +17,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       }
     },
     LeftData: {
-      paddingRight: 30,
+      padding: '12px 30px 0 0',
       borderRightWidth: 1,
       borderRightStyle: "solid",
       "@media (max-width:1023px)": {
@@ -64,7 +64,8 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     FooterLogo: {
       "& h1": {
-        width: 240
+        width: 167,
+        margin: 0
       },
       "& img": {
         width: "100%"
