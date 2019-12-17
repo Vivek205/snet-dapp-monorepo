@@ -29,7 +29,7 @@ const SNETLogin = props => {
   };
 
   return (
-    <Grid container spacing={24}>
+    <Grid container spacing={12}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.loginDetails}>
         <h2>{title}</h2>
         <form noValidate autoComplete="off" className={classes.loginForm}>

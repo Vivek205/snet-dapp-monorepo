@@ -1,4 +1,4 @@
-import * as login from "./loginActions";
-import * as signup from "./signupActions";
+import * as loginActions from "./loginActions";
+import * as signupActions from "./signupActions";
 
-export { login, signup };
+export { loginActions, signupActions };
