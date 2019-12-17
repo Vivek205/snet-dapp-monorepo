@@ -7,9 +7,9 @@ export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 
 const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLoggedin });
 
-const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
+export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
 
-const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: nickname });
+export const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: nickname });
 
 const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
 
