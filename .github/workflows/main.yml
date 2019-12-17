@@ -2,7 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: '*/15 * * * *'
 
 jobs:
   sync:
@@ -10,18 +10,6 @@ jobs:
 
     steps:
       - name: Fork Sync - master
-        uses: TG908/fork-sync@v1.1.4
-        with:
-          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
-          owner: Vivek205
-          base: master
-          head: master
-
-  sync:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Fork Sync - development
         uses: TG908/fork-sync@v1.1.4
         with:
           github_token: ${{ secrets.REPO_SYNC_TOKEN }}
