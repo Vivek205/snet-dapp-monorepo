@@ -18,9 +18,9 @@ const Onboarding = ({ match, classes }) => {
   }, [match]);
 
   const onboardingSections = {
-    ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: Entity },
-    TNC: { title: titles.TNC, description: descriptions.TNC, component: TNC },
-    AUTHENTICATE: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: Authenticate },
+    ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
+    TNC: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
+    AUTHENTICATE: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: <Authenticate /> },
   };
 
   const activeStep = onboardingSections[currentStep];
