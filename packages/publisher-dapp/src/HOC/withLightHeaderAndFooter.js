@@ -11,10 +11,10 @@ const withLightHeaderAndFooter = Component => {
       <Header />
       <Container>
         <Box my={8}>
-          <Component {...props} />
-          <Footer />
+          <Component {...props} />          
         </Box>
       </Container>
+      <Footer />
     </Fragment>
   );
 };
