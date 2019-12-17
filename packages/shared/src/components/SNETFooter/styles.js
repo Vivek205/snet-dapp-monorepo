@@ -1,21 +1,21 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(MUITheme => ({
   footer: {
     padding: "23px 0",
-    backgroundColor: theme.palette.background.footer,
-    color: theme.palette.text.offWhite,
+    backgroundColor: MUITheme.palette.background.footer,
+    color: MUITheme.palette.text.footerText,
     "@media (max-width:767px)": { padding: "21px 0 52px" },
   },
   footerWrapper: {
-    width: "83%",
+    width: "80%",
     margin: "0 auto",
     "@media (max-width:1279px) and (min-width:1024px)": { width: "98%" },
     "@media (max-width:1023px)": { width: "100%" },
   },
   footerLinks: { listStyle: "none" },
   footerLinkText: {
-    color: theme.palette.text.white,
+    color: MUITheme.palette.text.white,
     fontSize: 14,
     lineHeight: "28px",
     opacity: 0.6,
@@ -25,9 +25,10 @@ export const useStyles = makeStyles(theme => ({
   footerLinksTitle: {
     marginBottom: 8,
     display: "inline-block",
-    color: theme.palette.text.white,
+    color: MUITheme.palette.text.white,
     fontSize: 20,
     fontWeight: 600,
+    opacity: 0.8,
     "@media (max-width:1023px) and (min-width:768px)": {
       fontSize: 18,
     },
@@ -37,7 +38,7 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: 45,
   },
   socialIcon: {
-    color: theme.palette.text.white,
+    color: MUITheme.palette.text.white,
     opacity: 0.6,
     "& span": {
       fontSize: 20,
