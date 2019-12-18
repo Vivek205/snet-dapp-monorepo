@@ -57,7 +57,7 @@ export const GlobalRoutes = {
     component: OnboardingComponent,
   },
     ORGSETUPSTATUS: {
-    name: "onboarding",
+    name: "organization setup",
     path: "/orgsetupstatus",
     component: OrgSetupStatusComponent,
   },
