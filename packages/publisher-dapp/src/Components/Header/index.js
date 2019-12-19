@@ -21,9 +21,9 @@ const Header = () => {
         onClick: () => history.push(GlobalRoutes.LOGIN.path),
       },
       {
-        children: "enroll",
+        children: "Get Started",
         color: "primary",
-        onClick: () => history.push(`${GlobalRoutes.ONBOARDING.basePath}/entity`),
+        onClick: () => history.push(GlobalRoutes.ENROLL.path),
         variant: "contained",
       },
     ],
