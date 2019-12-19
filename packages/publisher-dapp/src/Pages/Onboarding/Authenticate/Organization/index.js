@@ -12,7 +12,7 @@ const Organization = () => {
     companyName: "",
     duns: "",
     website: "",
-    userFullName: "",
+    ownerFullName: "",
     phone: "",
   });
   const [hqAddress, setHqAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });

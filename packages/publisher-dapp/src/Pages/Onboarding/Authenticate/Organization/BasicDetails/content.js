@@ -22,7 +22,7 @@ export const basicDetailsFormData = {
   },
   USER_FULL_NAME: {
     id: "Your Full Name - 15/50 char",
-    name: "userFullName",
+    name: "ownerFullName",
     label: "Your Full Name",
     helperText: "15/50 char",
     description: `You should be owner of your company’s legal entity.`,

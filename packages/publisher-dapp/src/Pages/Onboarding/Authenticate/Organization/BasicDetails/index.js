@@ -22,7 +22,7 @@ const BasicDetails = props => {
       />
       <BasicDetailsInput
         {...basicDetailsFormData.USER_FULL_NAME}
-        value={basicDetails.userFullName}
+        value={basicDetails.ownerFullName}
         onChange={handleBasicDetailsChange}
       />
       <BasicDetailsInput
@@ -39,7 +39,7 @@ BasicDetails.propTypes = {
     companyName: PropTypes.string,
     duns: PropTypes.string,
     website: PropTypes.string,
-    userFullName: PropTypes.string,
+    ownerFullName: PropTypes.string,
     phone: PropTypes.string,
   }),
   handleBasicDetailsChange: PropTypes.func,
