@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { withStyles } from "@material-ui/core/styles";
 
+import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 import { mailingAddressFormData } from "./content";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const MailingAddress = props => {
-  const { mailingAddress, handleMailingAddressChange, sameAddress, handleSameAddressChange } = props;
-
+const MailingAddress = ({ classes, mailingAddress, handleMailingAddressChange, sameAddress, handleSameAddressChange }) => {
   return (
-    <Grid item sx={12} sm={12} md={6} lg={6}>
-      <Typography variant="h6">Company Mailing Address</Typography>
+    <Grid item sx={12} sm={12} md={6} lg={6} className={classes.mailingAddressContainer}>
+      <Typography variant="subtitle1">Company Mailing Address</Typography>
       <FormControlLabel
         control={<Checkbox checked={sameAddress} onChange={handleSameAddressChange} color="primary" />}
-        label="same as Headquarters Address"
+        label="same as Headquarters Address" className={classes.checkbox}
       />
       <StyledTextField
         {...mailingAddressFormData.STREET}
@@ -76,4 +76,4 @@ MailingAddress.propTypes = {
   handleMailingAddressChange: PropTypes.func,
 };
 
-export default MailingAddress;
+export default withStyles(useStyles)(MailingAddress);

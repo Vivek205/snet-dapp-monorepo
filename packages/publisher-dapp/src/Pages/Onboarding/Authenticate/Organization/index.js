@@ -1,5 +1,7 @@
 import React, { useState, Fragment } from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import BasicDetails from "./BasicDetails";
 import CompanyAddress from "./CompanyAddress";
@@ -42,15 +44,19 @@ const Organization = () => {
 
   return (
     <Fragment>
-      <BasicDetails basicDetails={basicDetails} handleBasicDetailsChange={handleBasicDetailsChange} />
-      <CompanyAddress
-        hqAddress={hqAddress}
-        handlehqAddressChange={handlehqAddressChange}
-        mailingAddress={mailingAddress}
-        handleMailingAddressChange={handleMailingAddressChange}
-        sameAddress={sameAddress}
-        handleSameAddressChange={handleAddressSame}
-      />
+      <div className={classes.box}>
+        <Typography variant="h6">Organization Verification Required</Typography>
+        <Typography>You need to provide your company organization details and your DUNS number for the verification process.</Typography>
+        <BasicDetails basicDetails={basicDetails} handleBasicDetailsChange={handleBasicDetailsChange} />
+        <CompanyAddress
+          hqAddress={hqAddress}
+          handlehqAddressChange={handlehqAddressChange}
+          mailingAddress={mailingAddress}
+          handleMailingAddressChange={handleMailingAddressChange}
+          sameAddress={sameAddress}
+          handleSameAddressChange={handleAddressSame}
+        />
+      </div>      
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" />
         <SNETButton color="primary" children="back" />

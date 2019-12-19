@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
+import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 import { hqAddressFormData } from "./content";
 
-const HQAddress = props => {
-  const { hqAddress, handlehqAddressChange } = props;
-
+const HQAddress = ({ classes, hqAddress, handlehqAddressChange }) => {
   return (
-    <Grid item sx={12} sm={12} md={6} lg={6}>
-      <Typography variant="h6">Headquarters Address</Typography>
+    <Grid item sx={12} sm={12} md={6} lg={6} className={classes.headquartersContainer}>
+      <Typography variant="subtitle1">Headquarters Address</Typography>
       <StyledTextField
         {...hqAddressFormData.STREET}
         variant="outlined"
@@ -68,4 +68,4 @@ HQAddress.propTypes = {
   handlehqAddressChange: PropTypes.func,
 };
 
-export default HQAddress;
+export default withStyles(useStyles)(HQAddress);

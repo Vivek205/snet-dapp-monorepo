@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
-import { useStyles } from "../styles";
+import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 
-const BasicDetailsInput = props => {
-  const classes = useStyles();
-  const { name, label, helperText, value, onChange, description } = props;
+const BasicDetailsInput = ({ classes, name, label, helperText, value, onChange, description }) => {
 
   return (
     <Grid container>
@@ -23,8 +22,8 @@ const BasicDetailsInput = props => {
           fullWidth
         />
       </Grid>
-      <Grid item sx={12} sm={12} md={6} lg={6}>
-        <Typography variant="body2">{description}</Typography>
+      <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
+        <Typography>{description}</Typography>
       </Grid>
     </Grid>
   );
@@ -39,4 +38,4 @@ BasicDetailsInput.propTypes = {
   onChange: PropTypes.func,
 };
 
-export default BasicDetailsInput;
+export default withStyles(useStyles)(BasicDetailsInput);
