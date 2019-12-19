@@ -52,8 +52,7 @@ export const GlobalRoutes = {
   },
   ONBOARDING: {
     name: "onboarding",
-    basePath: "/onboarding",
-    path: "/onboarding/",
+    path: "/onboarding",
     component: OnboardingComponent,
   },
   ORG_SETUP_STATUS: {

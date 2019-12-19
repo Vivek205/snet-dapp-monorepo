@@ -5,3 +5,10 @@ export const onboardingSections = {
 };
 
 export const progressText = ["entity", "terms of use", "authenticate"];
+
+export const verificationStatuses = {
+    NOT_STARTED: "NOT_STARTED",
+    SELECTED_ENTITY: "SELECTED_ENTITY",
+    ACCEPTED_TNC:"ACCEPTED_TNC",
+    VERIFICATION_PENDING:"VERIFICATION_PENDING"
+}
