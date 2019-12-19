@@ -1,18 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
-import AlertBox from "shared/dist/components/AlertBox";
-import StyledButton from "shared/dist/components/StyledButton";
+import AlertBox,{alertTypes} from "./../AlertBox";
+import SNETButton from "./../SNETButton";
+
 
 import { useStyles } from "./styles";
 
 import { forgotPasswordConstraints } from "./validationConstraints";
 import snetValidator from "../../../utility/snetValidator";
-import PropTypes from "prop-types";
-
-
-
 
 const SNETForgotPassword = props =>{
   
@@ -21,8 +19,9 @@ const SNETForgotPassword = props =>{
 
 
 
-  const {email, error,updateError,onSubmit} = props;
-  const [localEmail, setEmail] = useState(email);
+  const {forgotPasswordErr,onSubmit} = props;
+  const [email, setEmail] = useState("");
+  const [validationError,setValidationError]=useState(undefined)
 
   const handleEmail = event => {
     setEmail(event.target.value);
@@ -31,9 +30,9 @@ const SNETForgotPassword = props =>{
   const handleSubmit = event => {
     event.preventDefault();
     event.stopPropagation();
-    const isNotValid = snetValidator({ email: localEmail }, forgotPasswordConstraints);
+    const isNotValid = snetValidator({ email: email }, forgotPasswordConstraints);
     if (isNotValid) {
-      updateError(isNotValid[0]);
+      setValidationError(isNotValid[0]);
       return;
     }
     onSubmit(email)
@@ -54,11 +53,11 @@ const SNETForgotPassword = props =>{
             name="email"
             margin="normal"
             variant="outlined"
-            value={localEmail}
+            value={email}
             onChange={handleEmail}
           />
-          <AlertBox type="error" message={error} />
-          <StyledButton type="blue" btnText="reset password" onClick={handleSubmit} />
+          <AlertBox type={alertTypes.ERROR}  message={forgotPasswordErr || validationError } />
+          <SNETButton type="blue" btnText="reset password" onClick={handleSubmit} />
         </form>
       </Grid>
     </Grid>
@@ -70,9 +69,8 @@ const SNETForgotPassword = props =>{
 
 
 SNETForgotPassword.propTypes = {
-  email:PropTypes.string,
-  error:PropTypes.string,
-  updateError:PropTypes.func,
+
+  forgotPasswordErr:PropTypes.string,
   onSubmit:PropTypes.func
 
   

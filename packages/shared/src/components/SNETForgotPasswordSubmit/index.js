@@ -1,21 +1,22 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import AlertBox from "shared/dist/components/AlertBox";
-import StyledButton from "shared/dist/components/StyledButton";
+import AlertBox,{alertTypes} from "./../AlertBox";
+import SNETButton from "./../SNETButton";
 import { useStyles } from "./styles";
 import snetValidator from "../../../utility/snetValidator";
 import { forgotPassworSubmitConstraints } from "./validationConstraints";
-import PropTypes from "prop-types";
+
 
 
 const SNETForgotPasswordSubmit = props => {
   const classes = useStyles();
-  const {error, email,updateError,onSubmit } =props ;
+  const {error,updateError,onSubmit } =props ;
   const [showEmailSentAlert, setShowEmailSentAlert] = useState(true);
   const [code, setCode] = useState("");
-  const [password, setPassword] = useState("");
+  const [email,password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleCode = event => {
@@ -97,8 +98,8 @@ const SNETForgotPasswordSubmit = props => {
             value={confirmPassword}
             onChange={handleConfirmPassword}
           />
-          <AlertBox message={error} />
-          <StyledButton type="blue" btnText="Reset Password" onClick={handleSubmit} />
+          <AlertBox message={alertTypes.error} />
+          <SNETButton type="blue" btnText="Reset Password" onClick={handleSubmit} />
         </form>
       </Grid>
     </Grid>
@@ -107,7 +108,6 @@ const SNETForgotPasswordSubmit = props => {
 };
 
 SNETForgotPasswordSubmit.propTypes = {
-  email:PropTypes.string,
   error:PropTypes.string, 
   updateError:PropTypes.func,
   onSubmit: PropTypes.func
