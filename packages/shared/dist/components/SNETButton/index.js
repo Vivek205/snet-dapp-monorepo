@@ -19,7 +19,8 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
         fontSize: 14,
         letterSpacing: 1.25,
         padding: "13px 28px 11px",
-        lineHeight: "16px"
+        lineHeight: "16px",
+        fontSize: 14
       };
 
       if (props.color === "purple" && props.variant === "contained-inverted") {
