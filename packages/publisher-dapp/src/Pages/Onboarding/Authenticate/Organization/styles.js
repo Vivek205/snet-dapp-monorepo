@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(MUITheme => ({
   box:{
+    boxSizing: 'border-box',
     width: 846,
     padding: '0 22px 30px',
     borderRadius: 4,
@@ -20,7 +21,8 @@ export const useStyles = makeStyles(MUITheme => ({
       color: MUITheme.palette.text.primary,
       fontSize: 14,
       lineHeight: '21px'
-    }
+    },
+    [MUITheme.breakpoints.down('sm')]: { width: '100%' },
   },
   buttonsContainer: {
     marginTop: 40,
@@ -30,5 +32,6 @@ export const useStyles = makeStyles(MUITheme => ({
     "& button": {
       padding: " 13px 60px 11px",
     },
+    [MUITheme.breakpoints.down('xs')]: { flexDirection: 'column' },
   },  
 }));
