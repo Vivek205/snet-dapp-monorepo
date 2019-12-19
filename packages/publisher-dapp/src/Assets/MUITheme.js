@@ -87,15 +87,22 @@ export const MUITheme = createMuiTheme({
       color: "#212121",
       fontSize: 24,
       fontWeight: 600,
-      lineHeight: "30px",
+      lineHeight: '30px'
     },
     h5: {
       color: "#212121",
-      fontSize: 20,
-      lineHeight: "50px",
+      fontSize: 22,
+      fontWeight: 600,
+      lineHeight: '32px'
     },
-    body1: {
-      color: "#9b9b9b",
+    h6: {
+      color: "#212121",
+      fontSize: 20,
+      fontWeight: 600,
+      lineHeight: '25px'
+    },
+    body1:{
+      color: '#9b9b9b',
       fontSize: 24,
       lineHeight: "30px",
     },
