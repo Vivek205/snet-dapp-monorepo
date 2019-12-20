@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import AlertBox from "shared/dist/components/AlertBox";
 import StyledButton from "shared/dist/components/StyledButton";
+import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 
-const TermsAndConditions = ({ classes, title, checkboxChecked, handleChange, formLabel, CTAType, CTAText, CTADisabled, handleCTA, alertType, alertMsg  }) => {
+const TermsAndConditions = (props) => {
+  const { classes, title, formLabel, onAccept, agreed, onChangeAgreed } = props;
+
   return (
     <div className={classes.onboardingContainer}>
       <div className={classes.termsAndConditionsContainer}>
@@ -18,15 +21,23 @@ const TermsAndConditions = ({ classes, title, checkboxChecked, handleChange, for
         </div>
         <div className={classes.checkboxAndButton}>
           <FormControlLabel
-            control={<Checkbox checked={checkboxChecked} onChange={handleChange} color="primary" />}
+            control={<Checkbox onChange={onChangeAgreed} color="primary" />}
             label={formLabel}
           />
-          <StyledButton btnText="accept" />
+          {onAccept ? <StyledButton btnText="accept" disabled={!agreed} onClick={onAccept} /> : ""}
         </div>
-        <AlertBox type={alertType} message={alertMsg} />
+        <AlertBox type={alert.type} message={alert.message} />
       </div>
     </div>
   );
-}
+};
+
+TermsAndConditions.protoTypes = {
+  title: PropTypes.string,
+  formLabel: PropTypes.string,
+  onAccept: PropTypes.func,
+  agreed: PropTypes.bool,
+  onChangeAgreed: PropTypes.func
+};
 
 export default withStyles(useStyles)(TermsAndConditions);

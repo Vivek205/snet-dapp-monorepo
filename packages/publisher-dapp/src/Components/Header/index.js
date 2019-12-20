@@ -1,12 +1,16 @@
 import React from "react";
-import SNETHeader from "shared/dist/components/SNETHeader";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import SNETHeader from "shared/dist/components/SNETHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const Header = () => {
   const history = useHistory();
+  const { isLoggedIn } = useSelector(state => state.user);
 
   const headerProps = {
+    isLoggedIn,
     color: "white",
     navbar: {
       navbarItems: [
@@ -21,9 +25,9 @@ const Header = () => {
         onClick: () => history.push(GlobalRoutes.LOGIN.path),
       },
       {
-        children: "enroll",
+        children: "Get Started",
         color: "primary",
-        onClick: () => history.push(`${GlobalRoutes.ONBOARDING.basePath}/entity`),
+        onClick: () => history.push(GlobalRoutes.ENROLL.path),
         variant: "contained",
       },
     ],
