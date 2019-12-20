@@ -12,11 +12,6 @@ import Navigation from "./Navigation";
 const Onboarding = ({ match, classes }) => {
   const [currentStep, setCurrentStep] = useState(steps.ENTITY);
 
-  useEffect(() => {
-    const { step } = match.params;
-    setCurrentStep(step.toUpperCase());
-  }, [match]);
-
   const onboardingSections = {
     ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
     TNC: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
