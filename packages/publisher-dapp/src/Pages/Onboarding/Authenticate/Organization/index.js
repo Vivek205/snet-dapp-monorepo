@@ -1,6 +1,4 @@
 import React, { useState, Fragment } from "react";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
 import BasicDetails from "./BasicDetails";
@@ -14,7 +12,7 @@ const Organization = () => {
     companyName: "",
     duns: "",
     website: "",
-    userFullName: "",
+    ownerFullName: "",
     phone: "",
   });
   const [hqAddress, setHqAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
