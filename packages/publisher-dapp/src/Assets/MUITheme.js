@@ -48,6 +48,7 @@ export const MUITheme = createMuiTheme({
         red: "#D0021B",
         black: "#333",
       },
+      grey: "#D6D6D6",
       mainContent: "#fafafa",
       footer: "#211D24",
       white: "#fff",
