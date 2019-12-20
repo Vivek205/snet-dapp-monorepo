@@ -16,7 +16,7 @@ const RelatedLinks = ({ classes }) => {
         <Typography>Related Links</Typography>
       </div>
       {relatedLinks.map((item,index) => (
-        <AnchorLink label={item.label} href={item.linkTo} />
+        <AnchorLink label={item.label} href={item.linkTo} key={item.label} />
       ))}
     </Grid>
   );
