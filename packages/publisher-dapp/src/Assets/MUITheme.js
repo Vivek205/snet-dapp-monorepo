@@ -59,6 +59,7 @@ export const MUITheme = createMuiTheme({
       infoBox: "#DEEAFF",
     },
     border: {
+      primary: '#f5f7f8',
       mainContent: "#fafafa",
       alertBox: "#E67381",
       warningBox: "#F18D5A",

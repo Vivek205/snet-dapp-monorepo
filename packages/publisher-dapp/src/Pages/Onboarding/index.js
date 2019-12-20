@@ -9,10 +9,6 @@ import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
 
 const Onboarding = ({ location, history }) => {
-  const noPathsMatchesSubroutes = () => {
-    history.push(OnboardingRoutes.ENTITY.path);
-  };
-
   const activeSection = () => {
     const { pathname: path } = location;
     const { ENTITY, TNC, AUTHENTICATE } = onboardingSections;
@@ -24,7 +20,6 @@ const Onboarding = ({ location, history }) => {
     } else if (path.includes(OnboardingRoutes.AUTHENTICATE.path)) {
       return AUTHENTICATE;
     }
-    noPathsMatchesSubroutes();
     return ENTITY;
   };
 
