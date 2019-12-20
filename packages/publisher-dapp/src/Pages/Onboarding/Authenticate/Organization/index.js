@@ -11,7 +11,7 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [basicDetails, setBasicDetails] = useState({
-    companyName: "",
+    name: "",
     duns: "",
     website: "",
     ownerFullName: "",

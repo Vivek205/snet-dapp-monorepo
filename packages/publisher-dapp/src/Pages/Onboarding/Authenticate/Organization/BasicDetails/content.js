@@ -1,7 +1,7 @@
 export const basicDetailsFormData = {
   COMPANY_NAME: {
     id: "company Name - 15/50 char",
-    name: "companyName",
+    name: "name",
     label: "Company Name",
     helperText: "15/50 char",
     description: `The company name is displayed to users under you AI service name.`,

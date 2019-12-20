@@ -11,7 +11,7 @@ const BasicDetails = props => {
     <Grid container>
       <SNETTextField
         {...basicDetailsFormData.COMPANY_NAME}
-        value={basicDetails.companyName}
+        value={basicDetails.name}
         onChange={handleBasicDetailsChange}
       />
       <SNETTextField {...basicDetailsFormData.DUNS} value={basicDetails.duns} onChange={handleBasicDetailsChange} />
@@ -36,7 +36,7 @@ const BasicDetails = props => {
 
 BasicDetails.propTypes = {
   basicDetails: PropTypes.shape({
-    companyName: PropTypes.string,
+    name: PropTypes.string,
     duns: PropTypes.string,
     website: PropTypes.string,
     ownerFullName: PropTypes.string,

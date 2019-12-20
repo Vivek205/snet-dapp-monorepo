@@ -28,6 +28,9 @@ var SNETTextarea = function SNETTextarea(_ref) {
       label = _ref.label,
       rowCount = _ref.rowCount,
       colCount = _ref.colCount,
+      name = _ref.name,
+      value = _ref.value,
+      onChange = _ref.onChange,
       content = _ref.content,
       minCount = _ref.minCount,
       maxCount = _ref.maxCount;
@@ -41,7 +44,10 @@ var SNETTextarea = function SNETTextarea(_ref) {
     className: classes.label
   }, label), _react.default.createElement("textarea", {
     rows: rowCount,
-    cols: colCount
+    cols: colCount,
+    name: name,
+    value: value,
+    onChange: onChange
   }, content), _react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char")));
