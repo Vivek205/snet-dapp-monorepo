@@ -8,8 +8,8 @@ import OrganizationSetupRouter from "./OrganizationSetupRouter";
 import Heading from "./Heading";
 import { useStyles } from "./styles";
 
-const OrganizationSetup = ({ match, classes, location }) => {
-   const activeSection = () => {
+const OrganizationSetup = ({ classes, location }) => {
+  const activeSection = () => {
     const { pathname: path } = location;
     const strippedPath = path => path.split("/")[2];
     const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
@@ -34,7 +34,7 @@ const OrganizationSetup = ({ match, classes, location }) => {
     <div className={classes.organixationSetupContainer}>
       <Heading {...activeSection().heading} />
       <ProgressBar activeSection={activeSection()} progressText={progressText} />
-      <OrganizationSetupRouter />  
+      <OrganizationSetupRouter />
     </div>
   );
 };

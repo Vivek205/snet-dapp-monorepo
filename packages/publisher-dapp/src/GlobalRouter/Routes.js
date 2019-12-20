@@ -2,10 +2,10 @@ import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
-const Login = lazy(()=> import("../Pages/Login"));
-const Signup = lazy(()=> import("../Pages/Signup"));
-const Overview = lazy(() =>  import("../Pages/Overview"))
-const HowItWorks = lazy(() =>import("../Pages/HowItWorks"));
+const Login = lazy(() => import("../Pages/Login"));
+const Signup = lazy(() => import("../Pages/Signup"));
+const Overview = lazy(() => import("../Pages/Overview"));
+const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const Onboarding = lazy(() => import("../Pages/Onboarding"));
 const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
@@ -15,9 +15,9 @@ const LoginComponent = withLightHeaderAndFooter(Login);
 const SignupComponent = withLightHeaderAndFooter(Signup);
 const SingupConfirmComponent = withLightHeaderAndFooter(SignupConfirm);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
-const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks)
+const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
-const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup)
+const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -53,13 +53,13 @@ export const GlobalRoutes = {
   ONBOARDING: {
     name: "onboarding",
     basePath: "/onboarding",
-    path: "/onboarding/:step",
+    path: "/onboarding",
     component: OnboardingComponent,
   },
   ORGANIZATION_SETUP: {
     name: "organizationsetup",
     basePath: "/organizationsetup",
-    path: "/organizationsetup/:step",
+    path: "/organizationsetup",
     component: OrganizationsetupComponent,
   },
 };
