@@ -11,6 +11,12 @@ export const useStyles = MUITheme => ({
 			borderBottomWidth: 1,
 			borderBottomStyle: 'solid',
 			borderBottomColor: MUITheme.palette.border.primary
+		},
+		'& hr':{
+			height: 1,
+			border: 'none',
+			margin: '31px 23px',
+			backgroundColor: MUITheme.palette.background.grey		
 		}
 	}
 });
