@@ -1,15 +1,25 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography';
+import React, { Fragment } from "react";
 
-import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
+import SNETButton from "shared/dist/components/SNETButton";
+import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 
-const Region = ({ classes }) => {
+const Region = ({ history }) => {
+  const classes = useStyles();
+
+  const handleContinue = () => {
+    history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
+  };
+
   return (
-    <span>Region / Group</span>
-  )
+    <Fragment>
+      <span>Region / Group</span>
+      <div className={classes.buttonsContainer}>
+        <SNETButton color="primary" children="finish later" />
+        <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
+      </div>
+    </Fragment>
+  );
 };
 
-export default withStyles(useStyles)(Region);
+export default Region;

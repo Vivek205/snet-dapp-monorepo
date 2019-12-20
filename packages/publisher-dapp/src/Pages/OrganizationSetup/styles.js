@@ -1,5 +1,5 @@
 export const useStyles = MUITheme => ({
-	organixationSetupContainer:{
+	organizationSetupContainer:{
 		paddingTop: 40,
 		'& h3': { lineHeight: '48px' },
 	},

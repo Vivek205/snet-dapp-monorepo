@@ -32,7 +32,7 @@ var StyledTextField = function StyledTextField(_ref) {
   return _react.default.createElement(_TextField.default, _extends({
     id: "outlined-name",
     label: label,
-    className: "".concat(classes.styledTextField, " ").concat(className),
+    className: "".concat(classes.styledTextField, " ").concat(classes.className),
     value: value,
     onChange: handleChange,
     margin: "normal",

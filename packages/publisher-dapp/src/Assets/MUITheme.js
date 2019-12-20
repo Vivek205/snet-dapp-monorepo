@@ -48,6 +48,7 @@ export const MUITheme = createMuiTheme({
         red: "#D0021B",
         black: "#333",
       },
+      grey: "#D6D6D6",
       mainContent: "#fafafa",
       footer: "#211D24",
       white: "#fff",
@@ -116,6 +117,11 @@ export const MUITheme = createMuiTheme({
       color: "#212121",
       fontSize: 18,
       fontWeight: "bold",
+    },
+    subtitle2: {
+      color: "#666",
+      fontSize: 14,
+      lineHeight: '21px'
     },
   },
 });

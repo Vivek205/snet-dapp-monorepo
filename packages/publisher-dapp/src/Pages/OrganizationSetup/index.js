@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { progressText, organizationSetupSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
@@ -7,8 +7,23 @@ import { OrganizationSetupRoutes } from "./OrganizationSetupRouter/Routes";
 import OrganizationSetupRouter from "./OrganizationSetupRouter";
 import Heading from "./Heading";
 import { useStyles } from "./styles";
+import { useSelector, useDispatch } from "react-redux";
+import { organizationActions } from "../../Services/Redux/actionCreators";
 
 const OrganizationSetup = ({ classes, location }) => {
+  const { name, website, shortDescription, longDescription } = useSelector(state => state.organization);
+  const dispatch = useDispatch();
+
+  const handleFinishLater = async () => {
+    const payload = {
+      org_name: name,
+      description: longDescription,
+      shortDescription,
+      url: website,
+    };
+    await dispatch(organizationActions.finishLater(payload));
+  };
+
   const activeSection = () => {
     const { pathname: path } = location;
     const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
@@ -24,10 +39,10 @@ const OrganizationSetup = ({ classes, location }) => {
   };
 
   return (
-    <div className={classes.organixationSetupContainer}>
+    <div className={classes.organizationSetupContainer}>
       <Heading {...activeSection().heading} />
       <ProgressBar activeSection={activeSection().key} progressText={progressText} />
-      <OrganizationSetupRouter />
+      <OrganizationSetupRouter handleFinishLater={handleFinishLater} />
     </div>
   );
 };

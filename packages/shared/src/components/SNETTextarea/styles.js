@@ -27,6 +27,7 @@ export const useStyles = MUITheme => ({
   	color: MUITheme.palette.text.darkGrey
 	},
 	charLength:{
+		marginBottom: 25, 
 		display: 'block',
 		paddingLeft: 14,
 		color: MUITheme.palette.text.primary,
