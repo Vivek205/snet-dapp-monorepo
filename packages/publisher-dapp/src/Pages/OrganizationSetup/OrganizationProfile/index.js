@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 
-import SNETTextfield from "shared/dist/components/SNETTextfield";
+import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { useStyles } from "./styles";
 
 const OrganizationProfile = ({ classes }) => {
