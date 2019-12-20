@@ -2,30 +2,30 @@ import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
-import BasicDetailsInput from "./BasicDetailsInput";
+import SNETTextField from "shared/dist/components/SNETTextfield"
 import { basicDetailsFormData } from "./content";
 
 const BasicDetails = props => {
   const { basicDetails, handleBasicDetailsChange } = props;
   return (
     <Grid container>
-      <BasicDetailsInput
+      <SNETTextField
         {...basicDetailsFormData.COMPANY_NAME}
         value={basicDetails.companyName}
         onChange={handleBasicDetailsChange}
       />
-      <BasicDetailsInput {...basicDetailsFormData.DUNS} value={basicDetails.duns} onChange={handleBasicDetailsChange} />
-      <BasicDetailsInput
+      <SNETTextField {...basicDetailsFormData.DUNS} value={basicDetails.duns} onChange={handleBasicDetailsChange} />
+      <SNETTextField
         {...basicDetailsFormData.WEBSITE}
         value={basicDetails.website}
         onChange={handleBasicDetailsChange}
       />
-      <BasicDetailsInput
+      <SNETTextField
         {...basicDetailsFormData.USER_FULL_NAME}
         value={basicDetails.ownerFullName}
         onChange={handleBasicDetailsChange}
       />
-      <BasicDetailsInput
+      <SNETTextField
         {...basicDetailsFormData.PHONE}
         value={basicDetails.phone}
         onChange={handleBasicDetailsChange}

@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 
-const BasicDetailsInput = ({ classes, name, label, helperText, value, onChange, description }) => {
+const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description }) => {
 
   return (
     <Grid container>
@@ -29,7 +29,7 @@ const BasicDetailsInput = ({ classes, name, label, helperText, value, onChange, 
   );
 };
 
-BasicDetailsInput.propTypes = {
+SNETTextfield.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -38,4 +38,4 @@ BasicDetailsInput.propTypes = {
   onChange: PropTypes.func,
 };
 
-export default withStyles(useStyles)(BasicDetailsInput);
+export default withStyles(useStyles)(SNETTextfield);
