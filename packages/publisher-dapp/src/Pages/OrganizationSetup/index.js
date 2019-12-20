@@ -31,11 +31,11 @@ const OrganizationSetup = ({ match, classes, location }) => {
   };
 
   return (
-    <Fragment>
+    <div className={classes.organixationSetupContainer}>
       <Heading {...activeSection().heading} />
       <ProgressBar activeSection={activeSection()} progressText={progressText} />
       <OrganizationSetupRouter />  
-    </Fragment>
+    </div>
   );
 };
 
