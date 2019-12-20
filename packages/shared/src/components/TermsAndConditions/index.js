@@ -9,8 +9,8 @@ import PropTypes from "prop-types";
 import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 
-const TermsAndConditions = ({ classes, title, formLabel, onAccept }) => {
-  const [agreed, setAgreed] = useState(false);
+const TermsAndConditions = (props) => {
+  const { classes, title, formLabel, onAccept, agreed, onChangeAgreed } = props;
 
   return (
     <div className={classes.onboardingContainer}>
@@ -21,10 +21,10 @@ const TermsAndConditions = ({ classes, title, formLabel, onAccept }) => {
         </div>
         <div className={classes.checkboxAndButton}>
           <FormControlLabel
-            control={<Checkbox onChange={() => setAgreed(!agreed)} color="primary" />}
+            control={<Checkbox onChange={onChangeAgreed} color="primary" />}
             label={formLabel}
           />
-          <StyledButton btnText="accept" disabled={!agreed} onClick={onAccept}/>
+          {onAccept ? <StyledButton btnText="accept" disabled={!agreed} onClick={onAccept} /> : ""}
         </div>
         <AlertBox type={alert.type} message={alert.message} />
       </div>
@@ -36,6 +36,8 @@ TermsAndConditions.protoTypes = {
   title: PropTypes.string,
   formLabel: PropTypes.string,
   onAccept: PropTypes.func,
+  agreed: PropTypes.bool,
+  onChangeAgreed: PropTypes.func
 };
 
 export default withStyles(useStyles)(TermsAndConditions);
