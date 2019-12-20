@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { titles, descriptions, progressText, stepsToKeys, steps, stepsLimit, keysToSteps } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
