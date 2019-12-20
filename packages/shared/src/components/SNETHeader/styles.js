@@ -15,5 +15,6 @@ export const useStyles = makeStyles(MUITheme => ({
     "& *": {
       marginLeft: 5,
     },
+    textAlign: "end",
   },
 }));

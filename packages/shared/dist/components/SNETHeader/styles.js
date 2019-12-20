@@ -22,7 +22,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       flexGrow: 1,
       "& *": {
         marginLeft: 5
-      }
+      },
+      textAlign: "end"
     }
   };
 });
