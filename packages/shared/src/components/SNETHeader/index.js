@@ -48,6 +48,7 @@ SNETHeader.defaultProps = {
 };
 
 SNETHeader.propTypes = {
+  isLoggedIn: PropTypes.bool,
   color: PropTypes.string,
   navbar: PropTypes.shape({
     navbarItems: PropTypes.arrayOf(

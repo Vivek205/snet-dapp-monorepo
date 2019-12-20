@@ -1,54 +1,38 @@
-import React, { useState, Fragment } from "react";
-import { titles, descriptions, progressText, stepsToKeys, steps, stepsLimit, keysToSteps } from "./constant";
+import React, { Fragment } from "react";
+import { progressText, onboardingSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
 
-import Entity from "./Entity";
-import TNC from "./TNC";
-import Authenticate from "./Authenticate";
 import { useStyles } from "./styles";
-import Navigation from "./Navigation";
+import { OnboardingRoutes } from "./OnboardingRouter/Routes";
+import OnboardingRouter from "./OnboardingRouter";
+import Heading from "./Heading";
 
-const Onboarding = ({ match, classes }) => {
-  const [currentStep, setCurrentStep] = useState(steps.ENTITY);
-
-  const onboardingSections = {
-    ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
-    TNC: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
-    AUTHENTICATE: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: <Authenticate /> },
+const Onboarding = ({ location, history }) => {
+  const noPathsMatchesSubroutes = () => {
+    history.push(OnboardingRoutes.ENTITY.path);
   };
 
-  const activeStep = onboardingSections[currentStep];
+  const activeSection = () => {
+    const { pathname: path } = location;
+    const { ENTITY, TNC, AUTHENTICATE } = onboardingSections;
 
-  const handleNext = () => {
-    if (stepsToKeys[currentStep] === stepsLimit.LAST) {
-      return undefined;
+    if (path.includes(OnboardingRoutes.ENTITY.path)) {
+      return ENTITY;
+    } else if (path.includes(OnboardingRoutes.TNC.path)) {
+      return TNC;
+    } else if (path.includes(OnboardingRoutes.AUTHENTICATE.path)) {
+      return AUTHENTICATE;
     }
-    return () => {
-      const nextStep = keysToSteps[stepsToKeys[currentStep] + 1];
-      setCurrentStep(nextStep);
-    };
-  };
-
-  const handlePrev = () => {
-    if (stepsToKeys[currentStep] === stepsLimit.FIRST) {
-      return undefined;
-    }
-    return () => {
-      const nextStep = keysToSteps[stepsToKeys[currentStep] - 1];
-      setCurrentStep(nextStep);
-    };
+    noPathsMatchesSubroutes();
+    return ENTITY;
   };
 
   return (
     <Fragment>
-      <div className={classes.topSection}>
-        <h2>{activeStep.title}</h2>
-        <span> {activeStep.description}</span>
-      </div>
-      <ProgressBar activeSection={stepsToKeys[currentStep]} progressText={progressText} />
-      {activeStep.component}
-      <Navigation handleNext={handleNext()} handlePrev={handlePrev()} />
+      <Heading {...activeSection().heading} />
+      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
+      <OnboardingRouter />
     </Fragment>
   );
 };
