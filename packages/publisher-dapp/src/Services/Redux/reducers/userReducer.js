@@ -1,10 +1,12 @@
 import { userActions } from "../actionCreators";
+import { verificationStatuses } from "../../../Pages/Onboarding/constant";
 
 const initialState = {
   isLoggedIn: false,
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
+  verificationStatus: verificationStatuses.NOT_STARTED
 };
 
 const userReducer = (state = initialState, action) => {

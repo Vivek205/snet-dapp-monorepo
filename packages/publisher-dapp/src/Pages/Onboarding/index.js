@@ -8,32 +8,30 @@ import { OnboardingRoutes } from "./OnboardingRouter/Routes";
 import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
 
-const Onboarding = ({ location }) => {
+const Onboarding = ({ location, history }) => {
+  const noPathsMatchesSubroutes = () => {
+    history.push(OnboardingRoutes.ENTITY.path);
+  };
+
   const activeSection = () => {
     const { pathname: path } = location;
-    const strippedPath = path => path.split("/")[2];
     const { ENTITY, TNC, AUTHENTICATE } = onboardingSections;
 
-    switch (strippedPath(path)) {
-      case strippedPath(OnboardingRoutes.ENTITY.path): {
-        return ENTITY;
-      }
-      case strippedPath(OnboardingRoutes.TNC.path): {
-        return TNC;
-      }
-      case strippedPath(OnboardingRoutes.AUTHENTICATE.path): {
-        return AUTHENTICATE;
-      }
-      default: {
-        return ENTITY;
-      }
+    if (path.includes(OnboardingRoutes.ENTITY.path)) {
+      return ENTITY;
+    } else if (path.includes(OnboardingRoutes.TNC.path)) {
+      return TNC;
+    } else if (path.includes(OnboardingRoutes.AUTHENTICATE.path)) {
+      return AUTHENTICATE;
     }
+    noPathsMatchesSubroutes();
+    return ENTITY;
   };
 
   return (
     <Fragment>
       <Heading {...activeSection().heading} />
-      <ProgressBar activeSection={activeSection()} progressText={progressText} />
+      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
       <OnboardingRouter />
     </Fragment>
   );
