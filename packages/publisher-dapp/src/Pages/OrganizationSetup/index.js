@@ -11,29 +11,22 @@ import { useStyles } from "./styles";
 const OrganizationSetup = ({ classes, location }) => {
   const activeSection = () => {
     const { pathname: path } = location;
-    const strippedPath = path => path.split("/")[2];
     const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
 
-    switch (strippedPath(path)) {
-      case strippedPath(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path): {
-        return ORGANIZATION_PROFILE;
-      }
-      case strippedPath(OrganizationSetupRoutes.REGION.path): {
-        return REGION;
-      }
-      case strippedPath(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path): {
-        return PUBLISH_TO_BLOCKCHAIN;
-      }
-      default: {
-        return ORGANIZATION_PROFILE;
-      }
+    if (path.includes(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path)) {
+      return ORGANIZATION_PROFILE;
+    } else if (path.includes(OrganizationSetupRoutes.REGION.path)) {
+      return REGION;
+    } else if (path.includes(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path)) {
+      return PUBLISH_TO_BLOCKCHAIN;
     }
+    return ORGANIZATION_PROFILE;
   };
 
   return (
     <div className={classes.organixationSetupContainer}>
       <Heading {...activeSection().heading} />
-      <ProgressBar activeSection={activeSection()} progressText={progressText} />
+      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
       <OrganizationSetupRouter />
     </div>
   );
