@@ -56,7 +56,7 @@ export const GlobalRoutes = {
     path: "/onboarding/:step",
     component: OnboardingComponent,
   },
-  ORGANIZATIONSETUP: {
+  ORGANIZATION_SETUP: {
     name: "organizationsetup",
     basePath: "/organizationsetup",
     path: "/organizationsetup/:step",

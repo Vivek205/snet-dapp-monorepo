@@ -1,38 +1,40 @@
-import React, { useState, Fragment, useEffect } from "react";
-import { titles, descriptions, progressText, stepsToKeys, steps, stepsLimit, keysToSteps } from "./constant";
+import React, { Fragment } from "react";
+import { progressText, organizationSetupSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
 
-import Entity from "./Entity";
-import TNC from "./TNC";
-import Authenticate from "./Authenticate";
+import { OrganizationSetupRoutes } from "./OrganizationSetupRouter/Routes";
+import OrganizationSetupRouter from "./OrganizationSetupRouter";
+import Heading from "./Heading";
 import { useStyles } from "./styles";
-import Navigation from "./Navigation";
 
-const OrganizationSetup = ({ match, classes }) => {
-  const [currentStep, setCurrentStep] = useState(steps.ENTITY);
+const OrganizationSetup = ({ match, classes, location }) => {
+   const activeSection = () => {
+    const { pathname: path } = location;
+    const strippedPath = path => path.split("/")[2];
+    const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
 
-  useEffect(() => {
-    const { step } = match.params;
-    setCurrentStep(step.toUpperCase());
-  }, [match]);
-
-  const organizationSetupSections = {
-    ORGANIZATIONPROFILE: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
-    REGION: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
-    PUBLISHTOBLOCKCHAIN: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: <Authenticate /> },
+    switch (strippedPath(path)) {
+      case strippedPath(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path): {
+        return ORGANIZATION_PROFILE;
+      }
+      case strippedPath(OrganizationSetupRoutes.REGION.path): {
+        return REGION;
+      }
+      case strippedPath(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path): {
+        return PUBLISH_TO_BLOCKCHAIN;
+      }
+      default: {
+        return ORGANIZATION_PROFILE;
+      }
+    }
   };
-
-  const activeStep = organizationSetupSections[currentStep];
 
   return (
     <Fragment>
-      <div className={classes.topSection}>
-        <h2>{activeStep.title}</h2>
-        <span> {activeStep.description}</span>
-      </div>
-      <ProgressBar activeSection={stepsToKeys[currentStep]} progressText={progressText} />
-      {activeStep.component}
+      <Heading {...activeSection().heading} />
+      <ProgressBar activeSection={activeSection()} progressText={progressText} />
+      <OrganizationSetupRouter />  
     </Fragment>
   );
 };
