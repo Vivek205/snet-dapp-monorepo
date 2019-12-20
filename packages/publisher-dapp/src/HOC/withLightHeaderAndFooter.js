@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Footer from "shared/dist/components/Footer";
+import SNETFooter from "shared/dist/components/SNETFooter";
 
 import Header from "../Components/Header";
 import Container from "@material-ui/core/Container";
@@ -11,10 +11,10 @@ const withLightHeaderAndFooter = Component => {
       <Header />
       <Container>
         <Box my={8}>
-          <Component {...props} />
-          <Footer />
+          <Component {...props} />          
         </Box>
       </Container>
+      <SNETFooter />
     </Fragment>
   );
 };

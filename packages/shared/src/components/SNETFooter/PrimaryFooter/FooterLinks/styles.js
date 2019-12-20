@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 export const useStyles = makeStyles(theme => ({
   footerRightSideLinks: {
     display: "flex",
-    padding: "13px 0 0 35px",
+    padding: "18px 0 0 35px",
     width: "100%",
     "@media (max-width:1023px) and (min-width:768px)": {
       width: "auto",
