@@ -110,6 +110,11 @@ export const MUITheme = createMuiTheme({
       fontSize: 18,
       fontWeight: "bold",
     },
+    subtitle2: {
+      color: "#666",
+      fontSize: 14,
+      lineHeight: '21px'
+    },
   },
 });
 

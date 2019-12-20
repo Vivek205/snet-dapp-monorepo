@@ -31,7 +31,7 @@ const OrganizationSetup = ({ match, classes, location }) => {
   };
 
   return (
-    <div className={classes.organixationSetupContainer}>
+    <div className={classes.organizationSetupContainer}>
       <Heading {...activeSection().heading} />
       <ProgressBar activeSection={activeSection()} progressText={progressText} />
       <OrganizationSetupRouter />  
