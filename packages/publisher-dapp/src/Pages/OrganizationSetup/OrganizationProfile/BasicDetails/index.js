@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
 const BasicDetails = ({ classes }) => {
-  const { name, shortDescription, longDescription } = useSelector(state => state.organization);
+  const { id, name, shortDescription, longDescription, website } = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
   const handleFormInputsChange = event => {
@@ -25,7 +25,13 @@ const BasicDetails = ({ classes }) => {
         Marketplace
       </Typography>
       <SNETTextfield
-        disabled
+        name="id"
+        value={id}
+        label="Organization id"
+        description="The organziation id is the unique id for the organization."
+        onChange={handleFormInputsChange}
+      />
+      <SNETTextfield
         name="name"
         value={name}
         label="Organization Name"
@@ -53,6 +59,9 @@ const BasicDetails = ({ classes }) => {
         onChange={handleFormInputsChange}
       />
       <SNETTextfield
+        name="website"
+        value={website}
+        onChange={handleFormInputsChange}
         label="Organization Website URL"
         description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
       />

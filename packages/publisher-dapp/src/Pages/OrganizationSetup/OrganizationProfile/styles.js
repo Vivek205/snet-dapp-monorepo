@@ -18,5 +18,15 @@ export const useStyles = MUITheme => ({
 			margin: '31px 23px',
 			backgroundColor: MUITheme.palette.background.grey		
 		}
-	}
+	},
+	buttonsContainer: {
+		marginTop: 40,
+		marginBottom: 64,
+		display: "flex",
+		justifyContent: 'center',
+		"& button": {
+		  padding: " 13px 60px 11px",
+		},
+		[MUITheme.breakpoints.down('xs')]: { flexDirection: 'column' },
+	  },  
 });

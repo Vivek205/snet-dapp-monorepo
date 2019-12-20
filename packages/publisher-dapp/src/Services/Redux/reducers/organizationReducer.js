@@ -1,12 +1,14 @@
 import { SET_ONE_BASIC_DETAIL } from "../actionCreators/organizationActions";
 
 const initialState = {
+  id: "",
   name: "",
   duns: "",
   website: "",
   ownerFullName: "",
   phone: "",
-  sameMailingAddress: "",
+  email: "",
+  sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",
   hqAddres: { street: "", apartment: "", city: "", zip: "", country: "" },
