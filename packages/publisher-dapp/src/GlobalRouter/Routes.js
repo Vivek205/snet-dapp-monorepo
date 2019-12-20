@@ -8,6 +8,7 @@ const Overview = lazy(() =>  import("../Pages/Overview"))
 const HowItWorks = lazy(() =>import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const Onboarding = lazy(() => import("../Pages/Onboarding"));
+const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const LoginComponent = withLightHeaderAndFooter(Login);
@@ -16,6 +17,7 @@ const SingupConfirmComponent = withLightHeaderAndFooter(SignupConfirm);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks)
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
+const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup)
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -53,5 +55,11 @@ export const GlobalRoutes = {
     basePath: "/onboarding",
     path: "/onboarding/:step",
     component: OnboardingComponent,
+  },
+  ORGANIZATIONSETUP: {
+    name: "organizationsetup",
+    basePath: "/organizationsetup",
+    path: "/organizationsetup/:step",
+    component: OrganizationsetupComponent,
   },
 };
