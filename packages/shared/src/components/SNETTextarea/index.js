@@ -27,4 +27,16 @@ const SNETTextarea = ({ classes, label, rowCount, colCount, name, value, onChang
   );
 };
 
+SNETTextarea.propTypes = {
+  label: PropTypes.string,
+  rowCount: PropTypes.number,
+  colCount: PropTypes.number,
+  name: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  content: PropTypes.string,
+  mainCount: PropTypes.number,
+  maxCount: PropTypes.number,
+};
+
 export default withStyles(useStyles)(SNETTextarea);
