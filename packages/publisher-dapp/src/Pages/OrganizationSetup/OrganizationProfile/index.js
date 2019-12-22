@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 
-const OrganizationProfile = ({ classes, history }) => {
+const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const handleContinue = () => {
     history.push(OrganizationSetupRoutes.REGION.path);
   };
@@ -25,7 +25,7 @@ const OrganizationProfile = ({ classes, history }) => {
         <SupportDetails />
       </Grid>
       <div className={classes.buttonsContainer}>
-        <SNETButton color="primary" children="finish later" />
+        <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
       </div>
     </Fragment>
