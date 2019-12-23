@@ -1,7 +1,12 @@
 import React, { Fragment } from "react";
+import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
+import AlertBox from "shared/dist/components/AlertBox"; 
+import SNETTextfield from "shared/dist/components/SNETTextfield";
+import TechnicalInfo from "./TechnicalInfo";
+import Invite from "./Invite";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 
 const PublishToBlockchain = ({ handleFinishLater, history }) => {
@@ -16,7 +21,27 @@ const PublishToBlockchain = ({ handleFinishLater, history }) => {
   };
   return (
     <Fragment>
-      <span>publish to block chain</span>
+      <div className={classes.box}>
+        <Typography variant="h6">Publish Organization to Blockchain</Typography>
+        <Typography variant="subtitle2">Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.</Typography>
+        <SNETTextfield
+          label="Entity Type"
+          name="entitytype"
+        />
+        <SNETTextfield
+          label="Company Organization Name"
+          description="The company name is displayed as the provider to users on the AI service page name. . "
+          name="orgname"
+        />
+        <SNETTextfield
+          label="Owners Full Name"
+          description="You should be owner of your company’s legal entity."
+          name="fullname"
+        />
+        <TechnicalInfo />
+        <Invite />
+      </div>
+      <AlertBox message="Final launch will require you to be logged into your Metamask and some ETH gas cost to activate the service." type="warning" />
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="back" onClick={handleBack} />
