@@ -8,6 +8,7 @@ import configureStore from "./Services/Redux/Store";
 import { MUITheme } from "./Assets/MUITheme";
 import DefaultHelmet from "./Services/Helmet";
 import { aws_config } from "./Services/AWS/aws_config";
+import GlobalLoader from "./Components/GlobalLoader";
 
 const store = configureStore();
 
@@ -19,6 +20,7 @@ function App() {
       <MUIThemeProvider theme={MUITheme}>
         <DefaultHelmet />
         <GlobalRouter />
+        <GlobalLoader />
       </MUIThemeProvider>
     </ReactReduxProvider>
   );
