@@ -11,15 +11,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
 
 const OrganizationSetup = ({ classes, location }) => {
-  const { name, website, shortDescription, longDescription } = useSelector(state => state.organization);
+  const { id, name, website, shortDescription, longDescription } = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
     const payload = {
+      org_id: id,
+      org_uuid: "",
       org_name: name,
+      org_type: "organization",
+      metadata_ipfs_hash: "",
       description: longDescription,
       shortDescription,
       url: website,
+      contacts: [],
+      assets: {},
+      groups: [],
     };
     await dispatch(organizationActions.finishLater(payload));
   };

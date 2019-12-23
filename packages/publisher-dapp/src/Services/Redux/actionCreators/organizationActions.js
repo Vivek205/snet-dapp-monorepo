@@ -13,6 +13,5 @@ export const finishLater = payload => async () => {
   const apiPath = APIPaths.FINISH_LATER;
   const postObj = payload;
   const apiOptions = initializeAPIOptions(token, postObj);
-  const response = API.post(apiName, apiPath, apiOptions);
-  console.log("response", response);
+  await API.post(apiName, apiPath, apiOptions);
 };
