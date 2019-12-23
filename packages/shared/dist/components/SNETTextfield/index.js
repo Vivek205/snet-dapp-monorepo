@@ -15,6 +15,8 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _styles = require("@material-ui/core/styles");
 
+var _Info = _interopRequireDefault(require("@material-ui/icons/Info"));
+
 var _styles2 = require("./styles");
 
 var _StyledTextField = _interopRequireDefault(require("shared/dist/components/StyledTextField"));
@@ -28,7 +30,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
       helperText = _ref.helperText,
       value = _ref.value,
       onChange = _ref.onChange,
-      description = _ref.description;
+      description = _ref.description,
+      icon = _ref.icon;
   return _react.default.createElement(_Grid.default, {
     container: true
   }, _react.default.createElement(_Grid.default, {
@@ -38,7 +41,9 @@ var SNETTextfield = function SNETTextfield(_ref) {
     md: 6,
     lg: 6,
     className: classes.basicTextFieldGrid
-  }, _react.default.createElement(_StyledTextField.default, {
+  }, icon ? _react.default.createElement("div", {
+    className: classes.infoIconContainer
+  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement(_StyledTextField.default, {
     name: name,
     label: label,
     helperText: helperText,

@@ -19,9 +19,13 @@ const SNETTextarea = ({ classes, label, rowCount, colCount, name, value, onChang
         <textarea rows={rowCount} cols={colCount} name={name} value={value} onChange={onChange}>
           {content}
         </textarea>
-        <span className={classes.charLength}>
-          {minCount}/{maxCount} char
-        </span>
+        { maxCount ? 
+          <span className={classes.charLength}>
+            {minCount}/{maxCount} char
+          </span>
+        :
+          null
+        }
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import { useSelector, useDispatch } from "react-redux";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { useStyles } from "./styles";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 

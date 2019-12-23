@@ -10,6 +10,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = function useStyles(MUITheme) {
   return {
     basicTextFieldGrid: _defineProperty({
+      display: 'flex',
       '& label': {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
@@ -34,7 +35,14 @@ var useStyles = function useStyles(MUITheme) {
       paddingLeft: 0,
       marginTop: 0,
       marginBottom: 10
-    })
+    }),
+    infoIconContainer: {
+      '& svg': {
+        padding: '5px 10px 0 0',
+        fontSize: 20,
+        color: '#d6d6d6'
+      }
+    }
   };
 };
 

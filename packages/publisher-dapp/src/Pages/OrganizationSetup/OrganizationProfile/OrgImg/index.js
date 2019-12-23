@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from "@material-ui/core/Avatar";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import { useStyles } from "./styles";
 
