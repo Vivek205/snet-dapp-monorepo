@@ -10,7 +10,10 @@ const initialState = {
   sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",
-  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  contacts: [
+    { type: ContactsTypes.SUPPORT, email: "", phone: "dfkd" },
+    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  ],
   hqAddres: { street: "", apartment: "", city: "", zip: "", country: "" },
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
 };

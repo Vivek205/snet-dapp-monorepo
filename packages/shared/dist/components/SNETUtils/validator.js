@@ -15,6 +15,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 var validator = _validate.default;
 
 var hasLowerCase = function hasLowerCase(value, options, key, attributes) {
@@ -50,12 +58,28 @@ var hasAWSPasswordSplChar = function hasAWSPasswordSplChar(value, options, key, 
   return options.message || "must contain a special character";
 };
 
+var array = function array(arrayItems, itemConstraints, key) {
+  if (!_validate.default.isArray(arrayItems)) {
+    return "".concat(key, " is not a valid array");
+  }
+
+  var arrayItemErrors = arrayItems.reduce(function (errors, item, index) {
+    var error = (0, _validate.default)(item, itemConstraints); // if (error) errors[index] = { error: error };
+
+    if (error) errors.push.apply(errors, _toConsumableArray(error));
+    return errors;
+  }, []);
+  debugger;
+  return _validate.default.isEmpty(arrayItemErrors) ? null : arrayItemErrors[0];
+};
+
 validator.validators = _objectSpread({}, _validate.default.validators, {
   // custom validators
   hasLowerCase: hasLowerCase,
   hasUpperCase: hasUpperCase,
   hasNumber: hasNumber,
-  hasAWSPasswordSplChar: hasAWSPasswordSplChar
+  hasAWSPasswordSplChar: hasAWSPasswordSplChar,
+  array: array
 }); // default options
 
 validator.options = {
