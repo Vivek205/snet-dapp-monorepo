@@ -22,7 +22,7 @@ const OrganizationSetup = ({ classes, location }) => {
       org_type: "organization",
       metadata_ipfs_hash: "",
       description: longDescription,
-      shortDescription,
+      short_description: shortDescription,
       url: website,
       contacts: [],
       assets: {},

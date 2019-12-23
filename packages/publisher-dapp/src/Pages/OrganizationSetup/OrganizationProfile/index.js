@@ -12,7 +12,7 @@ import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
-  const [error, setError] = useState(undefined);
+  const [alert, setAlert] = useState({});
 
   const handleContinue = () => {
     history.push(OrganizationSetupRoutes.REGION.path);
@@ -20,10 +20,11 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
 
   const onFinishLater = async () => {
     try {
-      setError(undefined);
+      setAlert({});
       await handleFinishLater();
+      setAlert({ type: alertTypes.SUCCESS, message: "Changes have been saved to draft" });
     } catch (error) {
-      setError("Unable to save draft. Please try later");
+      setAlert({ type: alertTypes.ERROR, message: "Unable to save draft. Please try later" });
     }
   };
 
@@ -35,7 +36,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
         <OrgImg />
         <hr />
         <SupportDetails />
-        <AlertBox type={alertTypes.ERROR} message={error} />
+        <AlertBox type={alert.type} message={alert.message} />
       </Grid>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={onFinishLater} />
