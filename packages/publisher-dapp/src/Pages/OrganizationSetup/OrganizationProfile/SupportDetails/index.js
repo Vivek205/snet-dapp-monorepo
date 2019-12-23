@@ -7,14 +7,20 @@ import { useSelector, useDispatch } from "react-redux";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import { useStyles } from "./styles";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
+import { ContactsTypes } from "../../../../Utils/Contacts";
 
 const SupportDetails = ({ classes }) => {
-  const { email, phone } = useSelector(state => state.organization);
+  const { contacts } = useSelector(state => state.organization);
+  const supportContacts = contacts.find(el => el.type === ContactsTypes.SUPPORT);
+
   const dispatch = useDispatch();
 
   const handleFormInputsChange = event => {
     const { name, value } = event.target;
-    dispatch(organizationActions.setOneBasicDetail(name, value));
+    const index = contacts.findIndex(el => el.type === ContactsTypes.SUPPORT);
+    const updatedContacts = [...contacts];
+    updatedContacts[index] = { ...contacts[index], [name]: value };
+    dispatch(organizationActions.setContacts(updatedContacts));
   };
 
   return (
@@ -30,14 +36,14 @@ const SupportDetails = ({ classes }) => {
         label="Support Email"
         description="This email address will be displayed to AI Marketplace users."
         name="email"
-        value={email}
+        value={supportContacts.email}
         onChange={handleFormInputsChange}
       />
       <SNETTextfield
         label="Phone Number"
         description="Include plus sign, country code and area code.  For example +1-800-555-1234."
         name="phone"
-        value={phone}
+        value={supportContacts.phone}
         onChange={handleFormInputsChange}
       />
     </Grid>

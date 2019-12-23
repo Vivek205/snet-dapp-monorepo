@@ -1,7 +1,6 @@
 import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import CardHeader from "@material-ui/core/CardHeader";
 import Card from "@material-ui/core/Card";
 import Modal from "@material-ui/core/Modal";
@@ -11,20 +10,20 @@ import Divider from "@material-ui/core/Divider";
 
 import { useStyles } from "./styles";
 
-export const AppLoader = ({ loading, loaderHeader, loaderText }) => {
+export const SNETLoader = ({ isLoading, title, content }) => {
   const classes = useStyles();
 
   return (
-    <Modal disableBackdropClick open={loading}>
+    <Modal disableBackdropClick open={isLoading}>
       <Card className={classes.card}>
-        <CardHeader title={<h2>{loaderHeader}</h2>} />
+        <CardHeader title={<h2>{title}</h2>} />
         <Divider />
         <div className={classes.circularProgressContainer}>
           <CircularProgress className={classes.circularProgress} />
         </div>
         <CardContent>
           <Typography variant="body2" component="p">
-            {loaderText}
+            {content}
           </Typography>
         </CardContent>
       </Card>
@@ -32,15 +31,10 @@ export const AppLoader = ({ loading, loaderHeader, loaderText }) => {
   );
 };
 
-AppLoader.propTypes = {
-  loading: PropTypes.bool,
-  loaderHeader: PropTypes.string,
-  loaderText: PropTypes.string,
+SNETLoader.propTypes = {
+  isLoading: PropTypes.bool,
+  title: PropTypes.string,
+  content: PropTypes.string,
 };
 
-const mapStateToProps = state => {
-  const { app } = state.loaderReducer;
-  return { ...app };
-};
-
-export default connect(mapStateToProps)(AppLoader);
+export default SNETLoader;
