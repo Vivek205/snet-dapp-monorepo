@@ -1,15 +1,34 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography';
+import React, { Fragment } from "react";
 
-import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
+import SNETButton from "shared/dist/components/SNETButton";
+import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 
-const PublishToBlockchain = ({ classes }) => {
+const PublishToBlockchain = ({ handleFinishLater, history }) => {
+  const classes = useStyles();
+
+  const handlePublish = () => {
+    console.log("published to block chain");
+  };
+
+  const handleBack = () => {
+    history.push(OrganizationSetupRoutes.REGION.path);
+  };
   return (
-    <span>publish to block chain</span>
-  )
+    <Fragment>
+      <span>publish to block chain</span>
+      <div className={classes.buttonsContainer}>
+        <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
+        <SNETButton color="primary" children="back" onClick={handleBack} />
+        <SNETButton
+          color="primary"
+          variant="contained"
+          children="publish company to blockchain"
+          onClick={handlePublish}
+        />
+      </div>
+    </Fragment>
+  );
 };
 
-export default withStyles(useStyles)(PublishToBlockchain);
+export default PublishToBlockchain;
