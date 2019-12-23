@@ -3,12 +3,14 @@ import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
-import SNETTextfield from "shared/dist/components/SNETTextfield";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import Settings from "./Settings";
+import { useSelector } from "react-redux";
 
 const Region = ({ history, handleFinishLater }) => {
   const classes = useStyles();
+  const { groups } = useSelector(state => state.organization);
 
   const handleContinue = () => {
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
@@ -21,15 +23,23 @@ const Region = ({ history, handleFinishLater }) => {
   return (
     <Fragment>
       <div className={classes.box}>
-      	<Typography variant="h6">Region Groups Configuration</Typography>
-      	<Typography variant="subtitle2">Every AI service your company publishes can be optimized for users based in various regions and groups.  You will be able to configure this during the AI service level.</Typography>
-      	<SNETTextfield
-	        name="id"
-	        value=""
-	        label="Groups / Region"
-	      />
-	      <SNETButton color="primary" variant="text" children="add" />
-	      <Settings />
+        <Typography variant="h6">Region Groups Configuration</Typography>
+        <Typography variant="subtitle2">
+          Every AI service your company publishes can be optimized for users based in various regions and groups. You
+          will be able to configure this during the AI service level.
+        </Typography>
+        {groups.map(group => (
+          <Fragment>
+            <StyledDropdown
+              name="id"
+              value="default"
+              labelTxt="Groups / Region"
+              list={[{ value: "default_group", label: "Default Group" }]}
+            />
+            <SNETButton color="primary" variant="text" children="add" />
+            <Settings group={group} />
+          </Fragment>
+        ))}
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />

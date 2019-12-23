@@ -10,9 +10,22 @@ const initialState = {
   sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",
-  contacts: [
-    { type: ContactsTypes.SUPPORT, email: "", phone: "dfkd" },
-    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  groups: [
+    {
+      name: "North America",
+      id: "US-2651-DC",
+      paymentAddress: "",
+      paymentConfig: {
+        paymentExpirationThreshold: "",
+        paymentChannelStorageType: "",
+        paymentChannelStorageClient: {
+          connectionTimeout: "",
+          requestTimeout: "",
+          endpoints: ["123","234"],
+        },
+      },
+    },
   ],
   hqAddres: { street: "", apartment: "", city: "", zip: "", country: "" },
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
