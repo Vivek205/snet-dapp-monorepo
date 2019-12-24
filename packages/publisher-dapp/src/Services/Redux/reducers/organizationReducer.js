@@ -1,5 +1,5 @@
-import { SET_ONE_BASIC_DETAIL, SET_CONTACTS } from "../actionCreators/organizationActions";
 import { ContactsTypes } from "../../../Utils/Contacts";
+import { organizationActions } from "../actionCreators";
 
 const initialState = {
   id: "",
@@ -33,10 +33,12 @@ const initialState = {
 
 const OrganizationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ONE_BASIC_DETAIL:
+    case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
-    case SET_CONTACTS:
+    case  organizationActions.SET_CONTACTS:
       return { ...state, contacts: action.payload };
+    case organizationActions.SET_GROUPS:
+      return {...state, groups: action.payload }
     default:
       return state;
   }

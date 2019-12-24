@@ -7,14 +7,27 @@ import Chip from "@material-ui/core/Chip";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
+import StyledDropdown from "shared/dist/components/StyledDropdown";
+import { useDispatch } from "react-redux";
+import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
-const Settings = ({ group }) => {
+const Settings = ({ groups, group, groupIndex }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const { id, name, paymentAddress, paymentConfig } = group;
 
+  const handlePaymentAddressChange = event => {
+    const { value } = event.target;
+    const updatedGroups = [...groups];
+    updatedGroups[groupIndex] = { ...groups[groupIndex], paymentAddress: value };
+    dispatch(organizationActions.setGroups(updatedGroups));
+  };
+
   return (
     <Fragment>
+      <StyledDropdown name="id" value={id} labelTxt="Groups / Region" list={[{ value: id, label: name }]} />
+      <SNETButton color="primary" variant="text" children="add" />
       <Typography variant="subtitle1">Groups / Region Settings</Typography>
       <Grid container className={classes.settingsContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.regionNameIdContainer}>
@@ -32,6 +45,7 @@ const Settings = ({ group }) => {
             icon
             name="paymentAddress"
             value={paymentAddress}
+            onChange={handlePaymentAddressChange}
             label="Payment Address"
             description="The Metamask address associated with this region."
           />

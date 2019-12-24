@@ -28,17 +28,8 @@ const Region = ({ history, handleFinishLater }) => {
           Every AI service your company publishes can be optimized for users based in various regions and groups. You
           will be able to configure this during the AI service level.
         </Typography>
-        {groups.map(group => (
-          <Fragment>
-            <StyledDropdown
-              name="id"
-              value="default"
-              labelTxt="Groups / Region"
-              list={[{ value: "default_group", label: "Default Group" }]}
-            />
-            <SNETButton color="primary" variant="text" children="add" />
-            <Settings group={group} />
-          </Fragment>
+        {groups.map((group, index) => (
+          <Settings groups={groups} groupIndex={index} group={group} key={group.id} />
         ))}
       </div>
       <div className={classes.buttonsContainer}>
