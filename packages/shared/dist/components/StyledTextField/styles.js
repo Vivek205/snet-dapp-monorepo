@@ -16,6 +16,9 @@ var useStyles = function useStyles(theme) {
       },
       "& fieldset": {
         borderColor: "#828282 !important"
+      },
+      "& p": {
+        color: theme.palette.text.lightGrey
       }
     }
   };

@@ -129,8 +129,8 @@ var SNETLogin = function SNETLogin(props) {
     color: "primary",
     variant: "contained",
     children: "login",
-    onClick: handleSubmit,
-    type: "submit"
+    type: "submit",
+    onClick: handleSubmit
   }))));
 };
 
