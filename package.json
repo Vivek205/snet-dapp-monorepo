@@ -20,9 +20,9 @@
     "pretty-quick": "^1.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
     "react-scripts": "3.2.0",
-    "typescript": "^3.7.3",
-    "react-helmet": "^5.2.1"
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
@@ -48,5 +48,8 @@
   "peerDependencies": {
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.10.2"
   }
 }
