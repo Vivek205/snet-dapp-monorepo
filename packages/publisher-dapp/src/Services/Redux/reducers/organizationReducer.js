@@ -15,6 +15,7 @@ const initialState = {
     {
       name: "North America",
       id: "US-2651-DC",
+      uuid: "",
       paymentAddress: "",
       paymentConfig: {
         paymentExpirationThreshold: "",
@@ -22,7 +23,7 @@ const initialState = {
         paymentChannelStorageClient: {
           connectionTimeout: "",
           requestTimeout: "",
-          endpoints: ["123","234"],
+          endpoints: [],
         },
       },
     },
@@ -35,10 +36,10 @@ const OrganizationReducer = (state = initialState, action) => {
   switch (action.type) {
     case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
-    case  organizationActions.SET_CONTACTS:
+    case organizationActions.SET_CONTACTS:
       return { ...state, contacts: action.payload };
     case organizationActions.SET_GROUPS:
-      return {...state, groups: action.payload }
+      return { ...state, groups: action.payload };
     default:
       return state;
   }

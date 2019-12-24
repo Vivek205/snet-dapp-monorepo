@@ -15,7 +15,7 @@ import ValidationError from "shared/dist/components/SNETUtils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
   const organization = useSelector(state => state.organization);
-  const { id, name, website, shortDescription, longDescription } = organization;
+  const { id, uuid, name, website, shortDescription, longDescription } = organization;
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
@@ -25,7 +25,7 @@ const OrganizationSetup = ({ classes, location }) => {
     }
     const payload = {
       org_id: id,
-      org_uuid: "",
+      org_uuid: uuid,
       org_name: name,
       org_type: "organization",
       metadata_ipfs_hash: "",
