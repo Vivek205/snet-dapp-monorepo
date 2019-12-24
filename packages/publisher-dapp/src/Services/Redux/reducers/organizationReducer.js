@@ -10,9 +10,23 @@ const initialState = {
   sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",
-  contacts: [
-    { type: ContactsTypes.SUPPORT, email: "", phone: "dfkd" },
-    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  groups: [
+    {
+      name: "North America",
+      id: "US-2651-DC",
+      uuid: "",
+      paymentAddress: "",
+      paymentConfig: {
+        paymentExpirationThreshold: "",
+        paymentChannelStorageType: "",
+        paymentChannelStorageClient: {
+          connectionTimeout: "",
+          requestTimeout: "",
+          endpoints: [],
+        },
+      },
+    },
   ],
   assets: {
     heroImage: {
@@ -32,6 +46,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, contacts: action.payload };
     case organizationActions.SET_HERO_IMAGE:
       return { ...state, assets: { ...state.assets, heroImage: action.payload } };
+    case organizationActions.SET_GROUPS:
+      return { ...state, groups: action.payload };
     default:
       return state;
   }

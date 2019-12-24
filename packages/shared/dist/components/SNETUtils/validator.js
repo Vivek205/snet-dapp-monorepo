@@ -64,12 +64,10 @@ var array = function array(arrayItems, itemConstraints, key) {
   }
 
   var arrayItemErrors = arrayItems.reduce(function (errors, item, index) {
-    var error = (0, _validate.default)(item, itemConstraints); // if (error) errors[index] = { error: error };
-
+    var error = (0, _validate.default)(item, itemConstraints);
     if (error) errors.push.apply(errors, _toConsumableArray(error));
     return errors;
   }, []);
-  debugger;
   return _validate.default.isEmpty(arrayItemErrors) ? null : arrayItemErrors[0];
 };
 

@@ -8,12 +8,15 @@ import { LoaderContent } from "../../../Utils/Loader";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
 export const SET_CONTACTS = "SET_CONTACTS";
 export const SET_HERO_IMAGE = "SET_HERO_IMAGE";
+export const SET_GROUPS = "SET_GROUPS";
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
 
 export const setContacts = contacts => ({ type: SET_CONTACTS, payload: contacts });
 
 export const setHeroImage = (raw, fileType) => ({ type: SET_HERO_IMAGE, payload: { raw, fileType } });
+
+export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const finishLaterAPI = async payload => {
   const { token } = await fetchAuthenticatedUser();

@@ -11,18 +11,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
 import validator from "shared/dist/components/SNETUtils/validator";
 import { orgSetupFormConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/components/SNETUtils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
   const organization = useSelector(state => state.organization);
-  const { id, name, website, shortDescription, longDescription } = organization;
+  const { id, uuid, name, website, shortDescription, longDescription } = organization;
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
     const isNotValid = validator(organization, orgSetupFormConstraints);
-    console.log("isNotValid", isNotValid);
+    if (isNotValid) {
+      throw new ValidationError(isNotValid[0]);
+    }
     const payload = {
       org_id: id,
-      org_uuid: "",
+      org_uuid: uuid,
       org_name: name,
       org_type: "organization",
       metadata_ipfs_hash: "",

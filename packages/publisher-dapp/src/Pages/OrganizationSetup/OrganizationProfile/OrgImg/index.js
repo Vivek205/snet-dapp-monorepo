@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const OrgImg = ({ classes }) => {
   const { raw, fileType } = useSelector(state => state.organization.assets.heroImage);
 
-  
+
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orgImgContainer}>
       <Typography className={classes.title}>Organisation Profile Image</Typography>

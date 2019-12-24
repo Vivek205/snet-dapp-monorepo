@@ -10,6 +10,7 @@ import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import ValidationError from "shared/dist/components/SNETUtils/validationError";
 
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
@@ -24,6 +25,10 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
       await handleFinishLater();
       setAlert({ type: alertTypes.SUCCESS, message: "Changes have been saved to draft" });
     } catch (error) {
+      console.log("error valid", error);
+      if (error instanceof ValidationError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
       setAlert({ type: alertTypes.ERROR, message: "Unable to save draft. Please try later" });
     }
   };
