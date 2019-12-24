@@ -64,6 +64,7 @@ export const MUITheme = createMuiTheme({
       mainContent: "#fafafa",
       alertBox: "#E67381",
       warningBox: "#F18D5A",
+      grey: "#D6D6D6"
     },
     success: "#00C48C",
     error: { main: "#B00020" },
