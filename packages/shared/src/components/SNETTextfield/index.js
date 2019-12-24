@@ -3,15 +3,23 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import InfoIcon from "@material-ui/icons/Info";
 
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 
-const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description }) => {
+const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description, icon }) => {
 
   return (
     <Grid container>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.basicTextFieldGrid}>
+        {icon ? 
+          <div className={classes.infoIconContainer}>
+            <InfoIcon />
+          </div>
+        :
+           null
+        }
         <StyledTextField
           name={name}
           label={label}
