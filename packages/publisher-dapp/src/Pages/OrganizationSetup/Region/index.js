@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
-import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import Settings from "./Settings";
 import { useSelector } from "react-redux";
