@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -8,8 +9,7 @@ import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import Settings from "./Settings";
 import { useSelector } from "react-redux";
 
-const Region = ({ history, handleFinishLater }) => {
-  const classes = useStyles();
+const Region = ({ history, classes, handleFinishLater }) => {
   const { groups } = useSelector(state => state.organization);
 
   const handleContinue = () => {
@@ -41,4 +41,4 @@ const Region = ({ history, handleFinishLater }) => {
   );
 };
 
-export default Region;
+export default withStyles(useStyles)(Region);

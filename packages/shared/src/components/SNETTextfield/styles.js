@@ -11,7 +11,6 @@ export const useStyles = MUITheme => ({
    },
    description:{ 
    	paddingLeft: 30,
-   	marginTop: 16,
    	'& p':{
    		color: MUITheme.palette.text.lightGrey,
    		fontSize: 14,

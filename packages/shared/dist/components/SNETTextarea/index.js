@@ -65,18 +65,6 @@ SNETTextarea.propTypes = {
   maxCount: _propTypes.default.number
 };
 
-SNETTextarea.propTypes = {
-  label: _propTypes.default.string,
-  rowCount: _propTypes.default.number,
-  colCount: _propTypes.default.number,
-  name: _propTypes.default.string,
-  value: _propTypes.default.string,
-  onChange: _propTypes.default.func,
-  content: _propTypes.default.string,
-  mainCount: _propTypes.default.number,
-  maxCount: _propTypes.default.number
-};
-
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(SNETTextarea);
 
 exports.default = _default;

@@ -24,7 +24,6 @@ var useStyles = function useStyles(MUITheme) {
     }),
     description: _defineProperty({
       paddingLeft: 30,
-      marginTop: 16,
       '& p': {
         color: MUITheme.palette.text.lightGrey,
         fontSize: 14,
