@@ -31,6 +31,18 @@ const hasAWSPasswordSplChar = (value, options, key, attributes) => {
   return options.message || "must contain a special character";
 };
 
+const array = (arrayItems, itemConstraints, key) => {
+  if (!validate.isArray(arrayItems)) {
+    return `${key} is not a valid array`;
+  }
+  const arrayItemErrors = arrayItems.reduce((errors, item, index) => {
+    const error = validate(item, itemConstraints);
+    if (error) errors.push(...error);
+    return errors;
+  }, []);
+  return validate.isEmpty(arrayItemErrors) ? null : arrayItemErrors[0];
+};
+
 validator.validators = {
   ...validate.validators,
   // custom validators
@@ -38,6 +50,7 @@ validator.validators = {
   hasUpperCase,
   hasNumber,
   hasAWSPasswordSplChar,
+  array,
 };
 
 // default options

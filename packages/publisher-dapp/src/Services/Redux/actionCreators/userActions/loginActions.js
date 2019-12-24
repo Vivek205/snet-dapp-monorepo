@@ -28,12 +28,16 @@ export const fetchAuthenticatedUser = async () => {
 };
 
 export const initializeApplication = async dispatch => {
-  const { nickname, email, email_verified } = await fetchAuthenticatedUser();
-  dispatch(setUserLoggedIn(true));
-  dispatch(setUserEmail(email));
-  dispatch(setUserNickname(nickname));
-  dispatch(setUserEmailVerified(email_verified));
-  dispatch(setAppInitialized(true));
+  try {
+    const { nickname, email, email_verified } = await fetchAuthenticatedUser();
+    dispatch(setUserLoggedIn(true));
+    dispatch(setUserEmail(email));
+    dispatch(setUserNickname(nickname));
+    dispatch(setUserEmailVerified(email_verified));
+    dispatch(setAppInitialized(true));
+  } catch (error) {
+    dispatch(setAppInitialized(true));
+  }
 };
 
 const loginSucess = loginResponse => async dispatch => {
