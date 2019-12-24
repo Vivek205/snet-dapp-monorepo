@@ -23,7 +23,6 @@ const OrganizationSetup = ({ classes, location }) => {
     if (isNotValid) {
       throw new ValidationError(isNotValid[0]);
     }
-    console.log("isNotValid", isNotValid);
     const payload = {
       org_id: id,
       org_uuid: "",
