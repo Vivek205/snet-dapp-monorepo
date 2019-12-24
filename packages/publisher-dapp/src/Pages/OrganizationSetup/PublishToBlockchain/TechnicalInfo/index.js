@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
 import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 
-const TechnicalInfo = () => {
-  const classes = useStyles();
+const TechnicalInfo = ({ classes }) => {
   return (
     <div className={classes.technicalInfoContainer}>
       <Typography variant="subtitle1">Technical Information</Typography>
@@ -29,4 +29,4 @@ const TechnicalInfo = () => {
   );
 };
 
-export default TechnicalInfo;
+export default withStyles(useStyles)(TechnicalInfo);
