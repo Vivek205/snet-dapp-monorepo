@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
 const Settings = ({ classes, groups, group, groupIndex }) => {
+  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const dispatch = useDispatch();
 
   const { id, name, paymentAddress, paymentConfig } = group;
@@ -80,9 +81,14 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
               ))}
             </Card>
           </Grid>
-          <AdvanceSettings />
+          <AdvanceSettings show={showAdvancedSettings} />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-            <SNETButton children="show advanced setting" variant="text" color="primary" />
+            <SNETButton
+              children={showAdvancedSettings ? "hide advanced settings" : "show advanced setting"}
+              variant="text"
+              color="primary"
+              onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+            />
             <SNETButton children="remove region" variant="text" color="red" />
           </Grid>
         </Grid>
