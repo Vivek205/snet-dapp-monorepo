@@ -5,7 +5,10 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 
-const AdvanceSettings = ({ classes }) => {
+const AdvanceSettings = ({ classes, show }) => {
+  if (!show) {
+    return null;
+  }
   return (
     <Fragment>
       <Typography className={classes.heading}>Advanced Settings</Typography>
