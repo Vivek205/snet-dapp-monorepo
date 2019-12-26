@@ -1,15 +1,14 @@
 import React, { Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
-import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 
 const AdvanceSettings = ({ classes }) => {
   return (
     <Fragment>
-    	<Typography className={classes.heading}>Advanced Settings</Typography>
+      <Typography className={classes.heading}>Advanced Settings</Typography>
       <SNETTextfield
         icon
         name="expirationThreashold"
