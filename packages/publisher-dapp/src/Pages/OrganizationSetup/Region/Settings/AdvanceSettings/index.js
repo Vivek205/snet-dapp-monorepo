@@ -29,17 +29,17 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
     dispatch(organizationActions.setGroups(updatedGroups));
   };
 
-  const handleTimeoutChange  = event => {
-    const {name, value } = event.target;
+  const handleTimeoutChange = event => {
+    const { name, value } = event.target;
     const updatedGroups = [...groups];
     updatedGroups[groupIndex] = {
       ...group,
       paymentConfig: {
         ...group.paymentConfig,
-        paymentChannelStorageClient:{
+        paymentChannelStorageClient: {
           ...group.paymentConfig.paymentChannelStorageClient,
-        [name]:   value
-        }
+          [name]: value,
+        },
       },
     };
     dispatch(organizationActions.setGroups(updatedGroups));
@@ -61,7 +61,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
         name="connectionTimeout"
         value={connectionTimeout}
         label="Client Connection Timeout"
-    onChange={handleTimeoutChange}
+        onChange={handleTimeoutChange}
         description="Lorem ipsum dolor sit amet, summo dicnu debitis ea has, prompta tacimates eam an."
       />
       <SNETTextfield
