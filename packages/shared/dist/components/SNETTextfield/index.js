@@ -23,6 +23,12 @@ var _StyledTextField = _interopRequireDefault(require("shared/dist/components/St
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 var SNETTextfield = function SNETTextfield(_ref) {
   var classes = _ref.classes,
       name = _ref.name,
@@ -32,7 +38,9 @@ var SNETTextfield = function SNETTextfield(_ref) {
       onChange = _ref.onChange,
       description = _ref.description,
       icon = _ref.icon,
-      onKeyUp = _ref.onKeyUp;
+      onKeyUp = _ref.onKeyUp,
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "description", "icon", "onKeyUp"]);
+
   return _react.default.createElement(_Grid.default, {
     container: true
   }, _react.default.createElement(_Grid.default, {
@@ -44,7 +52,7 @@ var SNETTextfield = function SNETTextfield(_ref) {
     className: classes.basicTextFieldGrid
   }, icon ? _react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement(_StyledTextField.default, {
+  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement(_StyledTextField.default, _extends({
     name: name,
     label: label,
     helperText: helperText,
@@ -53,7 +61,7 @@ var SNETTextfield = function SNETTextfield(_ref) {
     onChange: onChange,
     fullWidth: true,
     onKeyUp: onKeyUp
-  })), _react.default.createElement(_Grid.default, {
+  }, rest))), _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,

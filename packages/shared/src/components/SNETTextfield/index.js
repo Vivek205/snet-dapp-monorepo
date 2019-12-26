@@ -8,7 +8,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 
-const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description, icon, onKeyUp }) => {
+const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description, icon, onKeyUp, ...rest }) => {
   return (
     <Grid container>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.basicTextFieldGrid}>
@@ -26,6 +26,7 @@ const SNETTextfield = ({ classes, name, label, helperText, value, onChange, desc
           onChange={onChange}
           fullWidth
           onKeyUp={onKeyUp}
+          {...rest}
         />
       </Grid>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
