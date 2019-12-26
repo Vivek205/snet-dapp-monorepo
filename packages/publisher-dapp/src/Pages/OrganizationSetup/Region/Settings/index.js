@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -70,7 +70,13 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
             </div>
             <Card className={classes.card}>
               {paymentConfig.paymentChannelStorageClient.endpoints.map(endpoint => (
-                <Chip className={classes.chip} key={endpoint} label={endpoint} color="primary" onDelete={() => console.log("deleted")} />
+                <Chip
+                  className={classes.chip}
+                  key={endpoint}
+                  label={endpoint}
+                  color="primary"
+                  onDelete={() => console.log("deleted")}
+                />
               ))}
             </Card>
           </Grid>
