@@ -3,6 +3,7 @@ import { organizationActions } from "../actionCreators";
 
 const initialState = {
   id: "",
+  uuid: "",
   name: "",
   duns: "",
   website: "",

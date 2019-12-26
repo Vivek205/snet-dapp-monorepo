@@ -9,13 +9,13 @@ import Heading from "./Heading";
 import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
-import validator from "shared/dist/components/SNETUtils/validator";
+import validator from "shared/dist/utils/validator";
 import { orgSetupFormConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/components/SNETUtils/validationError";
+import ValidationError from "shared/dist/utils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
   const organization = useSelector(state => state.organization);
-  const { id, uuid, name, website, shortDescription, longDescription } = organization;
+  const { id, uuid, name, website, shortDescription, longDescription, assets } = organization;
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
@@ -33,7 +33,12 @@ const OrganizationSetup = ({ classes, location }) => {
       short_description: shortDescription,
       url: website,
       contacts: [],
-      assets: {},
+      assets: {
+        hero_image: {
+          raw: assets.heroImage.raw,
+          file_type: assets.heroImage.fileType,
+        },
+      },
       groups: [],
     };
     await dispatch(organizationActions.finishLater(payload));

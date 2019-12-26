@@ -8,7 +8,7 @@ import AlertBox, { alertTypes } from "../../AlertBox";
 import SNETButton from "../../SNETButton";
 import PasswordInlineValidation from "./PasswordInlineValidation";
 import { useStyles } from "./styles";
-import validator from "../../SNETUtils/validator";
+import validator from "../../../utils/validator";
 import { signupFormConstraints } from "./validationConstraints";
 
 const Form = props => {

@@ -6,18 +6,37 @@ import Avatar from "@material-ui/core/Avatar";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import { useStyles } from "./styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { organizationActions } from "../../../../Services/Redux/actionCreators";
+import Reset from "./Reset";
+import { mimeTypeToFileType } from "shared/dist/utils/image";
+import { imgSrcInBase64 } from "shared/dist/utils/image";
 
 const OrgImg = ({ classes }) => {
-  const { raw, fileType } = useSelector(state => state.organization.assets.heroImage);
+  const { raw: data, fileType: mimeType } = useSelector(state => state.organization.assets.heroImage);
+  const dispatch = useDispatch();
 
+  const handleImageChange = (data, mimeType) => {
+    const fileType = mimeTypeToFileType(mimeType);
+    dispatch(organizationActions.setHeroImage(data, fileType));
+  };
 
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orgImgContainer}>
       <Typography className={classes.title}>Organisation Profile Image</Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.profileImgContainer}>
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.orgProfileImg}>
-          <SNETImageUpload />
+          <SNETImageUpload
+            disableUrlTab
+            imageName="org-hero-image"
+            imageDataFunc={handleImageChange}
+            outputImage={data}
+            outputImageName="organization_hero_image"
+            outputFormat={mimeType}
+            disableComparisonTab
+            disableInputTab={!!data}
+          />
+          <Reset onReset={() => handleImageChange(null, null)} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.previewContainer}>
           <Typography className={classes.previewText}>
@@ -27,10 +46,18 @@ const OrgImg = ({ classes }) => {
           <div className={classes.previewImg}>
             <div className={classes.previewLargeImg}>
               <Typography>Preview</Typography>
-              <Avatar alt="Singularity" src="http://placehold.it/90x90" className={classes.largePreviewImg} />
+              <Avatar
+                alt="Singularity"
+                src={!!data ? imgSrcInBase64(mimeType, data) : "http://placehold.it/40x40"}
+                className={classes.largePreviewImg}
+              />
             </div>
             <div className={classes.previewSmallImg}>
-              <Avatar alt="Singularity" src="http://placehold.it/40x40" className={classes.smallPreviewImg} />
+              <Avatar
+                alt="Singularity"
+                src={!!data ? imgSrcInBase64(mimeType, data) : "http://placehold.it/40x40"}
+                className={classes.smallPreviewImg}
+              />
             </div>
           </div>
         </Grid>
