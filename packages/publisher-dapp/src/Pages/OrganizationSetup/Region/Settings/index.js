@@ -13,9 +13,11 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
+import { keyCodes } from "shared/dist/utils/keyCodes";
 
 const Settings = ({ classes, groups, group, groupIndex }) => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  const [localEndpoints, setLocalEndpoints] = useState("");
   const dispatch = useDispatch();
 
   const { id, name, paymentAddress, paymentConfig } = group;
@@ -24,6 +26,56 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
     const { value } = event.target;
     const updatedGroups = [...groups];
     updatedGroups[groupIndex] = { ...group, paymentAddress: value };
+    dispatch(organizationActions.setGroups(updatedGroups));
+  };
+
+  const updateEndpointsInGroup = (groupsToBeUpdated, updatedEndpoints) => {
+    groupsToBeUpdated[groupIndex] = {
+      ...group,
+      paymentConfig: {
+        ...group.paymentConfig,
+        paymentChannelStorageClient: {
+          ...group.paymentConfig.paymentChannelStorageClient,
+          endpoints: updatedEndpoints,
+        },
+      },
+    };
+    return groupsToBeUpdated;
+  };
+
+  const handleKeyEnterInTags = () => {
+    const updatedEndpoints = [...group.paymentConfig.paymentChannelStorageClient.endpoints];
+    const endpointsEntered = localEndpoints.split(",");
+    let updatedGroups = [...groups];
+
+    endpointsEntered.forEach(endpoint => {
+      endpoint = endpoint.replace(/\s/g, "");
+      const index = updatedEndpoints.findIndex(el => el === endpoint);
+
+      if (index === -1) {
+        updatedEndpoints.push(endpoint);
+      }
+      updatedGroups = updateEndpointsInGroup(updatedGroups, updatedEndpoints);
+    });
+    dispatch(organizationActions.setGroups(updatedGroups));
+  };
+
+  const handleAddEndpoints = event => {
+    if (event.keyCode !== keyCodes.enter) {
+      return setLocalEndpoints(event.target.value);
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    handleKeyEnterInTags();
+  };
+
+  const handleDeleteEndpoints = endpoint => {
+    const updatedEndpoints = [...group.paymentConfig.paymentChannelStorageClient.endpoints];
+    let updatedGroups = [...groups];
+    const index = updatedEndpoints.findIndex(el => el === endpoint);
+
+    updatedEndpoints.splice(index, 1);
+    updatedGroups = updateEndpointsInGroup(updatedGroups, updatedEndpoints);
     dispatch(organizationActions.setGroups(updatedGroups));
   };
 
@@ -60,9 +112,9 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
             <SNETTextfield
               icon
               name="id"
-              value=" "
               label="ETCD Endpoint"
-              description="Enter all the ETCD end points that will be used."
+              description="Enter all the ETCD end points that will be used. separated by comma and press enter"
+              onKeyUp={handleAddEndpoints}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.cardContainer}>
@@ -76,7 +128,7 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
                   key={endpoint}
                   label={endpoint}
                   color="primary"
-                  onDelete={() => console.log("deleted")}
+                  onDelete={() => handleDeleteEndpoints(endpoint)}
                 />
               ))}
             </Card>
