@@ -3,23 +3,16 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
-import AlertBox from "shared/dist/components/AlertBox";
-import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import { useSelector } from "react-redux";
+import MMAddress from "./MMAddress";
 
 const TechnicalInfo = ({ classes }) => {
   const { groups } = useSelector(state => state.organization);
   return (
     <div className={classes.technicalInfoContainer}>
       <Typography variant="subtitle1">Technical Information</Typography>
-      <div className={classes.alertBoxBtnContainer}>
-        <AlertBox
-          message="Please install or log in to Metamask to proceed further.  Learn more about Metamask."
-          type="warning"
-        />
-        <SNETButton color="primary" variant="contained" children="connect metamask" />
-      </div>
+      <MMAddress classes={classes} />
       {groups.map(group => (
         <Fragment key={group.id}>
           <Typography variant="subtitle1">Group Information</Typography>
