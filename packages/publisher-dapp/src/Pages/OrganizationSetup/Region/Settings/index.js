@@ -23,7 +23,7 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
   const handlePaymentAddressChange = event => {
     const { value } = event.target;
     const updatedGroups = [...groups];
-    updatedGroups[groupIndex] = { ...groups[groupIndex], paymentAddress: value };
+    updatedGroups[groupIndex] = { ...group, paymentAddress: value };
     dispatch(organizationActions.setGroups(updatedGroups));
   };
 
@@ -81,7 +81,7 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
               ))}
             </Card>
           </Grid>
-          <AdvanceSettings show={showAdvancedSettings} />
+          <AdvanceSettings show={showAdvancedSettings} groups={groups} groupIndex={groupIndex} group={group} />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
             <SNETButton
               children={showAdvancedSettings ? "hide advanced settings" : "show advanced setting"}
