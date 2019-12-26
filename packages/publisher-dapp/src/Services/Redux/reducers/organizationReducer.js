@@ -19,11 +19,11 @@ const initialState = {
       uuid: "",
       paymentAddress: "",
       paymentConfig: {
-        paymentExpirationThreshold: "",
-        paymentChannelStorageType: "",
+        paymentExpirationThreshold: "40320",
+        paymentChannelStorageType: "etcd",
         paymentChannelStorageClient: {
-          connectionTimeout: "",
-          requestTimeout: "",
+          connectionTimeout: "5",
+          requestTimeout: "3",
           endpoints: [],
         },
       },
