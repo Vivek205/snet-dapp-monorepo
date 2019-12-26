@@ -31,7 +31,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
       value = _ref.value,
       onChange = _ref.onChange,
       description = _ref.description,
-      icon = _ref.icon;
+      icon = _ref.icon,
+      onKeyUp = _ref.onKeyUp;
   return _react.default.createElement(_Grid.default, {
     container: true
   }, _react.default.createElement(_Grid.default, {
@@ -50,7 +51,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
     variant: "outlined",
     value: value,
     onChange: onChange,
-    fullWidth: true
+    fullWidth: true,
+    onKeyUp: onKeyUp
   })), _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
