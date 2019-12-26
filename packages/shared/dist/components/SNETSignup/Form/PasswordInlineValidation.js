@@ -11,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _isEmpty = _interopRequireDefault(require("lodash/isEmpty"));
 
-var _validator = _interopRequireDefault(require("../../SNETUtils/validator"));
+var _validator = _interopRequireDefault(require("../../../utils/validator"));
 
 var _validationConstraints = require("./validationConstraints");
 

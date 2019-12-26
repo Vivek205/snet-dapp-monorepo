@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 
-import validator from "../../SNETUtils/validator";
+import validator from "../../../utils/validator";
 import { passwordInlineConstraints } from "./validationConstraints";
 import { passwordValidationMsgs } from "./constants";
 import AlertText from "../../AlertText";

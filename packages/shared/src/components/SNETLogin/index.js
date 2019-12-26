@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useStyles } from "./styles";
 import SNETButton from "../SNETButton";
 import AlertBox from "../AlertBox";
-import validator from "../SNETUtils/validator";
+import validator from "../../utils/validator";
 import { validationConstraints } from "./validationConstraints";
 
 const SNETLogin = props => {

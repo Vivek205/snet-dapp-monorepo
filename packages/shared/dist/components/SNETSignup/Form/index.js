@@ -25,7 +25,7 @@ var _PasswordInlineValidation = _interopRequireDefault(require("./PasswordInline
 
 var _styles = require("./styles");
 
-var _validator = _interopRequireDefault(require("../../SNETUtils/validator"));
+var _validator = _interopRequireDefault(require("../../../utils/validator"));
 
 var _validationConstraints = require("./validationConstraints");
 

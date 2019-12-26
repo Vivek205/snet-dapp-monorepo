@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import ValidationError from "shared/dist/components/SNETUtils/validationError";
+import ValidationError from "shared/dist/utils/validationError";
 
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const [alert, setAlert] = useState({});

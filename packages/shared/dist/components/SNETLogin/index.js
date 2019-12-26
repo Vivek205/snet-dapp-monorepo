@@ -23,7 +23,7 @@ var _SNETButton = _interopRequireDefault(require("../SNETButton"));
 
 var _AlertBox = _interopRequireDefault(require("../AlertBox"));
 
-var _validator = _interopRequireDefault(require("../SNETUtils/validator"));
+var _validator = _interopRequireDefault(require("../../utils/validator"));
 
 var _validationConstraints = require("./validationConstraints");
 

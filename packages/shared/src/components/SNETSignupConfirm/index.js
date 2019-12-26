@@ -7,7 +7,7 @@ import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "../AlertBox";
 import SNETButton from "../SNETButton";
 import Info from "./Info";
-import validator from "../SNETUtils/validator";
+import validator from "../../utils/validator";
 import { signupConfirmConstraints } from "./validationConstraints";
 
 const SNETSignupConfirm = props => {

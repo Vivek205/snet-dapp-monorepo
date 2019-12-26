@@ -3,6 +3,7 @@ import { organizationActions } from "../actionCreators";
 
 const initialState = {
   id: "",
+  uuid: "",
   name: "",
   duns: "",
   website: "",
@@ -28,6 +29,12 @@ const initialState = {
       },
     },
   ],
+  assets: {
+    heroImage: {
+      raw: "",
+      fileType: "",
+    },
+  },
   hqAddres: { street: "", apartment: "", city: "", zip: "", country: "" },
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
 };
@@ -38,6 +45,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, ...action.payload };
     case organizationActions.SET_CONTACTS:
       return { ...state, contacts: action.payload };
+    case organizationActions.SET_HERO_IMAGE:
+      return { ...state, assets: { ...state.assets, heroImage: action.payload } };
     case organizationActions.SET_GROUPS:
       return { ...state, groups: action.payload };
     default:
