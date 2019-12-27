@@ -7,10 +7,16 @@ import { useStyles } from "./styles";
 import HQAddress from "./HQAddress";
 import MailingAddress from "./MailingAddress";
 
-const CompanyAddress = ({ classes, hqAddress, handlehqAddressChange, mailingAddress, handleMailingAddressChange, sameAddress, handleSameAddressChange }) => {
+const CompanyAddress = ({
+  classes,
+  mailingAddress,
+  handleMailingAddressChange,
+  sameAddress,
+  handleSameAddressChange,
+}) => {
   return (
     <Grid container className={classes.headQuartersCompanyMailingContainer}>
-      <HQAddress hqAddress={hqAddress} handlehqAddressChange={handlehqAddressChange} />
+      <HQAddress />
       <MailingAddress
         mailingAddress={mailingAddress}
         sameAddress={sameAddress}
@@ -22,14 +28,6 @@ const CompanyAddress = ({ classes, hqAddress, handlehqAddressChange, mailingAddr
 };
 
 CompanyAddress.propTypes = {
-  hqAddress: PropTypes.shape({
-    street: PropTypes.string,
-    apartment: PropTypes.string,
-    city: PropTypes.string,
-    zip: PropTypes.string,
-    country: PropTypes.string,
-  }),
-  handlehqAddressChange: PropTypes.func,
   sameHqAndMailAddress: PropTypes.bool,
   handleSameAddressChange: PropTypes.func,
   mailingAddress: PropTypes.shape({

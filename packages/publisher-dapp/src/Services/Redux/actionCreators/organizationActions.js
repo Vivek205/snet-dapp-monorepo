@@ -12,6 +12,7 @@ export const SET_CONTACTS = "SET_CONTACTS";
 export const SET_HERO_IMAGE = "SET_HERO_IMAGE";
 export const SET_GROUPS = "SET_GROUPS";
 export const SET_ORGANIZATION_STATUS = "SET_ORGANIZATION_STATUS";
+export const SET_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
 
@@ -22,6 +23,8 @@ export const setHeroImage = (raw, fileType) => ({ type: SET_HERO_IMAGE, payload:
 export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const setOrganizationStatus = status => ({ type: SET_ORGANIZATION_STATUS, payload: status });
+
+export const setHqAddressDetail = (name, value) => ({ type: SET_HQ_ADDRESS_DETAIL, payload: { [name]: value } });
 
 const payloadForSubmit = organization => {
   // prettier-ignore

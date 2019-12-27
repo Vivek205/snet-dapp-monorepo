@@ -11,14 +11,8 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
 
-  const [hqAddress, setHqAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
   const [mailingAddress, setMailingAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
   const [sameAddress, setSameAddress] = useState(false);
-
-  const handlehqAddressChange = event => {
-    const { name, value } = event.target;
-    setHqAddress({ ...hqAddress, [name]: value });
-  };
 
   const handleMailingAddressChange = event => {
     const { name, value } = event.target;
@@ -43,8 +37,6 @@ const Organization = props => {
         </Typography>
         <BasicDetails />
         <CompanyAddress
-          hqAddress={hqAddress}
-          handlehqAddressChange={handlehqAddressChange}
           mailingAddress={mailingAddress}
           handleMailingAddressChange={handleMailingAddressChange}
           sameAddress={sameAddress}
