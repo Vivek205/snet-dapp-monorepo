@@ -23,7 +23,7 @@ export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const setOrganizationStatus = status => ({ type: SET_ORGANIZATION_STATUS, payload: status });
 
-const payloadForFinishLater = organization => {
+const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, name, website, shortDescription, longDescription, contacts, assets, ownerFullName } = organization;
 
@@ -60,7 +60,7 @@ export const finishLaterAPI = async payload => {
 export const finishLater = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
-    const payload = payloadForFinishLater(organization);
+    const payload = payloadForSubmit(organization);
     await finishLaterAPI(payload);
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
@@ -69,18 +69,19 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = async uuid => {
+export const submitForApprovalAPI = async payload => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.SUBMIT_FOR_APPROVAL(uuid);
-  const apiOptions = initializeAPIOptions(token);
+  const apiPath = APIPaths.SUBMIT_FOR_APPROVAL(payload.uuid);
+  const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const submitForApproval = uuid => async dispatch => {
+export const submitForApproval = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SUBMIT_FOR_APPROVAL));
-    const { status, error } = await submitForApprovalAPI(uuid);
+    const payload = payloadForSubmit(organization);
+    const { status, error } = await submitForApprovalAPI(payload);
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
@@ -92,5 +93,25 @@ export const submitForApproval = uuid => async dispatch => {
   }
 };
 
+const publishToBlockchainAPI = async uuid => {
+  const { token } = await fetchAuthenticatedUser();
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.PUBLISH_TO_BLOCKCHAIN(uuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.post(apiName, apiPath, apiOptions);
+};
 
-// export const publishToBlockchain
+export const publishToBlockchain = uuid => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
+    const { status, error } = await publishToBlockchainAPI(uuid);
+    if (status !== responseStatus.SUCCESS) {
+      throw new APIError(error.message);
+    }
+    dispatch(setOrganizationStatus(organizationSetupStatuses.PUBLISHED));
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};

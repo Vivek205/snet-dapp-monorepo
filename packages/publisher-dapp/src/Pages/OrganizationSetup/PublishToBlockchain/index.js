@@ -14,10 +14,11 @@ import validator from "shared/dist/utils/validator";
 import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
+import { APIError } from "shared/dist/utils/API";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const organization = useSelector(state => state.organization);
-  const { name, uuid, status, ownerFullName } = organization;
+  const { name, status, uuid, ownerFullName } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -29,9 +30,12 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      dispatch(organizationActions.submitForApproval(uuid));
+      dispatch(organizationActions.submitForApproval(organization));
     } catch (error) {
       if (error instanceof ValidationError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
       setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
@@ -39,7 +43,15 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   };
 
   const handlePublish = () => {
-    console.log("published to block chain");
+    setAlert({});
+    try {
+      dispatch(organizationActions.submitForApproval(uuid));
+    } catch (error) {
+      if (error instanceof APIError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
+    }
   };
 
   const handleBack = () => {
