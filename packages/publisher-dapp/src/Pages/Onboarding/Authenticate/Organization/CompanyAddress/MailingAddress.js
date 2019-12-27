@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -9,33 +8,58 @@ import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 import { mailingAddressFormData } from "./content";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useSelector, useDispatch } from "react-redux";
+import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const MailingAddress = ({ classes, mailingAddress, handleMailingAddressChange, sameAddress, handleSameAddressChange }) => {
+const MailingAddress = ({ classes }) => {
+  const organization = useSelector(state => state.organization);
+  const { sameMailingAddress } = organization;
+  const { street, apartment, city, zip, country } = organization.mailingAddress;
+  const dispatch = useDispatch();
+
+  const handleMailingAddressChange = event => {
+    const { name, value } = event.target;
+    dispatch(organizationActions.setMailingAddressDetail(name, value));
+  };
+
+  const handleSameAddressChange = event => {
+    const { name, checked } = event.target;
+    dispatch(organizationActions.setOneBasicDetail(name, checked));
+  };
+
   return (
     <Grid item sx={12} sm={12} md={6} lg={6} className={classes.mailingAddressContainer}>
       <Typography variant="subtitle1">Company Mailing Address</Typography>
       <FormControlLabel
-        control={<Checkbox checked={sameAddress} onChange={handleSameAddressChange} color="primary" />}
-        label="same as Headquarters Address" className={classes.checkbox}
+        control={
+          <Checkbox
+            name="sameMailingAddress"
+            checked={sameMailingAddress}
+            onChange={handleSameAddressChange}
+            color="primary"
+          />
+        }
+        label="same as Headquarters Address"
+        className={classes.checkbox}
       />
       <StyledTextField
         {...mailingAddressFormData.STREET}
         variant="outlined"
-        value={mailingAddress.STREET}
+        value={street}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.APARTMENT}
         variant="outlined"
-        value={mailingAddress.APARTMENT}
+        value={apartment}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.CITY}
         variant="outlined"
-        value={mailingAddress.CITY}
+        value={city}
         onChange={handleMailingAddressChange}
         fullWidth
       />
@@ -44,7 +68,7 @@ const MailingAddress = ({ classes, mailingAddress, handleMailingAddressChange, s
           <StyledTextField
             {...mailingAddressFormData.ZIP}
             variant="outlined"
-            value={mailingAddress.ZIP}
+            value={zip}
             onChange={handleMailingAddressChange}
             fullWidth
           />
@@ -53,7 +77,7 @@ const MailingAddress = ({ classes, mailingAddress, handleMailingAddressChange, s
           <StyledTextField
             {...mailingAddressFormData.COUNTRY}
             variant="outlined"
-            value={mailingAddress.COUNTRY}
+            value={country}
             onChange={handleMailingAddressChange}
             fullWidth
           />
@@ -61,19 +85,6 @@ const MailingAddress = ({ classes, mailingAddress, handleMailingAddressChange, s
       </Grid>
     </Grid>
   );
-};
-
-MailingAddress.propTypes = {
-  sameAddress: PropTypes.bool,
-  handleSameAddressChange: PropTypes.func,
-  mailingAddress: PropTypes.shape({
-    street: PropTypes.string,
-    apartment: PropTypes.string,
-    city: PropTypes.string,
-    zip: PropTypes.string,
-    country: PropTypes.string,
-  }),
-  handleMailingAddressChange: PropTypes.func,
 };
 
 export default withStyles(useStyles)(MailingAddress);

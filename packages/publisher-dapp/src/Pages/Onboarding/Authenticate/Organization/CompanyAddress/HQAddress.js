@@ -7,39 +7,43 @@ import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 import { hqAddressFormData } from "./content";
+import { useSelector, useDispatch } from "react-redux";
+import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const HQAddress = ({ classes, hqAddress, handlehqAddressChange }) => {
+const HQAddress = ({ classes }) => {
+  const { street, apartment, city, zip, country } = useSelector(state => state.organization.hqAddress);
+  const dispatch = useDispatch();
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    dispatch(organizationActions.setHqAddressDetail(name, value));
+  };
+
   return (
     <Grid item sx={12} sm={12} md={6} lg={6} className={classes.headquartersContainer}>
       <Typography variant="subtitle1">Headquarters Address</Typography>
       <StyledTextField
         {...hqAddressFormData.STREET}
         variant="outlined"
-        value={hqAddress.STREET}
-        onChange={handlehqAddressChange}
+        value={street}
+        onChange={handleChange}
         fullWidth
       />
       <StyledTextField
         {...hqAddressFormData.APARTMENT}
         variant="outlined"
-        value={hqAddress.APARTMENT}
-        onChange={handlehqAddressChange}
+        value={apartment}
+        onChange={handleChange}
         fullWidth
       />
-      <StyledTextField
-        {...hqAddressFormData.CITY}
-        variant="outlined"
-        value={hqAddress.CITY}
-        onChange={handlehqAddressChange}
-        fullWidth
-      />
+      <StyledTextField {...hqAddressFormData.CITY} variant="outlined" value={city} onChange={handleChange} fullWidth />
       <Grid container>
         <Grid item sx={12} sm={12} md={4} lg={4}>
           <StyledTextField
             {...hqAddressFormData.ZIP}
             variant="outlined"
-            value={hqAddress.ZIP}
-            onChange={handlehqAddressChange}
+            value={zip}
+            onChange={handleChange}
             fullWidth
           />
         </Grid>
@@ -47,8 +51,8 @@ const HQAddress = ({ classes, hqAddress, handlehqAddressChange }) => {
           <StyledTextField
             {...hqAddressFormData.COUNTRY}
             variant="outlined"
-            value={hqAddress.COUNTRY}
-            onChange={handlehqAddressChange}
+            value={country}
+            onChange={handleChange}
             fullWidth
           />
         </Grid>
@@ -65,7 +69,6 @@ HQAddress.propTypes = {
     zip: PropTypes.string,
     country: PropTypes.string,
   }),
-  handlehqAddressChange: PropTypes.func,
 };
 
 export default withStyles(useStyles)(HQAddress);
