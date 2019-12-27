@@ -7,11 +7,11 @@ const initialState = {
   id: "",
   uuid: "",
   name: "",
+  type: "organization",
   duns: "",
   website: "",
   ownerFullName: "",
   phone: "",
-  sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",
   contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
@@ -39,6 +39,7 @@ const initialState = {
     },
   },
   hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  sameMailingAddress: false,
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
 };
 

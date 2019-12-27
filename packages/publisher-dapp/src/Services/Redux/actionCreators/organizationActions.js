@@ -34,18 +34,37 @@ export const setMailingAddressDetail = (name, value) => ({
 
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid, name, website, shortDescription, longDescription, contacts, assets, ownerFullName } = organization;
+  const { id, uuid,duns, name,type, website, shortDescription, longDescription, 
+    contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
     org_id: id,
     org_uuid: uuid,
     org_name: name,
-    org_type: "organization",
+    duns_no: duns,
+    org_type: type,
     metadata_ipfs_hash: "",
     description: longDescription,
     short_description: shortDescription,
     url: website,
     contacts,
+    address: {
+      headquater_address: {
+        street_address: hqAddress.street,
+        apartment: hqAddress.apartment,
+        city: hqAddress.city,
+        pincode: hqAddress.zip,
+        country: hqAddress.country,
+      },
+      mail_address_same_hq_address: sameMailingAddress,
+      mailing_address: {
+        street_address: mailingAddress.street,
+        apartment: mailingAddress.apartment,
+        city: mailingAddress.city,
+        pincode: mailingAddress.zip,
+        country: mailingAddress.country,
+      },
+    },
     assets: {
       hero_image: {
         raw: assets.heroImage.raw,
