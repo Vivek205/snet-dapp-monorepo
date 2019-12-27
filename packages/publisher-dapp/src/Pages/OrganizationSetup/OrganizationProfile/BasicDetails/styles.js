@@ -4,8 +4,13 @@ export const useStyles = MUITheme => ({
 		paddingBottom: 14,
 		'& + div':{
 			padding: '0 30px',
-			marginBottom: 16
+			marginBottom: 16,
+			'& + div':{ 
+				padding: '0 30px',
+				marginBottom: 16,
+			}
 		}
 	},
-	basicDetailsTextfield: { backgroundColor: 'red' }
+	basicDetailsTextfield: { backgroundColor: 'red' },
+	orgWebsiteUrl: { padding: '0 30px' }
 })

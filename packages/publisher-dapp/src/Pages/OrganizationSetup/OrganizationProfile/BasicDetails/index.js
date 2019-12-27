@@ -58,13 +58,15 @@ const BasicDetails = ({ classes }) => {
         value={longDescription}
         onChange={handleFormInputsChange}
       />
-      <SNETTextfield
-        name="website"
-        value={website}
-        onChange={handleFormInputsChange}
-        label="Organization Website URL"
-        description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
-      />
+      <div className={classes.orgWebsiteUrl}>
+        <SNETTextfield
+          name="website"
+          value={website}
+          onChange={handleFormInputsChange}
+          label="Organization Website URL"
+          description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
+        />
+      </div>
     </Grid>
   );
 };
