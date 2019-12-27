@@ -65,3 +65,4 @@ typings/
 
 # IDE
 .vscode/
+.idea/
