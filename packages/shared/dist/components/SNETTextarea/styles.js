@@ -20,6 +20,8 @@ var useStyles = function useStyles(MUITheme) {
     textareaContainer: {
       position: 'relative',
       '& textarea': {
+        boxSizing: 'border-box',
+        width: '100%',
         padding: 10,
         borderRadius: 4,
         resize: 'none'

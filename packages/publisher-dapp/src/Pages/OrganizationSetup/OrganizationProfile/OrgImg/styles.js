@@ -7,7 +7,12 @@ export const useStyles = MUITheme => ({
 		lineHeight: '23px'
 	},
 	profileImgContainer:{
-		display: 'flex'
+		display: 'flex',
+		[MUITheme.breakpoints.down('sm')]:{ 
+			flexDirection: 'column',
+			alignItems: 'center',
+			textAlign: 'center'
+		}
 	},
 	previewText:{
 		color: MUITheme.palette.text.lightGrey,
@@ -40,7 +45,15 @@ export const useStyles = MUITheme => ({
 			minWidth: '100% !important',
 			width: '100% !important'
 		},
-		'& > button': { marginTop: 10 }
+		'& > button': { marginTop: 10 },
+		[MUITheme.breakpoints.down('sm')]:{ 
+			maxWidth: '100%',
+			width: '100%',
+			marginBottom: 20
+		}
 	},
-	previewContainer:{ paddingLeft: 40 }
+	previewContainer:{ 
+		paddingLeft: 40,
+		[MUITheme.breakpoints.down('sm')]:{ maxWidth: '100%' }
+	}
 })

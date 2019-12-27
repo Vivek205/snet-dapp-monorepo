@@ -17,7 +17,8 @@ export const useStyles = MUITheme => ({
 			border: 'none',
 			margin: '31px 23px',
 			backgroundColor: MUITheme.palette.background.grey		
-		}
+		},
+		[MUITheme.breakpoints.down('sm')]:{ width: 'auto' }
 	},
 	buttonsContainer: {
 		marginTop: 40,
