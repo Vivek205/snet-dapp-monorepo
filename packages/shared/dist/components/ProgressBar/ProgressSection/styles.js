@@ -7,26 +7,26 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
-var useStyles = (0, _styles.makeStyles)(function (theme) {
+var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     number: {
       borderRadius: 25,
       padding: "4px 10px",
       marginRight: 8,
-      backgroundColor: theme.palette.text.lightShadedGray,
-      color: theme.palette.text.white,
+      backgroundColor: MUITheme.palette.text.lightGrey,
+      color: MUITheme.palette.text.white,
       "@media(max-width:480px)": {
         padding: "4px 8px",
         fontSize: 12
       }
     },
     TabTitle: {
-      color: theme.palette.text.lightShadedGray,
+      color: MUITheme.palette.lightGrey,
       fontSize: 14
     },
     completedIcon: {
-      "& span": {
-        color: theme.palette.text.successBoxBorder,
+      "& svg": {
+        color: MUITheme.palette.success,
         fontSize: 28,
         marginRight: 10,
         "@media(max-width:480px)": {
@@ -43,16 +43,16 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     active: {
       "& span": {
         "&:first-of-type": {
-          backgroundColor: theme.palette.text.primary
+          backgroundColor: MUITheme.palette.primary.main
         },
         "&:last-of-type": {
-          color: theme.palette.text.darkShadedGray
+          color: MUITheme.palette.text.darkGrey
         }
       }
     },
     completed: {
       "&:last-of-type span": {
-        color: theme.palette.text.darkShadedGray
+        color: MUITheme.palette.text.darkGrey
       }
     }
   };
