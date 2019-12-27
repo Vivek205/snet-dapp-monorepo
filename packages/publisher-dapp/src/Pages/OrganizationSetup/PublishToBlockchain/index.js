@@ -17,7 +17,7 @@ import { organizationActions } from "../../../Services/Redux/actionCreators";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const organization = useSelector(state => state.organization);
-  const { name, status, ownerFullName } = organization;
+  const { name, uuid, status, ownerFullName } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      dispatch(organizationActions.submitForApproval(organization));
+      dispatch(organizationActions.submitForApproval(uuid));
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });

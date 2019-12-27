@@ -23,7 +23,7 @@ export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const setOrganizationStatus = status => ({ type: SET_ORGANIZATION_STATUS, payload: status });
 
-const payloadForSubmit = organization => {
+const payloadForFinishLater = organization => {
   // prettier-ignore
   const { id, uuid, name, website, shortDescription, longDescription, contacts, assets, ownerFullName } = organization;
 
@@ -60,7 +60,7 @@ export const finishLaterAPI = async payload => {
 export const finishLater = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
-    const payload = payloadForSubmit(organization);
+    const payload = payloadForFinishLater(organization);
     await finishLaterAPI(payload);
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
@@ -69,19 +69,18 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = async payload => {
+export const submitForApprovalAPI = async uuid => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.SUBMIT_FOR_APPROVAL(payload.uuid);
-  const apiOptions = initializeAPIOptions(token, payload);
+  const apiPath = APIPaths.SUBMIT_FOR_APPROVAL(uuid);
+  const apiOptions = initializeAPIOptions(token);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const submitForApproval = organization => async dispatch => {
+export const submitForApproval = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SUBMIT_FOR_APPROVAL));
-    const payload = payloadForSubmit(organization);
-    const { status, error } = await submitForApprovalAPI(payload);
+    const { status, error } = await submitForApprovalAPI(uuid);
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
@@ -92,3 +91,6 @@ export const submitForApproval = organization => async dispatch => {
     throw error;
   }
 };
+
+
+// export const publishToBlockchain
