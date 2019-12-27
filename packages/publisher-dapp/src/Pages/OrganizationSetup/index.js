@@ -15,7 +15,7 @@ import ValidationError from "shared/dist/utils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
   const organization = useSelector(state => state.organization);
-  const { id, uuid, name, website, shortDescription, longDescription, assets } = organization;
+  const { id, uuid, name, website, shortDescription, longDescription, contacts, assets } = organization;
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
@@ -32,7 +32,7 @@ const OrganizationSetup = ({ classes, location }) => {
       description: longDescription,
       short_description: shortDescription,
       url: website,
-      contacts: [],
+      contacts,
       assets: {
         hero_image: {
           raw: assets.heroImage.raw,
