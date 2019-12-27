@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     tabsContainer: {
       width: 630,
@@ -36,7 +36,7 @@ var useStyles = function useStyles(theme) {
           height: 1,
           marginRight: 16,
           display: "inline-block",
-          backgroundColor: theme.palette.text.lightGray,
+          backgroundColor: MUITheme.palette.background.grey,
           verticalAlign: "middle",
           "@media (max-width:1150px)": {
             width: 50
@@ -44,7 +44,7 @@ var useStyles = function useStyles(theme) {
         },
         "& i": {
           marginRight: 5,
-          color: theme.palette.text.green,
+          color: MUITheme.palette.success,
           fontSize: 20
         },
         "@media (max-width:470px)": {

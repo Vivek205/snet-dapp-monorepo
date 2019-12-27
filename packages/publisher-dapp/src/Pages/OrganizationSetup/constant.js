@@ -4,4 +4,4 @@ export const organizationSetupSections = {
   PUBLISH_TO_BLOCKCHAIN: { key: 3, heading: { title: "Organization Setup", description: "The final step will publish your company to the blockchain" } },
 };
 
-export const progressText = ["organization profile", "region/group", "publish to blockchain"];
+export const progressText = ["Organization Profile", "Region / Group", "Publish To Blockchain"];
