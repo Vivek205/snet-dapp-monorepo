@@ -51,6 +51,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, assets: { ...state.assets, heroImage: action.payload } };
     case organizationActions.SET_GROUPS:
       return { ...state, groups: action.payload };
+    case organizationActions.SET_ORGANIZATION_STATUS:
+      return { ...state, status: action.payload };
     default:
       return state;
   }
