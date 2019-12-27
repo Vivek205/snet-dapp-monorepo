@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -12,8 +11,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const MailingAddress = ({ classes, sameAddress, handleSameAddressChange }) => {
+const MailingAddress = ({ classes }) => {
   const organization = useSelector(state => state.organization);
+  const { sameMailingAddress } = organization;
   const { street, apartment, city, zip, country } = organization.mailingAddress;
   const dispatch = useDispatch();
 
@@ -22,11 +22,23 @@ const MailingAddress = ({ classes, sameAddress, handleSameAddressChange }) => {
     dispatch(organizationActions.setMailingAddressDetail(name, value));
   };
 
+  const handleSameAddressChange = event => {
+    const { name, checked } = event.target;
+    dispatch(organizationActions.setOneBasicDetail(name, checked));
+  };
+
   return (
     <Grid item sx={12} sm={12} md={6} lg={6} className={classes.mailingAddressContainer}>
       <Typography variant="subtitle1">Company Mailing Address</Typography>
       <FormControlLabel
-        control={<Checkbox checked={sameAddress} onChange={handleSameAddressChange} color="primary" />}
+        control={
+          <Checkbox
+            name="sameMailingAddress"
+            checked={sameMailingAddress}
+            onChange={handleSameAddressChange}
+            color="primary"
+          />
+        }
         label="same as Headquarters Address"
         className={classes.checkbox}
       />
@@ -73,11 +85,6 @@ const MailingAddress = ({ classes, sameAddress, handleSameAddressChange }) => {
       </Grid>
     </Grid>
   );
-};
-
-MailingAddress.propTypes = {
-  sameAddress: PropTypes.bool,
-  handleSameAddressChange: PropTypes.func,
 };
 
 export default withStyles(useStyles)(MailingAddress);

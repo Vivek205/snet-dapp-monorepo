@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
 
 import BasicDetails from "./BasicDetails";
@@ -10,13 +10,6 @@ import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
-
-  const [sameAddress, setSameAddress] = useState(false);
-
-  const handleAddressSame = event => {
-    console.log("event", event.target.checked, event.target.value);
-    setSameAddress(event.target.checked);
-  };
 
   const handleNavigateBack = () => {
     history.push(OnboardingRoutes.TNC.path);
@@ -30,7 +23,7 @@ const Organization = props => {
           You need to provide your company organization details and your DUNS number for the verification process.
         </Typography>
         <BasicDetails />
-        <CompanyAddress sameAddress={sameAddress} handleSameAddressChange={handleAddressSame} />
+        <CompanyAddress />
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" />
