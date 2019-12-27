@@ -1,7 +1,9 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions } from "../actionCreators";
+import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 
 const initialState = {
+  status: organizationSetupStatuses.NOT_STARTED,
   id: "",
   uuid: "",
   name: "",
@@ -49,6 +51,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, assets: { ...state.assets, heroImage: action.payload } };
     case organizationActions.SET_GROUPS:
       return { ...state, groups: action.payload };
+    case organizationActions.SET_ORGANIZATION_STATUS:
+      return { ...state, status: action.payload };
     default:
       return state;
   }

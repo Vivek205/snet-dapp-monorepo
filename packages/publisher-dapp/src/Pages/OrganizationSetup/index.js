@@ -9,39 +9,13 @@ import Heading from "./Heading";
 import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
-import validator from "shared/dist/utils/validator";
-import { orgSetupFormConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
   const organization = useSelector(state => state.organization);
-  const { id, uuid, name, website, shortDescription, longDescription, assets } = organization;
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
-    const isNotValid = validator(organization, orgSetupFormConstraints);
-    if (isNotValid) {
-      throw new ValidationError(isNotValid[0]);
-    }
-    const payload = {
-      org_id: id,
-      org_uuid: uuid,
-      org_name: name,
-      org_type: "organization",
-      metadata_ipfs_hash: "",
-      description: longDescription,
-      short_description: shortDescription,
-      url: website,
-      contacts: [],
-      assets: {
-        hero_image: {
-          raw: assets.heroImage.raw,
-          file_type: assets.heroImage.fileType,
-        },
-      },
-      groups: [],
-    };
-    await dispatch(organizationActions.finishLater(payload));
+    await dispatch(organizationActions.finishLater(organization));
   };
 
   const activeSection = () => {

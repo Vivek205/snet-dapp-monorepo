@@ -6,5 +6,7 @@ export const APIEndpoints = {
 };
 
 export const APIPaths = {
-  FINISH_LATER:"/org"
+  FINISH_LATER: "/org",
+  SUBMIT_FOR_APPROVAL: org_uuid => `/org/${org_uuid}/submit`,
+  PUBLISH_TO_BLOCKCHAIN: org_uuid => `/org/${org_uuid}/publish`,
 };

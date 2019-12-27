@@ -1,26 +1,63 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import TechnicalInfo from "./TechnicalInfo";
-import Invite from "./Invite";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import SubmitAction from "./SubmitAction";
+import validator from "shared/dist/utils/validator";
+import { submitOrganizationCostraints } from "../validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { organizationActions } from "../../../Services/Redux/actionCreators";
+import { APIError } from "shared/dist/utils/API";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
-  const { name, ownerFullName } = useSelector(state => state.organization);
+  const organization = useSelector(state => state.organization);
+  const { name, status, uuid, ownerFullName } = organization;
+  const [alert, setAlert] = useState({});
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    setAlert({});
+    try {
+      const isNotValid = validator(organization, submitOrganizationCostraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+      dispatch(organizationActions.submitForApproval(organization));
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      if (error instanceof APIError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
+    }
+  };
 
   const handlePublish = () => {
-    console.log("published to block chain");
+    setAlert({});
+    try {
+      dispatch(organizationActions.submitForApproval(uuid));
+    } catch (error) {
+      if (error instanceof APIError) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
+    }
   };
 
   const handleBack = () => {
     history.push(OrganizationSetupRoutes.REGION.path);
   };
+
   return (
     <Fragment>
       <div className={classes.box}>
@@ -48,19 +85,11 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
         </div>
         <TechnicalInfo />
       </div>
-      <AlertBox
-        message="Final launch will require you to be logged into your Metamask and some ETH gas cost to activate the service."
-        type="warning"
-      />
+      <AlertBox message={alert.message} type={alert.type} />
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="back" onClick={handleBack} />
-        <SNETButton
-          color="primary"
-          variant="contained"
-          children="publish company to blockchain"
-          onClick={handlePublish}
-        />
+        <SubmitAction status={status} handlePublish={handlePublish} handleSubmit={handleSubmit} />
       </div>
     </Fragment>
   );

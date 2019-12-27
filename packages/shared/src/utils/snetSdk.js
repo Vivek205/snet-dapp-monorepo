@@ -14,7 +14,6 @@ export const initSDK = async () => {
       web3Provider,
       defaultGasLimit: DEFAULT_GAS_LIMIT,
     };
-
     sdk = new SnetSDK(config);
   };
 
