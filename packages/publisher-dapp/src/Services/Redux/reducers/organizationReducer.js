@@ -10,6 +10,7 @@ const initialState = {
   duns: "",
   website: "",
   ownerFullName: "",
+  phone: "",
   sameMailingAddress: false,
   shortDescription: "",
   longDescription: "",

@@ -7,7 +7,7 @@ import { basicDetailsFormData } from "./content";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const BasicDetails = props => {
+const BasicDetails = () => {
   const { name, website, duns, ownerFullName, phone } = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ BasicDetails.propTypes = {
     ownerFullName: PropTypes.string,
     phone: PropTypes.string,
   }),
-  handleBasicDetailsChange: PropTypes.func,
 };
 
 export default BasicDetails;

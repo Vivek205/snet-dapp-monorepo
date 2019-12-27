@@ -10,22 +10,10 @@ import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
-  const [basicDetails, setBasicDetails] = useState({
-    name: "",
-    duns: "",
-    website: "",
-    ownerFullName: "",
-    phone: "",
-  });
+
   const [hqAddress, setHqAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
   const [mailingAddress, setMailingAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
   const [sameAddress, setSameAddress] = useState(false);
-
-  const handleBasicDetailsChange = event => {
-    const { name, value } = event.target;
-    console.log("name -", name, "value -", value);
-    setBasicDetails({ ...basicDetails, [name]: value });
-  };
 
   const handlehqAddressChange = event => {
     const { name, value } = event.target;
@@ -53,7 +41,7 @@ const Organization = props => {
         <Typography>
           You need to provide your company organization details and your DUNS number for the verification process.
         </Typography>
-        <BasicDetails basicDetails={basicDetails} handleBasicDetailsChange={handleBasicDetailsChange} />
+        <BasicDetails />
         <CompanyAddress
           hqAddress={hqAddress}
           handlehqAddressChange={handlehqAddressChange}
