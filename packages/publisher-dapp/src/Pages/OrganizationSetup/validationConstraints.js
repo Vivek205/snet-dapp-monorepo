@@ -10,4 +10,10 @@ export const orgSetupFormConstraints = {
       phone: { presence: { allowEmpty: false } },
     },
   },
+  "assets.heroImage.raw": {
+    presence: { allowEmpty: false, message: "Please upload a hero image for the organization", fullMessages: false },
+  },
+  "assets.heroImage.fileType": {
+    presence: { allowEmpty: false, message: "Please upload a hero image for the organization", fullMessages: false },
+  },
 };
