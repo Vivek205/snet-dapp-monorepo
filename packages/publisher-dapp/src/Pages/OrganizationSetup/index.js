@@ -10,19 +10,16 @@ import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
 import validator from "shared/dist/utils/validator";
-import { orgSetupFormConstraints } from "./validationConstraints";
+import { finishLaterConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 
 const OrganizationSetup = ({ classes, location }) => {
-  const organization = useSelector(state => state.organization);
-  const { id, uuid, name, website, shortDescription, longDescription, contacts, assets } = organization;
+  const { id, uuid, name, website, shortDescription, longDescription, contacts, assets } = useSelector(
+    state => state.organization
+  );
   const dispatch = useDispatch();
 
   const handleFinishLater = async () => {
-    const isNotValid = validator(organization, orgSetupFormConstraints);
-    if (isNotValid) {
-      throw new ValidationError(isNotValid[0]);
-    }
     const payload = {
       org_id: id,
       org_uuid: uuid,

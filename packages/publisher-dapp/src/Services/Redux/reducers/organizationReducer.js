@@ -1,7 +1,9 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions } from "../actionCreators";
+import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 
 const initialState = {
+  status: organizationSetupStatuses.NOT_STARTED,
   id: "",
   uuid: "",
   name: "",
