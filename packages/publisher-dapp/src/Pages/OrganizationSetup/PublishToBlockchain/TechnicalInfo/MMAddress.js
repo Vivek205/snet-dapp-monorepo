@@ -10,8 +10,12 @@ const MMAddress = ({ classes }) => {
   const [mmAddress, setMMAddress] = useState("");
 
   const handleConnetMM = async () => {
-    const sdk = await initSDK();
-    setMMAddress(sdk.account.address);
+    try {
+      const sdk = await initSDK();
+      setMMAddress(sdk.account.address);
+    } catch (error) {
+      console.log("connect MM err", error);
+    }
   };
 
   if (!!mmAddress) {

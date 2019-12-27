@@ -1,6 +1,5 @@
 import SnetSDK from "snet-sdk-web";
 
-const DEFAULT_GAS_PRICE = 4700000;
 const DEFAULT_GAS_LIMIT = 210000;
 const ON_ACCOUNT_CHANGE = "accountsChanged";
 const ON_NETWORK_CHANGE = "networkChanged";
@@ -13,7 +12,6 @@ export const initSDK = async () => {
     const config = {
       networkId,
       web3Provider,
-      defaultGasPrice: DEFAULT_GAS_PRICE,
       defaultGasLimit: DEFAULT_GAS_LIMIT,
     };
 
