@@ -25,7 +25,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       fontSize: 14
     },
     completedIcon: {
-      "& span": {
+      "& svg": {
         color: MUITheme.palette.success,
         fontSize: 28,
         marginRight: 10,
