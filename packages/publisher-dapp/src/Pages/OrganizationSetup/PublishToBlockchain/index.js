@@ -57,6 +57,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const handleBack = () => {
     history.push(OrganizationSetupRoutes.REGION.path);
   };
+
   return (
     <Fragment>
       <div className={classes.box}>
