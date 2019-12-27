@@ -35,10 +35,12 @@ export const useStyles = MUITheme => ({
 	},
 	orgProfileImg:{
 		width: 334,
+		textAlign: 'center',
 		'& > div': { 
 			minWidth: '100% !important',
 			width: '100% !important'
-		}
+		},
+		'& > button': { marginTop: 10 }
 	},
 	previewContainer:{ paddingLeft: 40 }
 })
