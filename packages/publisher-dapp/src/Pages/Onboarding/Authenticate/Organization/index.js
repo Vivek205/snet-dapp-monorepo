@@ -11,13 +11,7 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
 
-  const [mailingAddress, setMailingAddress] = useState({ street: "", apartment: "", city: "", zip: "", country: "" });
   const [sameAddress, setSameAddress] = useState(false);
-
-  const handleMailingAddressChange = event => {
-    const { name, value } = event.target;
-    setMailingAddress({ ...mailingAddress, [name]: value });
-  };
 
   const handleAddressSame = event => {
     console.log("event", event.target.checked, event.target.value);
@@ -36,12 +30,7 @@ const Organization = props => {
           You need to provide your company organization details and your DUNS number for the verification process.
         </Typography>
         <BasicDetails />
-        <CompanyAddress
-          mailingAddress={mailingAddress}
-          handleMailingAddressChange={handleMailingAddressChange}
-          sameAddress={sameAddress}
-          handleSameAddressChange={handleAddressSame}
-        />
+        <CompanyAddress sameAddress={sameAddress} handleSameAddressChange={handleAddressSame} />
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" />

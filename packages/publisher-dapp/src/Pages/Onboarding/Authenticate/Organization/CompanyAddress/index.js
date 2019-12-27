@@ -7,22 +7,11 @@ import { useStyles } from "./styles";
 import HQAddress from "./HQAddress";
 import MailingAddress from "./MailingAddress";
 
-const CompanyAddress = ({
-  classes,
-  mailingAddress,
-  handleMailingAddressChange,
-  sameAddress,
-  handleSameAddressChange,
-}) => {
+const CompanyAddress = ({ classes, sameAddress, handleSameAddressChange }) => {
   return (
     <Grid container className={classes.headQuartersCompanyMailingContainer}>
       <HQAddress />
-      <MailingAddress
-        mailingAddress={mailingAddress}
-        sameAddress={sameAddress}
-        handleSameAddressChange={handleSameAddressChange}
-        handleMailingAddressChange={handleMailingAddressChange}
-      />
+      <MailingAddress sameAddress={sameAddress} handleSameAddressChange={handleSameAddressChange} />
     </Grid>
   );
 };
@@ -30,14 +19,6 @@ const CompanyAddress = ({
 CompanyAddress.propTypes = {
   sameHqAndMailAddress: PropTypes.bool,
   handleSameAddressChange: PropTypes.func,
-  mailingAddress: PropTypes.shape({
-    street: PropTypes.string,
-    apartment: PropTypes.string,
-    city: PropTypes.string,
-    zip: PropTypes.string,
-    country: PropTypes.string,
-  }),
-  handleMailingAddressChange: PropTypes.func,
 };
 
 export default withStyles(useStyles)(CompanyAddress);
