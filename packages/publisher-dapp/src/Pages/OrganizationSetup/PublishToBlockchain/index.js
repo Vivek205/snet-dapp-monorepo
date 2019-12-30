@@ -17,7 +17,10 @@ import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
-  const organization = useSelector(state => state.organization);
+  const { organization, entity } = useSelector(state => ({
+    organization: state.organization,
+    entity: state.user.entity,
+  }));
   const { name, status, uuid, ownerFullName } = organization;
   const [alert, setAlert] = useState({});
 
@@ -67,7 +70,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
           hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
         </Typography>
         <div className={classes.inputFields}>
-          <SNETTextfield label="Entity Type" name="entitytype" disabled />
+          <SNETTextfield label="Entity Type" name="entity" disabled value={entity} />
           <SNETTextfield
             label="Company Organization Name"
             description="The company name is displayed as the provider to users on the AI service page name.11111. "

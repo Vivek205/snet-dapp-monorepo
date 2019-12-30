@@ -13,6 +13,7 @@ import { OrganizationSetupRoutes } from "../../../OrganizationSetup/Organization
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
+
   const organization = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const Organization = props => {
 
   const handleFinish = async () => {
     await dispatch(organizationActions.finishLater(organization));
-    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE);
+    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
   };
 
   return (

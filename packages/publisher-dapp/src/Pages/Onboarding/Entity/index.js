@@ -10,10 +10,19 @@ import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
+import { userEntities } from "../../../Utils/user";
+import { useDispatch, useSelector } from "react-redux";
+import { onboardingActions } from "../../../Services/Redux/actionCreators/userActions";
 
 const Entity = ({ classes, history }) => {
+  const entity = useSelector(state => state.user.entity);
+  const dispatch = useDispatch();
   const handleContinue = () => {
     history.push(OnboardingRoutes.TNC.path);
+  };
+
+  const handleEntityChange = event => {
+    dispatch(onboardingActions.setUserEntity(event.target.value));
   };
 
   return (
@@ -25,7 +34,16 @@ const Entity = ({ classes, history }) => {
           Person Business or join an existing approved entity with an invitation. The first two options require certain
           amount of information to proceed.
         </Typography>
-        <StyledDropdown labelTxt="Please Select" inputLabel="Entity Type" />
+        <StyledDropdown
+          labelTxt="Please Select"
+          inputLabel="Entity Type"
+          value={entity}
+          list={[
+            { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
+            { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
+          ]}
+          onChange={handleEntityChange}
+        />
       </Grid>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h5">Sign In</Typography>

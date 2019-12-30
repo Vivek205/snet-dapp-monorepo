@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
 const BasicDetails = () => {
-  const { name, website, duns, ownerFullName, phone } = useSelector(state => state.organization);
+  const { id, name, website, duns, ownerFullName, phone } = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
   const handleChange = event => {
@@ -18,6 +18,7 @@ const BasicDetails = () => {
 
   return (
     <Grid container>
+      <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.COMPANY_NAME} value={name} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
