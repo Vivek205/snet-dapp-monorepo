@@ -1,4 +1,10 @@
 export const basicDetailsFormData = {
+  ORG_ID: {
+    id: "Organization id",
+    name: "id",
+    label: "Org id",
+    description: "The org id is unique identification for the company.",
+  },
   COMPANY_NAME: {
     id: "company Name - 15/50 char",
     name: "name",

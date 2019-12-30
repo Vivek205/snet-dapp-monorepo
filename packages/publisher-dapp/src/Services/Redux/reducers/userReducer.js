@@ -2,6 +2,7 @@ import { userActions } from "../actionCreators";
 import { verificationStatuses } from "../../../Pages/Onboarding/constant";
 
 const initialState = {
+  entity: "",
   isInitialized: false,
   isLoggedIn: false,
   email: undefined,
@@ -26,6 +27,9 @@ const userReducer = (state = initialState, action) => {
     }
     case userActions.loginActions.SET_APP_INITIALIZED: {
       return { ...state, isInitialized: action.payload };
+    }
+    case userActions.onboardingActions.SET_USER_ENTITY: {
+      return { ...state, entity: action.payload };
     }
     default:
       return state;
