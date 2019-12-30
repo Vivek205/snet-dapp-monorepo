@@ -1,9 +1,11 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 import SNETButton from "shared/src/components/SNETButton";
 import { useSelector } from "react-redux";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 const LoginBanner = ({ classes }) => {
   const { isLoggedIn } = useSelector(state => state.user);
@@ -25,12 +27,16 @@ const LoginBanner = ({ classes }) => {
             accusamus mea cu. Nam hendrerit theophrastus ex, vix aeque solet cu.
           </Typography>
           <div className={classes.signInBtns}>
-            <SNETButton
-              color="primary"
-              children={isLoggedIn ? "Login to Another account" : "Login to singularitynet"}
-              variant="text"
-            />
-            <SNETButton color="primary" children="Create new account" variant="text" />
+            <Link to={GlobalRoutes.LOGIN.path}>
+              <SNETButton
+                color="primary"
+                children={isLoggedIn ? "Login to Another account" : "Login to singularitynet"}
+                variant="text"
+              />
+            </Link>
+            <Link to={GlobalRoutes.SIGNUP.path}>
+              <SNETButton color="primary" children="Create new account" variant="text" />
+            </Link>
           </div>
         </Grid>
       </Grid>
