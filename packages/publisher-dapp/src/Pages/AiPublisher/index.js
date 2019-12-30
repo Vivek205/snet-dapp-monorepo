@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
 import { Link } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 
@@ -21,10 +21,10 @@ const AiPublisher = ({ classes }) => {
           <div className={classes.btnContainer}>
             <SNETButton color="primary" children="create new ai service" variant="contained" />
             <SNETButton color="primary" variant="text" children="edit company organization" />
-          </div>
-          <MainSection />
+          </div>          
         </Grid>
       </Grid>
+      <MainSection />
   	</div>
   )
 };

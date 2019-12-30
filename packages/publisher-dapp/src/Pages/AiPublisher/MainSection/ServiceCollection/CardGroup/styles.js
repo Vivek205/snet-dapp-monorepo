@@ -1,16 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
-  lisViewCardCollection: {
-    marginTop: 10,
-    "@media(max-width: 1023px) and (min-width: 768px)": { textAlign: "center" },
-    "& a": {
-      width: "100%",
-      textDecoration: "none ",
-      display: "inline-block",
-      verticalAlign: "top",
-    },
-  },
   circularProgressContainer: {
     paddingTop: 20,
     textAlign: "center",
@@ -52,7 +42,7 @@ export const useStyles = makeStyles(theme => ({
   gridViewCardCollection: {
     marginTop: 9,
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     "& a": {
       textDecoration: "none ",
       display: "inline-block",
