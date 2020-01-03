@@ -21,6 +21,11 @@ export const useStyles = MUITheme => ({
 		fontSize: 20,
 		lineHeight: '28px'
 	},
+	description:{
+		color: MUITheme.palette.text.primary,
+		fontSize: 20,
+		lineHeight: '28px'
+	},
 	reverseDirection: {
     flexDirection: "row-reverse",
     backgroundColor: MUITheme.palette.background.white,
