@@ -1,4 +1,5 @@
 export const useStyles = MUITheme => ({
+	getInTouchContainer:{ background: MUITheme.palette.background.mainContent },
 	getInTouch:{
 		maxWidth: 1175,
 		padding: '40px 60px !important',
@@ -8,8 +9,12 @@ export const useStyles = MUITheme => ({
 		'& form':{ 
 			marginTop: 32,
 			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center'
+			justifyContent: 'center',
+			'& > div':{ 
+				width: 370,
+				margin: '0 24px 0 0' 
+			},
+			'& a':{ marginTop: '0 !important' }
 		},
 		'& input':{ 
 			width: 411,
