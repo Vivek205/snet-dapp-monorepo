@@ -38,10 +38,10 @@ const BasicDetails = () => {
   return (
     <Grid container>
       <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.COMPANY_NAME} value={name} onChange={handleChange} />
+      <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.USER_FULL_NAME} value={ownerFullName} onChange={handleChange} />
+      <SNETTextField {...basicDetailsFormData.OWNERS_FULL_NAME} value={ownerFullName} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );

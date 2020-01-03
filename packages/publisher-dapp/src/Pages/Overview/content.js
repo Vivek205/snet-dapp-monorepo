@@ -1,3 +1,5 @@
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
+
 export const overViewArticles= [
 	{ 
 		title: "From Code to Customer",
@@ -11,7 +13,8 @@ export const overViewArticles= [
 	 	media: "http://placehold.it/736x416",
 	 	btnDetails: {
 	 		text: "start your enroll",
-	 		type: "blue"
+	 		type: "blue",
+	 		linkTo: `${GlobalRoutes.ENROLL.path}`,
 	 	}
 	},
 	{

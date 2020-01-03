@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { useStyles } from "./styles";
 import StyledButton from "shared/dist/components/StyledButton";
 
@@ -24,7 +25,7 @@ const GetInTouch = ({ classes }) => {
 	          margin="normal"
 	          variant="outlined"
 	        />
-	        <StyledButton btnText="start your enroll" type="blue" />
+	        <StyledButton btnText="start your enroll" type="blue" href={GlobalRoutes.ENROLL.path} />
     		</form>    		
       </Grid>
   	</Grid>

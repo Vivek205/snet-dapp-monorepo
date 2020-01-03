@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onboardingActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 
-const Entity = ({ classes, history }) => {
+const SingularityAccount = ({ classes, history }) => {
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const handleContinue = () => {
@@ -27,10 +27,10 @@ const Entity = ({ classes, history }) => {
   };
 
   return (
-    <Grid container className={classes.entityContainer}>
+    <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h5">Entity Type</Typography>
-        <Typography className={classes.entityDescription}>
+        <Typography variant="h6">Entity Type</Typography>
+        <Typography className={classes.singularityAccDescription}>
           You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single
           Person Business or join an existing approved entity with an invitation. The first two options require certain
           amount of information to proceed.
@@ -45,10 +45,14 @@ const Entity = ({ classes, history }) => {
           ]}
           onChange={handleEntityChange}
         />
+        <SNETButton children="cancel" variant="text" color="primary" />
       </Grid>
-      <LoginBanner classes={classes} />
+      <LoginBanner classes={classes} 
+        providerName="waythingswork"
+        emailId="greg.kuebler@singularitynet.io"
+      />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h5">Email Preferences</Typography>
+        <Typography variant="h6">Email Preferences</Typography>
         <div className={classes.checkboxContainer}>
           {emailPreferencesList.map((item, index) => (
             <FormControlLabel control={<Checkbox value={item} color="primary" />} label={item} />
@@ -63,4 +67,4 @@ const Entity = ({ classes, history }) => {
   );
 };
 
-export default withStyles(useStyles)(Entity);
+export default withStyles(useStyles)(SingularityAccount);

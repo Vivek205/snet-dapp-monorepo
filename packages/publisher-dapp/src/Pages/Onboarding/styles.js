@@ -1,7 +1,7 @@
 export const useStyles = MUITheme => ({
 onboardingContainer: {
-    paddingBottom: 40,
-    backgroundColor: MUITheme.palette.text.offWhiteColor,
+    paddingTop: 40,
+    backgroundColor: MUITheme.palette.background.mainContent,
     "& ul": {
       justifyContent: "center",
       "& li": {
@@ -11,15 +11,13 @@ onboardingContainer: {
   },
 topSection: {
     textAlign: "center",
-    "& h2": {
-      color: MUITheme.palette.text.darkShadedGray,
-      fontSize: 32,
-    },
-    "& p": {
-      margin: "20px 0 0",
-      color: MUITheme.palette.text.mediumShadeGray,
+    "& span": {
+      margin: "15px 0 0",
+      display: 'inline-block',
+      color: MUITheme.palette.text.primary,
       fontSize: 20,
-      lineHeight: "30px",
+      fontWeight: 300,
+      lineHeight: "28px",
     },
   },
 })

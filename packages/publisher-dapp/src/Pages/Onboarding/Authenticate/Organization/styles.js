@@ -17,7 +17,7 @@ export const useStyles = makeStyles(MUITheme => ({
       
     },
     '& > p':{
-      marginTop: 16,
+      margin: '16px 0 27px',
       color: MUITheme.palette.text.primary,
       fontSize: 14,
       lineHeight: '21px'

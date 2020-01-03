@@ -20,7 +20,7 @@ export const useStyles = MUITheme => ({
 			}
 		},
 		'& .MuiListItemIcon-root':{ minWidth: 'auto' },
-		'& button':{ marginTop: 32 },
+		'& button, & a':{ marginTop: 32 },
 		'& img':{ width: '100%' }
 	},	
 	checkCircleIcon:{
