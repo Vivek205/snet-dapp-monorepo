@@ -48,7 +48,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const handlePublish = () => {
     setAlert({});
     try {
-      dispatch(organizationActions.submitForApproval(uuid));
+      dispatch(organizationActions.publishToBlockchain(uuid));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
