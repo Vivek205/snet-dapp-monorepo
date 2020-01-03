@@ -6,7 +6,7 @@ import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const TNC = ({ history }) => {
+const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
   const [agreed, setAgreed] = useState(false);
 
@@ -19,7 +19,7 @@ const TNC = ({ history }) => {
   };
 
   return (
-    <Fragment>
+    <div>
       <TermsAndConditions
         title={TermsAndConditionsDetails.title}
         formLabel={TermsAndConditionsDetails.formLabel}
@@ -31,8 +31,8 @@ const TNC = ({ history }) => {
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="accept" onClick={handleAccept} disabled={!agreed} />
       </div>
-    </Fragment>
+    </div>
   );
 };
 
-export default TNC;
+export default AcceptServiceAgreement;

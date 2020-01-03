@@ -8,6 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { withStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/CheckCircle";
 
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import GetInTouch from "./GetInTouch";
@@ -44,7 +45,7 @@ const Overview = ({ classes }) => {
         	))}
 	        </List>
 	        <div className={classes.btnContainer}>
-	        <SNETButton children="start your enroll" color="secondary" variant="contained" />
+	        <SNETButton children="start your enroll" color="secondary" variant="contained" href={GlobalRoutes.ENROLL.path} />
 	        </div>
 	      </React.Fragment>
 	    ))}

@@ -9,13 +9,13 @@ const Default = ({ history }) => {
   useEffect(() => {
     switch (verificationStatus) {
       case verificationStatuses.NOT_STARTED:
-        return history.push(OnboardingRoutes.ENTITY.path);
+        return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
       case verificationStatuses.SELECTED_ENTITY:
-        return history.push(OnboardingRoutes.TNC.path);
+        return history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
       case verificationStatuses.ACCEPTED_TNC:
-        return history.push(OnboardingRoutes.AUTHENTICATE.path);
+        return history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
       default:
-        return history.push(OnboardingRoutes.ENTITY.path);
+        return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
     }
   }, [history, verificationStatus]);
 

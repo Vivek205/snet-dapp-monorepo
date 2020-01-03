@@ -27,7 +27,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
           </ListItem>   
           ))}        
         </List>
-        <StyledButton btnText={btnDetails.text} type={btnDetails.type} />				
+        <StyledButton btnText={btnDetails.text} type={btnDetails.type} href={btnDetails.linkTo} />				
       </Grid>
     	<Grid item xs={12} sm={12} md={12} lg={7}>
       	<img src={media} alt="media" />

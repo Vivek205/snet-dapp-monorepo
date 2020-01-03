@@ -14,8 +14,8 @@ var useStyles = function useStyles(MUITheme) {
       backgroundColor: MUITheme.palette.background.mainContent
     },
     termsAndConditionsContainer: {
-      width: 630,
-      paddingBottom: 40,
+      width: 846,
+      paddingBottom: 30,
       margin: "40px auto 0",
       backgroundColor: MUITheme.palette.background.white,
       boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
@@ -36,6 +36,7 @@ var useStyles = function useStyles(MUITheme) {
       height: 247,
       margin: "0 12px",
       padding: "9px 7px",
+      borderRadius: 4,
       overflow: "auto",
       fontSize: 14,
       textAlign: "left",
@@ -65,6 +66,17 @@ var useStyles = function useStyles(MUITheme) {
           fontSize: 14,
           letterSpacing: 0.25,
           lineHeight: "20px"
+        },
+        "& span": {
+          "&:last-of-type": {
+            color: MUITheme.palette.text.primary
+          },
+          "&.MuiCheckbox-colorPrimary": {
+            color: MUITheme.palette.text.primary
+          },
+          "&.MuiCheckbox-colorPrimary.Mui-checked": {
+            color: "".concat(MUITheme.palette.primary.main, " !important")
+          }
         }
       },
       "& button": {
