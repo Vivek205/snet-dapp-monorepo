@@ -40,5 +40,31 @@ export const useStyles = MUITheme => ({
 		color: MUITheme.palette.text.primary,
 		fontSize: 18,
 		lineHeight: '26px'
+	},
+	companyOrgReg:{
+		'& > div':{ 
+			marginBottom: 20,
+			'&:last-of-type':{ marginBottom: 0 }
+		}
+	},
+	metamask:{
+		'& ul':{ 
+			padding: 0,
+			marginBottom: 0,
+			'& h6':{
+				paddingBottom: 20,
+				display: 'inline-block',				
+			},
+			'& li':{
+				paddingLeft: 85,
+				listStyle: 'none'
+			}
+		}
+	},
+	joiningTeamMember:{
+		'& p':{ marginBottom: '0 !important' }
+	},
+	website:{
+		'& p':{ marginBottom: '0 !important' }
 	}
 })
