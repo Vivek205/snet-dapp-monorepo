@@ -7,22 +7,22 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
-var useStyles = (0, _styles.makeStyles)(function (theme) {
+var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
   return {
     errorMsg: {
       margin: 0
     },
     error: {
-      color: theme.palette.text.errorRed
+      color: MuiTheme.palette.error.main
     },
     success: {
-      color: theme.palette.text.successBoxBorder
+      color: MuiTheme.palette.success
     },
     warning: {
-      color: theme.palette.text.warningBorder
+      color: MuiTheme.palette.text.warningBorder
     },
     info: {
-      color: theme.palette.text.primary
+      color: MuiTheme.palette.primary.main
     }
   };
 });

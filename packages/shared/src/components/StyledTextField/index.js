@@ -9,7 +9,7 @@ const StyledTextField = ({ classes, className, label, handleChange, value, ...re
     <TextField
       id="outlined-name"
       label={label}
-      className={`${classes.styledTextField} ${className}`}
+      className={`${classes.styledTextField} ${classes.className}`}
       value={value}
       onChange={handleChange}
       margin="normal"

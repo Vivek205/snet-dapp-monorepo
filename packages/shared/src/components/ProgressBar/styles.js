@@ -1,4 +1,4 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   tabsContainer: {
     width: 630,
     paddingTop: 41,
@@ -26,13 +26,13 @@ export const useStyles = theme => ({
         height: 1,
         marginRight: 16,
         display: "inline-block",
-        backgroundColor: theme.palette.text.lightGray,
+        backgroundColor: MUITheme.palette.background.grey,
         verticalAlign: "middle",
         "@media (max-width:1150px)": { width: 50 },
       },
       "& i": {
         marginRight: 5,
-        color: theme.palette.text.green,
+        color: MUITheme.palette.success,
         fontSize: 20,
       },
       "@media (max-width:470px)": { marginBottom: 20 },
