@@ -7,10 +7,11 @@ const initialState = {
   id: "",
   uuid: "",
   name: "",
+  type: "organization",
   duns: "",
   website: "",
   ownerFullName: "",
-  sameMailingAddress: false,
+  phone: "",
   shortDescription: "",
   longDescription: "",
   contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
@@ -37,7 +38,8 @@ const initialState = {
       fileType: "",
     },
   },
-  hqAddres: { street: "", apartment: "", city: "", zip: "", country: "" },
+  hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  sameMailingAddress: false,
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
 };
 
@@ -53,6 +55,10 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, groups: action.payload };
     case organizationActions.SET_ORGANIZATION_STATUS:
       return { ...state, status: action.payload };
+    case organizationActions.SET_HQ_ADDRESS_DETAIL:
+      return { ...state, hqAddress: { ...state.hqAddress, ...action.payload } };
+    case organizationActions.SET_MAILING_ADDRESS_DETAIL:
+      return { ...state, mailingAddress: { ...state.mailingAddress, ...action.payload } };
     default:
       return state;
   }

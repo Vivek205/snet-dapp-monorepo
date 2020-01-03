@@ -12,6 +12,8 @@ export const SET_CONTACTS = "SET_CONTACTS";
 export const SET_HERO_IMAGE = "SET_HERO_IMAGE";
 export const SET_GROUPS = "SET_GROUPS";
 export const SET_ORGANIZATION_STATUS = "SET_ORGANIZATION_STATUS";
+export const SET_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
+export const SET_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
 
@@ -23,20 +25,46 @@ export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const setOrganizationStatus = status => ({ type: SET_ORGANIZATION_STATUS, payload: status });
 
+export const setHqAddressDetail = (name, value) => ({ type: SET_HQ_ADDRESS_DETAIL, payload: { [name]: value } });
+
+export const setMailingAddressDetail = (name, value) => ({
+  type: SET_MAILING_ADDRESS_DETAIL,
+  payload: { [name]: value },
+});
+
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid, name, website, shortDescription, longDescription, contacts, assets, ownerFullName } = organization;
+  const { id, uuid,duns, name,type, website, shortDescription, longDescription, 
+    contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
     org_id: id,
     org_uuid: uuid,
     org_name: name,
-    org_type: "organization",
+    duns_no: duns,
+    org_type: type,
     metadata_ipfs_hash: "",
     description: longDescription,
     short_description: shortDescription,
     url: website,
     contacts,
+    address: {
+      headquater_address: {
+        street_address: hqAddress.street,
+        apartment: hqAddress.apartment,
+        city: hqAddress.city,
+        pincode: hqAddress.zip,
+        country: hqAddress.country,
+      },
+      mail_address_same_hq_address: sameMailingAddress,
+      mailing_address: {
+        street_address: mailingAddress.street,
+        apartment: mailingAddress.apartment,
+        city: mailingAddress.city,
+        pincode: mailingAddress.zip,
+        country: mailingAddress.country,
+      },
+    },
     assets: {
       hero_image: {
         raw: assets.heroImage.raw,
