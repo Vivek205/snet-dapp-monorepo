@@ -40,9 +40,7 @@ export const MUITheme = createMuiTheme({
       light: "#412f55",
     },
     background: {
-      disabled: {
-        gray: "#D6D6D6",
-      },
+      disabled: { gray: "#D6D6D6" },
       hover: {
         blue: "#ecf3fe",
         red: "#D0021B",

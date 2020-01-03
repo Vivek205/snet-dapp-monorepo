@@ -10,10 +10,10 @@ import StyledButton from "shared/dist/components/StyledButton";
 
 const GetInTouch = ({ classes }) => {
   return (
-  	<Grid container>
+  	<Grid container className={classes.getInTouchContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.getInTouch}>
       	<Typography variant="h2">More Questions? Get in Touch.</Typography>
-        <Typography variant="body2">Lorem ipsum dolor sit amet, ut sea homero forensibus. Ea veri indoctum nam, nec ea nulla concludaturque, graeco assentior at nam. Fugit veritus propriae sed at, in usu labores offendit. Pri veniam vivendum in, elitr latine sed te. His simul inimicus negle ge ntur ex, an vix praesent iracundia.</Typography>
+        <Typography variant="body2">We can help you tackle demanding challenges, whether you’re a developer, business manager, or marketer. Our tools work together so that you and your team can improve your AI service performances while gaining valuable user insights.  Connect with us so we can assist you with the most optimal solutions.</Typography>
       	<form>
 	        <TextField
 	          id="outlined-number"
@@ -25,7 +25,7 @@ const GetInTouch = ({ classes }) => {
 	          margin="normal"
 	          variant="outlined"
 	        />
-	        <StyledButton btnText="start your enroll" type="blue" href={GlobalRoutes.ENROLL.path} />
+	        <StyledButton btnText="get in touch" type="blue" href={GlobalRoutes.ENROLL.path} />
     		</form>    		
       </Grid>
   	</Grid>

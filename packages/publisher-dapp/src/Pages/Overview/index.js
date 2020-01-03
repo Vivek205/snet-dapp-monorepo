@@ -28,28 +28,7 @@ const Overview = ({ classes }) => {
   				btnDetails={item.btnDetails}
   				rightAlign={(index + 1) % 2 === 0}
   			/>
-  		))}  		
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.programMemDetails}>      	
-      {ProgramMemberShipDetailsList.map((item, index) => (
-      	<React.Fragment key={item.title}>
-	      	<Typography variant="h2">{item.title}</Typography>
-	        <Typography variant="body2">{item.description}</Typography>
-	        <List>	        	
-	        {item.list.map((list, index) => (
-	        	<ListItem key={index}>
-          		<ListItemIcon>
-              	<CheckIcon className={classes.checkCircleIcon} />
-            	</ListItemIcon>
-          		<ListItemText primary={list} />          
-          	</ListItem>		
-        	))}
-	        </List>
-	        <div className={classes.btnContainer}>
-	        <SNETButton children="start your enroll" color="secondary" variant="contained" href={GlobalRoutes.ENROLL.path} />
-	        </div>
-	      </React.Fragment>
-	    ))}
-      </Grid>
+  		))}
       <GetInTouch />
     </Grid>
   );

@@ -14,22 +14,27 @@ import StyledButton from "shared/dist/components/StyledButton";
 const OverviewArticle = ({ classes, title, description, list, media, btnDetails, rightAlign }) => {
   return (  
     <Grid item xs={12} sm={12} md={12} lg={12} className={`${classes.overviewArticleContainer} ${rightAlign ? classes.reverseDirection : null}`}>
-    	<Grid item xs={12} sm={12} md={12} lg={5} className={classes.overviewArticleContent}>
+    	<Grid item xs={12} sm={12} md={12} lg={7} className={classes.overviewArticleContent}>
         <Typography variant="h2">{title}</Typography>
-        <Typography variant="body2">{description}</Typography>
-        <List>
-          {list.map((item, index) => (
-          <ListItem key={index}>
-            <ListItemIcon>
-              <CheckIcon className={classes.checkCircleIcon} />
-            </ListItemIcon>
-            <ListItemText primary={item} />
-          </ListItem>   
-          ))}        
-        </List>
+        {description ? <Typography className={classes.description}>{description}</Typography> : null }
+        {list ? 
+          <List>
+            {list.map((item, index) => (
+              <ListItem key={index}>
+                <ListItemIcon>
+                  <CheckIcon className={classes.checkCircleIcon} />
+                </ListItemIcon>
+                <ListItemText primary={item} />
+              </ListItem>   
+              ))
+            }            
+          </List> 
+        : 
+          null
+        }                
         <StyledButton btnText={btnDetails.text} type={btnDetails.type} href={btnDetails.linkTo} />				
       </Grid>
-    	<Grid item xs={12} sm={12} md={12} lg={7}>
+    	<Grid item xs={12} sm={12} md={12} lg={5}>
       	<img src={media} alt="media" />
       </Grid>        
     </Grid>
