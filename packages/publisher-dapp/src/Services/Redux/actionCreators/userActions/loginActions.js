@@ -1,4 +1,5 @@
 import { Auth } from "aws-amplify";
+import { organizationActions } from "..";
 
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
@@ -30,6 +31,7 @@ export const fetchAuthenticatedUser = async () => {
 export const initializeApplication = async dispatch => {
   try {
     const { nickname, email, email_verified } = await fetchAuthenticatedUser();
+    dispatch(organizationActions.getStatus);
     dispatch(setUserLoggedIn(true));
     dispatch(setUserEmail(email));
     dispatch(setUserNickname(nickname));

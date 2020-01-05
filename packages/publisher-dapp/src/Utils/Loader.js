@@ -11,4 +11,8 @@ export const LoaderContent = {
     title: "Publish to Blockchain",
     content: "Just a moment. We are publishing your changes to blockchain",
   },
+  ORG_SETUP_SAVING_TRANSACTION:{
+    title: "Saving Transaction",
+    content: "Just a moment. We are saving your transaction",
+  }
 };
