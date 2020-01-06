@@ -5,24 +5,27 @@ import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
+import { useSelector, useDispatch } from "react-redux";
+import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
 const MMAddress = ({ classes }) => {
-  const [mmAddress, setMMAddress] = useState("");
+  const { ownerAddress } = useSelector(state => state.organization);
+  const dispatch = useDispatch();
 
   const handleConnetMM = async () => {
     try {
       const sdk = await initSDK();
-      setMMAddress(sdk.account.address);
+      dispatch(organizationActions.setOneBasicDetail("ownerAddress", sdk.account.address));
     } catch (error) {
       console.log("connect MM err", error);
     }
   };
 
-  if (!!mmAddress) {
+  if (!!ownerAddress) {
     return (
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
-          <SNETTextfield value={mmAddress} disabled label="Owner's Metamask Address" />
+          <SNETTextfield name="ownerAddress" value={ownerAddress} disabled label="Owner's Metamask Address" />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
           <SNETButton color="primary" variant="contained" children="capture from metamask" onClick={handleConnetMM} />
