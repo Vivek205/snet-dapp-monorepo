@@ -23,7 +23,7 @@ const Enroll = ({ classes, history }) => {
     <Grid container className={classes.enrollMainContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.topSectionContainer}>
         <Typography variant="h3">What You Need To Register</Typography>
-        <Typography className={classes.topSectionSubtitle}>Please keep these documents handy for seamless registration</Typography>        
+        <Typography variant="span">Please keep these documents handy for seamless registration</Typography>        
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -56,32 +56,32 @@ const Enroll = ({ classes, history }) => {
 
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.metamask}>
         <Typography variant="h4">Metamask</Typography>
-        <Typography className={classes.description}>In order to publish your AI services and company or individual entity to the blockchain, you will need to use Metamask app plugin.  It is recommended that you <a href="#">setup and install Metamask </a>Wallet account so that you will be perform the publishing actions to the blockchain as well as collect AGI tokens that your AI services gains from customers purchases.</Typography>
-        <Typography className={classes.description}>Publishing on SingularityNET platform is free, but there are minimal gas charges in ETH tokens that you will need to spend in order to complete certain actions to blockchain.
+        <Typography variant="body2">In order to publish your AI services and company or individual entity to the blockchain, you will need to use Metamask app plugin.  It is recommended that you <a href="#">setup and install Metamask </a>Wallet account so that you will be perform the publishing actions to the blockchain as well as collect AGI tokens that your AI services gains from customers purchases.</Typography>
+        <Typography variant="body2">Publishing on SingularityNET platform is free, but there are minimal gas charges in ETH tokens that you will need to spend in order to complete certain actions to blockchain.
         </Typography >
         <ul>
           <Typography variant="subtitle1" display="inline">You will be required to use your Metamask Wallet to perform these actions: </Typography>
           <li>
-            <Typography className={classes.description}>-  Publishing your company or individual entity to the blockchain</Typography>
+            <Typography variant="body2">-  Publishing your company or individual entity to the blockchain</Typography>
           </li>
           <li>
-            <Typography className={classes.description}>-  Collect AGI tokens that your published AI services gains from AI Marketplace users</Typography>
+            <Typography variant="body2">-  Collect AGI tokens that your published AI services gains from AI Marketplace users</Typography>
           </li>
-          <li><Typography className={classes.description}>-  Publishing a new AI service </Typography></li>
-          <li><Typography className={classes.description}>-  Adding team members to your company’s blockchain</Typography></li>
+          <li><Typography variant="body2">-  Publishing a new AI service </Typography></li>
+          <li><Typography variant="body2">-  Adding team members to your company’s blockchain</Typography></li>
         </ul>
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.website}>
         <Typography variant="h4">Website</Typography>
-        <Typography className={classes.description}>
+        <Typography variant="body2">
           Your company organization or indvidual entity must have a website URL that is publicly available and the domain name must be associated with your organization.  Your company orgnaization or individual entity will have your website URL displayed on the AI Marketplace.
         </Typography>
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.joiningTeamMember}>
         <Typography variant="h4">Joining Team Members</Typography>
-        <Typography className={classes.description}>
+        <Typography variant="body2">
           Joining team members will be required to provided the <a href="#" title="Metamask">Metamask address </a>in order to securly gain permissions to company organization or individual enttiy’s blockchain.  They will NOT be charged ETH gas cost to join.  The owner of the company or individual entity will be responsible to add the team members to the blockchain. .
         </Typography>        
       </Grid>
