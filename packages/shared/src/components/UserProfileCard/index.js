@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
-import Icon from "@material-ui/core/Icon";
+import PersonIcon from "@material-ui/icons/Person";
 import clsx from "clsx";
 
 import { useStyles } from "./styles";
@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 const UserProfileCard = ({ classes, nickName, onClose }) => {
   return (
     <div className={classes.Userdetails}>
-      <Icon className={clsx(classes.icon, "fas fa-user-circle")} />
+      <PersonIcon />
       <div>
         <h4>{nickName}</h4>
       </div>

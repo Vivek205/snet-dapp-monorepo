@@ -1,9 +1,9 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   Userdetails: {
     display: "flex",
     marginBottom: 10,
     "& span": {
-      color: theme.palette.text.lightShadedGray,
+      color: MUITheme.palette.text.lightGrey,
       fontSize: 66,
     },
     "& div": {
@@ -11,17 +11,17 @@ export const useStyles = theme => ({
       "& h4": {
         fontWeight: 600,
         margin: 0,
-        color: theme.palette.text.black1,
+        color: MUITheme.palette.text.darkGrey,
         lineHeight: "27px",
         fontSize: 20,
       },
       "& a": {
-        color: theme.palette.text.lightShadedGray,
+        color: MUITheme.palette.text.lightGrey,
         fontSize: 16,
         lineHeight: "22px",
         textDecoration: "none",
         "&:hover": {
-          color: theme.palette.text.primary,
+          color: MUITheme.palette.primary.main,
           fontweight: 600,
         },
       },
