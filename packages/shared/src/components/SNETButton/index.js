@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const SNETButton = withStyles(MuiTheme => ({
   root: props => {
-    const rootStyles = { fontWeight: 600, letterSpacing: 1.25, padding: "13px 28px 11px", lineHeight: "16px" };
+    const rootStyles = { fontWeight: 600, fontSize: 14, letterSpacing: 1.25, padding: "13px 28px 11px", lineHeight: "16px" };
     if (props.color === "purple" && props.variant === "contained") {
       rootStyles.color = MuiTheme.palette.text.secondary;
       rootStyles.backgroundColor = MuiTheme.palette.purple.main;

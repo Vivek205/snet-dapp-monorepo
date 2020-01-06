@@ -22,6 +22,7 @@
     "object-shorthand": "error",
     "require-await": "warn",
     "eqeqeq": "warn",
-    "no-useless-catch": "off"
+    "no-useless-catch": "off",
+    "no-console": "error"
   }
 }

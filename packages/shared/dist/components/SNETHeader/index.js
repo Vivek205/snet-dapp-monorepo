@@ -31,7 +31,8 @@ var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
       color = _ref.color,
       navbar = _ref.navbar,
-      actions = _ref.actions;
+      LoggedInActions = _ref.LoggedInActions,
+      LoggedOutActions = _ref.LoggedOutActions;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement(_SNETAppBar.default, {
     position: "fixed",
@@ -47,6 +48,7 @@ var SNETHeader = function SNETHeader(_ref) {
   }))), _react.default.createElement(_Container.default, {
     className: classes.actionsContainer
   }, _react.default.createElement(_HeaderActions.default, {
+<<<<<<< HEAD
     actions: actions,
     isLoggedIn: isLoggedIn,
     headerColor: color
@@ -86,7 +88,16 @@ SNETHeader.defaultProps = {
     variant: "contained"
   }]
 };
+=======
+    isLoggedIn: isLoggedIn,
+    LoggedInActions: LoggedInActions,
+    LoggedOutActions: LoggedOutActions
+  }))))));
+};
+
+>>>>>>> ad00213e6383dc46a16bf0bca66f3a3f428a8ec9
 SNETHeader.propTypes = {
+  isLoggedIn: _propTypes.default.bool,
   color: _propTypes.default.string,
   navbar: _propTypes.default.shape({
     navbarItems: _propTypes.default.arrayOf(_propTypes.default.shape({
@@ -97,12 +108,17 @@ SNETHeader.propTypes = {
       to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
     }))
   }),
+<<<<<<< HEAD
   actions: _propTypes.default.arrayOf(_propTypes.default.shape({
     label: _propTypes.default.string,
     color: _propTypes.default.string,
     variant: _propTypes.default.string,
     handler: _propTypes.default.func
   }))
+=======
+  LoggedInActions: _propTypes.default.elementType,
+  LoggedOutActions: _propTypes.default.elementType
+>>>>>>> ad00213e6383dc46a16bf0bca66f3a3f428a8ec9
 };
 var _default = SNETHeader;
 exports.default = _default;
