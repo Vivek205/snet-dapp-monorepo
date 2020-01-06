@@ -1,4 +1,8 @@
 export const LoaderContent = {
+  WAITING_FOR_METAMASK: {
+    title: "Waiting for Metamask Interaction",
+    content: "Please confirm the transaction in the Metamask to proceed",
+  },
   ORG_SETUP_FINISH_LATER: {
     title: "Saving Draft",
     content: "Just a moment. We are saving your changes to draft",
@@ -11,8 +15,8 @@ export const LoaderContent = {
     title: "Publish to Blockchain",
     content: "Just a moment. We are publishing your changes to blockchain",
   },
-  ORG_SETUP_SAVING_TRANSACTION:{
+  ORG_SETUP_SAVING_TRANSACTION: {
     title: "Saving Transaction",
     content: "Just a moment. We are saving your transaction",
-  }
+  },
 };
