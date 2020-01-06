@@ -14,6 +14,7 @@ export const useStyles = MUITheme => ({
       marginRight: 0,
       marginBottom: 25
     },
+    '& a':{ textDecoration: 'none' }
 	},
 	description:{
 		color: MUITheme.palette.text.primary,

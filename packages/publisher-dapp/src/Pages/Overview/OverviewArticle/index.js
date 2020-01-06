@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid'
+import { Link } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,8 +32,10 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
           </List> 
         : 
           null
-        }                
-        <StyledButton btnText={btnDetails.text} type={btnDetails.type} href={btnDetails.linkTo} />				
+        }
+        <Link to={btnDetails.linkTo}>
+          <StyledButton btnText={btnDetails.text} type={btnDetails.type} />				
+        </Link>
       </Grid>
     	<Grid item xs={12} sm={12} md={12} lg={5}>
       	<img src={media} alt="media" />
