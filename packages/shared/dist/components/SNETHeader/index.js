@@ -31,11 +31,12 @@ var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
       color = _ref.color,
       navbar = _ref.navbar,
-      actions = _ref.actions;
+      LoggedInActions = _ref.LoggedInActions,
+      LoggedOutActions = _ref.LoggedOutActions;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
-    color: "default"
+    color: color
   }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
     className: classes.logoContainer
   }, _react.default.createElement(_CardMedia.default, {
@@ -47,43 +48,12 @@ var SNETHeader = function SNETHeader(_ref) {
   }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
     className: classes.actionsContainer
   }, _react.default.createElement(_HeaderActions.default, {
-    actions: actions,
-    isLoggedIn: isLoggedIn
+    isLoggedIn: isLoggedIn,
+    LoggedInActions: LoggedInActions,
+    LoggedOutActions: LoggedOutActions
   }))))));
 };
 
-SNETHeader.defaultProps = {
-  color: "white",
-  navbar: {
-    navbarItems: [{
-      label: "Overview",
-      type: "link",
-      openInNewTab: false,
-      activeLinks: ["/", "/overview"],
-      to: "/overview"
-    }, {
-      label: "How It Works",
-      type: "link",
-      openInNewTab: false,
-      activeLinks: ["/enroll"],
-      to: "/enroll"
-    }]
-  },
-  actions: [{
-    children: "login",
-    color: "primary",
-    onClick: function onClick() {
-      return console.log("clicked");
-    }
-  }, {
-    children: "enroll",
-    color: "primary",
-    onClick: function onClick() {
-      return console.log("clicked");
-    },
-    variant: "contained"
-  }]
-};
 SNETHeader.propTypes = {
   isLoggedIn: _propTypes.default.bool,
   color: _propTypes.default.string,
@@ -96,12 +66,8 @@ SNETHeader.propTypes = {
       to: _propTypes.default.oneOf(_propTypes.default.string, _propTypes.default.object)
     }))
   }),
-  actions: _propTypes.default.arrayOf(_propTypes.default.shape({
-    label: _propTypes.default.string,
-    color: _propTypes.default.string,
-    vaiant: _propTypes.default.string,
-    handler: _propTypes.default.func
-  }))
+  LoggedInActions: _propTypes.default.elementType,
+  LoggedOutActions: _propTypes.default.elementType
 };
 var _default = SNETHeader;
 exports.default = _default;
