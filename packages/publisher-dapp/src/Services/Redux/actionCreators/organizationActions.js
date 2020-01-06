@@ -236,26 +236,6 @@ export const publishToIPFS = uuid => async dispatch => {
   }
 };
 
-export const createOrganization = (organization, ipfsHash) => async dispatch => {
-  const sdk = await initSDK();
-  const orgId = organization.id;
-  const orgMetadataURI = ipfsHash;
-  const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.WAITING_FOR_METAMASK));
-  return new Promise((resolve, reject) => {
-    sdk._registryContract
-      .createOrganization(orgId, orgMetadataURI, members)
-      .on(blockChainEvents.TRANSACTION_HASH, hash => {
-        dispatch(loaderActions.stopAppLoader);
-        resolve(hash);
-      })
-      .on(blockChainEvents.ERROR, error => {
-        dispatch(loaderActions.stopAppLoader);
-        reject(error);
-      });
-  });
-};
-
 const saveTransactionAPI = async (orgUuid, hash, ownerAddress) => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
@@ -265,16 +245,39 @@ const saveTransactionAPI = async (orgUuid, hash, ownerAddress) => {
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
+const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SAVING_TRANSACTION));
-    const { status, data, error } = await saveTransactionAPI(orgUuid, hash, ownerAddress);
+    const { status, error } = await saveTransactionAPI(orgUuid, hash, ownerAddress);
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
   }
+};
+
+export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
+  const sdk = await initSDK();
+  const orgId = organization.id;
+  const orgMetadataURI = ipfsHash;
+  const members = [organization.ownerAddress];
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+  return new Promise((resolve, reject) => {
+    sdk._registryContract
+      .createOrganization(orgId, orgMetadataURI, members)
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+        resolve(hash);
+      })
+      .on(blockChainEvents.CONFIRMATION, () => {
+        dispatch(loaderActions.stopAppLoader);
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader);
+        reject(error);
+      });
+  });
 };

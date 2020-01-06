@@ -1,7 +1,11 @@
 export const LoaderContent = {
-  WAITING_FOR_METAMASK: {
+  METAMASK_TRANSACTION: {
     title: "Waiting for Metamask Interaction",
     content: "Please confirm the transaction in the Metamask to proceed",
+  },
+  BLOCKHAIN_SUBMISSION: {
+    title: "Waiting for Blockchain Submission",
+    content: "Waiting for the transaction to get completed in the blockchain",
   },
   ORG_SETUP_FINISH_LATER: {
     title: "Saving Draft",

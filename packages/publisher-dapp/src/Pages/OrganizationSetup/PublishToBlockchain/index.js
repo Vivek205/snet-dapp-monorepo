@@ -51,8 +51,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     try {
       await dispatch(organizationActions.submitForApproval(organization));
       const ipfsHash = await dispatch(organizationActions.publishToIPFS(uuid));
-      const txnHash = await dispatch(organizationActions.createOrganization(organization, ipfsHash));
-      await dispatch(organizationActions.saveTransaction(organization.uuid, txnHash, organization.ownerAddress));
+      await dispatch(organizationActions.createAndSaveTransaction(organization, ipfsHash));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
