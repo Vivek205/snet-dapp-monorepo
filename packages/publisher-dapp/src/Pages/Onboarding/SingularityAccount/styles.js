@@ -27,10 +27,13 @@ export const useStyles = MUITheme => ({
   signInBtns: {
     marginTop: 15,
     [MUITheme.breakpoints.down("xs")]: { textAlign: "center" },
-    "& a": {
+    "& a": { 
       textDecoration: "none",
+      '&:last-of-type':{
+        '& button':{ padding: '12px 18px 11px'}
+        }
+      },      
     },
-  },
   signInContent: {
     padding: "30px 24px 0",
     display: "flex",
