@@ -9,7 +9,7 @@ const Heading = ({ classes, title, description }) => {
   return (
     <div className={classes.topSection}>
     	<Typography variant="h3">{title}</Typography>
-      <span>{description}</span>
+      	<span>{description}</span>
     </div>
   );
 };

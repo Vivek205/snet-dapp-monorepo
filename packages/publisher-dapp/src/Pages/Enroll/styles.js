@@ -18,28 +18,22 @@ export const useStyles = MUITheme => ({
 		},
 		'& h4':{ marginBottom: 12 },
 		[MUITheme.breakpoints.down('sm')]: { padding: '0 35px' },
+		'& .MuiTypography-body2':{ color: MUITheme.palette.text.primary }
 	},
 	topSectionContainer:{ 
 		textAlign: 'center',
-		'& h3':{
-			lineHeight: '48px'
+		'& h3':{ lineHeight: '48px' },
+		'& span':{
+			paddingTop: 10,
+			color: MUITheme.palette.text.primary,
+			fontSize: 20,
+			fontWeight: 300,
+			lineHeight: '28px'
 		}
-	},
-	topSectionSubtitle:{
-		paddingTop: 10,
-		color: MUITheme.palette.text.primary,
-		fontSize: 20,
-		fontWeight: 300,
-		lineHeight: '28px'
 	},
 	btnContainer:{ 
 		paddingBottom: '0 !important',
 		textAlign: 'center' 
-	},
-	description:{
-		color: MUITheme.palette.text.primary,
-		fontSize: 18,
-		lineHeight: '26px'
 	},
 	companyOrgReg:{
 		'& > div':{ 
