@@ -117,7 +117,7 @@ const Enroll = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.joiningTeamMember}>
         <Typography variant="h4">Joining Team Members</Typography>
         <Typography variant="body2">
-          Joining team members will be required to provided the{" "}
+          Joining team members will be required to provided the
           <a href="#" title="Metamask">
             Metamask address
           </a>
