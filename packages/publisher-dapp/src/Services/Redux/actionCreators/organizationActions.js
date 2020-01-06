@@ -115,16 +115,13 @@ export const getStatus = async dispatch => {
     website: data[0].url,
     duns: data[0].duns_no,
     contacts: data[0].contacts,
-    assets: {
-      heroImage: {
-        raw: data[0].assets.hero_image.url,
-        fileType: "",
-      },
-    },
-    // assets: data[0].assets,
-
     // groups: data[0].groups,
   };
+
+  if (data[0].assets && data[0].assets.hero_image && data[0].assets.hero_image.url) {
+    organization.assets = {};
+    organization.assets.heroImage = { url: data[0].assets.hero_image.url };
+  }
 
   console.log("response", data, organization);
 

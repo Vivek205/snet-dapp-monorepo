@@ -176,7 +176,7 @@ function (_React$Component) {
       // arbitrary, will be set properly
       dividerXPosition: _this.props.width / 2,
       displayModeTitle: _this.props.displayModeTitle,
-      outputImage: _this.props.outputImage && SNETImageUpload.prepareBase64Image(_this.props.outputImage),
+      outputImage: _this.props.outputImageType === "url" ? _this.props.outputImage : _this.props.outputImage && SNETImageUpload.prepareBase64Image(_this.props.outputImage),
       outputImageName: _this.props.outputImageName
     };
     _this.tabStyle = {
@@ -243,9 +243,17 @@ function (_React$Component) {
             mimeType = nextProps.outputImageMimeType;
           }
 
+          var outputImage;
+
+          if (this.props.outputImageType === "url" || nextProps.outputImage === "url") {
+            outputImage = nextProps.outputImage;
+          } else {
+            outputImage = SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage);
+          }
+
           this.setState({
             displayModeTitle: nextProps.displayModeTitle,
-            outputImage: SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage),
+            outputImage: outputImage,
             outputImageMimeType: mimeType,
             outputImageName: nextProps.outputImageName,
             mainState: "display",
@@ -1459,6 +1467,7 @@ SNETImageUpload.propTypes = {
   displayModeTitle: _propTypes.default.string,
   outputImage: _propTypes.default.string,
   outputImageMimeType: _propTypes.default.oneOf(["application/octet-stream", "image/png", "image/jpg", "image/jpeg", "image/gif"]),
+  outputImageType: _propTypes.default.oneOf(["url", "base64"]),
   outputImageName: _propTypes.default.string,
   disableInputTab: _propTypes.default.bool,
   disableOutputTab: _propTypes.default.bool,
