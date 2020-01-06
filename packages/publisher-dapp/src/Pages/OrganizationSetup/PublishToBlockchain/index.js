@@ -15,14 +15,13 @@ import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
-import { initSDK } from "shared/dist/utils/snetSdk";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, entity } = useSelector(state => ({
     organization: state.organization,
     entity: state.user.entity,
   }));
-  const { name, status, uuid, ownerFullName, id, metadataIpfsHash } = organization;
+  const { name, status, uuid, ownerFullName } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -34,7 +33,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      dispatch(organizationActions.publishToBlockchain(organization));
+      dispatch(organizationActions.publishToIPFS(organization));
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -50,10 +49,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     setAlert({});
     try {
       await dispatch(organizationActions.submitForApproval(organization));
-      await dispatch(organizationActions.publishToBlockchain(uuid));
+      await dispatch(organizationActions.publishToIPFS(uuid));
       const txnHash = await dispatch(organizationActions.createOrganization(organization));
       console.log("hash", txnHash);
-      await dispatch(organizationActions.saveTransaction(txnHash));
+      await dispatch(organizationActions.saveTransaction(organization.id, txnHash, organization.ownerAddress));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
