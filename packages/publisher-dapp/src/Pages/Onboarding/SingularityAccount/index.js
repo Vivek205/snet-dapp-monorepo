@@ -26,8 +26,6 @@ const SingularityAccount = ({ classes, history }) => {
     dispatch(onboardingActions.setUserEntity(event.target.value));
   };
 
-  console.log(entityTypeDetails)
-
   return (
     <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -44,10 +42,7 @@ const SingularityAccount = ({ classes, history }) => {
           onChange={handleEntityChange}
         />  
         </Grid>
-      <LoginBanner classes={classes} 
-        providerName="waythingswork"
-        emailId="greg.kuebler@singularitynet.io"
-      />
+      <LoginBanner />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Email Preferences</Typography>
         <div className={classes.checkboxContainer}>
