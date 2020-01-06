@@ -43,7 +43,7 @@ export const setMailingAddressDetail = (name, value) => ({
 
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid,duns, name,type, website, shortDescription, longDescription, metadataIpfsHash,
+  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
     contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
@@ -52,6 +52,7 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
+    owner_name: ownerFullName,
     metadata_ipfs_hash: metadataIpfsHash,
     description: longDescription,
     short_description: shortDescription,
@@ -204,7 +205,7 @@ export const publishToBlockchain = uuid => async dispatch => {
   }
 };
 
-export const createOrganization = async (organization) => {
+export const createOrganization = async organization => {
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = organization.metadataIpfsHash;

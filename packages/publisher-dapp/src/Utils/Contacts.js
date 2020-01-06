@@ -1,3 +1,4 @@
 export const ContactsTypes = {
-    SUPPORT:"support"
-}
+  SUPPORT: "support",
+  GENERAL: "general",
+};
