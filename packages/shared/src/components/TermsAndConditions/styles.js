@@ -60,7 +60,7 @@ export const useStyles = MUITheme => ({
       "& span": {        
         "&:last-of-type": { color: MUITheme.palette.text.primary },
         "&.MuiCheckbox-colorPrimary": { color: MUITheme.palette.text.primary },
-        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: `${MUITheme.palette.primary.main} !important` },
+        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: MUITheme.palette.primary.main },
       },
     },    
     "& button": { padding: "13px 61px 11px" },

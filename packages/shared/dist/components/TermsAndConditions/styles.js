@@ -75,7 +75,7 @@ var useStyles = function useStyles(MUITheme) {
             color: MUITheme.palette.text.primary
           },
           "&.MuiCheckbox-colorPrimary.Mui-checked": {
-            color: "".concat(MUITheme.palette.primary.main, " !important")
+            color: MUITheme.palette.primary.main
           }
         }
       },

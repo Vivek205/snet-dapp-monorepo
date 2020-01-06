@@ -21,7 +21,7 @@ export const useStyles = MUITheme => ({
     padding: "0 23px",
     margin: "7px 0 34px",
     color: MUITheme.palette.text.primary,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: "21px",
   },
   signInBtns: {
@@ -48,6 +48,7 @@ export const useStyles = MUITheme => ({
   userDetails:{ paddingLeft: 11 },
   signInRightContent: {
     "& p": {
+      marginLeft: 30,
       fontSize: 14,
       lineHeight: "21px",
     },
@@ -68,7 +69,7 @@ export const useStyles = MUITheme => ({
         lineHeight: "20px",
         "&:last-of-type": { color: MUITheme.palette.text.primary },
         "&.MuiCheckbox-colorPrimary": { color: MUITheme.palette.text.primary },
-        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: `${MUITheme.palette.primary.main} !important` },
+        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: MUITheme.palette.primary.main },
       },
     },
   },
