@@ -8,11 +8,11 @@ import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
-import { OrganizationSetupRoutes } from "../../../OrganizationSetup/OrganizationSetupRouter/Routes";
 import validator from "shared/dist/utils/validator";
 import { orgOnboardingConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 
 const Organization = props => {
   const classes = useStyles();
@@ -32,12 +32,16 @@ const Organization = props => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      await dispatch(organizationActions.finishLater(organization));
-      history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
+      await dispatch(organizationActions.submitForApproval(organization));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
+      return setAlert({
+        type: alertTypes.ERROR,
+        message: "Unable to finish organization authentication. Please try later",
+      });
     }
   };
 

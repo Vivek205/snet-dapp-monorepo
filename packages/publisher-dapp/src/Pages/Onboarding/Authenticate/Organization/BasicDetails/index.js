@@ -6,14 +6,33 @@ import SNETTextField from "shared/dist/components/SNETTextfield";
 import { basicDetailsFormData } from "./content";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
+import { ContactsTypes } from "../../../../../Utils/Contacts";
 
 const BasicDetails = () => {
-  const { id, name, website, duns, ownerFullName, phone } = useSelector(state => state.organization);
+  const { id, name, website, duns, ownerFullName, contacts } = useSelector(state => state.organization);
+  const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
+  let phone = "";
+  if (contact) {
+    phone = contact.phone;
+  }
+
   const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
     dispatch(organizationActions.setOneBasicDetail(name, value));
+  };
+
+  const handleContactsChange = event => {
+    const { name, value } = event.target;
+    const updatedContacts = [...contacts];
+    const index = contacts.findIndex(el => el.type === ContactsTypes.GENERAL);
+    if (index !== -1) {
+      updatedContacts[index] = { ...contacts[index], [name]: value };
+    } else {
+      updatedContacts[contacts.length] = { type: ContactsTypes.GENERAL, [name]: value };
+    }
+    dispatch(organizationActions.setContacts(updatedContacts));
   };
 
   return (

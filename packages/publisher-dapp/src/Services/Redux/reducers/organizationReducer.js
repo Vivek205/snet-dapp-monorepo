@@ -14,7 +14,11 @@ const initialState = {
   phone: "",
   shortDescription: "",
   longDescription: "",
-  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  metadataIpfsHash: "",
+  contacts: [
+    { type: ContactsTypes.GENERAL, email: "", phone: "" },
+    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  ],
   groups: [
     {
       name: "North America",
@@ -45,6 +49,8 @@ const initialState = {
 
 const OrganizationReducer = (state = initialState, action) => {
   switch (action.type) {
+    case organizationActions.SET_ALL_ATTRIBUTES:
+      return { ...state, ...action.payload };
     case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
     case organizationActions.SET_CONTACTS:

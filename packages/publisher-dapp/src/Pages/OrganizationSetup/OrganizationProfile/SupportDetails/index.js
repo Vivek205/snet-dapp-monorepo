@@ -11,7 +11,10 @@ import { ContactsTypes } from "../../../../Utils/Contacts";
 
 const SupportDetails = ({ classes }) => {
   const { contacts } = useSelector(state => state.organization);
-  const supportContacts = contacts.find(el => el.type === ContactsTypes.SUPPORT);
+  let supportContacts = contacts.find(el => el.type === ContactsTypes.SUPPORT);
+  if (!supportContacts) {
+    supportContacts = { type: ContactsTypes.SUPPORT, phone: "", email: "" };
+  }
 
   const dispatch = useDispatch();
 
@@ -19,7 +22,12 @@ const SupportDetails = ({ classes }) => {
     const { name, value } = event.target;
     const index = contacts.findIndex(el => el.type === ContactsTypes.SUPPORT);
     const updatedContacts = [...contacts];
-    updatedContacts[index] = { ...contacts[index], [name]: value };
+    if (index !== -1) {
+      updatedContacts[index] = { ...contacts[index], [name]: value };
+    } else {
+      updatedContacts[contacts.length] = { type: ContactsTypes.SUPPORT, [name]: value };
+    }
+
     dispatch(organizationActions.setContacts(updatedContacts));
   };
 
