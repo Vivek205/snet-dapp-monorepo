@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
@@ -9,9 +10,10 @@ import SNETButton from "shared/src/components/SNETButton";
 import { useSelector } from "react-redux";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import SingularityLogo from "shared/src/assets/images/avatar.png";
+import { useStyles } from "./styles";
 
-const LoginBanner = ({ classes, providerName, emailId, orgImg }) => {
-  const { isLoggedIn } = useSelector(state => state.user);
+const LoginBanner = ({ classes, orgImg }) => {
+  const { isLoggedIn, nickname, email } = useSelector(state => state.user);
 
   if(isLoggedIn){
     return (
@@ -21,8 +23,8 @@ const LoginBanner = ({ classes, providerName, emailId, orgImg }) => {
           <Grid item sx={12} sm={4} md={4} lg={4} className={classes.signInMedia}>
             <Avatar alt="Singularity" src={orgImg || SingularityLogo} className={classes.avatar} />
             <div className={classes.userDetails}>
-              <Typography variant="h6">{providerName}</Typography>
-              <Typography variant="subtitle2">{emailId}</Typography>
+              <Typography variant="h6">{nickname}</Typography>
+              <Typography variant="subtitle2">{email}</Typography>
             </div>
           </Grid>
           <Grid item sx={12} sm={8} md={8} lg={8} className={classes.signInRightContent}>
@@ -74,4 +76,4 @@ const LoginBanner = ({ classes, providerName, emailId, orgImg }) => {
   );
 };
 
-export default LoginBanner;
+export default withStyles(useStyles)(LoginBanner);
