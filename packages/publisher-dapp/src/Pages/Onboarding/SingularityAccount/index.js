@@ -26,8 +26,6 @@ const SingularityAccount = ({ classes, history }) => {
     dispatch(onboardingActions.setUserEntity(event.target.value));
   };
 
-  console.log(entityTypeDetails)
-
   return (
     <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
