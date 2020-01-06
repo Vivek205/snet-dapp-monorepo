@@ -19,7 +19,7 @@ const SingularityAccount = ({ classes, history }) => {
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const handleContinue = () => {
-    history.push(OnboardingRoutes.TNC.path);
+    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
   const handleEntityChange = event => {

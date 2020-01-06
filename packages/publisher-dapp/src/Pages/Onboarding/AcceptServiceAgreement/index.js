@@ -11,11 +11,11 @@ const AcceptServiceAgreement = ({ history }) => {
   const [agreed, setAgreed] = useState(false);
 
   const handleAccept = () => {
-    history.push(OnboardingRoutes.AUTHENTICATE.path);
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
   const handleNavigateBack = () => {
-    history.push(OnboardingRoutes.ENTITY.path);
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
   return (

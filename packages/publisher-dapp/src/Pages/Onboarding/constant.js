@@ -27,6 +27,6 @@ export const progressText = ["Singularity Account", "Accept Service Agreement", 
 export const verificationStatuses = {
     NOT_STARTED: "NOT_STARTED",
     SELECTED_ENTITY: "SELECTED_ENTITY",
-    ACCEPTED_TNC:"ACCEPTED_TNC",
+    ACCEPTED_AGREEMENT:"ACCEPTED_AGREEMENT",
     VERIFICATION_PENDING:"VERIFICATION_PENDING"
 }

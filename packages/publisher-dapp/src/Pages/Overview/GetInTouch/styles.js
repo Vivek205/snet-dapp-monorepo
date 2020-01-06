@@ -21,10 +21,14 @@ export const useStyles = MUITheme => ({
 			display: 'block',
 			[MUITheme.breakpoints.down('xs')]: { width: 300 },
 		},
-		'& button':{ marginTop: '19px !important' },
+		'& button':{ marginTop: '0 !important' },
 		[MUITheme.breakpoints.down('sm')]: { 
 			maxWidth: '100%',
 			padding: '40px 20px !important',
 		},
+		'& a':{ 
+			display: 'inherit',
+			textDecoration: 'none'
+		}
 	}
 })
