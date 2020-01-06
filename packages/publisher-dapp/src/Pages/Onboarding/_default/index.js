@@ -12,7 +12,7 @@ const Default = ({ history }) => {
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
       case verificationStatuses.SELECTED_ENTITY:
         return history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
-      case verificationStatuses.ACCEPTED_TNC:
+      case verificationStatuses.ACCEPTED_AGREEMENT:
         return history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
       default:
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);

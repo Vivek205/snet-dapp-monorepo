@@ -1,5 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
+import { Link } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +27,9 @@ const GetInTouch = ({ classes }) => {
 	          margin="normal"
 	          variant="outlined"
 	        />
-	        <StyledButton btnText="get in touch" type="blue" href={GlobalRoutes.ENROLL.path} />
+	        <Link to={GlobalRoutes.ENROLL.path}>
+	        	<StyledButton btnText="get in touch" type="blue" />
+	        </Link>
     		</form>    		
       </Grid>
   	</Grid>

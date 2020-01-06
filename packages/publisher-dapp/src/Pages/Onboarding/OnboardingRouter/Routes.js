@@ -23,11 +23,11 @@ export const OnboardingRoutes = {
   ACCEPT_SERVICE_AGREEMENT: {
     name: "accept service agreement",
     path: fullPath("/agreement"),
-    component: AcceptServiceAgreement ,
+    component: AcceptServiceAgreement,
   },
   AUTHENTICATE_ID: {
     name: "authenticate id",
     path: fullPath("/authenticate"),
-    component: Authenticate ,
+    component: Authenticate,
   },
 };
