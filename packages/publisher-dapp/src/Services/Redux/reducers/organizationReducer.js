@@ -14,8 +14,11 @@ const initialState = {
   phone: "",
   shortDescription: "",
   longDescription: "",
-  metadataIpfsHash:"",
-  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  metadataIpfsHash: "",
+  contacts: [
+    { type: ContactsTypes.GENERAL, email: "", phone: "" },
+    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  ],
   groups: [
     {
       name: "North America",

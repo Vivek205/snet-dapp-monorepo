@@ -43,7 +43,7 @@ export const setMailingAddressDetail = (name, value) => ({
 
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid,duns, name,type, website, shortDescription, longDescription, metadataIpfsHash,
+  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
     contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
@@ -52,6 +52,7 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
+    owner_name: ownerFullName,
     metadata_ipfs_hash: metadataIpfsHash,
     description: longDescription,
     short_description: shortDescription,
@@ -114,16 +115,13 @@ export const getStatus = async dispatch => {
     website: data[0].url,
     duns: data[0].duns_no,
     contacts: data[0].contacts,
-    assets: {
-      heroImage: {
-        raw: data[0].assets.hero_image.url,
-        fileType: "",
-      },
-    },
-    // assets: data[0].assets,
-
     // groups: data[0].groups,
   };
+
+  if (data[0].assets && data[0].assets.hero_image && data[0].assets.hero_image.url) {
+    organization.assets = {};
+    organization.assets.heroImage = { url: data[0].assets.hero_image.url };
+  }
 
   console.log("response", data, organization);
 
@@ -204,7 +202,7 @@ export const publishToBlockchain = uuid => async dispatch => {
   }
 };
 
-export const createOrganization = async (organization) => {
+export const createOrganization = async organization => {
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = organization.metadataIpfsHash;

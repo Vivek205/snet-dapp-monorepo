@@ -13,12 +13,19 @@ import { mimeTypeToFileType } from "shared/dist/utils/image";
 import { imgSrcInBase64 } from "shared/dist/utils/image";
 
 const OrgImg = ({ classes }) => {
-  const { raw: data, fileType: mimeType } = useSelector(state => state.organization.assets.heroImage);
+  const { raw: data, fileType: mimeType, url } = useSelector(state => state.organization.assets.heroImage);
   const dispatch = useDispatch();
 
   const handleImageChange = (data, mimeType) => {
     const fileType = mimeTypeToFileType(mimeType);
     dispatch(organizationActions.setHeroImage(data, fileType));
+  };
+
+  const imgSource = () => {
+    if (url) {
+      return url;
+    }
+    return Boolean(data) ? imgSrcInBase64(mimeType, data) : "";
   };
 
   return (
@@ -30,11 +37,12 @@ const OrgImg = ({ classes }) => {
             disableUrlTab
             imageName="org-hero-image"
             imageDataFunc={handleImageChange}
-            outputImage={data}
+            outputImage={imgSource()}
             outputImageName="organization_hero_image"
             outputFormat={mimeType}
             disableComparisonTab
-            disableInputTab={!!data}
+            disableInputTab={Boolean(data) || Boolean(url)}
+            outputImageType="url"
           />
           <Reset onReset={() => handleImageChange(null, null)} />
         </Grid>
@@ -46,18 +54,10 @@ const OrgImg = ({ classes }) => {
           <div className={classes.previewImg}>
             <div className={classes.previewLargeImg}>
               <Typography>Preview</Typography>
-              <Avatar
-                alt="Singularity"
-                src={!!data ? imgSrcInBase64(mimeType, data) : "http://placehold.it/40x40"}
-                className={classes.largePreviewImg}
-              />
+              <Avatar alt="Singularity" src={imgSource()} className={classes.largePreviewImg} />
             </div>
             <div className={classes.previewSmallImg}>
-              <Avatar
-                alt="Singularity"
-                src={!!data ? imgSrcInBase64(mimeType, data) : "http://placehold.it/40x40"}
-                className={classes.smallPreviewImg}
-              />
+              <Avatar alt="Singularity" src={imgSource()} className={classes.smallPreviewImg} />
             </div>
           </div>
         </Grid>
