@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 
+import { loginBannerDetails } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import { useSelector } from "react-redux";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
@@ -16,20 +17,16 @@ const LoginBanner = ({ classes, providerName, emailId, orgImg }) => {
     <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
       <Typography variant="h6">Sign in as</Typography>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.signInContent}>
-        <Grid item sx={12} sm={4} md={3} lg={3} className={classes.signInMedia}>
+        <Grid item sx={12} sm={4} md={4} lg={4} className={classes.signInMedia}>
           <Avatar alt="Singularity" src={orgImg || SingularityLogo} className={classes.avatar} />
           <div className={classes.userDetails}>
             <Typography variant="h6">{providerName}</Typography>
             <Typography variant="subtitle2">{emailId}</Typography>
           </div>
         </Grid>
-        <Grid item sx={12} sm={8} md={7} lg={7} className={classes.signInRightContent}>
-          <Typography className={classes.signInSubtitle}>
-            This is your Singularlity account that will be associated with your AI Publisher account.
-          </Typography>
-          <Typography className={classes.signInDescription}>
-            This is your Singularlity account that will be associated with your AI Publisher account. If you would like to use a different account, you can choose from the options below.  If you are an organization, consider registeringa new Singularity account rather using a personal account.
-          </Typography>
+        <Grid item sx={12} sm={8} md={8} lg={8} className={classes.signInRightContent}>
+          <Typography className={classes.signInSubtitle}>{loginBannerDetails.subtitle}</Typography>
+          <Typography className={classes.signInDescription}>{loginBannerDetails.description}</Typography>
           <div className={classes.signInBtns}>
             <Link to={GlobalRoutes.LOGIN.path}>
               <SNETButton

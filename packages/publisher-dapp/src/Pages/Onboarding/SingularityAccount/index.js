@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { emailPreferencesList } from "./content";
+import { emailPreferencesList, entityTypeDetails } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
@@ -26,15 +26,13 @@ const SingularityAccount = ({ classes, history }) => {
     dispatch(onboardingActions.setUserEntity(event.target.value));
   };
 
+  console.log(entityTypeDetails)
+
   return (
     <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h6">Entity Type</Typography>
-        <Typography className={classes.singularityAccDescription}>
-          You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single
-          Person Business or join an existing approved entity with an invitation. The first two options require certain
-          amount of information to proceed.
-        </Typography>
+        <Typography variant="h6">{entityTypeDetails.title}</Typography>
+        <Typography className={classes.singularityAccDescription}>{entityTypeDetails.description}</Typography>
         <StyledDropdown
           labelTxt="Please Select"
           inputLabel="Entity Type"
@@ -44,9 +42,8 @@ const SingularityAccount = ({ classes, history }) => {
             { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
           ]}
           onChange={handleEntityChange}
-        />
-        <SNETButton children="cancel" variant="text" color="primary" />
-      </Grid>
+        />  
+        </Grid>
       <LoginBanner classes={classes} 
         providerName="waythingswork"
         emailId="greg.kuebler@singularitynet.io"
