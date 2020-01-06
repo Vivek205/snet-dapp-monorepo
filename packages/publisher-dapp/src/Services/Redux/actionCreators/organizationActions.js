@@ -178,18 +178,18 @@ export const submitForApproval = organization => async dispatch => {
   }
 };
 
-const publishToBlockchainAPI = async uuid => {
+const publishToIPFSAPI = async uuid => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.PUBLISH_TO_BLOCKCHAIN(uuid);
+  const apiPath = APIPaths.PUBLISH_TO_IPFS(uuid);
   const apiOptions = initializeAPIOptions(token);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const publishToBlockchain = uuid => async dispatch => {
+export const publishToIPFS = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
-    const { status, data, error } = await publishToBlockchainAPI(uuid);
+    const { status, data, error } = await publishToIPFSAPI(uuid);
     dispatch(setOneBasicDetail("metadataIpfsHash", data[0].metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
@@ -211,18 +211,19 @@ export const createOrganization = async organization => {
   return hash;
 };
 
-const saveTransactionAPI = async (orgId, hash) => {
+const saveTransactionAPI = async (orgId, hash, mmAddress) => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.SAVE_TRANSACTION(orgId);
-  const apiOptions = initializeAPIOptions(token);
+  const body = { transcation_hash: hash, user_address: mmAddress };
+  const apiOptions = initializeAPIOptions(token, body);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const saveTransaction = (orgId, hash) => async dispatch => {
+export const saveTransaction = (orgId, hash, mmAddress) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SAVING_TRANSACTION));
-    const { status, data, error } = await saveTransactionAPI(orgId, hash);
+    const { status, data, error } = await saveTransactionAPI(orgId, hash, mmAddress);
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
