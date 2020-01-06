@@ -42,13 +42,17 @@ export const useStyles = MUITheme => ({
   },
   signInMedia: { 
     marginRight: 10, 
-    display: 'flex' 
+    display: 'flex',
+    wordBreak: 'break-word'
   },
   avatar:{ 
     width: 70, 
     height: 70 
   },
-  userDetails:{ paddingLeft: 11 },
+  userDetails:{ 
+    paddingLeft: 11,
+    '& h6':{ whiteSpace: 'normal' }
+  },
   signInRightContent: {
     "& p": {
       marginLeft: 30,
