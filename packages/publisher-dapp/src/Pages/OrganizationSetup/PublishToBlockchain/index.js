@@ -15,13 +15,14 @@ import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
+import { initSDK } from "shared/dist/utils/snetSdk";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, entity } = useSelector(state => ({
     organization: state.organization,
     entity: state.user.entity,
   }));
-  const { name, status, uuid, ownerFullName } = organization;
+  const { name, status, uuid, ownerFullName, id, metadataIpfsHash } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      dispatch(organizationActions.submitForApproval(organization));
+      dispatch(organizationActions.publishToBlockchain(organization));
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -45,15 +46,19 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     }
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     setAlert({});
     try {
-      dispatch(organizationActions.submitForApproval(uuid));
+      await dispatch(organizationActions.submitForApproval(organization));
+      await dispatch(organizationActions.publishToBlockchain(uuid));
+      const txnHash = await dispatch(organizationActions.createOrganization(organization));
+      console.log("hash", txnHash);
+      await dispatch(organizationActions.saveTransaction(txnHash));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
-      setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
+      setAlert({ type: alertTypes.ERROR, message: "unable to publish. please try later" });
     }
   };
 
