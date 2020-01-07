@@ -34,7 +34,7 @@ export const fetchAuthenticatedUser = async () => {
 export const initializeApplication = async dispatch => {
   try {
     const { nickname, email, email_verified } = await fetchAuthenticatedUser();
-    dispatch(organizationActions.getStatus);
+    await dispatch(organizationActions.getStatus);
     dispatch(setUserLoggedIn(true));
     dispatch(setUserEmail(email));
     dispatch(setUserNickname(nickname));
