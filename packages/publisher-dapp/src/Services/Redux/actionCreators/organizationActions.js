@@ -259,25 +259,30 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
 };
 
 export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
-  const sdk = await initSDK();
-  const orgId = organization.id;
-  const orgMetadataURI = ipfsHash;
-  const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
-  return new Promise((resolve, reject) => {
-    sdk._registryContract
-      .createOrganization(orgId, orgMetadataURI, members)
-      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
-        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
-        resolve(hash);
-      })
-      .on(blockChainEvents.CONFIRMATION, () => {
-        dispatch(loaderActions.stopAppLoader);
-      })
-      .on(blockChainEvents.ERROR, error => {
-        dispatch(loaderActions.stopAppLoader);
-        reject(error);
-      });
-  });
+  try {
+    const sdk = await initSDK();
+    const orgId = organization.id;
+    const orgMetadataURI = ipfsHash;
+    const members = [organization.ownerAddress];
+    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+    return new Promise((resolve, reject) => {
+      sdk._registryContract
+        .createOrganization(orgId, orgMetadataURI, members)
+        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+          await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+          dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+          resolve(hash);
+        })
+        .on(blockChainEvents.CONFIRMATION, () => {
+          dispatch(loaderActions.stopAppLoader());
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(error);
+        });
+    });
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
 };
