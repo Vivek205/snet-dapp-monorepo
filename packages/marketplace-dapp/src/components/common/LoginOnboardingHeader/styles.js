@@ -1,5 +1,5 @@
-export const useStyles = MUITheme => ({
-  registrationHeaderContainerg: { backgroundColor: MUITheme.palette.text.offWhiteColor },
+export const useStyles = theme => ({
+  loginOnboardingHeaderContainer: { backgroundColor: theme.palette.text.offWhiteColor },
   loginHeader: {
     display: "flex",
     alignItems: "center",
@@ -12,18 +12,18 @@ export const useStyles = MUITheme => ({
       width: 230,
       margin: 0,
       "& span": {
-        "&:before": { color: MUITheme.palette.text.purple },
+        "&:before": { color: theme.palette.text.purple },
       },
       "& img": { width: "100%" },
     },
     "& p": {
       margin: 0,
-      color: MUITheme.palette.text.mediumShadeGray,
+      color: theme.palette.text.mediumShadeGray,
       fontSize: "16px",
     },
     "& span": {
       display: "inline-block",
-      color: MUITheme.palette.text.primary,
+      color: theme.palette.text.primary,
       fontWeight: 600,
       textDecoration: "none",
     },
@@ -32,7 +32,7 @@ export const useStyles = MUITheme => ({
   loginHeaderLink: {
     textAlign: "right",
     "& span": {
-      color: MUITheme.palette.text.primary,
+      color: theme.palette.text.primary,
       fontSize: 16,
       fontWeight: 600,
       "&:hover": {
