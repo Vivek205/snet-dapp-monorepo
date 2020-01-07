@@ -1,21 +1,29 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 
 import { loggedInDetails, loggedOutDetails } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import SingularityLogo from "shared/src/assets/images/avatar.png";
 import { useStyles } from "./styles";
+import { loginActions } from "../../../Services/Redux/actionCreators/userActions";
 
 const LoginBanner = ({ classes, orgImg }) => {
   const { isLoggedIn, nickname, email } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  if(isLoggedIn){
+  const handleLoginToAnotherAccount = async () => {
+    await dispatch(loginActions.signout);
+    history.push(GlobalRoutes.LOGIN.path);
+  };
+
+  if (isLoggedIn) {
     return (
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Sign in as</Typography>
@@ -31,13 +39,12 @@ const LoginBanner = ({ classes, orgImg }) => {
             <Typography className={classes.signInSubtitle}>{loggedInDetails.subtitle}</Typography>
             <Typography className={classes.signInDescription}>{loggedInDetails.description}</Typography>
             <div className={classes.signInBtns}>
-              <Link to={GlobalRoutes.LOGIN.path}>
-                <SNETButton
-                  color="primary"
-                  children="Login to Another account"
-                  variant="text"
-                />
-              </Link>
+              <SNETButton
+                color="primary"
+                children="Login to Another account"
+                variant="text"
+                onClick={handleLoginToAnotherAccount}
+              />
               <Link to={GlobalRoutes.SIGNUP.path}>
                 <SNETButton color="primary" children="Create new account" variant="text" />
               </Link>
@@ -45,7 +52,7 @@ const LoginBanner = ({ classes, orgImg }) => {
           </Grid>
         </Grid>
       </Grid>
-    )
+    );
   }
 
   return (
@@ -60,11 +67,7 @@ const LoginBanner = ({ classes, orgImg }) => {
           <Typography className={classes.signInDescription}>{loggedOutDetails.description}</Typography>
           <div className={classes.signInBtns}>
             <Link to={GlobalRoutes.LOGIN.path}>
-              <SNETButton
-                color="primary"
-                children="Login to singularitynet"
-                variant="text"
-              />
+              <SNETButton color="primary" children="Login to singularitynet" variant="text" />
             </Link>
             <Link to={GlobalRoutes.SIGNUP.path}>
               <SNETButton color="primary" children="Create new account" variant="text" />
