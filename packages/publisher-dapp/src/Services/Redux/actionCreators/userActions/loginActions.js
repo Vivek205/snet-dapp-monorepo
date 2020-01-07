@@ -6,6 +6,7 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
 export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
+export const RESET_USER_ON_SIGNOUT = "RESET_USER_ON_SIGNOUT";
 
 const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLoggedin });
 
@@ -16,6 +17,8 @@ export const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: 
 const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
 
 const setAppInitialized = isInitialized => ({ type: SET_APP_INITIALIZED, payload: isInitialized });
+
+const resetUserOnSignout = () => ({ type: RESET_USER_ON_SIGNOUT });
 
 export const fetchAuthenticatedUser = async () => {
   // TODO remove bypassCache and set timer for session
@@ -66,4 +69,9 @@ export const login = (email, password) => async dispatch => {
     }
     throw error;
   }
+};
+
+export const signout = async dispatch => {
+  await Auth.signOut();
+  dispatch(resetUserOnSignout());
 };

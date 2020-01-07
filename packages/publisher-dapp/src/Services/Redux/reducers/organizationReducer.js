@@ -1,26 +1,28 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions } from "../actionCreators";
-import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { organizationSetupStatuses, organizationTypes } from "../../../Utils/organizationSetup";
 
 const initialState = {
   status: organizationSetupStatuses.NOT_STARTED,
   id: "",
   uuid: "",
   name: "",
-  type: "organization",
+  type: organizationTypes.ORGANIZATION,
   duns: "",
   website: "",
   ownerFullName: "",
   phone: "",
   shortDescription: "",
   longDescription: "",
-  metadataIpfsHash:"",
-  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  metadataIpfsHash: "",
+  contacts: [
+    { type: ContactsTypes.GENERAL, email: "", phone: "" },
+    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  ],
   groups: [
     {
       name: "North America",
       id: "US-2651-DC",
-      uuid: "",
       paymentAddress: "",
       paymentConfig: {
         paymentExpirationThreshold: "40320",
@@ -42,6 +44,7 @@ const initialState = {
   hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
   sameMailingAddress: false,
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  ownerAddress: "",
 };
 
 const OrganizationReducer = (state = initialState, action) => {

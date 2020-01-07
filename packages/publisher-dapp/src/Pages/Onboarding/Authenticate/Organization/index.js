@@ -22,7 +22,7 @@ const Organization = props => {
   const dispatch = useDispatch();
 
   const handleNavigateBack = () => {
-    history.push(OnboardingRoutes.TNC.path);
+    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
   const handleFinish = async () => {

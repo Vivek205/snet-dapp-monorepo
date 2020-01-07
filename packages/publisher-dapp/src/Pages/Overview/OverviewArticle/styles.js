@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
 	overviewArticleContainer: { 
-		padding: '40px 60px !important',
+		padding: '40px 60px 68px !important',
 		display: 'flex',
 		background: MUITheme.palette.background.mainContent,
 		[MUITheme.breakpoints.down('sm')]: { 
@@ -14,6 +14,12 @@ export const useStyles = MUITheme => ({
       marginRight: 0,
       marginBottom: 25
     },
+    '& a':{ textDecoration: 'none' }
+	},
+	description:{
+		color: MUITheme.palette.text.primary,
+		fontSize: 20,
+		lineHeight: '28px'
 	},
 	reverseDirection: {
     flexDirection: "row-reverse",
@@ -24,7 +30,7 @@ export const useStyles = MUITheme => ({
     }
   },
 	checkCircleIcon:{
-		width: 20,
+		width: 24,
 		marginRight: 16,
 		color: MUITheme.palette.success
 	}, 

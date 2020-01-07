@@ -36,7 +36,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   return (
     <Fragment>
       <Grid className={classes.box}>
-        <Typography variant="h5">OrganizationProfile</Typography>
+        <Typography variant="h6">OrganizationProfile</Typography>
         <BasicDetails />
         <OrgImg />
         <hr />

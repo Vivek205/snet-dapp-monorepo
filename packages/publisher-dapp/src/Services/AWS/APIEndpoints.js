@@ -7,6 +7,6 @@ export const APIEndpoints = {
 
 export const APIPaths = {
   ORG_SETUP: "/org",
-  PUBLISH_TO_BLOCKCHAIN: orgUuid => `/org/${orgUuid}/publish`,
-  SAVE_TRANSACTION: orgId => `/org/${orgId}/transaction`,
+  PUBLISH_TO_IPFS: orgUuid => `/org/${orgUuid}/ipfs_publish`,
+  SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
 };
