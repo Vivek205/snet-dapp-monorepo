@@ -1,5 +1,4 @@
 import { API } from "aws-amplify";
-import omitBy from "lodash/omitBy";
 import pickBy from "lodash/pickBy";
 import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
@@ -12,6 +11,7 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { responseStatus, APIError } from "shared/dist/utils/API";
 import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
 import { initSDK } from "shared/dist/utils/snetSdk";
+import { blockChainEvents } from "../../../Utils/Blockchain";
 
 export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -77,15 +77,32 @@ const payloadForSubmit = organization => {
         country: sameMailingAddress ? hqAddress.country : mailingAddress.country,
       },
     ],
-    assets: {
-      hero_image: {
-        raw: assets.heroImage.raw,
-        file_type: assets.heroImage.fileType,
+    assets: { hero_image: {} },
+    ownerAddress: organization.ownerAddress,
+  };
+
+  const groupsToBeSubmitted = organization.groups.map(group => ({
+    name: group.name,
+    id: group.id,
+    payment_address: group.paymentAddress,
+    payment_config: {
+      payment_expiration_threshold: group.paymentConfig.paymentExpirationThreshold,
+      payment_channel_storage_type: group.paymentConfig.paymentChannelStorageType,
+      payment_channel_storage_client: {
+        connection_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        request_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        endpoints: group.paymentConfig.paymentChannelStorageClient.endpoints,
       },
     },
-    ownerAddress: "",
-    groups: [],
-  };
+  }));
+
+  payload.groups = groupsToBeSubmitted;
+
+  if (assets.heroImage.url) {
+    payload.assets.hero_image = { url: assets.heroImage.url };
+  } else {
+    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+  }
 
   return payload;
 };
@@ -107,6 +124,7 @@ export const getStatus = async dispatch => {
     status: data[0].status,
     id: data[0].org_id,
     uuid: data[0].org_uuid,
+    ownerFullName: data[0].owner_name,
     // TODO rename data[0].name to data[0].org_name
     name: data[0].name,
     type: data[0].org_type,
@@ -115,7 +133,6 @@ export const getStatus = async dispatch => {
     website: data[0].url,
     duns: data[0].duns_no,
     contacts: data[0].contacts,
-    // groups: data[0].groups,
   };
 
   if (data[0].assets && data[0].assets.hero_image && data[0].assets.hero_image.url) {
@@ -123,12 +140,27 @@ export const getStatus = async dispatch => {
     organization.assets.heroImage = { url: data[0].assets.hero_image.url };
   }
 
-  console.log("response", data, organization);
+  if (!isEmpty(data[0].groups)) {
+    const parsedGroups = data[0].groups.map(group => ({
+      name: group.name,
+      id: group.id,
+      paymentAddress: group.payment_address,
+      paymentConfig: {
+        paymentExpirationThreshold: group.payment_config.payment_expiration_threshold,
+        paymentChannelStorageType: group.payment_config.payment_channel_storage_type,
+        paymentChannelStorageClient: {
+          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          endpoints: group.payment_config.payment_channel_storage_client.endpoints,
+        },
+      },
+    }));
+    organization.groups = parsedGroups;
+  }
 
-  // const enhancedOrg = omitBy(organization, isEmpty);
   const enhancedOrg = pickBy({ a: null, b: 1, c: undefined }, identity);
+  console.log(enhancedOrg);
 
-  // console.log("response", data, organization, enhancedOrg);
   dispatch(setAllAttributes(organization));
 };
 
@@ -190,40 +222,33 @@ export const publishToIPFS = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
     const { status, data, error } = await publishToIPFSAPI(uuid);
-    dispatch(setOneBasicDetail("metadataIpfsHash", data[0].metadata_ipfs_hash));
+    dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
+      dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
     dispatch(setOrganizationStatus(organizationSetupStatuses.PUBLISHED));
     dispatch(loaderActions.stopAppLoader());
+    return data.metadata_ipfs_hash;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
   }
 };
 
-export const createOrganization = async organization => {
-  const sdk = await initSDK();
-  const orgId = organization.id;
-  const orgMetadataURI = organization.metadataIpfsHash;
-  const members = ["0x3Bb9b2499c283cec176e7C707Ecb495B7a961ebf"];
-  const hash = await sdk._registryContract.createOrganization(orgId, orgMetadataURI, members);
-  return hash;
-};
-
-const saveTransactionAPI = async (orgId, hash, mmAddress) => {
+const saveTransactionAPI = async (orgUuid, hash, ownerAddress) => {
   const { token } = await fetchAuthenticatedUser();
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.SAVE_TRANSACTION(orgId);
-  const body = { transcation_hash: hash, user_address: mmAddress };
+  const apiPath = APIPaths.SAVE_TRANSACTION(orgUuid);
+  const body = { transaction_hash: hash, wallet_address: ownerAddress };
   const apiOptions = initializeAPIOptions(token, body);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const saveTransaction = (orgId, hash, mmAddress) => async dispatch => {
+const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SAVING_TRANSACTION));
-    const { status, data, error } = await saveTransactionAPI(orgId, hash, mmAddress);
+    const { status, error } = await saveTransactionAPI(orgUuid, hash, ownerAddress);
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
@@ -231,4 +256,28 @@ export const saveTransaction = (orgId, hash, mmAddress) => async dispatch => {
     dispatch(loaderActions.stopAppLoader());
     throw error;
   }
+};
+
+export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
+  const sdk = await initSDK();
+  const orgId = organization.id;
+  const orgMetadataURI = ipfsHash;
+  const members = [organization.ownerAddress];
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+  return new Promise((resolve, reject) => {
+    sdk._registryContract
+      .createOrganization(orgId, orgMetadataURI, members)
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+        resolve(hash);
+      })
+      .on(blockChainEvents.CONFIRMATION, () => {
+        dispatch(loaderActions.stopAppLoader);
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader);
+        reject(error);
+      });
+  });
 };
