@@ -23,7 +23,11 @@ const SingularityAccount = ({ classes, history }) => {
   };
 
   const handleEntityChange = event => {
-    dispatch(onboardingActions.setUserEntity(event.target.value));
+    const value = event.target.value;
+    if (value === "default") {
+      return;
+    }
+    dispatch(onboardingActions.setUserEntity(value));
   };
 
   return (
@@ -40,9 +44,9 @@ const SingularityAccount = ({ classes, history }) => {
             { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
           ]}
           onChange={handleEntityChange}
-        />  
-        </Grid>
-      <LoginBanner  classes={classes} />
+        />
+      </Grid>
+      <LoginBanner classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Email Preferences</Typography>
         <div className={classes.checkboxContainer}>
@@ -53,7 +57,13 @@ const SingularityAccount = ({ classes, history }) => {
       </Grid>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton color="primary" children="cancel" variant="text" />
-        <SNETButton color="transparent" children="continue" variant="contained" onClick={handleContinue} />
+        <SNETButton
+          color="primary"
+          children="continue"
+          variant="contained"
+          onClick={handleContinue}
+          disabled={!entity}
+        />
       </Grid>
     </Grid>
   );
