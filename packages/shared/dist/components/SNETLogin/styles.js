@@ -7,6 +7,8 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     loginDetails: {
@@ -21,7 +23,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         letterSpacing: -0.5
       }
     },
-    loginForm: {
+    loginForm: _defineProperty({
       boxSizing: "border-box",
       width: 410,
       padding: "19px 20px 30px",
@@ -38,11 +40,10 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       },
       "& button": {
         width: "100%"
-      },
-      "@media (max-width:545px)": {
-        width: "80%"
       }
-    },
+    }, MUITheme.breakpoints.down('xs'), {
+      width: 'auto'
+    }),
     textField: {
       width: "100%",
       "& label": {
@@ -121,7 +122,10 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         width: 165,
         height: 1,
         background: MUITheme.palette.border.primary,
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        '@media(max-width: 455px)': {
+          width: 55
+        }
       },
       '&:before': {
         marginRight: 10

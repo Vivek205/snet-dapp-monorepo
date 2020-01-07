@@ -29,7 +29,7 @@ export const useStyles = makeStyles(MUITheme => ({
       textTransform: "uppercase",
     },
     "& button": { width: "100%" },
-    "@media (max-width:545px)": { width: "80%" },
+    [MUITheme.breakpoints.down('xs')]: { width: 'auto' }
   },
   textField: {
     width: "100%",
@@ -96,6 +96,7 @@ export const useStyles = makeStyles(MUITheme => ({
       height: 1,
       background: MUITheme.palette.border.primary,
       verticalAlign: 'middle',
+      '@media(max-width: 455px)': { width: 55 }
     },
     '&:before':{ marginRight: 10 },
     '&:after':{ marginLeft: 10 },

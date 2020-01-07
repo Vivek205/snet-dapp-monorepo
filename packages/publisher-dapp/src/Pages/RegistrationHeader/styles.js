@@ -3,15 +3,13 @@ export const useStyles = MUITheme => ({
   	padding: '25px 0',
   	flexWrap: 'nowrap',
   	alignItems: 'center',
-  	backgroundColor: MUITheme.palette.background.mainContent 
+  	backgroundColor: MUITheme.palette.background.mainContent,
+    [MUITheme.breakpoints.down('xs')]: { 
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    },
   },
   logoContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexBasis: "100%",
-    maxWidth: "71%",
-    margin: "0 auto",
     "& h1": {
       width: 230,
       margin: 0,
@@ -37,11 +35,6 @@ export const useStyles = MUITheme => ({
         cursor: "pointer",
         textDecoration: "underline",
       },
-    },
-    "@media (max-width:750px)": {
-      maxWidth: "100%",
-      flexBasis: "100%",
-      textAlign: "left",
-    },
-  },
+    }
+  }
 });
