@@ -20,7 +20,7 @@ const Banners = {
 const OrgSetupStatus = ({ classes }) => {
   const { status } = useSelector(state => state.organization);
 
-  const CurrentStatus = Banners[organizationSetupStatuses.APPROVED];
+  const CurrentStatus = Banners[status];
 
   return (
     <Grid container spacing={24} className={classes.OrgSetupStatusContainer}>
@@ -31,7 +31,7 @@ const OrgSetupStatus = ({ classes }) => {
           services, demos, and tutorial content.
         </Typography>
       </Grid>
-      <CurrentStatus />
+      {CurrentStatus ? <CurrentStatus /> : null }
       <RelatedLinks />
     </Grid>
   );
