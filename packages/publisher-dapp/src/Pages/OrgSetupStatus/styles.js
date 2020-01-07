@@ -1,6 +1,9 @@
 export const useStyles = MUITheme => ({
 	OrgSetupStatusContainer: {
+		width: 845,
+		margin: '0 auto',
 		padding: '40px 0 0',
+		[MUITheme.breakpoints.down('sm')]: { width: 'auto' },
 	},
 	description:{
 		'& p':{
