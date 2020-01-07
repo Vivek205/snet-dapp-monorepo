@@ -92,10 +92,6 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
               <Typography className={classes.header}>Region Name</Typography>
               <Typography className={classes.value}>{name}</Typography>
             </div>
-            <div>
-              <Typography className={classes.header}>Region ID</Typography>
-              <Typography className={classes.value}>{id}</Typography>
-            </div>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield

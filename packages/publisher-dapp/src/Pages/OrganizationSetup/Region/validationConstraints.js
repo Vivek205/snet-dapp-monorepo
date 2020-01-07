@@ -15,6 +15,9 @@ export const orgSetupRegionValidationConstraints = {
       "paymentConfig.paymentChannelStorageClient.requestTimeout": {
         presence: { allowEmpty: false, message: "Request timeout cannot be empty" },
       },
+      "paymentConfig.paymentChannelStorageClient.endpoints": {
+        presence: { allowEmpty: false, message: "^Endpoints cannot be empty" },
+      },
     },
   },
 };
