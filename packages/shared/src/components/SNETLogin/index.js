@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import { useStyles } from "./styles";
 import SNETButton from "../SNETButton";
@@ -33,9 +35,12 @@ const SNETLogin = props => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.loginDetails}>
         <h2>{title}</h2>
         <form noValidate autoComplete="off" className={classes.loginForm}>
+          <span className={classes.loginWithTxt}>log in with</span>
+          <SNETButton children="google" variant="text" color="white" />
+          <span className={classes.separator}>or</span>
           <TextField
             id="outlined-user-name"
-            label="Email"
+            label="Username or Email"
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -54,9 +59,14 @@ const SNETLogin = props => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <div className={classes.checkboxSection}>
-            <div className={classes.checkbox} />
-            <Link to={forgotPasswordLink}>Forgot password?</Link>
+          <div className={classes.checkboxAndLink}>
+            <div className={classes.checkBox}>
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Remember Me"
+              />
+            </div>
+            <Link to={forgotPasswordLink}>Forgot password?</Link>            
           </div>
           <AlertBox type="error" message={validationErr || loginError} />
           <SNETButton color="primary" variant="contained" children="login" type="submit" onClick={handleSubmit} />

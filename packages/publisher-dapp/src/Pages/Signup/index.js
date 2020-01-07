@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useDispatch } from "react-redux";
 
 import SNETSignup from "shared/dist/components/SNETSignup";
 import { signupInfo } from "./content";
 import { signupActions } from "../../Services/Redux/actionCreators/userActions";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import RegistrationHeader from "../RegistrationHeader";
 
 const Signup = props => {
   const { history } = props;
@@ -23,7 +24,12 @@ const Signup = props => {
       setSignupError("Singup Failed");
     }
   };
-  return <SNETSignup info={signupInfo} onSubmit={handleSubmit} signupError={signupError} />;
+  return (
+    <Fragment>
+      <RegistrationHeader headerTitle="Already have an account" headerLinkText="Login" headerLinkTo={GlobalRoutes.LOGIN.path} />
+      <SNETSignup info={signupInfo} onSubmit={handleSubmit} signupError={signupError} />
+    </Fragment>
+  )
 };
 
 export default Signup;

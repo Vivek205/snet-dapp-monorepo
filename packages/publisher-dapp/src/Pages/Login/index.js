@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
 import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
+import RegistrationHeader from "../RegistrationHeader";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
@@ -30,13 +31,16 @@ const Login = ({ history }) => {
   };
 
   return (
-    <SNETLogin
-      title="Welcome Back"
-      //   TODO : create a page for forgotPassword and pass the link here
-      //   forgotPasswordLink={}
-      loginError={error}
-      onSubmit={handleSubmit}
-    />
+    <Fragment>
+      <RegistrationHeader headerTitle="New to SingularityNET?" headerLinkText="Sign up" headerLinkTo={GlobalRoutes.SIGNUP.path} />
+      <SNETLogin
+        title="Welcome Back"
+        //   TODO : create a page for forgotPassword and pass the link here
+        //   forgotPasswordLink={}
+        loginError={error}
+        onSubmit={handleSubmit}
+      />
+    </Fragment>
   );
 };
 
