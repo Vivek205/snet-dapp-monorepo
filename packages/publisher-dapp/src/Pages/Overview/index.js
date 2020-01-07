@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useStyles } from "./styles";
 import GetInTouch from "./GetInTouch";
 import OverviewArticle from "./OverviewArticle";
