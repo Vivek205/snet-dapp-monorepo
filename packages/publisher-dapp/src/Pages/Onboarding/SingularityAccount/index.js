@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { emailPreferencesList } from "./content";
+import { emailPreferencesList, entityTypeDetails } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { onboardingActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 
-const Entity = ({ classes, history }) => {
+const SingularityAccount = ({ classes, history }) => {
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const handleContinue = () => {
-    history.push(OnboardingRoutes.TNC.path);
+    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
   const handleEntityChange = event => {
@@ -27,14 +27,10 @@ const Entity = ({ classes, history }) => {
   };
 
   return (
-    <Grid container className={classes.entityContainer}>
+    <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h5">Entity Type</Typography>
-        <Typography className={classes.entityDescription}>
-          You will be able to choose publish and developed as Company Organization, Indivdual / Sole Proprietor / Single
-          Person Business or join an existing approved entity with an invitation. The first two options require certain
-          amount of information to proceed.
-        </Typography>
+        <Typography variant="h6">{entityTypeDetails.title}</Typography>
+        <Typography className={classes.singularityAccDescription}>{entityTypeDetails.description}</Typography>
         <StyledDropdown
           labelTxt="Please Select"
           inputLabel="Entity Type"
@@ -44,11 +40,11 @@ const Entity = ({ classes, history }) => {
             { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
           ]}
           onChange={handleEntityChange}
-        />
-      </Grid>
-      <LoginBanner classes={classes} />
+        />  
+        </Grid>
+      <LoginBanner  classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h5">Email Preferences</Typography>
+        <Typography variant="h6">Email Preferences</Typography>
         <div className={classes.checkboxContainer}>
           {emailPreferencesList.map((item, index) => (
             <FormControlLabel control={<Checkbox value={item} color="primary" />} label={item} />
@@ -63,4 +59,4 @@ const Entity = ({ classes, history }) => {
   );
 };
 
-export default withStyles(useStyles)(Entity);
+export default withStyles(useStyles)(SingularityAccount);

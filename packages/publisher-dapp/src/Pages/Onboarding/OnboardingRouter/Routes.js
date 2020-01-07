@@ -1,5 +1,5 @@
-import Entity from "../Entity";
-import TNC from "../TNC";
+import SingularityAccount from "../SingularityAccount";
+import AcceptServiceAgreement from "../AcceptServiceAgreement";
 import Authenticate from "../Authenticate";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Default from "../_default";
@@ -15,19 +15,19 @@ export const OnboardingRoutes = {
     exact:true,
     component: Default
   },
-  ENTITY: {
-    name: "entity",
-    path: fullPath("/entity"),
-    component: Entity,
+  SINGULARITY_ACCOUNT: {
+    name: "singularity account",
+    path: fullPath("/singularityaccount"),
+    component: SingularityAccount,
   },
-  TNC: {
-    name: "tnc",
-    path: fullPath("/tnc"),
-    component: TNC ,
+  ACCEPT_SERVICE_AGREEMENT: {
+    name: "accept service agreement",
+    path: fullPath("/agreement"),
+    component: AcceptServiceAgreement,
   },
-  AUTHENTICATE: {
-    name: "authenticate",
+  AUTHENTICATE_ID: {
+    name: "authenticate id",
     path: fullPath("/authenticate"),
-    component: Authenticate ,
+    component: Authenticate,
   },
 };

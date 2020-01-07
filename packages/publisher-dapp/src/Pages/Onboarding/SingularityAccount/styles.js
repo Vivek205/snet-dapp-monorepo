@@ -1,40 +1,61 @@
 export const useStyles = MUITheme => ({
-  entityContainer: { marginTop: 44 },
+  singularityAccContainer: { 
+    width: 845,
+    margin: '48px auto 0' 
+  },
   box: {
-    paddingBottom: 37,
+    paddingBottom: 33,
     borderRadius: 4,
     marginBottom: 27,
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
-    "& h5": {
+    "& > h6": {
       padding: "0 23px",
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
-      borderBottomColor: MUITheme.palette.border.main,
+      borderBottomColor: MUITheme.palette.border.primary,
+      lineHeight: '50px !important',
     },
   },
-  entityDescription: {
+  singularityAccDescription: {
     padding: "0 23px",
     margin: "7px 0 34px",
     color: MUITheme.palette.text.primary,
     fontSize: 16,
-    lineHeight: "24px",
+    lineHeight: "21px",
   },
   signInBtns: {
     marginTop: 15,
     [MUITheme.breakpoints.down("xs")]: { textAlign: "center" },
-    "& a": {
+    "& a": { 
       textDecoration: "none",
+      '&:last-of-type':{
+        '& button':{ padding: '12px 18px 11px'}
+        }
+      },      
     },
-  },
   signInContent: {
-    padding: "7px 30px",
+    padding: "30px 24px 0",
     display: "flex",
+    justifyContent: 'center',
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
-  signInMedia: { textAlign: "center" },
+  signInMedia: { 
+    marginRight: 10, 
+    display: 'flex',
+    wordBreak: 'break-word'
+  },
+  avatar:{ 
+    width: 70, 
+    height: 70 
+  },
+  userDetails:{ 
+    paddingLeft: 11,
+    '& h6':{ whiteSpace: 'normal' }
+  },
   signInRightContent: {
     "& p": {
+      marginLeft: 30,
       fontSize: 14,
       lineHeight: "21px",
     },
@@ -42,19 +63,20 @@ export const useStyles = MUITheme => ({
   },
   signInSubtitle: {
     marginBottom: 25,
-    color: MUITheme.palette.text.primary,
+    color: MUITheme.palette.text.darkGrey,
     fontWeight: 600,
   },
   checkboxContainer: {
-    padding: "32px 58px",
+    padding: "23px 58px 0",
     "& label": {
+      marginRight: 0,
       "& span": {
         fontSize: 14,
         letterSpacing: 0.25,
         lineHeight: "20px",
         "&:last-of-type": { color: MUITheme.palette.text.primary },
         "&.MuiCheckbox-colorPrimary": { color: MUITheme.palette.text.primary },
-        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: `${MUITheme.palette.primary.main} !important` },
+        "&.MuiCheckbox-colorPrimary.Mui-checked": { color: MUITheme.palette.primary.main },
       },
     },
   },
