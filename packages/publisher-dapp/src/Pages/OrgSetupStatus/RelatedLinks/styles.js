@@ -1,8 +1,10 @@
 export const useStyles = MUITheme => ({
 	relatedLinksContainer:{
+		marginTop: 40,
 		display: 'flex',
 		flexDirection: 'column',
 		'& a':{ 
+			fontSize: 14,
 			marginBottom: 10,
 			display: 'block',
 			'&:last-of-type':{ marginBottom: 0 }
@@ -11,9 +13,12 @@ export const useStyles = MUITheme => ({
 	iconTitleContainer:{
 		marginBottom: 15,
 		display: 'flex',
-		'& svg':{ color: MUITheme.palette.text.primary },
+		alignItems: 'center',
+		'& svg':{ 
+			fontSize: 13.5,
+			color: MUITheme.palette.text.primary 
+		},
 		'& p':{
-			paddingLeft: 3,
 			marginLeft: 8,
 			color: MUITheme.palette.text.primary,
 			fontSize: 16,

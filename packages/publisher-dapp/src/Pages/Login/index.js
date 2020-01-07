@@ -31,7 +31,7 @@ const Login = ({ history }) => {
 
   return (
     <SNETLogin
-      title="Welcome back"
+      title="Welcome Back"
       //   TODO : create a page for forgotPassword and pass the link here
       //   forgotPasswordLink={}
       loginError={error}
