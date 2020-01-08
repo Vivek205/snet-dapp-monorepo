@@ -39,7 +39,11 @@ var SNETTextfield = function SNETTextfield(_ref) {
       description = _ref.description,
       icon = _ref.icon,
       onKeyUp = _ref.onKeyUp,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "description", "icon", "onKeyUp"]);
+      btnText = _ref.btnText,
+      btnColor = _ref.btnColor,
+      btnVariant = _ref.btnVariant,
+      btnClick = _ref.btnClick,
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "description", "icon", "onKeyUp", "btnText", "btnColor", "btnVariant", "btnClick"]);
 
   return _react.default.createElement(_Grid.default, {
     container: true
@@ -61,14 +65,18 @@ var SNETTextfield = function SNETTextfield(_ref) {
     onChange: onChange,
     fullWidth: true,
     onKeyUp: onKeyUp
-  }, rest))), _react.default.createElement(_Grid.default, {
+  }, rest))), btnText ? _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
-    lg: 6,
-    className: classes.description
-  }, _react.default.createElement(_Typography.default, null, description)));
+    lg: 6
+  }, _react.default.createElement(SNETButton, {
+    children: btnText,
+    color: btnColor,
+    variant: btnVariant,
+    onClick: btnClick
+  })) : null);
 };
 
 SNETTextfield.propTypes = {
