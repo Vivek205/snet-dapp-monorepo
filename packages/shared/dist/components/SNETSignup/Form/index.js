@@ -101,9 +101,17 @@ var Form = function Form(props) {
     noValidate: true,
     autoComplete: "off",
     className: classes.signupForm
-  }, _react.default.createElement(_TextField.default, {
+  }, _react.default.createElement("span", {
+    className: classes.loginWithTxt
+  }, "sign up with"), _react.default.createElement(_SNETButton.default, {
+    children: "google",
+    variant: "text",
+    color: "white"
+  }), _react.default.createElement("span", {
+    className: classes.separator
+  }, "or"), _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
-    label: "Nickname",
+    label: "Username",
     className: classes.textField,
     value: nickname,
     onChange: function onChange(e) {

@@ -30,15 +30,15 @@ var SNETSignup = function SNETSignup(props) {
     item: true,
     xs: 12,
     sm: 12,
-    md: 6,
-    lg: 6,
+    md: 5,
+    lg: 5,
     className: classes.signupInfo
   }, _react.default.createElement(_Info.default, info)), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
-    md: 6,
-    lg: 6,
+    md: 7,
+    lg: 7,
     className: classes.signupFormWrapper
   }, _react.default.createElement(_Form.default, {
     onSubmit: onSubmit,

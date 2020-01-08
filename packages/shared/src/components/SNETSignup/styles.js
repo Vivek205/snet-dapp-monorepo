@@ -1,12 +1,15 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles(MuiTheme => ({
+export const useStyles = makeStyles(MUITheme => ({
+  signupFormWrapper: {
+    background: MUITheme.palette.background.mainContent,
+  },
   signupInfo: {
-    paddingRight: 54,
+    background: MUITheme.palette.background.mainContent,
     "@media (max-width:960px)": { paddingRight: 0 },
     "& h2": {
       margin: 0,
-      color: MuiTheme.palette.text.darkShadedGray,
+      color: MUITheme.palette.text.darkGrey,
       fontSize: 32,
       letterSpacing: -0.5,
       lineHeight: "48px",
@@ -14,7 +17,7 @@ export const useStyles = makeStyles(MuiTheme => ({
     },
     "& p": {
       margin: "23px 0 24px",
-      color: MuiTheme.palette.text.mediumShadeGray,
+      color: MUITheme.palette.text.primary,
       fontSize: 20,
       lineHeight: "30px",
     },
@@ -22,19 +25,18 @@ export const useStyles = makeStyles(MuiTheme => ({
       margin: 0,
       padding: 0,
     },
-
     "& li": {
       marginBottom: 15,
       display: "flex",
-      alignItems: "baseline",
+      alignItems: "center",
       listStyle: "none",
       "& svg": {
         marginRight: 15,
-        color: MuiTheme.palette.success,
+        color: MUITheme.palette.success,
         fontSize: 20,
       },
       "& p": {
-        color: MuiTheme.palette.text.mediumShadeGray,
+        color: MUITheme.palette.text.primary,
         fontSize: 16,
         letterSpacing: "0.29px",
         display: "inline-block",
