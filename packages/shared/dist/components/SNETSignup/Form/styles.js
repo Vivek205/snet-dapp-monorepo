@@ -10,8 +10,10 @@ var _styles = require("@material-ui/styles");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
+  var _signupForm;
+
   return {
-    signupForm: _defineProperty({
+    signupForm: (_signupForm = {
       width: 410,
       margin: ' 0 0 0 auto',
       boxSizing: "border-box",
@@ -22,9 +24,12 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& button": {
         width: "100%"
       }
-    }, MUITheme.breakpoints.down('sm'), {
+    }, _defineProperty(_signupForm, MUITheme.breakpoints.down('xs'), {
+      width: 'auto',
+      margin: '40px 30px 0'
+    }), _defineProperty(_signupForm, MUITheme.breakpoints.down('sm'), {
       margin: '35px auto 0'
-    }),
+    }), _signupForm),
     textField: {
       width: "100%",
       marginBottom: 0,

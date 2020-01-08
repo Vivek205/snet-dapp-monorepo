@@ -32,7 +32,6 @@ const Login = ({ history }) => {
 
   return (
     <Fragment>
-      <RegistrationHeader headerTitle="New to SingularityNET?" headerLinkText="Sign up" headerLinkTo={GlobalRoutes.SIGNUP.path} />
       <SNETLogin
         title="Welcome Back"
         //   TODO : create a page for forgotPassword and pass the link here

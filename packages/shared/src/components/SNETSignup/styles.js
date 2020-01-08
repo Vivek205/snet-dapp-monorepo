@@ -1,11 +1,15 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
-  signupFormWrapper: {
+  signupContainer: {
     background: MUITheme.palette.background.mainContent,
   },
+  signupWrapper:{
+    width: '71%',
+    margin: '0 auto',
+    [MUITheme.breakpoints.down('sm')]: { width: '90%' }
+  },
   signupInfo: {
-    background: MUITheme.palette.background.mainContent,
     "@media (max-width:960px)": { paddingRight: 0 },
     "& h2": {
       margin: 0,

@@ -7,13 +7,20 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
-    signupFormWrapper: {
+    signupContainer: {
       background: MUITheme.palette.background.mainContent
     },
+    signupWrapper: _defineProperty({
+      width: '71%',
+      margin: '0 auto'
+    }, MUITheme.breakpoints.down('sm'), {
+      width: '90%'
+    }),
     signupInfo: {
-      background: MUITheme.palette.background.mainContent,
       "@media (max-width:960px)": {
         paddingRight: 0
       },

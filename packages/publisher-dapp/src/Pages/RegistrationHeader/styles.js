@@ -9,6 +9,11 @@ export const useStyles = MUITheme => ({
       alignItems: 'flex-start'
     },
   },
+  registrationHeaderWrapper:{
+    width: '71%',
+    margin: '0 auto',
+    [MUITheme.breakpoints.down('sm')]: { width: '90%' }
+  },
   logoContainer: {
     "& h1": {
       width: 230,
@@ -35,6 +40,7 @@ export const useStyles = MUITheme => ({
         cursor: "pointer",
         textDecoration: "underline",
       },
-    }
+    },
+    [MUITheme.breakpoints.down('xs')]: { textAlign: 'left' }
   }
 });

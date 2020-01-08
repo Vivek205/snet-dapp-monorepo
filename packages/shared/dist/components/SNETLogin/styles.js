@@ -42,7 +42,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         width: "100%"
       }
     }, MUITheme.breakpoints.down('xs'), {
-      width: 'auto'
+      width: 'auto',
+      margin: '40px 30px 0'
     }),
     textField: {
       width: "100%",

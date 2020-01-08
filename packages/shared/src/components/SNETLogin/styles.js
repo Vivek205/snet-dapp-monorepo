@@ -29,7 +29,10 @@ export const useStyles = makeStyles(MUITheme => ({
       textTransform: "uppercase",
     },
     "& button": { width: "100%" },
-    [MUITheme.breakpoints.down('xs')]: { width: 'auto' }
+    [MUITheme.breakpoints.down('xs')]: { 
+      width: 'auto',
+      margin: '40px 30px 0'
+    }
   },
   textField: {
     width: "100%",

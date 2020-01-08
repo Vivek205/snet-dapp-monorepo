@@ -5,7 +5,6 @@ import SNETSignup from "shared/dist/components/SNETSignup";
 import { signupInfo } from "./content";
 import { signupActions } from "../../Services/Redux/actionCreators/userActions";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
-import RegistrationHeader from "../RegistrationHeader";
 
 const Signup = props => {
   const { history } = props;
@@ -25,8 +24,7 @@ const Signup = props => {
     }
   };
   return (
-    <Fragment>
-      <RegistrationHeader headerTitle="Already have an account" headerLinkText="Login" headerLinkTo={GlobalRoutes.LOGIN.path} />
+    <Fragment>      
       <SNETSignup info={signupInfo} onSubmit={handleSubmit} signupError={signupError} />
     </Fragment>
   )

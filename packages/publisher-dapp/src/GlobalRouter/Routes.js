@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
+import withLoginRegistrationHeader from "../HOC/withLoginRegistrationHeader";
+import withSignupRegistrationHeader from  "../HOC/withSignupRegistrationHeader";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const Login = lazy(() => import("../Pages/Login"));
@@ -12,9 +14,9 @@ const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
-const LoginComponent = withLightHeaderAndFooter(Login);
-const SignupComponent = withLightHeaderAndFooter(Signup);
-const SingupConfirmComponent = withLightHeaderAndFooter(SignupConfirm);
+const LoginComponent = withLoginRegistrationHeader(Login);
+const SignupComponent = withSignupRegistrationHeader(Signup);
+const SingupConfirmComponent = withSignupRegistrationHeader(SignupConfirm);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
