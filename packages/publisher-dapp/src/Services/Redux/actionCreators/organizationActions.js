@@ -202,7 +202,6 @@ export const submitForApproval = organization => async dispatch => {
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -220,7 +219,7 @@ const publishToIPFSAPI = async uuid => {
 
 export const publishToIPFS = uuid => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
     const { status, data, error } = await publishToIPFSAPI(uuid);
     dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
