@@ -29,14 +29,9 @@ const SNETTextfield = ({ classes, name, label, helperText, value, onChange, desc
           {...rest}
         />
       </Grid>
-      {
-        description ?
-          <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
-            <Typography>{description}</Typography>
-          </Grid>
-        :
-          null
-      }
+      <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
+        <Typography>{description}</Typography>
+      </Grid>
     </Grid>
   );
 };
