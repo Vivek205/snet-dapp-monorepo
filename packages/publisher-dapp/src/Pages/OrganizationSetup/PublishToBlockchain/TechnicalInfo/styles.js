@@ -8,13 +8,17 @@ export const useStyles = MUITheme => ({
     "& h6": {
       padding: "0 !important",
       border: "none !important",
+      marginBottom: 15,
       fontWeight: "normal",
       lineHeight: "23px",
     },
   },
-  alertBoxAndBtnContainer: { alignItems: 'center' },
+  alertBoxAndBtnContainer: { 
+    alignItems: 'center',
+    '& p':{ margin: 0 }
+  },
   connectMetamaskBtn: { paddingLeft: 30 },
   groupInfoContainer:{
-    '& h6':{ margin: '10px 0 15px' }
+    '& h6':{ margin: '15px 0' }
   }
 });
