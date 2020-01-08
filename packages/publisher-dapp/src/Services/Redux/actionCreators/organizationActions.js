@@ -226,7 +226,6 @@ export const publishToIPFS = uuid => async dispatch => {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.PUBLISHED));
     dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_hash;
   } catch (error) {
