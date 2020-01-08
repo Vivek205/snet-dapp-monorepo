@@ -12,4 +12,6 @@ export const useStyles = MUITheme => ({
       lineHeight: "23px",
     },
   },
+  alertBoxAndBtnContainer: { alignItems: 'center' },
+  connectMetamaskBtn: { paddingLeft: 30 }
 });
