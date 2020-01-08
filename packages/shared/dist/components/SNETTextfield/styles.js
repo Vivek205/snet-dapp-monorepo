@@ -11,7 +11,6 @@ var useStyles = function useStyles(MUITheme) {
   return {
     basicTextFieldGrid: _defineProperty({
       display: 'flex',
-      flexBasis: '100%',
       '& label': {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
