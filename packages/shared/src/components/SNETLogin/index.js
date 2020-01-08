@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import SNETButton from "../SNETButton";
@@ -33,7 +34,7 @@ const SNETLogin = props => {
   return (
     <Grid container spacing={12}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.loginDetails}>
-        <h2>{title}</h2>
+        <Typography variant="h2">{title}</Typography>
         <form noValidate autoComplete="off" className={classes.loginForm}>
           <span className={classes.loginWithTxt}>log in with</span>
           <SNETButton children="google" variant="text" color="white" />

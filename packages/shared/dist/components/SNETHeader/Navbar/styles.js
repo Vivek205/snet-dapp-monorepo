@@ -16,17 +16,19 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     navLink: {
       textDecoration: "none",
-      color: MUITheme.palette.text.disabled
+      color: MUITheme.palette.text.lightGrey
     },
     navLinkActive: function navLinkActive(props) {
       return {
-        borderBottom: "1px solid ".concat(MUITheme.palette.primary.main),
+        borderBottom: "2px solid ".concat(MUITheme.palette.primary.main),
         paddingBottom: 3,
         color: MUITheme.palette.primary.main,
+        fontWeight: 600,
         "&: visited": {
-          borderBottom: "1px solid ".concat(MUITheme.palette.primary.main),
+          borderBottom: "2px solid ".concat(MUITheme.palette.primary.main),
           paddingBottom: 3,
-          color: MUITheme.palette.primary.main
+          color: MUITheme.palette.primary.main,
+          fontWeight: 600
         }
       };
     }

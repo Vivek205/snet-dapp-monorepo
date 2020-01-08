@@ -10,6 +10,7 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down('sm')]: { width: '90%' }
   },
   signupInfo: {
+    fontFamily: MUITheme.typography.fontFamily,
     "@media (max-width:960px)": { paddingRight: 0 },
     "& h2": {
       margin: 0,

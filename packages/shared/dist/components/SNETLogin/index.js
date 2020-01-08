@@ -21,6 +21,8 @@ var _FormControlLabel = _interopRequireDefault(require("@material-ui/core/FormCo
 
 var _Checkbox = _interopRequireDefault(require("@material-ui/core/Checkbox"));
 
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
+
 var _styles = require("./styles");
 
 var _SNETButton = _interopRequireDefault(require("../SNETButton"));
@@ -93,7 +95,9 @@ var SNETLogin = function SNETLogin(props) {
     md: 12,
     lg: 12,
     className: classes.loginDetails
-  }, _react.default.createElement("h2", null, title), _react.default.createElement("form", {
+  }, _react.default.createElement(_Typography.default, {
+    variant: "h2"
+  }, title), _react.default.createElement("form", {
     noValidate: true,
     autoComplete: "off",
     className: classes.loginForm

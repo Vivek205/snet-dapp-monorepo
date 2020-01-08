@@ -8,16 +8,18 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   navLink: {
     textDecoration: "none",
-    color: MUITheme.palette.text.disabled,
+    color: MUITheme.palette.text.lightGrey,
   },
   navLinkActive: props => ({
-    borderBottom: `1px solid ${MUITheme.palette.primary.main}`,
+    borderBottom: `2px solid ${MUITheme.palette.primary.main}`,
     paddingBottom: 3,
     color: MUITheme.palette.primary.main,
+    fontWeight: 600,
     "&: visited": {
-      borderBottom: `1px solid ${MUITheme.palette.primary.main}`,
+      borderBottom: `2px solid ${MUITheme.palette.primary.main}`,
       paddingBottom: 3,
       color: MUITheme.palette.primary.main,
+      fontWeight: 600,
     },
   }),
 }));

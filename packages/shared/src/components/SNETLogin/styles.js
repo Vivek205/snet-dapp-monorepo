@@ -5,13 +5,7 @@ export const useStyles = makeStyles(MUITheme => ({
     height: "100vh",
     textAlign: "center",
     backgroundColor: MUITheme.palette.background.mainContent,
-    "& h2": {
-      margin: 0,
-      fontSize: 32,
-      fontWeight: 600,
-      color: MUITheme.palette.text.darkGrey,
-      letterSpacing: -0.5,
-    },
+    fontFamily: MUITheme.typography.fontFamily
   },
   loginForm: {
     boxSizing: "border-box",
@@ -95,7 +89,7 @@ export const useStyles = makeStyles(MUITheme => ({
     '&:before, &:after':{
       content: '" "',
       display: 'inline-block',
-      width: 165,
+      width: 164,
       height: 1,
       background: MUITheme.palette.border.primary,
       verticalAlign: 'middle',

@@ -28,6 +28,7 @@ export const useStyles = MUITheme => ({
     textAlign: "right",
     '& p':{
     	color: MUITheme.palette.text.lightGrey,
+      fontFamily: MUITheme.typography.fontFamily,
     	fontSize:16,
     	lineHeight: '22px'
     },
