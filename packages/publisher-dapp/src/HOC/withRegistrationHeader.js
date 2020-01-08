@@ -3,13 +3,13 @@ import React, { Fragment } from "react";
 import { GlobalRoutes } from "../GlobalRouter/Routes";
 import RegistrationHeader from "../Pages/RegistrationHeader";
 
-const withSignupRegistrationHeader = Component => {
+const withRegistrationHeader = Component => {
   return props => (
     <Fragment>      
-      <RegistrationHeader headerTitle="Already have an account?" headerLinkText="Login" headerLinkTo={GlobalRoutes.LOGIN.path} />
+      <RegistrationHeader headerTitle="New to SingularityNET?" headerLinkText="Sign up" headerLinkTo={GlobalRoutes.SIGNUP.path} />
       <Component {...props} />
     </Fragment>
   );
 };
 
-export default withSignupRegistrationHeader;
+export default withRegistrationHeader;
