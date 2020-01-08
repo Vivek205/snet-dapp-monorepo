@@ -19,8 +19,10 @@ const OrganizationSetup = ({ classes, location, history }) => {
   useEffect(() => {
     if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+    } else if (organization.status === organizationSetupStatuses.PUBLISHED) {
+      history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
     }
-  });
+  }, [organization.status, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
