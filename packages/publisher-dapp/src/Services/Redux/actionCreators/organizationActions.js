@@ -271,7 +271,7 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
           resolve(hash);
         })
-        .on(blockChainEvents.CONFIRMATION, () => {
+        .on(blockChainEvents.RECEIPT, () => {
           dispatch(setOneBasicDetail("status", organizationSetupStatuses.PUBLISHED));
           dispatch(loaderActions.stopAppLoader());
         })
