@@ -1,5 +1,6 @@
 import { Auth } from "aws-amplify";
-import { organizationActions } from "..";
+import { organizationActions, loaderActions } from "../";
+import { LoaderContent } from "../../../../Utils/Loader";
 
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
@@ -52,6 +53,7 @@ const loginSucess = loginResponse => async dispatch => {
     dispatch(setUserEmail(email)),
     dispatch(setUserNickname(nickname)),
     dispatch(setUserEmailVerified(isEmailVerified)),
+    dispatch(loaderActions.stopAppLoader()),
   ]);
 };
 
@@ -61,9 +63,11 @@ const handleUserNotConfirmed = email => async dispatch => {
 
 export const login = (email, password) => async dispatch => {
   try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.LOGIN));
     const loginResponse = await Auth.signIn(email, password);
     return await dispatch(loginSucess(loginResponse));
   } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
     if (error.code === "UserNotConfirmedException") {
       await dispatch(handleUserNotConfirmed(email));
     }
