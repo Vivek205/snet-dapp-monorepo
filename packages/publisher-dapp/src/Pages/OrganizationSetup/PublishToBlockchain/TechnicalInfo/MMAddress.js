@@ -23,11 +23,11 @@ const MMAddress = ({ classes }) => {
 
   if (!!ownerAddress) {
     return (
-      <Grid container>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+      <Grid container className={classes.ownAddContainer}>
+        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.ownerAddTxtField}>
           <SNETTextfield name="ownerAddress" value={ownerAddress} disabled label="Owner's Metamask Address" />
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.mmAddBtn}>
           <SNETButton color="primary" variant="contained" children="capture from metamask" onClick={handleConnetMM} />
         </Grid>
       </Grid>
@@ -42,7 +42,7 @@ const MMAddress = ({ classes }) => {
           type="warning"
         />
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.connectMetamaskBtn}>
+      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.mmAddBtn}>
         <SNETButton color="primary" variant="contained" children="connect metamask" onClick={handleConnetMM} />
       </Grid>
     </Grid>

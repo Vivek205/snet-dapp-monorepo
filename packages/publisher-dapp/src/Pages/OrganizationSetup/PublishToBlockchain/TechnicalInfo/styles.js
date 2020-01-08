@@ -17,8 +17,21 @@ export const useStyles = MUITheme => ({
     alignItems: 'center',
     '& p':{ margin: 0 }
   },
-  connectMetamaskBtn: { paddingLeft: 30 },
+  mmAddBtn: { paddingLeft: 30 },
   groupInfoContainer:{
     '& h6':{ margin: '15px 0' }
+  },
+  ownAddContainer:{
+    display: 'flex',
+    alignItems: 'center',
+    '& button':{ marginBottom: 28 }
+  },
+  ownerAddTxtField:{
+    '& > div':{
+      '& > div':{
+        maxWidth: '100%',
+        flexBasis: '100%'
+      }
+    }
   }
 });
