@@ -12,7 +12,15 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     navlist: {
       padding: 0,
       margin: 0,
-      display: "flex"
+      display: "flex",
+      '& li': {
+        width: 'auto',
+        padding: 0,
+        marginRight: 49,
+        '&:last-of-type': {
+          marginRight: 0
+        }
+      }
     },
     navLink: {
       textDecoration: "none",
