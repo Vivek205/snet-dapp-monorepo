@@ -13,5 +13,8 @@ export const useStyles = MUITheme => ({
     },
   },
   alertBoxAndBtnContainer: { alignItems: 'center' },
-  connectMetamaskBtn: { paddingLeft: 30 }
+  connectMetamaskBtn: { paddingLeft: 30 },
+  groupInfoContainer:{
+    '& h6':{ margin: '10px 0 15px' }
+  }
 });

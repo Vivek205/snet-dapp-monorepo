@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -14,7 +14,7 @@ const TechnicalInfo = ({ classes }) => {
       <Typography variant="subtitle1">Technical Information</Typography>
       <MMAddress classes={classes} />
       {groups.map(group => (
-        <Fragment key={group.id}>
+        <div key={group.id} className={classes.groupInfoContainer}>
           <Typography variant="subtitle1">Group Information</Typography>
           <SNETTextfield
             disabled
@@ -33,7 +33,7 @@ const TechnicalInfo = ({ classes }) => {
               key={endpoint}
             />
           ))}
-        </Fragment>
+        </div>
       ))}
     </div>
   );
