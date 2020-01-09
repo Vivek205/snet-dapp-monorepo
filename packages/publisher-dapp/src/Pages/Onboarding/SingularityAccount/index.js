@@ -68,7 +68,6 @@ const SingularityAccount = ({ classes, history }) => {
                 <Checkbox
                   color="primary"
                   checked={emailPreferences[preference.type]}
-                  // checked
                   value={preference.type}
                   onChange={handleEmailPreferencesChange}
                 />
