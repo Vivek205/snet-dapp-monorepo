@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { emailPreferencesList, entityTypeDetails } from "./content";
+import { emailPreferencesList, entityTypeDetails, preferenceTypes } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
@@ -16,6 +16,11 @@ import { onboardingActions } from "../../../Services/Redux/actionCreators/userAc
 import LoginBanner from "./LoginBanner";
 
 const SingularityAccount = ({ classes, history }) => {
+  const [emailPreferences, setEmailPreferences] = useState({
+    [preferenceTypes.FEATURE_RELEASE]: false,
+    [preferenceTypes.WEEKLY_SUMMARY]: false,
+    [preferenceTypes.COMMENTS_AND_MESSAGES]: false,
+  });
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const handleContinue = () => {
@@ -28,6 +33,12 @@ const SingularityAccount = ({ classes, history }) => {
       return;
     }
     dispatch(onboardingActions.setUserEntity(value));
+  };
+
+  const handleEmailPreferencesChange = event => {
+    const value = event.target.value;
+    const updatedEmailPreferences = { ...emailPreferences, [value]: !emailPreferences[value] };
+    setEmailPreferences(updatedEmailPreferences);
   };
 
   return (
@@ -50,8 +61,20 @@ const SingularityAccount = ({ classes, history }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Email Preferences</Typography>
         <div className={classes.checkboxContainer}>
-          {emailPreferencesList.map((item, index) => (
-            <FormControlLabel control={<Checkbox value={item} color="primary" />} label={item} />
+          {emailPreferencesList.map(preference => (
+            <FormControlLabel
+              key={preference.type}
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={emailPreferences[preference.type]}
+                  // checked
+                  value={preference.type}
+                  onChange={handleEmailPreferencesChange}
+                />
+              }
+              label={preference.description}
+            />
           ))}
         </div>
       </Grid>
