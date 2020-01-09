@@ -5,25 +5,26 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { emailPreferencesList, entityTypeDetails, preferenceTypes } from "./content";
+import { emailPreferencesList, entityTypeDetails } from "./content";
 import SNETButton from "shared/src/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
-import { userEntities } from "../../../Utils/user";
+import { userEntities, userPreferenceTypes } from "../../../Utils/user";
 import { useDispatch, useSelector } from "react-redux";
-import { onboardingActions } from "../../../Services/Redux/actionCreators/userActions";
+import { onboardingActions, preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 
 const SingularityAccount = ({ classes, history }) => {
   const [emailPreferences, setEmailPreferences] = useState({
-    [preferenceTypes.FEATURE_RELEASE]: false,
-    [preferenceTypes.WEEKLY_SUMMARY]: false,
-    [preferenceTypes.COMMENTS_AND_MESSAGES]: false,
+    [userPreferenceTypes.FEATURE_RELEASE]: false,
+    [userPreferenceTypes.WEEKLY_SUMMARY]: false,
+    [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const handleContinue = () => {
+    dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 

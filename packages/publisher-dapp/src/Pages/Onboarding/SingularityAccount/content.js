@@ -1,3 +1,5 @@
+import { userPreferenceTypes } from "../../../Utils/user";
+
 export const entityTypeDetails = {
   title: "Entity Type",
   description:
@@ -16,23 +18,17 @@ export const loggedOutDetails = {
     "To use the portal, please sign up. Lorem ipsum dolor sit amet, per odio adipi scing ea, est an purto libris fastidii, dolor laboramus consectetuer ut eum. An debet expetendis scriptorem ius. Dolorem detracto accusamus mea cu. Nam hendrerit theophrastus ex, vix aeque solet cu.",
 };
 
-export const preferenceTypes = {
-  FEATURE_RELEASE: "FEATURE_RELEASE",
-  WEEKLY_SUMMARY: "WEEKLY_SUMMARY",
-  COMMENTS_AND_MESSAGES: "COMMENTS_AND_MESSAGES",
-};
-
 export const emailPreferencesList = [
   {
-    type: preferenceTypes.FEATURE_RELEASE,
+    type: userPreferenceTypes.FEATURE_RELEASE,
     description: "I’d like to get new feature annoucements and tips to help imporve my AI services",
   },
   {
-    type: preferenceTypes.WEEKLY_SUMMARY,
+    type: userPreferenceTypes.WEEKLY_SUMMARY,
     description: "I’d like to get weekly summary reports of my AI services and account acitivty.",
   },
   {
-    type: preferenceTypes.COMMENTS_AND_MESSAGES,
+    type: userPreferenceTypes.COMMENTS_AND_MESSAGES,
     description: "I’d like to get email notifications when users leave comments or send messages ",
   },
 ];
