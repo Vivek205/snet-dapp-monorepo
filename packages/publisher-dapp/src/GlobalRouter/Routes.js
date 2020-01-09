@@ -13,7 +13,7 @@ const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
-const LoginComponent = withRegistrationHeader(Login);
+const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up");
 const SignupComponent = withRegistrationHeader(Signup);
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
