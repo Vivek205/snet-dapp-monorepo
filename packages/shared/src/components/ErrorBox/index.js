@@ -10,7 +10,8 @@ const ErrorBox = ({ classes, errImg, errText }) => {
     <div className={classes.errorMsgContainer}>
       <img src={errImg || NoConnectionImg} alt="No connection" />
       <span>
-        {errText ||
+        {errText ||  
+        
           `Unable to reach our servers. We have been notified of this.
         Please try again Later.`}
       </span>
