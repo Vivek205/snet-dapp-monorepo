@@ -1,6 +1,4 @@
 import { API } from "aws-amplify";
-import pickBy from "lodash/pickBy";
-import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
 
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -157,10 +155,6 @@ export const getStatus = async dispatch => {
     }));
     organization.groups = parsedGroups;
   }
-
-  const enhancedOrg = pickBy({ a: null, b: 1, c: undefined }, identity);
-  console.log(enhancedOrg);
-
   dispatch(setAllAttributes(organization));
 };
 
@@ -202,7 +196,6 @@ export const submitForApproval = organization => async dispatch => {
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -220,14 +213,13 @@ const publishToIPFSAPI = async uuid => {
 
 export const publishToIPFS = uuid => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
     const { status, data, error } = await publishToIPFSAPI(uuid);
     dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.PUBLISHED));
     dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_hash;
   } catch (error) {
@@ -259,25 +251,31 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
 };
 
 export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
-  const sdk = await initSDK();
-  const orgId = organization.id;
-  const orgMetadataURI = ipfsHash;
-  const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
-  return new Promise((resolve, reject) => {
-    sdk._registryContract
-      .createOrganization(orgId, orgMetadataURI, members)
-      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
-        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
-        resolve(hash);
-      })
-      .on(blockChainEvents.CONFIRMATION, () => {
-        dispatch(loaderActions.stopAppLoader);
-      })
-      .on(blockChainEvents.ERROR, error => {
-        dispatch(loaderActions.stopAppLoader);
-        reject(error);
-      });
-  });
+  try {
+    const sdk = await initSDK();
+    const orgId = organization.id;
+    const orgMetadataURI = ipfsHash;
+    const members = [organization.ownerAddress];
+    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+    return new Promise((resolve, reject) => {
+      sdk._registryContract
+        .createOrganization(orgId, orgMetadataURI, members)
+        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+          await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+          dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+          resolve(hash);
+        })
+        .on(blockChainEvents.RECEIPT, () => {
+          dispatch(setOneBasicDetail("status", organizationSetupStatuses.PUBLISHED));
+          dispatch(loaderActions.stopAppLoader());
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(error);
+        });
+    });
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
 };

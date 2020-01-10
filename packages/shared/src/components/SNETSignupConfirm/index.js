@@ -17,7 +17,7 @@ const SNETSignupConfirm = props => {
   const [validationErr, setValidationErr] = useState();
 
   const handleSubmit = event => {
-    event.prevetDefault();
+    event.preventDefault();
     setValidationErr();
     const isNotValid = validator({ otp }, signupConfirmConstraints);
     if (isNotValid) {
