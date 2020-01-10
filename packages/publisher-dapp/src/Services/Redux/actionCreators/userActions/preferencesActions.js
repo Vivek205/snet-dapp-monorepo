@@ -6,8 +6,8 @@ import { userPreferenceCommunicationTypes } from "../../../../Utils/user";
 import { fetchAuthenticatedUser } from "./loginActions";
 import { initializeAPIOptions } from "../../../../Utils/API";
 
-const updatePreferencesAPI = async payload => {
-  const { token } = await fetchAuthenticatedUser();
+const updatePreferencesAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.USER.name;
   const apiPath = APIPaths.USER_PREFERENCES;
   const apiOptions = initializeAPIOptions(token, payload);
@@ -25,7 +25,7 @@ const generateEmailPreferencesPayload = emailPreferences => {
   return preferences;
 };
 
-export const updateEmailPreferences = emailPreferences => () => {
+export const updateEmailPreferences = emailPreferences => dispatch => {
   const payload = generateEmailPreferencesPayload(emailPreferences);
-  updatePreferencesAPI(payload);
+  dispatch(updatePreferencesAPI(payload));
 };
