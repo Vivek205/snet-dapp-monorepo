@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import RegistrationHeader from "../Pages/RegistrationHeader";
+import RegistrationHeader from "../Components/RegistrationHeader";
 
 const withRegistrationHeader = (Component, title, linkText, linkTo) => {
   return props => (

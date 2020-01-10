@@ -45,8 +45,7 @@ var SNETSignupConfirm = function SNETSignupConfirm(props) {
   var info = props.info,
       onResendOtp = props.onResendOtp,
       onSubmit = props.onSubmit,
-      signupAlert = props.signupAlert,
-      email = props.email;
+      signupAlert = props.signupAlert;
   var classes = (0, _styles.useStyles)();
 
   var _useState = (0, _react.useState)(),
@@ -58,8 +57,6 @@ var SNETSignupConfirm = function SNETSignupConfirm(props) {
       _useState4 = _slicedToArray(_useState3, 2),
       validationErr = _useState4[0],
       setValidationErr = _useState4[1];
-
-  console.log('info', email);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();

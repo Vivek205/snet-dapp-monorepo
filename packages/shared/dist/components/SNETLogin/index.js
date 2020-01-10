@@ -101,15 +101,7 @@ var SNETLogin = function SNETLogin(props) {
     noValidate: true,
     autoComplete: "off",
     className: classes.loginForm
-  }, _react.default.createElement("span", {
-    className: classes.loginWithTxt
-  }, "log in with"), _react.default.createElement(_SNETButton.default, {
-    children: "google",
-    variant: "text",
-    color: "white"
-  }), _react.default.createElement("span", {
-    className: classes.separator
-  }, "or"), _react.default.createElement(_TextField.default, {
+  }, _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
     label: "Username or Email",
     className: classes.textField,

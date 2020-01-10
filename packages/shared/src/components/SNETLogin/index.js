@@ -36,9 +36,6 @@ const SNETLogin = props => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.loginDetails}>
         <Typography variant="h2">{title}</Typography>
         <form noValidate autoComplete="off" className={classes.loginForm}>
-          <span className={classes.loginWithTxt}>log in with</span>
-          <SNETButton children="google" variant="text" color="white" />
-          <span className={classes.separator}>or</span>
           <TextField
             id="outlined-user-name"
             label="Username or Email"
