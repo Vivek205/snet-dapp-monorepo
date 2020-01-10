@@ -23,6 +23,7 @@
     "require-await": "warn",
     "eqeqeq": "warn",
     "no-useless-catch": "off",
-    "no-console": "error"
+    "no-console": "error",
+    "react/jsx-no-useless-fragment": "error"
   }
 }
