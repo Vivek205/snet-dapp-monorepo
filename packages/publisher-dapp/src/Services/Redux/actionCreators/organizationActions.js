@@ -105,8 +105,8 @@ const payloadForSubmit = organization => {
   return payload;
 };
 
-const getStatusAPI = async () => {
-  const { token } = await fetchAuthenticatedUser();
+const getStatusAPI = () => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const apiOptions = initializeAPIOptions(token);
@@ -114,7 +114,7 @@ const getStatusAPI = async () => {
 };
 
 export const getStatus = async dispatch => {
-  const { data } = await getStatusAPI();
+  const { data } = await dispatch(getStatusAPI());
   if (isEmpty(data)) {
     return;
   }
@@ -158,8 +158,8 @@ export const getStatus = async dispatch => {
   dispatch(setAllAttributes(organization));
 };
 
-const finishLaterAPI = async payload => {
-  const { token } = await fetchAuthenticatedUser();
+const finishLaterAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
@@ -171,7 +171,7 @@ export const finishLater = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
     const payload = payloadForSubmit(organization);
-    await finishLaterAPI(payload);
+    await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -179,8 +179,8 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = async payload => {
-  const { token } = await fetchAuthenticatedUser();
+export const submitForApprovalAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
@@ -192,7 +192,7 @@ export const submitForApproval = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SUBMIT_FOR_APPROVAL));
     const payload = payloadForSubmit(organization);
-    const { status, error } = await submitForApprovalAPI(payload);
+    const { status, error } = await dispatch(submitForApprovalAPI(payload));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
@@ -203,8 +203,8 @@ export const submitForApproval = organization => async dispatch => {
   }
 };
 
-const publishToIPFSAPI = async uuid => {
-  const { token } = await fetchAuthenticatedUser();
+const publishToIPFSAPI = uuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.PUBLISH_TO_IPFS(uuid);
   const apiOptions = initializeAPIOptions(token);
@@ -214,7 +214,7 @@ const publishToIPFSAPI = async uuid => {
 export const publishToIPFS = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
-    const { status, data, error } = await publishToIPFSAPI(uuid);
+    const { status, data, error } = await dispatch(publishToIPFSAPI(uuid));
     dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
       dispatch(loaderActions.stopAppLoader());
@@ -228,8 +228,8 @@ export const publishToIPFS = uuid => async dispatch => {
   }
 };
 
-const saveTransactionAPI = async (orgUuid, hash, ownerAddress) => {
-  const { token } = await fetchAuthenticatedUser();
+const saveTransactionAPI = (orgUuid, hash, ownerAddress) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.SAVE_TRANSACTION(orgUuid);
   const body = { transaction_hash: hash, wallet_address: ownerAddress };
@@ -240,7 +240,7 @@ const saveTransactionAPI = async (orgUuid, hash, ownerAddress) => {
 const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SAVING_TRANSACTION));
-    const { status, error } = await saveTransactionAPI(orgUuid, hash, ownerAddress);
+    const { status, error } = await dispatch(saveTransactionAPI(orgUuid, hash, ownerAddress));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }

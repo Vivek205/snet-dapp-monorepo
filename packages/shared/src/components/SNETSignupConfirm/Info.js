@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
@@ -6,9 +6,12 @@ import { useStyles } from "./styles";
 const Info = props => {
   const { title, description } = props;
   const classes = useStyles();
-  
+
   return (
-    <p className={classes.signupconfirmDetail}><span>{title}</span>{description}</p>
+    <p className={classes.signupconfirmDetail}>
+      <span>{title}</span>
+      {description}
+    </p>
   );
 };
 
