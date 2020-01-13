@@ -10,7 +10,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = function useStyles(MUITheme) {
   return {
     onboardingContainer: {
-      padding: '1px 0 40px',
+      padding: "1px 0 40px",
       backgroundColor: MUITheme.palette.background.mainContent
     },
     termsAndConditionsContainer: {

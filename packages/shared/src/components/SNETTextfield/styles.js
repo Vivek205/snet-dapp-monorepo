@@ -1,6 +1,7 @@
 export const useStyles = MUITheme => ({
   basicTextFieldGrid: {
     display: "flex",
+    alignItems: "center",
     "& label": {
       color: MUITheme.palette.text.darkGrey,
       fontSize: 12,
@@ -9,13 +10,20 @@ export const useStyles = MUITheme => ({
     },
     [MUITheme.breakpoints.down("xs")]: { width: "100%" },
   },
+  textFieldWithExtraText: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
   description: {
     paddingLeft: 30,
     "& p": {
+      marginTop: 20,
       color: MUITheme.palette.text.lightGrey,
       fontSize: 14,
       letterSpacing: 0.25,
       lineHeight: "20px",
+      [MUITheme.breakpoints.down("sm")]: { marginTop: 0 },
     },
     [MUITheme.breakpoints.down("sm")]: {
       paddingLeft: 0,
@@ -29,5 +37,14 @@ export const useStyles = MUITheme => ({
       fontSize: 20,
       color: "#d6d6d6",
     },
+  },
+  charLength: {
+    marginBottom: 25,
+    display: "block",
+    paddingLeft: 14,
+    color: MUITheme.palette.text.primary,
+    fontSize: 12,
+    letterSpacing: 0.39,
+    [MUITheme.breakpoints.down("sm")]: { marginBottom: 10 },
   },
 });

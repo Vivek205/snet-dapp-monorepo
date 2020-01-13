@@ -41,10 +41,11 @@ var PasswordInlineValidation = function PasswordInlineValidation(props) {
     condition: (0, _isEmpty.default)(_validator.default.single(password, _validationConstraints.passwordInlineConstraints.number)),
     message: _constants.passwordValidationMsgs.NUMBER
   }];
-  return validationInputs.map(function (value) {
+  return validationInputs.map(function (alert) {
     return _react.default.createElement(_AlertText.default, {
-      type: value.condition ? _AlertBox.alertTypes.SUCCESS : _AlertBox.alertTypes.ERROR,
-      message: value.message
+      key: alert.message,
+      type: alert.condition ? _AlertBox.alertTypes.SUCCESS : _AlertBox.alertTypes.ERROR,
+      message: alert.message
     });
   });
 };

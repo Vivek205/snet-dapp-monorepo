@@ -8,7 +8,20 @@ import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles";
 import StyledTextField from "shared/dist/components/StyledTextField";
 
-const SNETTextfield = ({ classes, name, label, helperText, value, onChange, description, icon, onKeyUp, ...rest }) => {
+const SNETTextfield = ({
+  classes,
+  name,
+  label,
+  helperText,
+  value,
+  onChange,
+  maxCount,
+  minCount,
+  description,
+  icon,
+  onKeyUp,
+  ...rest
+}) => {
   return (
     <Grid container>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.basicTextFieldGrid}>
@@ -17,17 +30,24 @@ const SNETTextfield = ({ classes, name, label, helperText, value, onChange, desc
             <InfoIcon />
           </div>
         ) : null}
-        <StyledTextField
-          name={name}
-          label={label}
-          helperText={helperText}
-          variant="outlined"
-          value={value}
-          onChange={onChange}
-          fullWidth
-          onKeyUp={onKeyUp}
-          {...rest}
-        />
+        <div className={classes.textFieldWithExtraText}>
+          <StyledTextField
+            name={name}
+            label={label}
+            helperText={helperText}
+            variant="outlined"
+            value={value}
+            onChange={onChange}
+            fullWidth
+            onKeyUp={onKeyUp}
+            {...rest}
+          />
+          {maxCount ? (
+            <span className={classes.charLength}>
+              {minCount}/{maxCount} char
+            </span>
+          ) : null}
+        </div>
       </Grid>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
         <Typography>{description}</Typography>

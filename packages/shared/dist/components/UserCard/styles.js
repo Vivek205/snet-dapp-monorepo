@@ -8,7 +8,7 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     userDetails: {
-      display: 'flex'
+      display: "flex"
     },
     avatar: {
       width: 40,
@@ -20,13 +20,13 @@ var useStyles = function useStyles(MUITheme) {
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 14,
       letterSpacing: 0.17,
-      lineHeight: '18px'
+      lineHeight: "18px"
     },
     userEmail: {
       color: MUITheme.palette.text.lightGrey,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 12,
-      lineHeight: '15px'
+      lineHeight: "15px"
     }
   };
 };

@@ -15,7 +15,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     signupForm: (_signupForm = {
       width: 410,
-      margin: ' 0 0 0 auto',
+      margin: " 0 0 0 auto",
       boxSizing: "border-box",
       padding: "20px 20px 30px",
       borderRadius: 4,
@@ -24,11 +24,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& button": {
         width: "100%"
       }
-    }, _defineProperty(_signupForm, MUITheme.breakpoints.down('xs'), {
-      width: 'auto',
-      margin: '40px 30px 0'
-    }), _defineProperty(_signupForm, MUITheme.breakpoints.down('sm'), {
-      margin: '35px auto 0'
+    }, _defineProperty(_signupForm, MUITheme.breakpoints.down("xs"), {
+      width: "auto",
+      margin: "40px 30px 0"
+    }), _defineProperty(_signupForm, MUITheme.breakpoints.down("sm"), {
+      margin: "35px auto 0"
     }), _signupForm),
     textField: {
       width: "100%",
@@ -38,7 +38,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 14,
         letterSpacing: 0.4,
-        lineHeight: '16px'
+        lineHeight: "16px"
       },
       "& div": {
         width: "100%"

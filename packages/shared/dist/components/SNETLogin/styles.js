@@ -35,9 +35,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& button": {
         width: "100%"
       }
-    }, MUITheme.breakpoints.down('xs'), {
-      width: 'auto',
-      margin: '40px 30px 0'
+    }, MUITheme.breakpoints.down("xs"), {
+      width: "auto",
+      margin: "40px 30px 0"
     }),
     textField: {
       width: "100%",
@@ -45,7 +45,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 14,
         letterSpacing: 0.4,
-        lineHeight: '16px'
+        lineHeight: "16px"
       },
       "& fieldset": {
         borderColor: "#828282 !important"
