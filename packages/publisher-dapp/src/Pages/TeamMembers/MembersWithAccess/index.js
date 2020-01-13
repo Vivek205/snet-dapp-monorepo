@@ -8,9 +8,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import UserCard from "shared/dist/components/UserCard";
 import { useStyles } from "./styles";
 
-const AccessedTeamMembers = ({ classes }) => {
+const MembersWithAccess = ({ classes }) => {
   return (
-    <Grid container className={classes.accessedTeamMembersContainer}>
+    <Grid container className={classes.membersWithAccessContainer}>
       <Typography variant="h6">Team Members With Access</Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableHead}>
         <Grid item xs={12} sm={12} md={4} lg={4}>
@@ -48,4 +48,4 @@ const AccessedTeamMembers = ({ classes }) => {
   );
 };
 
-export default withStyles(useStyles)(AccessedTeamMembers);
+export default withStyles(useStyles)(MembersWithAccess);

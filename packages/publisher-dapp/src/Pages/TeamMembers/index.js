@@ -5,8 +5,9 @@ import { withStyles } from "@material-ui/core/styles";
 import BackIcon from "@material-ui/icons/KeyboardBackspace";
 import Typography from "@material-ui/core/Typography";
 
-import InvitedAcceptedList from "./InvitedAcceptedList";
-import AccessedTeamMembers from "./AccessedTeamMembers";
+import InvitedMembers from "./InvitedMembers";
+import MembersWithAccess from "./MembersWithAccess";
+import AcceptedMembers from "./AcceptedMembers";
 import { TopSectionContent } from "./content";
 
 import { useStyles } from "./styles";
@@ -29,10 +30,10 @@ const TeamMembers = ({ classes }) => {
           </div>
         </div>
         <div className={classes.invitedAndAcceptedList}>
-          <InvitedAcceptedList invitedPplCount="(4)" />
-          <InvitedAcceptedList acceptedPplCount="(5)" acceptedMember />
+          <InvitedMembers invitedPplCount="(4)" />
+          <AcceptedMembers acceptedPplCount="(5)" />
         </div>
-        <AccessedTeamMembers />
+        <MembersWithAccess />
       </Grid>
     </Grid>
   );

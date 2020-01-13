@@ -74,9 +74,9 @@ export const GlobalRoutes = {
     path: "/orgsetupstatus",
     component: OrgSetupStatusComponent,
   },
-  TEAM_MEMBERS: {
+  INVITE_MEMBERS: {
     name: "team memebrs",
-    path: "/teammembers",
+    path: "/invitemembers",
     component: TeamMembersComponent,
   },
 };

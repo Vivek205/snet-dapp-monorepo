@@ -1,5 +1,5 @@
 export const useStyles = MUITheme => ({
-  invitedAcceptedListContainer: {
+  invitedMembersContainer: {
     width: 411,
     borderRadius: 4,
     background: MUITheme.palette.background.white,
@@ -20,7 +20,7 @@ export const useStyles = MUITheme => ({
   },
   column: {
     display: "flex",
-    padding: "29px 10px",
+    padding: "15px 10px 8px",
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.secondary,
@@ -32,6 +32,11 @@ export const useStyles = MUITheme => ({
       textTransform: "uppercase",
     },
     [MUITheme.breakpoints.down("sm")]: { display: "none" },
+  },
+  tableBody: {
+    width: "100%",
+    maxHeight: 245,
+    overflow: "auto",
   },
   data: {
     display: "flex",

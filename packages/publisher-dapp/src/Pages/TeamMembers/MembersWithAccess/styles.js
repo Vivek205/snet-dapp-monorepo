@@ -1,5 +1,5 @@
 export const useStyles = MUITheme => ({
-  accessedTeamMembersContainer: {
+  membersWithAccessContainer: {
     paddingBottom: 30,
     borderRadius: 4,
     marginTop: 25,
