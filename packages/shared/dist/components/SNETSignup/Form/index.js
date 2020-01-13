@@ -103,7 +103,7 @@ var Form = function Form(props) {
     className: classes.signupForm
   }, _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
-    label: "Username",
+    label: "Nickname",
     className: classes.textField,
     value: nickname,
     onChange: function onChange(e) {

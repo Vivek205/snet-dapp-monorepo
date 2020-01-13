@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
@@ -30,15 +30,13 @@ const Login = ({ history }) => {
   };
 
   return (
-    <Fragment>
-      <SNETLogin
-        title="Welcome Back"
-        //   TODO : create a page for forgotPassword and pass the link here
-        //   forgotPasswordLink={}
-        loginError={error}
-        onSubmit={handleSubmit}
-      />
-    </Fragment>
+    <SNETLogin
+      title="Welcome Back"
+      //   TODO : create a page for forgotPassword and pass the link here
+      //   forgotPasswordLink={}
+      loginError={error}
+      onSubmit={handleSubmit}
+    />
   );
 };
 

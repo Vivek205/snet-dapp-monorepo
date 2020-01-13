@@ -38,7 +38,7 @@ const SNETLogin = props => {
         <form noValidate autoComplete="off" className={classes.loginForm}>
           <TextField
             id="outlined-user-name"
-            label="Username or Email"
+            label="Email"
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -58,13 +58,8 @@ const SNETLogin = props => {
             onChange={e => setPassword(e.target.value)}
           />
           <div className={classes.checkboxAndLink}>
-            <div className={classes.checkBox}>
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Remember Me"
-              />
-            </div>
-            <Link to={forgotPasswordLink}>Forgot password?</Link>            
+            <div className={classes.checkBox}></div>
+            <Link to={forgotPasswordLink}>Forgot password?</Link>
           </div>
           <AlertBox type="error" message={validationErr || loginError} />
           <SNETButton color="primary" variant="contained" children="login" type="submit" onClick={handleSubmit} />

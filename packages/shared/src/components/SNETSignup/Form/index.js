@@ -40,7 +40,7 @@ const Form = props => {
     <form noValidate autoComplete="off" className={classes.signupForm}>
       <TextField
         id="outlined-user-name"
-        label="Username"
+        label="Nickname"
         className={classes.textField}
         value={nickname}
         onChange={e => setNickname(e.target.value)}

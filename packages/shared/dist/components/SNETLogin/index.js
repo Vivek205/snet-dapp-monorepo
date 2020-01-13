@@ -103,7 +103,7 @@ var SNETLogin = function SNETLogin(props) {
     className: classes.loginForm
   }, _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
-    label: "Username or Email",
+    label: "Email",
     className: classes.textField,
     margin: "normal",
     variant: "outlined",
@@ -128,12 +128,7 @@ var SNETLogin = function SNETLogin(props) {
     className: classes.checkboxAndLink
   }, _react.default.createElement("div", {
     className: classes.checkBox
-  }, _react.default.createElement(_FormControlLabel.default, {
-    control: _react.default.createElement(_Checkbox.default, {
-      color: "primary"
-    }),
-    label: "Remember Me"
-  })), _react.default.createElement(_reactRouterDom.Link, {
+  }), _react.default.createElement(_reactRouterDom.Link, {
     to: forgotPasswordLink
   }, "Forgot password?")), _react.default.createElement(_AlertBox.default, {
     type: "error",
