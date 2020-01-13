@@ -46,6 +46,7 @@ var initSDK = function initSDK() {
 
         case 8:
           accounts = _context.sent;
+          // eslint-disable-next-line require-atomic-updates
           window.web3.eth.defaultAccount = accounts[0];
           web3Provider.addListener(ON_ACCOUNT_CHANGE, function (accounts) {
             var event = new CustomEvent("snetMMAccountChanged", {

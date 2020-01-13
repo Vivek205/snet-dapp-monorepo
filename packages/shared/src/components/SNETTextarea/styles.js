@@ -36,4 +36,12 @@ export const useStyles = MUITheme => ({
     fontSize: 12,
     letterSpacing: 0.39,
   },
+  extraInfo: {
+    marginLeft: 17,
+    color: MUITheme.palette.text.lightGrey,
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 12.17,
+    letterSpacing: 0.4,
+    lineHeight: "16px",
+  },
 });

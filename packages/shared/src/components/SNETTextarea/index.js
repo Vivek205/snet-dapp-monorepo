@@ -5,12 +5,27 @@ import InfoIcon from "@material-ui/icons/Info";
 
 import { useStyles } from "./styles";
 
-const SNETTextarea = ({ classes, label, rowCount, colCount, name, value, onChange, content, minCount, maxCount }) => {
+const SNETTextarea = ({
+  classes,
+  label,
+  rowCount,
+  colCount,
+  name,
+  value,
+  onChange,
+  content,
+  minCount,
+  maxCount,
+  showInfoIcon,
+  extraInfo,
+}) => {
   return (
     <div className={classes.textareaIconContainer}>
-      <div className={classes.infoIconContainer}>
-        <InfoIcon />
-      </div>
+      {showInfoIcon ? (
+        <div className={classes.infoIconContainer}>
+          <InfoIcon />
+        </div>
+      ) : null}
       <div className={classes.textareaContainer}>
         <span className={classes.label}>{label}</span>
         <textarea rows={rowCount} cols={colCount} name={name} value={value} onChange={onChange}>
@@ -21,6 +36,7 @@ const SNETTextarea = ({ classes, label, rowCount, colCount, name, value, onChang
             {minCount}/{maxCount} char
           </span>
         ) : null}
+        {extraInfo ? <span className={classes.extraInfo}>{extraInfo}</span> : null}
       </div>
     </div>
   );

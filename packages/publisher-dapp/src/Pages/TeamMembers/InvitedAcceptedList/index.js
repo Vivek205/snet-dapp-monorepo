@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -6,10 +6,16 @@ import ShowMoreIcon from "@material-ui/icons/MoreVert";
 
 import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
-
+import InvitePopup from "./InvitePopup";
 import { useStyles } from "./styles";
 
 const InvitedAcceptedList = ({ classes, invitedPplCount, acceptedPplCount, acceptedMember, userImg }) => {
+  const [showInviteTeamPopup, setShowInviteTeamPopup] = useState(false);
+
+  const handleInviteMembers = () => {
+    setShowInviteTeamPopup(true);
+  };
+
   if (acceptedMember) {
     return (
       <Grid container className={classes.invitedAcceptedListContainer}>
@@ -64,8 +70,10 @@ const InvitedAcceptedList = ({ classes, invitedPplCount, acceptedPplCount, accep
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" />
+        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
       </Grid>
+
+      <InvitePopup open={showInviteTeamPopup} />
     </Grid>
   );
 };

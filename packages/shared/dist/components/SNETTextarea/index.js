@@ -9,17 +9,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
-
-var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
-
 var _styles = require("@material-ui/core/styles");
 
 var _Info = _interopRequireDefault(require("@material-ui/icons/Info"));
 
 var _styles2 = require("./styles");
-
-var _StyledTextField = _interopRequireDefault(require("shared/dist/components/StyledTextField"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,12 +27,14 @@ var SNETTextarea = function SNETTextarea(_ref) {
       onChange = _ref.onChange,
       content = _ref.content,
       minCount = _ref.minCount,
-      maxCount = _ref.maxCount;
+      maxCount = _ref.maxCount,
+      showInfoIcon = _ref.showInfoIcon,
+      extraInfo = _ref.extraInfo;
   return _react.default.createElement("div", {
     className: classes.textareaIconContainer
-  }, _react.default.createElement("div", {
+  }, showInfoIcon ? _react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)), _react.default.createElement("div", {
+  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
     className: classes.textareaContainer
   }, _react.default.createElement("span", {
     className: classes.label
@@ -50,7 +46,9 @@ var SNETTextarea = function SNETTextarea(_ref) {
     onChange: onChange
   }, content), maxCount ? _react.default.createElement("span", {
     className: classes.charLength
-  }, minCount, "/", maxCount, " char") : null));
+  }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {
+    className: classes.extraInfo
+  }, extraInfo) : null));
 };
 
 SNETTextarea.propTypes = {

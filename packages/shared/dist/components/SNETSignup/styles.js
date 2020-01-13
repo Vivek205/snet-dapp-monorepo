@@ -15,10 +15,10 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       background: MUITheme.palette.background.mainContent
     },
     signupWrapper: _defineProperty({
-      width: '71%',
-      margin: '0 auto'
-    }, MUITheme.breakpoints.down('sm'), {
-      width: '90%'
+      width: "71%",
+      margin: "0 auto"
+    }, MUITheme.breakpoints.down("sm"), {
+      width: "90%"
     }),
     signupInfo: {
       fontFamily: MUITheme.typography.fontFamily,

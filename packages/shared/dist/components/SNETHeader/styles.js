@@ -12,13 +12,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     logoContainer: _defineProperty({
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       flexGrow: 1,
       "& img": {
         width: 172
       }
-    }, MUITheme.breakpoints.down('md'), {
+    }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
     portalName: {
@@ -26,11 +26,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       color: MUITheme.palette.text.darkGrey,
       fontSize: 22,
       fontWeight: 300,
-      lineHeight: '30px'
+      lineHeight: "30px"
     },
     navContainer: _defineProperty({
       flexGrow: 1
-    }, MUITheme.breakpoints.down('md'), {
+    }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
     actionsContainer: _defineProperty({
@@ -39,7 +39,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginLeft: 5
       },
       textAlign: "end"
-    }, MUITheme.breakpoints.down('md'), {
+    }, MUITheme.breakpoints.down("md"), {
       padding: 0
     })
   };
