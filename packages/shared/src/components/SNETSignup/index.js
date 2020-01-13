@@ -10,14 +10,16 @@ const SNETSignup = props => {
   const classes = useStyles();
   const { info, onSubmit, signupError } = props;
   return (
-    <Grid container>
-      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.signupInfo}>
-        <Info {...info} />
+    <div className={classes.signupContainer}>
+      <Grid container className={classes.signupWrapper}>
+        <Grid item xs={12} sm={12} md={5} lg={5} className={classes.signupInfo}>
+          <Info {...info} />
+        </Grid>
+        <Grid item xs={12} sm={12} md={7} lg={7}>
+          <Form onSubmit={onSubmit} signupError={signupError} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.signupFormWrapper}>
-        <Form onSubmit={onSubmit} signupError={signupError} />
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 
