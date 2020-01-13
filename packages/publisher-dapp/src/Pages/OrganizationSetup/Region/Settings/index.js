@@ -20,7 +20,7 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
   const [localEndpoints, setLocalEndpoints] = useState("");
   const dispatch = useDispatch();
 
-  const { id, name, paymentAddress, paymentConfig } = group;
+  const { name, paymentAddress, paymentConfig } = group;
 
   const handlePaymentAddressChange = event => {
     const { value } = event.target;

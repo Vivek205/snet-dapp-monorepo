@@ -25,6 +25,7 @@ export const initSDK = async () => {
     if (hasEth && hasWeb3) {
       web3Provider = window.ethereum;
       const accounts = await web3Provider.enable();
+      // eslint-disable-next-line require-atomic-updates
       window.web3.eth.defaultAccount = accounts[0];
       web3Provider.addListener(ON_ACCOUNT_CHANGE, accounts => {
         const event = new CustomEvent("snetMMAccountChanged", { detail: { address: accounts[0] } });

@@ -48,7 +48,6 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
       await handleFinishLater();
       setAlert({ type: alertTypes.SUCCESS, message: "Changes have been saved to draft" });
     } catch (error) {
-      console.log("error valid", error);
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
