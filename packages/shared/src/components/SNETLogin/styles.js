@@ -5,7 +5,7 @@ export const useStyles = makeStyles(MUITheme => ({
     height: "100vh",
     textAlign: "center",
     backgroundColor: MUITheme.palette.background.mainContent,
-    fontFamily: MUITheme.typography.fontFamily
+    fontFamily: MUITheme.typography.fontFamily,
   },
   loginForm: {
     boxSizing: "border-box",
@@ -23,18 +23,18 @@ export const useStyles = makeStyles(MUITheme => ({
       textTransform: "uppercase",
     },
     "& button": { width: "100%" },
-    [MUITheme.breakpoints.down('xs')]: { 
-      width: 'auto',
-      margin: '40px 30px 0'
-    }
+    [MUITheme.breakpoints.down("xs")]: {
+      width: "auto",
+      margin: "40px 30px 0",
+    },
   },
   textField: {
     width: "100%",
-    "& label": { 
+    "& label": {
       color: MUITheme.palette.text.darkGrey,
       fontSize: 14,
       letterSpacing: 0.4,
-      lineHeight: '16px'
+      lineHeight: "16px",
     },
     "& fieldset": { borderColor: "#828282 !important" },
     "& div": { color: "#212121 !important" },
@@ -53,19 +53,19 @@ export const useStyles = makeStyles(MUITheme => ({
     },
     "@media (max-width:400px)": { flexDirection: "column" },
   },
-  checkBox:{
-     "& label": {
+  checkBox: {
+    "& label": {
       "& span:last-of-type": {
         color: MUITheme.palette.text.primary,
         fontSize: 14,
         letterSpacing: 0.25,
-        lineHeight: "20px"        
+        lineHeight: "20px",
       },
-      "& span": {        
+      "& span": {
         "&:last-of-type": { color: MUITheme.palette.text.primary },
         "&.MuiCheckbox-colorPrimary": { color: MUITheme.palette.text.primary },
         "&.MuiCheckbox-colorPrimary.Mui-checked": { color: MUITheme.palette.primary.main },
       },
-    }, 
+    },
   },
 }));

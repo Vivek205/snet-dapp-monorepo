@@ -25,7 +25,7 @@ const Form = props => {
     if (isNotValid) {
       return setValidationErr(isNotValid[0]);
     }
-    onSubmit(nickname, email, password);    
+    onSubmit(nickname, email, password);
   };
 
   const emailValidationMsg = () => {

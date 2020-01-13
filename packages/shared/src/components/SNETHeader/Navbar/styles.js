@@ -5,12 +5,12 @@ export const useStyles = makeStyles(MUITheme => ({
     padding: 0,
     margin: 0,
     display: "flex",
-    '& li':{
-      width: 'auto',
+    "& li": {
+      width: "auto",
       padding: 0,
       marginRight: 49,
-      '&:last-of-type':{ marginRight: 0 }
-    }
+      "&:last-of-type": { marginRight: 0 },
+    },
   },
   navLink: {
     textDecoration: "none",

@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
@@ -58,7 +56,7 @@ const SNETLogin = props => {
             onChange={e => setPassword(e.target.value)}
           />
           <div className={classes.checkboxAndLink}>
-            <div className={classes.checkBox}></div>
+            <div className={classes.checkBox} />
             <Link to={forgotPasswordLink}>Forgot password?</Link>
           </div>
           <AlertBox type="error" message={validationErr || loginError} />
