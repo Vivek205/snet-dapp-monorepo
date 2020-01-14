@@ -10,36 +10,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = function useStyles(MUITheme) {
   return {
     basicTextFieldGrid: _defineProperty({
-      display: 'flex',
-      '& label': {
+      display: "flex",
+      "& label": {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
         letterSpacing: 0.4,
-        '&.MuiFormLabel-root.Mui-focused': {
+        "&.MuiFormLabel-root.Mui-focused": {
           color: MUITheme.palette.text.darkGrey
         }
       }
-    }, MUITheme.breakpoints.down('xs'), {
-      width: '100%'
+    }, MUITheme.breakpoints.down("xs"), {
+      width: "100%"
     }),
     description: _defineProperty({
       paddingLeft: 30,
-      '& p': {
+      "& p": {
         color: MUITheme.palette.text.lightGrey,
         fontSize: 14,
         letterSpacing: 0.25,
-        lineHeight: '20px'
+        lineHeight: "20px"
       }
-    }, MUITheme.breakpoints.down('sm'), {
+    }, MUITheme.breakpoints.down("sm"), {
       paddingLeft: 0,
       marginTop: 0,
       marginBottom: 10
     }),
     infoIconContainer: {
-      '& svg': {
-        padding: '5px 10px 0 0',
+      "& svg": {
+        padding: "5px 10px 0 0",
         fontSize: 20,
-        color: '#d6d6d6'
+        color: "#d6d6d6"
       }
     }
   };

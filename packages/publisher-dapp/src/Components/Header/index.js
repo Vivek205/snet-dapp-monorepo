@@ -9,7 +9,7 @@ const Header = () => {
   const history = useHistory();
   const { isLoggedIn } = useSelector(state => state.user);
 
-  const headerProps = {    
+  const headerProps = {
     isLoggedIn,
     portalName: "Publisher",
     color: "white",

@@ -11,6 +11,7 @@ const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const Onboarding = lazy(() => import("../Pages/Onboarding"));
 const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
+const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -24,6 +25,7 @@ const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
 const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup);
 const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
+const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -71,5 +73,10 @@ export const GlobalRoutes = {
     name: "organization setup",
     path: "/orgsetupstatus",
     component: OrgSetupStatusComponent,
+  },
+  INVITE_MEMBERS: {
+    name: "team memebrs",
+    path: "/invitemembers",
+    component: TeamMembersComponent,
   },
 };

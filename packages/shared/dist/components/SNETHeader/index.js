@@ -55,38 +55,6 @@ var SNETHeader = function SNETHeader(_ref) {
   }))))));
 };
 
-SNETHeader.defaultProps = {
-  color: "white",
-  navbar: {
-    navbarItems: [{
-      label: "Overview",
-      type: "link",
-      openInNewTab: false,
-      activeLinks: ["/", "/overview"],
-      to: "/overview"
-    }, {
-      label: "How It Works",
-      type: "link",
-      openInNewTab: false,
-      activeLinks: ["/enroll"],
-      to: "/enroll"
-    }]
-  },
-  actions: [{
-    children: "login",
-    color: "primary",
-    onClick: function onClick() {
-      return console.log("clicked");
-    }
-  }, {
-    children: "enroll",
-    color: "primary",
-    onClick: function onClick() {
-      return console.log("clicked");
-    },
-    variant: "contained"
-  }]
-};
 SNETHeader.propTypes = {
   isLoggedIn: _propTypes.default.bool,
   color: _propTypes.default.string,
