@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -18,8 +20,16 @@ const InvitePopup = ({ classes, open, handleClose }) => {
 
   return (
     <Modal open={open} onClose={handleCancel} className={classes.inviteModal}>
-      <Card>
-        <CardHeader title={<Typography variant="h4">Invite Team Members</Typography>} />
+      <Card className={classes.card}>
+        <CardHeader
+          className={classes.cardHeader}
+          title={<Typography variant="h4">Invite Team Members</Typography>}
+          action={
+            <IconButton onClick={handleCancel}>
+              <CloseIcon />
+            </IconButton>
+          }
+        />
         <CardContent className={classes.popupContent}>
           <SNETTextarea
             label="Email Address(es)"
@@ -29,7 +39,7 @@ const InvitePopup = ({ classes, open, handleClose }) => {
         </CardContent>
         <CardActions className={classes.btnContainer}>
           <SNETButton children="cancel" color="primary" variant="text" />
-          <SNETButton children="send invitation" color="primary" variant="text" disabled />
+          <SNETButton children="send invitation(s)" color="primary" variant="contained" disabled />
         </CardActions>
       </Card>
     </Modal>

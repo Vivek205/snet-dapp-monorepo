@@ -16,6 +16,10 @@ const InvitedAcceptedList = ({ classes, invitedPplCount, acceptedPplCount, accep
     setShowInviteTeamPopup(true);
   };
 
+  const handleClosePopup = () => {
+    setShowInviteTeamPopup(false);
+  };
+
   if (acceptedMember) {
     return (
       <Grid container className={classes.invitedAcceptedListContainer}>
@@ -74,7 +78,7 @@ const InvitedAcceptedList = ({ classes, invitedPplCount, acceptedPplCount, accep
           <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
         </Grid>
       </Grid>
-      <InvitePopup open={showInviteTeamPopup} />
+      <InvitePopup open={showInviteTeamPopup} handleClose={handleClosePopup} />
     </Fragment>
   );
 };

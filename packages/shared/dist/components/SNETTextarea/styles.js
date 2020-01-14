@@ -48,11 +48,11 @@ var useStyles = function useStyles(MUITheme) {
     },
     extraInfo: {
       marginLeft: 17,
-      color: MUITheme.palette.text.lightGrey,
+      color: MUITheme.palette.text.darkGrey,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 12.17,
       letterSpacing: 0.4,
-      lineHeight: '16px'
+      lineHeight: "16px"
     }
   };
 };

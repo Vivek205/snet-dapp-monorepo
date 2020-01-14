@@ -15,11 +15,19 @@ export const useStyles = MUITheme => ({
       margin: "0 25px",
     },
   },
+  card: { marginTop: 110 },
+  cardHeader: {
+    padding: 0,
+    "& button": { padding: 22 },
+  },
   popupContent: {
     padding: "0 22px",
     "& > div": {
       "& > div": { width: "100%" },
     },
   },
-  btnContainer: { textAlign: "center" },
+  btnContainer: {
+    padding: "31px 22px",
+    justifyContent: "center",
+  },
 });
