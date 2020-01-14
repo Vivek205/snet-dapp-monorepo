@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -47,34 +47,35 @@ const InvitedAcceptedList = ({ classes, invitedPplCount, acceptedPplCount, accep
   }
 
   return (
-    <Grid container className={classes.invitedAcceptedListContainer}>
-      <Typography variant="h6">Invited People {invitedPplCount}</Typography>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
-          <span>email</span>
+    <Fragment>
+      <Grid container className={classes.invitedAcceptedListContainer}>
+        <Typography variant="h6">Invited People {invitedPplCount}</Typography>
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <span>email</span>
+          </Grid>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <span>invited on</span>
+          </Grid>
         </Grid>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
-          <span>invited on</span>
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data}>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <span className={classes.mobileTableHeader}>email:</span>
+            <span className={classes.tableBodyCell}>pauljones@email.com</span>
+          </Grid>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <span className={classes.mobileTableHeader}>invited on:</span>
+            <span className={classes.tableBodyCell}>Dec 25,2019</span>
+          </Grid>
+          <ShowMoreIcon className={classes.showMoreIcon} />
         </Grid>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data}>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
-          <span className={classes.mobileTableHeader}>email:</span>
-          <span className={classes.tableBodyCell}>pauljones@email.com</span>
-        </Grid>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
-          <span className={classes.mobileTableHeader}>invited on:</span>
-          <span className={classes.tableBodyCell}>Dec 25,2019</span>
-        </Grid>
-        <ShowMoreIcon className={classes.showMoreIcon} />
-      </Grid>
 
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
+          <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
+        </Grid>
       </Grid>
-
       <InvitePopup open={showInviteTeamPopup} />
-    </Grid>
+    </Fragment>
   );
 };
 
