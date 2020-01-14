@@ -35,7 +35,7 @@ export const useStyles = MUITheme => ({
   },
   tableBody: {
     width: "100%",
-    maxHeight: 245,
+    height: 245,
     overflow: "auto",
   },
   data: {
@@ -46,7 +46,10 @@ export const useStyles = MUITheme => ({
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.secondary,
     margin: "0 10px",
-    "&:hover": { background: MUITheme.palette.background.mainContent },
+    "&:hover": {
+      background: MUITheme.palette.background.mainContent,
+      "& svg": { display: "block" },
+    },
     "& > div": {
       [MUITheme.breakpoints.down("sm")]: {
         marginBottom: 15,
@@ -71,6 +74,7 @@ export const useStyles = MUITheme => ({
     textAlign: "center",
   },
   showMoreIcon: {
+    display: "none",
     position: "absolute",
     right: 31,
     color: MUITheme.palette.text.lightGrey,
@@ -90,5 +94,14 @@ export const useStyles = MUITheme => ({
     fontSize: 13,
     textTransform: "uppercase",
     [MUITheme.breakpoints.down("sm")]: { display: "block" },
+  },
+  message: {
+    marginTop: 31,
+    display: "block",
+    color: "#999",
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 16,
+    fontWeight: 200,
+    textAlign: "center",
   },
 });

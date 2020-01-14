@@ -50,6 +50,7 @@ export const useStyles = MUITheme => ({
     },
     "&:hover": {
       background: MUITheme.palette.background.mainContent,
+      "& svg": { visibility: "visible" },
     },
     [MUITheme.breakpoints.down("xs")]: {
       position: "relative",
@@ -60,6 +61,7 @@ export const useStyles = MUITheme => ({
     paddingRight: 20,
     textAlign: "right",
     "& svg": {
+      visibility: "hidden",
       color: MUITheme.palette.text.lightGrey,
       cursor: "pointer",
       [MUITheme.breakpoints.down("sm")]: {

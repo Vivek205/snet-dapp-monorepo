@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ShowMoreIcon from "@material-ui/icons/MoreVert";
 
+import { acceptedMembersData } from "../content.js";
 import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -22,17 +23,23 @@ const AcceptedMembers = ({ classes, acceptedPplCount, userImg }) => {
         </Grid>
       </Grid>
       <div className={classes.tableBody}>
-        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.data}>
-          <Grid item sx={12} sm={12} md={6} lg={6}>
-            <span className={classes.mobileTableHeader}>joining member:</span>
-            <UserCard userName="Paul Johas" userEmail="pauljones@email.com" />
-          </Grid>
-          <Grid item sx={12} sm={12} md={6} lg={6}>
-            <span className={classes.mobileTableHeader}>role:</span>
-            <span className={classes.tableBodyCell}>Editor</span>
-          </Grid>
-          <ShowMoreIcon className={classes.showMoreIcon} />
-        </Grid>
+        {acceptedMembersData.length === 0 ? (
+          <span className={classes.message}>No pending accepted invitations</span>
+        ) : (
+          acceptedMembersData.map((item, index) => (
+            <Grid item sx={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
+              <Grid item sx={12} sm={12} md={6} lg={6}>
+                <span className={classes.mobileTableHeader}>joining member:</span>
+                <UserCard userName={item.name} userEmail={item.email} />
+              </Grid>
+              <Grid item sx={12} sm={12} md={6} lg={6}>
+                <span className={classes.mobileTableHeader}>role:</span>
+                <span className={classes.tableBodyCell}>{item.role}</span>
+              </Grid>
+              <ShowMoreIcon className={classes.showMoreIcon} />
+            </Grid>
+          ))
+        )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="add to blockchain" variant="contained" color="primary" />
