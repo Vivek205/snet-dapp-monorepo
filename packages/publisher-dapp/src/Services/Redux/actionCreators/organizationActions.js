@@ -10,6 +10,7 @@ import { responseStatus, APIError } from "shared/dist/utils/API";
 import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
+import { clientTypes } from "shared/dist/utils/clientTypes";
 
 export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -45,6 +46,7 @@ const payloadForSubmit = organization => {
     contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
+    origin: clientTypes.PUBLISHER_DAPP,
     org_id: id,
     org_uuid: uuid,
     org_name: name,
