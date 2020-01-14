@@ -13,11 +13,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: 0,
       margin: 0,
       display: "flex",
-      '& li': {
-        width: 'auto',
+      "& li": {
+        width: "auto",
         padding: 0,
         marginRight: 49,
-        '&:last-of-type': {
+        "&:last-of-type": {
           marginRight: 0
         }
       }

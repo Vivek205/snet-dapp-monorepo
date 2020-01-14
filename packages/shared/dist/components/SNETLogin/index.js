@@ -17,10 +17,6 @@ var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _FormControlLabel = _interopRequireDefault(require("@material-ui/core/FormControlLabel"));
-
-var _Checkbox = _interopRequireDefault(require("@material-ui/core/Checkbox"));
-
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
 var _styles = require("./styles");

@@ -90,7 +90,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // Color Palette
 var snetGreyError = _colors.grey[700];
 var snetGrey = _colors.grey[500];
-var dropzoneBackgroundGrey = _colors.grey[200];
 var snetBackgroundGrey = _colors.grey[100];
 var snetRed = _colors.red[500];
 var snetBackgroundRed = _colors.red[100]; // Definitions
@@ -346,7 +345,8 @@ function (_React$Component) {
       var mimeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.mimeType;
       var encoding = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.state.encoding;
       var filename = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.state.filename;
-      this.props.imageDataFunc(data, mimeType, encoding, filename);
+      this.props.imageDataFunc(data, mimeType, encoding, filename); // eslint-disable-next-line no-console
+
       console.log("Sent: \nMIME type: " + mimeType + "\nEncoding: " + encoding + "\nFilename: " + filename + "\nImage data: " + data);
     }
   }, {

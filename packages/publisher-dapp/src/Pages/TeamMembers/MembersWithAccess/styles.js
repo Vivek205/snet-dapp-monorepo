@@ -94,4 +94,7 @@ export const useStyles = MUITheme => ({
     textTransform: "uppercase",
     [MUITheme.breakpoints.down("xs")]: { display: "block" },
   },
+  paginationContainer: {
+    padding: "0 22px",
+  },
 });

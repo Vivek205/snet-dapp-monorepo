@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import ShowMoreIcon from "@material-ui/icons/MoreVert";
 import InfoIcon from "@material-ui/icons/Info";
 
+import StyledPagination from "shared/dist/components/StyledPagination";
 import UserCard from "shared/dist/components/UserCard";
 import { useStyles } from "./styles";
 
@@ -43,6 +44,9 @@ const MembersWithAccess = ({ classes }) => {
         <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
           <ShowMoreIcon />
         </Grid>
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.paginationContainer}>
+        <StyledPagination limit="4" offset="1" total_count="100" />
       </Grid>
     </Grid>
   );
