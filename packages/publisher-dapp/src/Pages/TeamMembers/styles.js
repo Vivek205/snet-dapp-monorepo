@@ -11,6 +11,7 @@ export const useStyles = MUITheme => ({
     },
     "& a": {
       color: MUITheme.palette.primary.main,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 16,
       textDecoration: "none",
       "&:hover": { textDecoration: "underline" },

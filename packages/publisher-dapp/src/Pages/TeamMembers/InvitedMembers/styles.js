@@ -58,10 +58,7 @@ export const useStyles = MUITheme => ({
         "&:last-of-type": { marginBottom: 0 },
       },
     },
-    [MUITheme.breakpoints.down("sm")]: {
-      width: "100%",
-      flexDirection: "column",
-    },
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   tableHeaderCell: {
     color: MUITheme.palette.text.darkGrey,
@@ -103,5 +100,18 @@ export const useStyles = MUITheme => ({
     fontSize: 16,
     fontWeight: 200,
     textAlign: "center",
+  },
+  tableBodyCell: {
+    boxSizing: "content-box",
+    paddingRight: 10,
+    display: " block",
+    color: MUITheme.palette.text.darkGrey,
+    fontSize: 14,
+    fontFamily: MUITheme.typography.fontFamily,
+    wordBreak: "break-all",
+    [MUITheme.breakpoints.down("sm")]: {
+      paddingRight: 0,
+      wordBreak: "keep-all",
+    },
   },
 });
