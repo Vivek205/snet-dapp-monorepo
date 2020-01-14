@@ -7,16 +7,27 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
-var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
+    signupContainer: {
+      background: MUITheme.palette.background.mainContent
+    },
+    signupWrapper: _defineProperty({
+      width: '71%',
+      margin: '0 auto'
+    }, MUITheme.breakpoints.down('sm'), {
+      width: '90%'
+    }),
     signupInfo: {
-      paddingRight: 54,
+      fontFamily: MUITheme.typography.fontFamily,
       "@media (max-width:960px)": {
         paddingRight: 0
       },
       "& h2": {
         margin: 0,
-        color: MuiTheme.palette.text.darkShadedGray,
+        color: MUITheme.palette.text.darkGrey,
         fontSize: 32,
         letterSpacing: -0.5,
         lineHeight: "48px",
@@ -24,7 +35,7 @@ var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
       },
       "& p": {
         margin: "23px 0 24px",
-        color: MuiTheme.palette.text.mediumShadeGray,
+        color: MUITheme.palette.text.primary,
         fontSize: 20,
         lineHeight: "30px"
       },
@@ -35,15 +46,15 @@ var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
       "& li": {
         marginBottom: 15,
         display: "flex",
-        alignItems: "baseline",
+        alignItems: "center",
         listStyle: "none",
         "& svg": {
           marginRight: 15,
-          color: MuiTheme.palette.success,
+          color: MUITheme.palette.success,
           fontSize: 20
         },
         "& p": {
-          color: MuiTheme.palette.text.mediumShadeGray,
+          color: MUITheme.palette.text.primary,
           fontSize: 16,
           letterSpacing: "0.29px",
           display: "inline-block",

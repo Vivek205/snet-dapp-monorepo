@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { progressText, onboardingSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,27 +8,27 @@ import { OnboardingRoutes } from "./OnboardingRouter/Routes";
 import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
 
-const Onboarding = ({ location, history }) => {
+const Onboarding = ({ location, history, classes }) => {
   const activeSection = () => {
     const { pathname: path } = location;
-    const { ENTITY, TNC, AUTHENTICATE } = onboardingSections;
+    const { SINGULARITY_ACCOUNT, ACCEPT_SERVICE_AGREEMENT, AUTHENTICATE_ID } = onboardingSections;
 
-    if (path.includes(OnboardingRoutes.ENTITY.path)) {
-      return ENTITY;
-    } else if (path.includes(OnboardingRoutes.TNC.path)) {
-      return TNC;
-    } else if (path.includes(OnboardingRoutes.AUTHENTICATE.path)) {
-      return AUTHENTICATE;
+    if (path.includes(OnboardingRoutes.SINGULARITY_ACCOUNT.path)) {
+      return SINGULARITY_ACCOUNT;
+    } else if (path.includes(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path)) {
+      return ACCEPT_SERVICE_AGREEMENT;
+    } else if (path.includes(OnboardingRoutes.AUTHENTICATE_ID.path)) {
+      return AUTHENTICATE_ID;
     }
-    return ENTITY;
+    return SINGULARITY_ACCOUNT;
   };
 
   return (
-    <Fragment>
+    <div className={classes.onboardingContainer}>
       <Heading {...activeSection().heading} />
       <ProgressBar activeSection={activeSection().key} progressText={progressText} />
       <OnboardingRouter />
-    </Fragment>
+    </div>
   );
 };
 

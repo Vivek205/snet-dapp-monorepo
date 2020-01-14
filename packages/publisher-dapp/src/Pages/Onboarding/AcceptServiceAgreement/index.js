@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 
 import { TermsAndConditionsDetails } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
@@ -6,20 +6,20 @@ import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const TNC = ({ history }) => {
+const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
   const [agreed, setAgreed] = useState(false);
 
   const handleAccept = () => {
-    history.push(OnboardingRoutes.AUTHENTICATE.path);
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
   const handleNavigateBack = () => {
-    history.push(OnboardingRoutes.ENTITY.path);
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
   return (
-    <Fragment>
+    <div>
       <TermsAndConditions
         title={TermsAndConditionsDetails.title}
         formLabel={TermsAndConditionsDetails.formLabel}
@@ -31,8 +31,8 @@ const TNC = ({ history }) => {
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="accept" onClick={handleAccept} disabled={!agreed} />
       </div>
-    </Fragment>
+    </div>
   );
 };
 
-export default TNC;
+export default AcceptServiceAgreement;

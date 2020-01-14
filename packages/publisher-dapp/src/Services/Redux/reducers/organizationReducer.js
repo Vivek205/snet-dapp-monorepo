@@ -1,25 +1,28 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions } from "../actionCreators";
-import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { organizationSetupStatuses, organizationTypes } from "../../../Utils/organizationSetup";
 
 const initialState = {
   status: organizationSetupStatuses.NOT_STARTED,
   id: "",
   uuid: "",
   name: "",
-  type: "organization",
+  type: organizationTypes.ORGANIZATION,
   duns: "",
   website: "",
   ownerFullName: "",
   phone: "",
   shortDescription: "",
   longDescription: "",
-  contacts: [{ type: ContactsTypes.SUPPORT, email: "", phone: "" }],
+  metadataIpfsHash: "",
+  contacts: [
+    { type: ContactsTypes.GENERAL, email: "", phone: "" },
+    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+  ],
   groups: [
     {
-      name: "North America",
-      id: "US-2651-DC",
-      uuid: "",
+      name: "default_group",
+      id: "",
       paymentAddress: "",
       paymentConfig: {
         paymentExpirationThreshold: "40320",
@@ -41,10 +44,13 @@ const initialState = {
   hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
   sameMailingAddress: false,
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  ownerAddress: "",
 };
 
 const OrganizationReducer = (state = initialState, action) => {
   switch (action.type) {
+    case organizationActions.SET_ALL_ATTRIBUTES:
+      return { ...state, ...action.payload };
     case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
     case organizationActions.SET_CONTACTS:

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 
 import BasicDetails from "./BasicDetails";
@@ -8,11 +8,12 @@ import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
-import { OrganizationSetupRoutes } from "../../../OrganizationSetup/OrganizationSetupRouter/Routes";
 import validator from "shared/dist/utils/validator";
 import { orgOnboardingConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
+import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
 
 const Organization = props => {
   const classes = useStyles();
@@ -21,8 +22,14 @@ const Organization = props => {
   const organization = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+    }
+  });
+
   const handleNavigateBack = () => {
-    history.push(OnboardingRoutes.TNC.path);
+    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
   const handleFinish = async () => {
@@ -32,12 +39,17 @@ const Organization = props => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      await dispatch(organizationActions.finishLater(organization));
-      history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
+      await dispatch(organizationActions.submitForApproval(organization));
+      await dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
+      return setAlert({
+        type: alertTypes.ERROR,
+        message: "Unable to finish organization authentication. Please try later",
+      });
     }
   };
 

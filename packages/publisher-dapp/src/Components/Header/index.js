@@ -11,6 +11,7 @@ const Header = () => {
 
   const headerProps = {
     isLoggedIn,
+    portalName: "Publisher",
     color: "white",
     navbar: {
       navbarItems: [

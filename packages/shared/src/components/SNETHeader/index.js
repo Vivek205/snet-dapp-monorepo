@@ -10,15 +10,16 @@ import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 
-const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
+const SNETHeader = ({ isLoggedIn, color, navbar, actions, portalName }) => {
   const classes = useStyles();
   return (
     <div>
       <header>
-        <AppBar position="fixed" color="default">
+        <AppBar position="fixed" color="white">
           <Toolbar>
             <Container className={classes.logoContainer}>
               <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
+              <span className={classes.portalName}>{portalName}</span>
             </Container>
             <Container className={classes.navContainer}>
               <Navbar {...navbar} />
@@ -31,20 +32,6 @@ const SNETHeader = ({ isLoggedIn, color, navbar, actions }) => {
       </header>
     </div>
   );
-};
-
-SNETHeader.defaultProps = {
-  color: "white",
-  navbar: {
-    navbarItems: [
-      { label: "Overview", type: "link", openInNewTab: false, activeLinks: ["/", "/overview"], to: "/overview" },
-      { label: "How It Works", type: "link", openInNewTab: false, activeLinks: ["/enroll"], to: "/enroll" },
-    ],
-  },
-  actions: [
-    { children: "login", color: "primary", onClick: () => console.log("clicked") },
-    { children: "enroll", color: "primary", onClick: () => console.log("clicked"), variant: "contained" },
-  ],
 };
 
 SNETHeader.propTypes = {

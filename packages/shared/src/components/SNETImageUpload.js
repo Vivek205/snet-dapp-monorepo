@@ -51,7 +51,6 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 // Color Palette
 const snetGreyError = grey[700];
 const snetGrey = grey[500];
-const dropzoneBackgroundGrey = grey[200];
 const snetBackgroundGrey = grey[100];
 const snetRed = red[500];
 const snetBackgroundRed = red[100];
@@ -129,7 +128,10 @@ export default class SNETImageUpload extends React.Component {
       imageXPosition: undefined, // arbitrary, will be set properly
       dividerXPosition: this.props.width / 2,
       displayModeTitle: this.props.displayModeTitle,
-      outputImage: this.props.outputImage && SNETImageUpload.prepareBase64Image(this.props.outputImage),
+      outputImage:
+        this.props.outputImageType === "url"
+          ? this.props.outputImage
+          : this.props.outputImage && SNETImageUpload.prepareBase64Image(this.props.outputImage),
       outputImageName: this.props.outputImageName,
     };
 
@@ -196,9 +198,16 @@ export default class SNETImageUpload extends React.Component {
           mimeType = nextProps.outputImageMimeType;
         }
 
+        let outputImage;
+        if (this.props.outputImageType === "url" || nextProps.outputImage === "url") {
+          outputImage = nextProps.outputImage;
+        } else {
+          outputImage = SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage);
+        }
+
         this.setState({
           displayModeTitle: nextProps.displayModeTitle,
-          outputImage: SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage),
+          outputImage,
           outputImageMimeType: mimeType,
           outputImageName: nextProps.outputImageName,
           mainState: "display",
@@ -286,6 +295,7 @@ export default class SNETImageUpload extends React.Component {
     filename = this.state.filename
   ) {
     this.props.imageDataFunc(data, mimeType, encoding, filename);
+    // eslint-disable-next-line no-console
     console.log(
       "Sent: \nMIME type: " + mimeType + "\nEncoding: " + encoding + "\nFilename: " + filename + "\nImage data: " + data
     );
@@ -1418,6 +1428,7 @@ SNETImageUpload.propTypes = {
     "image/jpeg",
     "image/gif",
   ]),
+  outputImageType: PropTypes.oneOf(["url", "base64"]),
   outputImageName: PropTypes.string,
   disableInputTab: PropTypes.bool,
   disableOutputTab: PropTypes.bool,
