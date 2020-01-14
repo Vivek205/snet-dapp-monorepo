@@ -1,5 +1,5 @@
 export const useStyles = MUITheme => ({
-  invitedAcceptedListContainer: {
+  acceptedMembersContainer: {
     width: 411,
     borderRadius: 4,
     background: MUITheme.palette.background.white,
@@ -20,7 +20,7 @@ export const useStyles = MUITheme => ({
   },
   column: {
     display: "flex",
-    padding: "29px 10px",
+    padding: "15px 10px 8px",
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.secondary,
@@ -33,15 +33,23 @@ export const useStyles = MUITheme => ({
     },
     [MUITheme.breakpoints.down("sm")]: { display: "none" },
   },
+  tableBody: {
+    width: "100%",
+    height: 245,
+    overflow: "auto",
+  },
   data: {
     display: "flex",
     position: "relative",
-    padding: "29px 10px",
+    padding: "20px 10px",
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.secondary,
     margin: "0 10px",
-    "&:hover": { background: MUITheme.palette.background.mainContent },
+    "&:hover": {
+      background: MUITheme.palette.background.mainContent,
+      "& svg": { display: "block" },
+    },
     "& > div": {
       [MUITheme.breakpoints.down("sm")]: {
         marginBottom: 15,
@@ -50,10 +58,7 @@ export const useStyles = MUITheme => ({
         "&:last-of-type": { marginBottom: 0 },
       },
     },
-    [MUITheme.breakpoints.down("sm")]: {
-      width: "100%",
-      flexDirection: "column",
-    },
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   tableHeaderCell: {
     color: MUITheme.palette.text.darkGrey,
@@ -66,6 +71,7 @@ export const useStyles = MUITheme => ({
     textAlign: "center",
   },
   showMoreIcon: {
+    display: "none",
     position: "absolute",
     right: 31,
     color: MUITheme.palette.text.lightGrey,
@@ -84,6 +90,25 @@ export const useStyles = MUITheme => ({
     fontFamily: MUITheme.typography.fontFamily,
     fontSize: 13,
     textTransform: "uppercase",
+    "& + div": {
+      paddingRight: 10,
+      wordBreak: "break-all",
+      "& > div": { maxWidth: "100%" },
+    },
     [MUITheme.breakpoints.down("sm")]: { display: "block" },
+  },
+  message: {
+    marginTop: 31,
+    display: "block",
+    color: "#999",
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 16,
+    fontWeight: 200,
+    textAlign: "center",
+  },
+  tableBodyCell: {
+    color: MUITheme.palette.text.darkGrey,
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 14,
   },
 });

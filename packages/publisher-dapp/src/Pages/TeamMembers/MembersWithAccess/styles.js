@@ -1,5 +1,5 @@
 export const useStyles = MUITheme => ({
-  accessedTeamMembersContainer: {
+  membersWithAccessContainer: {
     paddingBottom: 30,
     borderRadius: 4,
     marginTop: 25,
@@ -50,6 +50,7 @@ export const useStyles = MUITheme => ({
     },
     "&:hover": {
       background: MUITheme.palette.background.mainContent,
+      "& svg": { visibility: "visible" },
     },
     [MUITheme.breakpoints.down("xs")]: {
       position: "relative",
@@ -60,6 +61,7 @@ export const useStyles = MUITheme => ({
     paddingRight: 20,
     textAlign: "right",
     "& svg": {
+      visibility: "hidden",
       color: MUITheme.palette.text.lightGrey,
       cursor: "pointer",
       [MUITheme.breakpoints.down("sm")]: {
@@ -93,5 +95,11 @@ export const useStyles = MUITheme => ({
     fontSize: 13,
     textTransform: "uppercase",
     [MUITheme.breakpoints.down("xs")]: { display: "block" },
+  },
+  paginationContainer: { padding: "0 22px" },
+  tableBodyCell: {
+    color: MUITheme.palette.text.darkGrey,
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 14,
   },
 });
