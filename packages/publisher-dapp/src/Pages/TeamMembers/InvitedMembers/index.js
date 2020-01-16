@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import ShowMoreIcon from "@material-ui/icons/MoreVert";
 
 import InvitePopup from "./InvitePopup";
-import { invitedMembersData } from "../content.js";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
@@ -17,10 +16,13 @@ const InvitedMembers = ({
   textareaValue,
   onTextareaChange,
   handleSendInvitation,
+  pendingMembers,
+  verifiedMembers,
 }) => {
+  const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
     <Grid container className={classes.invitedMembersContainer}>
-      <Typography variant="h6">Invited People {invitedPplCount}</Typography>
+      <Typography variant="h6">Invited People {invitedMembers.length}</Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
         <Grid item xs={6} sm={6} md={6} lg={6}>
           <span>email</span>
@@ -30,10 +32,10 @@ const InvitedMembers = ({
         </Grid>
       </Grid>
       <div className={classes.tableBody}>
-        {invitedMembersData.length === 0 ? (
+        {invitedMembers.length === 0 ? (
           <span className={classes.message}>No pending invitations</span>
         ) : (
-          invitedMembersData.map((item, index) => (
+          invitedMembers.map((item, index) => (
             <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
               <Grid item xs={6} sm={6} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>email</span>
