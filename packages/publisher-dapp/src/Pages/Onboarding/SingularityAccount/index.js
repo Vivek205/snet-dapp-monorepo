@@ -54,6 +54,7 @@ const SingularityAccount = ({ classes, history }) => {
           list={[
             { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
             { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
+            { value: userEntities.INVITEE, label: "Accept Invitation" },
           ]}
           onChange={handleEntityChange}
         />

@@ -1,8 +1,9 @@
 import { userActions } from "../actionCreators";
 import { verificationStatuses } from "../../../Pages/Onboarding/constant";
+import { userEntities } from "../../../Utils/user";
 
 const initialState = {
-  entity: "",
+  entity: userEntities.INVITEE,
   isInitialized: false,
   isLoggedIn: false,
   email: undefined,
