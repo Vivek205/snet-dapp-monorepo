@@ -9,7 +9,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 import AlertText from "shared/dist/components/AlertText";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import { inviteMembersActions } from "../../../Services/Redux/actionCreators";
-import { APIError } from "shared/dist/utils/API";
+import validator from "shared/dist/utils/validator";
+import { verificationCodeConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 const VerifyInvitation = () => {
   const userEntity = useSelector(state => state.user.entity);
@@ -19,13 +22,17 @@ const VerifyInvitation = () => {
 
   const handleVerify = async () => {
     try {
+      const isNotValid = validator({ code }, verificationCodeConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
       await dispatch(inviteMembersActions.verifyInvitation(code));
       setAlert({ type: alertTypes.SUCCESS, message: "Verified" });
     } catch (error) {
-      if (error instanceof APIError) {
-        return setAlert({ type: alertTypes.ERROR, message: error });
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
-      setAlert({ type: alertTypes.ERROR, message: "Something went wrong. Please try later" });
+      return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
     }
   };
 

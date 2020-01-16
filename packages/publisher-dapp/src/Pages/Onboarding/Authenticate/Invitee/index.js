@@ -12,7 +12,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { inviteMembersActions } from "../../../../Services/Redux/actionCreators";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import { APIError } from "shared/dist/utils/API";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 const Invitee = ({ classes, history }) => {
   const orgUuid = useSelector(state => state.organization.uuid);
@@ -35,8 +35,8 @@ const Invitee = ({ classes, history }) => {
       };
       dispatch(inviteMembersActions.acceptInvitation(orgUuid, payload));
     } catch (error) {
-      if (error instanceof APIError) {
-        return setAlert({ type: alertTypes.ERROR, message: error });
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
       return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
     }
