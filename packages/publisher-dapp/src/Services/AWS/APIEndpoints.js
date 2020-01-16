@@ -16,4 +16,6 @@ export const APIPaths = {
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
   PUBLISH_TO_IPFS: orgUuid => `/org/${orgUuid}/ipfs_publish`,
   SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
+  ACCEPT_INVITATION: orgUuid => `/org/${orgUuid}/member/register`,
+  VERIFY_INIVITATION: "/org/member/verify",
 };

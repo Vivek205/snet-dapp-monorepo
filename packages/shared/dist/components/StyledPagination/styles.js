@@ -52,7 +52,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     styledPagination: {
       "& button": {
-        color: '#4a4a4a'
+        color: "#4a4a4a"
       },
       "& .MuiFlatPagination-rootCurrent": {
         padding: "0 8px",
@@ -60,7 +60,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         color: "".concat(MUITheme.palette.text.white, " !important")
       },
       "& .MuiFlatPageButton-rootEnd": {
-        color: '#4a4a4a',
+        color: "#4a4a4a",
         fontWeight: 600
       },
       "& .MuiFlatPageButton-rootEnd.Mui-disabled": {

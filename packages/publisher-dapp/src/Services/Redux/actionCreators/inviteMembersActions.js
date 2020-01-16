@@ -3,6 +3,9 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { memberStatus } from "../../../Utils/TeamMembers";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
+import { loaderActions } from ".";
+import { LoaderContent } from "../../../Utils/Loader";
+import { APIError } from "shared/dist/utils/API";
 
 export const SET_MEMBERS_FOR_STATUS = "SET_MEMBERS_FOR_STATUS";
 
@@ -45,4 +48,53 @@ const inviteMembersAPI = (payload, uuid) => async dispatch => {
 export const inviteMembers = (members, uuid) => async dispatch => {
   const payload = genrateInviteMembersPayload(members);
   await dispatch(inviteMembersAPI(payload, uuid));
+};
+
+const acceptInvitationAPI = (orgUuid, payload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.ACCEPT_INVITATION(orgUuid);
+  const apiOptions = initializeAPIOptions(token, payload);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const acceptInvitation = (orgUuid, payload) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
+    const { data, error } = await dispatch(acceptInvitationAPI(orgUuid, payload));
+    if (error) {
+      throw new APIError(error);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const verifyInvitationCodeAPI = code => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.VERIFY_INIVITATION;
+  const queryParameters = {
+    invite_code: code,
+  };
+  const apiOptions = initializeAPIOptions(token, null, queryParameters);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const verifyInvitation = code => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.VERIFY_INVITATION_CODE));
+    const { data, error } = await dispatch(verifyInvitationCodeAPI(code));
+    if (error) {
+      throw new APIError(error);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
 };

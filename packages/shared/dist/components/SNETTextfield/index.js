@@ -43,7 +43,6 @@ var SNETTextfield = function SNETTextfield(_ref) {
       onKeyUp = _ref.onKeyUp,
       rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "description", "icon", "onKeyUp"]);
 
-  console.log(maxCount, minCount);
   return _react.default.createElement(_Grid.default, {
     container: true
   }, _react.default.createElement(_Grid.default, {

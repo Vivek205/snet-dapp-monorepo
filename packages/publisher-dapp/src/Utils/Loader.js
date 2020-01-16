@@ -27,4 +27,12 @@ export const LoaderContent = {
     title: "Saving Transaction",
     content: "Just a moment. We are saving your transaction",
   },
+  ACCEPT_INVITATION: {
+    title: "Accepting Invitation",
+    content: "Just a moment. We are adding you to the organization",
+  },
+  VERIFY_INVITATION_CODE: {
+    title: "Verifying Code",
+    content: "Just a moment. We are verifying your invitation code",
+  },
 };

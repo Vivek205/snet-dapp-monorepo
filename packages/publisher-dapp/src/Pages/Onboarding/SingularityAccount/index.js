@@ -14,6 +14,7 @@ import { userEntities, userPreferenceTypes } from "../../../Utils/user";
 import { useDispatch, useSelector } from "react-redux";
 import { onboardingActions, preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
+import VerifyInvitation from "./VerifyInvitation";
 
 const SingularityAccount = ({ classes, history }) => {
   const [emailPreferences, setEmailPreferences] = useState({
@@ -58,6 +59,7 @@ const SingularityAccount = ({ classes, history }) => {
           ]}
           onChange={handleEntityChange}
         />
+        <VerifyInvitation />
       </Grid>
       <LoginBanner classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
