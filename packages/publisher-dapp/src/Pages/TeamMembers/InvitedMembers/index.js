@@ -4,11 +4,20 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ShowMoreIcon from "@material-ui/icons/MoreVert";
 
+import InvitePopup from "./InvitePopup";
 import { invitedMembersData } from "../content.js";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const InvitedMembers = ({ classes, invitedPplCount }) => {
+const InvitedMembers = ({
+  classes,
+  invitedPplCount,
+  showPopup,
+  handleInviteMembers,
+  textareaValue,
+  onTextareaChange,
+  handleSendInvitation,
+}) => {
   return (
     <Grid container className={classes.invitedMembersContainer}>
       <Typography variant="h6">Invited People {invitedPplCount}</Typography>
@@ -40,8 +49,14 @@ const InvitedMembers = ({ classes, invitedPplCount }) => {
         )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" />
+        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
       </Grid>
+      <InvitePopup
+        open={showPopup}
+        textareaValue={textareaValue}
+        onTextareaChange={onTextareaChange}
+        handleSendInvitation={handleSendInvitation}
+      />
     </Grid>
   );
 };

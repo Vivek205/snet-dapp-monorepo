@@ -1,6 +1,7 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions } from "../actionCreators";
 import { organizationSetupStatuses, organizationTypes } from "../../../Utils/organizationSetup";
+import { memberStatus } from "../../../Utils/TeamMembers.js";
 
 const initialState = {
   status: organizationSetupStatuses.NOT_STARTED,
@@ -45,6 +46,14 @@ const initialState = {
   sameMailingAddress: false,
   mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
   ownerAddress: "",
+  members: {
+    [memberStatus.PENDING]: [],
+    [memberStatus.ACCEPTED]: [],
+    [memberStatus.PUBLISHED]: [],
+    [memberStatus.PUBLISH_IN_PROGRESS]: [],
+    [memberStatus.VERIFIED]: [],
+    [memberStatus.EXPIRED]: [],
+  },
 };
 
 const OrganizationReducer = (state = initialState, action) => {
@@ -65,6 +74,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, hqAddress: { ...state.hqAddress, ...action.payload } };
     case organizationActions.SET_MAILING_ADDRESS_DETAIL:
       return { ...state, mailingAddress: { ...state.mailingAddress, ...action.payload } };
+    case organizationActions.SET_MEMBERS_FOR_STATUS:
+      return { ...state, members: { ...state.members, ...action.payload } };
     default:
       return state;
   }
