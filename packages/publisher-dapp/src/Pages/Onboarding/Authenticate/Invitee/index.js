@@ -13,6 +13,9 @@ import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { inviteMembersActions } from "../../../../Services/Redux/actionCreators";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { checkIfKnownError } from "shared/dist/utils/error";
+import validator from "shared/dist/utils/validator";
+import { inviteeValidationConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
 
 const Invitee = ({ classes, history }) => {
   const orgUuid = useSelector(state => state.organization.uuid);
@@ -28,6 +31,10 @@ const Invitee = ({ classes, history }) => {
 
   const handleFinish = () => {
     try {
+      const isNotValid = validator({ userFullName, phone, address }, inviteeValidationConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
       const payload = {
         full_name: userFullName,
         phone_number: phone,
