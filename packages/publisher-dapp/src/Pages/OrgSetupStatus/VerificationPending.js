@@ -8,8 +8,8 @@ import orgSetupPendingImg from "shared/dist/assets/images/orgSetupPending.png";
 const VerificationPending = () => {
   const history = useHistory();
 
-  const handleOrgSetup = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path);
+  const handleInviteSetup = () => {
+    history.push(GlobalRoutes.INVITE_MEMBERS.path);
   };
 
   return (
@@ -18,7 +18,7 @@ const VerificationPending = () => {
       img={orgSetupPendingImg}
       description="This review may take a day or two.  In the meantime you can add team memebers to your organization to help you setup and manage your AI services more efficiently.   You can also view our guides and tutorials."
       actions={[
-        { children: "Invite Team members", variant: "outlined", color: "primary", onClick: handleOrgSetup },
+        { children: "Invite Team members", variant: "outlined", color: "primary", onClick: handleInviteSetup },
         { children: "contact support", variant: "text", color: "primary" },
       ]}
       pending
