@@ -10,7 +10,6 @@ import { useStyles } from "./styles";
 
 const InvitedMembers = ({
   classes,
-  invitedPplCount,
   showPopup,
   handleInviteMembers,
   textareaValue,

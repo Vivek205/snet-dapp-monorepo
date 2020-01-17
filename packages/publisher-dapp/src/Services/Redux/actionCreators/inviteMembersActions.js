@@ -35,7 +35,7 @@ export const getAllMembers = uuid => async dispatch => {
   await Promise.all(promises);
 };
 
-const generateInviteMembersPayload = members => members.map(member => ({ username: member }));
+const generateInviteMembersPayload = members => members.map(member => ({ username: member.trim() }));
 
 const inviteMembersAPI = (payload, uuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());

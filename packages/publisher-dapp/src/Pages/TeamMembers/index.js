@@ -18,7 +18,7 @@ import { useStyles } from "./styles";
 class TeamMembers extends Component {
   state = {
     showPopup: false,
-    textareaValue: " ",
+    textareaValue: "",
   };
 
   componentDidMount = () => {
@@ -34,7 +34,7 @@ class TeamMembers extends Component {
   };
 
   handleSendInvitation = () => {
-    const allEmails = this.state.textareaValue.spilt(",");
+    const allEmails = this.state.textareaValue.split(",");
     this.props.inviteMembers(allEmails, this.props.uuid);
   };
 
