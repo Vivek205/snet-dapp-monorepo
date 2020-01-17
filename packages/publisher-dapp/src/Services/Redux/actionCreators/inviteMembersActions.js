@@ -30,10 +30,16 @@ export const getMembers = (status, uuid) => async dispatch => {
 };
 
 export const getAllMembers = uuid => async dispatch => {
-  const promises = Object.values(memberStatus).map(status => {
-    return dispatch(getMembers(status, uuid));
-  });
-  await Promise.all(promises);
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.GET_ALL_MEMBERS));
+    const promises = Object.values(memberStatus).map(status => {
+      return dispatch(getMembers(status, uuid));
+    });
+    await Promise.all(promises);
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+  }
 };
 
 const generateInviteMembersPayload = members => members.map(member => ({ username: member.trim() }));
@@ -47,8 +53,14 @@ const inviteMembersAPI = (payload, uuid) => async dispatch => {
 };
 
 export const inviteMembers = (members, uuid) => async dispatch => {
-  const payload = generateInviteMembersPayload(members);
-  await dispatch(inviteMembersAPI(payload, uuid));
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.INVITE_MEMBERS));
+    const payload = generateInviteMembersPayload(members);
+    await dispatch(inviteMembersAPI(payload, uuid));
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+  }
 };
 
 const acceptInvitationAPI = (orgUuid, payload) => async dispatch => {
@@ -133,6 +145,12 @@ const publishMembersAPI = (payload, uuid) => async dispatch => {
 };
 
 export const publishMembers = (members, uuid) => async dispatch => {
-  const payload = generatePublishMembersPayload(members);
-  await dispatch(publishMembersAPI(payload, uuid));
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_MEMBERS));
+    const payload = generatePublishMembersPayload(members);
+    await dispatch(publishMembersAPI(payload, uuid));
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+  }
 };
