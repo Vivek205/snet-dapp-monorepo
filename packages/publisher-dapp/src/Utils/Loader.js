@@ -35,4 +35,16 @@ export const LoaderContent = {
     title: "Verifying Code",
     content: "Just a moment. We are verifying your invitation code",
   },
+  GET_ALL_MEMBERS: {
+    title: "Fetching Members",
+    content: "Just a moment. We are fetching the details of all the members",
+  },
+  INVITE_MEMBERS: {
+    title: "Inviting Members",
+    content: "Just a moment. We are sending invitation to the members",
+  },
+  PUBLISH_MEMBERS: {
+    title: "Publishing Members to blockchain",
+    content: "Just a moment. We are publishing members to the blockchain",
+  },
 };
