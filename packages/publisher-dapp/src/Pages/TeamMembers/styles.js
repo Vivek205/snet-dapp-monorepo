@@ -1,7 +1,8 @@
 export const useStyles = MUITheme => ({
   teammembersContainer: {
-    padding: "40px 0",
+    padding: "40px 60px 52px",
     background: MUITheme.palette.background.mainContent,
+    [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
   backToHomeLink: {
     "& svg": {
@@ -20,6 +21,7 @@ export const useStyles = MUITheme => ({
   topSection: {
     marginBottom: 33,
     display: "flex",
+    [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
   topSectionContent: {
