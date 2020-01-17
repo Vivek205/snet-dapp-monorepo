@@ -13,7 +13,7 @@ import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const InvitePopup = ({ classes, open, handleClose }) => {
+const InvitePopup = ({ classes, open, handleClose, textareaValue, onTextareaChange, handleSendInvitation }) => {
   const handleCancel = () => {
     handleClose();
   };
@@ -35,11 +35,18 @@ const InvitePopup = ({ classes, open, handleClose }) => {
             label="Email Address(es)"
             extraInfo="For multiple emails, separated by comma or line breaks"
             rowCount="6"
+            value={textareaValue}
+            onChange={onTextareaChange}
           />
         </CardContent>
         <CardActions className={classes.btnContainer}>
           <SNETButton children="cancel" color="primary" variant="text" />
-          <SNETButton children="send invitation(s)" color="primary" variant="contained" disabled />
+          <SNETButton
+            children="send invitation(s)"
+            color="primary"
+            variant="contained"
+            onClick={handleSendInvitation}
+          />
         </CardActions>
       </Card>
     </Modal>

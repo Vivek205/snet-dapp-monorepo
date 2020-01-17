@@ -12,6 +12,9 @@ export const APIEndpoints = {
 export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
+  GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
+  INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
+  PUBLISH_MEMBERS: orgUuid => `/org/${orgUuid}/member/publish`,
   PUBLISH_TO_IPFS: orgUuid => `/org/${orgUuid}/ipfs_publish`,
   SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
 };
