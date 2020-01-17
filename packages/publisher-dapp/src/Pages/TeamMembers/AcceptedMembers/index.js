@@ -9,10 +9,12 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const AcceptedMembers = ({ classes, acceptedPplCount, userImg, acceptedMembers }) => {
+const AcceptedMembers = ({ classes, acceptedPplCount, userImg, acceptedMembers, handleAddToBlockChain }) => {
   return (
     <Grid container className={classes.acceptedMembersContainer}>
-      <Typography variant="h6">Accepted Invitations {acceptedMembers.length}</Typography>
+      <Typography variant="h6">
+        Accepted Invitations {acceptedMembers.length > 0 ? acceptedMembers.length : null}
+      </Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
         <Grid item xs={6} sm={6} md={6} lg={6}>
           <span>joining member</span>
@@ -41,7 +43,13 @@ const AcceptedMembers = ({ classes, acceptedPplCount, userImg, acceptedMembers }
         )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="add to blockchain" variant="contained" color="primary" />
+        <SNETButton
+          children="add to blockchain"
+          variant="contained"
+          color="primary"
+          onClick={handleAddToBlockChain}
+          disabled={acceptedMembers.length === 0}
+        />
       </Grid>
     </Grid>
   );

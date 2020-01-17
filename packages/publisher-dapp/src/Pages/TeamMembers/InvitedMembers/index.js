@@ -21,7 +21,7 @@ const InvitedMembers = ({
   const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
     <Grid container className={classes.invitedMembersContainer}>
-      <Typography variant="h6">Invited People {invitedMembers.length}</Typography>
+      <Typography variant="h6">Invited People {invitedMembers.length > 0 ? invitedMembers.length : null}</Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
         <Grid item xs={6} sm={6} md={6} lg={6}>
           <span>email</span>
@@ -50,7 +50,13 @@ const InvitedMembers = ({
         )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
+        <SNETButton
+          children="invite members"
+          variant="contained"
+          color="primary"
+          onClick={handleInviteMembers}
+          disabled={invitedMembers.length === 0}
+        />
       </Grid>
       <InvitePopup
         open={showPopup}

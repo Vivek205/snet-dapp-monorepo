@@ -117,3 +117,22 @@ export const getMemberStatus = (username, orgUuid) => async dispatch => {
     setUserInviteeStatus(data[0].status);
   }
 };
+const generatePublishMembersPayload = members =>
+  members.map(member => ({
+    username: member.username,
+    address: member.address,
+    status: member.status,
+  }));
+
+const publishMembersAPI = (payload, uuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.PUBLISH_MEMBERS(uuid);
+  const apiOptions = initializeAPIOptions(token, payload);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const publishMembers = (members, uuid) => async dispatch => {
+  const payload = generatePublishMembersPayload(members);
+  await dispatch(publishMembersAPI(payload, uuid));
+};
