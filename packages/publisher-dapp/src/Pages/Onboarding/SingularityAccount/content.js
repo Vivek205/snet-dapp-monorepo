@@ -32,3 +32,9 @@ export const emailPreferencesList = [
     description: "I’d like to get email notifications when users leave comments or send messages ",
   },
 ];
+
+export const verifyInvitationCodeForm = {
+  id: "code",
+  name: "code",
+  label: "Invitation Code",
+};

@@ -13,8 +13,11 @@ export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
+  GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
   PUBLISH_MEMBERS: orgUuid => `/org/${orgUuid}/member/publish`,
   PUBLISH_TO_IPFS: orgUuid => `/org/${orgUuid}/ipfs_publish`,
   SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
+  ACCEPT_INVITATION: orgUuid => `/org/${orgUuid}/member/register`,
+  VERIFY_INIVITATION: "/org/member/verify",
 };

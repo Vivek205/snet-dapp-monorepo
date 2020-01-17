@@ -1,8 +1,9 @@
 import { userActions } from "../actionCreators";
 import { verificationStatuses } from "../../../Pages/Onboarding/constant";
+import { userEntities } from "../../../Utils/user";
 
 const initialState = {
-  entity: "",
+  entity: userEntities.INVITEE,
   isInitialized: false,
   isLoggedIn: false,
   email: undefined,
@@ -12,6 +13,7 @@ const initialState = {
   jwt: {
     exp: "",
   },
+  inviteeStatus: "",
 };
 
 const userReducer = (state = initialState, action) => {
@@ -39,6 +41,9 @@ const userReducer = (state = initialState, action) => {
     }
     case userActions.loginActions.SET_JWT_EXP: {
       return { ...state, jwt: { ...state.jwt, exp: action.payload } };
+    }
+    case userActions.onboardingActions.SET_USER_INVITEE_STATUS: {
+      return { ...state, inviteeStatus: action.payload };
     }
     default:
       return state;
