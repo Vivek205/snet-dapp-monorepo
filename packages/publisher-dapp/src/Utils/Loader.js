@@ -43,6 +43,10 @@ export const LoaderContent = {
     title: "Inviting Members",
     content: "Just a moment. We are sending invitation to the members",
   },
+  ADD_MEMBERS_TO_BLOCKCHAIN: {
+    title: "Adding Members to Blockchain",
+    content: "Just a moment. We are adding members to blockchain",
+  },
   PUBLISH_MEMBERS: {
     title: "Publishing Members to blockchain",
     content: "Just a moment. We are publishing members to the blockchain",

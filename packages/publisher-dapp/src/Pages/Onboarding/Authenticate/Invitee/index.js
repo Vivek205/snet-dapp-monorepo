@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { profileIdentityDetails } from "./content";
 import { useStyles } from "./styles";
-import SNETTextfield from "shared/dist/components/SNETTextfield";
 import MMAddress from "./MMAddress";
 import SNETButton from "shared/dist/components/SNETButton";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
@@ -17,11 +16,15 @@ import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 
+const selectUuidAndInviteCode = state => ({
+  orgUuid: state.organization.uuid,
+  inviteCode: state.user.inviteCode,
+});
+
 const Invitee = ({ classes, history }) => {
-  const orgUuid = useSelector(state => state.organization.uuid);
+  const { orgUuid, inviteCode } = useSelector(selectUuidAndInviteCode);
   const dispatch = useDispatch();
-  const [userFullName, setUserFullName] = useState("");
-  const [phone, setPhone] = useState("");
+
   const [address, setAddress] = useState("");
   const [alert, setAlert] = useState({});
 
@@ -31,13 +34,12 @@ const Invitee = ({ classes, history }) => {
 
   const handleFinish = () => {
     try {
-      const isNotValid = validator({ userFullName, phone, address }, inviteeValidationConstraints);
+      const isNotValid = validator({ address }, inviteeValidationConstraints);
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
       const payload = {
-        full_name: userFullName,
-        phone_number: phone,
+        invite_code: inviteCode,
         wallet_address: address,
       };
       dispatch(inviteMembersActions.acceptInvitation(orgUuid, payload));
@@ -55,20 +57,8 @@ const Invitee = ({ classes, history }) => {
         <Typography variant="h6">{profileIdentityDetails.title}</Typography>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.acceptedInvitationContent}>
           <Typography variant="subtitle2">{profileIdentityDetails.description}</Typography>
-          <SNETTextfield
-            {...profileIdentityDetails.FULL_NAME}
-            value={userFullName}
-            onChange={e => setUserFullName(e.target.value)}
-          />
-          <SNETTextfield
-            {...profileIdentityDetails.PHONE_NUMBER}
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-          />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.actionContainer}>
-            <Grid item xs={12} sm={12} md={6} lg={6} className={classes.metamaskField}>
-              <MMAddress address={address} setAddress={setAddress} />
-            </Grid>
+            <MMAddress address={address} setAddress={setAddress} />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
         </Grid>

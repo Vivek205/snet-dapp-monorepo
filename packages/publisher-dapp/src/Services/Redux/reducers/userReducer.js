@@ -14,6 +14,7 @@ const initialState = {
     exp: "",
   },
   inviteeStatus: "",
+  inviteCode: "",
 };
 
 const userReducer = (state = initialState, action) => {
@@ -45,6 +46,8 @@ const userReducer = (state = initialState, action) => {
     case userActions.onboardingActions.SET_USER_INVITEE_STATUS: {
       return { ...state, inviteeStatus: action.payload };
     }
+    case userActions.onboardingActions.SET_USER_INVITE_CODE:
+      return { ...state, inviteCode: action.payload };
     default:
       return state;
   }
