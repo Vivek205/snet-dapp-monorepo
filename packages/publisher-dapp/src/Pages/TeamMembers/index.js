@@ -115,7 +115,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
-  publishMembers: (members, uuid) => dispatch(inviteMembersActions.publishMembers(members, uuid)),
   addAndPublishMembers: (members, orgId, uuid) =>
     dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid)),
 });

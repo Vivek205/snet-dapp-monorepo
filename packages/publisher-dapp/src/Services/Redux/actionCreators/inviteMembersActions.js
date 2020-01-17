@@ -6,6 +6,7 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
+import BlockChainError from "shared/dist/utils/API";
 import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
@@ -174,8 +175,8 @@ export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => 
         resolve();
       })
       .on(blockChainEvents.ERROR, error => {
-        reject(error);
         dispatch(loaderActions.stopAppLoader());
+        throw new BlockChainError();
       });
   });
 };
