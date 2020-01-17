@@ -66,18 +66,18 @@ export const inviteMembers = (members, uuid) => async dispatch => {
   }
 };
 
-const acceptInvitationAPI = (orgUuid, payload) => async dispatch => {
+const acceptInvitationAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ACCEPT_INVITATION(orgUuid);
+  const apiPath = APIPaths.ACCEPT_INVITATION;
   const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const acceptInvitation = (orgUuid, payload) => async dispatch => {
+export const acceptInvitation = payload => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
-    const { data, error } = await dispatch(acceptInvitationAPI(orgUuid, payload));
+    const { data, error } = await dispatch(acceptInvitationAPI(payload));
     if (error.code) {
       throw new APIError(error.message);
     }
