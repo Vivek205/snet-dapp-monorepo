@@ -21,9 +21,25 @@ export const useStyles = MUITheme => ({
     display: "flex",
     alignItems: "center",
     "& button": { marginLeft: 30 },
-    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
+    [MUITheme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      alignItems: "flex-start",
+    },
   },
   metamaskField: {
+    "& > div": {
+      "& > div": {
+        maxWidth: "100%",
+        flexBasis: "100%",
+      },
+    },
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
+  },
+  buttonsContainer: {
+    marginTop: 40,
+    textAlign: "center",
+  },
+  metamaskAddTxtField: {
     "& > div": {
       "& > div": {
         maxWidth: "100%",
