@@ -6,12 +6,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 
-const MMAddress = ({ classes, address, setAddress }) => {
+const MMAddress = ({ address, setAddress }) => {
   const handleConnetMM = async () => {
     const sdk = await initSDK();
     setAddress(sdk.account.address);
-    // return new Promise.resolve(sdk.account.address);
-    // dispatch(organizationActions.setOneBasicDetail("ownerAddress", sdk.account.address));
   };
 
   if (!!address) {
