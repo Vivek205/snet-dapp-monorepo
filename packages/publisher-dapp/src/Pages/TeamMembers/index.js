@@ -14,11 +14,14 @@ import AcceptedMembers from "./AcceptedMembers";
 import { TopSectionContent } from "./content";
 
 import { useStyles } from "./styles";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 class TeamMembers extends Component {
   state = {
     showPopup: false,
     textareaValue: "",
+    addBlockChainAlert: {},
   };
 
   componentDidMount = () => {
@@ -42,8 +45,18 @@ class TeamMembers extends Component {
     this.props.inviteMembers(allEmails, this.props.uuid);
   };
 
-  handleAddToBlockChain = () => {
-    this.props.publishMembers(this.props.members[memberStatus.ACCEPTED], this.props.uuid);
+  handleAddToBlockChain = async () => {
+    try {
+      const { members, orgId, uuid, addAndPublishMembers } = this.props;
+      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid);
+      this.setState({
+        addBlockChainAlert: { type: alertTypes.SUCCESS, message: "Members have been added to blockchain" },
+      });
+    } catch (error) {
+      if (checkIfKnownError(error)) {
+        this.setState({ addBlockChainAlert: { type: alertTypes.ERROR, message: error.message } });
+      }
+    }
   };
 
   render() {
@@ -79,6 +92,7 @@ class TeamMembers extends Component {
             <AcceptedMembers
               acceptedMembers={members[memberStatus.ACCEPTED]}
               handleAddToBlockChain={this.handleAddToBlockChain}
+              addBlockChainAlert={this.state.addBlockChainAlert}
             />
           </div>
           <MembersWithAccess
@@ -93,6 +107,7 @@ class TeamMembers extends Component {
 
 const mapStateToProps = state => ({
   [memberStatus.PUBLISHED]: state.organization.members[memberStatus.PUBLISHED],
+  orgId: state.organization.id,
   uuid: state.organization.uuid,
   members: state.organization.members,
 });
@@ -101,6 +116,8 @@ const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
   publishMembers: (members, uuid) => dispatch(inviteMembersActions.publishMembers(members, uuid)),
+  addAndPublishMembers: (members, orgId, uuid) =>
+    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TeamMembers));
