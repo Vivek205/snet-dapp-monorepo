@@ -26,7 +26,7 @@ const getMembersAPI = (status, uuid) => async dispatch => {
 
 export const getMembers = (status, uuid) => async dispatch => {
   const { data } = await dispatch(getMembersAPI(status, uuid));
-  setMembersForStatus(status, data);
+  dispatch(setMembersForStatus(status, data));
 };
 
 export const getAllMembers = uuid => async dispatch => {

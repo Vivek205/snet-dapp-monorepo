@@ -35,11 +35,11 @@ const InvitedMembers = ({
         {invitedMembers.length === 0 ? (
           <span className={classes.message}>No pending invitations</span>
         ) : (
-          invitedMembers.map((item, index) => (
-            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
+          invitedMembers.map(item => (
+            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data} key={item.username}>
               <Grid item xs={6} sm={6} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>email</span>
-                <span className={classes.tableBodyCell}>{item.email}</span>
+                <span className={classes.tableBodyCell}>{item.username}</span>
               </Grid>
               <Grid item xs={6} sm={6} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>invited on</span>

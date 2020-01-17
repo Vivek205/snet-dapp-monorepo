@@ -1,5 +1,5 @@
 import { ContactsTypes } from "../../../Utils/Contacts";
-import { organizationActions } from "../actionCreators";
+import { organizationActions, inviteMembersActions } from "../actionCreators";
 import { organizationSetupStatuses, organizationTypes } from "../../../Utils/organizationSetup";
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 
@@ -74,7 +74,7 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, hqAddress: { ...state.hqAddress, ...action.payload } };
     case organizationActions.SET_MAILING_ADDRESS_DETAIL:
       return { ...state, mailingAddress: { ...state.mailingAddress, ...action.payload } };
-    case organizationActions.SET_MEMBERS_FOR_STATUS:
+    case inviteMembersActions.SET_MEMBERS_FOR_STATUS:
       return { ...state, members: { ...state.members, ...action.payload } };
     default:
       return state;
