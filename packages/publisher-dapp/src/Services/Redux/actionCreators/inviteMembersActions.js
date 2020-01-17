@@ -42,14 +42,14 @@ export const getAllMembers = uuid => async dispatch => {
   }
 };
 
-const generateInviteMembersPayload = members => members.map(member => ({ username: member.trim() }));
+const generateInviteMembersPayload = members => ({ members: members.map(member => ({ username: member.trim() })) });
 
 const inviteMembersAPI = (payload, uuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.INVITE_MEMBERS(uuid);
   const apiOptions = initializeAPIOptions(token, payload);
-  return await API.get(apiName, apiPath, apiOptions);
+  return await API.post(apiName, apiPath, apiOptions);
 };
 
 export const inviteMembers = (members, uuid) => async dispatch => {
@@ -75,8 +75,8 @@ export const acceptInvitation = (orgUuid, payload) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
     const { data, error } = await dispatch(acceptInvitationAPI(orgUuid, payload));
-    if (error) {
-      throw new APIError(error);
+    if (error.code) {
+      throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
     return data;
@@ -101,8 +101,8 @@ export const verifyInvitation = code => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.VERIFY_INVITATION_CODE));
     const { data, error } = await dispatch(verifyInvitationCodeAPI(code));
-    if (error) {
-      throw new APIError(error);
+    if (error.code) {
+      throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
     return data;
@@ -122,8 +122,8 @@ const getMemberStatusAPI = (username, orgUuid) => async dispatch => {
 
 export const getMemberStatus = (username, orgUuid) => async dispatch => {
   const { data, error } = await dispatch(getMemberStatusAPI(username, orgUuid));
-  if (error) {
-    throw new APIError(error);
+  if (error.code) {
+    throw new APIError(error.message);
   }
   if (data[0] && data[0].status) {
     setUserInviteeStatus(data[0].status);

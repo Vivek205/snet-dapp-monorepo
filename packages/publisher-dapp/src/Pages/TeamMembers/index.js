@@ -29,6 +29,10 @@ class TeamMembers extends Component {
     this.setState({ showPopup: true });
   };
 
+  handleInviteMembersClose = () => {
+    this.setState({ showPopup: false });
+  };
+
   onTextareaChange = event => {
     this.setState({ textareaValue: event.target.value });
   };
@@ -70,6 +74,7 @@ class TeamMembers extends Component {
               textareaValue={textareaValue}
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
+              handleClose={this.handleInviteMembersClose}
             />
             <AcceptedMembers
               acceptedMembers={members[memberStatus.ACCEPTED]}

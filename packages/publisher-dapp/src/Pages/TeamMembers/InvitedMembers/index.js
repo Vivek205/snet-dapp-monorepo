@@ -17,6 +17,7 @@ const InvitedMembers = ({
   handleSendInvitation,
   pendingMembers,
   verifiedMembers,
+  handleClose,
 }) => {
   const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
@@ -50,19 +51,14 @@ const InvitedMembers = ({
         )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton
-          children="invite members"
-          variant="contained"
-          color="primary"
-          onClick={handleInviteMembers}
-          disabled={invitedMembers.length === 0}
-        />
+        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
       </Grid>
       <InvitePopup
         open={showPopup}
         textareaValue={textareaValue}
         onTextareaChange={onTextareaChange}
         handleSendInvitation={handleSendInvitation}
+        handleClose={handleClose}
       />
     </Grid>
   );
