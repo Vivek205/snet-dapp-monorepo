@@ -6,6 +6,7 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { loaderActions } from ".";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
+import { setUserInviteeStatus } from "./userActions/onboardingActions";
 
 export const SET_MEMBERS_FOR_STATUS = "SET_MEMBERS_FOR_STATUS";
 
@@ -96,5 +97,23 @@ export const verifyInvitation = code => async dispatch => {
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
+  }
+};
+
+const getMemberStatusAPI = (username, orgUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.GET_MEMBER_STATUS(orgUuid, username);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getMemberStatus = (username, orgUuid) => async dispatch => {
+  const { data, error } = await dispatch(getMemberStatusAPI(username, orgUuid));
+  if (error) {
+    throw new APIError(error);
+  }
+  if (data[0] && data[0].status) {
+    setUserInviteeStatus(data[0].status);
   }
 };

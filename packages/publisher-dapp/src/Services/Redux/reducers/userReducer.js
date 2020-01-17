@@ -13,6 +13,7 @@ const initialState = {
   jwt: {
     exp: "",
   },
+  inviteeStatus: "",
 };
 
 const userReducer = (state = initialState, action) => {
@@ -40,6 +41,9 @@ const userReducer = (state = initialState, action) => {
     }
     case userActions.loginActions.SET_JWT_EXP: {
       return { ...state, jwt: { ...state.jwt, exp: action.payload } };
+    }
+    case userActions.onboardingActions.SET_USER_INVITEE_STATUS: {
+      return { ...state, inviteeStatus: action.payload };
     }
     default:
       return state;
