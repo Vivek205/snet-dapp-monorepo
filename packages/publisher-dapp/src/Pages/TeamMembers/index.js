@@ -39,7 +39,7 @@ class TeamMembers extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, members } = this.props;
     const { showPopup, textareaValue } = this.state;
     return (
       <Grid container className={classes.teammembersContainer}>
@@ -59,16 +59,20 @@ class TeamMembers extends Component {
           </div>
           <div className={classes.invitedAndAcceptedList}>
             <InvitedMembers
-              invitedPplCount="(4)"
+              pendingMembers={members[memberStatus.PENDING]}
+              verifiedMembers={members[memberStatus.VERIFIED]}
               showPopup={showPopup}
               handleInviteMembers={this.handleInviteMembers}
               textareaValue={textareaValue}
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
             />
-            <AcceptedMembers acceptedPplCount="(5)" />
+            <AcceptedMembers acceptedMembers={members[memberStatus.ACCEPTED]} />
           </div>
-          <MembersWithAccess />
+          <MembersWithAccess
+            publisedMembers={members[memberStatus.PUBLISHED]}
+            publishedInProgressMembers={members[memberStatus.PUBLISH_IN_PROGRESS]}
+          />
         </Grid>
       </Grid>
     );

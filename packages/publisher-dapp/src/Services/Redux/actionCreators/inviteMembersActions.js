@@ -18,7 +18,8 @@ const getMembersAPI = (status, uuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.GET_MEMBERS(uuid);
-  const apiOptions = initializeAPIOptions(token);
+  const queryStringParameters = { status };
+  const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
@@ -28,14 +29,13 @@ export const getMembers = (status, uuid) => async dispatch => {
 };
 
 export const getAllMembers = uuid => async dispatch => {
-  // await dispatch(getMembers(memberStatus.PUBLISHED, uuid))
   const promises = Object.values(memberStatus).map(status => {
     return dispatch(getMembers(status, uuid));
   });
   await Promise.all(promises);
 };
 
-const genrateInviteMembersPayload = members => members.map(member => ({ username: "dummy@dummy.io" }));
+const generateInviteMembersPayload = members => members.map(member => ({ username: member }));
 
 const inviteMembersAPI = (payload, uuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -46,7 +46,7 @@ const inviteMembersAPI = (payload, uuid) => async dispatch => {
 };
 
 export const inviteMembers = (members, uuid) => async dispatch => {
-  const payload = genrateInviteMembersPayload(members);
+  const payload = generateInviteMembersPayload(members);
   await dispatch(inviteMembersAPI(payload, uuid));
 };
 
