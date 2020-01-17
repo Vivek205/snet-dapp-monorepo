@@ -8,8 +8,9 @@ import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
+import AlertBox from "shared/dist/components/AlertBox";
 
-const AcceptedMembers = ({ classes, acceptedPplCount, userImg, acceptedMembers, handleAddToBlockChain }) => {
+const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addBlockChainAlert }) => {
   return (
     <Grid container className={classes.acceptedMembersContainer}>
       <Typography variant="h6">
@@ -42,6 +43,7 @@ const AcceptedMembers = ({ classes, acceptedPplCount, userImg, acceptedMembers, 
           ))
         )}
       </div>
+      <AlertBox type={addBlockChainAlert.type} message={addBlockChainAlert.message} />
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton
           children="add to blockchain"

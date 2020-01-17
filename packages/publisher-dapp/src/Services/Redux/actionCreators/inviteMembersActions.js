@@ -6,7 +6,10 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
+import BlockChainError from "shared/dist/utils/API";
 import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
+import { initSDK } from "shared/dist/utils/snetSdk";
+import { blockChainEvents } from "../../../Utils/Blockchain";
 
 export const SET_MEMBERS_FOR_STATUS = "SET_MEMBERS_FOR_STATUS";
 
@@ -150,8 +153,30 @@ export const publishMembers = (members, uuid) => async dispatch => {
     dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_MEMBERS));
     const payload = generatePublishMembersPayload(members);
     await dispatch(publishMembersAPI(payload, uuid));
-    dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
   }
+};
+
+const filterAdressFromMembers = members => members.map(member => member.address);
+
+export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => {
+  const sdk = await initSDK();
+  const newMembersAddress = filterAdressFromMembers(members);
+  dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
+  return new Promise((resolve, reject) => {
+    sdk._registryContract
+      .addOrganizationMembers(orgId, newMembersAddress)
+      .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
+        await dispatch(publishMembers(members, uuid, txnHash));
+      })
+      .on(blockChainEvents.RECEIPT, () => {
+        dispatch(loaderActions.stopAppLoader());
+        resolve();
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader());
+        throw new BlockChainError();
+      });
+  });
 };
