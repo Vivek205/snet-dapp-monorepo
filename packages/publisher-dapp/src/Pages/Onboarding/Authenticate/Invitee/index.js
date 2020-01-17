@@ -16,13 +16,8 @@ import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 
-const selectUuidAndInviteCode = state => ({
-  orgUuid: state.organization.uuid,
-  inviteCode: state.user.inviteCode,
-});
-
 const Invitee = ({ classes, history }) => {
-  const { orgUuid, inviteCode } = useSelector(selectUuidAndInviteCode);
+  const inviteCode = useSelector(state => state.user.inviteCode);
   const dispatch = useDispatch();
 
   const [address, setAddress] = useState("");
@@ -42,7 +37,7 @@ const Invitee = ({ classes, history }) => {
         invite_code: inviteCode,
         wallet_address: address,
       };
-      dispatch(inviteMembersActions.acceptInvitation(orgUuid, payload));
+      dispatch(inviteMembersActions.acceptInvitation(payload));
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
