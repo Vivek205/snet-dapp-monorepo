@@ -38,6 +38,10 @@ class TeamMembers extends Component {
     this.props.inviteMembers(allEmails, this.props.uuid);
   };
 
+  handleAddToBlockChain = () => {
+    this.props.publishMembers(this.props.members[memberStatus.ACCEPTED], this.props.uuid);
+  };
+
   render() {
     const { classes, members } = this.props;
     const { showPopup, textareaValue } = this.state;
@@ -67,7 +71,10 @@ class TeamMembers extends Component {
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
             />
-            <AcceptedMembers acceptedMembers={members[memberStatus.ACCEPTED]} />
+            <AcceptedMembers
+              acceptedMembers={members[memberStatus.ACCEPTED]}
+              handleAddToBlockChain={this.handleAddToBlockChain}
+            />
           </div>
           <MembersWithAccess
             publisedMembers={members[memberStatus.PUBLISHED]}
@@ -88,6 +95,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
+  publishMembers: (members, uuid) => dispatch(inviteMembersActions.publishMembers(members, uuid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TeamMembers));
