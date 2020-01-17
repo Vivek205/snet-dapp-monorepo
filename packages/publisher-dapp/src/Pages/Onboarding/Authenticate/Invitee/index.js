@@ -16,11 +16,15 @@ import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 
+const selectUuidAndInviteCode = state => ({
+  orgUuid: state.organization.uuid,
+  inviteCode: state.user.inviteCode,
+});
+
 const Invitee = ({ classes, history }) => {
-  const orgUuid = useSelector(state => state.organization.uuid);
+  const { orgUuid, inviteCode } = useSelector(selectUuidAndInviteCode);
   const dispatch = useDispatch();
-  const [userFullName] = useState("");
-  const [phone] = useState("");
+
   const [address, setAddress] = useState("");
   const [alert, setAlert] = useState({});
 
@@ -30,13 +34,12 @@ const Invitee = ({ classes, history }) => {
 
   const handleFinish = () => {
     try {
-      const isNotValid = validator({ userFullName, phone, address }, inviteeValidationConstraints);
+      const isNotValid = validator({ address }, inviteeValidationConstraints);
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
       const payload = {
-        full_name: userFullName,
-        phone_number: phone,
+        invite_code: inviteCode,
         wallet_address: address,
       };
       dispatch(inviteMembersActions.acceptInvitation(orgUuid, payload));

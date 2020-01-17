@@ -3,10 +3,10 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { memberStatus } from "../../../Utils/TeamMembers";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { loaderActions } from ".";
+import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
-import { setUserInviteeStatus } from "./userActions/onboardingActions";
+import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
 
 export const SET_MEMBERS_FOR_STATUS = "SET_MEMBERS_FOR_STATUS";
 
@@ -94,7 +94,7 @@ const verifyInvitationCodeAPI = code => async dispatch => {
     invite_code: code,
   };
   const apiOptions = initializeAPIOptions(token, null, queryParameters);
-  return await API.post(apiName, apiPath, apiOptions);
+  return await API.get(apiName, apiPath, apiOptions);
 };
 
 export const verifyInvitation = code => async dispatch => {
@@ -104,6 +104,7 @@ export const verifyInvitation = code => async dispatch => {
     if (error.code) {
       throw new APIError(error.message);
     }
+    dispatch(setUserInviteCode(code));
     dispatch(loaderActions.stopAppLoader());
     return data;
   } catch (error) {
