@@ -19,6 +19,7 @@ const InvitedMembers = ({
   verifiedMembers,
   handleClose,
   inviteMembersAlert,
+  shouldInviteMembersBeEnabled,
 }) => {
   const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
@@ -52,7 +53,13 @@ const InvitedMembers = ({
         )}
       </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
+        <SNETButton
+          children="invite members"
+          variant="contained"
+          color="primary"
+          onClick={handleInviteMembers}
+          disabled={!shouldInviteMembersBeEnabled()}
+        />
       </Grid>
       <InvitePopup
         open={showPopup}
