@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
 
+import { useStyles } from "./styles";
 import { userEntities } from "../../../Utils/user";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import { verifyInvitationCodeForm } from "./content";
@@ -14,7 +16,7 @@ import { verificationCodeConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
-const VerifyInvitation = () => {
+const VerifyInvitation = ({ classes }) => {
   const userEntity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
@@ -40,7 +42,7 @@ const VerifyInvitation = () => {
     return null;
   }
   return (
-    <Grid container sx={12} sm={12} md={12} lg={12}>
+    <Grid container sx={12} sm={12} md={12} lg={12} className={classes.verifyInvitationContainer}>
       <Grid item sx={12} sm={12} md={6} lg={6}>
         <SNETTextfield {...verifyInvitationCodeForm} value={code} onChange={e => setCode(e.target.value)} />
       </Grid>
@@ -52,4 +54,4 @@ const VerifyInvitation = () => {
   );
 };
 
-export default VerifyInvitation;
+export default withStyles(useStyles)(VerifyInvitation);
