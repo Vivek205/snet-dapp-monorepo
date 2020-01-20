@@ -300,3 +300,10 @@ export const getOwner = uuid => async dispatch => {
   await dispatch(setOrgOwner(data[0].username));
   return data;
 };
+
+export const initializeOrg = async dispatch => {
+  const data = await dispatch(getStatus);
+  if (data[0]) {
+    await dispatch(getOwner(data[0].org_uuid));
+  }
+};

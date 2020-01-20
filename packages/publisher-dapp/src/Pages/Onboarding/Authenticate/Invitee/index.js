@@ -28,7 +28,7 @@ const Invitee = ({ classes, history }) => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     try {
       const isNotValid = validator({ address }, inviteeValidationConstraints);
       if (isNotValid) {
@@ -38,7 +38,7 @@ const Invitee = ({ classes, history }) => {
         invite_code: inviteCode,
         wallet_address: address,
       };
-      dispatch(inviteMembersActions.acceptInvitation(payload));
+      await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
       history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
