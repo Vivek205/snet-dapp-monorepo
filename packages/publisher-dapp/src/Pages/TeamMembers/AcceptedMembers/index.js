@@ -10,7 +10,13 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import AlertBox from "shared/dist/components/AlertBox";
 
-const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addBlockChainAlert }) => {
+const AcceptedMembers = ({
+  classes,
+  acceptedMembers,
+  handleAddToBlockChain,
+  addBlockChainAlert,
+  shouldAddToBlockChainBeEnabled,
+}) => {
   return (
     <Grid container className={classes.acceptedMembersContainer}>
       <Typography variant="h6">
@@ -50,7 +56,7 @@ const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addB
           variant="contained"
           color="primary"
           onClick={handleAddToBlockChain}
-          disabled={acceptedMembers.length === 0}
+          disabled={!shouldAddToBlockChainBeEnabled()}
         />
       </Grid>
     </Grid>

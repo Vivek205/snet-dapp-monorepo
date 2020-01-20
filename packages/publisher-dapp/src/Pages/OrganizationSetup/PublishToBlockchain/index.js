@@ -18,9 +18,10 @@ import { APIError } from "shared/dist/utils/API";
 import { organizationTypes, organizationSetupStatuses } from "../../../Utils/organizationSetup";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
-  const { organization } = useSelector(state => ({
+  const { organization, email, ownerEmail } = useSelector(state => ({
     organization: state.organization,
-    entity: state.user.entity,
+    email: state.user.email,
+    ownerEmail: state.organization.owner,
   }));
   const { name, type, status, uuid, ownerFullName, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
@@ -70,6 +71,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     history.push(OrganizationSetupRoutes.REGION.path);
   };
 
+  const shouldPublishBeDisabled = () => !ownerAddress || email !== ownerEmail;
+
   return (
     <Fragment>
       <div className={classes.box}>
@@ -112,7 +115,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
         <SNETButton color="primary" children="back" onClick={handleBack} />
         <SubmitAction
           status={status}
-          disablePublish={!ownerAddress}
+          disablePublish={shouldPublishBeDisabled()}
           handlePublish={handlePublish}
           handleSubmit={handleSubmit}
         />
