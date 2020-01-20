@@ -11,17 +11,21 @@ import { memberStatus } from "../../Utils/TeamMembers";
 import InvitedMembers from "./InvitedMembers";
 import MembersWithAccess from "./MembersWithAccess";
 import AcceptedMembers from "./AcceptedMembers";
-import { TopSectionContent } from "./content";
+import { TopSectionContent, invitationError } from "./content";
 
 import { useStyles } from "./styles";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import { checkIfKnownError } from "shared/dist/utils/error";
+import ValidationError from "shared/dist/utils/validationError";
+import { inviteEmailsConstraints } from "./validationConstraints";
+import validator from "shared/dist/utils/validator";
 
 class TeamMembers extends Component {
   state = {
     showPopup: false,
     textareaValue: "",
     addBlockChainAlert: {},
+    inviteMembersAlert: {},
   };
 
   componentDidMount = () => {
@@ -40,9 +44,47 @@ class TeamMembers extends Component {
     this.setState({ textareaValue: event.target.value });
   };
 
-  handleSendInvitation = () => {
-    const allEmails = this.state.textareaValue.split(",");
-    this.props.inviteMembers(allEmails, this.props.uuid);
+  handleSendInvitation = async () => {
+    const validateIfEmailAlreadyExists = emails => {
+      let alreadyInvitedError;
+      emails.forEach(email => {
+        const trimmedEmail = email.trim();
+        const isNotValid = validator.single(trimmedEmail, inviteEmailsConstraints.email);
+        if (isNotValid) {
+          throw new ValidationError(isNotValid[0]);
+        }
+        if (this.props.members[memberStatus.PENDING].find(el => el.username === trimmedEmail)) {
+          return (alreadyInvitedError = invitationError[memberStatus.PENDING](email));
+        } else if (this.props.members[memberStatus.VERIFIED].find(el => el.username === trimmedEmail)) {
+          return (alreadyInvitedError = invitationError[memberStatus.VERIFIED](email));
+        } else if (this.props.members[memberStatus.ACCEPTED].find(el => el.username === trimmedEmail)) {
+          return (alreadyInvitedError = invitationError[memberStatus.ACCEPTED](email));
+        } else if (this.props.members[memberStatus.PUBLISH_IN_PROGRESS].find(el => el.username === trimmedEmail)) {
+          return (alreadyInvitedError = invitationError[memberStatus.PUBLISH_IN_PROGRESS](email));
+        } else if (this.props.members[memberStatus.PUBLISHED].find(el => el.username === trimmedEmail)) {
+          return (alreadyInvitedError = invitationError[memberStatus.PUBLISHED](email));
+        }
+      });
+      if (alreadyInvitedError) {
+        throw new ValidationError(alreadyInvitedError);
+      }
+    };
+
+    try {
+      const allEmails = this.state.textareaValue.split(",");
+      validateIfEmailAlreadyExists(allEmails);
+      await this.props.inviteMembers(allEmails, this.props.uuid);
+      this.setState({
+        inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
+      });
+    } catch (error) {
+      if (checkIfKnownError(error)) {
+        return this.setState({ inviteMembersAlert: { type: alertTypes.ERROR, message: error.message } });
+      }
+      this.setState({
+        inviteMembersAlert: { type: alertTypes.ERROR, message: "Something went wrong. Please try again later" },
+      });
+    }
   };
 
   handleAddToBlockChain = async () => {
@@ -54,8 +96,11 @@ class TeamMembers extends Component {
       });
     } catch (error) {
       if (checkIfKnownError(error)) {
-        this.setState({ addBlockChainAlert: { type: alertTypes.ERROR, message: error.message } });
+        return this.setState({ addBlockChainAlert: { type: alertTypes.ERROR, message: error.message } });
       }
+      this.setState({
+        addBlockChainAlert: { type: alertTypes.ERROR, message: "Something went wrong. Please try again later" },
+      });
     }
   };
 
@@ -88,6 +133,7 @@ class TeamMembers extends Component {
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
               handleClose={this.handleInviteMembersClose}
+              inviteMembersAlert={this.state.inviteMembersAlert}
             />
             <AcceptedMembers
               acceptedMembers={members[memberStatus.ACCEPTED]}

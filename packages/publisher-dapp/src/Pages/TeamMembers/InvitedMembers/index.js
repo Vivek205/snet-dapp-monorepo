@@ -18,6 +18,7 @@ const InvitedMembers = ({
   pendingMembers,
   verifiedMembers,
   handleClose,
+  inviteMembersAlert,
 }) => {
   const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
@@ -59,6 +60,7 @@ const InvitedMembers = ({
         onTextareaChange={onTextareaChange}
         handleSendInvitation={handleSendInvitation}
         handleClose={handleClose}
+        inviteMembersAlert={inviteMembersAlert}
       />
     </Grid>
   );

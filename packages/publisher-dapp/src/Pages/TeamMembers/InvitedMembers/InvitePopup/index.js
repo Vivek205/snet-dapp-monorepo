@@ -12,8 +12,17 @@ import CloseIcon from "@material-ui/icons/Close";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
+import AlertBox from "shared/dist/components/AlertBox";
 
-const InvitePopup = ({ classes, open, handleClose, textareaValue, onTextareaChange, handleSendInvitation }) => {
+const InvitePopup = ({
+  classes,
+  open,
+  handleClose,
+  textareaValue,
+  onTextareaChange,
+  handleSendInvitation,
+  inviteMembersAlert,
+}) => {
   const handleCancel = () => {
     handleClose();
   };
@@ -38,6 +47,7 @@ const InvitePopup = ({ classes, open, handleClose, textareaValue, onTextareaChan
             value={textareaValue}
             onChange={onTextareaChange}
           />
+          <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
         </CardContent>
         <CardActions className={classes.btnContainer}>
           <SNETButton children="cancel" color="primary" variant="text" />
