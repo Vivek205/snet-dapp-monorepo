@@ -60,7 +60,8 @@ export const inviteMembers = (members, uuid) => async dispatch => {
     dispatch(loaderActions.startAppLoader(LoaderContent.INVITE_MEMBERS));
     const payload = generateInviteMembersPayload(members);
     await dispatch(inviteMembersAPI(payload, uuid));
-    dispatch(loaderActions.stopAppLoader());
+    await dispatch(getMembers(memberStatus.PENDING, uuid));
+    return dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
   }
