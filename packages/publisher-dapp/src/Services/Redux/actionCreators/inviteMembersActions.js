@@ -3,7 +3,7 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { memberStatus } from "../../../Utils/TeamMembers";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { loaderActions } from "./";
+import { loaderActions, organizationActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
 import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
@@ -63,6 +63,7 @@ export const inviteMembers = (members, uuid) => async dispatch => {
     return dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
+    throw error;
   }
 };
 
@@ -75,14 +76,19 @@ const acceptInvitationAPI = payload => async dispatch => {
 };
 
 export const acceptInvitation = payload => async dispatch => {
+  const { data, error } = await dispatch(acceptInvitationAPI(payload));
+  if (error.code) {
+    throw new APIError(error.message);
+  }
+  return data;
+};
+
+export const acceptInvitationAndGetLatestOrgStatus = payload => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
-    const { data, error } = await dispatch(acceptInvitationAPI(payload));
-    if (error.code) {
-      throw new APIError(error.message);
-    }
+    await dispatch(acceptInvitation(payload));
+    await dispatch(organizationActions.getStatus);
     dispatch(loaderActions.stopAppLoader());
-    return data;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

@@ -15,7 +15,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
-import { OrganizationSetupRoutes } from "../../../OrganizationSetup/OrganizationSetupRouter/Routes";
+import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 
 const Invitee = ({ classes, history }) => {
   const inviteCode = useSelector(state => state.user.inviteCode);
@@ -28,7 +28,7 @@ const Invitee = ({ classes, history }) => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     try {
       const isNotValid = validator({ address }, inviteeValidationConstraints);
       if (isNotValid) {
@@ -38,8 +38,8 @@ const Invitee = ({ classes, history }) => {
         invite_code: inviteCode,
         wallet_address: address,
       };
-      dispatch(inviteMembersActions.acceptInvitation(payload));
-      history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
+      await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });

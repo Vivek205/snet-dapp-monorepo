@@ -40,6 +40,8 @@ class TeamMembers extends Component {
     this.setState({ showPopup: false, textareaValue: "", inviteMembersAlert: {} });
   };
 
+  shouldInviteMembersBeEnabled = () => this.props.email === this.props.ownerEmail;
+
   onTextareaChange = event => {
     this.setState({ textareaValue: event.target.value });
   };
@@ -137,6 +139,7 @@ class TeamMembers extends Component {
               handleSendInvitation={this.handleSendInvitation}
               handleClose={this.handleInviteMembersClose}
               inviteMembersAlert={this.state.inviteMembersAlert}
+              shouldInviteMembersBeEnabled={this.shouldInviteMembersBeEnabled}
             />
             <AcceptedMembers
               acceptedMembers={members[memberStatus.ACCEPTED]}
