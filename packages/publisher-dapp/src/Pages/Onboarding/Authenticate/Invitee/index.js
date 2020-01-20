@@ -39,7 +39,7 @@ const Invitee = ({ classes, history }) => {
         wallet_address: address,
       };
       dispatch(inviteMembersActions.acceptInvitation(payload));
-      setAlert({ type: alertTypes.ERROR, message: "You have been sucessfully addded to the organization" });
+      setAlert({ type: alertTypes.ERROR, message: "You have been sucessfully addded to the organization as a member" });
       history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
