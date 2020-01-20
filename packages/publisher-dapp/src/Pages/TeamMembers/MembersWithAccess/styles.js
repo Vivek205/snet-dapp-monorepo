@@ -102,4 +102,14 @@ export const useStyles = MUITheme => ({
     fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
   },
+  message: {
+    width: "100%",
+    marginTop: 30,
+    display: "block",
+    color: "#999",
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 16,
+    fontWeight: 200,
+    textAlign: "center",
+  },
 });

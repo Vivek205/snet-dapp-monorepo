@@ -2,6 +2,7 @@ export const useStyles = MUITheme => ({
   singularityAccContainer: {
     width: 845,
     margin: "48px auto 0",
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
   box: {
     paddingBottom: 33,
@@ -15,6 +16,13 @@ export const useStyles = MUITheme => ({
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
       lineHeight: "50px !important",
+    },
+    "& > div": {
+      [MUITheme.breakpoints.down("sm")]: {
+        boxSizing: "border-box",
+        width: "100%",
+        padding: "0 24px",
+      },
     },
   },
   singularityAccDescription: {
@@ -84,5 +92,18 @@ export const useStyles = MUITheme => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+  },
+  verifyInvitationContainer: {
+    padding: "0 27px",
+    alignItems: "center",
+    "& > div": {
+      "& > div": {
+        "& > div": {
+          maxWidth: "100%",
+          flexBasis: "91%",
+          [MUITheme.breakpoints.down("sm")]: { flexBasis: "100%" },
+        },
+      },
+    },
   },
 });
