@@ -32,7 +32,7 @@ const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addB
             <Grid item sx={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
               <Grid item sx={12} sm={12} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>joining member:</span>
-                <UserCard userName={item.name} userEmail={item.email} />
+                <UserCard userName={item.username} userEmail={item.username} />
               </Grid>
               <Grid item sx={12} sm={12} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>role:</span>
