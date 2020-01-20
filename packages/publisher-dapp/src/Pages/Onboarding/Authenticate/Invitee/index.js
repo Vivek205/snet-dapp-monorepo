@@ -15,6 +15,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
+import { OrganizationSetupRoutes } from "../../../OrganizationSetup/OrganizationSetupRouter/Routes";
 
 const Invitee = ({ classes, history }) => {
   const inviteCode = useSelector(state => state.user.inviteCode);
@@ -38,6 +39,8 @@ const Invitee = ({ classes, history }) => {
         wallet_address: address,
       };
       dispatch(inviteMembersActions.acceptInvitation(payload));
+      setAlert({ type: alertTypes.ERROR, message: "You have been sucessfully addded to the organization" });
+      history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
