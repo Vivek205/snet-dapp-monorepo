@@ -54,6 +54,7 @@ const initialState = {
     [memberStatus.VERIFIED]: [],
     [memberStatus.EXPIRED]: [],
   },
+  owner: "",
 };
 
 const OrganizationReducer = (state = initialState, action) => {
@@ -76,6 +77,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, mailingAddress: { ...state.mailingAddress, ...action.payload } };
     case inviteMembersActions.SET_MEMBERS_FOR_STATUS:
       return { ...state, members: { ...state.members, ...action.payload } };
+    case organizationActions.SET_ORG_OWNER:
+      return { ...state, owner: action.payload };
     default:
       return state;
   }

@@ -104,6 +104,9 @@ class TeamMembers extends Component {
     }
   };
 
+  shouldAddToBlockChainBeEnabled = () =>
+    this.props.members[memberStatus.ACCEPTED].length > 0 || this.props.email === this.props.ownerEmail;
+
   render() {
     const { classes, members } = this.props;
     const { showPopup, textareaValue } = this.state;
@@ -139,6 +142,7 @@ class TeamMembers extends Component {
               acceptedMembers={members[memberStatus.ACCEPTED]}
               handleAddToBlockChain={this.handleAddToBlockChain}
               addBlockChainAlert={this.state.addBlockChainAlert}
+              shouldAddToBlockChainBeEnabled={this.shouldAddToBlockChainBeEnabled}
             />
           </div>
           <MembersWithAccess
@@ -156,6 +160,8 @@ const mapStateToProps = state => ({
   orgId: state.organization.id,
   uuid: state.organization.uuid,
   members: state.organization.members,
+  email: state.user.email,
+  ownerEmail: state.organization.owner,
 });
 
 const mapDispatchToProps = dispatch => ({
