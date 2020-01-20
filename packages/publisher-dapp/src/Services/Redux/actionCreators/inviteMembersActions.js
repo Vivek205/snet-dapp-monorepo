@@ -63,6 +63,7 @@ export const inviteMembers = (members, uuid) => async dispatch => {
     return dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
+    throw error;
   }
 };
 

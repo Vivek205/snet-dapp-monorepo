@@ -9,7 +9,7 @@ import orgSetupPendingImg from "shared/dist/assets/images/orgSetupPending.png";
 const VerificationPending = () => {
   const { email, ownerEmail } = useSelector(state => ({
     email: state.user.email,
-    ownerEmail: state.organization.ownerEmail,
+    ownerEmail: state.organization.owner,
   }));
   const history = useHistory();
 

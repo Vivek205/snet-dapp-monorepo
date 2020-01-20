@@ -41,6 +41,7 @@ const Organization = props => {
       }
       await dispatch(organizationActions.submitForApproval(organization));
       await dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
+      await dispatch(organizationActions.initializeOrg);
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (error instanceof ValidationError) {

@@ -9,7 +9,7 @@ import orgSetupApprovedImg from "shared/dist/assets/images/orgSetupApproved.png"
 const VerificationApproved = () => {
   const { email, ownerEmail } = useSelector(state => ({
     email: state.user.email,
-    ownerEmail: state.organization.ownerEmail,
+    ownerEmail: state.organization.owner,
   }));
   const history = useHistory();
 
