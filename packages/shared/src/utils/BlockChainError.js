@@ -1,6 +1,6 @@
-export default class ValidationError extends Error {
+export default class BlockChainError extends Error {
   constructor(message) {
     super(message);
-    this.name = "ValidationError";
+    this.name = "BlockChainError";
   }
 }

@@ -23,18 +23,14 @@ const InvitePopup = ({
   handleSendInvitation,
   inviteMembersAlert,
 }) => {
-  const handleCancel = () => {
-    handleClose();
-  };
-
   return (
-    <Modal open={open} onClose={handleCancel} className={classes.inviteModal}>
+    <Modal open={open} onClose={handleClose} className={classes.inviteModal}>
       <Card className={classes.card}>
         <CardHeader
           className={classes.cardHeader}
           title={<Typography variant="h4">Invite Team Members</Typography>}
           action={
-            <IconButton onClick={handleCancel}>
+            <IconButton onClick={handleClose}>
               <CloseIcon />
             </IconButton>
           }
@@ -50,7 +46,7 @@ const InvitePopup = ({
           <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <SNETButton children="cancel" color="primary" variant="text" />
+          <SNETButton children="cancel" color="primary" variant="text" onClick={handleClose} />
           <SNETButton
             children="send invitation(s)"
             color="primary"

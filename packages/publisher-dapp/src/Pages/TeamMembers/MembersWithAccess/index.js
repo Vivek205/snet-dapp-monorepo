@@ -33,7 +33,7 @@ const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMember
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableBody} key={item.email}>
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <span className={classes.mobileTableHeader}>member</span>
-              <UserCard userName={item.name} userEmail={item.email} />
+              <UserCard userName={item.username} userEmail={item.username} />
             </Grid>
             <Grid item xs={12} sm={12} md={2} lg={2}>
               <span className={classes.mobileTableHeader}>role</span>

@@ -6,7 +6,6 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { APIError } from "shared/dist/utils/API";
-import BlockChainError from "shared/dist/utils/API";
 import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
@@ -134,25 +133,27 @@ export const getMemberStatus = (username, orgUuid) => async dispatch => {
     setUserInviteeStatus(data[0].status);
   }
 };
-const generatePublishMembersPayload = members =>
-  members.map(member => ({
+const generatePublishMembersPayload = (members, txnHash) => ({
+  transaction_hash: txnHash,
+  members: members.map(member => ({
     username: member.username,
     address: member.address,
     status: member.status,
-  }));
+  })),
+});
 
 const publishMembersAPI = (payload, uuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.PUBLISH_MEMBERS(uuid);
   const apiOptions = initializeAPIOptions(token, payload);
-  return await API.get(apiName, apiPath, apiOptions);
+  return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const publishMembers = (members, uuid) => async dispatch => {
+export const publishMembers = (members, uuid, txnHash) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_MEMBERS));
-    const payload = generatePublishMembersPayload(members);
+    const payload = generatePublishMembersPayload(members, txnHash);
     await dispatch(publishMembersAPI(payload, uuid));
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -162,22 +163,28 @@ export const publishMembers = (members, uuid) => async dispatch => {
 const filterAdressFromMembers = members => members.map(member => member.address);
 
 export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => {
-  const sdk = await initSDK();
-  const newMembersAddress = filterAdressFromMembers(members);
-  dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
-  return new Promise((resolve, reject) => {
-    sdk._registryContract
-      .addOrganizationMembers(orgId, newMembersAddress)
-      .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
-        await dispatch(publishMembers(members, uuid, txnHash));
-      })
-      .on(blockChainEvents.RECEIPT, () => {
-        dispatch(loaderActions.stopAppLoader());
-        resolve();
-      })
-      .on(blockChainEvents.ERROR, error => {
-        dispatch(loaderActions.stopAppLoader());
-        throw new BlockChainError();
-      });
-  });
+  try {
+    const sdk = await initSDK();
+    const newMembersAddress = filterAdressFromMembers(members);
+    dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
+    return new Promise((resolve, reject) => {
+      sdk._registryContract
+        .addOrganizationMembers(orgId, newMembersAddress)
+        .send()
+        .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
+          await dispatch(publishMembers(members, uuid, txnHash));
+        })
+        .on(blockChainEvents.RECEIPT, () => {
+          dispatch(loaderActions.stopAppLoader());
+          resolve();
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(error);
+        });
+    });
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
 };
