@@ -37,7 +37,7 @@ class TeamMembers extends Component {
   };
 
   handleInviteMembersClose = () => {
-    this.setState({ showPopup: false });
+    this.setState({ showPopup: false, textareaValue: "", inviteMembersAlert: {} });
   };
 
   onTextareaChange = event => {
