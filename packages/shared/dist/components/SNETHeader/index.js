@@ -36,7 +36,7 @@ var SNETHeader = function SNETHeader(_ref) {
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
-    color: "white"
+    color: color
   }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
     className: classes.logoContainer
   }, _react.default.createElement(_CardMedia.default, {
@@ -64,7 +64,7 @@ SNETHeader.propTypes = {
       activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
       label: _propTypes.default.string,
       openInNewTab: _propTypes.default.bool,
-      to: _propTypes.default.oneOf(_propTypes.default.string, _propTypes.default.object)
+      to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
     }))
   }),
   actions: _propTypes.default.arrayOf(_propTypes.default.shape({

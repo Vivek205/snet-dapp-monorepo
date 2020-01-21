@@ -30,7 +30,7 @@ Navbar.propTypes = {
       activeLinks: PropTypes.arrayOf(PropTypes.string),
       label: PropTypes.string,
       openInNewTab: PropTypes.bool,
-      to: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+      to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     })
   ),
 };

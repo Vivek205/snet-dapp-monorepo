@@ -31,7 +31,7 @@ const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMember
         <span className={classes.message}>No team members added</span>
       ) : (
         membersWithAccess.map((item, index) => (
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableBody} key={item.email}>
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableBody} key={item.username}>
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <span className={classes.mobileTableHeader}>member</span>
               <UserCard userName={item.username} userEmail={item.username} />
