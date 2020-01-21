@@ -32,12 +32,12 @@ class TeamMembers extends Component {
     this.props.getAllMembers(this.props.uuid);
   };
 
-  handleInviteMembers = () => {
-    this.setState({ showPopup: true });
+  handleInviteMembersOpen = () => {
+    this.setState({ showPopup: true, inviteMembersAlert: {} });
   };
 
   handleInviteMembersClose = () => {
-    this.setState({ showPopup: false, textareaValue: "", inviteMembersAlert: {} });
+    this.setState({ showPopup: false, textareaValue: "" });
   };
 
   shouldInviteMembersBeEnabled = () => this.props.email === this.props.ownerEmail;
@@ -47,6 +47,8 @@ class TeamMembers extends Component {
   };
 
   handleSendInvitation = async () => {
+    this.setState({ inviteMembersAlert: {} });
+
     const validateIfEmailAlreadyExists = emails => {
       let alreadyInvitedError;
       emails.forEach(email => {
@@ -79,6 +81,7 @@ class TeamMembers extends Component {
       this.setState({
         inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
       });
+      this.handleInviteMembersClose();
     } catch (error) {
       if (checkIfKnownError(error)) {
         return this.setState({ inviteMembersAlert: { type: alertTypes.ERROR, message: error.message } });
@@ -133,7 +136,7 @@ class TeamMembers extends Component {
               pendingMembers={members[memberStatus.PENDING]}
               verifiedMembers={members[memberStatus.VERIFIED]}
               showPopup={showPopup}
-              handleInviteMembers={this.handleInviteMembers}
+              handleInviteMembersOpen={this.handleInviteMembersOpen}
               textareaValue={textareaValue}
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
