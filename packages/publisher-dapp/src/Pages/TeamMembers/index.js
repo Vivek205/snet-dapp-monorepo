@@ -110,7 +110,9 @@ class TeamMembers extends Component {
   };
 
   shouldAddToBlockChainBeEnabled = () =>
-    this.props.members[memberStatus.ACCEPTED].length > 0 || this.props.email === this.props.ownerEmail;
+    this.props.members[memberStatus.ACCEPTED].length > 0 ||
+    this.props.email === this.props.ownerEmail ||
+    this.props.orgStatus === "PUBLISHED";
 
   render() {
     const { classes, members } = this.props;
@@ -168,6 +170,7 @@ const mapStateToProps = state => ({
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
+  orgStatus: state.organization.status,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -19,11 +19,11 @@ const MMAddress = ({ classes }) => {
 
   if (!!ownerAddress) {
     return (
-      <Grid container>
-        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
+      <Grid container className={classes.technicalInfo}>
+        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.owmnerMMTextfield}>
           <SNETTextfield name="ownerAddress" value={ownerAddress} disabled label="Owner's Metamask Address" />
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
+        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.btnContainer}>
           <SNETButton color="primary" variant="contained" children="capture from metamask" onClick={handleConnetMM} />
         </Grid>
       </Grid>
@@ -31,14 +31,14 @@ const MMAddress = ({ classes }) => {
   }
 
   return (
-    <Grid container>
+    <Grid container className={classes.technicalInfo}>
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
         <AlertBox
           message="Please install or log in to Metamask to proceed further.  Learn more about Metamask."
           type="warning"
         />
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.topSectionContainer}>
+      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.btnContainer}>
         <SNETButton color="primary" variant="contained" children="connect metamask" onClick={handleConnetMM} />
       </Grid>
     </Grid>

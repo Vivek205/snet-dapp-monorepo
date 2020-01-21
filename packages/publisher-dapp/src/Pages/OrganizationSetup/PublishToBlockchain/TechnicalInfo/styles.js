@@ -12,4 +12,20 @@ export const useStyles = MUITheme => ({
       lineHeight: "23px",
     },
   },
+  technicalInfo: {
+    alignItems: "center",
+    [MUITheme.breakpoints.down("sm")]: { marginBottom: 25 },
+  },
+  btnContainer: {
+    paddingLeft: 30,
+    [MUITheme.breakpoints.down("sm")]: { paddingLeft: 0 },
+  },
+  owmnerMMTextfield: {
+    "& div": {
+      "& div": {
+        maxWidth: "100%",
+        flexBasis: "100%",
+      },
+    },
+  },
 });
