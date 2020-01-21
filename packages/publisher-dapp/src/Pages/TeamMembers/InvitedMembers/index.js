@@ -7,11 +7,13 @@ import ShowMoreIcon from "@material-ui/icons/MoreVert";
 import InvitePopup from "./InvitePopup";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { parseDateFromAPIResponse } from "shared/dist/utils/Date";
 
 const InvitedMembers = ({
   classes,
   showPopup,
-  handleInviteMembers,
+  handleInviteMembersOpen,
   textareaValue,
   onTextareaChange,
   handleSendInvitation,
@@ -19,6 +21,7 @@ const InvitedMembers = ({
   verifiedMembers,
   handleClose,
   inviteMembersAlert,
+  shouldInviteMembersBeEnabled,
 }) => {
   const invitedMembers = [...pendingMembers, ...verifiedMembers];
   return (
@@ -44,15 +47,24 @@ const InvitedMembers = ({
               </Grid>
               <Grid item xs={6} sm={6} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>invited on</span>
-                <span className={classes.tableBodyCell}>{item.invitedOn}</span>
+                <span className={classes.tableBodyCell}>{parseDateFromAPIResponse(item.invited_on)}</span>
               </Grid>
               <ShowMoreIcon className={classes.showMoreIcon} />
             </Grid>
           ))
         )}
       </div>
+      {inviteMembersAlert.type === alertTypes.SUCCESS ? (
+        <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
+      ) : null}
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="invite members" variant="contained" color="primary" onClick={handleInviteMembers} />
+        <SNETButton
+          children="invite members"
+          variant="contained"
+          color="primary"
+          onClick={handleInviteMembersOpen}
+          disabled={!shouldInviteMembersBeEnabled()}
+        />
       </Grid>
       <InvitePopup
         open={showPopup}

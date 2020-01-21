@@ -48,7 +48,7 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
 export const initializeApplication = async dispatch => {
   try {
     const { nickname, email, email_verified } = await dispatch(fetchAuthenticatedUser());
-    await dispatch(organizationActions.getStatus);
+    await dispatch(organizationActions.initializeOrg);
     dispatch(setUserLoggedIn(true));
     dispatch(setUserEmail(email));
     dispatch(setUserNickname(nickname));
@@ -78,10 +78,12 @@ export const login = (email, password) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.LOGIN));
     const loginResponse = await Auth.signIn(email, password);
+    await dispatch(organizationActions.initializeOrg);
     return await dispatch(loginSucess(loginResponse));
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     if (error.code === "UserNotConfirmedException") {
+      await dispatch(organizationActions.initializeOrg);
       await dispatch(handleUserNotConfirmed(email));
     }
     throw error;

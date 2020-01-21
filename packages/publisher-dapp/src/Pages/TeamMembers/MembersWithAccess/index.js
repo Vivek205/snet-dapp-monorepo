@@ -8,6 +8,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import StyledPagination from "shared/dist/components/StyledPagination";
 import UserCard from "shared/dist/components/UserCard";
 import { useStyles } from "./styles";
+import { parseDateFromAPIResponse } from "shared/dist/utils/Date";
 
 const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMembers }) => {
   const membersWithAccess = [...publisedMembers, ...publishedInProgressMembers];
@@ -33,7 +34,7 @@ const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMember
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableBody} key={item.email}>
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <span className={classes.mobileTableHeader}>member</span>
-              <UserCard userName={item.name} userEmail={item.email} />
+              <UserCard userName={item.username} userEmail={item.username} />
             </Grid>
             <Grid item xs={12} sm={12} md={2} lg={2}>
               <span className={classes.mobileTableHeader}>role</span>
@@ -44,7 +45,7 @@ const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMember
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>
               <span className={classes.mobileTableHeader}>joined since</span>
-              <span className={classes.tableBodyCell}>{item.joinedSince}</span>
+              <span className={classes.tableBodyCell}>{parseDateFromAPIResponse(item.updated_on)}</span>
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
               <ShowMoreIcon />

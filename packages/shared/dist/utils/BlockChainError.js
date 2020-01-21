@@ -27,22 +27,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var ValidationError =
+var BlockChainError =
 /*#__PURE__*/
 function (_Error) {
-  _inherits(ValidationError, _Error);
+  _inherits(BlockChainError, _Error);
 
-  function ValidationError(message) {
+  function BlockChainError(message) {
     var _this;
 
-    _classCallCheck(this, ValidationError);
+    _classCallCheck(this, BlockChainError);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ValidationError).call(this, message));
-    _this.name = "ValidationError";
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BlockChainError).call(this, message));
+    _this.name = "BlockChainError";
     return _this;
   }
 
-  return ValidationError;
+  return BlockChainError;
 }(_wrapNativeSuper(Error));
 
-exports.default = ValidationError;
+exports.default = BlockChainError;

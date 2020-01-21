@@ -10,7 +10,13 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import AlertBox from "shared/dist/components/AlertBox";
 
-const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addBlockChainAlert }) => {
+const AcceptedMembers = ({
+  classes,
+  acceptedMembers,
+  handleAddToBlockChain,
+  addBlockChainAlert,
+  shouldAddToBlockChainBeEnabled,
+}) => {
   return (
     <Grid container className={classes.acceptedMembersContainer}>
       <Typography variant="h6">
@@ -32,7 +38,7 @@ const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addB
             <Grid item sx={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
               <Grid item sx={12} sm={12} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>joining member:</span>
-                <UserCard userName={item.name} userEmail={item.email} />
+                <UserCard userName={item.username} userEmail={item.username} />
               </Grid>
               <Grid item sx={12} sm={12} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>role:</span>
@@ -50,7 +56,7 @@ const AcceptedMembers = ({ classes, acceptedMembers, handleAddToBlockChain, addB
           variant="contained"
           color="primary"
           onClick={handleAddToBlockChain}
-          disabled={acceptedMembers.length === 0}
+          disabled={!shouldAddToBlockChainBeEnabled()}
         />
       </Grid>
     </Grid>

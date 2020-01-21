@@ -1,6 +1,6 @@
 export const userEntities = {
-  ORGANIZATION: "organization",
-  INDIVIDUAL: "individual",
+  ORGANIZATION: "Organization",
+  INDIVIDUAL: "Individual",
   INVITEE: "invitee",
 };
 

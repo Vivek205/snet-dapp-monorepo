@@ -20,6 +20,7 @@ export const SET_GROUPS = "SET_GROUPS";
 export const SET_ORGANIZATION_STATUS = "SET_ORGANIZATION_STATUS";
 export const SET_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
 export const SET_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
+export const SET_ORG_OWNER = "SET_ORG_OWNER";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
@@ -39,6 +40,8 @@ export const setMailingAddressDetail = (name, value) => ({
   type: SET_MAILING_ADDRESS_DETAIL,
   payload: { [name]: value },
 });
+
+export const setOrgOwner = owner => ({ type: SET_ORG_OWNER, payload: owner });
 
 const payloadForSubmit = organization => {
   // prettier-ignore
@@ -118,7 +121,7 @@ const getStatusAPI = () => async dispatch => {
 export const getStatus = async dispatch => {
   const { data } = await dispatch(getStatusAPI());
   if (isEmpty(data)) {
-    return;
+    return data;
   }
   const organization = {
     status: data[0].status,
@@ -128,7 +131,7 @@ export const getStatus = async dispatch => {
     // TODO rename data[0].name to data[0].org_name
     name: data[0].name,
     type: data[0].org_type,
-    description: data[0].description,
+    longDescription: data[0].description,
     shortDescription: data[0].short_description,
     website: data[0].url,
     duns: data[0].duns_no,
@@ -158,6 +161,7 @@ export const getStatus = async dispatch => {
     organization.groups = parsedGroups;
   }
   dispatch(setAllAttributes(organization));
+  return data;
 };
 
 const finishLaterAPI = payload => async dispatch => {
@@ -279,5 +283,27 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
+  }
+};
+
+const getOwnerAPI = uuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.GET_MEMBERS(uuid);
+  const queryStringParameters = { role: "owner" };
+  const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getOwner = uuid => async dispatch => {
+  const { data } = await dispatch(getOwnerAPI(uuid));
+  await dispatch(setOrgOwner(data[0].username));
+  return data;
+};
+
+export const initializeOrg = async dispatch => {
+  const data = await dispatch(getStatus);
+  if (data && data[0]) {
+    await dispatch(getOwner(data[0].org_uuid));
   }
 };

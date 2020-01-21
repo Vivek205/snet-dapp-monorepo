@@ -32,19 +32,23 @@ class TeamMembers extends Component {
     this.props.getAllMembers(this.props.uuid);
   };
 
-  handleInviteMembers = () => {
-    this.setState({ showPopup: true });
+  handleInviteMembersOpen = () => {
+    this.setState({ showPopup: true, inviteMembersAlert: {} });
   };
 
   handleInviteMembersClose = () => {
-    this.setState({ showPopup: false });
+    this.setState({ showPopup: false, textareaValue: "" });
   };
+
+  shouldInviteMembersBeEnabled = () => this.props.email === this.props.ownerEmail;
 
   onTextareaChange = event => {
     this.setState({ textareaValue: event.target.value });
   };
 
   handleSendInvitation = async () => {
+    this.setState({ inviteMembersAlert: {} });
+
     const validateIfEmailAlreadyExists = emails => {
       let alreadyInvitedError;
       emails.forEach(email => {
@@ -77,6 +81,7 @@ class TeamMembers extends Component {
       this.setState({
         inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
       });
+      this.handleInviteMembersClose();
     } catch (error) {
       if (checkIfKnownError(error)) {
         return this.setState({ inviteMembersAlert: { type: alertTypes.ERROR, message: error.message } });
@@ -104,6 +109,11 @@ class TeamMembers extends Component {
     }
   };
 
+  shouldAddToBlockChainBeEnabled = () =>
+    this.props.members[memberStatus.ACCEPTED].length > 0 ||
+    this.props.email === this.props.ownerEmail ||
+    this.props.orgStatus === "PUBLISHED";
+
   render() {
     const { classes, members } = this.props;
     const { showPopup, textareaValue } = this.state;
@@ -128,17 +138,19 @@ class TeamMembers extends Component {
               pendingMembers={members[memberStatus.PENDING]}
               verifiedMembers={members[memberStatus.VERIFIED]}
               showPopup={showPopup}
-              handleInviteMembers={this.handleInviteMembers}
+              handleInviteMembersOpen={this.handleInviteMembersOpen}
               textareaValue={textareaValue}
               onTextareaChange={this.onTextareaChange}
               handleSendInvitation={this.handleSendInvitation}
               handleClose={this.handleInviteMembersClose}
               inviteMembersAlert={this.state.inviteMembersAlert}
+              shouldInviteMembersBeEnabled={this.shouldInviteMembersBeEnabled}
             />
             <AcceptedMembers
               acceptedMembers={members[memberStatus.ACCEPTED]}
               handleAddToBlockChain={this.handleAddToBlockChain}
               addBlockChainAlert={this.state.addBlockChainAlert}
+              shouldAddToBlockChainBeEnabled={this.shouldAddToBlockChainBeEnabled}
             />
           </div>
           <MembersWithAccess
@@ -156,6 +168,9 @@ const mapStateToProps = state => ({
   orgId: state.organization.id,
   uuid: state.organization.uuid,
   members: state.organization.members,
+  email: state.user.email,
+  ownerEmail: state.organization.owner,
+  orgStatus: state.organization.status,
 });
 
 const mapDispatchToProps = dispatch => ({
