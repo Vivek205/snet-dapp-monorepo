@@ -24,6 +24,7 @@ const SingularityAccount = ({ classes, history }) => {
   });
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
+
   const handleContinue = () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
