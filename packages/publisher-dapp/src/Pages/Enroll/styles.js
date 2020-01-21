@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
   enrollMainContainer: {
-    padding: "0 11%",
+    padding: "0 18% 64px",
     "& > div": {
       padding: "32px 0",
       borderTopWidth: 1,
@@ -17,8 +17,9 @@ export const useStyles = MUITheme => ({
       },
     },
     "& h4": { marginBottom: 12 },
-    [MUITheme.breakpoints.down("sm")]: { padding: "0 35px" },
     "& .MuiTypography-body2": { color: MUITheme.palette.text.primary },
+    [MUITheme.breakpoints.down("md")]: { padding: "0 10% 64px" },
+    [MUITheme.breakpoints.down("sm")]: { padding: "0 35px 64px" },
   },
   topSectionContainer: {
     textAlign: "center",
