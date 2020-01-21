@@ -8,6 +8,7 @@ import InvitePopup from "./InvitePopup";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { parseDateFromAPIResponse } from "shared/dist/utils/Date";
 
 const InvitedMembers = ({
   classes,
@@ -46,7 +47,7 @@ const InvitedMembers = ({
               </Grid>
               <Grid item xs={6} sm={6} md={6} lg={6}>
                 <span className={classes.mobileTableHeader}>invited on</span>
-                <span className={classes.tableBodyCell}>{item.invitedOn}</span>
+                <span className={classes.tableBodyCell}>{parseDateFromAPIResponse(item.invited_on)}</span>
               </Grid>
               <ShowMoreIcon className={classes.showMoreIcon} />
             </Grid>
