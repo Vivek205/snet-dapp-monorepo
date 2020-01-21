@@ -4,7 +4,7 @@ import { organizationSetupStatuses, organizationTypes } from "../../../Utils/org
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 
 const initialState = {
-  status: organizationSetupStatuses.NOT_STARTED,
+  orgStatus: organizationSetupStatuses.NOT_STARTED,
   id: "",
   uuid: "",
   name: "",
@@ -70,7 +70,7 @@ const OrganizationReducer = (state = initialState, action) => {
     case organizationActions.SET_GROUPS:
       return { ...state, groups: action.payload };
     case organizationActions.SET_ORGANIZATION_STATUS:
-      return { ...state, status: action.payload };
+      return { ...state, orgStatus: action.payload };
     case organizationActions.SET_HQ_ADDRESS_DETAIL:
       return { ...state, hqAddress: { ...state.hqAddress, ...action.payload } };
     case organizationActions.SET_MAILING_ADDRESS_DETAIL:
