@@ -167,7 +167,7 @@ const mapStateToProps = state => ({
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
-  orgStatus: state.organization.orgStatus,
+  orgStatus: state.organization.status,
 });
 
 const mapDispatchToProps = dispatch => ({
