@@ -7,11 +7,12 @@ import ShowMoreIcon from "@material-ui/icons/MoreVert";
 import InvitePopup from "./InvitePopup";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const InvitedMembers = ({
   classes,
   showPopup,
-  handleInviteMembers,
+  handleInviteMembersOpen,
   textareaValue,
   onTextareaChange,
   handleSendInvitation,
@@ -52,12 +53,15 @@ const InvitedMembers = ({
           ))
         )}
       </div>
+      {inviteMembersAlert.type === alertTypes.SUCCESS ? (
+        <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
+      ) : null}
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton
           children="invite members"
           variant="contained"
           color="primary"
-          onClick={handleInviteMembers}
+          onClick={handleInviteMembersOpen}
           disabled={!shouldInviteMembersBeEnabled()}
         />
       </Grid>
