@@ -9,13 +9,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
 const MMAddress = ({ classes }) => {
-  const { ownerAddress } = useSelector(state => state.organization);
+  const { email, ownerAddress, ownerEmail } = useSelector(state => ({
+    email: state.user.email,
+    ownerAddress: state.organization.ownerAddress,
+    ownerEmail: state.organization.owner,
+  }));
   const dispatch = useDispatch();
 
   const handleConnetMM = async () => {
     const sdk = await initSDK();
     dispatch(organizationActions.setOneBasicDetail("ownerAddress", sdk.account.address));
   };
+
+  if (email !== ownerEmail) {
+    return null;
+  }
 
   if (!!ownerAddress) {
     return (
