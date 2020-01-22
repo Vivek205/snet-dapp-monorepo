@@ -15,7 +15,7 @@ const SNETHeader = ({ isLoggedIn, color, navbar, actions, portalName }) => {
   return (
     <div>
       <header>
-        <AppBar position="fixed" color="white">
+        <AppBar position="fixed" color={color}>
           <Toolbar>
             <Container className={classes.logoContainer}>
               <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
@@ -44,7 +44,7 @@ SNETHeader.propTypes = {
         activeLinks: PropTypes.arrayOf(PropTypes.string),
         label: PropTypes.string,
         openInNewTab: PropTypes.bool,
-        to: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+        to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       })
     ),
   }),

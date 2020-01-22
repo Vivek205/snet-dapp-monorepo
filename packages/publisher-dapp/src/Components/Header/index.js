@@ -12,7 +12,7 @@ const Header = () => {
   const headerProps = {
     isLoggedIn,
     portalName: "Publisher",
-    color: "white",
+    color: "default",
     navbar: {
       navbarItems: [
         { label: "Overview", type: "link", openInNewTab: false, activeLinks: ["/", "/overview"], to: "/overview" },
