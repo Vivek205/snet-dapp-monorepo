@@ -14,6 +14,11 @@ export const addressTypes = {
 };
 
 export const orgSubmitActions = {
-  SUBMIT: "submit",
-  DRAFT: "draft",
+  SUBMIT: "SUBMIT",
+  DRAFT: "DRAFT",
+};
+
+export const organizationTypes = {
+  INDIVIDUAL: "inidividual",
+  ORGANIZATION: "organization",
 };

@@ -5,19 +5,19 @@ export const basicDetailsFormData = {
     label: "Org id",
     description: "The org id is unique identification for the company.",
   },
-  COMPANY_NAME: {
-    id: "company Name - 15/50 char",
+  ORGANIZATION_NAME: {
+    id: "organization Name - 15/50 char",
     name: "name",
-    label: "Company Name",
+    label: "Organization Name",
     helperText: "15/50 char",
-    description: `The company name is displayed to users under you AI service name.`,
+    description: `The organization name is displayed to AI Marketplace users for all publish AI services.`,
   },
   DUNS: {
     id: "DUNS Number",
     name: "duns",
     label: "DUNS Number",
     helperText: "",
-    description: `You can use the DUNS number lookup tool here.  This can take up to 5 days to verify.`,
+    description: `You can learn more about how to get a DUNS number. This can take up to 5 days to verify.`,
   },
   WEBSITE: {
     id: "Organization Website URL",
@@ -26,10 +26,10 @@ export const basicDetailsFormData = {
     helperText: "",
     description: `Your organization’s website must be publicly available and the domain name must be associated with your organization.`,
   },
-  USER_FULL_NAME: {
+  OWNERS_FULL_NAME: {
     id: "Your Full Name - 15/50 char",
     name: "ownerFullName",
-    label: "Your Full Name",
+    label: "Owner's Full Name",
     helperText: "15/50 char",
     description: `You should be owner of your company’s legal entity.`,
   },
@@ -37,7 +37,6 @@ export const basicDetailsFormData = {
     id: "Phone Number - 15/50 char",
     name: "phone",
     label: "Phone Number",
-    helperText: "15/50 char",
-    description: `Include plus sign, country code and area code.  For example +1-800-555-1234.   Why do we ask for you phone number`,
+    description: `Include plus sign, country code and area code.  For example +1-800-555-1234.`,
   },
 };

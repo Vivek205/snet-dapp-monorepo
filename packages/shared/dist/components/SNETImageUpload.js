@@ -90,7 +90,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // Color Palette
 var snetGreyError = _colors.grey[700];
 var snetGrey = _colors.grey[500];
-var dropzoneBackgroundGrey = _colors.grey[200];
 var snetBackgroundGrey = _colors.grey[100];
 var snetRed = _colors.red[500];
 var snetBackgroundRed = _colors.red[100]; // Definitions
@@ -176,7 +175,7 @@ function (_React$Component) {
       // arbitrary, will be set properly
       dividerXPosition: _this.props.width / 2,
       displayModeTitle: _this.props.displayModeTitle,
-      outputImage: _this.props.outputImage && SNETImageUpload.prepareBase64Image(_this.props.outputImage),
+      outputImage: _this.props.outputImageType === "url" ? _this.props.outputImage : _this.props.outputImage && SNETImageUpload.prepareBase64Image(_this.props.outputImage),
       outputImageName: _this.props.outputImageName
     };
     _this.tabStyle = {
@@ -243,9 +242,17 @@ function (_React$Component) {
             mimeType = nextProps.outputImageMimeType;
           }
 
+          var outputImage;
+
+          if (this.props.outputImageType === "url" || nextProps.outputImage === "url") {
+            outputImage = nextProps.outputImage;
+          } else {
+            outputImage = SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage);
+          }
+
           this.setState({
             displayModeTitle: nextProps.displayModeTitle,
-            outputImage: SNETImageUpload.addBase64Header(mimeType, nextProps.outputImage),
+            outputImage: outputImage,
             outputImageMimeType: mimeType,
             outputImageName: nextProps.outputImageName,
             mainState: "display",
@@ -338,7 +345,8 @@ function (_React$Component) {
       var mimeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.mimeType;
       var encoding = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.state.encoding;
       var filename = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.state.filename;
-      this.props.imageDataFunc(data, mimeType, encoding, filename);
+      this.props.imageDataFunc(data, mimeType, encoding, filename); // eslint-disable-next-line no-console
+
       console.log("Sent: \nMIME type: " + mimeType + "\nEncoding: " + encoding + "\nFilename: " + filename + "\nImage data: " + data);
     }
   }, {
@@ -1459,6 +1467,7 @@ SNETImageUpload.propTypes = {
   displayModeTitle: _propTypes.default.string,
   outputImage: _propTypes.default.string,
   outputImageMimeType: _propTypes.default.oneOf(["application/octet-stream", "image/png", "image/jpg", "image/jpeg", "image/gif"]),
+  outputImageType: _propTypes.default.oneOf(["url", "base64"]),
   outputImageName: _propTypes.default.string,
   disableInputTab: _propTypes.default.bool,
   disableOutputTab: _propTypes.default.bool,

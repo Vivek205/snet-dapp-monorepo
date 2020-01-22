@@ -36,10 +36,12 @@ var SNETTextfield = function SNETTextfield(_ref) {
       helperText = _ref.helperText,
       value = _ref.value,
       onChange = _ref.onChange,
+      maxCount = _ref.maxCount,
+      minCount = _ref.minCount,
       description = _ref.description,
       icon = _ref.icon,
       onKeyUp = _ref.onKeyUp,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "description", "icon", "onKeyUp"]);
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "description", "icon", "onKeyUp"]);
 
   return _react.default.createElement(_Grid.default, {
     container: true
@@ -52,7 +54,9 @@ var SNETTextfield = function SNETTextfield(_ref) {
     className: classes.basicTextFieldGrid
   }, icon ? _react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement(_StyledTextField.default, _extends({
+  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
+    className: classes.textFieldWithExtraText
+  }, _react.default.createElement(_StyledTextField.default, _extends({
     name: name,
     label: label,
     helperText: helperText,
@@ -61,7 +65,9 @@ var SNETTextfield = function SNETTextfield(_ref) {
     onChange: onChange,
     fullWidth: true,
     onKeyUp: onKeyUp
-  }, rest))), _react.default.createElement(_Grid.default, {
+  }, rest)), maxCount ? _react.default.createElement("span", {
+    className: classes.charLength
+  }, minCount, "/", maxCount, " char") : null)), _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,

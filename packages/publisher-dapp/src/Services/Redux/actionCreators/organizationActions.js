@@ -1,7 +1,4 @@
 import { API } from "aws-amplify";
-import omitBy from "lodash/omitBy";
-import pickBy from "lodash/pickBy";
-import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
 
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -12,6 +9,8 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { responseStatus, APIError } from "shared/dist/utils/API";
 import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
 import { initSDK } from "shared/dist/utils/snetSdk";
+import { blockChainEvents } from "../../../Utils/Blockchain";
+import { clientTypes } from "shared/dist/utils/clientTypes";
 
 export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -21,6 +20,7 @@ export const SET_GROUPS = "SET_GROUPS";
 export const SET_ORGANIZATION_STATUS = "SET_ORGANIZATION_STATUS";
 export const SET_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
 export const SET_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
+export const SET_ORG_OWNER = "SET_ORG_OWNER";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
@@ -41,17 +41,21 @@ export const setMailingAddressDetail = (name, value) => ({
   payload: { [name]: value },
 });
 
+export const setOrgOwner = owner => ({ type: SET_ORG_OWNER, payload: owner });
+
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid,duns, name,type, website, shortDescription, longDescription, metadataIpfsHash,
+  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
     contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
 
   const payload = {
+    origin: clientTypes.PUBLISHER_DAPP,
     org_id: id,
     org_uuid: uuid,
     org_name: name,
     duns_no: duns,
     org_type: type,
+    owner_name: ownerFullName,
     metadata_ipfs_hash: metadataIpfsHash,
     description: longDescription,
     short_description: shortDescription,
@@ -76,21 +80,38 @@ const payloadForSubmit = organization => {
         country: sameMailingAddress ? hqAddress.country : mailingAddress.country,
       },
     ],
-    assets: {
-      hero_image: {
-        raw: assets.heroImage.raw,
-        file_type: assets.heroImage.fileType,
+    assets: { hero_image: {} },
+    ownerAddress: organization.ownerAddress,
+  };
+
+  const groupsToBeSubmitted = organization.groups.map(group => ({
+    name: group.name,
+    id: group.id,
+    payment_address: group.paymentAddress,
+    payment_config: {
+      payment_expiration_threshold: group.paymentConfig.paymentExpirationThreshold,
+      payment_channel_storage_type: group.paymentConfig.paymentChannelStorageType,
+      payment_channel_storage_client: {
+        connection_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        request_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        endpoints: group.paymentConfig.paymentChannelStorageClient.endpoints,
       },
     },
-    ownerAddress: "",
-    groups: [],
-  };
+  }));
+
+  payload.groups = groupsToBeSubmitted;
+
+  if (assets.heroImage.url) {
+    payload.assets.hero_image = { url: assets.heroImage.url };
+  } else {
+    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+  }
 
   return payload;
 };
 
-const getStatusAPI = async () => {
-  const { token } = await fetchAuthenticatedUser();
+const getStatusAPI = () => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const apiOptions = initializeAPIOptions(token);
@@ -98,44 +119,53 @@ const getStatusAPI = async () => {
 };
 
 export const getStatus = async dispatch => {
-  const { data } = await getStatusAPI();
+  const { data } = await dispatch(getStatusAPI());
   if (isEmpty(data)) {
-    return;
+    return data;
   }
   const organization = {
     status: data[0].status,
     id: data[0].org_id,
     uuid: data[0].org_uuid,
+    ownerFullName: data[0].owner_name,
     // TODO rename data[0].name to data[0].org_name
     name: data[0].name,
     type: data[0].org_type,
-    description: data[0].description,
+    longDescription: data[0].description,
     shortDescription: data[0].short_description,
     website: data[0].url,
     duns: data[0].duns_no,
     contacts: data[0].contacts,
-    assets: {
-      heroImage: {
-        raw: data[0].assets.hero_image.url,
-        fileType: "",
-      },
-    },
-    // assets: data[0].assets,
-
-    // groups: data[0].groups,
   };
 
-  console.log("response", data, organization);
+  if (data[0].assets && data[0].assets.hero_image && data[0].assets.hero_image.url) {
+    organization.assets = {};
+    organization.assets.heroImage = { url: data[0].assets.hero_image.url };
+  }
 
-  // const enhancedOrg = omitBy(organization, isEmpty);
-  const enhancedOrg = pickBy({ a: null, b: 1, c: undefined }, identity);
-
-  // console.log("response", data, organization, enhancedOrg);
+  if (!isEmpty(data[0].groups)) {
+    const parsedGroups = data[0].groups.map(group => ({
+      name: group.name,
+      id: group.id,
+      paymentAddress: group.payment_address,
+      paymentConfig: {
+        paymentExpirationThreshold: group.payment_config.payment_expiration_threshold,
+        paymentChannelStorageType: group.payment_config.payment_channel_storage_type,
+        paymentChannelStorageClient: {
+          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          endpoints: group.payment_config.payment_channel_storage_client.endpoints,
+        },
+      },
+    }));
+    organization.groups = parsedGroups;
+  }
   dispatch(setAllAttributes(organization));
+  return data;
 };
 
-const finishLaterAPI = async payload => {
-  const { token } = await fetchAuthenticatedUser();
+const finishLaterAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
@@ -147,7 +177,7 @@ export const finishLater = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
     const payload = payloadForSubmit(organization);
-    await finishLaterAPI(payload);
+    await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -155,8 +185,8 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = async payload => {
-  const { token } = await fetchAuthenticatedUser();
+export const submitForApprovalAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
@@ -168,11 +198,10 @@ export const submitForApproval = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SUBMIT_FOR_APPROVAL));
     const payload = payloadForSubmit(organization);
-    const { status, error } = await submitForApprovalAPI(payload);
+    const { status, error } = await dispatch(submitForApprovalAPI(payload));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -180,56 +209,101 @@ export const submitForApproval = organization => async dispatch => {
   }
 };
 
-const publishToBlockchainAPI = async uuid => {
-  const { token } = await fetchAuthenticatedUser();
+const publishToIPFSAPI = uuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.PUBLISH_TO_BLOCKCHAIN(uuid);
+  const apiPath = APIPaths.PUBLISH_TO_IPFS(uuid);
   const apiOptions = initializeAPIOptions(token);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const publishToBlockchain = uuid => async dispatch => {
+export const publishToIPFS = uuid => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_BLOCKCHAIN));
-    const { status, data, error } = await publishToBlockchainAPI(uuid);
-    dispatch(setOneBasicDetail("metadataIpfsHash", data[0].metadata_ipfs_hash));
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
+    const { status, data, error } = await dispatch(publishToIPFSAPI(uuid));
+    dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
     if (status !== responseStatus.SUCCESS) {
+      dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(setOrganizationStatus(organizationSetupStatuses.PUBLISHED));
     dispatch(loaderActions.stopAppLoader());
+    return data.metadata_ipfs_hash;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
   }
 };
 
-export const createOrganization = async (organization) => {
-  const sdk = await initSDK();
-  const orgId = organization.id;
-  const orgMetadataURI = organization.metadataIpfsHash;
-  const members = ["0x3Bb9b2499c283cec176e7C707Ecb495B7a961ebf"];
-  const hash = await sdk._registryContract.createOrganization(orgId, orgMetadataURI, members);
-  return hash;
-};
-
-const saveTransactionAPI = async (orgId, hash) => {
-  const { token } = await fetchAuthenticatedUser();
+const saveTransactionAPI = (orgUuid, hash, ownerAddress) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.SAVE_TRANSACTION(orgId);
-  const apiOptions = initializeAPIOptions(token);
+  const apiPath = APIPaths.SAVE_TRANSACTION(orgUuid);
+  const body = { transaction_hash: hash, wallet_address: ownerAddress };
+  const apiOptions = initializeAPIOptions(token, body);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const saveTransaction = (orgId, hash) => async dispatch => {
+const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SAVING_TRANSACTION));
-    const { status, data, error } = await saveTransactionAPI(orgId, hash);
+    const { status, error } = await dispatch(saveTransactionAPI(orgUuid, hash, ownerAddress));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
+  }
+};
+
+export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
+  try {
+    const sdk = await initSDK();
+    const orgId = organization.id;
+    const orgMetadataURI = ipfsHash;
+    const members = [organization.ownerAddress];
+    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+    return new Promise((resolve, reject) => {
+      sdk._registryContract
+        .createOrganization(orgId, orgMetadataURI, members)
+        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+          await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+          dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+          resolve(hash);
+        })
+        .on(blockChainEvents.RECEIPT, () => {
+          dispatch(setOneBasicDetail("status", organizationSetupStatuses.PUBLISHED));
+          dispatch(loaderActions.stopAppLoader());
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(error);
+        });
+    });
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const getOwnerAPI = uuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.GET_MEMBERS(uuid);
+  const queryStringParameters = { role: "owner" };
+  const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getOwner = uuid => async dispatch => {
+  const { data } = await dispatch(getOwnerAPI(uuid));
+  await dispatch(setOrgOwner(data[0].username));
+  return data;
+};
+
+export const initializeOrg = async dispatch => {
+  const data = await dispatch(getStatus);
+  if (data && data[0]) {
+    await dispatch(getOwner(data[0].org_uuid));
   }
 };

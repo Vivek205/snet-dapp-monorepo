@@ -13,7 +13,7 @@ import { organizationActions } from "../../../../../Services/Redux/actionCreator
 
 const MailingAddress = ({ classes }) => {
   const organization = useSelector(state => state.organization);
-  const { sameMailingAddress } = organization;
+  const { sameMailingAddress, hqAddress } = organization;
   const { street, apartment, city, zip, country } = organization.mailingAddress;
   const dispatch = useDispatch();
 
@@ -44,22 +44,25 @@ const MailingAddress = ({ classes }) => {
       />
       <StyledTextField
         {...mailingAddressFormData.STREET}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={street}
+        value={sameMailingAddress ? hqAddress.street : street}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.APARTMENT}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={apartment}
+        value={sameMailingAddress ? hqAddress.apartment : apartment}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.CITY}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={city}
+        value={sameMailingAddress ? hqAddress.city : city}
         onChange={handleMailingAddressChange}
         fullWidth
       />
@@ -67,8 +70,9 @@ const MailingAddress = ({ classes }) => {
         <Grid item sx={12} sm={12} md={4} lg={4}>
           <StyledTextField
             {...mailingAddressFormData.ZIP}
+            disabled={sameMailingAddress}
             variant="outlined"
-            value={zip}
+            value={sameMailingAddress ? hqAddress.zip : zip}
             onChange={handleMailingAddressChange}
             fullWidth
           />
@@ -76,8 +80,9 @@ const MailingAddress = ({ classes }) => {
         <Grid item sx={12} sm={12} md={8} lg={8}>
           <StyledTextField
             {...mailingAddressFormData.COUNTRY}
+            disabled={sameMailingAddress}
             variant="outlined"
-            value={country}
+            value={sameMailingAddress ? hqAddress.country : country}
             onChange={handleMailingAddressChange}
             fullWidth
           />

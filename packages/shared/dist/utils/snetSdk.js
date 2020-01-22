@@ -9,7 +9,8 @@ var _snetSdkWeb = _interopRequireDefault(require("snet-sdk-web"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var DEFAULT_GAS_LIMIT = 210000;
+var DEFAULT_GAS_LIMIT = undefined;
+var DEFAULT_GAS_PRICE = undefined;
 var ON_ACCOUNT_CHANGE = "accountsChanged";
 var ON_NETWORK_CHANGE = "networkChanged";
 
@@ -24,7 +25,8 @@ var initSDK = function initSDK() {
             var config = {
               networkId: networkId,
               web3Provider: web3Provider,
-              defaultGasLimit: DEFAULT_GAS_LIMIT
+              defaultGasLimit: DEFAULT_GAS_LIMIT,
+              defaultGasPrice: DEFAULT_GAS_PRICE
             };
             sdk = new _snetSdkWeb.default(config);
           };
@@ -44,6 +46,7 @@ var initSDK = function initSDK() {
 
         case 8:
           accounts = _context.sent;
+          // eslint-disable-next-line require-atomic-updates
           window.web3.eth.defaultAccount = accounts[0];
           web3Provider.addListener(ON_ACCOUNT_CHANGE, function (accounts) {
             var event = new CustomEvent("snetMMAccountChanged", {
