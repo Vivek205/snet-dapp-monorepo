@@ -54,6 +54,10 @@ const Organization = props => {
     }
   };
 
+  const handleCancel = () => {
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
+  };
+
   return (
     <Fragment>
       <div className={classes.box}>
@@ -66,7 +70,7 @@ const Organization = props => {
         <AlertBox type={alert.type} message={alert.message} />
       </div>
       <div className={classes.buttonsContainer}>
-        <SNETButton color="primary" children="cancel" />
+        <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="finish" onClick={handleFinish} />
       </div>

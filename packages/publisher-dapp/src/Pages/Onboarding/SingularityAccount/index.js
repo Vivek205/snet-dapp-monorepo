@@ -30,6 +30,15 @@ const SingularityAccount = ({ classes, history }) => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
 
+  const handleCancel = () => {
+    dispatch(onboardingActions.setUserEntity(userEntities.DEFAULT));
+    setEmailPreferences({
+      [userPreferenceTypes.FEATURE_RELEASE]: false,
+      [userPreferenceTypes.WEEKLY_SUMMARY]: false,
+      [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
+    });
+  };
+
   const handleEntityChange = event => {
     const value = event.target.value;
     if (value === "default") {
@@ -83,13 +92,13 @@ const SingularityAccount = ({ classes, history }) => {
         </div>
       </Grid>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton color="primary" children="cancel" variant="text" />
+        <SNETButton color="primary" children="cancel" variant="text" onClick={handleCancel} />
         <SNETButton
           color="primary"
           children="continue"
           variant="contained"
           onClick={handleContinue}
-          disabled={!entity}
+          disabled={!entity || entity === userEntities.DEFAULT}
         />
       </Grid>
     </Grid>

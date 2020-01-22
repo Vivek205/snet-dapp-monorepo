@@ -18,6 +18,10 @@ const AcceptServiceAgreement = ({ history }) => {
     history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
+  const handleCancel = () => {
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
+  };
+
   return (
     <div>
       <TermsAndConditions
@@ -27,7 +31,7 @@ const AcceptServiceAgreement = ({ history }) => {
         onChangeAgreed={() => setAgreed(!agreed)}
       />
       <div className={classes.buttonsContainer}>
-        <SNETButton color="primary" children="cancel" />
+        <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="accept" onClick={handleAccept} disabled={!agreed} />
       </div>
