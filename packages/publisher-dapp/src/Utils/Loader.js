@@ -3,6 +3,10 @@ export const LoaderContent = {
     title: "Logging in",
     content: "Just a moment. We are logging you in",
   },
+  SIGN_OUT: {
+    title: "Signing out",
+    content: "Just a moment. We are signing you out",
+  },
   METAMASK_TRANSACTION: {
     title: "Waiting for Metamask Interaction",
     content: "Please confirm the transaction in the Metamask to proceed",
