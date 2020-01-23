@@ -55,6 +55,7 @@ const Organization = props => {
   };
 
   const handleCancel = () => {
+    dispatch(organizationActions.resetOrganizationData());
     history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
