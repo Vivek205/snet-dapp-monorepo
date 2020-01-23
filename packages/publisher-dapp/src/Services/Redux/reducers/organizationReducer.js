@@ -64,7 +64,7 @@ const OrganizationReducer = (state = initialState, action) => {
     case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
     case organizationActions.RESET_ORGANIZATION_DATA:
-      return { ...state, ...initialState };
+      return { ...initialState };
     case organizationActions.SET_CONTACTS:
       return { ...state, contacts: action.payload };
     case organizationActions.SET_HERO_IMAGE:
