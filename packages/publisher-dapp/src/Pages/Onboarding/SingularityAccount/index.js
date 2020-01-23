@@ -12,6 +12,7 @@ import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import { userEntities, userPreferenceTypes } from "../../../Utils/user";
 import { useDispatch, useSelector } from "react-redux";
+import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { onboardingActions, preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
@@ -37,6 +38,7 @@ const SingularityAccount = ({ classes, history }) => {
       [userPreferenceTypes.WEEKLY_SUMMARY]: false,
       [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
     });
+    dispatch(organizationActions.resetOrganizationData());
   };
 
   const handleEntityChange = event => {
