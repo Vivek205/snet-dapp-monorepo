@@ -33,7 +33,8 @@ export const LoaderContent = {
   },
   ACCEPT_INVITATION: {
     title: "Accepting Invitation",
-    content: "Just a moment. We are adding you to the organization",
+    content:
+      "Just a moment. We are adding you to the organization. Once done, you will be taken to the organization setup page",
   },
   VERIFY_INVITATION_CODE: {
     title: "Verifying Code",

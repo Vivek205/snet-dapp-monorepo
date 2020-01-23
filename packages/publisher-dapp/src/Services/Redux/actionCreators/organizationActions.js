@@ -14,6 +14,7 @@ import { clientTypes } from "shared/dist/utils/clientTypes";
 
 export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
+export const RESET_ORGANIZATION_DATA = "RESET_ORGANIZATION_DATA";
 export const SET_CONTACTS = "SET_CONTACTS";
 export const SET_HERO_IMAGE = "SET_HERO_IMAGE";
 export const SET_GROUPS = "SET_GROUPS";
@@ -25,6 +26,8 @@ export const SET_ORG_OWNER = "SET_ORG_OWNER";
 export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
+
+export const resetOrganizationData = () => ({ type: RESET_ORGANIZATION_DATA });
 
 export const setContacts = contacts => ({ type: SET_CONTACTS, payload: contacts });
 

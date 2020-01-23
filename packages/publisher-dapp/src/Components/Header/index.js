@@ -7,7 +7,6 @@ import LoggedOutActions from "./LoggedOutActions";
 
 const Header = () => {
   const { isLoggedIn } = useSelector(state => state.user);
-
   return (
     <SNETHeader
       isLoggedIn={isLoggedIn}
