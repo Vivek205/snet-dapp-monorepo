@@ -8,40 +8,35 @@ exports.useStyles = void 0;
 var _styles = require("@material-ui/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
-  var navLinkColor = {
-    white: MUITheme.palette.text.disabled,
-    purple: MUITheme.typography.body1.color
-  };
-  var navLinkActiveColor = {
-    white: MUITheme.palette.primary.main,
-    purple: MUITheme.palette.text.secondary
-  };
   return {
     navlist: {
       padding: 0,
       margin: 0,
-      display: "flex"
-    },
-    navLink: function navLink(props) {
-      return {
-        textDecoration: "none",
-        color: navLinkColor[props.headerColor],
-        "&:hover": {
-          color: navLinkActiveColor[props.headerColor]
+      display: "flex",
+      "& li": {
+        width: "auto",
+        padding: 0,
+        marginRight: 49,
+        "&:last-of-type": {
+          marginRight: 0
         }
-      };
+      }
     },
-    navLinkActive: function navLinkActive(props) {
-      return {
-        borderBottom: "2px solid ".concat(navLinkActiveColor[props.headerColor]),
+    navLink: {
+      textDecoration: "none",
+      color: MUITheme.palette.text.lightGrey
+    },
+    navLinkActive: {
+      borderBottom: "2px solid ".concat(MUITheme.palette.primary.main),
+      paddingBottom: 3,
+      color: MUITheme.palette.primary.main,
+      fontWeight: 600,
+      "&: visited": {
+        borderBottom: "2px solid ".concat(MUITheme.palette.primary.main),
         paddingBottom: 3,
-        color: navLinkActiveColor[props.headerColor],
-        "&: visited": {
-          borderBottom: "2px solid ".concat(navLinkActiveColor[props.headerColor]),
-          paddingBottom: 3,
-          color: navLinkActiveColor[props.headerColor]
-        }
-      };
+        color: MUITheme.palette.primary.main,
+        fontWeight: 600
+      }
     }
   };
 });

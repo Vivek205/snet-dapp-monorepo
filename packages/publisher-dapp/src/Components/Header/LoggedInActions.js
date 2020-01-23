@@ -3,22 +3,21 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import UserProfilePopUp from "./UserProfilePopUp";
+import { useStyles } from "./styles";
 
 const LoggedInActions = () => {
-	const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const classes = useStyles();
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
 
-	const handleClick = () => {
-		setShowProfilePopup(!showProfilePopup)
-	}
-
-	if (showProfilePopup) {    
-  	return <UserProfilePopUp />;
-  }
+  const handleProfileIconClick = () => {
+    setShowProfilePopup(!showProfilePopup);
+  };
 
   return (
     <Fragment>
-      <NotificationsIcon fontSize="large" />
-      <AccountCircleIcon fontSize="large" onClick={handleClick} />
+      <NotificationsIcon fontSize="large" className={classes.NotificationsIcon} />
+      <AccountCircleIcon fontSize="large" onClick={handleProfileIconClick} className={classes.AccountCircleIcon} />
+      <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
     </Fragment>
   );
 };

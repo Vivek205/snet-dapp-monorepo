@@ -17,6 +17,8 @@ var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
+
 var _styles = require("./styles");
 
 var _SNETButton = _interopRequireDefault(require("../SNETButton"));
@@ -89,7 +91,9 @@ var SNETLogin = function SNETLogin(props) {
     md: 12,
     lg: 12,
     className: classes.loginDetails
-  }, _react.default.createElement("h2", null, title), _react.default.createElement("form", {
+  }, _react.default.createElement(_Typography.default, {
+    variant: "h2"
+  }, title), _react.default.createElement("form", {
     noValidate: true,
     autoComplete: "off",
     className: classes.loginForm
@@ -117,9 +121,9 @@ var SNETLogin = function SNETLogin(props) {
       return setPassword(e.target.value);
     }
   }), _react.default.createElement("div", {
-    className: classes.checkboxSection
+    className: classes.checkboxAndLink
   }, _react.default.createElement("div", {
-    className: classes.checkbox
+    className: classes.checkBox
   }), _react.default.createElement(_reactRouterDom.Link, {
     to: forgotPasswordLink
   }, "Forgot password?")), _react.default.createElement(_AlertBox.default, {

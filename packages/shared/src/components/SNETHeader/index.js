@@ -9,9 +9,8 @@ import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
 import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
-import Logo from "./Logo";
 
-const SNETHeader = ({ isLoggedIn, color, navbar, LoggedInActions, LoggedOutActions }) => {
+const SNETHeader = ({ isLoggedIn, color, navbar, LoggedInActions, LoggedOutActions, portalName }) => {
   const classes = useStyles();
   return (
     <div>
@@ -20,6 +19,7 @@ const SNETHeader = ({ isLoggedIn, color, navbar, LoggedInActions, LoggedOutActio
           <Toolbar>
             <Container className={classes.logoContainer}>
               <CardMedia component="img" image={SnetSvgLogo} alt="SingularityNET" />
+              <span className={classes.portalName}>{portalName}</span>
             </Container>
             <Container className={classes.navContainer}>
               <Navbar {...navbar} />

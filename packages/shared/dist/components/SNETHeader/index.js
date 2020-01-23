@@ -25,8 +25,6 @@ var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 
 var _Navbar = _interopRequireDefault(require("./Navbar"));
 
-var _Logo = _interopRequireDefault(require("./Logo"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SNETHeader = function SNETHeader(_ref) {
@@ -34,7 +32,8 @@ var SNETHeader = function SNETHeader(_ref) {
       color = _ref.color,
       navbar = _ref.navbar,
       LoggedInActions = _ref.LoggedInActions,
-      LoggedOutActions = _ref.LoggedOutActions;
+      LoggedOutActions = _ref.LoggedOutActions,
+      portalName = _ref.portalName;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
@@ -45,7 +44,9 @@ var SNETHeader = function SNETHeader(_ref) {
     component: "img",
     image: _BlackLogo.default,
     alt: "SingularityNET"
-  })), _react.default.createElement(_Container.default, {
+  }), _react.default.createElement("span", {
+    className: classes.portalName
+  }, portalName)), _react.default.createElement(_Container.default, {
     className: classes.navContainer
   }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
     className: classes.actionsContainer

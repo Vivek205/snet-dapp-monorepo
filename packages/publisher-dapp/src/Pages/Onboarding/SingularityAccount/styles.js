@@ -1,7 +1,8 @@
 export const useStyles = MUITheme => ({
-  singularityAccContainer: { 
+  singularityAccContainer: {
     width: 845,
-    margin: '48px auto 0' 
+    margin: "48px auto 0",
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
   box: {
     paddingBottom: 33,
@@ -14,7 +15,14 @@ export const useStyles = MUITheme => ({
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
-      lineHeight: '50px !important',
+      lineHeight: "50px !important",
+    },
+    "& > div": {
+      [MUITheme.breakpoints.down("sm")]: {
+        boxSizing: "border-box",
+        width: "100%",
+        padding: "0 24px",
+      },
     },
   },
   singularityAccDescription: {
@@ -27,31 +35,31 @@ export const useStyles = MUITheme => ({
   signInBtns: {
     marginTop: 15,
     [MUITheme.breakpoints.down("xs")]: { textAlign: "center" },
-    "& a": { 
+    "& a": {
       textDecoration: "none",
-      '&:last-of-type':{
-        '& button':{ padding: '12px 18px 11px'}
-        }
-      },      
+      "&:last-of-type": {
+        "& button": { padding: "12px 18px 11px" },
+      },
     },
+  },
   signInContent: {
     padding: "30px 24px 0",
     display: "flex",
-    justifyContent: 'center',
+    justifyContent: "center",
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
-  signInMedia: { 
-    marginRight: 10, 
-    display: 'flex',
-    wordBreak: 'break-word'
+  signInMedia: {
+    marginRight: 10,
+    display: "flex",
+    wordBreak: "break-word",
   },
-  avatar:{ 
-    width: 70, 
-    height: 70 
+  avatar: {
+    width: 70,
+    height: 70,
   },
-  userDetails:{ 
+  userDetails: {
     paddingLeft: 11,
-    '& h6':{ whiteSpace: 'normal' }
+    "& h6": { whiteSpace: "normal" },
   },
   signInRightContent: {
     "& p": {
@@ -84,5 +92,18 @@ export const useStyles = MUITheme => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+  },
+  verifyInvitationContainer: {
+    padding: "0 27px",
+    alignItems: "center",
+    "& > div": {
+      "& > div": {
+        "& > div": {
+          maxWidth: "100%",
+          flexBasis: "91%",
+          [MUITheme.breakpoints.down("sm")]: { flexBasis: "100%" },
+        },
+      },
+    },
   },
 });

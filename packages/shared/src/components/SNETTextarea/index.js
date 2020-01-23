@@ -1,31 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
 import { useStyles } from "./styles";
-import StyledTextField from "shared/dist/components/StyledTextField";
 
-const SNETTextarea = ({ classes, label, rowCount, colCount, name, value, onChange, content, minCount, maxCount }) => {
+const SNETTextarea = ({
+  classes,
+  label,
+  rowCount,
+  colCount,
+  name,
+  value,
+  onChange,
+  content,
+  minCount,
+  maxCount,
+  showInfoIcon,
+  extraInfo,
+}) => {
   return (
     <div className={classes.textareaIconContainer}>
-      <div className={classes.infoIconContainer}>
-        <InfoIcon />
-      </div>
+      {showInfoIcon ? (
+        <div className={classes.infoIconContainer}>
+          <InfoIcon />
+        </div>
+      ) : null}
       <div className={classes.textareaContainer}>
         <span className={classes.label}>{label}</span>
         <textarea rows={rowCount} cols={colCount} name={name} value={value} onChange={onChange}>
           {content}
         </textarea>
-        { maxCount ? 
+        {maxCount ? (
           <span className={classes.charLength}>
             {minCount}/{maxCount} char
           </span>
-        :
-          null
-        }
+        ) : null}
+        {extraInfo ? <span className={classes.extraInfo}>{extraInfo}</span> : null}
       </div>
     </div>
   );
