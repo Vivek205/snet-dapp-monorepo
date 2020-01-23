@@ -267,16 +267,17 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
     const members = [organization.ownerAddress];
     dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
     return new Promise((resolve, reject) => {
-      sdk._registryContract
+      const method = sdk._registryContract
         .createOrganization(orgId, orgMetadataURI, members)
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
           resolve(hash);
         })
-        .on(blockChainEvents.RECEIPT, () => {
+        .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(setOneBasicDetail("status", organizationSetupStatuses.PUBLISHED));
           dispatch(loaderActions.stopAppLoader());
+          await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
           dispatch(loaderActions.stopAppLoader());

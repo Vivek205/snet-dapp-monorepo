@@ -166,7 +166,7 @@ export const publishMembers = (members, uuid, txnHash) => async dispatch => {
   }
 };
 
-const filterAdressFromMembers = members => members.map(member => member.address);
+const filterAdressFromMembers = members => members.map(member => member.address).filter(value => !!value);
 
 export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => {
   try {
@@ -174,15 +174,16 @@ export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => 
     const newMembersAddress = filterAdressFromMembers(members);
     dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
     return new Promise((resolve, reject) => {
-      sdk._registryContract
+      const method = sdk._registryContract
         .addOrganizationMembers(orgId, newMembersAddress)
         .send()
         .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
           await dispatch(publishMembers(members, uuid, txnHash));
         })
-        .on(blockChainEvents.RECEIPT, () => {
+        .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(loaderActions.stopAppLoader());
           resolve();
+          await method.off();
         })
         .on(blockChainEvents.ERROR, error => {
           dispatch(loaderActions.stopAppLoader());
