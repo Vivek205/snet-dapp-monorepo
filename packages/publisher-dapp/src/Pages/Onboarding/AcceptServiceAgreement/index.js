@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { TermsAndConditionsDetails } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
@@ -9,6 +11,7 @@ import { useStyles } from "./styles";
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
   const [agreed, setAgreed] = useState(false);
+  const dispatch = useDispatch();
 
   const handleAccept = () => {
     history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
@@ -19,6 +22,7 @@ const AcceptServiceAgreement = ({ history }) => {
   };
 
   const handleCancel = () => {
+    dispatch(organizationActions.resetOrganizationData());
     history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
