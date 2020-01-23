@@ -2,7 +2,7 @@ export const useStyles = MUITheme => ({
   Userdetails: {
     display: "flex",
     marginBottom: 10,
-    "& span": {
+    "& svg": {
       color: MUITheme.palette.text.lightGrey,
       fontSize: 66,
     },

@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from "react";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { withStyles } from "@material-ui/core/styles";
 
 import UserProfilePopUp from "./UserProfilePopUp";
 import { useStyles } from "./styles";
 
-const LoggedInActions = () => {
-  const classes = useStyles();
+const LoggedInActions = ({ classes }) => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
 
   const handleProfileIconClick = () => {
@@ -22,4 +22,4 @@ const LoggedInActions = () => {
   );
 };
 
-export default LoggedInActions;
+export default withStyles(useStyles)(LoggedInActions);
