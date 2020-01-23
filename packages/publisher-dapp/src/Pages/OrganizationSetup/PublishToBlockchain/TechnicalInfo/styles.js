@@ -18,7 +18,11 @@ export const useStyles = MUITheme => ({
   },
   btnContainer: {
     paddingLeft: 30,
-    [MUITheme.breakpoints.down("sm")]: { paddingLeft: 0 },
+    marginBottom: 15,
+    [MUITheme.breakpoints.down("sm")]: {
+      paddingLeft: 0,
+      marginBottom: 0,
+    },
   },
   owmnerMMTextfield: {
     "& div": {

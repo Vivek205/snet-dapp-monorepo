@@ -39,7 +39,7 @@ export const useStyles = MUITheme => ({
   },
   invitedAndAcceptedList: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     [MUITheme.breakpoints.down("xs")]: {
       flexDirection: "column",
       alignItems: "center",

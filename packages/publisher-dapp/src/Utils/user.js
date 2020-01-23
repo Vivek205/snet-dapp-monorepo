@@ -2,6 +2,7 @@ export const userEntities = {
   ORGANIZATION: "Organization",
   INDIVIDUAL: "Individual",
   INVITEE: "invitee",
+  DEFAULT: "default",
 };
 
 export const userPreferenceTypes = {

@@ -29,7 +29,7 @@ const MMAddress = ({ classes }) => {
     return (
       <Grid container className={classes.technicalInfo}>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.owmnerMMTextfield}>
-          <SNETTextfield name="ownerAddress" value={ownerAddress} disabled label="Owner's Metamask Address" />
+          <SNETTextfield name="ownerAddress" value={ownerAddress} label="Owner's Metamask Address" />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.btnContainer}>
           <SNETButton color="primary" variant="contained" children="capture from metamask" onClick={handleConnetMM} />

@@ -39,7 +39,7 @@ const MailingAddress = ({ classes }) => {
             color="primary"
           />
         }
-        label="same as Headquarters Address"
+        label="Same as Headquarters Address"
         className={classes.checkbox}
       />
       <StyledTextField

@@ -24,6 +24,10 @@ const Invitee = ({ classes, history }) => {
   const [address, setAddress] = useState("");
   const [alert, setAlert] = useState({});
 
+  const handleCancel = () => {
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
+  };
+
   const handleNavigateBack = () => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
@@ -61,7 +65,7 @@ const Invitee = ({ classes, history }) => {
         </Grid>
       </Grid>
       <div className={classes.buttonsContainer}>
-        <SNETButton color="primary" children="cancel" />
+        <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="finish" onClick={handleFinish} />
       </div>
