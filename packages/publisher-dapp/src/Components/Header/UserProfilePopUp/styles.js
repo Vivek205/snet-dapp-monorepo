@@ -1,7 +1,6 @@
 export const useStyles = MUITheme => ({
   UserProfilePopUpContainer: {
-    width: 300,
-    padding: "15px 0 0",
+    width: 400,
     borderRadius: 4,
     mrgin: 0,
     position: "absolute",

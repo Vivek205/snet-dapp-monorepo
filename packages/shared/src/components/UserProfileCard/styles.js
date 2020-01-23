@@ -1,5 +1,6 @@
 export const useStyles = MUITheme => ({
   Userdetails: {
+    padding: "15px 25px",
     display: "flex",
     marginBottom: 10,
     "& svg": {
