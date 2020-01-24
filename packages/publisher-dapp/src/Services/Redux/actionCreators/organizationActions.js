@@ -306,8 +306,14 @@ export const getOwner = uuid => async dispatch => {
 };
 
 export const initializeOrg = async dispatch => {
-  const data = await dispatch(getStatus);
-  if (data && data[0]) {
-    await dispatch(getOwner(data[0].org_uuid));
+  try {
+    const data = await dispatch(getStatus);
+    if (data && data[0]) {
+      await dispatch(getOwner(data[0].org_uuid));
+    }
+  } catch (error) {
+    // ! do not remove this catch. It stops the error bubbling and allows
+    // ! the login to work seamlessly even if the initializeOrg fails
+    return undefined;
   }
 };
