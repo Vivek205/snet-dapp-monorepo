@@ -4,7 +4,7 @@ import PublishToBlockchain from "../PublishToBlockchain";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Default from "../_default";
 
-const basePath = GlobalRoutes.ORGANIZATION_SETUP.basePath;
+const basePath = GlobalRoutes.ORGANIZATION_SETUP.path;
 
 const fullPath = path => `${basePath}${path}`;
 
