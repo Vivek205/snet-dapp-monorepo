@@ -16,7 +16,7 @@ import { verificationCodeConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
-const VerifyInvitation = ({ classes }) => {
+const VerifyInvitation = ({ classes, verifyInvitation, setVerifiedInvitation }) => {
   const userEntity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
@@ -30,6 +30,7 @@ const VerifyInvitation = ({ classes }) => {
       }
       await dispatch(inviteMembersActions.verifyInvitation(code));
       setAlert({ type: alertTypes.SUCCESS, message: "Verified" });
+      setVerifiedInvitation(true);
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
