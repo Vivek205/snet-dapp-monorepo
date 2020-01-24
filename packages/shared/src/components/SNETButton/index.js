@@ -17,9 +17,7 @@ const SNETButton = withStyles(theme => ({
       rootStyles["&:hover"] = {
         backgroundColor: theme.palette.purple.light,
         // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: theme.palette.purple.main,
-        },
+        "@media (hover: none)": { backgroundColor: theme.palette.purple.main },
       };
     }
     if (props.color === "white" && props.variant === "text") {

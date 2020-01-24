@@ -9,6 +9,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _styles = require("../styles");
 
 var _Routes = _interopRequireDefault(require("../../../utility/constants/Routes"));
@@ -52,6 +54,9 @@ var NavItem = function NavItem(_ref) {
 
 NavItem.defaultProps = {
   link: "#"
+};
+NavItem.propTypes = {
+  link: _propTypes.default.string
 };
 var _default = NavItem;
 exports.default = _default;

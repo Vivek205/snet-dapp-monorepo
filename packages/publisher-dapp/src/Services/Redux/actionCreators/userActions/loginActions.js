@@ -91,6 +91,8 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const signout = async dispatch => {
+  dispatch(loaderActions.startAppLoader(LoaderContent.SIGN_OUT));
   await Auth.signOut();
-  dispatch(resetUserOnSignout());
+  await dispatch(resetUserOnSignout());
+  dispatch(loaderActions.stopAppLoader());
 };

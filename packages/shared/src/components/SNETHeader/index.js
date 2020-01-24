@@ -1,16 +1,16 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
-import CardMedia from "@material-ui/core/CardMedia";
 import Container from "@material-ui/core/Container";
 import PropTypes from "prop-types";
+import AppBar from "@material-ui/core/AppBar";
+import CardMedia from "@material-ui/core/CardMedia";
 
+import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
 import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 
-const SNETHeader = ({ isLoggedIn, color, navbar, actions, portalName }) => {
+const SNETHeader = ({ isLoggedIn, color, navbar, LoggedInActions, LoggedOutActions, portalName }) => {
   const classes = useStyles();
   return (
     <div>
@@ -25,7 +25,11 @@ const SNETHeader = ({ isLoggedIn, color, navbar, actions, portalName }) => {
               <Navbar {...navbar} />
             </Container>
             <Container className={classes.actionsContainer}>
-              <HeaderActions actions={actions} isLoggedIn={isLoggedIn} />
+              <HeaderActions
+                isLoggedIn={isLoggedIn}
+                LoggedInActions={LoggedInActions}
+                LoggedOutActions={LoggedOutActions}
+              />
             </Container>
           </Toolbar>
         </AppBar>
@@ -48,14 +52,9 @@ SNETHeader.propTypes = {
       })
     ),
   }),
-  actions: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      color: PropTypes.string,
-      vaiant: PropTypes.string,
-      handler: PropTypes.func,
-    })
-  ),
+
+  LoggedInActions: PropTypes.elementType,
+  LoggedOutActions: PropTypes.elementType,
 };
 
 export default SNETHeader;

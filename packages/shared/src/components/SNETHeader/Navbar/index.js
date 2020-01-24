@@ -6,15 +6,18 @@ import { useStyles } from "./styles";
 import SNETList from "../../SNETList";
 import NavbarLink from "./NavbarLink";
 
-const Navbar = ({ navbarItems }) => {
-  const classes = useStyles();
+const Navbar = props => {
+  const { navbarItems, headerColor } = props;
+  const classes = useStyles(props);
 
   return (
     <nav>
       <SNETList display="inline" className={classes.navlist}>
         {navbarItems.map(navbarItem => {
           if (navbarItem.type === "link") {
-            return <ListItem key={navbarItem.label} children={<NavbarLink {...navbarItem} />} />;
+            return (
+              <ListItem key={navbarItem.label} children={<NavbarLink {...navbarItem} headerColor={headerColor} />} />
+            );
           }
           return null;
         })}
@@ -33,6 +36,7 @@ Navbar.propTypes = {
       to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     })
   ),
+  headerColor: PropTypes.string,
 };
 
 export default Navbar;

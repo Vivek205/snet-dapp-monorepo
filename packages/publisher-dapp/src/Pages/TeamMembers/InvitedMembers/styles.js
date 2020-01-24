@@ -10,9 +10,7 @@ export const useStyles = MUITheme => ({
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
     },
-    "&:first-of-type": {
-      marginRight: 25,
-    },
+    "&:first-of-type": { marginRight: 25 },
     [MUITheme.breakpoints.down("xs")]: {
       width: "auto",
       margin: "0 25px 30px",
