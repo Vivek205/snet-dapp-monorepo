@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.parseDateFromAPIResponse = exports.getLocalDateFromUTC = exports.getCurrentUTCEpoch = void 0;
+exports.parseDateFromAPIResponse = exports.getCurrentUTCEpoch = void 0;
 
 var getCurrentUTCEpoch = function getCurrentUTCEpoch() {
   var currentDate = new Date();
@@ -13,14 +13,6 @@ var getCurrentUTCEpoch = function getCurrentUTCEpoch() {
 };
 
 exports.getCurrentUTCEpoch = getCurrentUTCEpoch;
-
-var getLocalDateFromUTC = function getLocalDateFromUTC(dateString) {
-  var dateStringInUTC = "".concat(dateString, " UTC");
-  var localDate = new Date(dateStringInUTC);
-  return localDate;
-};
-
-exports.getLocalDateFromUTC = getLocalDateFromUTC;
 
 var parseDateFromAPIResponse = function parseDateFromAPIResponse(dateString) {
   if (!dateString) {

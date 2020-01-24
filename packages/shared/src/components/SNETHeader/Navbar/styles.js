@@ -16,7 +16,7 @@ export const useStyles = makeStyles(MUITheme => ({
     textDecoration: "none",
     color: MUITheme.palette.text.lightGrey,
   },
-  navLinkActive: props => ({
+  navLinkActive: {
     borderBottom: `2px solid ${MUITheme.palette.primary.main}`,
     paddingBottom: 3,
     color: MUITheme.palette.primary.main,
@@ -27,5 +27,5 @@ export const useStyles = makeStyles(MUITheme => ({
       color: MUITheme.palette.primary.main,
       fontWeight: 600,
     },
-  }),
+  },
 }));

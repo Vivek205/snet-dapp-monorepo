@@ -1,31 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import SNETButton from "../SNETButton";
 
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
-const HeaderActions = ({ isLoggedIn, actions }) => {
+const HeaderActions = ({ isLoggedIn, LoggedInActions, LoggedOutActions }) => {
   if (isLoggedIn) {
-    return (
-      <Fragment>
-        <NotificationsIcon fontSize="large" />
-        <AccountCircleIcon fontSize="large" />
-      </Fragment>
-    );
+    return <LoggedInActions />;
   }
-  return actions.map(action => <SNETButton key={action.children} {...action} />);
+  return <LoggedOutActions />;
 };
 
 HeaderActions.propTypes = {
-  actions: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      color: PropTypes.string,
-      vaiant: PropTypes.string,
-      handler: PropTypes.func,
-    })
-  ),
+  LoggedInActions: PropTypes.elementType,
+  LoggedOutActions: PropTypes.elementType,
 };
 
 export default HeaderActions;
