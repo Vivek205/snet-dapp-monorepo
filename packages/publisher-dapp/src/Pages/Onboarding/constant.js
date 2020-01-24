@@ -1,36 +1,32 @@
-export const steps = {
-  ENTITY: "ENTITY",
-  TNC: "TNC",
-  AUTHENTICATE: "AUTHENITCATE",
+export const onboardingSections = {
+  SINGULARITY_ACCOUNT: {
+    key: 1,
+    heading: {
+      title: "Lets Get Started",
+      description: "You will need to log in or create your SingularityNet account",
+    },
+  },
+  ACCEPT_SERVICE_AGREEMENT: {
+    key: 2,
+    heading: {
+      title: "Singularity AI Publisher's Agreement",
+      description: "Please review and agree to the terms to continue",
+    },
+  },
+  AUTHENTICATE_ID: {
+    key: 3,
+    heading: {
+      title: "Authenticate Organization",
+      description: "Please provide your information.",
+    },
+  },
 };
 
-export const titles = {
-  ENTITY: "entity",
-  TNC: "terms of use",
-  AUTHENTICATE: "authenticate",
+export const progressText = ["Singularity Account", "Accept Service Agreement", "Authenticate ID"];
+
+export const verificationStatuses = {
+  NOT_STARTED: "NOT_STARTED",
+  SELECTED_ENTITY: "SELECTED_ENTITY",
+  ACCEPTED_AGREEMENT: "ACCEPTED_AGREEMENT",
+  VERIFICATION_PENDING: "VERIFICATION_PENDING",
 };
-
-export const descriptions = {
-  ENTITY: "entity",
-  TNC: "terms of use",
-  AUTHENTICATE: "authenticate",
-};
-
-export const stepsToKeys = {
-  ENTITY: 1,
-  TNC: 2,
-  AUTHENTICATE: 3,
-};
-
-export const keysToSteps = {
-  1: "ENTITY",
-  2: "TNC",
-  3: "AUTHENTICATE",
-};
-
-export const stepsLimit = {
-    FIRST: 1,
-    LAST: 3
-}
-
-export const progressText = ["entity", "terms of use", "authenticate"];

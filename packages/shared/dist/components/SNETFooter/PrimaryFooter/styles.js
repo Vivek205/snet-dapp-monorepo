@@ -17,7 +17,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       }
     },
     LeftData: {
-      padding: '12px 30px 0 0',
+      padding: "12px 30px 0 0",
       borderRightWidth: 1,
       borderRightStyle: "solid",
       "@media (max-width:1023px)": {

@@ -17,24 +17,21 @@ var _AlertBox = _interopRequireDefault(require("shared/dist/components/AlertBox"
 
 var _StyledButton = _interopRequireDefault(require("shared/dist/components/StyledButton"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _styles2 = require("./styles");
 
 var _PrivacyTerms = _interopRequireDefault(require("./PrivacyTerms"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TermsAndConditions = function TermsAndConditions(_ref) {
-  var classes = _ref.classes,
-      title = _ref.title,
-      checkboxChecked = _ref.checkboxChecked,
-      handleChange = _ref.handleChange,
-      formLabel = _ref.formLabel,
-      CTAType = _ref.CTAType,
-      CTAText = _ref.CTAText,
-      CTADisabled = _ref.CTADisabled,
-      handleCTA = _ref.handleCTA,
-      alertType = _ref.alertType,
-      alertMsg = _ref.alertMsg;
+var TermsAndConditions = function TermsAndConditions(props) {
+  var classes = props.classes,
+      title = props.title,
+      formLabel = props.formLabel,
+      onAccept = props.onAccept,
+      agreed = props.agreed,
+      onChangeAgreed = props.onChangeAgreed;
   return _react.default.createElement("div", {
     className: classes.onboardingContainer
   }, _react.default.createElement("div", {
@@ -45,17 +42,26 @@ var TermsAndConditions = function TermsAndConditions(_ref) {
     className: classes.checkboxAndButton
   }, _react.default.createElement(_FormControlLabel.default, {
     control: _react.default.createElement(_Checkbox.default, {
-      checked: checkboxChecked,
-      onChange: handleChange,
+      onChange: onChangeAgreed,
       color: "primary"
     }),
     label: formLabel
-  }), _react.default.createElement(_StyledButton.default, {
-    btnText: "accept"
-  })), _react.default.createElement(_AlertBox.default, {
-    type: alertType,
-    message: alertMsg
+  }), onAccept ? _react.default.createElement(_StyledButton.default, {
+    btnText: "accept",
+    disabled: !agreed,
+    onClick: onAccept
+  }) : ""), _react.default.createElement(_AlertBox.default, {
+    type: alert.type,
+    message: alert.message
   })));
+};
+
+TermsAndConditions.protoTypes = {
+  title: _propTypes.default.string,
+  formLabel: _propTypes.default.string,
+  onAccept: _propTypes.default.func,
+  agreed: _propTypes.default.bool,
+  onChangeAgreed: _propTypes.default.func
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(TermsAndConditions);

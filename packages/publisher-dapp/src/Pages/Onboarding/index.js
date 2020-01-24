@@ -1,60 +1,48 @@
-import React, { useState, Fragment, useEffect } from "react";
-import { titles, descriptions, progressText, stepsToKeys, steps, stepsLimit, keysToSteps } from "./constant";
+import React, { useEffect } from "react";
+import { progressText, onboardingSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
+import isEmpty from "lodash/isEmpty";
+import { useSelector } from "react-redux";
 
-import Entity from "./Entity";
-import TNC from "./TNC";
-import Authenticate from "./Authenticate";
 import { useStyles } from "./styles";
-import Navigation from "./Navigation";
+import { OnboardingRoutes } from "./OnboardingRouter/Routes";
+import OnboardingRouter from "./OnboardingRouter";
+import Heading from "./Heading";
+import { OrganizationSetupRoutes } from "../OrganizationSetup/OrganizationSetupRouter/Routes";
 
-const Onboarding = ({ match, classes }) => {
-  const [currentStep, setCurrentStep] = useState(steps.ENTITY);
+const Onboarding = ({ location, history, classes }) => {
+  const { email, ownerEmail } = useSelector(state => ({
+    email: state.user.email,
+    ownerEmail: state.organization.owner,
+  }));
 
   useEffect(() => {
-    const { step } = match.params;
-    setCurrentStep(step.toUpperCase());
-  }, [match]);
-
-  const onboardingSections = {
-    ENTITY: { title: titles.ENTITY, description: descriptions.ENTITY, component: <Entity /> },
-    TNC: { title: titles.TNC, description: descriptions.TNC, component: <TNC /> },
-    AUTHENTICATE: { title: titles.AUTHENTICATE, description: descriptions.AUTHENTICATE, component: <Authenticate /> },
-  };
-
-  const activeStep = onboardingSections[currentStep];
-
-  const handleNext = () => {
-    if (stepsToKeys[currentStep] === stepsLimit.LAST) {
-      return undefined;
+    if (!isEmpty(email) && !isEmpty(ownerEmail) && email === ownerEmail) {
+      history.push(OrganizationSetupRoutes.DEFAULT_PAGE.path);
     }
-    return () => {
-      const nextStep = keysToSteps[stepsToKeys[currentStep] + 1];
-      setCurrentStep(nextStep);
-    };
-  };
+  });
 
-  const handlePrev = () => {
-    if (stepsToKeys[currentStep] === stepsLimit.FIRST) {
-      return undefined;
+  const activeSection = () => {
+    const { pathname: path } = location;
+    const { SINGULARITY_ACCOUNT, ACCEPT_SERVICE_AGREEMENT, AUTHENTICATE_ID } = onboardingSections;
+
+    if (path.includes(OnboardingRoutes.SINGULARITY_ACCOUNT.path)) {
+      return SINGULARITY_ACCOUNT;
+    } else if (path.includes(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path)) {
+      return ACCEPT_SERVICE_AGREEMENT;
+    } else if (path.includes(OnboardingRoutes.AUTHENTICATE_ID.path)) {
+      return AUTHENTICATE_ID;
     }
-    return () => {
-      const nextStep = keysToSteps[stepsToKeys[currentStep] - 1];
-      setCurrentStep(nextStep);
-    };
+    return SINGULARITY_ACCOUNT;
   };
 
   return (
-    <Fragment>
-      <div className={classes.topSection}>
-        <h2>{activeStep.title}</h2>
-        <span> {activeStep.description}</span>
-      </div>
-      <ProgressBar activeSection={stepsToKeys[currentStep]} progressText={progressText} />
-      {activeStep.component}
-      <Navigation handleNext={handleNext()} handlePrev={handlePrev()} />
-    </Fragment>
+    <div className={classes.onboardingContainer}>
+      <Heading {...activeSection().heading} />
+      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
+      <OnboardingRouter />
+    </div>
   );
 };
 

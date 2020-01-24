@@ -1,31 +1,41 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
+import withRegistrationHeader from "../HOC/withRegistrationHeader";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
-const Login = lazy(()=> import("../Pages/Login"));
-const Signup = lazy(()=> import("../Pages/Signup"));
-const Overview = lazy(() =>  import("../Pages/Overview"))
-const HowItWorks = lazy(() =>import("../Pages/HowItWorks"));
+const Login = lazy(() => import("../Pages/Login"));
+const Signup = lazy(() => import("../Pages/Signup"));
+const Overview = lazy(() => import("../Pages/Overview"));
+const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const Onboarding = lazy(() => import("../Pages/Onboarding"));
+const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
+const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
+const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
+
+const SIGNUP_PATH = "/signup";
+const LOGIN_PATH = "/login";
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
-const LoginComponent = withLightHeaderAndFooter(Login);
-const SignupComponent = withLightHeaderAndFooter(Signup);
-const SingupConfirmComponent = withLightHeaderAndFooter(SignupConfirm);
+const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
+const SignupComponent = withRegistrationHeader(Signup, "Already have an account?", "Login", LOGIN_PATH);
+const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
-const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks)
+const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
+const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup);
+const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
+const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 
 export const GlobalRoutes = {
   LOGIN: {
     name: "login",
-    path: "/login",
+    path: LOGIN_PATH,
     component: LoginComponent,
   },
   SIGNUP: {
     name: "signup",
-    path: "/signup",
+    path: SIGNUP_PATH,
     component: SignupComponent,
   },
   SIGNUP_CONFIRM: {
@@ -50,8 +60,23 @@ export const GlobalRoutes = {
   },
   ONBOARDING: {
     name: "onboarding",
-    basePath: "/onboarding",
-    path: "/onboarding/:step",
+    path: "/onboarding",
     component: OnboardingComponent,
+  },
+  ORGANIZATION_SETUP: {
+    name: "organizationsetup",
+    basePath: "/organizationsetup",
+    path: "/organizationsetup",
+    component: OrganizationsetupComponent,
+  },
+  ORG_SETUP_STATUS: {
+    name: "organization setup",
+    path: "/orgsetupstatus",
+    component: OrgSetupStatusComponent,
+  },
+  INVITE_MEMBERS: {
+    name: "team memebrs",
+    path: "/invitemembers",
+    component: TeamMembersComponent,
   },
 };

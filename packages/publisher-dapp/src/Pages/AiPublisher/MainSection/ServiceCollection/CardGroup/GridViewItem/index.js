@@ -6,8 +6,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import truncate from "lodash/truncate";
 import { withStyles } from "@material-ui/styles";
@@ -18,7 +16,9 @@ import SingularityLogo from "shared/dist/assets/images/avatar.png";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const StyledCard = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubheader }) => {
+const GridViewItem = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubheader, ratingGiven, totalRating }) => {
+  const GridViewHeaderLength = 35;
+  const StartCount = 5;
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -28,21 +28,18 @@ const StyledCard = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubheade
           title: classes.cardTitle,
           subheader: classes.cardSubheader,
         }}
-        title={truncate(cardTitle, { length: 35 })}
+        title={truncate(cardTitle, { length: GridViewHeaderLength })}
         subheader={cardSubheader}
       />
       <CardMedia className={classes.CardMedia} image={cardMedia || CardImg} title={title} />
       <CardContent className={classes.cardContent}>
         <div className={classes.ratingSection}>
-          <StarRatingComponent
-            name="rate1"
-            starCount={5}
-            value={10}
-            className={classes.ratingStars}
-          />
-          <RatingsCount ratingGiven={2} totalRating={6} />
+          <StarRatingComponent name="rate1" starCount={StartCount} value={10} className={classes.ratingStars} />
+          <RatingsCount ratingGiven={ratingGiven} totalRating={totalRating} />
         </div>
-        <Typography className={classes.cardTypograpy} component="p">cardDescription</Typography>
+        <Typography className={classes.cardTypograpy} component="p">
+          cardDescription
+        </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
         <SNETButton children="preview" variant="text" color="primary" />
@@ -51,4 +48,4 @@ const StyledCard = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubheade
   );
 };
 
-export default withStyles(useStyles)(StyledCard);
+export default withStyles(useStyles)(GridViewItem);

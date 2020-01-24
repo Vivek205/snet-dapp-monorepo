@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 
-import validator from "../../SNETUtils/validator";
+import validator from "../../../utils/validator";
 import { passwordInlineConstraints } from "./validationConstraints";
 import { passwordValidationMsgs } from "./constants";
 import AlertText from "../../AlertText";
@@ -33,8 +33,12 @@ const PasswordInlineValidation = props => {
     },
   ];
 
-  return validationInputs.map(value => (
-    <AlertText type={value.condition ? alertTypes.SUCCESS : alertTypes.ERROR} message={value.message} />
+  return validationInputs.map(alert => (
+    <AlertText
+      key={alert.message}
+      type={alert.condition ? alertTypes.SUCCESS : alertTypes.ERROR}
+      message={alert.message}
+    />
   ));
 };
 

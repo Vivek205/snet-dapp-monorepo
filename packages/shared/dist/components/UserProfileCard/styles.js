@@ -5,13 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     Userdetails: {
+      padding: '15px 25px',
       display: "flex",
       marginBottom: 10,
-      "& span": {
-        color: theme.palette.text.lightShadedGray,
+      "& svg": {
+        color: MUITheme.palette.text.lightGrey,
         fontSize: 66
       },
       "& div": {
@@ -19,17 +20,17 @@ var useStyles = function useStyles(theme) {
         "& h4": {
           fontWeight: 600,
           margin: 0,
-          color: theme.palette.text.black1,
+          color: MUITheme.palette.text.darkGrey,
           lineHeight: "27px",
           fontSize: 20
         },
         "& a": {
-          color: theme.palette.text.lightShadedGray,
+          color: MUITheme.palette.text.lightGrey,
           fontSize: 16,
           lineHeight: "22px",
           textDecoration: "none",
           "&:hover": {
-            color: theme.palette.text.primary,
+            color: MUITheme.palette.primary.main,
             fontweight: 600
           }
         }

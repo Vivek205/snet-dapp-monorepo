@@ -1,25 +1,30 @@
 export const useStyles = MUITheme => ({
-    onboardingContainer: {
-        paddingBottom: 40,
-        backgroundColor: MUITheme.palette.text.offWhiteColor,
-        "& ul": {
-          justifyContent: "center",
-          "& li": {
-            "&:before": { marginLeft: 16 },
+  onboardingContainer: {
+    padding: "40px",
+    backgroundColor: MUITheme.palette.background.mainContent,
+    "& ul": {
+      justifyContent: "center",
+      "& li": {
+        "&:before": {
+          marginLeft: 16,
+          "@media(max-width:540px)": {
+            marginLeft: 10,
+            marginRight: 10,
           },
+          "@media(max-width:470px)": { display: "none" },
         },
       },
-    topSection: {
-        textAlign: "center",
-        "& h2": {
-          color: MUITheme.palette.text.darkShadedGray,
-          fontSize: 32,
-        },
-        "& p": {
-          margin: "20px 0 0",
-          color: MUITheme.palette.text.mediumShadeGray,
-          fontSize: 20,
-          lineHeight: "30px",
-        },
-      },
-})
+      "@media(max-width:470px)": { alignItems: "flex-start" },
+    },
+  },
+  topSection: {
+    textAlign: "center",
+    "& h3": { marginBottom: 15 },
+    "& span": {
+      color: MUITheme.palette.text.primary,
+      fontSize: 20,
+      fontWeight: 300,
+      lineHeight: "28px",
+    },
+  },
+});

@@ -62,3 +62,7 @@ typings/
 
 # experimental: github workflows / actions
 .github/*
+
+# IDE
+.vscode/
+.idea/

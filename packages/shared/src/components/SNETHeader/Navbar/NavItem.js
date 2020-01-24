@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { useStyles } from "../styles";
 import Routes from "../../../utility/constants/Routes";
@@ -32,6 +33,10 @@ const NavItem = ({ title, link }) => {
 
 NavItem.defaultProps = {
   link: "#",
+};
+
+NavItem.propTypes = {
+  link: PropTypes.string,
 };
 
 export default NavItem;
