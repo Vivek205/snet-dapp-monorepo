@@ -56,18 +56,12 @@ const SingularityAccount = ({ classes, history }) => {
     setEmailPreferences(updatedEmailPreferences);
   };
 
-  const disableContinue = () => {
-    if (!entity) {
-      return !entity;
-    }
-    if (entity === userEntities.DEFAULT) {
-      return entity === userEntities.DEFAULT;
-    }
+  const shouldContinueBeDisabled = () => {
+    let disableContinue = !entity || entity === userEntities.DEFAULT;
     if (entity === userEntities.INVITEE) {
-      if (!verifiedInvitation) {
-        return !verifiedInvitation;
-      }
+      disableContinue = disableContinue || !verifiedInvitation;
     }
+    return disableContinue;
   };
 
   return (
@@ -115,7 +109,7 @@ const SingularityAccount = ({ classes, history }) => {
           children="continue"
           variant="contained"
           onClick={handleContinue}
-          disabled={disableContinue()}
+          disabled={shouldContinueBeDisabled()}
         />
       </Grid>
     </Grid>
