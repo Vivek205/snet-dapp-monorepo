@@ -23,6 +23,7 @@ const SingularityAccount = ({ classes, history }) => {
     [userPreferenceTypes.WEEKLY_SUMMARY]: false,
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
+  const [verifiedInvitation, setVerifiedInvitation] = useState(false);
   const entity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
 
@@ -55,6 +56,14 @@ const SingularityAccount = ({ classes, history }) => {
     setEmailPreferences(updatedEmailPreferences);
   };
 
+  const shouldContinueBeDisabled = () => {
+    let disableContinue = !entity || entity === userEntities.DEFAULT;
+    if (entity === userEntities.INVITEE) {
+      disableContinue = disableContinue || !verifiedInvitation;
+    }
+    return disableContinue;
+  };
+
   return (
     <Grid container className={classes.singularityAccContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -71,7 +80,7 @@ const SingularityAccount = ({ classes, history }) => {
           ]}
           onChange={handleEntityChange}
         />
-        <VerifyInvitation />
+        <VerifyInvitation verifiedInvitation={verifiedInvitation} setVerifiedInvitation={setVerifiedInvitation} />
       </Grid>
       <LoginBanner classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -100,7 +109,7 @@ const SingularityAccount = ({ classes, history }) => {
           children="continue"
           variant="contained"
           onClick={handleContinue}
-          disabled={!entity || entity === userEntities.DEFAULT}
+          disabled={shouldContinueBeDisabled()}
         />
       </Grid>
     </Grid>
