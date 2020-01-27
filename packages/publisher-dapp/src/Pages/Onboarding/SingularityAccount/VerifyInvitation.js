@@ -24,6 +24,8 @@ const VerifyInvitation = ({ classes, verifyInvitation, setVerifiedInvitation }) 
 
   const handleVerify = async () => {
     try {
+      setVerifiedInvitation(false);
+      setAlert({});
       const isNotValid = validator({ code }, verificationCodeConstraints);
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
