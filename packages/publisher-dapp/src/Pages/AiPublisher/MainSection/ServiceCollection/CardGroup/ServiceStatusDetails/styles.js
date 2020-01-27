@@ -1,86 +1,52 @@
 export const useStyles = MUITheme => ({
-	statusDetails: { 
-		padding: '20px 33px',
-		display: 'flex',
-		backgroundColor: '#f1f1f1'
-	},
-	property:{ 
-		color:`${MUITheme.palette.text.lightGrey} !important`,
-		fontSize: '16px !important',
-		lineHeight: '20px',
-		textTransform: 'uppercase'
-	},
-	value:{
-		paddingLeft: 16,
-		color: `${MUITheme.palette.success} !important`,
-		fontSize: '18px !important',
-		lineHeight: '23px',
-		textTransform: 'uppercase'
-	},
-	priceAndPriceModel:{
-		padding: '18px 33px',
-		display: 'flex',
-		justifyContent: 'space-between',
-		borderBottomWidth: 1,
-		borderBottomStyle: 'solid',
-		borderBottomColor: '#979797',
-		'& div':{ display: 'flex' },
-		'& p':{
-			'&:first-of-type':{ textTransform: 'none !important' },
-			'&:last-of-type':{
-				paddingLeft: 16,
-				color: `${MUITheme.palette.text.darkGrey} !important`,
-				fontSize: '18px !important',
-				lineHeight: '23px',
-			},
-		},	
-	},
-	usageActivity:{
-		paddingTop: 35,
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	usageActivityHeader:{ 
-		padding: '0 33px',
-		display: 'flex',
-		justifyContent: 'space-between'
-	},
-	usageDurationDetail:{
-		'& > span':{
-			color: MUITheme.palette.text.lightGrey,
-			fontSize: 16
-		}
-	},
-	usageActivityDetails:{
-		padding: '43px 33px 57px',
-		borderBottomWidth: 1,
-		borderBottomStyle: 'solid',
-		borderBottomColor: '#979797',
-		display: 'flex',
-		justifyContent: 'space-between',
-		'& div':{
-			'& span':{
-				display: 'block',
-				textAlign: 'right',
-				'&:first-of-type':{
-					color: MUITheme.palette.text.lightGrey,
-					fontSize: 16
-				},
-				'&:last-of-type':{
-					color: MUITheme.palette.text.darkGrey,
-					fontSize: 28
-				}
-			}
-		}
-	},
-	usageActivityActions:{
-		padding: '20px 33px',
-		display: 'flex',
-		justifyContent: 'space-between',
-		'& div':{
-			'& button':{
-				'&:last-of-type':{ marginLeft: 25 }
-			}
-		}
-	}
-})
+  serviceStatusDetailsMainContainer: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  statusDetails: { display: "flex" },
+  property: {
+    color: `${MUITheme.palette.text.darkGrey} !important`,
+    fontSize: "16px !important",
+    lineHeight: "20px",
+    textTransform: "uppercase",
+  },
+  value: {
+    paddingLeft: 16,
+    color: `${MUITheme.palette.success} !important`,
+    fontSize: "18px !important",
+    lineHeight: "23px",
+    textTransform: "uppercase",
+  },
+  serviceStatusActions: {
+    paddingTop: 24,
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    borderTopColor: "rgba(151, 151, 151, 0.15)",
+    display: "flex",
+    "& button": {
+      "&:first-of-type": { marginRight: 40 },
+    },
+  },
+  tabsHeader: {
+    margin: "15px 0 24px",
+    background: "#fff",
+    color: MUITheme.palette.text.lightGrey,
+    boxShadow: "none",
+    "& button": {
+      minWidth: "auto",
+      padding: 0,
+      marginRight: 40,
+      fontSize: 20,
+      textTransform: "none",
+      color: MUITheme.palette.text.lightShadedGray,
+      fontFamily: MUITheme.typography.primary,
+    },
+    "& .Mui-selected": {
+      color: MUITheme.palette.primary.main,
+      fontWeight: 600,
+    },
+    "& .MuiTabs-indicator": { backgroundColor: MUITheme.palette.primary.main },
+  },
+});

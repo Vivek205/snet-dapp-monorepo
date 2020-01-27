@@ -15,8 +15,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Person = _interopRequireDefault(require("@material-ui/icons/Person"));
 
-var _clsx = _interopRequireDefault(require("clsx"));
-
 var _styles2 = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

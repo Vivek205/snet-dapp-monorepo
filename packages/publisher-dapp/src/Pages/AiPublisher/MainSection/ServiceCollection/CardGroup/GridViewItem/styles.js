@@ -1,9 +1,8 @@
 export const useStyles = MUITheme => ({
   card: {
     minHeight: 440,
-    width: 302,
+    width: 308,
     paddingTop: 10,
-    marginBottom: 25,
     display: "inline-block",
     position: "relative",
     fontSize: 18,
@@ -71,6 +70,6 @@ export const useStyles = MUITheme => ({
   },
   ratingStars: {
     "& label": { fontSize: 24 },
-    "& .dv-star-rating-empty-star i": { color: '#ccc' },
+    "& .dv-star-rating-empty-star i": { color: "#ccc" },
   },
 });

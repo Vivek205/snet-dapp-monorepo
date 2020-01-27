@@ -24,7 +24,7 @@ const CardGroup = ({ loading }) => {
 
   return (
     <Grid container className={classes.gridViewCardCollection}>
-      <Grid item xs={12} sm={12} md={4} lg={4}>
+      <Grid item xs={12} sm={12} md={3} lg={3}>
         <Link key="1" to="/" className={classes.routerLink}>
           <GridViewItem
             cardTitle="title"
@@ -36,7 +36,7 @@ const CardGroup = ({ loading }) => {
           />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={12} md={8} lg={8}>
+      <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
         <ServiceStatusDetails />
       </Grid>
     </Grid>

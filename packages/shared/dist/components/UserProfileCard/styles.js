@@ -8,7 +8,7 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     Userdetails: {
-      padding: '15px 25px',
+      padding: "15px 25px",
       display: "flex",
       marginBottom: 10,
       "& svg": {

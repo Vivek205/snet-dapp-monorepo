@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(MUITheme => ({
   circularProgressContainer: {
     paddingTop: 20,
     textAlign: "center",
@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     display: "table",
     width: "100%",
     "& div": {
-      color: theme.palette.text.primary,
+      color: MUITheme.palette.text.primary,
     },
   },
   loaderChild: {
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     height: 48,
   },
   loaderText: {
-    color: theme.palette.text.lightShadedGray,
+    color: MUITheme.palette.text.lightShadedGray,
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 0.25,
@@ -34,15 +34,16 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
     "& span": {
-      color: theme.palette.text.lightShadedGray,
+      color: MUITheme.palette.text.lightShadedGray,
       fontSize: 16,
       lineHeight: "20px",
     },
   },
   gridViewCardCollection: {
-    marginTop: 9,
+    padding: "22px 8px 20px 23px",
     display: "flex",
     flexWrap: "nowrap",
+    background: MUITheme.palette.background.white,
     "& a": {
       textDecoration: "none ",
       display: "inline-block",
@@ -61,5 +62,8 @@ export const useStyles = makeStyles(theme => ({
     },
     "@media(min-width: 768px) and (max-width: 1024px)": { justifyContent: "center" },
     "@media(max-width: 768px)": { flexDirection: "column" },
+  },
+  serviceStatusDetails: {
+    padding: "0 26px",
   },
 }));

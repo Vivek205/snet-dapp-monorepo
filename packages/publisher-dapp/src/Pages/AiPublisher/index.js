@@ -1,31 +1,41 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
-import { Link } from "react-router-dom";
-import Typography from '@material-ui/core/Typography';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
+import ServiceImage from "shared/dist/assets/images/services.png";
 import MainSection from "./MainSection";
 import { useStyles } from "./styles";
 
 const AiPublisher = ({ classes }) => {
   return (
-  	<div className={classes.AiPublisherMainContainer}>
+    <div className={classes.AiPublisherMainContainer}>
       <Grid container spacing={24} className={classes.topSectionCotainer}>
-        <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
-          <Typography variant="h3" className={classes.title}>My AI Apps</Typography>
-        </Grid>
-        <Grid item xs={12} sm={9} md={9} lg={9} className={classes.descriptionContainer}>
-          <Typography className={classes.descriptionTitle}>Welcome to the AI Publisher</Typography>
-          <Typography className={classes.description}>With this pubilsher portal, you can publish and manage yourAI services. You will be able to edit your services, demos, and tutorial content.</Typography>
-          <div className={classes.btnContainer}>
-            <SNETButton color="primary" children="create new ai service" variant="contained" />
-            <SNETButton color="primary" variant="text" children="edit company organization" />
-          </div>          
+        <Grid item xs={12} sm={2} md={2} lg={2} className={classes.titleContainer} />
+        <Grid item xs={12} sm={10} md={10} lg={10} className={classes.rightSection}>
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.descriptionContainer}>
+            <Grid item xs={12} sm={7} md={7} lg={7} className={classes.content}>
+              <div>
+                <Typography className={classes.descriptionTitle}>My AI Apps</Typography>
+                <Typography className={classes.description}>
+                  With this pubilsher portal, you can publish and manage yourAI services. You will be able to edit your
+                  services, demos, and tutorial content.
+                </Typography>
+              </div>
+              <div className={classes.btnContainer}>
+                <SNETButton color="primary" children="create new ai service" variant="contained" />
+                <SNETButton color="primary" variant="text" children="view documentation" />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={5} md={5} lg={5} className={classes.media}>
+              <img src={ServiceImage} title="Services" />
+            </Grid>
+          </Grid>
+          <MainSection />
         </Grid>
       </Grid>
-      <MainSection />
-  	</div>
-  )
+    </div>
+  );
 };
 export default withStyles(useStyles)(AiPublisher);
