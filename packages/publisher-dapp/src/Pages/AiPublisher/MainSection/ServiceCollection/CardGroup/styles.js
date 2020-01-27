@@ -45,6 +45,7 @@ export const useStyles = makeStyles(MUITheme => ({
     flexWrap: "nowrap",
     background: MUITheme.palette.background.white,
     "& a": {
+      width: "100%",
       textDecoration: "none ",
       display: "inline-block",
       verticalAlign: "top",

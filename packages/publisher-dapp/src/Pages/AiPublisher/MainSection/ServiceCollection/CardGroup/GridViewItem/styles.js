@@ -1,7 +1,7 @@
 export const useStyles = MUITheme => ({
   card: {
     minHeight: 440,
-    width: 308,
+    width: "100%",
     paddingTop: 10,
     display: "inline-block",
     position: "relative",
