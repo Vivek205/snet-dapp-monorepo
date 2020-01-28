@@ -3,16 +3,20 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import VerticalTabs from "./VerticalTabs";
 import SNETButton from "shared/dist/components/SNETButton";
 import ServiceImage from "shared/dist/assets/images/services.png";
 import MainSection from "./MainSection";
+import { upperTabs, lowerTabs } from "./content";
 import { useStyles } from "./styles";
 
 const AiPublisher = ({ classes }) => {
   return (
     <div className={classes.AiPublisherMainContainer}>
       <Grid container spacing={24} className={classes.topSectionCotainer}>
-        <Grid item xs={12} sm={2} md={2} lg={2} className={classes.titleContainer} />
+        <Grid item xs={12} sm={2} md={2} lg={2} className={classes.verticalTabsContainer}>
+          <VerticalTabs upperTabs={upperTabs} lowerTabs={lowerTabs} />
+        </Grid>
         <Grid item xs={12} sm={10} md={10} lg={10} className={classes.rightSection}>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.descriptionContainer}>
             <Grid item xs={12} sm={7} md={7} lg={7} className={classes.content}>
