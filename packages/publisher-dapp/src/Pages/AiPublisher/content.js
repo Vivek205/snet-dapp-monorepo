@@ -1,3 +1,4 @@
+import React from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
@@ -9,38 +10,38 @@ import SettingIcon from "@material-ui/icons/Settings";
 
 export const upperTabs = [
   {
-    icon: HomeIcon,
+    icon: <HomeIcon />,
     title: "My AI Apps",
   },
   {
-    icon: ShowChartIcon,
+    icon: <ShowChartIcon />,
     title: "App Analytics",
   },
   {
-    icon: AttachMoneyIcon,
+    icon: <AttachMoneyIcon />,
     title: "Sales & Trends",
   },
   {
-    icon: GroupIcon,
+    icon: <GroupIcon />,
     title: "Teams & Access",
   },
   {
-    icon: DashboardIcon,
+    icon: <DashboardIcon />,
     title: "Financial Reports",
   },
 ];
 
 export const lowerTabs = [
   {
-    icon: AccountBalanceIcon,
+    icon: <AccountBalanceIcon />,
     title: "Wallet Account",
   },
   {
-    icon: DescriptionIcon,
+    icon: <DescriptionIcon />,
     title: "Dev Docs",
   },
   {
-    icon: SettingIcon,
+    icon: <SettingIcon />,
     title: "Settings",
   },
 ];

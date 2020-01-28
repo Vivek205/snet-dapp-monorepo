@@ -29,7 +29,7 @@ const VerticalTabs = ({ upperTabs, lowerTabs }) => {
         <List className={classes.list}>
           {upperTabs.map((item, index) => (
             <ListItem button key={item.title} className={classes.listItem}>
-              <ListItemIcon className={classes.listItemIcon}>{item.icon.displayName}</ListItemIcon>
+              <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
             </ListItem>
           ))}
