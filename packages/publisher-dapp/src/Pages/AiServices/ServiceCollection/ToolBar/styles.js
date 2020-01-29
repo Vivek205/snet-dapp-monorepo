@@ -22,8 +22,13 @@ export const useStyles = makeStyles(MUITheme => ({
     },
     "& fieldset": { display: "none" },
     "& .MuiSelect-selectMenu": { color: MUITheme.palette.primary.main },
+    "& > div": {
+      width: "auto",
+      paddingLeft: 0,
+    },
   },
   sortbyTxt: {
+    padding: "0 17px 0 0",
     color: MUITheme.palette.text.lightGrey,
     fontSize: 16,
   },

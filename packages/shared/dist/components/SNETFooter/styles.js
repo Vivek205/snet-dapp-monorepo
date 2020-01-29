@@ -11,6 +11,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     footer: {
       padding: "23px 0",
+      position: 'absolute',
+      zIndex: 99999,
       backgroundColor: MUITheme.palette.background.footer,
       color: MUITheme.palette.text.footerText,
       "@media (max-width:767px)": {
