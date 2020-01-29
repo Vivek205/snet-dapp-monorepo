@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/styles";
 export const useStyles = makeStyles(MUITheme => ({
   footer: {
     padding: "23px 0",
+    position: "absolute",
+    zIndex: 9999,
     backgroundColor: MUITheme.palette.background.footer,
     color: MUITheme.palette.text.footerText,
     "@media (max-width:767px)": { padding: "21px 0 52px" },
