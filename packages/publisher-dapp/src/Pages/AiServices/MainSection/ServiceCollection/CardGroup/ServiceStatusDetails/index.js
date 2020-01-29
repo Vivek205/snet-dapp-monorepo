@@ -25,7 +25,7 @@ const ServiceStatusDetails = props => {
   const [activeTab, setActiveTab] = useState(0);
 
   const onTabChange = activeTab => {
-    setActiveTab({ activeTab });
+    setActiveTab(activeTab);
   };
 
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
