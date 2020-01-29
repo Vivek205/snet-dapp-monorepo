@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - development
-    paths:
-      - 'packages/publisher-dapp/**'
 
 jobs:
   release:
