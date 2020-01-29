@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 
 import SNETFooter from "shared/dist/components/SNETFooter";
 import VerticalTabs from "shared/dist/components/VerticalTabs";
-import { upperTabs, lowerTabs } from "./content";
+import { upperTabs, lowerTabs } from "./dashboardMenuContent";
 import Header from "../Components/Header";
 
 const withDashboardMenu = Component => {
