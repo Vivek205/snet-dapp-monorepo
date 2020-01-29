@@ -4,6 +4,8 @@ export const useStyles = makeStyles(MUITheme => ({
   footer: {
     padding: "23px 0",
     position: "absolute",
+    right: 0,
+    left: 0,
     zIndex: 9999,
     backgroundColor: MUITheme.palette.background.footer,
     color: MUITheme.palette.text.footerText,
