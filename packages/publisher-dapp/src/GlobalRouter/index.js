@@ -1,9 +1,8 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as ReactRouter, Route, Switch } from "react-router-dom";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import PageNotFound from "shared/dist/components/PageNotFound";
-import Typography from "@material-ui/core/Typography";
 import { useSelector, useDispatch } from "react-redux";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 import { GlobalRoutes } from "./Routes";
 import { loginActions } from "../Services/Redux/actionCreators/userActions";
@@ -17,11 +16,11 @@ const GlobalRouter = () => {
   }, [dispatch]);
 
   if (!isInitialized) {
-    return <Typography>Just a moment. We are getting things ready for you.</Typography>;
+    return <LinearProgress />;
   }
   return (
     <ReactRouter>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<LinearProgress />}>
         <Switch>
           <Route path="/" exact component={GlobalRoutes.OVERVIEW.component} />
           {Object.values(GlobalRoutes).map(route => (
