@@ -20,14 +20,15 @@ const tabs = [
   { name: "Changelog", activeIndex: 3, component: <Changelog /> },
 ];
 
-const ServiceStatusDetails = ({ classes, history, location }) => {
+const ServiceStatusDetails = props => {
+  const { classes } = props;
   const [activeTab, setActiveTab] = useState(0);
 
   const onTabChange = activeTab => {
-    setActiveTab({ activeTab });
+    setActiveTab(activeTab);
   };
 
-  const activeComponent = tabs.filter(el => el.activeIndex === activeTab)[0].component;
+  const activeComponent = tabs.find(el => el.activeIndex === activeTab);
 
   return (
     <div className={classes.serviceStatusDetailsMainContainer}>
@@ -44,7 +45,7 @@ const ServiceStatusDetails = ({ classes, history, location }) => {
               ))}
             </Tabs>
           </AppBar>
-          {activeComponent}
+          {activeComponent && activeComponent.component}
         </div>
       </div>
       <div className={classes.serviceStatusActions}>

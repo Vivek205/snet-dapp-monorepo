@@ -1,23 +1,22 @@
 import React, { Fragment, useState } from "react";
-import { withStyles } from "@material-ui/styles";
 
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 
-const ServiceSortOptions = ({ pagination, updatePagination, fetchService }) => {
-  const [activeSortItem, setActiveSortItem] = useState(true);
+const ServiceSortOptions = () => {
+  const [activeSortItem, setActiveSortItem] = useState("");
   const classes = useStyles();
 
-  const handleSortChange = async event => {
-    setActiveSortItem(activeSortItem(false));
+  const handleSortChange = event => {
+    setActiveSortItem(event.target.value);
   };
 
   return (
     <Fragment>
       <span className={classes.sortbyTxt}>Sort by:</span>
-      <StyledDropdown value="value" labelTxt="select" onChange={handleSortChange} />
+      <StyledDropdown value={activeSortItem} labelTxt="select" onChange={handleSortChange} />
     </Fragment>
   );
 };
 
-export default withStyles(useStyles)(ServiceSortOptions);
+export default ServiceSortOptions;

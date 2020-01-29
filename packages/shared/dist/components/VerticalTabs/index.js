@@ -62,7 +62,7 @@ var VerticalTabs = function VerticalTabs(_ref) {
     setIsOpen: setOpen
   }), _react.default.createElement(_List.default, {
     className: classes.list
-  }, upperTabs.map(function (item, index) {
+  }, upperTabs.map(function (item) {
     return _react.default.createElement(_ListItem.default, {
       button: true,
       key: item.title,
@@ -74,7 +74,7 @@ var VerticalTabs = function VerticalTabs(_ref) {
     }));
   })), _react.default.createElement(_Divider.default, null), _react.default.createElement(_List.default, {
     className: classes.list
-  }, lowerTabs.map(function (item, index) {
+  }, lowerTabs.map(function (item) {
     return _react.default.createElement(_ListItem.default, {
       button: true,
       key: item.title,
