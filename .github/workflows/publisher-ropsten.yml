@@ -11,10 +11,10 @@ jobs:
   release:
    runs-on: ubuntu-18.04
    env:
-     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+     PUBLISHER_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-     SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-     SENTRY_DEPLOY_ENVIRONMENT: ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+     PUBLISHER_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+     PUBLISHER_DEPLOY_ENVIRONMENT: ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
 
    steps: 
     - uses: actions/checkout@v1.0.0
