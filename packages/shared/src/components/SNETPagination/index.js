@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { useStyles } from "./styles";
 
-const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
+const SNETPagination = ({ limit, offset, total_count, handleChange }) => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const classes = useStyles();
 
@@ -65,4 +65,4 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
   );
 };
 
-export default StyledPagination;
+export default SNETPagination;

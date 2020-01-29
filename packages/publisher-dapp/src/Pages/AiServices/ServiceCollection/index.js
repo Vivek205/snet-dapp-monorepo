@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/styles";
 
 import ToolBar from "./ToolBar";
 import CardGroup from "./CardGroup";
-import StyledPagination from "./StyledPagination";
+import SNETPagination from "shared/dist/components/SNETPagination";
 import { useStyles } from "./styles";
 
 const ServiceCollection = ({ classes }) => {
@@ -11,7 +11,7 @@ const ServiceCollection = ({ classes }) => {
     <div className={classes.serviceCollection}>
       <ToolBar />
       <CardGroup />
-      <StyledPagination />
+      <SNETPagination />
     </div>
   );
 };
