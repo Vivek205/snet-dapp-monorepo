@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { withStyles } from "@material-ui/styles";
 
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
@@ -20,4 +19,4 @@ const ServiceSortOptions = ({ pagination, updatePagination, fetchService }) => {
   );
 };
 
-export default withStyles(useStyles)(ServiceSortOptions);
+export default ServiceSortOptions;
