@@ -1,4 +1,4 @@
-name: New Sentry Release and Deploy to Heroku
+name: Sentry Release for Publisher
 
 on:
   push:
@@ -9,10 +9,10 @@ jobs:
   release:
    runs-on: ubuntu-18.04
    env:
-     PUBLISHER_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+     SENTRY_AUTH_TOKEN: ${{ secrets.PUBLISHER_AUTH_TOKEN }}
      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-     PUBLISHER_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-     PUBLISHER_DEPLOY_ENVIRONMENT: ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+     SENTRY_PROJECT: ${{ secrets.PUBLISHER_PROJECT }}
+     SENTRY_DEPLOY_ENVIRONMENT: ${{ secrets.PUBLISHER_DEPLOY_ENVIRONMENT }}
 
    steps: 
     - uses: actions/checkout@v1.0.0
