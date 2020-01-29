@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
+import withDashboardMenu from "../HOC/withDashboardMenu";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const Login = lazy(() => import("../Pages/Login"));
@@ -12,7 +13,7 @@ const Onboarding = lazy(() => import("../Pages/Onboarding"));
 const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
-const AiPublisher = lazy(() => import("../Pages/AiPublisher"));
+const AiServices = lazy(() => import("../Pages/AiServices"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -27,7 +28,7 @@ const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
 const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup);
 const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
 const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
-const AiPublisherComponent = withLightHeaderAndFooter(AiPublisher);
+const AiServicesComponent = withDashboardMenu(AiServices);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -84,6 +85,6 @@ export const GlobalRoutes = {
   SERVICES: {
     name: "services",
     path: "/services",
-    component: AiPublisherComponent,
+    component: AiServicesComponent,
   },
 };

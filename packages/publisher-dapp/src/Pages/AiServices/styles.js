@@ -1,13 +1,8 @@
 export const useStyles = MUITheme => ({
-  AiPublisherMainContainer: {
-    paddingTop: 26,
+  AiServicesMainContainer: {
+    marginTop: 60,
+    padding: "40px 70px 30px 0",
     backgroundColor: MUITheme.palette.background.mainContent,
-  },
-  rightSection: {
-    "& p": {
-      color: MUITheme.palette.text.darkGrey,
-      fontSize: 22,
-    },
   },
   descriptionContainer: {
     display: "flex",
