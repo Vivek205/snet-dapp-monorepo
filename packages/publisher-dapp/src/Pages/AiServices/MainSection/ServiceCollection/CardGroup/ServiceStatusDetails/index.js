@@ -20,7 +20,8 @@ const tabs = [
   { name: "Changelog", activeIndex: 3, component: <Changelog /> },
 ];
 
-const ServiceStatusDetails = ({ classes, history, location }) => {
+const ServiceStatusDetails = props => {
+  const { classes } = props;
   const [activeTab, setActiveTab] = useState(0);
 
   const onTabChange = activeTab => {
