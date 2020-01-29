@@ -27,7 +27,7 @@ const VerticalTabs = ({ upperTabs, lowerTabs }) => {
       >
         <ToggleMenu classes={classes} isOpen={open} setIsOpen={setOpen} />
         <List className={classes.list}>
-          {upperTabs.map((item, index) => (
+          {upperTabs.map(item => (
             <ListItem button key={item.title} className={classes.listItem}>
               <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
@@ -36,7 +36,7 @@ const VerticalTabs = ({ upperTabs, lowerTabs }) => {
         </List>
         <Divider />
         <List className={classes.list}>
-          {lowerTabs.map((item, index) => (
+          {lowerTabs.map(item => (
             <ListItem button key={item.title} className={classes.listItem}>
               <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
