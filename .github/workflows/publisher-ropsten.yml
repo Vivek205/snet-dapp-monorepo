@@ -9,7 +9,7 @@ jobs:
   release:
    runs-on: ubuntu-18.04
    env:
-     SENTRY_AUTH_TOKEN: ${{ secrets.PUBLISHER_AUTH_TOKEN }}
+     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_KEY }}
      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
      SENTRY_PROJECT: ${{ secrets.PUBLISHER_PROJECT }}
      SENTRY_DEPLOY_ENVIRONMENT: ${{ secrets.PUBLISHER_DEPLOY_ENVIRONMENT }}
