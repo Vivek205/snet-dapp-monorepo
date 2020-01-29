@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import ServiceImage from "shared/dist/assets/images/services.png";
-import MainSection from "./MainSection";
+import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 
 const AiServices = ({ classes }) => {
@@ -18,7 +18,7 @@ const AiServices = ({ classes }) => {
               <Typography variant="h3" className={classes.descriptionTitle}>
                 My AI Apps
               </Typography>
-              <Typography className={classes.description}>
+              <Typography variant="h5" className={classes.description}>
                 With this pubilsher portal, you can publish and manage yourAI services. You will be able to edit your
                 services, demos, and tutorial content.
               </Typography>
@@ -29,10 +29,10 @@ const AiServices = ({ classes }) => {
             </div>
           </Grid>
           <Grid item xs={12} sm={5} md={5} lg={5} className={classes.media}>
-            <img src={ServiceImage} title="Services" />
+            <img src={ServiceImage} alt="Services" />
           </Grid>
         </Grid>
-        <MainSection />
+        <ServiceCollection />
       </Grid>
     </div>
   );

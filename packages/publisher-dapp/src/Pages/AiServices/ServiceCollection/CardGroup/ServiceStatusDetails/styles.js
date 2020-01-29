@@ -28,6 +28,7 @@ export const useStyles = MUITheme => ({
     "& button": {
       "&:first-of-type": { marginRight: 40 },
     },
+    [MUITheme.breakpoints.down("sm")]: { marginTop: 50 },
   },
   tabsHeader: {
     margin: "15px 0 24px",
@@ -42,6 +43,10 @@ export const useStyles = MUITheme => ({
       textTransform: "none",
       color: MUITheme.palette.text.lightShadedGray,
       fontFamily: MUITheme.typography.primary,
+      "@media(max-width: 1090px)": {
+        marginRight: 30,
+        fontSize: 16,
+      },
     },
     "& .Mui-selected": {
       color: MUITheme.palette.primary.main,

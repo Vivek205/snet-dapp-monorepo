@@ -64,10 +64,18 @@ export const useStyles = makeStyles(MUITheme => ({
       },
       "@media(max-width: 768px)": { textAlign: "center" },
     },
-    "@media(min-width: 768px) and (max-width: 1024px)": { justifyContent: "center" },
-    "@media(max-width: 768px)": { flexDirection: "column" },
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
+  },
+  serviceDetailCard: {
+    minWidth: 302,
+    [MUITheme.breakpoints.down("sm")]: {
+      minWidth: "auto",
+      width: 302,
+      margin: "0 auto",
+    },
   },
   serviceStatusDetails: {
     padding: "0 26px",
+    [MUITheme.breakpoints.down("sm")]: { padding: "50px 26px" },
   },
 }));
