@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useSelector } from "react-redux";
 
 import { useStyles } from "./styles";
 import GridViewItem from "./GridViewItem";
 import ServiceStatusDetails from "./ServiceStatusDetails";
 
-const CardGroup = ({ loading }) => {
+const CardGroup = () => {
   const classes = useStyles();
+  const { isLoading } = useSelector(state => state.loader.aiServiceList);
   const [isAvailable] = useState(true);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={classes.circularProgressContainer}>
         <div className={classes.loaderChild}>
