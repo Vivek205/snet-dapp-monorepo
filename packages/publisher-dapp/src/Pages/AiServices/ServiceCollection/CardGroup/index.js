@@ -12,7 +12,7 @@ import ServiceStatusDetails from "./ServiceStatusDetails";
 
 const CardGroup = () => {
   const classes = useStyles();
-  const { isLoading } = useSelector(state => ({
+  const { isLoading, serviceList } = useSelector(state => ({
     isLoading: state.loader.aiServiceList.isLoading,
     serviceList: state.aiServiceList.data,
   }));
@@ -33,16 +33,16 @@ const CardGroup = () => {
     return <Typography>No services found</Typography>;
   }
 
-  return (
-    <Grid container className={classes.gridViewCardCollection}>
+  return serviceList.map(service => (
+    <Grid container className={classes.gridViewCardCollection} key={service.uuid}>
       <Grid item xs={12} sm={12} md={3} lg={3} className={classes.serviceDetailCard}>
         <Link key="1" to="/" className={classes.routerLink}>
           <GridViewItem
-            cardTitle="title"
+            cardTitle={service.displayName}
             cardSubheader="sub header"
-            ratingGiven="2"
-            totalRating="5"
-            cardDescription="description"
+            ratingGiven={service.serviceRating.rating}
+            totalRating={service.serviceRating.totalUsersRated}
+            cardDescription={service.shortDescription}
             isAvailable={isAvailable}
           />
         </Link>
@@ -51,7 +51,7 @@ const CardGroup = () => {
         <ServiceStatusDetails />
       </Grid>
     </Grid>
-  );
+  ));
 };
 
 export default CardGroup;
