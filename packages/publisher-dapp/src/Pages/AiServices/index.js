@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import ServiceImage from "shared/dist/assets/images/services.png";
+
+import CreateNewServicePopup from "./CreateNewServicePopup";
 import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 
 const AiServices = ({ classes }) => {
+  const [showPopUp, setshowPopUp] = useState(false);
+
+  const handleCreateService = () => {
+    setshowPopUp(true);
+  };
+
+  const handleClosePopup = () => {
+    setshowPopUp(false);
+  };
+
   return (
     <div className={classes.AiServicesMainContainer}>
       <Grid container spacing={24} className={classes.topSectionCotainer}>
@@ -24,7 +36,12 @@ const AiServices = ({ classes }) => {
               </Typography>
             </div>
             <div className={classes.btnContainer}>
-              <SNETButton color="primary" children="create new ai service" variant="contained" />
+              <SNETButton
+                color="primary"
+                children="create new ai service"
+                variant="contained"
+                onClick={handleCreateService}
+              />
               <SNETButton color="primary" variant="text" children="view documentation" />
             </div>
           </Grid>
@@ -34,6 +51,7 @@ const AiServices = ({ classes }) => {
         </Grid>
         <ServiceCollection />
       </Grid>
+      <CreateNewServicePopup open={showPopUp} handleClose={handleClosePopup} />
     </div>
   );
 };
