@@ -37,10 +37,10 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
           }
         />
         <CardContent className={classes.popupContent}>
-          <p className={classes.popupDescription}>
+          <Typography className={classes.popupDescription}>
             Your AI service needs to have a unique name that does not duplicate any other existing service on the AI
             Marketpalce.
-          </p>
+          </Typography>
           <SNETTextfield
             name="AI Service Name"
             label="AI Service Name"

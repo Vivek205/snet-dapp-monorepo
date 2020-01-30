@@ -33,7 +33,6 @@ export const useStyles = MUITheme => ({
   popupDescription: {
     margin: "34px 0 27px",
     color: MUITheme.palette.text.primary,
-    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 16,
     lineHeight: "24px",
   },
