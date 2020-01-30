@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import PersonIcon from "@material-ui/icons/Person";
-import clsx from "clsx";
 
 import { useStyles } from "./styles";
 

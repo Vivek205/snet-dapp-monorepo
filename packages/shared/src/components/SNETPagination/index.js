@@ -8,29 +8,19 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { useStyles } from "./styles";
 
-const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
+const SNETPagination = ({ limit, offset, totalCount, itemsPerPageOptions, from, to }) => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const classes = useStyles();
 
   const handleItemsPerPage = event => {
-    const pagination = {
-      offset: 0,
-      limit: event.target.value,
-    };
     setItemsPerPage(event.target.value);
-    handleChange(pagination);
   };
 
   const handlePageChange = selectedOffset => {
     if (selectedOffset === parseFloat(offset)) {
       return;
     }
-    const pagination = { offset: selectedOffset };
-    handleChange(pagination);
   };
-
-  const currentFirstItem = offset;
-  const currentLastItem = parseFloat(limit) + parseFloat(offset);
 
   return (
     <Grid container spacing={24} className={classes.paginationContainer}>
@@ -38,7 +28,7 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
         <Pagination
           limit={limit}
           offset={offset}
-          total={total_count}
+          total={totalCount}
           reduced={true}
           onClick={(e, offset) => handlePageChange(offset)}
           className={classes.styledPagination}
@@ -52,17 +42,19 @@ const StyledPagination = ({ limit, offset, total_count, handleChange }) => {
             input={<OutlinedInput labelWidth={75} name="age" id="outlined-age-simple" onChange={handleItemsPerPage} />}
             className={classes.selectBox}
           >
-            <MenuItem value={12}>12</MenuItem>
-            <MenuItem value={24}>24</MenuItem>
-            <MenuItem value={36}>36</MenuItem>
+            {itemsPerPageOptions.map(item => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <span>
-          {currentFirstItem}-{currentLastItem} of {total_count}
+          {from}-{to} of {totalCount}
         </span>
       </Grid>
     </Grid>
   );
 };
 
-export default StyledPagination;
+export default SNETPagination;
