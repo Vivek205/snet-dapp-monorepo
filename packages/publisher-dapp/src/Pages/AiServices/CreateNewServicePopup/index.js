@@ -14,14 +14,14 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
-  const [disableCreateBtn, setdisableCreateBtn] = useState(true);
+  const [serviceName, setServiceName] = useState("");
 
   const handleCancel = () => {
     handleClose();
   };
 
-  const handleOnEnterServiceName = () => {
-    setdisableCreateBtn(false);
+  const handleOnEnterServiceName = e => {
+    setServiceName(e.target.value);
   };
 
   return (
@@ -52,7 +52,7 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
         </CardContent>
         <CardActions className={classes.btnContainer}>
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
-          <SNETButton children="create" color="primary" variant="contained" disabled={disableCreateBtn} />
+          <SNETButton children="create" color="primary" variant="contained" disabled={!serviceName} />
         </CardActions>
       </Card>
     </Modal>
