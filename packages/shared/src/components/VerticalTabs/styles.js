@@ -38,6 +38,9 @@ export const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    "& ul": {
+      "& > div": { padding: 12 },
+    },
   },
   drawerClose: {
     width: 60,
@@ -49,11 +52,18 @@ export const useStyles = makeStyles(theme => ({
     }),
     overflowX: "hidden",
     "& ul": {
-      "& span": { display: "none" },
+      "& > div": {
+        padding: "12px 18px",
+        "&:hover": {
+          "& span": { color: "rgba(64,134,255,0)" },
+        },
+      },
+      "& span": { color: "#220D3A" },
     },
   },
   toolbar: {
     textAlign: "right",
+    "& button": { padding: 9 },
   },
   content: {
     flexGrow: 1,
@@ -61,12 +71,13 @@ export const useStyles = makeStyles(theme => ({
   },
   list: { padding: 0 },
   listItem: {
-    padding: "12px 16px",
     "& span": {
+      marginLeft: 11,
       color: "#9b9b9b",
       fontSize: 14,
       lineHeight: "20px",
       letterSpacing: 0.25,
+      whiteSpace: "nowrap",
     },
     "&:hover": {
       background: "rgba(64,134,255,0.25)",
@@ -74,6 +85,9 @@ export const useStyles = makeStyles(theme => ({
       "& span": { color: "#fff" },
     },
   },
-  listItemIcon: { color: "#9b9b9b" },
+  listItemIcon: {
+    minWidth: "auto",
+    color: "#9b9b9b",
+  },
   chevronIcon: { color: "#fff" },
 }));
