@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { useStyles } from "./styles";
 
-const SNETPagination = ({ limit, offset, totalCount, handleChange, itemsPerPageOptions, from, to }) => {
+const SNETPagination = ({ limit, offset, totalCount, itemsPerPageOptions, from, to }) => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const classes = useStyles();
 
@@ -42,7 +42,7 @@ const SNETPagination = ({ limit, offset, totalCount, handleChange, itemsPerPageO
             input={<OutlinedInput labelWidth={75} name="age" id="outlined-age-simple" onChange={handleItemsPerPage} />}
             className={classes.selectBox}
           >
-            {itemsPerPageOptions.map((item, index) => (
+            {itemsPerPageOptions.map(item => (
               <MenuItem key={item.value} value={item.value}>
                 {item.label}
               </MenuItem>
