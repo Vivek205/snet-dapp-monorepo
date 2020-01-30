@@ -6,11 +6,25 @@ import { connect } from "react-redux";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import ServiceImage from "shared/dist/assets/images/services.png";
+
+import CreateNewServicePopup from "./CreateNewServicePopup";
 import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 
 class AiServices extends Component {
+  state = {
+    showPopUp: false,
+  };
+
+  handleCreateService = () => {
+    this.setState({ showPopUp: true });
+  };
+
+  handleClosePopup = () => {
+    this.setState({ showPopUp: true });
+  };
+
   componentDidMount = async () => {
     const { orgUuid, getAiServiceList } = this.props;
     await getAiServiceList(orgUuid);
@@ -18,6 +32,8 @@ class AiServices extends Component {
 
   render() {
     const { classes } = this.props;
+    const { showPopUp } = this.state;
+
     return (
       <div className={classes.AiServicesMainContainer}>
         <Grid container spacing={24} className={classes.topSectionCotainer}>
@@ -43,6 +59,7 @@ class AiServices extends Component {
           </Grid>
           <ServiceCollection />
         </Grid>
+        <CreateNewServicePopup open={showPopUp} handleClose={this.handleClosePopup} />
       </div>
     );
   }
