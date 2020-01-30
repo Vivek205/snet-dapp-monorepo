@@ -68,7 +68,6 @@ export const GlobalRoutes = {
   },
   ORGANIZATION_SETUP: {
     name: "organizationsetup",
-    basePath: "/organizationsetup",
     path: "/organizationsetup",
     component: OrganizationsetupComponent,
   },
@@ -88,3 +87,22 @@ export const GlobalRoutes = {
     component: AiServicesComponent,
   },
 };
+
+export const setupRouteAuthentications = state => ({
+  ...GlobalRoutes,
+  ORGANIZATION_SETUP: {
+    ...GlobalRoutes.ORGANIZATION_SETUP,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
+  ORG_SETUP_STATUS: {
+    ...GlobalRoutes.ORG_SETUP_STATUS,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
+  INVITE_MEMBERS: {
+    ...GlobalRoutes.INVITE_MEMBERS,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
+});
