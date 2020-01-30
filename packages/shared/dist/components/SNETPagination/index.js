@@ -40,8 +40,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var SNETPagination = function SNETPagination(_ref) {
   var limit = _ref.limit,
       offset = _ref.offset,
-      total_count = _ref.total_count,
-      handleChange = _ref.handleChange;
+      totalCount = _ref.totalCount,
+      handleChange = _ref.handleChange,
+      itemsPerPageOptions = _ref.itemsPerPageOptions,
+      from = _ref.from,
+      to = _ref.to;
 
   var _useState = (0, _react.useState)(12),
       _useState2 = _slicedToArray(_useState, 2),
@@ -51,27 +54,15 @@ var SNETPagination = function SNETPagination(_ref) {
   var classes = (0, _styles.useStyles)();
 
   var handleItemsPerPage = function handleItemsPerPage(event) {
-    var pagination = {
-      offset: 0,
-      limit: event.target.value
-    };
     setItemsPerPage(event.target.value);
-    handleChange(pagination);
   };
 
   var handlePageChange = function handlePageChange(selectedOffset) {
     if (selectedOffset === parseFloat(offset)) {
       return;
     }
-
-    var pagination = {
-      offset: selectedOffset
-    };
-    handleChange(pagination);
   };
 
-  var currentFirstItem = offset;
-  var currentLastItem = parseFloat(limit) + parseFloat(offset);
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
@@ -86,7 +77,7 @@ var SNETPagination = function SNETPagination(_ref) {
   }, _react.default.createElement(_materialUiFlatPagination.default, {
     limit: limit,
     offset: offset,
-    total: total_count,
+    total: totalCount,
     reduced: true,
     onClick: function onClick(e, offset) {
       return handlePageChange(offset);
@@ -113,13 +104,12 @@ var SNETPagination = function SNETPagination(_ref) {
       onChange: handleItemsPerPage
     }),
     className: classes.selectBox
-  }, _react.default.createElement(_MenuItem.default, {
-    value: 12
-  }, "12"), _react.default.createElement(_MenuItem.default, {
-    value: 24
-  }, "24"), _react.default.createElement(_MenuItem.default, {
-    value: 36
-  }, "36"))), _react.default.createElement("span", null, currentFirstItem, "-", currentLastItem, " of ", total_count)));
+  }, itemsPerPageOptions.map(function (item, index) {
+    return _react.default.createElement(_MenuItem.default, {
+      key: item.value,
+      value: item.value
+    }, item.label);
+  }))), _react.default.createElement("span", null, from, "-", to, " of ", totalCount)));
 };
 
 var _default = SNETPagination;
