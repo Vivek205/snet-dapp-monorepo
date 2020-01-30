@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSelector } from "react-redux";
+import isEmpty from "lodash/isEmpty";
+import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import GridViewItem from "./GridViewItem";
@@ -10,7 +12,10 @@ import ServiceStatusDetails from "./ServiceStatusDetails";
 
 const CardGroup = () => {
   const classes = useStyles();
-  const { isLoading } = useSelector(state => state.loader.aiServiceList);
+  const { isLoading } = useSelector(state => ({
+    isLoading: state.loader.aiServiceList.isLoading,
+    serviceList: state.aiServiceList.data,
+  }));
   const [isAvailable] = useState(true);
 
   if (isLoading) {
@@ -22,6 +27,10 @@ const CardGroup = () => {
         </div>
       </div>
     );
+  }
+
+  if (isEmpty) {
+    return <Typography>No services found</Typography>;
   }
 
   return (
