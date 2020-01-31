@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
-import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import GridViewItem from "./GridViewItem";
 import ServiceStatusDetails from "./ServiceStatusDetails";
+import NoServicesFound from "./NoServicesFound";
+import LoadingAiServices from "./LoadingAiServices";
 
 const CardGroup = () => {
   const classes = useStyles();
@@ -19,18 +19,11 @@ const CardGroup = () => {
   const [isAvailable] = useState(true);
 
   if (isLoading) {
-    return (
-      <div className={classes.circularProgressContainer}>
-        <div className={classes.loaderChild}>
-          <CircularProgress className={classes.circularProgress} />
-          <p className={classes.loaderText}>LOADING AI..</p>
-        </div>
-      </div>
-    );
+    return <LoadingAiServices />;
   }
 
   if (isEmpty) {
-    return <Typography>No services found</Typography>;
+    return <NoServicesFound />;
   }
 
   return serviceList.map(service => (
