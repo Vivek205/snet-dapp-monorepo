@@ -22,7 +22,7 @@ export const serviceCreationSections = {
     },
   },
   SUBMIT: {
-    key: 3,
+    key: 4,
     heading: {
       title: "Submit for Review",
       description: "You have completed the required steps for submission",

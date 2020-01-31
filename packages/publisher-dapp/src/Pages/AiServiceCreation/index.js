@@ -20,7 +20,7 @@ const AiServiceCreation = ({ classes, location }) => {
       return DEMO;
     } else if (path.includes(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path)) {
       return PRICING_AND_DISTRIBUTION;
-    } else if (path.includes(ServiceCreationRoutes.SUBMIT)) {
+    } else if (path.includes(ServiceCreationRoutes.SUBMIT.path)) {
       return SUBMIT;
     }
     return PROFILE;
