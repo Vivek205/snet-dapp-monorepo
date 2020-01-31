@@ -41,7 +41,10 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(props) {
+var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
+  var title = _ref.title,
+      forgotPasswordConfirmError = _ref.forgotPasswordConfirmError,
+      onSubmit = _ref.onSubmit;
   var classes = (0, _styles.useStyles)();
 
   var _useState = (0, _react.useState)(true),
@@ -75,8 +78,8 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(props) {
   };
 
   var handleSubmit = function handleSubmit(event) {
-    setValidationErr("");
     event.preventDefault();
+    setValidationErr("");
     var isNotValid = (0, _validator.default)({
       password: password,
       confirmPassword: confirmPassword,

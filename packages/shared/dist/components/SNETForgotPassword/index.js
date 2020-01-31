@@ -41,7 +41,11 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var SNETForgotPassword = function SNETForgotPassword(props) {
+var SNETForgotPassword = function SNETForgotPassword(_ref) {
+  var title = _ref.title,
+      email = _ref.email,
+      forgotPasswordError = _ref.forgotPasswordError,
+      onSubmit = _ref.onSubmit;
   var classes = (0, _styles.useStyles)();
 
   var _useState = (0, _react.useState)(email),
@@ -55,9 +59,9 @@ var SNETForgotPassword = function SNETForgotPassword(props) {
       setValidationErr = _useState4[1];
 
   var handleSubmit = function handleSubmit(event) {
-    setValidationErr("");
     event.preventDefault();
     event.stopPropagation();
+    setValidationErr("");
     var isNotValid = (0, _validator.default)({
       email: localEmail
     }, _validationConstraints.forgotPasswordConstraints);
@@ -67,7 +71,7 @@ var SNETForgotPassword = function SNETForgotPassword(props) {
       return;
     }
 
-    onsubmit(localEmail);
+    onSubmit(localEmail);
   };
 
   return _react.default.createElement(_Grid.default, {
