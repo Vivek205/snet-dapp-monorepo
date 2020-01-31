@@ -9,19 +9,23 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _materialUiFlatPagination = _interopRequireDefault(require("material-ui-flat-pagination"));
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _styles = require("./styles");
 
 var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
-var _FormControl = _interopRequireDefault(require("@material-ui/core/FormControl"));
+var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
 
-var _Select = _interopRequireDefault(require("@material-ui/core/Select"));
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
-var _OutlinedInput = _interopRequireDefault(require("@material-ui/core/OutlinedInput"));
+var _AlertBox = _interopRequireDefault(require("../AlertBox"));
 
-var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
+var _SNETButton = _interopRequireDefault(require("../SNETButton"));
 
-var _styles = require("./styles");
+var _validator = _interopRequireDefault(require("../../utils/validator"));
+
+var _validationConstraints = require("./validationConstraints");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,79 +41,85 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var SNETPagination = function SNETPagination(_ref) {
-  var limit = _ref.limit,
-      offset = _ref.offset,
-      totalCount = _ref.totalCount,
-      itemsPerPageOptions = _ref.itemsPerPageOptions,
-      from = _ref.from,
-      to = _ref.to;
-
-  var _useState = (0, _react.useState)(12),
-      _useState2 = _slicedToArray(_useState, 2),
-      itemsPerPage = _useState2[0],
-      setItemsPerPage = _useState2[1];
-
+var SNETForgotPassword = function SNETForgotPassword(_ref) {
+  var title = _ref.title,
+      email = _ref.email,
+      forgotPasswordError = _ref.forgotPasswordError,
+      onSubmit = _ref.onSubmit;
   var classes = (0, _styles.useStyles)();
 
-  var handleItemsPerPage = function handleItemsPerPage(event) {
-    setItemsPerPage(event.target.value);
-  };
+  var _useState = (0, _react.useState)(email),
+      _useState2 = _slicedToArray(_useState, 2),
+      localEmail = _useState2[0],
+      setEmail = _useState2[1];
 
-  var handlePageChange = function handlePageChange(selectedOffset) {
-    if (selectedOffset === parseFloat(offset)) {
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      validationErr = _useState4[0],
+      setValidationErr = _useState4[1];
+
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    setValidationErr("");
+    var isNotValid = (0, _validator.default)({
+      email: localEmail
+    }, _validationConstraints.forgotPasswordConstraints);
+
+    if (isNotValid) {
+      setValidationErr(isNotValid[0]);
       return;
     }
+
+    onSubmit(localEmail);
   };
 
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
-    className: classes.paginationContainer
+    className: classes.forgotPwdMainContainer
   }, _react.default.createElement(_Grid.default, {
     item: true,
-    xs: 6,
-    sm: 6,
-    md: 6,
-    lg: 6,
-    className: classes.pagination
-  }, _react.default.createElement(_materialUiFlatPagination.default, {
-    limit: limit,
-    offset: offset,
-    total: totalCount,
-    reduced: true,
-    onClick: function onClick(e, offset) {
-      return handlePageChange(offset);
-    },
-    className: classes.styledPagination
-  })), _react.default.createElement(_Grid.default, {
-    item: true,
-    xs: 6,
-    sm: 6,
-    md: 6,
-    lg: 6,
-    className: classes.pageCountSection
-  }, _react.default.createElement("span", {
-    className: classes.itemPerPageTxt
-  }, "Items per page"), _react.default.createElement(_FormControl.default, {
+    xs: 12,
+    sm: 12,
+    md: 12,
+    lg: 12,
+    className: classes.forgotPwdContent
+  }, _react.default.createElement(_Typography.default, {
+    variant: "h2"
+  }, title), _react.default.createElement("p", null, "We'll email you instructions on how to reset it."), _react.default.createElement("form", {
+    noValidate: true,
+    autoComplete: "off",
+    className: classes.forgotPwdForm
+  }, _react.default.createElement(_TextField.default, {
+    id: "outlined-username-input",
+    label: "Email",
+    className: classes.textField,
+    type: "text",
+    name: "email",
+    margin: "normal",
     variant: "outlined",
-    className: classes.pageListformControl
-  }, _react.default.createElement(_Select.default, {
-    value: itemsPerPage,
-    input: _react.default.createElement(_OutlinedInput.default, {
-      labelWidth: 75,
-      name: "age",
-      id: "outlined-age-simple",
-      onChange: handleItemsPerPage
-    }),
-    className: classes.selectBox
-  }, itemsPerPageOptions.map(function (item) {
-    return _react.default.createElement(_MenuItem.default, {
-      key: item.value,
-      value: item.value
-    }, item.label);
-  }))), _react.default.createElement("span", null, from, "-", to, " of ", totalCount)));
+    value: localEmail,
+    onChange: function onChange(e) {
+      return setEmail(e.target.value);
+    }
+  }), _react.default.createElement(_AlertBox.default, {
+    type: "error",
+    message: validationErr || forgotPasswordError
+  }), _react.default.createElement(_SNETButton.default, {
+    color: "primary",
+    variant: "contained",
+    children: "reset password",
+    type: "submit",
+    onClick: handleSubmit
+  }))));
 };
 
-var _default = SNETPagination;
+SNETForgotPassword.propTypes = {
+  title: _propTypes.default.string,
+  email: _propTypes.default.string,
+  forgotPasswordError: _propTypes.default.string,
+  onSubmit: _propTypes.default.func
+};
+var _default = SNETForgotPassword;
 exports.default = _default;
