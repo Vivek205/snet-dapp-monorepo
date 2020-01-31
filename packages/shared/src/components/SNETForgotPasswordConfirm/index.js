@@ -24,8 +24,8 @@ const SNETForgotPasswordConfirm = ({ title, forgotPasswordConfirmError, onSubmit
   };
 
   const handleSubmit = event => {
-    setValidationErr("");
     event.preventDefault();
+    setValidationErr("");
     const isNotValid = validator({ password, confirmPassword, code }, forgotPassworSubmitConstraints);
     if (isNotValid) {
       setValidationErr(isNotValid[0]);

@@ -16,9 +16,9 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
   const [validationErr, setValidationErr] = useState("");
 
   const handleSubmit = event => {
-    setValidationErr("");
     event.preventDefault();
     event.stopPropagation();
+    setValidationErr("");
     const isNotValid = validator({ email: localEmail }, forgotPasswordConstraints);
     if (isNotValid) {
       setValidationErr(isNotValid[0]);
