@@ -14,6 +14,7 @@ const OrganizationSetup = lazy(() => import("../Pages/OrganizationSetup"));
 const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
 const AiServices = lazy(() => import("../Pages/AiServices"));
+const AiServiceCreation = lazy(() => import("../Pages/AiServiceCreation"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -29,6 +30,7 @@ const OrganizationsetupComponent = withLightHeaderAndFooter(OrganizationSetup);
 const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
 const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 const AiServicesComponent = withDashboardMenu(AiServices);
+const AiServiceCreationComponent = withLightHeaderAndFooter(AiServiceCreation);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -85,6 +87,11 @@ export const GlobalRoutes = {
     name: "services",
     path: "/services",
     component: AiServicesComponent,
+  },
+  AI_SERVICE_CREATION: {
+    name: "ai service creation",
+    path: "/servicecreation",
+    component: AiServiceCreationComponent,
   },
 };
 
