@@ -3,8 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import SNETButton from "shared/src/components/SNETButton";
-import SNETTextfield from "shared/src/components/SNETTextfield";
+import SNETButton from "shared/dist/components/SNETButton";
+import SNETTextfield from "shared/dist/components/SNETTextfield";
 
 import { useStyles } from "./styles";
 
