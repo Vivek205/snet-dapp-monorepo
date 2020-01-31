@@ -1,0 +1,54 @@
+{
+  "name": "rfai-dapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.4.0",
+    "@material-ui/icons": "^4.1.0",
+    "@material-ui/lab": "^3.0.0-alpha.30",
+    "@material-ui/styles": "^4.0.2",
+    "aws-amplify": "^1.1.28",
+    "clsx": "^1.0.4",
+    "color": "^3.1.2",
+    "history": "^4.9.0",
+    "html-react-parser": "^0.10.0",
+    "lodash": "latest",
+    "material-design-icons": "^3.0.1",
+    "material-ui-flat-pagination": "^4.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-dropzone": "^8.0.4",
+    "react-file-drop": "^0.2.8",
+    "react-ga": "^2.6.0",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "singularitynet-rfai-contracts": "^0.2.5",
+    "singularitynet-token-contracts": "^2.0.1",
+    "validate.js": "^0.13.1",
+    "web3": "^1.2.2",
+    "shared": "*"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts --max_old_space_size=5120 build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "peerDependencies": {
+    "react-scripts": "3.2.0"
+  }
+}

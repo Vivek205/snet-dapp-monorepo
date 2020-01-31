@@ -1,0 +1,57 @@
+{
+  "name": "snet-dapp",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@material-ui/core": "^4.7.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^2.7.0",
+    "lerna": "^3.19.0",
+    "lint-staged": "^8.2.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "react-scripts": "3.2.0",
+    "typescript": "^3.7.3",
+    "snet-sdk-web": "^1.0.0-beta.10"
+  },
+  "scripts": {
+    "start:marketplace": "cd packages/marketplace-dapp && yarn start",
+    "start:rfai": "cd packages/rfai-dapp && yarn start",
+    "start:publisher": "cd packages/publisher-dapp && yarn start",
+    "build:marketplace": "cd packages/marketplace-dapp && yarn build",
+    "build:publisher": "cd packages/publisher-dapp && yarn build",
+    "build:rfai": "cd packages/rfai-dapp && yarn build",
+    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
+    "storybook": "lerna exec --scope shared  -- yarn run storybook",
+    "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
+    "lint": "eslint .",
+    "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
+    "lint:fix-shared": "eslint packages/shared/. --fix",
+    "lint:fix": "eslint . --fix",
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "peerDependencies": {
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.11.2"
+  }
+}
