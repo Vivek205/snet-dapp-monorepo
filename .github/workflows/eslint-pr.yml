@@ -14,11 +14,8 @@ jobs:
         with:
           version: 10.17.0
       - uses: actions/checkout@v1
-      - name: action-yarn
-        uses: comchangs/action-yarn@v0.1-beta
       - name: directory
         run: node --version && yarn --version
-        
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
