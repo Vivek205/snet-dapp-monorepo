@@ -21,4 +21,6 @@ export const APIPaths = {
   ACCEPT_INVITATION: "/org/member/register",
   VERIFY_INIVITATION: "/org/member/verify",
   AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/services`,
+
+  AI_CREATE_SERVICE: orgUuid => `/org/${orgUuid}/service`,
 };
