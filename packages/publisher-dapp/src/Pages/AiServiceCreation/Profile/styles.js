@@ -18,13 +18,49 @@ export const useStyles = MUITheme => ({
       borderBottomColor: MUITheme.palette.border.primary,
       lineHeight: "50px !important",
     },
+    "& .MuiTypography-subtitle1": { fontWeight: "normal" },
+  },
+  wrapper: {
+    padding: "0 22px",
+    "& .MuiTextField-root + span": {
+      marginBottom: 0,
+    },
   },
   description: {
-    padding: "0 23px",
-    margin: "7px 0 34px",
+    margin: "7px 0 15px",
     color: MUITheme.palette.text.primary,
     fontSize: 16,
     lineHeight: "21px",
+  },
+  publishingCompanyContainer: {
+    display: "flex",
+    alignItems: "center",
+    "& > div": {
+      "& > div:first-of-type": {
+        maxWidth: "100%",
+        flexBasis: "100%",
+      },
+    },
+    "& > div + div": {
+      marginLeft: 30,
+    },
+  },
+  images: {
+    display: "flex",
+    "& img": { width: "100%" },
+  },
+  largeImg: { width: 302 },
+  smallerImg: {
+    width: 207,
+    marginLeft: 20,
+  },
+  imgDimensionDetails: {
+    marginTop: 12,
+    display: "inline-block",
+    color: MUITheme.palette.text.lightGrey,
+    fontSize: 14,
+    letterSpacing: 0.25,
+    lineHeight: "20px",
   },
   btnContainer: {
     display: "flex",
