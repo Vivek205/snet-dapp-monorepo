@@ -20,8 +20,10 @@
     "pretty-quick": "^1.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
     "react-scripts": "3.2.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "snet-sdk-web": "^1.0.0-beta.10"
   },
   "scripts": {
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
@@ -35,6 +37,7 @@
     "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
     "lint": "eslint .",
     "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
+    "lint:fix-shared": "eslint packages/shared/. --fix",
     "lint:fix": "eslint . --fix",
     "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
   },
@@ -47,5 +50,8 @@
   "peerDependencies": {
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.11.2"
   }
 }

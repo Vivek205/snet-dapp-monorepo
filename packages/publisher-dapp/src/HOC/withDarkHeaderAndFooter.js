@@ -1,5 +1,5 @@
 import React from "react";
-import Footer from "shared/dist/components/Footer";
+import SNETFooter from "shared/dist/components/SNETFooter";
 
 import Header from "../Components/Header";
 
@@ -8,7 +8,7 @@ const withDarkHeaderAndFooter = Component => {
     <div>
       <Header />
       <Component {...props} />
-      <Footer />
+      <SNETFooter />
     </div>
   );
 };

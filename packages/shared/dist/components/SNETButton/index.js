@@ -16,6 +16,7 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
     root: function root(props) {
       var rootStyles = {
         fontWeight: 600,
+        fontSize: 14,
         letterSpacing: 1.25,
         padding: "13px 28px 11px",
         lineHeight: "16px"
@@ -32,6 +33,12 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
             backgroundColor: theme.palette.purple.main
           }
         };
+      }
+
+      if (props.color === "white" && props.variant === "text") {
+        rootStyles.color = theme.palette.primary.main;
+        rootStyles.backgroundColor = theme.palette.background.white;
+        rootStyles.boxShadow = "0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24)";
       }
 
       return rootStyles;

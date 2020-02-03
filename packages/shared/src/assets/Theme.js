@@ -1,153 +1,130 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const customBlue = "#4086ff";
-const customHoverBlue = "#005ACB";
-
-const transBlueBorderTextHover = "#005ACB";
-const transBlueBorderBgHover = "rgba(0,90,203,0.05)";
-
-const alertBoxColor = "rgba(0,0,0,0.6)";
-const alertBoxBorder = "#E67381";
-const alertBoxBackgroundColor = "#FDE5E8";
-
-const warningBoxBg = "#FDF3E5";
-const warningBoxBorder = "#F18D5A";
-
-const infoBoxBg = "#DEEAFF";
-const infoBoxLink = "#067AD7";
-
-const userProfileIconColor = "#757575";
-
-const purple = "#220D3A";
-
-const darkShadedGray = "#212121";
-const mediumShadeGray = "#666";
-const lightShadedGray = "#9b9b9b";
-const grayTitleText = "#4a4a4a";
-
-const succesBoxBg = "#E7FFF8";
-const successBoxBorder = "#00C48C";
-
-const lightGray = "#D6D6D6";
-const disabledBtnBg = "#ccc";
-
-const gray = "rgba(0,0,0,0.04)";
-const gray1 = "#F5F7F8";
-const cardBackground = "#f8f8f8";
-const iconColor = "#AAAEB3";
-const cardSeparator = "#e5e5e5";
-
-const whiteColor = "#fff";
-const offWhiteColor = "#fAFAFA";
-const offWhite = "rgba(255,255,255,.60)";
-
-const errorBgColor = "rgba(208,2,27,0.2)";
-const githubBlack = "#333";
-const black1 = "rgba(0,0,0,.87)";
-const green = "#00C48C";
-
-const footerBgColor = "#211D24";
-const darkOrange = "#AC5C2C";
-
-const orange = "#F29132";
-const orange1 = "#FFF8E7";
-const RatingStarColor = "#FFC000";
-
-const aqua = "#00C48C";
-
-const errorRed = "#B00020";
-const redBtnText = "#D0021B";
-const redBtnBg = "#E67381";
-
-const verticalTabLeftBorder = "#e2e2e2";
-
-const inputBoxBorder = "#979797";
-
-const dialogTitle = "rgba(0,0,0,0.87)";
-
-const outlinedBtnHoverBg = "rgba(241,241,241,0.15)";
-
-const h2 = { size: 32, color: darkShadedGray };
-
-const offlineRed = "#EF5265";
-const offlineRedBg = "rgba(239,82,101,0.15)";
-
-const informationBarBg = "#2196F3";
-
-const infoBg = "#DEEAFF";
-
-const warningBg = "#FDF3E5";
-const warningBorder = "#F18D5A";
-
-const theme = createMuiTheme({
-  palette: {
-    text: {
-      primary: customBlue,
-      white: whiteColor,
-      customHoverBlue,
-      disabledBtnBg,
-      black1,
-      darkShadedGray,
-      mediumShadeGray,
-      lightShadedGray,
-      offWhiteColor,
-      offWhite,
-      green,
-      purple,
-      darkOrange,
-      orange,
-      orange1,
-      aqua,
-      lightGray,
-      gray,
-      gray1,
-      cardBackground,
-      iconColor,
-      errorRed,
-      RatingStarColor,
-      offlineRed,
-      successBoxBorder,
-      grayTitleText,
-      redBtnText,
-      transBlueBorderTextHover,
-      transBlueBorderBgHover,
-      cardSeparator,
-      userProfileIconColor,
-      alertBoxBorder,
-      alertBoxColor,
-      alertBoxBackgroundColor,
-      infoBg,
-      warningBg,
-      warningBorder,
-      verticalTabLeftBorder,
-      redBtnBg,
-      warningBoxBorder,
-      warningBoxBg,
-      infoBoxBg,
-      infoBoxLink,
-      inputBoxBorder,
-      dialogTitle,
-      outlinedBtnHoverBg,
-      informationBarBg,
+export const MUITheme = createMuiTheme({
+  breakpoints: {
+    keys: ["xs", "sm", "md", "lg", "xl"],
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
     },
   },
-  backgroundColor: {
-    blue: customBlue,
-    red: errorBgColor,
-    white: whiteColor,
-    githubBlack,
-    offlineRedBg,
-    footerBgColor,
-    succesBoxBg,
-  },
-  font: {
-    h2,
+  palette: {
+    text: {
+      primary: "#666",
+      secondary: "#fff",
+      disabled: "#D6D6D6",
+      red: "#D0021B",
+      darkGrey: "#212121",
+      lightGrey: "#9b9b9b",
+      footerText: "#FFFFE1",
+      white: "#fff",
+      black: "#000",
+      hover: {
+        blue: "#005ACB",
+        red: "#D0021B",
+        black: "#333",
+      },
+    },
+    primary: {
+      main: "#4086ff",
+      dark: "#005ACB",
+    },
+    secondary: {
+      main: "#E67381",
+      dark: "#D0021B",
+    },
+    purple: {
+      main: "#220D3A",
+      light: "#412f55",
+    },
+    background: {
+      disabled: { gray: "#D6D6D6" },
+      hover: {
+        blue: "#ecf3fe",
+        red: "#D0021B",
+        black: "#333",
+      },
+      grey: "#D6D6D6",
+      mainContent: "#fafafa",
+      footer: "#211D24",
+      white: "#fff",
+      black: "#333",
+      red: "#D0021B",
+      succesBox: "#E7FFF8",
+      alertBox: "#FDE5E8",
+      warningBox: "#FDF3E5",
+      infoBox: "#DEEAFF",
+    },
+    border: {
+      primary: "#f5f7f8",
+      secondary: "#ccc",
+      mainContent: "#fafafa",
+      alertBox: "#E67381",
+      warningBox: "#F18D5A",
+      grey: "#D6D6D6",
+    },
+    success: "#00C48C",
+    error: { main: "#B00020" },
+    infoBoxLink: "#067AD7",
+    warning: "#F18D5A",
   },
   typography: {
-    primary: {
-      main: "Muli, sans-serif",
+    fontFamily: "Muli",
+    h2: {
+      color: "#212121",
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: "45px",
+    },
+    h3: {
+      color: "#212121",
+      fontSize: 32,
+      fontWeight: 600,
+      letterSpacing: -0.5,
+      lineHeight: "32px",
+    },
+    h4: {
+      color: "#212121",
+      fontSize: 24,
+      fontWeight: 600,
+      lineHeight: "30px",
+    },
+    h5: {
+      color: "#212121",
+      fontSize: 22,
+      fontWeight: 600,
+      lineHeight: "32px",
+    },
+    h6: {
+      color: "#212121",
+      fontSize: 20,
+      fontWeight: 600,
+      lineHeight: "25px",
+    },
+    body1: {
+      color: "#9b9b9b",
+      fontSize: 24,
+      lineHeight: "30px",
+    },
+    body2: {
+      color: "#616161",
+      fontSize: 18,
+      lineHeight: "28px",
+    },
+    subtitle1: {
+      color: "#212121",
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    subtitle2: {
+      color: "#666",
+      fontSize: 14,
+      lineHeight: "21px",
     },
   },
 });
 
-export default theme;
+export default MUITheme;
