@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
+const test = "";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const GetStarted = lazy(() => import("../Pages/GetStarted"));
