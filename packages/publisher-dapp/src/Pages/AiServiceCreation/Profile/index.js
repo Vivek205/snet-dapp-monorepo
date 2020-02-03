@@ -12,7 +12,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location }) => {
+const Profile = ({ classes }) => {
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
