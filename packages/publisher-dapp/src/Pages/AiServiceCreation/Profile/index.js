@@ -22,6 +22,7 @@ const Profile = ({ classes, location }) => {
             Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter
             videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
           </Typography>
+
           <SNETTextfield
             icon
             label="AI Service Name"
@@ -33,6 +34,7 @@ const Profile = ({ classes, location }) => {
             <SNETTextfield icon label="Publishing Company" />
             <UserCard userName="PROVIDER" userEmail="SINGULARITYNET" />
           </div>
+
           <SNETTextarea
             showInfoIcon
             label="Short Description"
@@ -109,6 +111,7 @@ const Profile = ({ classes, location }) => {
           </div>
         </div>
       </Grid>
+
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="finish later" color="primary" variant="text" />
         <SNETButton children="preview" color="primary" variant="contained" />

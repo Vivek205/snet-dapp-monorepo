@@ -6,7 +6,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import { emailPreferencesList, entityTypeDetails } from "./content";
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
