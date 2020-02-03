@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
@@ -6,9 +6,13 @@ import { useStyles } from "./styles";
 import Region from "./Region";
 import UploadProto from "./UploadProto";
 import AdvancedFields from "./AdvancedFields";
+import Actions from "./Actions";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const PricingDistribution = () => {
   const classes = useStyles();
+  const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
+
   return (
     <Grid container className={classes.container}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -21,8 +25,10 @@ const PricingDistribution = () => {
           <Region />
           <UploadProto />
           <AdvancedFields />
+          <AlertBox type={alert.type} message={alert.message} />
         </div>
       </Grid>
+      <Actions />
     </Grid>
   );
 };
