@@ -58,7 +58,6 @@ const snetBackgroundRed = red[100];
 // Definitions
 const spacingUnit = 8;
 const snetFont = "Muli";
-const minimumWidth = "400px";
 const minimumTabHeight = 160;
 
 export default class SNETImageUpload extends React.Component {
@@ -1188,7 +1187,6 @@ export default class SNETImageUpload extends React.Component {
         style={{
           width: this.props.width,
           minHeight: "264px",
-          minWidth: minimumWidth,
           position: "relative",
         }}
       >

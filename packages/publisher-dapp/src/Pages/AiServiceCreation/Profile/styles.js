@@ -3,7 +3,10 @@ export const useStyles = MUITheme => ({
     width: 845,
     paddingBottom: 144,
     margin: "48px auto 0",
-    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "0 30px 100px",
+    },
   },
   box: {
     paddingBottom: 33,
@@ -19,6 +22,7 @@ export const useStyles = MUITheme => ({
       lineHeight: "50px !important",
     },
     "& .MuiTypography-subtitle1": { fontWeight: "normal" },
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
   wrapper: {
     padding: "0 22px",
@@ -42,13 +46,26 @@ export const useStyles = MUITheme => ({
       },
     },
     "& > div + div": { marginLeft: 30 },
+    [MUITheme.breakpoints.down("xs")]: {
+      marginBottom: 25,
+      flexDirection: "column",
+      alignItems: "flex-start",
+    },
   },
   profileImgContainer: { padding: "30px 0 41px" },
-  uploaderContentConatiner: { display: "flex" },
+  uploaderContentConatiner: {
+    display: "flex",
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
+  },
   profileImgContent: {
     paddingTop: 60,
     marginLeft: 28,
     "& h6:first-of-type": { marginBottom: 25 },
+    [MUITheme.breakpoints.down("sm")]: {
+      paddingTop: 20,
+      marginLeft: 0,
+      marginBottom: 25,
+    },
   },
   images: {
     display: "flex",
@@ -73,7 +90,12 @@ export const useStyles = MUITheme => ({
     "& h6": {
       paddingTop: 60,
       marginLeft: 28,
+      [MUITheme.breakpoints.down("sm")]: {
+        paddingTop: 20,
+        marginLeft: 0,
+      },
     },
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   btnContainer: {
     display: "flex",

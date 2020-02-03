@@ -13,7 +13,7 @@ import AlertBox from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location, error }) => {
+const Profile = ({ classes, location, errorType, errorMessage }) => {
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -110,8 +110,7 @@ const Profile = ({ classes, location, error }) => {
               </Typography>
             </div>
           </div>
-
-          {error ? <AlertBox type="error" message="Error Message" /> : null}
+          <AlertBox type={errorType} message={errorMessage} />
         </div>
       </Grid>
 
