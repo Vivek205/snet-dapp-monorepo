@@ -1479,7 +1479,6 @@ SNETImageUpload.propTypes = {
   comparisonTabTitle: _propTypes.default.string
 };
 SNETImageUpload.defaultProps = {
-  width: "500px",
   tabHeight: 300,
   imageName: "Content Image",
   disableUploadTab: false,

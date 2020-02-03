@@ -1441,7 +1441,6 @@ SNETImageUpload.propTypes = {
 };
 
 SNETImageUpload.defaultProps = {
-  width: "500px",
   tabHeight: 300,
   imageName: "Content Image",
   disableUploadTab: false, // If true disables upload tab
