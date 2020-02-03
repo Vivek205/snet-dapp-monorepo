@@ -24,6 +24,7 @@
     "eqeqeq": "warn",
     "no-useless-catch": "off",
     "no-console": "error",
+    "no-debugger": "error",
     "jsx-a11y/alt-text": "error"
   }
 }
