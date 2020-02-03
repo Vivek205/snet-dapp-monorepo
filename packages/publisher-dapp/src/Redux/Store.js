@@ -5,6 +5,10 @@ import rootReducer from "./reducers";
 
 let composeEnhancers = compose;
 const middlewares = [thunk];
+const eslint = "";
+const test = "";
+const github = "";
+const actions = "";
 
 if (process.env.NODE_ENV === "development") {
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
