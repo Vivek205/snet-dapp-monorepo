@@ -9,6 +9,7 @@ import { loaderActions } from "./";
 
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
 export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
+export const SET_AI_SERVICE_LIST_TOTAL_COUNT = "SET_AI_SERVICE_LIST_TOTAL_COUNT";
 
 const setAiServiceList = aiServiceList => ({
   type: SET_AI_SERVICE_LIST,
@@ -20,9 +21,14 @@ export const setAiServiceListPagination = pagination => ({
   payload: pagination,
 });
 
+export const setAiServiceListTotalCount = totalCount => ({
+  type: SET_AI_SERVICE_LIST_TOTAL_COUNT,
+  payload: totalCount,
+});
+
 const getAiServiceListAPI = (orgUuid, pagination) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.ROPSTEN.name;
+  const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.AI_SERVICE_LIST(orgUuid);
   const apiOptions = initializeAPIOptions(token, pagination);
   return await API.post(apiName, apiPath, apiOptions);
@@ -84,7 +90,9 @@ export const getAiServiceList = (orgUuid, pagination) => async dispatch => {
     if (error.code) {
       throw new APIError(error.message);
     }
-    const aiServiceList = parseAiServiceListResponse(data);
+    const { result, total_count: totalCount } = data;
+    dispatch(setAiServiceListTotalCount(totalCount));
+    const aiServiceList = parseAiServiceListResponse(result);
     dispatch(setAiServiceList(aiServiceList));
     dispatch(loaderActions.stopAiServiceListLoader());
   } catch (error) {
