@@ -16,11 +16,14 @@ const AiServiceCreation = ({ classes, location }) => {
 
     if (path.includes(ServiceCreationRoutes.PROFILE.path)) {
       return PROFILE;
-    } else if (path.includes(ServiceCreationRoutes.DEMO.path)) {
+    }
+    if (path.includes(ServiceCreationRoutes.DEMO.path)) {
       return DEMO;
-    } else if (path.includes(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path)) {
+    }
+    if (path.includes(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path)) {
       return PRICING_AND_DISTRIBUTION;
-    } else if (path.includes(ServiceCreationRoutes.SUBMIT.path)) {
+    }
+    if (path.includes(ServiceCreationRoutes.SUBMIT.path)) {
       return SUBMIT;
     }
     return PROFILE;
