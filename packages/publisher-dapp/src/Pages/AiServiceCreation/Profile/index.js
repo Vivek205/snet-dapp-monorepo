@@ -25,17 +25,21 @@ const Profile = ({ classes, _location }) => {
   const validateServiceId = async () => {
     // TODO: Need to get the Org UUID from Redux
     const orgUuid = "test_org_uuid";
-    // Call the API to Save the Service Name
+    // Call the API to Validate the Service Id
     try {
       await dispatch(serviceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
       //return setAPIError("Unable to process the request. Tray again later");
     }
-
-    return false;
   };
 
   const [alert] = useState({});
+
+  const handleServiceIdChange = async event => {
+    setServiceId(event.target.value);
+    await dispatch(serviceDetailsActions.setServiceId(event.target.value));
+  };
+
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -62,7 +66,8 @@ const Profile = ({ classes, _location }) => {
             maxCount={50}
             description="The Id of your service to uniquely identity in the organization."
             value={serviceId}
-            onChange={e => setServiceId(e.target.value)}
+            onChange={handleServiceIdChange}
+            onBlur={validateServiceId}
           />
           <div className={classes.publishingCompanyContainer}>
             <SNETTextfield icon label="Publishing Company" />
@@ -150,7 +155,7 @@ const Profile = ({ classes, _location }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="finish later" color="primary" variant="text" />
         <SNETButton children="preview" color="primary" variant="contained" />
-        <SNETButton children="continue" color="primary" variant="contained" onClick={validateServiceId} />
+        <SNETButton children="continue" color="primary" variant="contained" />
       </Grid>
     </Grid>
   );
