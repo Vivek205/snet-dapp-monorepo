@@ -1,4 +1,4 @@
-name: reviewdog
+name: EsLint files on PR - reviewdog
 
 on: 
   pull_request:
