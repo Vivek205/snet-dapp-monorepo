@@ -96,7 +96,6 @@ var snetBackgroundRed = _colors.red[100]; // Definitions
 
 var spacingUnit = 8;
 var snetFont = "Muli";
-var minimumWidth = "400px";
 var minimumTabHeight = 160;
 
 var SNETImageUpload =
@@ -1230,9 +1229,7 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement("div", {
         style: {
-          width: this.props.width,
           minHeight: "264px",
-          minWidth: minimumWidth,
           position: "relative"
         }
       }, _react.default.createElement(_Grid.default, {
@@ -1479,7 +1476,6 @@ SNETImageUpload.propTypes = {
   comparisonTabTitle: _propTypes.default.string
 };
 SNETImageUpload.defaultProps = {
-  width: "500px",
   tabHeight: 300,
   imageName: "Content Image",
   disableUploadTab: false,

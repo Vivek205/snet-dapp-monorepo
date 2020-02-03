@@ -41,7 +41,6 @@ var SNETPagination = function SNETPagination(_ref) {
   var limit = _ref.limit,
       offset = _ref.offset,
       totalCount = _ref.totalCount,
-      handleChange = _ref.handleChange,
       itemsPerPageOptions = _ref.itemsPerPageOptions,
       from = _ref.from,
       to = _ref.to;
@@ -104,7 +103,7 @@ var SNETPagination = function SNETPagination(_ref) {
       onChange: handleItemsPerPage
     }),
     className: classes.selectBox
-  }, itemsPerPageOptions.map(function (item, index) {
+  }, itemsPerPageOptions.map(function (item) {
     return _react.default.createElement(_MenuItem.default, {
       key: item.value,
       value: item.value
