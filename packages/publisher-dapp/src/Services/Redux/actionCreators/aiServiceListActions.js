@@ -8,26 +8,23 @@ import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "./";
 
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
+export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
 
 const setAiServiceList = aiServiceList => ({
   type: SET_AI_SERVICE_LIST,
   payload: aiServiceList,
 });
 
-const getAiServiceListAPI = orgUuid => async dispatch => {
+export const setAiServiceListPagination = pagination => ({
+  type: SET_AI_SERVICE_LIST_PAGINATION,
+  payload: pagination,
+});
+
+const getAiServiceListAPI = (orgUuid, pagination) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.ROPSTEN.name;
   const apiPath = APIPaths.AI_SERVICE_LIST(orgUuid);
-  const payload = {
-    q: "",
-    limit: 10,
-    offset: 0,
-    s: "all",
-    sort_by: "display_name",
-    order_by: "desc",
-    filters: [],
-  };
-  const apiOptions = initializeAPIOptions(token, payload);
+  const apiOptions = initializeAPIOptions(token, pagination);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
@@ -80,10 +77,10 @@ const parseAiServiceData = service => ({
 
 const parseAiServiceListResponse = response => response.map(parseAiServiceData);
 
-export const getAiServiceList = orgUuid => async dispatch => {
+export const getAiServiceList = (orgUuid, pagination) => async dispatch => {
   try {
     dispatch(loaderActions.startAiServiceListLoader());
-    const { data, error } = await dispatch(getAiServiceListAPI(orgUuid));
+    const { data, error } = await dispatch(getAiServiceListAPI(orgUuid, pagination));
     if (error.code) {
       throw new APIError(error.message);
     }
