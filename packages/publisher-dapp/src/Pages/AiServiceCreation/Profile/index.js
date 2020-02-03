@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,9 +12,29 @@ import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox from "shared/dist/components/AlertBox";
 
+import { serviceDetailsActions } from "../../../Services/Redux/actionCreators";
+
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location }) => {
+const Profile = ({ classes, _location }) => {
+  const dispatch = useDispatch();
+
+  const [serviceName, setServiceName] = useState(useSelector(state => state.serviceDetails.name));
+  const [serviceId, setServiceId] = useState("");
+
+  const validateServiceId = async () => {
+    // TODO: Need to get the Org UUID from Redux
+    const orgUuid = "test_org_uuid";
+    // Call the API to Save the Service Name
+    try {
+      await dispatch(serviceDetailsActions.validateServiceId(orgUuid, serviceId));
+    } catch (error) {
+      //return setAPIError("Unable to process the request. Tray again later");
+    }
+
+    return false;
+  };
+
   const [alert] = useState({});
   return (
     <Grid container className={classes.profileContainer}>
@@ -30,7 +51,18 @@ const Profile = ({ classes, location }) => {
             label="AI Service Name"
             minCount={0}
             maxCount={50}
-            description="The name of your service can not be same name as another service."
+            description="The name of your service cannot be same name as another service."
+            value={serviceName}
+            onChange={e => setServiceName(e.target.value)}
+          />
+          <SNETTextfield
+            icon
+            label="AI Service Id"
+            minCount={0}
+            maxCount={50}
+            description="The Id of your service to uniquely identity in the organization."
+            value={serviceId}
+            onChange={e => setServiceId(e.target.value)}
           />
           <div className={classes.publishingCompanyContainer}>
             <SNETTextfield icon label="Publishing Company" />
@@ -118,7 +150,7 @@ const Profile = ({ classes, location }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="finish later" color="primary" variant="text" />
         <SNETButton children="preview" color="primary" variant="contained" />
-        <SNETButton children="continue" color="primary" variant="contained" />
+        <SNETButton children="continue" color="primary" variant="contained" onClick={validateServiceId} />
       </Grid>
     </Grid>
   );
