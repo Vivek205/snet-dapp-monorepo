@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +13,8 @@ import AlertBox from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location, errorType, errorMessage }) => {
+const Profile = ({ classes, location }) => {
+  const [alert] = useState({});
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -110,7 +111,7 @@ const Profile = ({ classes, location, errorType, errorMessage }) => {
               </Typography>
             </div>
           </div>
-          <AlertBox type={errorType} message={errorMessage} />
+          <AlertBox type={alert.type} message={alert.message} />
         </div>
       </Grid>
 
