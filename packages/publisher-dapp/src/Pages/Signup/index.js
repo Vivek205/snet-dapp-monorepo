@@ -12,6 +12,7 @@ const Signup = props => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (nickname, email, password) => {
+    console.log("handle submit");
     try {
       await dispatch(signupActions.signup(nickname, email, password));
       history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
