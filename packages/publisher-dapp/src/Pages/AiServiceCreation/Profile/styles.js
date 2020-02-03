@@ -41,12 +41,18 @@ export const useStyles = MUITheme => ({
         flexBasis: "100%",
       },
     },
-    "& > div + div": {
-      marginLeft: 30,
-    },
+    "& > div + div": { marginLeft: 30 },
+  },
+  profileImgContainer: { padding: "30px 0 41px" },
+  uploaderContentConatiner: { display: "flex" },
+  profileImgContent: {
+    paddingTop: 60,
+    marginLeft: 28,
+    "& h6:first-of-type": { marginBottom: 25 },
   },
   images: {
     display: "flex",
+    marginTop: 12,
     "& img": { width: "100%" },
   },
   largeImg: { width: 302 },
@@ -62,8 +68,18 @@ export const useStyles = MUITheme => ({
     letterSpacing: 0.25,
     lineHeight: "20px",
   },
+  galeryWrapper: {
+    display: "flex",
+    "& h6": {
+      paddingTop: 60,
+      marginLeft: 28,
+    },
+  },
   btnContainer: {
     display: "flex",
     justifyContent: "center",
+    "& button": {
+      "&:nth-child(2)": { margin: "0 25px 0 35px" },
+    },
   },
 });

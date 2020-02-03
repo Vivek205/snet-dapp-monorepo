@@ -9,10 +9,11 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
+import AlertBox from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location }) => {
+const Profile = ({ classes, location, error }) => {
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -67,7 +68,7 @@ const Profile = ({ classes, location }) => {
             label="Project URL"
             description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
           />
-          <SNETTextfield label="Contributors" minCount={0} maxCount={100} />
+          <SNETTextfield icon label="Contributors" minCount={0} maxCount={100} />
 
           <div className={classes.profileImgContainer}>
             <Typography variant="subtitle1">AI Service Profile Image</Typography>
@@ -76,11 +77,11 @@ const Profile = ({ classes, location }) => {
                 <SNETImageUpload />
               </div>
               <div className={classes.profileImgContent}>
-                <Typography>
+                <Typography variant="subtitle2">
                   Every AI service will have has a profile image. We recommend an image that is 906 x 504 in size. You
                   can preview how it will look on the AI Marketpalce.
                 </Typography>
-                <Typography>
+                <Typography variant="subtitle2">
                   We encourage to find a representative image for your service to attract users explore your page and
                   service.
                 </Typography>
@@ -100,15 +101,17 @@ const Profile = ({ classes, location }) => {
 
           <div className={classes.galleryContainer}>
             <Typography variant="subtitle1">Gallery Images</Typography>
-            <div className={classes.imgUploader} />
-            <div className={classes.galleryImgContent}>
-              <Typography>
+            <div className={classes.galeryWrapper}>
+              <SNETImageUpload />
+              <Typography variant="subtitle2">
                 You will be able to support a gallery of images on your AI service profile page. You can have up to 10
                 images that display various examples, outputs or aspects of your service that you would like to
                 highlight.
               </Typography>
             </div>
           </div>
+
+          {error ? <AlertBox type="error" message="Error Message" /> : null}
         </div>
       </Grid>
 
