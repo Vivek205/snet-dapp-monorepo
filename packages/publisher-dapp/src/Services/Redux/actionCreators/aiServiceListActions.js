@@ -1,4 +1,5 @@
 import { API } from "aws-amplify";
+import isEmpty from "lodash/isEmpty";
 
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -7,18 +8,30 @@ import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "./";
 
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
+export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
+export const SET_AI_SERVICE_LIST_TOTAL_COUNT = "SET_AI_SERVICE_LIST_TOTAL_COUNT";
 
 const setAiServiceList = aiServiceList => ({
   type: SET_AI_SERVICE_LIST,
   payload: aiServiceList,
 });
 
-const getAiServiceListAPI = orgUuid => async dispatch => {
-  const { token } = dispatch(fetchAuthenticatedUser());
+export const setAiServiceListPagination = pagination => ({
+  type: SET_AI_SERVICE_LIST_PAGINATION,
+  payload: pagination,
+});
+
+export const setAiServiceListTotalCount = totalCount => ({
+  type: SET_AI_SERVICE_LIST_TOTAL_COUNT,
+  payload: totalCount,
+});
+
+const getAiServiceListAPI = (orgUuid, pagination) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.AI_SERVICE_LIST(orgUuid);
-  const apiOptions = initializeAPIOptions(token);
-  return await API.get(apiName, apiPath, apiOptions);
+  const apiOptions = initializeAPIOptions(token, pagination);
+  return await API.post(apiName, apiPath, apiOptions);
 };
 
 const parseGroups = groups => {
@@ -45,31 +58,41 @@ const parseAiServiceData = service => ({
   shortDescription: service.short_description,
   description: service.description,
   projectUrl: service.project_url,
-  heroImage: service.assets.hero_image
-    ? { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash }
-    : {},
-  protoFiles: service.assets.proto ? { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash } : {},
-  demoFiles: service.assets.demo_files
-    ? { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash }
-    : {},
-  serviceRating: { rating: service.service_rating.rating, totalUsersRated: service.service_rating.total_users_rated },
+  heroImage: isEmpty(service.assets.hero_image)
+    ? {}
+    : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
+  protoFiles: isEmpty(service.assets.proto)
+    ? {}
+    : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
+  demoFiles: isEmpty(service.assets.demo_files)
+    ? {}
+    : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },
+  rating: isEmpty(service.rating)
+    ? {}
+    : { rating: service.rating.rating, totalUsersRated: service.rating.total_users_rated },
   ranking: service.ranking,
-  contributors: service.contributors.map(contributor => ({ name: contributor.name, email: contributor.email_id })),
-  groups: parseGroups(service.groups),
+  contributors: isEmpty(service.contributors)
+    ? []
+    : service.contributors.map(contributor => ({ name: contributor.name, email: contributor.email_id })),
+  groups: isEmpty(service.groups) ? [] : parseGroups(service.groups),
   tags: service.tags,
-  comments: { serviceProvider: service.comments.service_provider },
+  comments: isEmpty(service.comments)
+    ? { serviceProvider: [] }
+    : { serviceProvider: service.comments.service_provider },
 });
 
 const parseAiServiceListResponse = response => response.map(parseAiServiceData);
 
-export const getAiServiceList = orgUuid => async dispatch => {
+export const getAiServiceList = (orgUuid, pagination) => async dispatch => {
   try {
     dispatch(loaderActions.startAiServiceListLoader());
-    const { data, error } = await dispatch(getAiServiceListAPI(orgUuid));
+    const { data, error } = await dispatch(getAiServiceListAPI(orgUuid, pagination));
     if (error.code) {
       throw new APIError(error.message);
     }
-    const aiServiceList = parseAiServiceListResponse(data);
+    const { result, total_count: totalCount } = data;
+    dispatch(setAiServiceListTotalCount(totalCount));
+    const aiServiceList = parseAiServiceListResponse(result);
     dispatch(setAiServiceList(aiServiceList));
     dispatch(loaderActions.stopAiServiceListLoader());
   } catch (error) {

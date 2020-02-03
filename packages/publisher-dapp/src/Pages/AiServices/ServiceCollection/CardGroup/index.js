@@ -22,7 +22,7 @@ const CardGroup = () => {
     return <LoadingAiServices />;
   }
 
-  if (isEmpty) {
+  if (isEmpty(serviceList)) {
     return <NoServicesFound />;
   }
 
@@ -33,15 +33,15 @@ const CardGroup = () => {
           <GridViewItem
             cardTitle={service.displayName}
             cardSubheader="sub header"
-            ratingGiven={service.serviceRating.rating}
-            totalRating={service.serviceRating.totalUsersRated}
+            ratingGiven={service.rating.rating}
+            totalRating={service.rating.totalUsersRated}
             cardDescription={service.shortDescription}
             isAvailable={isAvailable}
           />
         </Link>
       </Grid>
       <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
-        <ServiceStatusDetails />
+        <ServiceStatusDetails status={service.state} groups={service.groups} />
       </Grid>
     </Grid>
   ));
