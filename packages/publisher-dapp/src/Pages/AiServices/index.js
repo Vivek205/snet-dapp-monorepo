@@ -41,6 +41,7 @@ const AiServices = ({ classes }) => {
                 children="create new ai service"
                 variant="contained"
                 onClick={handleCreateService}
+                // check
               />
               <SNETButton color="primary" variant="text" children="view documentation" />
             </div>
