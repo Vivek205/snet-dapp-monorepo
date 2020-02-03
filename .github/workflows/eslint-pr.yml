@@ -1,28 +1,23 @@
-name: Eslint - PR
+name: reviewdog
 
 on: 
+  push:
+    branches: 
+      - '*'
   pull_request:
-    branches: '*'
-  
+    branches: 
+      - '*'
 
 jobs:
   eslint:
-
+    name: runner / eslint
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 12
-    - run: rm -rf .yarnclean
-    - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
-      env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          HUSKY_SKIP_INSTALL: true
-    - uses: tinovyatkin/action-eslint@v1
-      with:
-        repo-token: ${{secrets.REPO_SYNC_TOKEN}}
-        check-name: eslint
+      - uses: actions/checkout@v1
+      - name: eslint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.REPO_SYNC_TOKEN }}
+          reporter: github-pr-review # Change reporter.
+          eslint_flags: 'packages/publisher-dapp'
+
