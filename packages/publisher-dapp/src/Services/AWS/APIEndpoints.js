@@ -20,5 +20,5 @@ export const APIPaths = {
   SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
   ACCEPT_INVITATION: "/org/member/register",
   VERIFY_INIVITATION: "/org/member/verify",
-  AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/service`,
+  AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/services`,
 };
