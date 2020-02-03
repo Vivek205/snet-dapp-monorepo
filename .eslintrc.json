@@ -12,7 +12,7 @@
     "prefer-arrow-callback": ["error", { "allowNamedFunctions": false, "allowUnboundThis": false }],
     "no-empty-function": ["error"],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "error",
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     "react/jsx-curly-brace-presence": ["warn", { "props": "never", "children": "never" }],
     "no-extra-boolean-cast": "off",
