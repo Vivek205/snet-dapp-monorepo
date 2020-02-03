@@ -4,8 +4,10 @@ import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import Region from "./Region";
+import UploadProto from "./UploadProto";
+import AdvancedFields from "./AdvancedFields";
 
-const PricingDistribution = ({ location }) => {
+const PricingDistribution = () => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
@@ -17,6 +19,8 @@ const PricingDistribution = ({ location }) => {
             videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
           </Typography>
           <Region />
+          <UploadProto />
+          <AdvancedFields />
         </div>
       </Grid>
     </Grid>
