@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -8,20 +9,37 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import { useHistory } from "react-router-dom";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 import { useStyles } from "./styles";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
+  const dispatch = useDispatch();
+
   const [serviceName, setServiceName] = useState("");
+  const [apiError, setAPIError] = useState("");
+  const history = useHistory();
 
   const handleCancel = () => {
     handleClose();
   };
 
-  const handleOnEnterServiceName = e => {
-    setServiceName(e.target.value);
+  const handleContinue = async () => {
+    // TODO: Need to get the Org UUID from Redux
+    const orgUuid = "test_org_uuid";
+    // Call the API to Save the Service Name
+    try {
+      await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
+      history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
+    } catch (error) {
+      return setAPIError("Unable to process the request. Tray again later");
+    }
   };
 
   return (
@@ -47,12 +65,19 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
             icon
             maxCount="50"
             minCount="15"
-            onChange={handleOnEnterServiceName}
+            onChange={e => setServiceName(e.target.value)}
           />
         </CardContent>
         <CardActions className={classes.btnContainer}>
+          <AlertBox type={alertTypes.ERROR} message={apiError} />
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
-          <SNETButton children="create" color="primary" variant="contained" disabled={!serviceName} />
+          <SNETButton
+            children="create"
+            color="primary"
+            variant="contained"
+            disabled={!serviceName}
+            onClick={handleContinue}
+          />
         </CardActions>
       </Card>
     </Modal>

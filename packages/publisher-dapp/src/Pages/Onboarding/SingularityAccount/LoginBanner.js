@@ -6,10 +6,10 @@ import { Link, useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 
 import { loggedInDetails, loggedOutDetails } from "./content";
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import { useSelector, useDispatch } from "react-redux";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import SingularityLogo from "shared/src/assets/images/avatar.png";
+import SingularityLogo from "shared/dist/assets/images/avatar.png";
 import { useStyles } from "./styles";
 import { loginActions } from "../../../Services/Redux/actionCreators/userActions";
 

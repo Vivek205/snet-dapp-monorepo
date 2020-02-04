@@ -3,7 +3,10 @@ export const useStyles = MUITheme => ({
     paddingTop: 40,
     "& h3": { lineHeight: "48px" },
   },
-  topSection: { textAlign: "center" },
+  topSection: {
+    padding: "0 10px",
+    textAlign: "center",
+  },
   description: {
     paddingTop: 15,
     color: MUITheme.palette.text.primary,

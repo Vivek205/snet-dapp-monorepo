@@ -15,7 +15,7 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _Avatar = _interopRequireDefault(require("@material-ui/core/Avatar"));
 
-var _avatar = _interopRequireDefault(require("shared/src/assets/images/avatar.png"));
+var _avatar = _interopRequireDefault(require("shared/dist/assets/images/avatar.png"));
 
 var _styles2 = require("./styles");
 

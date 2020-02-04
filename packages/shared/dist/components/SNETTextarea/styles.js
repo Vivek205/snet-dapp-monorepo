@@ -48,7 +48,7 @@ var useStyles = function useStyles(MUITheme) {
     },
     extraInfo: {
       marginLeft: 17,
-      color: MUITheme.palette.text.darkGrey,
+      color: MUITheme.palette.text.primary,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 12.17,
       letterSpacing: 0.4,
