@@ -17,7 +17,7 @@ export const setServiceId = serviceId => ({
   payload: serviceId,
 });
 
-const setServiceAvailability = serviceAvailability => ({
+export const setServiceAvailability = serviceAvailability => ({
   type: SET_AI_SERVICE_ID_AVAILABILITY,
   payload: serviceAvailability,
 });

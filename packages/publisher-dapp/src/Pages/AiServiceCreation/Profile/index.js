@@ -3,14 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import Chip from "@material-ui/core/Chip";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import DummyCardImg from "shared/dist/assets/images/dummy-card.png";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
-import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+import { serviceValidationConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import { keyCodes } from "shared/dist/utils/keyCodes";
 
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
@@ -20,7 +26,15 @@ const Profile = ({ classes, _location }) => {
 
   const [serviceName, setServiceName] = useState(useSelector(state => state.aiServiceDetails.name));
   const [serviceId, setServiceId] = useState("");
-  const [alert] = useState({});
+  const [shortDesc, setShortDesc] = useState("");
+  const [longDesc, setLongDesc] = useState("");
+
+  const [tags, setTags] = useState("");
+  const [items, setItems] = useState([]); // Used only for UI representation
+
+  const [projectURL, setProjectURL] = useState("");
+  const [contributors, setContributors] = useState("");
+  const [alert, setAlert] = useState({});
 
   const validateServiceId = async () => {
     // TODO: Need to get the Org UUID from Redux
@@ -29,13 +43,59 @@ const Profile = ({ classes, _location }) => {
     try {
       await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
-      //return setAPIError("Unable to process the request. Tray again later");
+      dispatch(aiServiceDetailsActions.setServiceAvailability(undefined));
     }
   };
 
   const handleServiceIdChange = async event => {
     setServiceId(event.target.value);
     await dispatch(aiServiceDetailsActions.setServiceId(event.target.value));
+  };
+
+  const handleContinue = () => {
+    try {
+      const isNotValid = validator({ serviceName, serviceId }, serviceValidationConstraints);
+
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+    } catch (error) {
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
+    }
+  };
+
+  const handleAddTags = event => {
+    if (event.keyCode === keyCodes.enter) {
+      const localTags = tags;
+      setTags("");
+      handleKeyEnterInTags(localTags);
+    }
+  };
+
+  const handleKeyEnterInTags = () => {
+    const tagsEntered = tags.split(",");
+    const localItems = items;
+    tagsEntered.forEach(tag => {
+      tag = tag.replace(/\s/g, "");
+      const index = localItems.findIndex(el => el === tag);
+      if (index === -1) {
+        localItems.push(tag);
+      }
+    });
+
+    setItems([...localItems]);
+  };
+
+  const handleDeleteTag = tag => {
+    const localItems = items;
+    const index = localItems.findIndex(el => el === tag);
+    localItems.splice(index, 1);
+
+    // Set State
+    setItems([...localItems]);
   };
 
   return (
@@ -67,10 +127,6 @@ const Profile = ({ classes, _location }) => {
             onChange={handleServiceIdChange}
             onBlur={validateServiceId}
           />
-          <div className={classes.publishingCompanyContainer}>
-            <SNETTextfield icon label="Publishing Company" />
-            <UserCard userName="PROVIDER" userEmail="SINGULARITYNET" />
-          </div>
 
           <SNETTextarea
             showInfoIcon
@@ -79,32 +135,56 @@ const Profile = ({ classes, _location }) => {
             maxCount={160}
             rowCount={3}
             colCount={105}
+            value={shortDesc}
+            onChange={e => setShortDesc(e.target.value)}
           />
           <SNETTextarea
             showInfoIcon
-            label="Dark Description"
+            label="Long Description"
             minCount={0}
             maxCount={5000}
             rowCount={8}
             colCount={105}
+            value={longDesc}
+            onChange={e => setLongDesc(e.target.value)}
           />
+
           <SNETTextfield
             icon
-            label="Input Tags"
-            extraInfo="Insert multiple items separted with commas. press hit enter"
+            name="id"
+            label="Service Tags"
+            description="Enter all the TAGs separated by comma and press enter"
+            value={tags}
+            onKeyUp={handleAddTags}
+            onChange={e => setTags(e.target.value)}
           />
-          <SNETTextarea
-            showInfoIcon
-            label="Added Tags"
-            rowCount={4}
-            colCount={105}
-            extraInfo="You can add up to 20 tag items"
-          />
+          <Card className={classes.card}>
+            {items.map(tag => (
+              <Chip
+                className={classes.chip}
+                key={tag}
+                label={tag}
+                color="primary"
+                onDelete={() => handleDeleteTag(tag)}
+              />
+            ))}
+          </Card>
+
           <SNETTextfield
             label="Project URL"
             description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
+            value={projectURL}
+            onChange={e => setProjectURL(e.target.value)}
           />
-          <SNETTextfield icon label="Contributors" minCount={0} maxCount={100} />
+
+          <SNETTextfield
+            icon
+            label="Contributors"
+            minCount={0}
+            maxCount={100}
+            value={contributors}
+            onChange={e => setContributors(e.target.value)}
+          />
 
           <div className={classes.profileImgContainer}>
             <Typography variant="subtitle1">AI Service Profile Image</Typography>
@@ -135,17 +215,6 @@ const Profile = ({ classes, _location }) => {
             </div>
           </div>
 
-          <div className={classes.galleryContainer}>
-            <Typography variant="subtitle1">Gallery Images</Typography>
-            <div className={classes.galeryWrapper}>
-              <SNETImageUpload />
-              <Typography variant="subtitle2">
-                You will be able to support a gallery of images on your AI service profile page. You can have up to 10
-                images that display various examples, outputs or aspects of your service that you would like to
-                highlight.
-              </Typography>
-            </div>
-          </div>
           <AlertBox type={alert.type} message={alert.message} />
         </div>
       </Grid>
@@ -153,7 +222,7 @@ const Profile = ({ classes, _location }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="finish later" color="primary" variant="text" />
         <SNETButton children="preview" color="primary" variant="contained" />
-        <SNETButton children="continue" color="primary" variant="contained" />
+        <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
       </Grid>
     </Grid>
   );
