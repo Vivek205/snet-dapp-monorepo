@@ -13,12 +13,11 @@ import { useHistory } from "react-router-dom";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-
-import { serviceDetailsActions } from "../../../Services/Redux/actionCreators";
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
     const orgUuid = "test_org_uuid";
     // Call the API to Save the Service Name
     try {
-      await dispatch(serviceDetailsActions.createService(orgUuid, serviceName));
+      await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
       history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
     } catch (error) {
       return setAPIError("Unable to process the request. Tray again later");
@@ -70,7 +69,7 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
           />
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <AlertBox type="error" message={apiError} />
+          <AlertBox type={alertTypes.ERROR} message={apiError} />
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
           <SNETButton
             children="create"

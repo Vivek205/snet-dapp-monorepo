@@ -1,4 +1,4 @@
-import { serviceDetailsActions } from "../actionCreators";
+import { aiServiceDetailsActions } from "../actionCreators";
 
 const initialState = {
   uuid: "",
@@ -9,13 +9,13 @@ const initialState = {
 
 const serviceDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case serviceDetailsActions.SET_AI_SERVICE_ID:
+    case aiServiceDetailsActions.SET_AI_SERVICE_ID:
       return { ...state, id: action.payload };
-    case serviceDetailsActions.SET_AI_SERVICE_ID_AVAILABILITY:
+    case aiServiceDetailsActions.SET_AI_SERVICE_ID_AVAILABILITY:
       return { ...state, availability: action.payload };
-    case serviceDetailsActions.SET_AI_SERVICE_NAME:
+    case aiServiceDetailsActions.SET_AI_SERVICE_NAME:
       return { ...state, name: action.payload };
-    case serviceDetailsActions.SET_AI_SERVICE_UUID:
+    case aiServiceDetailsActions.SET_AI_SERVICE_UUID:
       return { ...state, uuid: action.payload };
     default:
       return state;

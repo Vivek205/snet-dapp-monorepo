@@ -12,32 +12,30 @@ import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox from "shared/dist/components/AlertBox";
 
-import { serviceDetailsActions } from "../../../Services/Redux/actionCreators";
-
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
 
-  const [serviceName, setServiceName] = useState(useSelector(state => state.serviceDetails.name));
+  const [serviceName, setServiceName] = useState(useSelector(state => state.aiServiceDetails.name));
   const [serviceId, setServiceId] = useState("");
+  const [alert] = useState({});
 
   const validateServiceId = async () => {
     // TODO: Need to get the Org UUID from Redux
     const orgUuid = "test_org_uuid";
     // Call the API to Validate the Service Id
     try {
-      await dispatch(serviceDetailsActions.validateServiceId(orgUuid, serviceId));
+      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
       //return setAPIError("Unable to process the request. Tray again later");
     }
   };
 
-  const [alert] = useState({});
-
   const handleServiceIdChange = async event => {
     setServiceId(event.target.value);
-    await dispatch(serviceDetailsActions.setServiceId(event.target.value));
+    await dispatch(aiServiceDetailsActions.setServiceId(event.target.value));
   };
 
   return (

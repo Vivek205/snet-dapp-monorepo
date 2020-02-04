@@ -3,7 +3,7 @@ import * as organizationActions from "./organizationActions";
 import * as loaderActions from "./loaderActions";
 import * as inviteMembersActions from "./inviteMembersActions";
 import * as aiServiceListActions from "./aiServiceListActions";
-import * as serviceDetailsActions from "./serviceDetailsActions";
+import * as aiServiceDetailsActions from "./aiServiceDetailsActions";
 
 export {
   userActions,
@@ -11,5 +11,5 @@ export {
   loaderActions,
   inviteMembersActions,
   aiServiceListActions,
-  serviceDetailsActions,
+  aiServiceDetailsActions,
 };

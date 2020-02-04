@@ -1,5 +1,4 @@
 import { API } from "aws-amplify";
-//import isEmpty from "lodash/isEmpty";
 
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
