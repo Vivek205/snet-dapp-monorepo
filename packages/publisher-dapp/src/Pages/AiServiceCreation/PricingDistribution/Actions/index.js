@@ -21,7 +21,7 @@ const Actions = () => {
   return (
     <div className={classes.buttonsContainer}>
       <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
-      <SNETButton color="primary" children="back" onClick={handleBack} />
+      <SNETButton color="primary" children="prvious step" onClick={handleBack} />
       <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
     </div>
   );

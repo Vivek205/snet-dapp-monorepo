@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(MUITheme => ({
   description: {
-    margin: "7px 0 15px",
+    margin: "16px 0 32px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
-    lineHeight: "21px",
+    fontSize: 14,
+    lineHeight: "20px",
   },
+  modelTextfieldContainer: { marginTop: 32 },
 }));

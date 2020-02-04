@@ -7,6 +7,7 @@ import Region from "./Region";
 import UploadProto from "./UploadProto";
 import AdvancedFields from "./AdvancedFields";
 import Actions from "./Actions";
+
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const PricingDistribution = () => {
@@ -14,7 +15,7 @@ const PricingDistribution = () => {
   const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
 
   return (
-    <Grid container className={classes.container}>
+    <Grid container className={classes.pricingContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Pricing distribution</Typography>
         <div className={classes.wrapper}>

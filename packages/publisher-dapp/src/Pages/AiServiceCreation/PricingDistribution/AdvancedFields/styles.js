@@ -1,10 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(MUITheme => ({
+  advFilesContainer: { marginTop: 72 },
   description: {
-    margin: "7px 0 15px",
+    margin: "16px 0 21px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
-    lineHeight: "21px",
+    fontSize: 14,
+    lineHeight: "20px",
   },
 }));

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
-  container: {
+  pricingContainer: {
     width: 845,
     paddingBottom: 144,
     margin: "48px auto 0",
@@ -11,7 +11,6 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   box: {
-    paddingBottom: 33,
     borderRadius: 4,
     marginBottom: 27,
     backgroundColor: MUITheme.palette.background.white,
@@ -26,14 +25,9 @@ export const useStyles = makeStyles(MUITheme => ({
     "& .MuiTypography-subtitle1": { fontWeight: "normal" },
     [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
-  wrapper: {
-    padding: "0 22px",
-    "& .MuiTextField-root + span": {
-      marginBottom: 0,
-    },
-  },
+  wrapper: { padding: "21px 22px 70px" },
   description: {
-    margin: "7px 0 15px",
+    margin: 0,
     color: MUITheme.palette.text.primary,
     fontSize: 16,
     lineHeight: "21px",
