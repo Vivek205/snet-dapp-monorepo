@@ -16,7 +16,7 @@
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     "react/jsx-curly-brace-presence": ["warn", { "props": "never", "children": "never" }],
     "no-extra-boolean-cast": "off",
-    "no-unused-vars": "error",
+    "no-unused-vars": ["error", { "vars": "all", "args": "all", "argsIgnorePattern": "^_" }],
     "react/jsx-key": "error",
     "no-useless-computed-key": "error",
     "object-shorthand": "error",
@@ -24,6 +24,7 @@
     "eqeqeq": "warn",
     "no-useless-catch": "off",
     "no-console": "error",
+    "no-debugger": "error",
     "jsx-a11y/alt-text": "error"
   }
 }

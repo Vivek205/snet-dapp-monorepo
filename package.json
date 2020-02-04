@@ -52,6 +52,6 @@
     "eslint-plugin-react-hooks": "^2.3.0"
   },
   "dependencies": {
-    "@sentry/browser": "^5.10.2"
+    "@sentry/browser": "^5.11.2"
   }
 }

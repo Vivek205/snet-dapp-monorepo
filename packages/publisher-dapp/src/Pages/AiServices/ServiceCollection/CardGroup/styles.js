@@ -78,4 +78,11 @@ export const useStyles = makeStyles(MUITheme => ({
     padding: "0 26px",
     [MUITheme.breakpoints.down("sm")]: { padding: "50px 26px" },
   },
+  noServicesFoundContainer: {
+    width: 500,
+    margin: "0px auto",
+  },
+  noServicesFoundCard: {
+    width: 500,
+  },
 }));

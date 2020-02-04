@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
 
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const LoggedOutActions = () => {

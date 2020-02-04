@@ -228,7 +228,7 @@ function (_React$Component) {
 
   _createClass(SNETImageUpload, [{
     key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps, nextContent) {
+    value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
       var mimeType; //"data:" + this.state.outputImageMimeType + ";base64," +
@@ -607,7 +607,7 @@ function (_React$Component) {
 
   }, {
     key: "toDataUrl",
-    value: function toDataUrl(src, outputFormat) {
+    value: function toDataUrl(src) {
       var filename = src.substring(src.lastIndexOf("/") + 1);
       var img = new Image();
       var callback = this.verifyAndUpload;
@@ -916,7 +916,7 @@ function (_React$Component) {
 
   }, {
     key: "handleTabChange",
-    value: function handleTabChange(event, value) {
+    value: function handleTabChange(_event, value) {
       this.setState({
         value: value
       });
