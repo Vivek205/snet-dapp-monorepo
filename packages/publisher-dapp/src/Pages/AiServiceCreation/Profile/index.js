@@ -17,6 +17,8 @@ import { serviceValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { keyCodes } from "shared/dist/utils/keyCodes";
+//import { mimeTypeToFileType } from "shared/dist/utils/image";
+import { imgSrcInBase64 } from "shared/dist/utils/image";
 
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
@@ -35,6 +37,12 @@ const Profile = ({ classes, _location }) => {
   const [projectURL, setProjectURL] = useState("");
   const [contributors, setContributors] = useState("");
   const [alert, setAlert] = useState({});
+
+  // TODO: Get from the defaults
+  const [mimeType, setMimeType] = useState("");
+  //const [url, SetURL] = useState(undefined);
+  const url = "";
+  const [data, setData] = useState("");
 
   const validateServiceId = async () => {
     // TODO: Need to get the Org UUID from Redux
@@ -96,6 +104,19 @@ const Profile = ({ classes, _location }) => {
 
     // Set State
     setItems([...localItems]);
+  };
+
+  const handleImageChange = (data, mimeType) => {
+    //const fileType = mimeTypeToFileType(mimeType);
+    // Call API to Store the Image
+    setData(data);
+    setMimeType(mimeType);
+  };
+  const imgSource = () => {
+    if (url) {
+      return url;
+    }
+    return Boolean(data) ? imgSrcInBase64(mimeType, data) : "";
   };
 
   return (
@@ -190,12 +211,24 @@ const Profile = ({ classes, _location }) => {
             <Typography variant="subtitle1">AI Service Profile Image</Typography>
             <div className={classes.uploaderContentConatiner}>
               <div className={classes.imgUploader}>
-                <SNETImageUpload />
+                <SNETImageUpload
+                  disableUrlTab
+                  imageName="service-hero-image"
+                  imageDataFunc={handleImageChange}
+                  outputImage={imgSource()}
+                  outputImageName="service_hero_image"
+                  outputFormat={mimeType}
+                  disableComparisonTab
+                  disableInputTab={Boolean(data) || Boolean(url)}
+                  outputImageType="url"
+                  disableResetButton={false}
+                  disableDownloadButton={true}
+                />
               </div>
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
-                  Every AI service will have has a profile image. We recommend an image that is 906 x 504 in size. You
-                  can preview how it will look on the AI Marketpalce.
+                  Every AI service will have a profile image. We recommend an image that is 906 x 504 in size. You can
+                  preview how it will look on the AI Marketpalce.
                 </Typography>
                 <Typography variant="subtitle2">
                   We encourage to find a representative image for your service to attract users explore your page and
@@ -205,11 +238,11 @@ const Profile = ({ classes, _location }) => {
             </div>
             <div className={classes.images}>
               <div className={classes.largeImg}>
-                <img src={DummyCardImg} alt="Large Size Image" />
+                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Large Size Image" />
                 <Typography className={classes.imgDimensionDetails}>302 x 168 | 32-bit PNG or JPG </Typography>
               </div>
               <div className={classes.smallerImg}>
-                <img src={DummyCardImg} alt="Small Size Image" />
+                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Small Size Image" />
                 <Typography className={classes.imgDimensionDetails}>207 x 115 | 32-bit PNG or JPG </Typography>
               </div>
             </div>
