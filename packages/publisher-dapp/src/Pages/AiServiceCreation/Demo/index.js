@@ -6,12 +6,14 @@ import FolderIcon from "@material-ui/icons/Folder";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
 const Demo = ({ classes }) => {
-  const [uploadSucces, alert] = useState(false);
+  const [uploadSucces] = useState(false);
+  const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
+
   return (
     <Grid container className={classes.demoContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
