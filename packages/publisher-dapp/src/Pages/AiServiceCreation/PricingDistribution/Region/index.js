@@ -12,7 +12,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 const Region = () => {
   const classes = useStyles();
-  const [showRegion] = useState(false);
+  const [showRegion] = useState(true);
 
   if (showRegion) {
     return (
