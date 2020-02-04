@@ -112,4 +112,9 @@ export const setupRouteAuthentications = state => ({
     isAllowed: state.user.isLoggedIn,
     redirectTo: GlobalRoutes.LOGIN.path,
   },
+  AI_SERVICE_CREATION: {
+    ...GlobalRoutes.AI_SERVICE_CREATION,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
 });

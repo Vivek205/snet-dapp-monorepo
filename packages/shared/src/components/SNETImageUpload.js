@@ -58,7 +58,6 @@ const snetBackgroundRed = red[100];
 // Definitions
 const spacingUnit = 8;
 const snetFont = "Muli";
-const minimumWidth = "400px";
 const minimumTabHeight = 160;
 
 export default class SNETImageUpload extends React.Component {
@@ -186,7 +185,7 @@ export default class SNETImageUpload extends React.Component {
   }
 
   // When props.outputImage changes, the component changes to the display mode.
-  componentWillReceiveProps(nextProps, nextContent) {
+  componentWillReceiveProps(nextProps) {
     let mimeType;
 
     //"data:" + this.state.outputImageMimeType + ";base64," +
@@ -547,7 +546,7 @@ export default class SNETImageUpload extends React.Component {
        - URL IMAGE SEARCH -
     *  --------------------*/
 
-  toDataUrl(src, outputFormat) {
+  toDataUrl(src) {
     const filename = src.substring(src.lastIndexOf("/") + 1);
     const img = new Image();
     const callback = this.verifyAndUpload;
@@ -850,7 +849,7 @@ export default class SNETImageUpload extends React.Component {
        - INITIAL STATE -
     *  -----------------*/
 
-  handleTabChange(event, value) {
+  handleTabChange(_event, value) {
     this.setState({
       value,
     });
@@ -1188,7 +1187,6 @@ export default class SNETImageUpload extends React.Component {
         style={{
           width: this.props.width,
           minHeight: "264px",
-          minWidth: minimumWidth,
           position: "relative",
         }}
       >
@@ -1441,7 +1439,6 @@ SNETImageUpload.propTypes = {
 };
 
 SNETImageUpload.defaultProps = {
-  width: "500px",
   tabHeight: 300,
   imageName: "Content Image",
   disableUploadTab: false, // If true disables upload tab

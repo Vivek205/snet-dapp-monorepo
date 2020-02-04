@@ -21,6 +21,7 @@ const SNETTextfield = ({
   description,
   icon,
   onKeyUp,
+  extraInfo,
   ...rest
 }) => {
   return (
@@ -41,7 +42,7 @@ const SNETTextfield = ({
             onChange={onChange}
             fullWidth
             onKeyUp={onKeyUp}
-            disabled
+            disabled={disabled}
             {...rest}
           />
           {maxCount ? (
@@ -49,6 +50,7 @@ const SNETTextfield = ({
               {minCount}/{maxCount} char
             </span>
           ) : null}
+          {extraInfo ? <span className={classes.extraInfo}>{extraInfo}</span> : null}
         </div>
       </Grid>
       <Grid item sx={12} sm={12} md={6} lg={6} className={classes.description}>
