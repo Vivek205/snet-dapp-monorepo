@@ -10,7 +10,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const Submit = ({ classes, location }) => {
+const Submit = ({ classes }) => {
   const [alert] = useState({});
   return (
     <Grid container className={classes.submitContainer}>

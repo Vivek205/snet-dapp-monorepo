@@ -1229,7 +1229,6 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement("div", {
         style: {
-          width: this.props.width,
           minHeight: "264px",
           position: "relative"
         }

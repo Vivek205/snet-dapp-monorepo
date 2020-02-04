@@ -1185,7 +1185,6 @@ export default class SNETImageUpload extends React.Component {
     return (
       <div
         style={{
-          width: this.props.width,
           minHeight: "264px",
           position: "relative",
         }}
