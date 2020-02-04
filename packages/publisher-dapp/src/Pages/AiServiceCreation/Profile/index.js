@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,10 +12,32 @@ import UserCard from "shared/dist/components/UserCard";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox from "shared/dist/components/AlertBox";
 
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
 
-const Profile = ({ classes, location }) => {
+const Profile = ({ classes, _location }) => {
+  const dispatch = useDispatch();
+
+  const [serviceName, setServiceName] = useState(useSelector(state => state.aiServiceDetails.name));
+  const [serviceId, setServiceId] = useState("");
   const [alert] = useState({});
+
+  const validateServiceId = async () => {
+    // TODO: Need to get the Org UUID from Redux
+    const orgUuid = "test_org_uuid";
+    // Call the API to Validate the Service Id
+    try {
+      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
+    } catch (error) {
+      //return setAPIError("Unable to process the request. Tray again later");
+    }
+  };
+
+  const handleServiceIdChange = async event => {
+    setServiceId(event.target.value);
+    await dispatch(aiServiceDetailsActions.setServiceId(event.target.value));
+  };
+
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -30,7 +53,19 @@ const Profile = ({ classes, location }) => {
             label="AI Service Name"
             minCount={0}
             maxCount={50}
-            description="The name of your service can not be same name as another service."
+            description="The name of your service cannot be same name as another service."
+            value={serviceName}
+            onChange={e => setServiceName(e.target.value)}
+          />
+          <SNETTextfield
+            icon
+            label="AI Service Id"
+            minCount={0}
+            maxCount={50}
+            description="The Id of your service to uniquely identity in the organization."
+            value={serviceId}
+            onChange={handleServiceIdChange}
+            onBlur={validateServiceId}
           />
           <div className={classes.publishingCompanyContainer}>
             <SNETTextfield icon label="Publishing Company" />

@@ -57,7 +57,12 @@ class AiServices extends Component {
                 </Typography>
               </div>
               <div className={classes.btnContainer}>
-                <SNETButton color="primary" children="create new ai service" variant="contained" />
+                <SNETButton
+                  color="primary"
+                  children="create new ai service"
+                  variant="contained"
+                  onClick={this.handleCreateService}
+                />
                 <SNETButton color="primary" variant="text" children="view documentation" />
               </div>
             </Grid>

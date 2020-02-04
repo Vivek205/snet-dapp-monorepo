@@ -66,10 +66,10 @@ export const MUITheme = createMuiTheme({
       warningBox: "#F18D5A",
       grey: "#D6D6D6",
     },
-    success: "#00C48C",
+    success: { main: "#00C48C" },
     error: { main: "#B00020" },
     infoBoxLink: "#067AD7",
-    warning: "#F18D5A",
+    warning: { main: "#F18D5A" },
   },
   typography: {
     fontFamily: "Muli",

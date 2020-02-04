@@ -17,6 +17,7 @@ const SNETTextfield = ({
   onChange,
   maxCount,
   minCount,
+  disabled,
   description,
   icon,
   onKeyUp,
@@ -41,6 +42,7 @@ const SNETTextfield = ({
             onChange={onChange}
             fullWidth
             onKeyUp={onKeyUp}
+            disabled={disabled}
             {...rest}
           />
           {maxCount ? (
