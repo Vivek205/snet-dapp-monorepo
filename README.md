@@ -1,8 +1,12 @@
 # SingularityNET Frontend Monorepo
 
 ## Prerequisites
-- Node >= 10.16.0
-- Yarn >= 1.15.0
+### Windows
+- Node >= 10.14.1 < 12.0.0
+- yarn >= 1.15.0 < 2.0.0
+### Linux
+- Node >= 10.16.0 < 12.0.0
+- Yarn >= 1.15.0  < 2.0.0
 
 ## Initial setup
 - git clone `Repo link`
@@ -26,6 +30,13 @@ Marketplace is ready for you.
 - Add the appropriate values for the keys in the `.env` file
 - cd `../../`
 - yarn start:rfai
+
+## Starting PUBLISHER
+- cd `packages/publisher-dapp`
+- cp `.env.example` `.env`
+- Add the appropriate values for the keys in the `.env` file
+- cd `../../`
+- yarn start:publisher
 
 ## Building new components
 - cd `packages/shared`
