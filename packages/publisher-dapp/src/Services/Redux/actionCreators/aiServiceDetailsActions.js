@@ -11,6 +11,12 @@ export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
+export const SET_AI_SERVICE_TOUCH_FLAG = "SET_AI_SERVICE_TOUCH_FLAG";
+
+export const setServiceTouchFlag = touchFlag => ({
+  type: SET_AI_SERVICE_TOUCH_FLAG,
+  payload: touchFlag,
+});
 
 export const setServiceId = serviceId => ({
   type: SET_AI_SERVICE_ID,
@@ -73,7 +79,50 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
     }
     dispatch(setServiceAvailability(data));
   } catch (error) {
-    dispatch(setServiceAvailability(undefined)); // In Case of error setting it to undefined
+    dispatch(setServiceAvailability("")); // In Case of error setting it to undefined
+    throw error;
+  }
+};
+
+const createServicePayload = serviceDetails => {
+  // TODO: Certain values are hard coded here....
+  const payload = {
+    service_id: serviceDetails.id,
+    display_name: serviceDetails.name,
+    short_description: serviceDetails.shortDescription,
+    description: serviceDetails.longDescription,
+    project_url: serviceDetails.projectURL,
+    proto: {},
+    assets: {},
+    contributors: serviceDetails.contributors.map(c => ({ name: c, email: "" })),
+    ipfs_hash: serviceDetails.ipfsHash,
+    contacts: [],
+    groups: [],
+    tags: serviceDetails.tags,
+    freecalls_allowed: 0,
+  };
+
+  return payload;
+};
+
+const saveServicedetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.AI_SAVE_SERVICE(orgUuid, serviceUuid);
+  const body = serviceDetailsPayload;
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.put(apiName, apiPath, apiOptions);
+};
+
+export const saveServicedetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+  try {
+    const serviceDetailsPayload = createServicePayload(serviceDetails);
+    //const { data, error } = await dispatch(saveServicedetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+    const { error } = await dispatch(saveServicedetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+  } catch (error) {
     throw error;
   }
 };

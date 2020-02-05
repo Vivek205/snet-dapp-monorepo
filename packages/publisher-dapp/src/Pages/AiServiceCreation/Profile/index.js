@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -20,22 +22,25 @@ import { keyCodes } from "shared/dist/utils/keyCodes";
 //import { mimeTypeToFileType } from "shared/dist/utils/image";
 import { imgSrcInBase64 } from "shared/dist/utils/image";
 
+import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const serviceDetails = useSelector(state => state.aiServiceDetails);
 
-  const [serviceName, setServiceName] = useState(useSelector(state => state.aiServiceDetails.name));
-  const [serviceId, setServiceId] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
-  const [longDesc, setLongDesc] = useState("");
+  const [serviceName, setServiceName] = useState(serviceDetails.name);
+  const [serviceId, setServiceId] = useState(serviceDetails.id);
+  const [shortDesc, setShortDesc] = useState(serviceDetails.shortDescription);
+  const [longDesc, setLongDesc] = useState(serviceDetails.longDescription);
 
-  const [tags, setTags] = useState("");
-  const [items, setItems] = useState([]); // Used only for UI representation
+  const [tags, setTags] = useState(""); // Only to render in the chip comp
+  const [items, setItems] = useState(serviceDetails.tags); // This should be set while assigning the values
 
-  const [projectURL, setProjectURL] = useState("");
-  const [contributors, setContributors] = useState("");
+  const [projectURL, setProjectURL] = useState(serviceDetails.projectURL);
+  const [contributors, setContributors] = useState(serviceDetails.contributors.map(c => c.name).join(","));
   const [alert, setAlert] = useState({});
 
   // TODO: Get from the defaults
@@ -44,29 +49,56 @@ const Profile = ({ classes, _location }) => {
   const url = "";
   const [data, setData] = useState("");
 
+  const [touch, setTouch] = useState(false);
+  // TODO: Need to get the Org UUID from Redux
+  const orgUuid = "test_org_uuid";
+
+  const setServiceTouchFlag = () => {
+    // TODO - See if we can manage from local state (useState()) instead of redux state
+    dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
+    setTouch(true);
+  };
+
   const validateServiceId = async () => {
-    // TODO: Need to get the Org UUID from Redux
-    const orgUuid = "test_org_uuid";
     // Call the API to Validate the Service Id
     try {
       await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
-      dispatch(aiServiceDetailsActions.setServiceAvailability(undefined));
+      dispatch(aiServiceDetailsActions.setServiceAvailability(""));
     }
   };
 
   const handleServiceIdChange = async event => {
+    setServiceTouchFlag();
     setServiceId(event.target.value);
     await dispatch(aiServiceDetailsActions.setServiceId(event.target.value));
   };
 
-  const handleContinue = () => {
+  const updateServiceDetails = () => {
+    serviceDetails.name = serviceName;
+    serviceDetails.id = serviceId;
+    serviceDetails.shortDescription = shortDesc;
+    serviceDetails.longDescription = longDesc;
+    serviceDetails.projectURL = projectURL;
+    serviceDetails.contributors = contributors.split(",");
+    serviceDetails.tags = items;
+  };
+
+  const handleContinue = async () => {
     try {
       const isNotValid = validator({ serviceName, serviceId }, serviceValidationConstraints);
 
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
+
+      if (touch) {
+        // Call API to save
+        updateServiceDetails();
+        await dispatch(aiServiceDetailsActions.saveServicedetails(orgUuid, serviceDetails.uuid, serviceDetails));
+      }
+
+      history.push(ServiceCreationRoutes.DEMO.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -104,6 +136,7 @@ const Profile = ({ classes, _location }) => {
 
     // Set State
     setItems([...localItems]);
+    setServiceTouchFlag();
   };
 
   const handleImageChange = (data, mimeType) => {
@@ -111,6 +144,7 @@ const Profile = ({ classes, _location }) => {
     // Call API to Store the Image
     setData(data);
     setMimeType(mimeType);
+    setServiceTouchFlag();
   };
   const imgSource = () => {
     if (url) {
@@ -134,9 +168,12 @@ const Profile = ({ classes, _location }) => {
             label="AI Service Name"
             minCount={0}
             maxCount={50}
-            description="The name of your service cannot be same name as another service."
+            description="The name of your service cannot be same name as another serviceDetails."
             value={serviceName}
-            onChange={e => setServiceName(e.target.value)}
+            onChange={e => {
+              setServiceName(e.target.value);
+              setServiceTouchFlag();
+            }}
           />
           <SNETTextfield
             icon
@@ -157,7 +194,10 @@ const Profile = ({ classes, _location }) => {
             rowCount={3}
             colCount={105}
             value={shortDesc}
-            onChange={e => setShortDesc(e.target.value)}
+            onChange={e => {
+              setShortDesc(e.target.value);
+              setServiceTouchFlag();
+            }}
           />
           <SNETTextarea
             showInfoIcon
@@ -167,7 +207,10 @@ const Profile = ({ classes, _location }) => {
             rowCount={8}
             colCount={105}
             value={longDesc}
-            onChange={e => setLongDesc(e.target.value)}
+            onChange={e => {
+              setLongDesc(e.target.value);
+              setServiceTouchFlag();
+            }}
           />
 
           <SNETTextfield
@@ -195,7 +238,10 @@ const Profile = ({ classes, _location }) => {
             label="Project URL"
             description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
             value={projectURL}
-            onChange={e => setProjectURL(e.target.value)}
+            onChange={e => {
+              setProjectURL(e.target.value);
+              setServiceTouchFlag();
+            }}
           />
 
           <SNETTextfield
@@ -204,7 +250,10 @@ const Profile = ({ classes, _location }) => {
             minCount={0}
             maxCount={100}
             value={contributors}
-            onChange={e => setContributors(e.target.value)}
+            onChange={e => {
+              setContributors(e.target.value);
+              setServiceTouchFlag();
+            }}
           />
 
           <div className={classes.profileImgContainer}>
@@ -232,7 +281,7 @@ const Profile = ({ classes, _location }) => {
                 </Typography>
                 <Typography variant="subtitle2">
                   We encourage to find a representative image for your service to attract users explore your page and
-                  service.
+                  serviceDetails.
                 </Typography>
               </div>
             </div>
