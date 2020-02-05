@@ -2,12 +2,32 @@ import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   grayBox: {
-    padding: "24px 16px 36px",
+    padding: "0 45px",
     borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#F1F1F1",
+    borderStyle: "dashed",
+    borderColor: MUITheme.palette.border.grey,
     borderRadius: 4,
-    backgroundColor: "#F6F6F6",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F8F8F8",
+    textAlign: "center",
+    "& svg": {
+      color: MUITheme.palette.primary.main,
+      fontSize: 40,
+    },
+    "& p": {
+      "&:first-of-type": {
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 14,
+        "& span": { color: MUITheme.palette.primary.main },
+      },
+      "&:last-of-type": {
+        color: "#4a4a4a",
+        fontSize: 12,
+      },
+    },
   },
   title: {
     color: MUITheme.palette.text.lightGrey,
@@ -58,9 +78,15 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   uploadDetails: {
-    paddingTop: 60,
     marginLeft: 27,
     "& > div": { marginBottom: 8 },
     [MUITheme.breakpoints.down("sm")]: { paddingTop: 25 },
+  },
+  uploadBtns: {
+    marginTop: 20,
+    "& button": {
+      padding: 0,
+      "&:last-of-type": { marginLeft: 40 },
+    },
   },
 }));

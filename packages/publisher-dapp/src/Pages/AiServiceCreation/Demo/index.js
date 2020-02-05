@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import FolderIcon from "@material-ui/icons/Folder";
 
 import SNETButton from "shared/dist/components/SNETButton";
-import SNETImageUpload from "shared/dist/components/SNETImageUpload";
+import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
 const Demo = ({ classes }) => {
-  const [uploadSucces] = useState(false);
   const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
 
   return (
@@ -92,41 +90,7 @@ const Demo = ({ classes }) => {
               suscipiantur eu usu, vel tota senserit prodesset in. Nostrum probatus singulis id nec, virtute docendi
               mnesarchum pri ea, eirmod maiorum scripserit quo ei.{" "}
             </Typography>
-            <div className={classes.imgUploaderContainer}>
-              <SNETImageUpload />
-              <div className={classes.uploadDetails}>
-                <div className={uploadSucces ? classes.successfullUpload : classes.uploadStatusContainer}>
-                  <FolderIcon />
-                  <Typography className={uploadSucces ? classes.uploaded : classes.uploadStatus}>
-                    {uploadSucces ? "Files Uploaded Successfully" : "No Files Uploaded"}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography className={classes.title}>File Name:</Typography>
-                  <Typography className={classes.value} />
-                </div>
-                <div>
-                  <Typography className={classes.title}>Items:</Typography>
-                  <Typography className={classes.value} />
-                </div>
-                <div>
-                  <Typography className={classes.title}>Uploaded:</Typography>
-                  <Typography className={classes.value} />
-                </div>
-                <div>
-                  <Typography className={classes.title}>Size:</Typography>
-                  <Typography className={classes.value} />
-                </div>
-                <div>
-                  <Typography className={classes.title}>User:</Typography>
-                  <Typography className={classes.value} />
-                </div>
-                <div className={classes.uploadBtns}>
-                  <SNETButton children="download files" color="primary" variant="text" />
-                  <SNETButton children="delete files" color="red" variant="text" />
-                </div>
-              </div>
-            </div>
+            <SNETFileUpload />
           </div>
 
           <AlertBox type={alert.type} message={alert.message} />

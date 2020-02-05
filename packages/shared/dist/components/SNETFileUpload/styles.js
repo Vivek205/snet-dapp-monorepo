@@ -12,12 +12,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     grayBox: {
-      padding: "24px 16px 36px",
+      padding: '0 45px',
       borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "#F1F1F1",
+      borderStyle: "dashed",
+      borderColor: MUITheme.palette.border.grey,
       borderRadius: 4,
-      backgroundColor: "#F6F6F6"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: "#F8F8F8",
+      textAlign: 'center',
+      '& svg': {
+        color: MUITheme.palette.primary.main,
+        fontSize: 40
+      },
+      '& p': {
+        '&:first-of-type': {
+          color: MUITheme.palette.text.lightGrey,
+          fontSize: 14,
+          '& span': {
+            color: MUITheme.palette.primary.main
+          }
+        },
+        '&:last-of-type': {
+          color: '#4a4a4a',
+          fontSize: 12
+        }
+      }
     },
     title: {
       color: MUITheme.palette.text.lightGrey,
@@ -70,14 +92,22 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       flexDirection: "column"
     }),
     uploadDetails: _defineProperty({
-      paddingTop: 60,
       marginLeft: 27,
       "& > div": {
         marginBottom: 8
       }
     }, MUITheme.breakpoints.down("sm"), {
       paddingTop: 25
-    })
+    }),
+    uploadBtns: {
+      marginTop: 20,
+      '& button': {
+        padding: 0,
+        '&:last-of-type': {
+          marginLeft: 40
+        }
+      }
+    }
   };
 });
 exports.useStyles = useStyles;

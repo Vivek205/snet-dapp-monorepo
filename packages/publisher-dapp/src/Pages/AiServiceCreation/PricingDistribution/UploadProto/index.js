@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
 
-// import UploadFile from "../../UploadFile";
 import { useStyles } from "./styles";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
@@ -17,7 +16,6 @@ const UploadProto = () => {
         hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
       </Typography>
       <SNETFileUpload />
-      {/* <UploadFile /> */}
       <div className={classes.modelTextfieldContainer}>
         <SNETTextfield
           icon
