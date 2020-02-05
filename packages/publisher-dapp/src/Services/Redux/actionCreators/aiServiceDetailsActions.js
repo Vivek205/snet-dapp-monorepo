@@ -11,6 +11,7 @@ export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
+export const SET_AI_SERVICE_ENDPOINTS = "SET_AI_SERVICE_ENDPOINTS";
 
 export const setServiceId = serviceId => ({
   type: SET_AI_SERVICE_ID,
@@ -31,6 +32,8 @@ const setServiceUuid = serviceUuid => ({
   type: SET_AI_SERVICE_UUID,
   payload: serviceUuid,
 });
+
+export const setAiServiceEndpoints = endpoints => ({ type: SET_AI_SERVICE_ENDPOINTS, payload: endpoints });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());

@@ -22,6 +22,7 @@ const SNETTextfield = ({
   icon,
   onKeyUp,
   extraInfo,
+  inputRef,
   ...rest
 }) => {
   return (
@@ -43,6 +44,7 @@ const SNETTextfield = ({
             fullWidth
             onKeyUp={onKeyUp}
             disabled={disabled}
+            inputRef={inputRef}
             {...rest}
           />
           {maxCount ? (
