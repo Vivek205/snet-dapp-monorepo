@@ -60,4 +60,8 @@ export const LoaderContent = {
     title: "Creating Service",
     content: "Just a moment. We are creating a service",
   },
+  FREE_CALL_SIGNER_ADDRESS: {
+    title: "Retrieving Signer Address",
+    content: "Just a moment. We are creating a service",
+  },
 };

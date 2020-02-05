@@ -1,7 +1,7 @@
 import MuiButton from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
-const SNETButton = withStyles(theme => ({
+const SNETButton = withStyles(MUITheme => ({
   root: props => {
     const rootStyles = {
       fontWeight: 600,
@@ -11,23 +11,26 @@ const SNETButton = withStyles(theme => ({
       lineHeight: "16px",
     };
     if (props.color === "purple" && props.variant === "contained-inverted") {
-      rootStyles.color = theme.palette.text.secondary;
-      rootStyles.backgroundColor = theme.palette.purple.main;
+      rootStyles.color = MUITheme.palette.text.white;
+      rootStyles.backgroundColor = MUITheme.palette.purple.main;
       rootStyles.border = "1px solid";
       rootStyles["&:hover"] = {
-        backgroundColor: theme.palette.purple.light,
+        backgroundColor: MUITheme.palette.purple.light,
         // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": { backgroundColor: theme.palette.purple.main },
+        "@media (hover: none)": { backgroundColor: MUITheme.palette.purple.main },
       };
     }
     if (props.color === "white" && props.variant === "text") {
-      rootStyles.color = theme.palette.primary.main;
-      rootStyles.backgroundColor = theme.palette.background.white;
+      rootStyles.color = MUITheme.palette.primary.main;
+      rootStyles.backgroundColor = MUITheme.palette.background.white;
       rootStyles.boxShadow = "0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24)";
+    }
+    if (props.color === "red") {
+      rootStyles.color = MUITheme.palette.text.red;
     }
     return rootStyles;
   },
-  containedSecondary: { color: theme.palette.text.secondary },
+  containedSecondary: { color: MUITheme.palette.text.white },
 }))(MuiButton);
 
 export default SNETButton;

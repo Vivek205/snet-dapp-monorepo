@@ -43,7 +43,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
       icon = _ref.icon,
       onKeyUp = _ref.onKeyUp,
       extraInfo = _ref.extraInfo,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo"]);
+      inputRef = _ref.inputRef,
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef"]);
 
   return _react.default.createElement(_Grid.default, {
     container: true
@@ -67,7 +68,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
     onChange: onChange,
     fullWidth: true,
     onKeyUp: onKeyUp,
-    disabled: disabled
+    disabled: disabled,
+    inputRef: inputRef
   }, rest)), maxCount ? _react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {

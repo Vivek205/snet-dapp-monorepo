@@ -129,4 +129,7 @@ export const useStyles = MUITheme => ({
     "& > div": { marginBottom: 8 },
     [MUITheme.breakpoints.down("sm")]: { paddingTop: 25 },
   },
+  stepThreeContainer: {
+    "& > div": { marginTop: 20 },
+  },
 });
