@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import isEmpty from "lodash/isEmpty";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -14,6 +15,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
 import { serviceValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
@@ -185,6 +187,12 @@ const Profile = ({ classes, _location }) => {
             onChange={handleServiceIdChange}
             onBlur={validateServiceId}
           />
+          <div>
+            <AlertText
+              type={serviceDetails.availability === "AVAILABLE" ? alertTypes.INFO : alertTypes.ERROR}
+              message={!isEmpty(serviceId) ? `Service Id is ${serviceDetails.availability}` : ""}
+            />
+          </div>
 
           <SNETTextarea
             showInfoIcon
