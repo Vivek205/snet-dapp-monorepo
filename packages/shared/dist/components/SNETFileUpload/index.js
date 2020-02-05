@@ -57,27 +57,7 @@ var SNETFileUpload = function SNETFileUpload(props) {
     md: 6,
     lg: 6,
     className: classes.grayBox
-  }, _react.default.createElement(_Grid.default, {
-    container: true,
-    direction: "column",
-    justify: "center",
-    alignItems: "center"
-  }, _react.default.createElement(_Grid.default, {
-    item: true,
-    style: {
-      padding: "0 40px"
-    }
-  }, _react.default.createElement(_Backup.default, null)), _react.default.createElement(_Grid.default, {
-    item: true,
-    style: {
-      padding: "0 40px"
-    }
-  }, _react.default.createElement(_Typography.default, null, "Drag and drop image here or", _react.default.createElement("span", null, " click"))), _react.default.createElement(_Grid.default, {
-    item: true,
-    style: {
-      padding: "20px 40px"
-    }
-  }, _react.default.createElement(_Typography.default, null, "(Image must be under ", maxSize, "mb. Source images are not saved on the servers after the job is processed.)")))), _react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Backup.default, null), _react.default.createElement(_Typography.default, null, "Drag and drop image here or", _react.default.createElement("span", null, " click")), _react.default.createElement(_Typography.default, null, "(Package must be under 10mb.  Make sure the extension is .zip or .tar)")), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,

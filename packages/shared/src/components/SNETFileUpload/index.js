@@ -33,22 +33,11 @@ const SNETFileUpload = props => {
       </div> */}
       <input {...getInputProps()} />
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.grayBox}>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Grid item style={{ padding: "0 40px" }}>
-            <CloudUpload />
-          </Grid>
-          <Grid item style={{ padding: "0 40px" }}>
-            <Typography>
-              Drag and drop image here or
-              <span> click</span>
-            </Typography>
-          </Grid>
-          <Grid item style={{ padding: "20px 40px" }}>
-            <Typography>
-              (Image must be under {maxSize}mb. Source images are not saved on the servers after the job is processed.)
-            </Typography>
-          </Grid>
-        </Grid>
+        <CloudUpload />
+        <Typography>
+          Drag and drop image here or<span> click</span>
+        </Typography>
+        <Typography>(Package must be under 10mb. Make sure the extension is .zip or .tar)</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <FileStats show />
