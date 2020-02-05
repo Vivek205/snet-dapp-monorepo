@@ -16,7 +16,7 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 const Region = () => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { price, freeCallsAllowed, endpoints } = useSelector(state => state.aiServiceDetails);
+  const { price, priceModel, freeCallsAllowed, endpoints } = useSelector(state => state.aiServiceDetails);
   const endpointRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -47,12 +47,20 @@ const Region = () => {
     dispatch(aiServiceDetailsActions.setAiServiceEndpoints(updatedEndpoints));
   };
 
+  const handleInputChange = async event => {
+    const { name, value } = event.target;
+    await dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+  };
+
   if (showRegion) {
     return (
       <div>
         <div className={classes.dropDownBtn}>
-          <StyledDropdown name="id" labelTxt="Groups / Region" list={[{ value: "name", label: "name" }]} />
-          <SNETButton children="add" color="primary" variant="outlined" />
+          <StyledDropdown
+            name="default_group"
+            value="default_group"
+            list={[{ value: "default_group", label: "default_group" }]}
+          />
         </div>
         <Grid container className={classes.grayBox}>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.regionNameIdContainer}>
@@ -60,30 +68,18 @@ const Region = () => {
               <Typography className={classes.header}>Region Name</Typography>
               <Typography className={classes.value}>North America</Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Typography className={classes.header}>Region ID</Typography>
-              <Typography className={classes.value}>US-2651-DC</Typography>
-            </Grid>
           </Grid>
 
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.servicePriceModelContainer}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
-              <SNETTextfield
-                icon
-                name="aiServicePrice"
-                // TODO value
-                // TODO onChange
-                value={price}
-                label="Ai Service Price"
-              />
+              <SNETTextfield icon name="price" value={price} label="Ai Service Price" onChange={handleInputChange} />
               AGI
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6}>
-              <SNETTextfield
-                name="priceModel"
-                // TODO value
-                // TODO onChange
-                label="Price Model"
+              <StyledDropdown
+                inputLabel="Entity Type"
+                value={priceModel}
+                list={[{ value: "fixed_price", label: "fixed_price" }]}
               />
             </Grid>
           </Grid>
@@ -91,17 +87,16 @@ const Region = () => {
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
               icon
-              name="demoFreeCalls"
+              name="freeCallsAllowed"
               value={freeCallsAllowed}
-              // TODO value
-              // TODO onChange
               label="Demo Free Calls"
+              onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
               icon
-              name="daemonEndPoints"
+              name="endpoints"
               inputRef={endpointRef}
               onKeyUp={handleNewEndpointsChange}
               label="Daemon Endpoints"
@@ -127,9 +122,6 @@ const Region = () => {
               </Card>
               <span className={classes.extraInfo}>You can add up to 20 endpoints</span>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-            <SNETButton children="remove region details" color="red" variant="text" />
           </Grid>
         </Grid>
       </div>

@@ -1,6 +1,4 @@
-import { makeStyles } from "@material-ui/styles";
-
-export const useStyles = makeStyles(MUITheme => ({
+export const useStyles = MUITheme => ({
   pricingContainer: {
     width: 845,
     paddingBottom: 144,
@@ -32,4 +30,4 @@ export const useStyles = makeStyles(MUITheme => ({
     fontSize: 16,
     lineHeight: "21px",
   },
-}));
+});

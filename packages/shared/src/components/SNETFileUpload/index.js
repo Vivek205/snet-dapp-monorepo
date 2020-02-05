@@ -25,19 +25,13 @@ const SNETFileUpload = props => {
 
   return (
     <Grid container {...getRootProps()}>
-      {/* <div>
-        <input {...getInputProps()} />
-        <BackupIcon />
-        {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some files here, or click to select files</p>}
-        Drag and drop package here or click (Package must be under 10mb. Make sure the extension is .zip or .tar)
-      </div> */}
       <input {...getInputProps()} />
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.grayBox}>
         <CloudUpload />
         <Typography>
           Drag and drop image here or<span> click</span>
         </Typography>
-        <Typography>(Package must be under 10mb. Make sure the extension is .zip or .tar)</Typography>
+        <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <FileStats show />

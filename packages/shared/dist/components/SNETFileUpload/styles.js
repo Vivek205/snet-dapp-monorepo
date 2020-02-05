@@ -12,31 +12,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     grayBox: {
-      padding: '0 45px',
+      padding: "0 45px",
       borderWidth: 1,
       borderStyle: "dashed",
       borderColor: MUITheme.palette.border.grey,
       borderRadius: 4,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
       backgroundColor: "#F8F8F8",
-      textAlign: 'center',
-      '& svg': {
+      textAlign: "center",
+      "& svg": {
         color: MUITheme.palette.primary.main,
         fontSize: 40
       },
-      '& p': {
-        '&:first-of-type': {
+      "& p": {
+        "&:first-of-type": {
           color: MUITheme.palette.text.lightGrey,
           fontSize: 14,
-          '& span': {
+          "& span": {
             color: MUITheme.palette.primary.main
           }
         },
-        '&:last-of-type': {
-          color: '#4a4a4a',
+        "&:last-of-type": {
+          color: "#4a4a4a",
           fontSize: 12
         }
       }
@@ -101,9 +101,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }),
     uploadBtns: {
       marginTop: 20,
-      '& button': {
+      "& button": {
         padding: 0,
-        '&:last-of-type': {
+        "&:last-of-type": {
           marginLeft: 40
         }
       }
