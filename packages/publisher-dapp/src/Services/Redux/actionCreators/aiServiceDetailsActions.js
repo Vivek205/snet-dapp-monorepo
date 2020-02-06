@@ -12,6 +12,10 @@ export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
 export const SET_AI_SERVICE_TOUCH_FLAG = "SET_AI_SERVICE_TOUCH_FLAG";
+export const SET_AI_SERVICE_ENDPOINTS = "SET_AI_SERVICE_ENDPOINTS";
+export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
+export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
+export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
 
 export const setServiceTouchFlag = touchFlag => ({
   type: SET_AI_SERVICE_TOUCH_FLAG,
@@ -36,6 +40,20 @@ const setServiceName = serviceName => ({
 const setServiceUuid = serviceUuid => ({
   type: SET_AI_SERVICE_UUID,
   payload: serviceUuid,
+});
+
+export const setAiServiceDetailLeaf = (name, value) => ({
+  type: SET_AI_SERVICE_DETAIL_LEAF,
+  payload: { name, value },
+});
+
+export const setAiServiceEndpoints = endpoints => ({ type: SET_AI_SERVICE_ENDPOINTS, payload: endpoints });
+
+export const setAiServiceMultipleDetails = entries => ({ type: SET_AI_SERVICE_MULTIPLE_DETAILS, payload: entries });
+
+const setAiServiceFreeCallSignerAddress = address => ({
+  type: SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS,
+  payload: address,
 });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
@@ -123,6 +141,30 @@ export const saveServicedetails = (orgUuid, serviceUuid, serviceDetails) => asyn
       throw new APIError(error.message);
     }
   } catch (error) {
+    throw error;
+  }
+};
+
+const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.SIGNER.name;
+  const apiPath = APIPaths.FREE_CALL_SIGNER_ADDRESS;
+  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId };
+  const apiOptions = initializeAPIOptions(token, queryParams);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getFreeCallSignerAddress = (orgId, serviceId, groupId) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
+    const { data, error } = await dispatch(getFreeCallSignerAddressAPI(orgId, serviceId, groupId));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    setAiServiceFreeCallSignerAddress(data.freecall_signer_address);
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
     throw error;
   }
 };

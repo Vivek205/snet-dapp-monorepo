@@ -15,8 +15,10 @@ const ProgressSection = ({ progressNumber, progressText, progressStatus }) => {
 
   return (
     <li className={classes[progressStatus]}>
-      <StatusToggler progressStatus={progressStatus} progressNumber={progressNumber} />
-      <span className={classes.TabTitle}>{progressText}</span>
+      <div>
+        <StatusToggler progressStatus={progressStatus} progressNumber={progressNumber} />
+        <span className={classes.TabTitle}>{progressText}</span>
+      </div>
     </li>
   );
 };

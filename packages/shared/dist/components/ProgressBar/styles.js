@@ -23,8 +23,14 @@ var useStyles = function useStyles(MUITheme) {
       },
       "& li": {
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         listStyle: "none",
+        '& div': {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center'
+        },
         "&:first-of-type": {
           "&::before": {
             display: "none"
@@ -34,13 +40,9 @@ var useStyles = function useStyles(MUITheme) {
           content: '""',
           width: 90,
           height: 1,
-          marginRight: 16,
+          marginTop: 15,
           display: "inline-block",
-          backgroundColor: MUITheme.palette.background.grey,
-          verticalAlign: "middle",
-          "@media (max-width:1150px)": {
-            width: 50
-          }
+          backgroundColor: MUITheme.palette.background.grey
         },
         "& i": {
           marginRight: 5,
