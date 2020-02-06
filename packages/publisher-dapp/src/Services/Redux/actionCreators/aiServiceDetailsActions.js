@@ -112,7 +112,7 @@ const createServicePayload = serviceDetails => {
     project_url: serviceDetails.projectURL,
     proto: {},
     assets: {},
-    contributors: serviceDetails.contributors.map(c => ({ name: c, email: "" })),
+    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
     groups: [],

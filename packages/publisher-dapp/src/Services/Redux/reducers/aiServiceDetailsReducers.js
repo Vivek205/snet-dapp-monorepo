@@ -31,7 +31,7 @@ const initialState = {
       ipfsHash: "",
     },
   },
-  contributors: [],
+  contributors: "",
   ipfsHash: "",
   contacts: [
     { type: ContactsTypes.GENERAL, email: "", phone: "" },

@@ -31,18 +31,12 @@ import { useStyles } from "./styles";
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const serviceDetails = useSelector(state => state.aiServiceDetails);
 
-  const [serviceName, setServiceName] = useState(serviceDetails.name);
-  const [serviceId, setServiceId] = useState(serviceDetails.id);
-  const [shortDesc, setShortDesc] = useState(serviceDetails.shortDescription);
-  const [longDesc, setLongDesc] = useState(serviceDetails.longDescription);
-
   const [tags, setTags] = useState(""); // Only to render in the chip comp
-  const [items, setItems] = useState(serviceDetails.tags); // This should be set while assigning the values
+  //const [items, setItems] = useState(serviceDetails.tags); // This should be set while assigning the values
 
-  const [projectURL, setProjectURL] = useState(serviceDetails.projectURL);
-  const [contributors, setContributors] = useState(serviceDetails.contributors.map(c => c.name).join(","));
   const [alert, setAlert] = useState({});
 
   // TODO: Get from the defaults
@@ -51,52 +45,41 @@ const Profile = ({ classes, _location }) => {
   const url = "";
   const [data, setData] = useState("");
 
-  const [touch, setTouch] = useState(false);
   // TODO: Need to get the Org UUID from Redux
   const orgUuid = "test_org_uuid";
 
   const setServiceTouchFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
     dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
-    setTouch(true);
   };
 
-  const validateServiceId = async () => {
+  const handleControlChange = event => {
+    setServiceTouchFlag();
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(event.target.name, event.target.value));
+  };
+
+  const validateServiceId = async event => {
     // Call the API to Validate the Service Id
     try {
-      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
+      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, event.target.value));
     } catch (error) {
       dispatch(aiServiceDetailsActions.setServiceAvailability(""));
     }
   };
 
-  const handleServiceIdChange = async event => {
-    setServiceTouchFlag();
-    setServiceId(event.target.value);
-    await dispatch(aiServiceDetailsActions.setServiceId(event.target.value));
-  };
-
-  const updateServiceDetails = () => {
-    serviceDetails.name = serviceName;
-    serviceDetails.id = serviceId;
-    serviceDetails.shortDescription = shortDesc;
-    serviceDetails.longDescription = longDesc;
-    serviceDetails.projectURL = projectURL;
-    serviceDetails.contributors = contributors.split(",");
-    serviceDetails.tags = items;
-  };
-
   const handleContinue = async () => {
     try {
+      const serviceName = serviceDetails.name;
+      const serviceId = serviceDetails.id;
+
       const isNotValid = validator({ serviceName, serviceId }, serviceValidationConstraints);
 
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
 
-      if (touch) {
+      if (serviceDetails.touch) {
         // Call API to save
-        updateServiceDetails();
         await dispatch(aiServiceDetailsActions.saveServicedetails(orgUuid, serviceDetails.uuid, serviceDetails));
       }
 
@@ -119,7 +102,10 @@ const Profile = ({ classes, _location }) => {
 
   const handleKeyEnterInTags = () => {
     const tagsEntered = tags.split(",");
-    const localItems = items;
+    //const localItems = items;
+
+    const localItems = serviceDetails.tags;
+
     tagsEntered.forEach(tag => {
       tag = tag.replace(/\s/g, "");
       const index = localItems.findIndex(el => el === tag);
@@ -128,16 +114,17 @@ const Profile = ({ classes, _location }) => {
       }
     });
 
-    setItems([...localItems]);
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
+    setServiceTouchFlag();
   };
 
   const handleDeleteTag = tag => {
-    const localItems = items;
+    const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
 
     // Set State
-    setItems([...localItems]);
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
     setServiceTouchFlag();
   };
 
@@ -148,6 +135,7 @@ const Profile = ({ classes, _location }) => {
     setMimeType(mimeType);
     setServiceTouchFlag();
   };
+
   const imgSource = () => {
     if (url) {
       return url;
@@ -167,63 +155,58 @@ const Profile = ({ classes, _location }) => {
 
           <SNETTextfield
             icon
+            name="name"
             label="AI Service Name"
             minCount={0}
             maxCount={50}
             description="The name of your service cannot be same name as another serviceDetails."
-            value={serviceName}
-            onChange={e => {
-              setServiceName(e.target.value);
-              setServiceTouchFlag();
-            }}
+            value={serviceDetails.name}
+            onChange={handleControlChange}
           />
           <SNETTextfield
             icon
+            name="id"
             label="AI Service Id"
             minCount={0}
             maxCount={50}
             description="The Id of your service to uniquely identity in the organization."
-            value={serviceId}
-            onChange={handleServiceIdChange}
+            value={serviceDetails.id}
+            onChange={handleControlChange}
             onBlur={validateServiceId}
           />
           <div>
             <AlertText
               type={serviceDetails.availability === "AVAILABLE" ? alertTypes.INFO : alertTypes.ERROR}
-              message={!isEmpty(serviceId) ? `Service Id is ${serviceDetails.availability}` : ""}
+              message={!isEmpty(serviceDetails.id) ? `Service Id is ${serviceDetails.availability}` : ""}
             />
           </div>
 
           <SNETTextarea
             showInfoIcon
+            name="shortDescription"
             label="Short Description"
             minCount={0}
             maxCount={160}
             rowCount={3}
             colCount={105}
-            value={shortDesc}
-            onChange={e => {
-              setShortDesc(e.target.value);
-              setServiceTouchFlag();
-            }}
+            value={serviceDetails.shortDescription}
+            onChange={handleControlChange}
           />
           <SNETTextarea
             showInfoIcon
+            name="longDescription"
             label="Long Description"
             minCount={0}
             maxCount={5000}
             rowCount={8}
             colCount={105}
-            value={longDesc}
-            onChange={e => {
-              setLongDesc(e.target.value);
-              setServiceTouchFlag();
-            }}
+            value={serviceDetails.longDescription}
+            onChange={handleControlChange}
           />
 
           <SNETTextfield
             icon
-            name="id"
+            name="tags"
             label="Service Tags"
             description="Enter all the TAGs separated by comma and press enter"
             value={tags}
@@ -231,7 +214,7 @@ const Profile = ({ classes, _location }) => {
             onChange={e => setTags(e.target.value)}
           />
           <Card className={classes.card}>
-            {items.map(tag => (
+            {serviceDetails.tags.map(tag => (
               <Chip
                 className={classes.chip}
                 key={tag}
@@ -243,25 +226,21 @@ const Profile = ({ classes, _location }) => {
           </Card>
 
           <SNETTextfield
+            name="projectURL"
             label="Project URL"
             description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
-            value={projectURL}
-            onChange={e => {
-              setProjectURL(e.target.value);
-              setServiceTouchFlag();
-            }}
+            value={serviceDetails.projectURL}
+            onChange={handleControlChange}
           />
 
           <SNETTextfield
             icon
+            name="contributors"
             label="Contributors"
             minCount={0}
             maxCount={100}
-            value={contributors}
-            onChange={e => {
-              setContributors(e.target.value);
-              setServiceTouchFlag();
-            }}
+            value={serviceDetails.contributors}
+            onChange={handleControlChange}
           />
 
           <div className={classes.profileImgContainer}>
