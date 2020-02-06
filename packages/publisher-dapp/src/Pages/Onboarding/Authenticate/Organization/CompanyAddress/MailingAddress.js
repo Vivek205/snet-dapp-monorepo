@@ -11,20 +11,25 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
+const stateSelector = state => ({
+  sameMailingAddress: state.organization.orgAddress.sameMailingAddress,
+  hqAddress: state.organization.orgAddress.hqAddress,
+  mailingAddress: state.organization.orgAddress.mailingAddress,
+});
+
 const MailingAddress = ({ classes }) => {
-  const organization = useSelector(state => state.organization);
-  const { sameMailingAddress, hqAddress } = organization;
-  const { street, apartment, city, zip, country } = organization.mailingAddress;
+  const { sameMailingAddress, hqAddress, mailingAddress } = useSelector(stateSelector);
+  const { street, apartment, city, zip, country } = mailingAddress;
   const dispatch = useDispatch();
 
   const handleMailingAddressChange = event => {
     const { name, value } = event.target;
-    dispatch(organizationActions.setMailingAddressDetail(name, value));
+    dispatch(organizationActions.setOrgMailingAddressDetail(name, value));
   };
 
   const handleSameAddressChange = event => {
-    const { name, checked } = event.target;
-    dispatch(organizationActions.setOneBasicDetail(name, checked));
+    const { checked } = event.target;
+    dispatch(organizationActions.setOrgSameMailingAddress(checked));
   };
 
   return (
