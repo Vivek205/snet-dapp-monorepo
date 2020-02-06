@@ -55,6 +55,8 @@ const initialState = {
 
 const serviceDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case aiServiceDetailsActions.SET_ALL_ATTRIBUTES:
+      return { ...state, ...action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_TOUCH_FLAG:
       return { ...state, touch: action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_ID:

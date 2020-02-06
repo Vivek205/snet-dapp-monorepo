@@ -7,6 +7,7 @@ import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 
+export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
@@ -16,6 +17,8 @@ export const SET_AI_SERVICE_ENDPOINTS = "SET_AI_SERVICE_ENDPOINTS";
 export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
 export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
+
+export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
 export const setServiceTouchFlag = touchFlag => ({
   type: SET_AI_SERVICE_TOUCH_FLAG,
@@ -103,8 +106,8 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
 };
 
 const createServicePayload = serviceDetails => {
-  // TODO: Certain values are hard coded here....
-  const payload = {
+  // TODO: Certain values are hard coded here.... Need to look at for complete integration
+  const payloadForSubmit = {
     service_id: serviceDetails.id,
     display_name: serviceDetails.name,
     short_description: serviceDetails.shortDescription,
@@ -120,29 +123,99 @@ const createServicePayload = serviceDetails => {
     freecalls_allowed: 0,
   };
 
-  return payload;
+  return payloadForSubmit;
 };
 
-const saveServicedetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+const saveServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.AI_SAVE_SERVICE(orgUuid, serviceUuid);
+  const apiPath = APIPaths.SAVE_AI_SERVICE(orgUuid, serviceUuid);
   const body = serviceDetailsPayload;
   const apiOptions = initializeAPIOptions(token, body);
   return await API.put(apiName, apiPath, apiOptions);
 };
 
-export const saveServicedetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
     const serviceDetailsPayload = createServicePayload(serviceDetails);
-    //const { data, error } = await dispatch(saveServicedetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
-    const { error } = await dispatch(saveServicedetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+    const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);
     }
   } catch (error) {
     throw error;
   }
+};
+
+const getServiceDetailsAPI = (orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.FETCH_AI_SERVICE(orgUuid, serviceUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
+  try {
+    const { data, error } = await dispatch(getServiceDetailsAPI(orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    const service = createReduxServicePayload(data, serviceUuid);
+    dispatch(setAllAttributes(service));
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createReduxServicePayload = (data, serviceUuid) => {
+  // TODO: Certain elements are hard coded need to update after all forms integration
+  const service = {
+    uuid: serviceUuid,
+    name: data.display_name,
+    id: data.service_id,
+    shortDescription: data.short_description,
+    longDescription: data.description,
+    projectURL: data.project_url,
+    proto: {
+      ipfsHash: "",
+      encoding: "",
+      type: "",
+    },
+    assets: {
+      heroImage: {
+        url: "",
+        ipfsHash: "",
+      },
+      demoFiles: {
+        url: "",
+        ipfsHash: "",
+      },
+      protoFiles: {
+        url: "",
+        ipfsHash: "",
+      },
+    },
+    contributors: data.contributors.map(c => c.name).join(","),
+    ipfsHash: data.metadata_ipfs_hash,
+    contacts: [],
+    groups: [
+      {
+        groupId: "",
+        pricing: [],
+        endpoints: [],
+      },
+    ],
+    tags: [],
+    freecallsAllowed: "",
+    freeCallSignerAddress: "",
+    price: "",
+    priceModel: "fixed_price",
+    freeCallsAllowed: "",
+    endpoints: [],
+  };
+
+  return service;
 };
 
 const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {

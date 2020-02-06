@@ -35,7 +35,6 @@ const Profile = ({ classes, _location }) => {
   const serviceDetails = useSelector(state => state.aiServiceDetails);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
-  //const [items, setItems] = useState(serviceDetails.tags); // This should be set while assigning the values
 
   const [alert, setAlert] = useState({});
 
@@ -80,7 +79,7 @@ const Profile = ({ classes, _location }) => {
 
       if (serviceDetails.touch) {
         // Call API to save
-        await dispatch(aiServiceDetailsActions.saveServicedetails(orgUuid, serviceDetails.uuid, serviceDetails));
+        await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
       }
 
       history.push(ServiceCreationRoutes.DEMO.path);
