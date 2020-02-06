@@ -25,11 +25,11 @@ var useStyles = function useStyles(MUITheme) {
         display: "flex",
         alignItems: "flex-start",
         listStyle: "none",
-        '& div': {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center'
+        "& div": {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center"
         },
         "&:first-of-type": {
           "&::before": {
