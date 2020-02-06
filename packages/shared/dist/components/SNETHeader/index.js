@@ -17,7 +17,11 @@ var _AppBar = _interopRequireDefault(require("@material-ui/core/AppBar"));
 
 var _CardMedia = _interopRequireDefault(require("@material-ui/core/CardMedia"));
 
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
+
 var _BlackLogo = _interopRequireDefault(require("../../assets/images/BlackLogo.svg"));
+
+var _StyledDropdown = _interopRequireDefault(require("../StyledDropdown"));
 
 var _styles = require("./styles");
 
@@ -44,13 +48,11 @@ var SNETHeader = function SNETHeader(_ref) {
     component: "img",
     image: _BlackLogo.default,
     alt: "SingularityNET"
-  }), _react.default.createElement("span", {
-    className: classes.portalName
+  }), _react.default.createElement(_Typography.default, {
+    variant: "h5"
   }, portalName)), _react.default.createElement(_Container.default, {
     className: classes.navContainer
-  }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
-    className: classes.actionsContainer
-  }, _react.default.createElement(_HeaderActions.default, {
+  }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, null, _react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions
