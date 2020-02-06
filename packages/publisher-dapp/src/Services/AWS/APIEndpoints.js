@@ -26,6 +26,7 @@ export const APIPaths = {
   VERIFY_INIVITATION: "/org/member/verify",
   AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/services`,
   AI_CREATE_SERVICE: orgUuid => `/org/${orgUuid}/service`,
+  AI_SAVE_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
   AI_SERVICE_ID_VALIDATE: (orgUuid, serviceId) => `/org/${orgUuid}/verify?service_id=${serviceId}`,
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
 };

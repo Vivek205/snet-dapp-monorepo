@@ -14,6 +14,10 @@ import { useHistory } from "react-router-dom";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+import { serviceValidationConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
@@ -23,7 +27,7 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   const dispatch = useDispatch();
 
   const [serviceName, setServiceName] = useState("");
-  const [apiError, setAPIError] = useState("");
+  const [alert, setAlert] = useState({});
   const history = useHistory();
 
   const handleCancel = () => {
@@ -31,14 +35,26 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   };
 
   const handleContinue = async () => {
+    // Reset Error
+    setAlert({ type: alertTypes.ERROR, message: undefined });
+
     // TODO: Need to get the Org UUID from Redux
     const orgUuid = "test_org_uuid";
-    // Call the API to Save the Service Name
+
     try {
+      // Do Validation
+      const isNotValid = validator({ serviceName }, serviceValidationConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+      // Call the API to Save the Service Name
       await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
       history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
     } catch (error) {
-      return setAPIError("Unable to process the request. Tray again later");
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Tray again later" });
     }
   };
 
@@ -67,9 +83,9 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
             minCount="15"
             onChange={e => setServiceName(e.target.value)}
           />
+          <AlertBox type={alert.type} message={alert.message} />
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <AlertBox type={alertTypes.ERROR} message={apiError} />
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
           <SNETButton
             children="create"
