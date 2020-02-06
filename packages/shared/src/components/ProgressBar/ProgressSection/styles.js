@@ -4,7 +4,6 @@ export const useStyles = makeStyles(MUITheme => ({
   number: {
     borderRadius: 25,
     padding: "4px 10px",
-    marginRight: 8,
     backgroundColor: MUITheme.palette.text.lightGrey,
     color: MUITheme.palette.text.white,
     "@media(max-width:480px)": {
@@ -18,19 +17,10 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   completedIcon: {
     "& svg": {
-      color: MUITheme.palette.success,
+      color: MUITheme.palette.success.main,
       fontSize: 28,
-      marginRight: 10,
-      "@media(max-width:480px)": {
-        padding: "0 !important",
-        marginRight: "0 !important",
-        fontSize: "21px !important",
-      },
     },
-    "@media(max-width:480px)": {
-      padding: "0 !important",
-      margin: 0,
-    },
+    "@media(max-width:480px)": { padding: "0 !important" },
   },
   active: {
     "& span": {
