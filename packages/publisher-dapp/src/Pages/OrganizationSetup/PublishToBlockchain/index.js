@@ -29,10 +29,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.PUBLISHED) {
+    if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
       setAlert({ type: alertTypes.SUCCESS, message: "Organization has been published in the blockchain" });
     }
-  }, [organization.status]);
+  }, [organization.state.state]);
 
   const handleSubmit = () => {
     setAlert({});

@@ -23,7 +23,7 @@ const Organization = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
+    if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     }
   });

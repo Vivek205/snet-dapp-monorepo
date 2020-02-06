@@ -4,7 +4,13 @@ import { organizationSetupStatuses, organizationTypes } from "../../../Utils/org
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 
 const initialState = {
-  status: organizationSetupStatuses.NOT_STARTED,
+  state: {
+    state: organizationSetupStatuses.NOT_STARTED,
+    updatedOn: "",
+    updatedBy: "",
+    reviewedBy: "",
+    reviewedOn: "",
+  },
   id: "",
   uuid: "",
   name: "",
@@ -81,6 +87,14 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, members: { ...state.members, ...action.payload } };
     case organizationActions.SET_ORG_OWNER:
       return { ...state, owner: action.payload };
+    case organizationActions.SET_ORG_STATE_ALL:
+      // computing the key `state` to avoid name conflicts with redux `state`
+      // eslint-disable-next-line no-useless-computed-key
+      return { ...state, ["state"]: action.payload };
+    case organizationActions.SET_ORG_STATE_STATE:
+      // computing the key `state` to avoid name conflicts with redux `state`
+      // eslint-disable-next-line no-useless-computed-key
+      return { ...state, ["state"]: { ...state.state, ["state"]: action.payload } };
     default:
       return state;
   }
