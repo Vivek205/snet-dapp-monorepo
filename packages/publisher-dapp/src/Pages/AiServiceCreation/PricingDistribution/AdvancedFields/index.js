@@ -26,9 +26,9 @@ const AdvancedFields = () => {
       />
       <SNETTextfield
         icon
-        name="aiServicePrice"
+        name="signer address"
         value={freeCallSignerAddress}
-        label="Ai Service Price"
+        label="Free call signer address"
         description=" Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. "
         disabled
       />

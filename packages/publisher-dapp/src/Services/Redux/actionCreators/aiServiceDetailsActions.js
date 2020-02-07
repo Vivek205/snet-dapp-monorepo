@@ -6,6 +6,8 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
+import { initSDK } from "shared/dist/utils/snetSdk";
+import { blockChainEvents } from "../../../Utils/Blockchain";
 
 export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -17,6 +19,7 @@ export const SET_AI_SERVICE_GROUPS = "SET_AI_SERVICE_ENDPOINTS";
 export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
 export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
+export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
@@ -58,6 +61,8 @@ const setAiServiceFreeCallSignerAddress = address => ({
   type: SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS,
   payload: address,
 });
+
+export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -121,10 +126,12 @@ const createServicePayload = serviceDetails => {
     contacts: [],
     groups: [],
     tags: serviceDetails.tags,
-    freecalls_allowed: 0,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
-    freeCallsAllowed: serviceDetails.freeCallsAllowed,
+    freecalls_allowed: serviceDetails.freeCallsAllowed,
+    comment: {
+      service_provider: serviceDetails.comments.serviceProvider,
+    },
   };
 
   return payloadForSubmit;
@@ -175,6 +182,9 @@ export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
 const createReduxServicePayload = (data, serviceUuid) => {
   // TODO: Certain elements are hard coded need to update after all forms integration
   const service = {
+    serviceState: {
+      state: data.service_state.state,
+    },
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
@@ -211,23 +221,19 @@ const createReduxServicePayload = (data, serviceUuid) => {
       },
     ],
     tags: [],
-    freecallsAllowed: "",
-    freeCallSignerAddress: "",
-    price: "",
-    priceModel: "fixed_price",
-    freeCallsAllowed: "",
-    endpoints: [],
+    freecallsAllowed: data.freecalls_allowed,
   };
 
   return service;
 };
 
+// eslint-disable-next-line no-unused-vars
 const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.SIGNER.name;
   const apiPath = APIPaths.FREE_CALL_SIGNER_ADDRESS;
-  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId };
-  const apiOptions = initializeAPIOptions(token, queryParams);
+  const queryParams = { org_id: "orgId", service_id: "serviceId", group_id: "groupId" };
+  const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
@@ -238,8 +244,82 @@ export const getFreeCallSignerAddress = (orgId, serviceId, groupId) => async dis
     if (error.code) {
       throw new APIError(error.message);
     }
-    setAiServiceFreeCallSignerAddress(data.freecall_signer_address);
+    dispatch(setAiServiceFreeCallSignerAddress(data.free_call_signer_address));
     dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.SUBMIT_AI_SERVICE(orgUuid, serviceUuid);
+  const body = serviceDetailsPayload;
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.put(apiName, apiPath, apiOptions);
+};
+
+export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
+    const serviceDetailsPayload = createServicePayload(serviceDetails);
+    const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const publishToIPFSAPI = (orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.PUBLISH_TO_BLOCKCHAIN(orgUuid, serviceUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const publishToIPFS = (orgUuid, serviceUuid) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_IPFS));
+    const { data, error } = await dispatch(publishToIPFSAPI(orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+export const publishToBlockchain = (orgId, serviceId, serviceMetadataURI, tags) => async dispatch => {
+  try {
+    const sdk = await initSDK();
+    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
+    return new Promise((resolve, reject) => {
+      const method = sdk._registryContract
+        .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
+        .send()
+        .on(blockChainEvents.TRANSACTION_HASH, () => {
+          // TODO call save transaction API
+        })
+        .once(blockChainEvents.CONFIRMATION, async () => {
+          dispatch(loaderActions.stopAppLoader());
+          resolve();
+          await method.off();
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(error);
+        });
+    });
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

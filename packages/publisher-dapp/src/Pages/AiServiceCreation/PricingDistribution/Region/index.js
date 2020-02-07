@@ -21,7 +21,7 @@ const Region = () => {
   const dispatch = useDispatch();
 
   const selectedGroup = groups[0];
-  const selectedPricing = selectedGroup.pricing[0];
+  const selectedPricing = selectedGroup.pricing ? selectedGroup.pricing[0] : {};
 
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
@@ -89,7 +89,7 @@ const Region = () => {
               <SNETTextfield
                 icon
                 name="price"
-                value={selectedPricing.price}
+                value={selectedPricing && selectedPricing.price}
                 label="Ai Service Price"
                 onChange={handlePriceChange}
               />
@@ -98,7 +98,7 @@ const Region = () => {
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <StyledDropdown
                 inputLabel="Entity Type"
-                value={selectedPricing.priceModel}
+                value={selectedPricing && selectedPricing.priceModel}
                 list={[{ value: "fixed_price", label: "fixed_price" }]}
               />
             </Grid>
@@ -130,15 +130,16 @@ const Region = () => {
             <div className={classes.cardContainer}>
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
-                {selectedGroup.endpoints.map(endpoint => (
-                  <Chip
-                    className={classes.chip}
-                    key={endpoint}
-                    label={endpoint}
-                    color="primary"
-                    onDelete={() => handleEndpointDelete(endpoint)}
-                  />
-                ))}
+                {selectedGroup.endpoints &&
+                  selectedGroup.endpoints.map(endpoint => (
+                    <Chip
+                      className={classes.chip}
+                      key={endpoint}
+                      label={endpoint}
+                      color="primary"
+                      onDelete={() => handleEndpointDelete(endpoint)}
+                    />
+                  ))}
               </Card>
               <span className={classes.extraInfo}>You can add up to 20 endpoints</span>
             </div>
