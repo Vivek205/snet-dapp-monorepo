@@ -1,8 +1,12 @@
 import { aiServiceDetailsActions } from "../actionCreators";
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { serviceSetupStatuses } from "../../../Utils/serviceSetup";
+import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 
 const initialState = {
+  serviceState: {
+    state: serviceCreationStatus.NOT_STARTED,
+  },
   touch: false,
   status: serviceSetupStatuses.NOT_STARTED,
   uuid: "",
@@ -53,8 +57,10 @@ const initialState = {
   tags: [],
   freeCallSignerAddress: "",
   price: "",
-  // priceModel: "fixed_price",
   freeCallsAllowed: "",
+  comments: {
+    serviceProvider: [],
+  },
 };
 
 const serviceDetailsReducer = (state = initialState, action) => {
@@ -79,6 +85,14 @@ const serviceDetailsReducer = (state = initialState, action) => {
       return { ...state, ...action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS:
       return { ...state, freeCallSignerAddress: action.payload };
+    case aiServiceDetailsActions.SET_SERVICE_PROVIDER_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          serviceProvider: action.payload,
+        },
+      };
     default:
       return state;
   }

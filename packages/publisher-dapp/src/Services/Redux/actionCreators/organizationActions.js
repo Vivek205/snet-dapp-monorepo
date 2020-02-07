@@ -317,6 +317,7 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
     return new Promise((resolve, reject) => {
       const method = sdk._registryContract
         .createOrganization(orgId, orgMetadataURI, members)
+        .send()
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
