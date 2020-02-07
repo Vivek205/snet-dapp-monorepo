@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -25,7 +25,7 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   const dispatch = useDispatch();
-
+  const { orgUuid } = useParams();
   const [serviceName, setServiceName] = useState("");
   const [alert, setAlert] = useState({});
   const history = useHistory();
@@ -35,26 +35,23 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   };
 
   const handleContinue = async () => {
-    // Reset Error
     setAlert({ type: alertTypes.ERROR, message: undefined });
 
-    // TODO: Need to get the Org UUID from Redux
-    const orgUuid = "test_org_uuid";
-
     try {
-      // Do Validation
       const isNotValid = validator({ serviceName }, serviceValidationConstraints);
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
       // Call the API to Save the Service Name
-      await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
-      history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
+      const { service_uuid: serviceUuid } = await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
+      history.push(
+        GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+      );
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
-      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Tray again later" });
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Try again later" });
     }
   };
 

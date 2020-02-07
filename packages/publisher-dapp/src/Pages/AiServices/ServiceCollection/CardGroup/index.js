@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
@@ -9,6 +9,7 @@ import GridViewItem from "./GridViewItem";
 import ServiceStatusDetails from "./ServiceStatusDetails";
 import NoServicesFound from "./NoServicesFound";
 import LoadingAiServices from "./LoadingAiServices";
+import { ServiceCreationRoutes } from "../../../AiServiceCreation/ServiceCreationRouter/Routes";
 
 const CardGroup = () => {
   const classes = useStyles();
@@ -16,6 +17,7 @@ const CardGroup = () => {
     isLoading: state.loader.aiServiceList.isLoading,
     serviceList: state.aiServiceList.data,
   }));
+  const { orgUuid } = useParams();
   const [isAvailable] = useState(true);
 
   if (isLoading) {
@@ -29,7 +31,10 @@ const CardGroup = () => {
   return serviceList.map(service => (
     <Grid container className={classes.gridViewCardCollection} key={service.uuid}>
       <Grid item xs={12} sm={12} md={3} lg={3} className={classes.serviceDetailCard}>
-        <Link key="1" to="/" className={classes.routerLink}>
+        <Link
+          to={ServiceCreationRoutes.PROFILE.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", service.uuid)}
+          className={classes.routerLink}
+        >
           <GridViewItem
             cardTitle={service.displayName}
             cardSubheader="sub header"

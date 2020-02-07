@@ -13,16 +13,14 @@ import { useStyles } from "./styles";
 
 import { aiServiceDetailsActions } from "../../Services/Redux/actionCreators";
 
-const AiServiceCreation = ({ classes, location }) => {
+const AiServiceCreation = ({ classes, location, match }) => {
   const dispatch = useDispatch();
 
-  // TODO: Need to get the Org & service UUID from Redux
-  const orgUuid = "test_org_uuid";
-  const serviceUuid = "154a074ceecd4a7b9ae01d283823db8f";
+  const { orgUuid, serviceUuid } = match.params;
 
   useEffect(() => {
     dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid));
-  }, [dispatch]);
+  }, [dispatch, orgUuid, serviceUuid]);
 
   const activeSection = () => {
     const { pathname: path } = location;

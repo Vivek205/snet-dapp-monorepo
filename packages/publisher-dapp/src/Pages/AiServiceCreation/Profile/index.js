@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -31,7 +31,7 @@ import { useStyles } from "./styles";
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { orgUuid } = useParams();
   const serviceDetails = useSelector(state => state.aiServiceDetails);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
@@ -43,9 +43,6 @@ const Profile = ({ classes, _location }) => {
   //const [url, SetURL] = useState(undefined);
   const url = "";
   const [data, setData] = useState("");
-
-  // TODO: Need to get the Org UUID from Redux
-  const orgUuid = "test_org_uuid";
 
   const setServiceTouchFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
@@ -82,7 +79,9 @@ const Profile = ({ classes, _location }) => {
         await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
       }
 
-      history.push(ServiceCreationRoutes.DEMO.path);
+      history.push(
+        ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
+      );
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
