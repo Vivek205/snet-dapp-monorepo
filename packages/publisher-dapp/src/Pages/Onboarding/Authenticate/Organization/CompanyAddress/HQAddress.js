@@ -11,12 +11,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
 const HQAddress = ({ classes }) => {
-  const { street, apartment, city, zip, country } = useSelector(state => state.organization.hqAddress);
+  const { street, apartment, city, zip, country } = useSelector(state => state.organization.orgAddress.hqAddress);
   const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
-    dispatch(organizationActions.setHqAddressDetail(name, value));
+    dispatch(organizationActions.setOrgHqAddressDetail(name, value));
   };
 
   return (

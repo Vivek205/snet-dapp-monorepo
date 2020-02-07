@@ -16,7 +16,17 @@ import SingularityLogo from "shared/dist/assets/images/avatar.png";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
-const GridViewItem = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubheader, ratingGiven, totalRating }) => {
+const GridViewItem = ({
+  classes,
+  orgImg,
+  cardTitle,
+  cardMedia,
+  cardDescription,
+  title,
+  cardSubheader,
+  ratingGiven,
+  totalRating,
+}) => {
   const GridViewHeaderLength = 35;
   const StartCount = 5;
   return (
@@ -34,11 +44,16 @@ const GridViewItem = ({ classes, orgImg, cardTitle, cardMedia, title, cardSubhea
       <CardMedia className={classes.CardMedia} image={cardMedia || CardImg} title={title} />
       <CardContent className={classes.cardContent}>
         <div className={classes.ratingSection}>
-          <StarRatingComponent name="rate1" starCount={StartCount} value={10} className={classes.ratingStars} />
+          <StarRatingComponent
+            name="rate1"
+            starCount={StartCount}
+            value={ratingGiven}
+            className={classes.ratingStars}
+          />
           <RatingsCount ratingGiven={ratingGiven} totalRating={totalRating} />
         </div>
         <Typography className={classes.cardTypograpy} component="p">
-          cardDescription
+          {cardDescription}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>

@@ -17,12 +17,12 @@ const OrganizationSetup = ({ classes, location, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
+    if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
-    } else if (organization.status === organizationSetupStatuses.PUBLISHED) {
+    } else if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
       history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
     }
-  }, [organization.status, history]);
+  }, [organization.state.state, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));

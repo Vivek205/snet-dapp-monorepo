@@ -10,6 +10,7 @@
     "react-redux": "^7.1.0",
     "redux-thunk": "^2.3.0",
     "react-router-dom": "^5.0.1",
+    "lodash": "latest",
     "shared": "*"
   },
   "peerDependencies": {
@@ -21,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts --max_old_space_size=5120 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

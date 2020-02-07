@@ -19,9 +19,16 @@ export const SET_CONTACTS = "SET_CONTACTS";
 export const SET_HERO_IMAGE = "SET_HERO_IMAGE";
 export const SET_GROUPS = "SET_GROUPS";
 export const SET_ORGANIZATION_STATUS = "SET_ORGANIZATION_STATUS";
-export const SET_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
-export const SET_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
+export const SET_ORG_SAME_MAILING_ADDRESS = "SET_ORG_SAME_MAILING_ADDRESS";
+export const SET_ORG_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
+export const SET_ORG_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
 export const SET_ORG_OWNER = "SET_ORG_OWNER";
+export const SET_ORG_STATE_ALL = "SET_ORG_STATE_ALL";
+export const SET_ORG_STATE_STATE = "SET_ORG_STATE_STATE";
+export const SET_ORG_STATE_UPDATED_ON = "SET_ORG_STATE_UPDATED_ON";
+export const SET_ORG_STATE_UPDATED_BY = "SET_ORG_STATE_UPDATED_BY";
+export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
+export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
 
@@ -37,19 +44,26 @@ export const setGroups = groups => ({ type: SET_GROUPS, payload: groups });
 
 export const setOrganizationStatus = status => ({ type: SET_ORGANIZATION_STATUS, payload: status });
 
-export const setHqAddressDetail = (name, value) => ({ type: SET_HQ_ADDRESS_DETAIL, payload: { [name]: value } });
+export const setOrgHqAddressDetail = (name, value) => ({ type: SET_ORG_HQ_ADDRESS_DETAIL, payload: { [name]: value } });
 
-export const setMailingAddressDetail = (name, value) => ({
-  type: SET_MAILING_ADDRESS_DETAIL,
+export const setOrgMailingAddressDetail = (name, value) => ({
+  type: SET_ORG_MAILING_ADDRESS_DETAIL,
   payload: { [name]: value },
 });
 
 export const setOrgOwner = owner => ({ type: SET_ORG_OWNER, payload: owner });
 
+export const setOrgStateAll = state => ({ type: SET_ORG_STATE_ALL, payload: state });
+
+export const setOrgStateState = state => ({ type: SET_ORG_STATE_STATE, payload: state });
+
+export const setOrgSameMailingAddress = value => ({ type: SET_ORG_SAME_MAILING_ADDRESS, payload: value });
+
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
-    contacts, assets, ownerFullName, hqAddress, mailingAddress, sameMailingAddress } = organization;
+    contacts, assets, ownerFullName, orgAddress } = organization;
+  const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
     origin: clientTypes.PUBLISHER_DAPP,
@@ -64,25 +78,27 @@ const payloadForSubmit = organization => {
     short_description: shortDescription,
     url: website,
     contacts,
-    mail_address_same_hq_address: sameMailingAddress,
-    addresses: [
-      {
-        address_type: addressTypes.HEAD_QUARTERS,
-        street_address: hqAddress.street,
-        apartment: hqAddress.apartment,
-        city: hqAddress.city,
-        pincode: hqAddress.zip,
-        country: hqAddress.country,
-      },
-      {
-        address_type: addressTypes.MAILING,
-        street_address: sameMailingAddress ? hqAddress.street : mailingAddress.street,
-        apartment: sameMailingAddress ? hqAddress.apartment : mailingAddress.apartment,
-        city: sameMailingAddress ? hqAddress.city : mailingAddress.city,
-        pincode: sameMailingAddress ? hqAddress.zip : mailingAddress.zip,
-        country: sameMailingAddress ? hqAddress.country : mailingAddress.country,
-      },
-    ],
+    org_address: {
+      mail_address_same_hq_address: sameMailingAddress,
+      addresses: [
+        {
+          address_type: addressTypes.HEAD_QUARTERS,
+          street_address: hqAddress.street,
+          apartment: hqAddress.apartment,
+          city: hqAddress.city,
+          pincode: hqAddress.zip,
+          country: hqAddress.country,
+        },
+        {
+          address_type: addressTypes.MAILING,
+          street_address: sameMailingAddress ? hqAddress.street : mailingAddress.street,
+          apartment: sameMailingAddress ? hqAddress.apartment : mailingAddress.apartment,
+          city: sameMailingAddress ? hqAddress.city : mailingAddress.city,
+          pincode: sameMailingAddress ? hqAddress.zip : mailingAddress.zip,
+          country: sameMailingAddress ? hqAddress.country : mailingAddress.country,
+        },
+      ],
+    },
     assets: { hero_image: {} },
     ownerAddress: organization.ownerAddress,
   };
@@ -126,28 +142,60 @@ export const getStatus = async dispatch => {
   if (isEmpty(data)) {
     return data;
   }
-  const organization = {
-    status: data[0].status,
-    id: data[0].org_id,
-    uuid: data[0].org_uuid,
-    ownerFullName: data[0].owner_name,
-    // TODO rename data[0].name to data[0].org_name
-    name: data[0].name,
-    type: data[0].org_type,
-    longDescription: data[0].description,
-    shortDescription: data[0].short_description,
-    website: data[0].url,
-    duns: data[0].duns_no,
-    contacts: data[0].contacts,
+
+  const selectedOrg = data[0];
+
+  const parseOrgAddress = () => {
+    const { mail_address_same_hq_address, addresses } = selectedOrg.org_address;
+    const mailingAddressData = addresses.find(el => el.address_type === addressTypes.MAILING);
+    const hqAddressData = addresses.find(el => el.address_type === addressTypes.HEAD_QUARTERS);
+    const orgAddress = {
+      sameMailingAddress: mail_address_same_hq_address,
+      hqAddress: !hqAddressData
+        ? {}
+        : {
+            street_address: hqAddressData.street_address,
+            apartment: hqAddressData.apartment,
+            city: hqAddressData.city,
+            zip: hqAddressData.pincode,
+            country: hqAddressData.country,
+          },
+      mailingAddress: !mailingAddressData
+        ? {}
+        : {
+            street_address: mailingAddressData.street_address,
+            apartment: mailingAddressData.apartment,
+            city: mailingAddressData.city,
+            zip: mailingAddressData.pincode,
+            country: mailingAddressData.country,
+          },
+    };
+    return orgAddress;
   };
 
-  if (data[0].assets && data[0].assets.hero_image && data[0].assets.hero_image.url) {
+  const organization = {
+    state: selectedOrg.state,
+    id: selectedOrg.org_id,
+    uuid: selectedOrg.org_uuid,
+    ownerFullName: selectedOrg.owner_name,
+    // TODO selectedOrg].name to data[0].org_name
+    name: selectedOrg.name,
+    type: selectedOrg.org_type,
+    longDescription: selectedOrg.description,
+    shortDescription: selectedOrg.short_description,
+    website: selectedOrg.url,
+    duns: selectedOrg.duns_no,
+    contacts: selectedOrg.contacts,
+    orgAddress: parseOrgAddress(),
+  };
+
+  if (selectedOrg.assets && selectedOrg.assets.hero_image && selectedOrg.assets.hero_image.url) {
     organization.assets = {};
-    organization.assets.heroImage = { url: data[0].assets.hero_image.url };
+    organization.assets.heroImage = { url: selectedOrg.assets.hero_image.url };
   }
 
-  if (!isEmpty(data[0].groups)) {
-    const parsedGroups = data[0].groups.map(group => ({
+  if (!isEmpty(selectedOrg.groups)) {
+    const parsedGroups = selectedOrg.groups.map(group => ({
       name: group.name,
       id: group.id,
       paymentAddress: group.payment_address,
@@ -275,7 +323,7 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
           resolve(hash);
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
-          dispatch(setOneBasicDetail("status", organizationSetupStatuses.PUBLISHED));
+          dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
           dispatch(loaderActions.stopAppLoader());
           await method.off();
         })

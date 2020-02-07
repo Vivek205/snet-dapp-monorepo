@@ -3,10 +3,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
+import isEqual from "lodash/isEqual";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import ServiceImage from "shared/dist/assets/images/services.png";
-
 import CreateNewServicePopup from "./CreateNewServicePopup";
 import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
@@ -22,12 +22,20 @@ class AiServices extends Component {
   };
 
   handleClosePopup = () => {
-    this.setState({ showPopUp: true });
+    this.setState({ showPopUp: false });
   };
 
   componentDidMount = async () => {
-    const { orgUuid, getAiServiceList } = this.props;
-    await getAiServiceList(orgUuid);
+    const { orgUuid, pagination, getAiServiceList } = this.props;
+    await getAiServiceList(orgUuid, pagination);
+  };
+
+  componentDidUpdate = async prevProps => {
+    const { orgUuid, pagination, getAiServiceList } = this.props;
+    if (isEqual(prevProps.pagination, pagination)) {
+      return;
+    }
+    await getAiServiceList(orgUuid, pagination);
   };
 
   render() {
@@ -49,7 +57,12 @@ class AiServices extends Component {
                 </Typography>
               </div>
               <div className={classes.btnContainer}>
-                <SNETButton color="primary" children="create new ai service" variant="contained" />
+                <SNETButton
+                  color="primary"
+                  children="create new ai service"
+                  variant="contained"
+                  onClick={this.handleCreateService}
+                />
                 <SNETButton color="primary" variant="text" children="view documentation" />
               </div>
             </Grid>
@@ -67,10 +80,11 @@ class AiServices extends Component {
 
 const mapStateToProps = state => ({
   orgUuid: state.organization.uuid,
+  pagination: state.aiServiceList.pagination,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAiServiceList: orgUuid => dispatch(aiServiceListActions.getAiServiceList(orgUuid)),
+  getAiServiceList: (orgUuid, pagination) => dispatch(aiServiceListActions.getAiServiceList(orgUuid, pagination)),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(AiServices));

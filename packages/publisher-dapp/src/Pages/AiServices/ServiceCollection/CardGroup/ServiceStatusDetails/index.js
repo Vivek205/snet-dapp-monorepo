@@ -13,20 +13,16 @@ import Pricing from "./Pricing";
 import Changelog from "./Changelog";
 import { useStyles } from "./styles";
 
-const tabs = [
-  { name: "Revenue", activeIndex: 0, component: <Revenue /> },
-  { name: "Usage", activeIndex: 1, component: <Usage /> },
-  { name: "Pricing", activeIndex: 2, component: <Pricing /> },
-  { name: "Changelog", activeIndex: 3, component: <Changelog /> },
-];
-
 const ServiceStatusDetails = props => {
-  const { classes } = props;
-  const [activeTab, setActiveTab] = useState(0);
+  const { classes, status, groups } = props;
+  const [activeTab] = useState(2);
 
-  const onTabChange = activeTab => {
-    setActiveTab(activeTab);
-  };
+  const tabs = [
+    { name: "Revenue", activeIndex: 0, component: <Revenue /> },
+    { name: "Usage", activeIndex: 1, component: <Usage /> },
+    { name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> },
+    { name: "Changelog", activeIndex: 3, component: <Changelog /> },
+  ];
 
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
 
@@ -35,13 +31,13 @@ const ServiceStatusDetails = props => {
       <div>
         <div className={classes.statusDetails}>
           <Typography className={classes.property}>status</Typography>
-          <Typography className={classes.value}>active</Typography>
+          <Typography className={classes.value}>{status}</Typography>
         </div>
         <div className={classes.tabsContainer}>
           <AppBar position="static" className={classes.tabsHeader}>
             <Tabs value={activeTab}>
               {tabs.map(value => (
-                <Tab key={value.name} label={value.name} onClick={() => onTabChange(value.activeIndex)} />
+                <Tab key={value.name} label={value.name} />
               ))}
             </Tabs>
           </AppBar>

@@ -12,7 +12,6 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     number: {
       borderRadius: 25,
       padding: "4px 10px",
-      marginRight: 8,
       backgroundColor: MUITheme.palette.text.lightGrey,
       color: MUITheme.palette.text.white,
       "@media(max-width:480px)": {
@@ -26,18 +25,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     completedIcon: {
       "& svg": {
-        color: MUITheme.palette.success,
-        fontSize: 28,
-        marginRight: 10,
-        "@media(max-width:480px)": {
-          padding: "0 !important",
-          marginRight: "0 !important",
-          fontSize: "21px !important"
-        }
+        color: MUITheme.palette.success.main,
+        fontSize: 28
       },
       "@media(max-width:480px)": {
-        padding: "0 !important",
-        margin: 0
+        padding: "0 !important"
       }
     },
     active: {

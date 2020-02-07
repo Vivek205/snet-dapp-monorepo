@@ -56,4 +56,12 @@ export const LoaderContent = {
     title: "Publishing Members to blockchain",
     content: "Just a moment. We are publishing members to the blockchain",
   },
+  CREATE_SERVICE: {
+    title: "Creating Service",
+    content: "Just a moment. We are creating a service",
+  },
+  FREE_CALL_SIGNER_ADDRESS: {
+    title: "Retrieving Signer Address",
+    content: "Just a moment. We are creating a service",
+  },
 };

@@ -7,6 +7,10 @@ export const APIEndpoints = {
     name: "User",
     endpoint: process.env.REACT_APP_USER_ENDPOINT,
   },
+  SIGNER: {
+    name: "signer",
+    endpoint: process.env.REACT_APP_SIGNER_ENDPOINT,
+  },
 };
 
 export const APIPaths = {
@@ -20,5 +24,10 @@ export const APIPaths = {
   SAVE_TRANSACTION: orgUuid => `/org/${orgUuid}/transaction`,
   ACCEPT_INVITATION: "/org/member/register",
   VERIFY_INIVITATION: "/org/member/verify",
-  AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/service`,
+  AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/services`,
+  AI_CREATE_SERVICE: orgUuid => `/org/${orgUuid}/service`,
+  SAVE_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
+  FETCH_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
+  AI_SERVICE_ID_VALIDATE: (orgUuid, serviceId) => `/org/${orgUuid}/verify?service_id=${serviceId}`,
+  FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
 };
