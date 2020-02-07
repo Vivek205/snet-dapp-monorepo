@@ -78,6 +78,7 @@ export const createService = (orgUuid, serviceName) => async dispatch => {
     dispatch(setServiceName(serviceName));
     dispatch(setServiceUuid(data.service_uuid));
     dispatch(loaderActions.stopAppLoader());
+    return data;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

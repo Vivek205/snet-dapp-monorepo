@@ -6,7 +6,7 @@ const initialState = {
     q: "",
     limit: 12,
     offset: 0,
-    s: "all",
+    s: "display_name",
     sort_by: "",
     order_by: "",
     filters: [],

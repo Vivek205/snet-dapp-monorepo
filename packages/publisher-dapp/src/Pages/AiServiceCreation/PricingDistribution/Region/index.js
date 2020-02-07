@@ -16,11 +16,12 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 const Region = () => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { price, priceModel, freeCallsAllowed, groups } = useSelector(state => state.aiServiceDetails);
+  const { freeCallsAllowed, groups } = useSelector(state => state.aiServiceDetails);
   const endpointRef = useRef(null);
   const dispatch = useDispatch();
 
   const selectedGroup = groups[0];
+  const selectedPricing = selectedGroup.pricing[0];
 
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
@@ -55,7 +56,14 @@ const Region = () => {
 
   const handleInputChange = async event => {
     const { name, value } = event.target;
-    await dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+  };
+
+  const handlePriceChange = event => {
+    const { value } = event.target;
+    const updatedPricing = { ...selectedPricing, price: value };
+    const updatedGroups = [...groups];
+    updatedGroups[0] = { ...selectedGroup, pricing: updatedPricing };
   };
 
   if (showRegion) {
@@ -78,13 +86,19 @@ const Region = () => {
 
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.servicePriceModelContainer}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
-              <SNETTextfield icon name="price" value={price} label="Ai Service Price" onChange={handleInputChange} />
+              <SNETTextfield
+                icon
+                name="price"
+                value={selectedPricing.price}
+                label="Ai Service Price"
+                onChange={handlePriceChange}
+              />
               AGI
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <StyledDropdown
                 inputLabel="Entity Type"
-                value={priceModel}
+                value={selectedPricing.priceModel}
                 list={[{ value: "fixed_price", label: "fixed_price" }]}
               />
             </Grid>

@@ -40,14 +40,20 @@ const initialState = {
   groups: [
     {
       groupId: "",
-      pricing: [],
+      pricing: [
+        {
+          default: true,
+          priceModel: "fixed_price",
+          priceInCogs: 1,
+        },
+      ],
       endpoints: [],
     },
   ],
   tags: [],
   freeCallSignerAddress: "",
   price: "",
-  priceModel: "fixed_price",
+  // priceModel: "fixed_price",
   freeCallsAllowed: "",
 };
 
