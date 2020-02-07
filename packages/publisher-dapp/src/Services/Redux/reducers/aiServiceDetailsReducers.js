@@ -45,12 +45,10 @@ const initialState = {
     },
   ],
   tags: [],
-  freecallsAllowed: "",
   freeCallSignerAddress: "",
   price: "",
   priceModel: "fixed_price",
   freeCallsAllowed: "",
-  endpoints: [],
 };
 
 const serviceDetailsReducer = (state = initialState, action) => {
@@ -67,8 +65,8 @@ const serviceDetailsReducer = (state = initialState, action) => {
       return { ...state, name: action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_UUID:
       return { ...state, uuid: action.payload };
-    case aiServiceDetailsActions.SET_AI_SERVICE_ENDPOINTS:
-      return { ...state, endpoints: action.payload };
+    case aiServiceDetailsActions.SET_AI_SERVICE_GROUPS:
+      return { ...state, groups: action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_DETAIL_LEAF:
       return { ...state, [action.payload.name]: action.payload.value };
     case aiServiceDetailsActions.SET_AI_SERVICE_MULTIPLE_DETAILS:

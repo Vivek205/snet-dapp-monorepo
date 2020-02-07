@@ -13,7 +13,7 @@ export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
 export const SET_AI_SERVICE_TOUCH_FLAG = "SET_AI_SERVICE_TOUCH_FLAG";
-export const SET_AI_SERVICE_ENDPOINTS = "SET_AI_SERVICE_ENDPOINTS";
+export const SET_AI_SERVICE_GROUPS = "SET_AI_SERVICE_ENDPOINTS";
 export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
 export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
@@ -50,7 +50,7 @@ export const setAiServiceDetailLeaf = (name, value) => ({
   payload: { name, value },
 });
 
-export const setAiServiceEndpoints = endpoints => ({ type: SET_AI_SERVICE_ENDPOINTS, payload: endpoints });
+export const setAiServiceGroups = groups => ({ type: SET_AI_SERVICE_GROUPS, payload: groups });
 
 export const setAiServiceMultipleDetails = entries => ({ type: SET_AI_SERVICE_MULTIPLE_DETAILS, payload: entries });
 
@@ -121,6 +121,9 @@ const createServicePayload = serviceDetails => {
     groups: [],
     tags: serviceDetails.tags,
     freecalls_allowed: 0,
+    price: serviceDetails.price,
+    priceModel: serviceDetails.priceModel,
+    freeCallsAllowed: serviceDetails.freeCallsAllowed,
   };
 
   return payloadForSubmit;

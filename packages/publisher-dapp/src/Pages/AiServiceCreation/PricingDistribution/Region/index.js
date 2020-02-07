@@ -16,16 +16,18 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 const Region = () => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { price, priceModel, freeCallsAllowed, endpoints } = useSelector(state => state.aiServiceDetails);
+  const { price, priceModel, freeCallsAllowed, groups } = useSelector(state => state.aiServiceDetails);
   const endpointRef = useRef(null);
   const dispatch = useDispatch();
+
+  const selectedGroup = groups[0];
 
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
     const newEndpoints = endpointRef.current.value;
-    const updatedEndpoints = [...endpoints];
+    const updatedEndpoints = [...selectedGroup.endpoints];
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
@@ -36,15 +38,19 @@ const Region = () => {
         }
       }
     });
-    dispatch(aiServiceDetailsActions.setAiServiceEndpoints(updatedEndpoints));
+    const updatedGroups = [...groups];
+    updatedGroups[0] = { ...selectedGroup, endpoints: updatedEndpoints };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
     endpointRef.current.value = "";
   };
 
   const handleEndpointDelete = endpoint => {
-    const index = endpoints.findIndex(el => el === endpoint);
-    const updatedEndpoints = [...endpoints];
+    const index = selectedGroup.endpoints.findIndex(el => el === endpoint);
+    const updatedEndpoints = [...selectedGroup.endpoints];
     updatedEndpoints.splice(index, 1);
-    dispatch(aiServiceDetailsActions.setAiServiceEndpoints(updatedEndpoints));
+    const updatedGroups = [...groups];
+    updatedGroups[0] = { ...selectedGroup, endpoints: updatedEndpoints };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
   };
 
   const handleInputChange = async event => {
@@ -110,7 +116,7 @@ const Region = () => {
             <div className={classes.cardContainer}>
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
-                {endpoints.map(endpoint => (
+                {selectedGroup.endpoints.map(endpoint => (
                   <Chip
                     className={classes.chip}
                     key={endpoint}
