@@ -1,10 +1,14 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
+  appBar: {
+    padding: "8px 15px",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   logoContainer: {
     display: "flex",
     alignItems: "center",
-    flexGrow: 1,
     "& img": { width: 172 },
     "& h5": {
       marginLeft: 8,
