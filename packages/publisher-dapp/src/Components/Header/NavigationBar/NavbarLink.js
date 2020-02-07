@@ -8,7 +8,7 @@ const NavbarLink = props => {
   const { activeLinks, label, openInNewTab, to } = props;
   const classes = useStyles(props);
 
-  const isActive = ({ pathname }) => {
+  const isActive = (_unused, { pathname }) => {
     return activeLinks.includes(pathname);
   };
 
