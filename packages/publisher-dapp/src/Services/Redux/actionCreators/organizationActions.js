@@ -178,8 +178,7 @@ export const getStatus = async dispatch => {
     id: selectedOrg.org_id,
     uuid: selectedOrg.org_uuid,
     ownerFullName: selectedOrg.owner_name,
-    // TODO selectedOrg].name to data[0].org_name
-    name: selectedOrg.name,
+    name: selectedOrg.org_name,
     type: selectedOrg.org_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
