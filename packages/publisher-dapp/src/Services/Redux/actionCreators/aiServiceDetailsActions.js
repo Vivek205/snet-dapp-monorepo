@@ -364,7 +364,6 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
-          // TODO call save transaction API
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(loaderActions.stopAppLoader());
