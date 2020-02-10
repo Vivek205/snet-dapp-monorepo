@@ -59,9 +59,6 @@ const initialState = {
   ],
   groups: defaultGroups,
   tags: [],
-  freeCallSignerAddress: "",
-  price: "",
-
   comments: {
     serviceProvider: [],
   },

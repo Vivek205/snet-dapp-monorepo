@@ -13,22 +13,37 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { keyCodes } from "shared/dist/utils/keyCodes";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 
+const selectState = state => ({
+  serviceGroups: state.aiServiceDetails.groups,
+  orgGroups: state.organization.groups,
+});
+
 const Region = () => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { groups } = useSelector(state => state.aiServiceDetails);
+  const { serviceGroups, orgGroups } = useSelector(selectState);
   const endpointRef = useRef(null);
   const dispatch = useDispatch();
 
-  const selectedGroup = groups[0];
-  const selectedPricing = selectedGroup.pricing ? selectedGroup.pricing[0] : {};
+  const selectedServiceGroup = serviceGroups[0];
+  const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
+
+  const selectedOrgGroup = orgGroups[0];
+
+  const updateGroupId = () => {
+    if (!Boolean(selectedServiceGroup.id)) {
+      const updatedServiceGroups = [...serviceGroups];
+      updatedServiceGroups[0] = { ...selectedServiceGroup, id: selectedOrgGroup.id };
+      dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    }
+  };
 
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
     const newEndpoints = endpointRef.current.value;
-    const updatedEndpoints = [...selectedGroup.endpoints];
+    const updatedEndpoints = [...selectedServiceGroup.endpoints];
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
@@ -39,34 +54,38 @@ const Region = () => {
         }
       }
     });
-    const updatedGroups = [...groups];
-    updatedGroups[0] = { ...selectedGroup, endpoints: updatedEndpoints };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
     endpointRef.current.value = "";
+    updateGroupId();
   };
 
   const handleEndpointDelete = endpoint => {
-    const index = selectedGroup.endpoints.findIndex(el => el === endpoint);
-    const updatedEndpoints = [...selectedGroup.endpoints];
+    const index = selectedServiceGroup.endpoints.findIndex(el => el === endpoint);
+    const updatedEndpoints = [...selectedServiceGroup.endpoints];
     updatedEndpoints.splice(index, 1);
-    const updatedGroups = [...groups];
-    updatedGroups[0] = { ...selectedGroup, endpoints: updatedEndpoints };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
   };
 
   const handleFreeCallsChange = event => {
     const { value } = event.target;
-    const updatedGroups = [...groups];
-    updatedGroups[0] = { ...selectedGroup, freeCallsAllowed: value };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
-    // dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    updateGroupId();
   };
 
   const handlePriceChange = event => {
     const { value } = event.target;
-    const updatedPricing = { ...selectedPricing, price: value };
-    const updatedGroups = [...groups];
-    updatedGroups[0] = { ...selectedGroup, pricing: updatedPricing };
+    const updatedServicePricing = [...selectedServiceGroup.pricing];
+    updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    updateGroupId();
   };
 
   if (showRegion) {
@@ -92,7 +111,7 @@ const Region = () => {
               <SNETTextfield
                 icon
                 name="price"
-                value={selectedPricing && selectedPricing.price}
+                value={selectedServicePricing && selectedServicePricing.price}
                 label="Ai Service Price"
                 onChange={handlePriceChange}
               />
@@ -101,7 +120,7 @@ const Region = () => {
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <StyledDropdown
                 inputLabel="Entity Type"
-                value={selectedPricing && selectedPricing.priceModel}
+                value={selectedServicePricing && selectedServicePricing.priceModel}
                 list={[{ value: "fixed_price", label: "fixed_price" }]}
               />
             </Grid>
@@ -111,7 +130,7 @@ const Region = () => {
             <SNETTextfield
               icon
               name="freeCallsAllowed"
-              value={selectedGroup.freeCallsAllowed}
+              value={selectedServiceGroup.freeCallsAllowed}
               label="Demo Free Calls"
               onChange={handleFreeCallsChange}
             />
@@ -133,8 +152,8 @@ const Region = () => {
             <div className={classes.cardContainer}>
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
-                {selectedGroup.endpoints &&
-                  selectedGroup.endpoints.map(endpoint => (
+                {selectedServiceGroup.endpoints &&
+                  selectedServiceGroup.endpoints.map(endpoint => (
                     <Chip
                       className={classes.chip}
                       key={endpoint}
