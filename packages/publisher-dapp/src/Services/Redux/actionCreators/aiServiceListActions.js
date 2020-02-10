@@ -54,7 +54,7 @@ const parseAiServiceData = service => ({
   orgUuid: service.org_uuid,
   uuid: service.service_uuid,
   id: service.service_id,
-  state: service.state,
+  state: service.service_state,
   displayName: service.display_name,
   shortDescription: service.short_description,
   description: service.description,

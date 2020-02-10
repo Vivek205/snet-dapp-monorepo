@@ -119,14 +119,21 @@ const generateSaveServicePayload = serviceDetails => {
     pricing.map(price => ({ default: price.default, price_model: price.priceModel, price_in_cogs: price.priceInCogs }));
 
   const generateGroupsPayload = () =>
-    serviceDetails.groups.map(group => ({
-      group_name: group.name,
-      group_id: group.id,
-      free_calls: group.freeCallsAllowed,
-      free_call_signer_address: serviceDetails.freeCallSignerAddress,
-      pricing: generatePricingpayload(group.pricing),
-      endpoints: generateEndpointsPayload(group.endpoints),
-    }));
+    serviceDetails.groups
+      .map(group => {
+        if (!group.id) {
+          return undefined;
+        }
+        return {
+          group_name: group.name,
+          group_id: group.id,
+          free_calls: group.freeCallsAllowed,
+          free_call_signer_address: serviceDetails.freeCallSignerAddress,
+          pricing: generatePricingpayload(group.pricing),
+          endpoints: generateEndpointsPayload(group.endpoints),
+        };
+      })
+      .filter(el => el !== undefined);
   // TODO: Certain values are hard coded here.... Need to look at for complete integration
   const payloadForSubmit = {
     service_id: serviceDetails.id,
@@ -140,6 +147,7 @@ const generateSaveServicePayload = serviceDetails => {
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
     groups: generateGroupsPayload(),
+    // groups: undefined,
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
@@ -362,7 +370,7 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
         .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
         .send()
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-          await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, organization.ownerAddress));
+          await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, sdk.account.address));
           dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
