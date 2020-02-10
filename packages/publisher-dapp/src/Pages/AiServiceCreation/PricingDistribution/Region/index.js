@@ -16,7 +16,7 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 const Region = () => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { freeCallsAllowed, groups } = useSelector(state => state.aiServiceDetails);
+  const { groups } = useSelector(state => state.aiServiceDetails);
   const endpointRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -54,9 +54,12 @@ const Region = () => {
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
   };
 
-  const handleInputChange = async event => {
-    const { name, value } = event.target;
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+  const handleFreeCallsChange = event => {
+    const { value } = event.target;
+    const updatedGroups = [...groups];
+    updatedGroups[0] = { ...selectedGroup, freeCallsAllowed: value };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedGroups));
+    // dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
 
   const handlePriceChange = event => {
@@ -108,9 +111,9 @@ const Region = () => {
             <SNETTextfield
               icon
               name="freeCallsAllowed"
-              value={freeCallsAllowed}
+              value={selectedGroup.freeCallsAllowed}
               label="Demo Free Calls"
-              onChange={handleInputChange}
+              onChange={handleFreeCallsChange}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>

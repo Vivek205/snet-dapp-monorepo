@@ -120,7 +120,9 @@ const generateSaveServicePayload = serviceDetails => {
 
   const generateGroupsPayload = () =>
     serviceDetails.groups.map(group => ({
-      group_id: group.groupId,
+      group_name: group.name,
+      group_id: group.id,
+      free_calls: group.freeCallsAllowed,
       pricing: generatePricingpayload(group.pricing),
       endpoints: generateEndpointsPayload(group.endpoints),
     }));
@@ -140,7 +142,6 @@ const generateSaveServicePayload = serviceDetails => {
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
-    freecalls_allowed: serviceDetails.freeCallsAllowed,
     comment: {
       service_provider: serviceDetails.comments.serviceProvider,
     },
@@ -208,9 +209,11 @@ const parseServiceDetails = (data, serviceUuid) => {
       return defaultGroups;
     }
     data.groups.map(group => ({
-      groupId: group.group_id,
+      name: group.group_name,
+      id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: parseEndpoints(group.endpoints),
+      freeCallsAllowed: group.free_calls,
     }));
   };
   // TODO: Certain elements are hard coded need to update after all forms integration
@@ -325,15 +328,41 @@ export const publishToIPFS = (orgUuid, serviceUuid) => async dispatch => {
   }
 };
 
-export const publishToBlockchain = (orgId, serviceId, serviceMetadataURI, tags) => async dispatch => {
+const saveTransactionAPI = (orgUuid, serviceUuid, hash, publisherAddress) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.SAVE_SERVICE_TRANSACTION(orgUuid, serviceUuid);
+  const body = { transaction_hash: hash, wallet_address: publisherAddress };
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+const saveTransaction = (orgUuid, serviceUuid, hash, ownerAddress) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_TRANSACTION));
+    const { error } = await dispatch(saveTransactionAPI(orgUuid, serviceUuid, hash, ownerAddress));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+export const publishToBlockchain = (organization, serviceDetails, serviceMetadataURI, tags) => async dispatch => {
+  const orgId = organization.id;
+  const serviceId = serviceDetails.id;
   try {
     const sdk = await initSDK();
-    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
+    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
     return new Promise((resolve, reject) => {
       const method = sdk._registryContract
         .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
         .send()
-        .on(blockChainEvents.TRANSACTION_HASH, () => {
+        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+          await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, organization.ownerAddress));
+          dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
           // TODO call save transaction API
         })
         .once(blockChainEvents.CONFIRMATION, async () => {

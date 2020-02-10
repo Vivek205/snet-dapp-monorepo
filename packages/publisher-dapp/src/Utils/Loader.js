@@ -88,4 +88,8 @@ export const LoaderContent = {
     title: "Publish service to blockchain",
     content: "Just a moment. We are publishing to blockchain",
   },
+  SAVE_SERVICE_TRANSACTION: {
+    title: "Saving service transaction",
+    content: "Just a moment. We are saving the transaction hash",
+  },
 };

@@ -5,7 +5,8 @@ import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant
 
 export const defaultGroups = [
   {
-    groupId: "",
+    name: "defaultGroup",
+    id: "",
     pricing: [
       {
         default: true,
@@ -14,6 +15,7 @@ export const defaultGroups = [
       },
     ],
     endpoints: [],
+    freeCallsAllowed: "",
   },
 ];
 
@@ -59,7 +61,7 @@ const initialState = {
   tags: [],
   freeCallSignerAddress: "",
   price: "",
-  freeCallsAllowed: "",
+
   comments: {
     serviceProvider: [],
   },

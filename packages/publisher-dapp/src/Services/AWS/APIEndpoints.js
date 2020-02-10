@@ -31,5 +31,6 @@ export const APIPaths = {
   PUBLISH_TO_BLOCKCHAIN: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/ipfs_publish`,
   FETCH_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
   AI_SERVICE_ID_VALIDATE: (orgUuid, serviceId) => `/org/${orgUuid}/verify?service_id=${serviceId}`,
+  SAVE_SERVICE_TRANSACTION: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/transaction`,
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
 };

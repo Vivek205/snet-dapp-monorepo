@@ -45,12 +45,7 @@ const Submit = ({ classes }) => {
   const handlePublishToBlockchain = async () => {
     const { metadata_ipfs_hash } = await dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid));
     await dispatch(
-      aiServiceDetailsActions.publishToBlockchain(
-        organization.id,
-        serviceDetails.id,
-        metadata_ipfs_hash,
-        serviceDetails.tags
-      )
+      aiServiceDetailsActions.publishToBlockchain(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags)
     );
   };
 
