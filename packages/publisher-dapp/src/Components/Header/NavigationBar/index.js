@@ -5,17 +5,33 @@ import { useLocation } from "react-router-dom";
 
 import SNETList from "shared/dist/components/SNETList";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
+import { useSelector } from "react-redux";
 
 import { useStyles } from "./styles";
 import NavbarLink from "./NavbarLink";
 import { navbarItems } from "./constant";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+
+const selectState = state => ({
+  orgUuid: state.organization.uuid,
+  serviceUuid: state.aiServiceDetails.uuid,
+});
 
 const NavigationBar = props => {
   const { headerColor } = props;
   const classes = useStyles(props);
   const location = useLocation();
-
-  if (location.pathname.includes("/servicecreation/")) {
+  const { orgUuid, serviceUuid } = useSelector(selectState);
+  // console.log("pathname", location.pathname);
+  // console.log(
+  //   "path",
+  //   GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+  // );
+  if (
+    location.pathname.includes(
+      GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+    )
+  ) {
     return (
       <nav>
         <SNETList display="inline" className={classes.navlist}>
