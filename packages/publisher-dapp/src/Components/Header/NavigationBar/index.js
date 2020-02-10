@@ -29,6 +29,9 @@ const NavigationBar = props => {
 
   const serviceDropdownChange = event => {
     const { value } = event.target;
+    if (value === "default") {
+      return;
+    }
     dispatch(aiServiceDetailsActions.setServiceUuid(value));
     history.push(GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", value));
   };
@@ -42,6 +45,7 @@ const NavigationBar = props => {
           <div className={classes.serviceNameDropdown}>
             <StyledDropdown
               name="service_list_dropdown"
+              labelTxt="select a service"
               value={serviceUuid}
               list={serviceDropdownList}
               onChange={serviceDropdownChange}
