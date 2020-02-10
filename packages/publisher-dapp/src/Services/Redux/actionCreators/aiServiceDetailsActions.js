@@ -123,6 +123,7 @@ const generateSaveServicePayload = serviceDetails => {
       group_name: group.name,
       group_id: group.id,
       free_calls: group.freeCallsAllowed,
+      free_call_signer_address: serviceDetails.freeCallSignerAddress,
       pricing: generatePricingpayload(group.pricing),
       endpoints: generateEndpointsPayload(group.endpoints),
     }));
