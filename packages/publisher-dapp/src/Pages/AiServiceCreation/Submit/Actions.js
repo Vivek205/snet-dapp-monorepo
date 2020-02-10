@@ -3,7 +3,14 @@ import { serviceCreationStatus } from "../constant";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
-const Actions = ({ classes, status, handleConnectMM, handleSubmitForReview, handlePublishToBlockchain }) => {
+const Actions = ({
+  classes,
+  status,
+  handleConnectMM,
+  handleSubmitForReview,
+  handlePublishToBlockchain,
+  shouldPublishBeEnabled,
+}) => {
   if (status === serviceCreationStatus.APPROVED) {
     return (
       <div className={classes.btnContainer}>
@@ -13,6 +20,7 @@ const Actions = ({ classes, status, handleConnectMM, handleSubmitForReview, hand
           color="primary"
           variant="contained"
           onClick={handlePublishToBlockchain}
+          disabled={!shouldPublishBeEnabled}
         />
       </div>
     );

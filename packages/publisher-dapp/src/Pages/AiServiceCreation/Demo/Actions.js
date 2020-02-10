@@ -1,14 +1,12 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-
-import { useStyles } from "./styles";
-import SNETButton from "shared/dist/components/SNETButton";
-import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
 import { useSelector, useDispatch } from "react-redux";
-import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 
-const Actions = () => {
-  const classes = useStyles();
+import SNETButton from "shared/dist/components/SNETButton";
+import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
+
+const Actions = ({ classes }) => {
   const history = useHistory();
   const serviceDetails = useSelector(state => state.aiServiceDetails);
   const { orgUuid, serviceUuid } = useParams();
@@ -19,13 +17,16 @@ const Actions = () => {
   };
 
   const handleBack = () => {
-    history.push(ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    history.push(ServiceCreationRoutes.PROFILE.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
   };
 
   const handleContinue = async () => {
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
-    history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
-    // TODO handleContinue
+    history.push(
+      ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path
+        .replace(":orgUuid", orgUuid)
+        .replace(":serviceUuid", serviceUuid)
+    );
   };
 
   return (

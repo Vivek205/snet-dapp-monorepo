@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-
 import { useStyles } from "./styles";
+import Actions from "./Actions";
 
 const Demo = ({ classes }) => {
   const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
@@ -96,6 +96,7 @@ const Demo = ({ classes }) => {
           <AlertBox type={alert.type} message={alert.message} />
         </div>
       </Grid>
+      <Actions classes={classes} />
     </Grid>
   );
 };

@@ -12,7 +12,7 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 
-export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
+export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
 export const RESET_ORGANIZATION_DATA = "RESET_ORGANIZATION_DATA";
 export const SET_CONTACTS = "SET_CONTACTS";
@@ -30,7 +30,7 @@ export const SET_ORG_STATE_UPDATED_BY = "SET_ORG_STATE_UPDATED_BY";
 export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 
-export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
+export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
 
