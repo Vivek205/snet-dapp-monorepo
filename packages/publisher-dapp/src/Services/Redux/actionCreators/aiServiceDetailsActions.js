@@ -1,4 +1,5 @@
 import { API } from "aws-amplify";
+import isEmpty from "lodash/isEmpty";
 
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -8,8 +9,9 @@ import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
+import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 
-export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
+export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
@@ -21,7 +23,7 @@ export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
 export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 
-export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
+export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
 export const setServiceTouchFlag = touchFlag => ({
   type: SET_AI_SERVICE_TOUCH_FLAG,
@@ -111,7 +113,17 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   }
 };
 
-const createServicePayload = serviceDetails => {
+const generateSaveServicePayload = serviceDetails => {
+  const generateEndpointsPayload = endpoints => endpoints.map(endpointValue => ({ endpoint: endpointValue }));
+  const generatePricingpayload = pricing =>
+    pricing.map(price => ({ default: price.default, price_model: price.priceModel, price_in_cogs: price.priceInCogs }));
+
+  const generateGroupsPayload = () =>
+    serviceDetails.groups.map(group => ({
+      group_id: group.groupId,
+      pricing: generatePricingpayload(group.pricing),
+      endpoints: generateEndpointsPayload(group.endpoints),
+    }));
   // TODO: Certain values are hard coded here.... Need to look at for complete integration
   const payloadForSubmit = {
     service_id: serviceDetails.id,
@@ -124,7 +136,7 @@ const createServicePayload = serviceDetails => {
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
-    groups: [],
+    groups: generateGroupsPayload(),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
@@ -148,12 +160,16 @@ const saveServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => a
 
 export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
-    const serviceDetailsPayload = createServicePayload(serviceDetails);
+    dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
+      dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
+    dispatch(loaderActions.stopAppLoader());
   } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
     throw error;
   }
 };
@@ -172,14 +188,31 @@ export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
     if (error.code) {
       throw new APIError(error.message);
     }
-    const service = createReduxServicePayload(data, serviceUuid);
+    const service = parseServiceDetails(data, serviceUuid);
     dispatch(setAllAttributes(service));
   } catch (error) {
     throw error;
   }
 };
 
-const createReduxServicePayload = (data, serviceUuid) => {
+const parseServiceDetails = (data, serviceUuid) => {
+  const parseEndpoints = endpoints => endpoints.map(endpointValue => endpointValue.endpoint);
+  const parsePricing = pricing =>
+    pricing.map(price => ({
+      default: price.default,
+      priceModel: price.price_model,
+      priceInCogs: price.price_in_cogs,
+    }));
+  const parseGroups = () => {
+    if (isEmpty(data.groups)) {
+      return defaultGroups;
+    }
+    data.groups.map(group => ({
+      groupId: group.group_id,
+      pricing: parsePricing(group.pricing),
+      endpoints: parseEndpoints(group.endpoints),
+    }));
+  };
   // TODO: Certain elements are hard coded need to update after all forms integration
   const service = {
     serviceState: {
@@ -213,14 +246,8 @@ const createReduxServicePayload = (data, serviceUuid) => {
     contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
     contacts: [],
-    groups: [
-      {
-        groupId: "",
-        pricing: [],
-        endpoints: [],
-      },
-    ],
-    tags: [],
+    groups: parseGroups(),
+    tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
   };
 
@@ -264,7 +291,7 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
 export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
-    const serviceDetailsPayload = createServicePayload(serviceDetails);
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);

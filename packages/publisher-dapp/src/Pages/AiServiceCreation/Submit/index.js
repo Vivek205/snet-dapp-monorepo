@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -37,6 +37,10 @@ const Submit = ({ classes }) => {
   const handleSubmitForReview = async () => {
     await dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails));
   };
+
+  const shouldPublishBeEnabled = useCallback(() => {
+    return Boolean(MMAddress);
+  }, [MMAddress]);
 
   const handlePublishToBlockchain = async () => {
     const { metadata_ipfs_hash } = await dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid));
@@ -89,6 +93,7 @@ const Submit = ({ classes }) => {
             handleConnectMM={handleConnectMM}
             handleSubmitForReview={handleSubmitForReview}
             handlePublishToBlockchain={handlePublishToBlockchain}
+            shouldPublishBeEnabled={shouldPublishBeEnabled()}
           />
         </div>
       </Grid>
