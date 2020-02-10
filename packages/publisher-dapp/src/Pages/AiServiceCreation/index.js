@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-
 import { withStyles } from "@material-ui/core/styles";
+import last from "lodash/last";
 
 import ProgressBar from "shared/dist/components/ProgressBar";
-
 import { progressText, serviceCreationSections } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
 import { useStyles } from "./styles";
-
 import { aiServiceDetailsActions } from "../../Services/Redux/actionCreators";
 
 const AiServiceCreation = ({ classes, location, match }) => {
@@ -22,24 +20,23 @@ const AiServiceCreation = ({ classes, location, match }) => {
     dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid));
   }, [dispatch, orgUuid, serviceUuid]);
 
-  const activeSection = () => {
+  const activeSection = useCallback(() => {
     const { pathname: path } = location;
     const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
-
-    if (path.includes(ServiceCreationRoutes.PROFILE.path)) {
+    if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
     }
-    if (path.includes(ServiceCreationRoutes.DEMO.path)) {
+    if (path.includes(last(ServiceCreationRoutes.DEMO.path.split("/")))) {
       return DEMO;
     }
-    if (path.includes(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path)) {
+    if (path.includes(last(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path.split("/")))) {
       return PRICING_AND_DISTRIBUTION;
     }
-    if (path.includes(ServiceCreationRoutes.SUBMIT.path)) {
+    if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
       return SUBMIT;
     }
     return PROFILE;
-  };
+  }, [location]);
 
   return (
     <div className={classes.serviceCreationContainer}>
