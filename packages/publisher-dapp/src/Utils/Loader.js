@@ -64,4 +64,16 @@ export const LoaderContent = {
     title: "Retrieving Signer Address",
     content: "Just a moment. We are creating a service",
   },
+  SUBMIT_SERVICE_FOR_REVIEW: {
+    title: "Submitting for review",
+    content: "Just a moment. We are submitting the service for review",
+  },
+  PUBLISH_SERVICE_TO_IPFS: {
+    title: "Publish service to IPFS",
+    content: "Just a moment. We are publishing to IPFS",
+  },
+  PUBLISH_SERVICE_TO_BLOCKCHAIN: {
+    title: "Publish service to blockchain",
+    content: "Just a moment. We are publishing to blockchain",
+  },
 };

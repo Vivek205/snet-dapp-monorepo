@@ -22,7 +22,7 @@ class AiServices extends Component {
   };
 
   handleClosePopup = () => {
-    this.setState({ showPopUp: true });
+    this.setState({ showPopUp: false });
   };
 
   componentDidMount = async () => {

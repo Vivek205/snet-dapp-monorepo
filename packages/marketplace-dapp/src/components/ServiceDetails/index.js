@@ -94,8 +94,8 @@ class ServiceDetails extends Component {
               display_name={service.display_name}
               serviceImg={service.assets_url && service.assets_url.hero_image}
               orgImg={service.org_assets_url && service.org_assets_url.hero_image}
-              star_rating={service.service_rating && service.service_rating.rating}
-              totalRating={service.service_rating ? service.service_rating.total_users_rated : 0}
+              star_rating={service.rating && service.rating.rating}
+              totalRating={service.rating ? service.rating.total_users_rated : 0}
             />
             <PricingDetails
               activeTab={activeTab}

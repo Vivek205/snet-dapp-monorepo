@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 
 const ServiceStatusDetails = props => {
   const { classes, status, groups } = props;
-  const [activeTab, setActiveTab] = useState(2);
+  const [activeTab] = useState(2);
 
   const tabs = [
     { name: "Revenue", activeIndex: 0, component: <Revenue /> },
@@ -23,10 +23,6 @@ const ServiceStatusDetails = props => {
     { name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> },
     { name: "Changelog", activeIndex: 3, component: <Changelog /> },
   ];
-
-  const onTabChange = activeTab => {
-    setActiveTab(activeTab);
-  };
 
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
 
@@ -41,7 +37,7 @@ const ServiceStatusDetails = props => {
           <AppBar position="static" className={classes.tabsHeader}>
             <Tabs value={activeTab}>
               {tabs.map(value => (
-                <Tab key={value.name} label={value.name} onClick={() => onTabChange(value.activeIndex)} />
+                <Tab key={value.name} label={value.name} />
               ))}
             </Tabs>
           </AppBar>

@@ -4,7 +4,13 @@ import { organizationSetupStatuses, organizationTypes } from "../../../Utils/org
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 
 const initialState = {
-  status: organizationSetupStatuses.NOT_STARTED,
+  state: {
+    state: organizationSetupStatuses.NOT_STARTED,
+    updatedOn: "",
+    updatedBy: "",
+    reviewedBy: "",
+    reviewedOn: "",
+  },
   id: "",
   uuid: "",
   name: "",
@@ -42,9 +48,11 @@ const initialState = {
       fileType: "",
     },
   },
-  hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
-  sameMailingAddress: false,
-  mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  orgAddress: {
+    sameMailingAddress: false,
+    hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+    mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
+  },
   ownerAddress: "",
   members: {
     [memberStatus.PENDING]: [],
@@ -73,14 +81,30 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, groups: action.payload };
     case organizationActions.SET_ORGANIZATION_STATUS:
       return { ...state, status: action.payload };
-    case organizationActions.SET_HQ_ADDRESS_DETAIL:
-      return { ...state, hqAddress: { ...state.hqAddress, ...action.payload } };
-    case organizationActions.SET_MAILING_ADDRESS_DETAIL:
-      return { ...state, mailingAddress: { ...state.mailingAddress, ...action.payload } };
+    case organizationActions.SET_ORG_HQ_ADDRESS_DETAIL:
+      return {
+        ...state,
+        orgAddress: { ...state.orgAddress, hqAddress: { ...state.orgAddress.hqAddress, ...action.payload } },
+      };
+    case organizationActions.SET_ORG_MAILING_ADDRESS_DETAIL:
+      return {
+        ...state,
+        orgAddress: { ...state.orgAddress, mailingAddress: { ...state.orgAddress.mailingAddress, ...action.payload } },
+      };
     case inviteMembersActions.SET_MEMBERS_FOR_STATUS:
       return { ...state, members: { ...state.members, ...action.payload } };
     case organizationActions.SET_ORG_OWNER:
       return { ...state, owner: action.payload };
+    case organizationActions.SET_ORG_STATE_ALL:
+      // computing the key `state` to avoid name conflicts with redux `state`
+      // eslint-disable-next-line no-useless-computed-key
+      return { ...state, ["state"]: action.payload };
+    case organizationActions.SET_ORG_STATE_STATE:
+      // computing the key `state` to avoid name conflicts with redux `state`
+      // eslint-disable-next-line no-useless-computed-key
+      return { ...state, ["state"]: { ...state.state, ["state"]: action.payload } };
+    case organizationActions.SET_ORG_SAME_MAILING_ADDRESS:
+      return { ...state, orgAddress: { ...state.orgAddress, sameMailingAddress: action.payload } };
     default:
       return state;
   }

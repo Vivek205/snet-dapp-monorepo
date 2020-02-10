@@ -1,15 +1,27 @@
-import React from "react";
-import { progressText, serviceCreationSections } from "./constant";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import { withStyles } from "@material-ui/core/styles";
 
 import ProgressBar from "shared/dist/components/ProgressBar";
 
+import { progressText, serviceCreationSections } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
 import { useStyles } from "./styles";
 
-const AiServiceCreation = ({ classes, location }) => {
+import { aiServiceDetailsActions } from "../../Services/Redux/actionCreators";
+
+const AiServiceCreation = ({ classes, location, match }) => {
+  const dispatch = useDispatch();
+
+  const { orgUuid, serviceUuid } = match.params;
+
+  useEffect(() => {
+    dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid));
+  }, [dispatch, orgUuid, serviceUuid]);
+
   const activeSection = () => {
     const { pathname: path } = location;
     const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;

@@ -18,7 +18,7 @@ const Banners = {
 };
 
 const OrgSetupStatus = ({ classes }) => {
-  const { status } = useSelector(state => state.organization);
+  const status = useSelector(state => state.organization.state.state);
 
   const CurrentStatus = Banners[status];
 
