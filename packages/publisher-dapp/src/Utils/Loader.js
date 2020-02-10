@@ -56,6 +56,14 @@ export const LoaderContent = {
     title: "Publishing Members to blockchain",
     content: "Just a moment. We are publishing members to the blockchain",
   },
+  GET_ALL_SERVICES: {
+    title: "Retrieving the list of services",
+    content: "Just a moment. We are retrieving the list of services",
+  },
+  INIT_SERVICE_CREATION: {
+    title: "Initializing Service Creation",
+    content: "Just a moment. We are initializing the service creation page",
+  },
   CREATE_SERVICE: {
     title: "Creating Service",
     content: "Just a moment. We are creating a service",

@@ -45,7 +45,7 @@ const setServiceName = serviceName => ({
   payload: serviceName,
 });
 
-const setServiceUuid = serviceUuid => ({
+export const setServiceUuid = serviceUuid => ({
   type: SET_AI_SERVICE_UUID,
   payload: serviceUuid,
 });
@@ -254,12 +254,11 @@ const parseServiceDetails = (data, serviceUuid) => {
   return service;
 };
 
-// eslint-disable-next-line no-unused-vars
 const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.SIGNER.name;
   const apiPath = APIPaths.FREE_CALL_SIGNER_ADDRESS;
-  const queryParams = { org_id: "orgId", service_id: "serviceId", group_id: "groupId" };
+  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId };
   const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
