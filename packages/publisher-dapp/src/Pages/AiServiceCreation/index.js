@@ -21,7 +21,7 @@ const AiServiceCreation = ({ classes, location, match }) => {
   }, [dispatch, orgUuid, serviceUuid]);
 
   const activeSection = useCallback(() => {
-    const { pathname: path } = location;
+    const path = location.pathname;
     const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
     if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
@@ -36,7 +36,7 @@ const AiServiceCreation = ({ classes, location, match }) => {
       return SUBMIT;
     }
     return PROFILE;
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <div className={classes.serviceCreationContainer}>

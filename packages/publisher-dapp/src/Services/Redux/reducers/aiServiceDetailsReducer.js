@@ -3,6 +3,20 @@ import { ContactsTypes } from "../../../Utils/Contacts";
 import { serviceSetupStatuses } from "../../../Utils/serviceSetup";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 
+export const defaultGroups = [
+  {
+    groupId: "",
+    pricing: [
+      {
+        default: true,
+        priceModel: "fixed_price",
+        priceInCogs: 1,
+      },
+    ],
+    endpoints: [],
+  },
+];
+
 const initialState = {
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
@@ -41,19 +55,7 @@ const initialState = {
     { type: ContactsTypes.GENERAL, email: "", phone: "" },
     { type: ContactsTypes.SUPPORT, email: "", phone: "" },
   ],
-  groups: [
-    {
-      groupId: "",
-      pricing: [
-        {
-          default: true,
-          priceModel: "fixed_price",
-          priceInCogs: 1,
-        },
-      ],
-      endpoints: [],
-    },
-  ],
+  groups: defaultGroups,
   tags: [],
   freeCallSignerAddress: "",
   price: "",
@@ -65,7 +67,7 @@ const initialState = {
 
 const serviceDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case aiServiceDetailsActions.SET_ALL_ATTRIBUTES:
+    case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_TOUCH_FLAG:
       return { ...state, touch: action.payload };
