@@ -213,11 +213,11 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceModel: price.price_model,
       priceInCogs: price.price_in_cogs,
     }));
-  const parseGroups = () => {
-    if (isEmpty(data.groups)) {
+  const parseGroups = groups => {
+    if (isEmpty(groups)) {
       return defaultGroups;
     }
-    data.groups.map(group => ({
+    return groups.map(group => ({
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
@@ -258,7 +258,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
     contacts: [],
-    groups: parseGroups(),
+    groups: parseGroups(data.groups),
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
   };

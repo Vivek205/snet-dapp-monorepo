@@ -9,6 +9,7 @@ import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
+import { getFileBinary } from "shared/dist/utils/FileUpload";
 
 const UploadProto = () => {
   const classes = useStyles();
@@ -16,19 +17,6 @@ const UploadProto = () => {
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
-
-  const getFileBinary = file => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = error => {
-        reject(error);
-      };
-      reader.readAsBinaryString(file);
-    });
-  };
 
   const handleDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
