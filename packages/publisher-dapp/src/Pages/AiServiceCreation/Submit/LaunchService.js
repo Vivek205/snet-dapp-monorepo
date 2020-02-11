@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { serviceCreationStatus } from "../constant";
 import { useStyles } from "./styles";
+import SNETButton from "shared/dist/components/SNETButton";
 
 const selectState = state => ({
   organization: state.organization,
@@ -24,14 +25,15 @@ const LaunchService = () => {
     );
   };
 
-  if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
-    return <div>Approval Pending</div>;
-  }
-
   return (
-    <div>
-      Launch service<button onClick={handlePublishToBlockchain}>launch</button>
-    </div>
+    <SNETButton
+      color="primary"
+      variant="contained"
+      disabled={serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING}
+      onClick={handlePublishToBlockchain}
+    >
+      Continue to launch
+    </SNETButton>
   );
 };
 
