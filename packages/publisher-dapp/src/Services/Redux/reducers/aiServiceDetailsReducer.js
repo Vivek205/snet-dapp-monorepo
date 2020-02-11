@@ -94,6 +94,8 @@ const serviceDetailsReducer = (state = initialState, action) => {
           serviceProvider: action.payload,
         },
       };
+    case aiServiceDetailsActions.SET_AI_SERVICE_STATE_STATE:
+      return { ...state, serviceState: { ...state.serviceState, state: action.payload } };
     default:
       return state;
   }
