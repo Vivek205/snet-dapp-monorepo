@@ -17,7 +17,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
-import { serviceValidationConstraints } from "./validationConstraints";
+import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { keyCodes } from "shared/dist/utils/keyCodes";
@@ -68,7 +68,7 @@ const Profile = ({ classes, _location }) => {
       const serviceName = serviceDetails.name;
       const serviceId = serviceDetails.id;
 
-      const isNotValid = validator({ serviceName, serviceId }, serviceValidationConstraints);
+      const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
 
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
