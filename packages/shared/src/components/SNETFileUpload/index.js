@@ -9,7 +9,19 @@ import { useStyles } from "./styles";
 import FileStats from "./FileStats";
 
 const SNETFileUpload = props => {
-  const { disabled, minSize, maxSize, multiple, onDrop, onDropAccepted, onDropRejected } = props;
+  const {
+    disabled,
+    minSize,
+    maxSize,
+    multiple,
+    accept,
+    onDrop,
+    onDropAccepted,
+    onDropRejected,
+    showFileDetails,
+    fileName,
+    fileSize,
+  } = props;
   const classes = useStyles();
 
   // eslint-disable-next-line no-unused-vars
@@ -18,6 +30,7 @@ const SNETFileUpload = props => {
     minSize,
     maxSize,
     multiple,
+    accept,
     onDrop,
     onDropAccepted,
     onDropRejected,
@@ -34,7 +47,7 @@ const SNETFileUpload = props => {
         <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
-        <FileStats show />
+        <FileStats show={showFileDetails} fileName={fileName} fileSize={fileSize} />
       </Grid>
     </Grid>
   );
@@ -50,6 +63,9 @@ SNETFileUpload.prototypes = {
   onDrop: PropTypes.func,
   onDropAccepted: PropTypes.func,
   onDropRejected: PropTypes.func,
+  showFileDetails: PropTypes.bool,
+  fileName: PropTypes.string,
+  fileSize: PropTypes.string,
 };
 
 export default SNETFileUpload;

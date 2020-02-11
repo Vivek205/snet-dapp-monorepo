@@ -30,9 +30,13 @@ var SNETFileUpload = function SNETFileUpload(props) {
       minSize = props.minSize,
       maxSize = props.maxSize,
       multiple = props.multiple,
+      accept = props.accept,
       onDrop = props.onDrop,
       onDropAccepted = props.onDropAccepted,
-      onDropRejected = props.onDropRejected;
+      onDropRejected = props.onDropRejected,
+      showFileDetails = props.showFileDetails,
+      fileName = props.fileName,
+      fileSize = props.fileSize;
   var classes = (0, _styles.useStyles)(); // eslint-disable-next-line no-unused-vars
 
   var _useDropzone = (0, _reactDropzone.useDropzone)({
@@ -40,6 +44,7 @@ var SNETFileUpload = function SNETFileUpload(props) {
     minSize: minSize,
     maxSize: maxSize,
     multiple: multiple,
+    accept: accept,
     onDrop: onDrop,
     onDropAccepted: onDropAccepted,
     onDropRejected: onDropRejected
@@ -64,7 +69,9 @@ var SNETFileUpload = function SNETFileUpload(props) {
     md: 6,
     lg: 6
   }, _react.default.createElement(_FileStats.default, {
-    show: true
+    show: showFileDetails,
+    fileName: fileName,
+    fileSize: fileSize
   })));
 };
 
@@ -78,7 +85,10 @@ SNETFileUpload.prototypes = {
   //https://github.com/react-dropzone/attr-accept
   onDrop: _propTypes.default.func,
   onDropAccepted: _propTypes.default.func,
-  onDropRejected: _propTypes.default.func
+  onDropRejected: _propTypes.default.func,
+  showFileDetails: _propTypes.default.bool,
+  fileName: _propTypes.default.string,
+  fileSize: _propTypes.default.string
 };
 var _default = SNETFileUpload;
 exports.default = _default;

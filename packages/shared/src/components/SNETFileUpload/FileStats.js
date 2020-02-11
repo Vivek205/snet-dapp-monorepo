@@ -7,7 +7,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const FileStats = props => {
-  const { uploadSuccess, show } = props;
+  const { uploadSuccess, show, fileName, fileSize } = props;
   const classes = useStyles();
 
   if (!show) {
@@ -25,7 +25,7 @@ const FileStats = props => {
         </div>
         <div>
           <Typography className={classes.title}>File Name:</Typography>
-          <Typography className={classes.value} />
+          <Typography className={classes.value}>{fileName}</Typography>
         </div>
         <div>
           <Typography className={classes.title}>Items:</Typography>
@@ -37,7 +37,7 @@ const FileStats = props => {
         </div>
         <div>
           <Typography className={classes.title}>Size:</Typography>
-          <Typography className={classes.value} />
+          <Typography className={classes.value}>{fileSize}</Typography>
         </div>
         <div>
           <Typography className={classes.title}>User:</Typography>

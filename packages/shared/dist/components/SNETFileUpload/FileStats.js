@@ -21,7 +21,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var FileStats = function FileStats(props) {
   var uploadSuccess = props.uploadSuccess,
-      show = props.show;
+      show = props.show,
+      fileName = props.fileName,
+      fileSize = props.fileSize;
   var classes = (0, _styles.useStyles)();
 
   if (!show) {
@@ -40,7 +42,7 @@ var FileStats = function FileStats(props) {
     className: classes.title
   }, "File Name:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileName)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, "Items:"), _react.default.createElement(_Typography.default, {
     className: classes.value
@@ -52,7 +54,7 @@ var FileStats = function FileStats(props) {
     className: classes.title
   }, "Size:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileSize)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, "User:"), _react.default.createElement(_Typography.default, {
     className: classes.value
