@@ -46,7 +46,7 @@ const CardGroup = () => {
         </Link>
       </Grid>
       <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
-        <ServiceStatusDetails status={service.state} groups={service.groups} />
+        <ServiceStatusDetails status={service.state.state} groups={service.groups} />
       </Grid>
     </Grid>
   ));

@@ -14,8 +14,8 @@ const Actions = () => {
   const { orgUuid, serviceUuid } = useParams();
   const dispatch = useDispatch();
 
-  const handleFinishLater = () => {
-    // TODO handleFinishLater
+  const handleFinishLater = async () => {
+    await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
   };
 
   const handleBack = () => {
@@ -25,7 +25,6 @@ const Actions = () => {
   const handleContinue = async () => {
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
     history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
-    // TODO handleContinue
   };
 
   return (

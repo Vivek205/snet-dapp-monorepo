@@ -1,16 +1,18 @@
 import { aiServiceListActions } from "../actionCreators";
 
+export const defaultPagination = {
+  q: "",
+  limit: 12,
+  offset: 0,
+  s: "display_name",
+  sort_by: "",
+  order_by: "",
+  filters: [],
+};
+
 const initialState = {
   data: [],
-  pagination: {
-    q: "",
-    limit: 12,
-    offset: 0,
-    s: "display_name",
-    sort_by: "",
-    order_by: "",
-    filters: [],
-  },
+  pagination: defaultPagination,
   totalCount: 0,
 };
 
