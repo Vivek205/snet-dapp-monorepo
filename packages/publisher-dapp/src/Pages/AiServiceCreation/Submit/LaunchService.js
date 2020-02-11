@@ -94,7 +94,7 @@ const LaunchService = ({ classes }) => {
           <SNETButton
             color="primary"
             variant="contained"
-            disabled={serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING}
+            disabled={serviceDetails.serviceState.state !== serviceCreationStatus.APPROVED}
             onClick={handlePublishToBlockchain}
             children="Continue to Launch"
           />
