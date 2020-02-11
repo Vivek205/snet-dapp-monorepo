@@ -388,3 +388,29 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
     throw error;
   }
 };
+
+const uploadFileAPI = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.UTILITY.name;
+  const apiPath = APIPaths.UPLOAD_FILE;
+  const additionalHeaders = { "Content-Type": contentType };
+  const body = fileBinaryData;
+  const queryParams = { type: assetType, org_uuid: orgUuid, service_uuid: serviceUuid };
+  const apiOptions = initializeAPIOptions(token, body, queryParams, additionalHeaders);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const uploadFile = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.UPLOAD_FILE));
+    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBinaryData, contentType, orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
