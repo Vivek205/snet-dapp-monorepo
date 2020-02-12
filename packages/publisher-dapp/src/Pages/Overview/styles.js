@@ -26,7 +26,7 @@ export const useStyles = MUITheme => ({
   checkCircleIcon: {
     width: 20,
     marginRight: 16,
-    color: MUITheme.palette.success,
+    color: MUITheme.palette.success.main,
   },
   features: {
     padding: "40px 60px !important",

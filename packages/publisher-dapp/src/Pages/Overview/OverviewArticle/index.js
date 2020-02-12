@@ -22,7 +22,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
       lg={12}
       className={`${classes.overviewArticleContainer} ${rightAlign ? classes.reverseDirection : null}`}
     >
-      <Grid item xs={12} sm={12} md={12} lg={7} className={classes.overviewArticleContent}>
+      <Grid item xs={12} sm={12} md={12} lg={6} className={classes.overviewArticleContent}>
         <Typography variant="h2">{title}</Typography>
         {description ? <Typography className={classes.description}>{description}</Typography> : null}
         {list ? (
@@ -41,7 +41,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
           <StyledButton btnText={btnDetails.text} type={btnDetails.type} />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={5}>
+      <Grid item xs={12} sm={12} md={12} lg={6}>
         <img src={media} alt="media" />
       </Grid>
     </Grid>
