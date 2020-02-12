@@ -33,8 +33,15 @@ export const useStyles = MUITheme => ({
     },
     [MUITheme.breakpoints.down("xs")]: { marginBottom: 20 },
   },
+  description: {
+    paddingTop: 30,
+    color: MUITheme.palette.text.primary,
+    fontSize: 18,
+    fontWeight: 300,
+    lineHeight: "26px",
+  },
   topSectionMedia: {
-    "& img": { width: 250 },
+    "& img": { width: 194 },
     [MUITheme.breakpoints.down("xs")]: { textAlign: "center" },
   },
   invitedAndAcceptedList: {
