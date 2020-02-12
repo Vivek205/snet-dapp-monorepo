@@ -1,5 +1,6 @@
 export const useStyles = MUITheme => ({
   launchServiceContainer: {
+    boxSizing: "border-box",
     width: 845,
     margin: "48px auto 0",
     [MUITheme.breakpoints.down("sm")]: {
@@ -46,6 +47,7 @@ export const useStyles = MUITheme => ({
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.grey,
     "& > div": {
+      paddingRight: 10,
       "& > div": { display: "flex" },
     },
     "& div": {

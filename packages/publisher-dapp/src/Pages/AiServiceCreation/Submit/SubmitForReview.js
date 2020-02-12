@@ -17,6 +17,7 @@ const selectState = state => ({ serviceDetails: state.aiServiceDetails });
 
 const SubmitForReview = ({ classes }) => {
   const [MMAddress, setMMAddress] = useState(undefined);
+  const [disabledTextfield, setDisabledTextField] = useState(true);
   const { serviceDetails } = useSelector(selectState);
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
@@ -25,6 +26,7 @@ const SubmitForReview = ({ classes }) => {
     const sdk = await initSDK();
     if (sdk.account.address) {
       setMMAddress(sdk.account.address);
+      setDisabledTextField(false);
     }
   };
 
@@ -53,8 +55,8 @@ const SubmitForReview = ({ classes }) => {
             name="Metamask Address"
             value={MMAddress}
             icon
-            label="Metamask Address disabled"
-            disabled
+            label="Metamask Address"
+            disabled={disabledTextfield}
             description="Click on connect Metamask to capture the ethereum account address from your Metamask wallet"
           />
           <div className={classes.commentField}>
