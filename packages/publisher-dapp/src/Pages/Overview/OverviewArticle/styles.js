@@ -1,10 +1,10 @@
 export const useStyles = MUITheme => ({
   overviewArticleContainer: {
-    padding: "40px 60px 68px !important",
+    padding: "40px 60px 68px",
     display: "flex",
     background: MUITheme.palette.background.mainContent,
     [MUITheme.breakpoints.down("sm")]: {
-      padding: "40px 20px !important",
+      padding: "40px 20px",
       flexDirection: "column",
     },
   },
@@ -22,16 +22,21 @@ export const useStyles = MUITheme => ({
     lineHeight: "28px",
   },
   reverseDirection: {
+    padding: "67px 60px 61px",
     flexDirection: "row-reverse",
     backgroundColor: MUITheme.palette.background.white,
     "& > div:first-of-type": {
       marginRight: 0,
       marginLeft: 24,
     },
+    [MUITheme.breakpoints.down("sm")]: {
+      padding: "40px 20px",
+      flexDirection: "column",
+    },
   },
   checkCircleIcon: {
     width: 24,
     marginRight: 16,
-    color: MUITheme.palette.success,
+    color: MUITheme.palette.success.main,
   },
 });
