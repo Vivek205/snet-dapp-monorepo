@@ -126,7 +126,11 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
 const generateSaveServicePayload = serviceDetails => {
   const generateEndpointsPayload = endpoints => endpoints.map(endpointValue => ({ endpoint: endpointValue }));
   const generatePricingpayload = pricing =>
-    pricing.map(price => ({ default: price.default, price_model: price.priceModel, price_in_cogs: price.priceInCogs }));
+    pricing.map(price => ({
+      default: price.default,
+      price_model: price.priceModel,
+      price_in_cogs: Number(price.priceInCogs),
+    }));
 
   const generateGroupsPayload = () =>
     serviceDetails.groups
