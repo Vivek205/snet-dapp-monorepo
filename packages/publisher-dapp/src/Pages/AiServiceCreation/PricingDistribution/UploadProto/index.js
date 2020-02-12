@@ -39,10 +39,9 @@ const UploadProto = () => {
           const { name, size, type } = acceptedFiles[0];
           setSelectedFile({ name, size, type });
           const binaryFile = await getFileBinary(acceptedFiles[0]);
-          const data = await dispatch(
+          const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, binaryFile, type, orgUuid, serviceUuid)
           );
-          const { url } = data;
           dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
@@ -53,7 +52,7 @@ const UploadProto = () => {
     [dispatch, orgUuid, serviceUuid]
   );
 
-  const acceptedFileTypes = "image/*";
+  const acceptedFileTypes = "application/zip";
 
   return (
     <Fragment>
