@@ -11,7 +11,7 @@ import { useStyles } from "../styles";
 import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 
-const LaunchTable = ({ classes }) => {
+const LaunchTable = ({ classes, handlePublishToBlockchain }) => {
   return (
     <Fragment>
       <Grid container className={classes.table}>
@@ -52,7 +52,7 @@ const LaunchTable = ({ classes }) => {
           type="warning"
           message="Final launch will require you to be logged into your Metamask and some ETH gas cost to activate the service."
         />
-        <SNETButton color="primary" variant="contained" children="Launch Service" />
+        <SNETButton color="primary" variant="contained" children="Launch Service" onClick={handlePublishToBlockchain} />
       </div>
     </Fragment>
   );
