@@ -12,7 +12,11 @@ const selectState = state => ({ serviceDetails: state.aiServiceDetails });
 const Submit = () => {
   const { serviceDetails } = useSelector(selectState);
 
-  if (serviceDetails.serviceState.state === serviceCreationStatus.NOT_STARTED) {
+  const allowSubmitForReview =
+    serviceDetails.serviceState.state === serviceCreationStatus.NOT_STARTED ||
+    serviceDetails.serviceState.state === serviceCreationStatus.DRAFT;
+
+  if (allowSubmitForReview) {
     return <SubmitForReview />;
   }
 
