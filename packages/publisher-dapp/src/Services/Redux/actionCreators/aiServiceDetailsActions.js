@@ -23,6 +23,7 @@ export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
 export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
+export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -68,6 +69,8 @@ const setAiServiceFreeCallSignerAddress = address => ({
 export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
 
 export const setServiceDetailsProtoUrl = url => ({ type: SET_SERVICE_DETAILS_PROTO_URL, payload: url });
+
+export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL, payload: url });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -149,6 +152,10 @@ const generateSaveServicePayload = serviceDetails => {
       proto_files: {
         url: serviceDetails.assets.protoFiles.url,
         ipfs_hash: serviceDetails.assets.protoFiles.ipfsHash,
+      },
+      hero_image: {
+        url: serviceDetails.assets.heroImage.url,
+        ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
@@ -250,18 +257,22 @@ const parseServiceDetails = (data, serviceUuid) => {
       type: "",
     },
     assets: {
-      heroImage: {
-        url: data.assets.proto_files.url,
-        ipfsHash: "",
-      },
+      heroImage: data.assets.hero_image
+        ? {
+            url: data.assets.hero_image.url,
+            ipfsHash: "",
+          }
+        : {},
       demoFiles: {
         url: "",
         ipfsHash: "",
       },
-      protoFiles: {
-        url: data.assets.proto_files.url,
-        ipfsHash: data.assets.proto_files.ipfs_hash,
-      },
+      protoFiles: data.assets.proto_files
+        ? {
+            url: data.assets.proto_files.url,
+            ipfsHash: data.assets.proto_files.ipfs_hash,
+          }
+        : {},
     },
     contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
