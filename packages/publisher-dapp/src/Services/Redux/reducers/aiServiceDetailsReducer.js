@@ -5,7 +5,7 @@ import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant
 
 export const defaultGroups = [
   {
-    name: "defaultGroup",
+    name: "default_group",
     id: "",
     pricing: [
       {

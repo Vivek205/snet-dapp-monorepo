@@ -109,11 +109,11 @@ const payloadForSubmit = organization => {
     id: group.id,
     payment_address: group.paymentAddress,
     payment_config: {
-      payment_expiration_threshold: group.paymentConfig.paymentExpirationThreshold,
+      payment_expiration_threshold: Number(group.paymentConfig.paymentExpirationThreshold),
       payment_channel_storage_type: group.paymentConfig.paymentChannelStorageType,
       payment_channel_storage_client: {
-        connection_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
-        request_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        connection_timeout: `${group.paymentConfig.paymentChannelStorageClient.connectionTimeout}s`,
+        request_timeout: `${group.paymentConfig.paymentChannelStorageClient.requestTimeout}s`,
         endpoints: group.paymentConfig.paymentChannelStorageClient.endpoints,
       },
     },
@@ -203,8 +203,8 @@ export const getStatus = async dispatch => {
         paymentExpirationThreshold: group.payment_config.payment_expiration_threshold,
         paymentChannelStorageType: group.payment_config.payment_channel_storage_type,
         paymentChannelStorageClient: {
-          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
-          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
+          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
           endpoints: group.payment_config.payment_channel_storage_client.endpoints,
         },
       },

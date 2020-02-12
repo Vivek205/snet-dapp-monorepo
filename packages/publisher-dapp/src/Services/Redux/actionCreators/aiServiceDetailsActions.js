@@ -124,7 +124,6 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
 };
 
 const generateSaveServicePayload = serviceDetails => {
-  const generateEndpointsPayload = endpoints => endpoints.map(endpointValue => ({ endpoint: endpointValue }));
   const generatePricingpayload = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -144,7 +143,7 @@ const generateSaveServicePayload = serviceDetails => {
           free_calls: group.freeCallsAllowed,
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
-          endpoints: generateEndpointsPayload(group.endpoints),
+          endpoints: group.endpoints,
         };
       })
       .filter(el => el !== undefined);
@@ -229,7 +228,6 @@ export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
 };
 
 const parseServiceDetails = (data, serviceUuid) => {
-  const parseEndpoints = endpoints => endpoints.map(endpointValue => endpointValue.endpoint);
   const parsePricing = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -244,7 +242,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
-      endpoints: parseEndpoints(group.endpoints),
+      endpoints: group.endpoints,
       freeCallsAllowed: group.free_calls,
     }));
   };
