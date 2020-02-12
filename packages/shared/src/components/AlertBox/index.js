@@ -20,15 +20,24 @@ const backgroundColor = {
   info: alertTypes.INFO,
 };
 
-const AlertBox = ({ classes, message, type, link }) => {
-  if (message) {
+const AlertBox = ({ classes, message, type, link, icon: Icon, header }) => {
+  if (Icon) {
     return (
-      <p className={clsx(classes.messageBox, classes[backgroundColor[type]])}>
-        {message} <AlertLink link={link} />
-      </p>
+      <div className={clsx(classes.alertBoxContainer, classes[backgroundColor[type]])}>
+        <Icon />
+        <div className={classes.content}>
+          <span>{header}</span>
+          <p>{message}</p>
+        </div>
+      </div>
     );
   }
-  return null;
+
+  return (
+    <p className={clsx(classes.messageBox, classes[backgroundColor[type]])}>
+      {message} <AlertLink link={link} />
+    </p>
+  );
 };
 
 AlertBox.propTypes = {

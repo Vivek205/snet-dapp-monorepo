@@ -7,8 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _Toolbar = _interopRequireDefault(require("@material-ui/core/Toolbar"));
-
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _AppBar = _interopRequireDefault(require("@material-ui/core/AppBar"));
@@ -30,7 +28,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
       color = _ref.color,
-      navbar = _ref.navbar,
       NavigationBar = _ref.NavigationBar,
       LoggedInActions = _ref.LoggedInActions,
       LoggedOutActions = _ref.LoggedOutActions,

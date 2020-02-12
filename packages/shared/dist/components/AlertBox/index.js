@@ -37,17 +37,23 @@ var AlertBox = function AlertBox(_ref) {
   var classes = _ref.classes,
       message = _ref.message,
       type = _ref.type,
-      link = _ref.link;
+      link = _ref.link,
+      Icon = _ref.icon,
+      header = _ref.header;
 
-  if (message) {
-    return _react.default.createElement("p", {
-      className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
-    }, message, " ", _react.default.createElement(_AlertLink.default, {
-      link: link
-    }));
+  if (Icon) {
+    return _react.default.createElement("div", {
+      className: (0, _clsx.default)(classes.alertBoxContainer, classes[backgroundColor[type]])
+    }, _react.default.createElement(Icon, null), _react.default.createElement("div", {
+      className: classes.content
+    }, _react.default.createElement("span", null, header), _react.default.createElement("p", null, message)));
   }
 
-  return null;
+  return _react.default.createElement("p", {
+    className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
+  }, message, " ", _react.default.createElement(_AlertLink.default, {
+    link: link
+  }));
 };
 
 AlertBox.propTypes = {

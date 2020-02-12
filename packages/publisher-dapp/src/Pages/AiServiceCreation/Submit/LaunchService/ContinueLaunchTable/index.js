@@ -65,7 +65,12 @@ const ContinueLaunchTable = ({ classes, serviceDetails, handlePublishToBlockchai
         ))}
       </Grid>
       <div className={classes.alertBoxBtnContainer}>
-        <AlertBox type="warning" message="Review in Progress" />
+        <AlertBox
+          type="warning"
+          message="Please check back here for results"
+          header="Review in progress..."
+          icon={HourGlassIcon}
+        />
         <SNETButton
           color="primary"
           variant="contained"

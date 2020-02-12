@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import DoneIcon from "@material-ui/icons/Done";
 import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 
 import { serviceData } from "../../../constant";
 import { useStyles } from "../styles";
@@ -51,6 +52,7 @@ const LaunchTable = ({ classes }) => {
         <AlertBox
           type="warning"
           message="Final launch will require you to be logged into your Metamask and some ETH gas cost to activate the service."
+          icon={ReportProblemIcon}
         />
         <SNETButton color="primary" variant="contained" children="Launch Service" />
       </div>
