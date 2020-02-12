@@ -1,8 +1,8 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
@@ -14,9 +14,19 @@ import { getFileBinary } from "shared/dist/utils/FileUpload";
 const UploadProto = () => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
+  const serviceDetails = useSelector(state => state.aiServiceDetails);
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
+
+  useEffect(() => {
+    if (!alert.message && Boolean(serviceDetails.assets.protoFiles.url)) {
+      setAlert({
+        type: alertTypes.SUCCESS,
+        message: "File have been uploaded. You can download your files on clicking the download button",
+      });
+    }
+  }, [serviceDetails.assets.protoFiles.url, alert.message]);
 
   const handleDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
@@ -29,9 +39,11 @@ const UploadProto = () => {
           const { name, size, type } = acceptedFiles[0];
           setSelectedFile({ name, size, type });
           const binaryFile = await getFileBinary(acceptedFiles[0]);
-          await dispatch(
+          const data = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, binaryFile, type, orgUuid, serviceUuid)
           );
+          const { url } = data;
+          dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
           setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
@@ -57,7 +69,9 @@ const UploadProto = () => {
         showFileDetails
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
+        fileDownloadURL={serviceDetails.assets.protoFiles.url}
       />
+
       <AlertBox type={alert.type} message={alert.message} />
     </Fragment>
   );

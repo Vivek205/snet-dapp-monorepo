@@ -23,7 +23,8 @@ var FileStats = function FileStats(props) {
   var uploadSuccess = props.uploadSuccess,
       show = props.show,
       fileName = props.fileName,
-      fileSize = props.fileSize;
+      fileSize = props.fileSize,
+      fileDownloadURL = props.fileDownloadURL;
   var classes = (0, _styles.useStyles)();
 
   if (!show) {
@@ -60,11 +61,17 @@ var FileStats = function FileStats(props) {
     className: classes.value
   })), _react.default.createElement("div", {
     className: classes.uploadBtns
+  }, _react.default.createElement("a", {
+    href: fileDownloadURL,
+    download: true,
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
   }, _react.default.createElement(_SNETButton.default, {
     children: "download files",
     color: "primary",
     variant: "text"
-  }), _react.default.createElement(_SNETButton.default, {
+  })), _react.default.createElement(_SNETButton.default, {
     children: "delete files",
     color: "red",
     variant: "text"
@@ -73,7 +80,10 @@ var FileStats = function FileStats(props) {
 
 FileStats.prototypes = {
   show: _propTypes.default.bool,
-  uploadSuccess: _propTypes.default.func
+  uploadSuccess: _propTypes.default.func,
+  fileName: _propTypes.default.func,
+  fileSize: _propTypes.default.number,
+  fileDownloadURL: _propTypes.default.string
 };
 var _default = FileStats;
 exports.default = _default;

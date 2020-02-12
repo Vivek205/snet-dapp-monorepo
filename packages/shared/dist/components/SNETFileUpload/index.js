@@ -36,7 +36,8 @@ var SNETFileUpload = function SNETFileUpload(props) {
       onDropRejected = props.onDropRejected,
       showFileDetails = props.showFileDetails,
       fileName = props.fileName,
-      fileSize = props.fileSize;
+      fileSize = props.fileSize,
+      fileDownloadURL = props.fileDownloadURL;
   var classes = (0, _styles.useStyles)(); // eslint-disable-next-line no-unused-vars
 
   var _useDropzone = (0, _reactDropzone.useDropzone)({
@@ -71,7 +72,8 @@ var SNETFileUpload = function SNETFileUpload(props) {
   }, _react.default.createElement(_FileStats.default, {
     show: showFileDetails,
     fileName: fileName,
-    fileSize: fileSize
+    fileSize: fileSize,
+    fileDownloadURL: fileDownloadURL
   })));
 };
 
@@ -88,7 +90,8 @@ SNETFileUpload.prototypes = {
   onDropRejected: _propTypes.default.func,
   showFileDetails: _propTypes.default.bool,
   fileName: _propTypes.default.string,
-  fileSize: _propTypes.default.string
+  fileSize: _propTypes.default.number,
+  fileDownloadURL: _propTypes.default.string
 };
 var _default = SNETFileUpload;
 exports.default = _default;

@@ -7,7 +7,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const FileStats = props => {
-  const { uploadSuccess, show, fileName, fileSize } = props;
+  const { uploadSuccess, show, fileName, fileSize, fileDownloadURL } = props;
   const classes = useStyles();
 
   if (!show) {
@@ -44,7 +44,9 @@ const FileStats = props => {
           <Typography className={classes.value} />
         </div>
         <div className={classes.uploadBtns}>
-          <SNETButton children="download files" color="primary" variant="text" />
+          <a href={fileDownloadURL} download onClick={e => e.stopPropagation()}>
+            <SNETButton children="download files" color="primary" variant="text" />
+          </a>
           <SNETButton children="delete files" color="red" variant="text" />
         </div>
       </div>
@@ -55,6 +57,9 @@ const FileStats = props => {
 FileStats.prototypes = {
   show: PropTypes.bool,
   uploadSuccess: PropTypes.func,
+  fileName: PropTypes.func,
+  fileSize: PropTypes.number,
+  fileDownloadURL: PropTypes.string,
 };
 
 export default FileStats;

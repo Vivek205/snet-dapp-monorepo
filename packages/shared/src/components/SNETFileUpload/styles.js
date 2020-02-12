@@ -84,6 +84,9 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   uploadBtns: {
     marginTop: 20,
+    "& a": {
+      textDecoration: "none",
+    },
     "& button": {
       padding: 0,
       "&:last-of-type": { marginLeft: 40 },
