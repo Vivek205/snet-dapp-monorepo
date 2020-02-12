@@ -6,6 +6,9 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
 import { useSelector, useDispatch } from "react-redux";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
+// import validator from "shared/dist/utils/validator";
+// import { servicePricingValidationConstraints } from "../validationConstraints";
+// import validationError from "shared/dist/utils/validationError";
 
 const Actions = () => {
   const classes = useStyles();
@@ -23,6 +26,10 @@ const Actions = () => {
   };
 
   const handleContinue = async () => {
+    // const isNotValid = validator({}, servicePricingValidationConstraints);
+    // if (isNotValid[0]) {
+    //   throw validationError(isNotValid[0]);
+    // }
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
     history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
   };

@@ -94,6 +94,12 @@ const serviceDetailsReducer = (state = initialState, action) => {
           serviceProvider: action.payload,
         },
       };
+    case aiServiceDetailsActions.SET_AI_SERVICE_STATE_STATE:
+      return { ...state, serviceState: { ...state.serviceState, state: action.payload } };
+    case aiServiceDetailsActions.SET_SERVICE_DETAILS_PROTO_URL:
+      return { ...state, assets: { ...state.assets, protoFiles: { ...state.assets.protoFiles, url: action.payload } } };
+    case aiServiceDetailsActions.SET_SERVICE_HERO_IMAGE_URL:
+      return { ...state, assets: { ...state.assets, heroImage: { ...state.heroImage, url: action.payload } } };
     default:
       return state;
   }
