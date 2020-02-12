@@ -55,7 +55,7 @@ const LaunchService = ({ classes }) => {
           few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
           needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
         </Typography>
-        <LaunchTable />
+        <LaunchTable handlePublishToBlockchain={handlePublishToBlockchain} />
       </Grid>
       <MessageToReviewers />
     </div>

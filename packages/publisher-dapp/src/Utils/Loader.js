@@ -92,4 +92,8 @@ export const LoaderContent = {
     title: "Saving service transaction",
     content: "Just a moment. We are saving the transaction hash",
   },
+  UPLOAD_FILE: {
+    title: "Uploading...",
+    content: "Just a moment. We are uploading the file",
+  },
 };

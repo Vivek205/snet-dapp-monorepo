@@ -21,7 +21,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var FileStats = function FileStats(props) {
   var uploadSuccess = props.uploadSuccess,
-      show = props.show;
+      show = props.show,
+      fileName = props.fileName,
+      fileSize = props.fileSize,
+      fileDownloadURL = props.fileDownloadURL;
   var classes = (0, _styles.useStyles)();
 
   if (!show) {
@@ -40,7 +43,7 @@ var FileStats = function FileStats(props) {
     className: classes.title
   }, "File Name:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileName)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, "Items:"), _react.default.createElement(_Typography.default, {
     className: classes.value
@@ -52,17 +55,23 @@ var FileStats = function FileStats(props) {
     className: classes.title
   }, "Size:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileSize)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, "User:"), _react.default.createElement(_Typography.default, {
     className: classes.value
   })), _react.default.createElement("div", {
     className: classes.uploadBtns
+  }, _react.default.createElement("a", {
+    href: fileDownloadURL,
+    download: true,
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
   }, _react.default.createElement(_SNETButton.default, {
     children: "download files",
     color: "primary",
     variant: "text"
-  }), _react.default.createElement(_SNETButton.default, {
+  })), _react.default.createElement(_SNETButton.default, {
     children: "delete files",
     color: "red",
     variant: "text"
@@ -71,7 +80,10 @@ var FileStats = function FileStats(props) {
 
 FileStats.prototypes = {
   show: _propTypes.default.bool,
-  uploadSuccess: _propTypes.default.func
+  uploadSuccess: _propTypes.default.func,
+  fileName: _propTypes.default.func,
+  fileSize: _propTypes.default.number,
+  fileDownloadURL: _propTypes.default.string
 };
 var _default = FileStats;
 exports.default = _default;

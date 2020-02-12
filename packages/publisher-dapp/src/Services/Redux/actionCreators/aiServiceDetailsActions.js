@@ -24,6 +24,8 @@ export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
 export const SET_AI_SERVICE_MULTIPLE_DETAILS = "SET_AI_SERVICE_MULTIPLE_DETAILS";
 export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 export const SET_AI_SERVICE_STATE_STATE = "SET_AI_SERVICE_STATE_STATE";
+export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
+export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -69,6 +71,10 @@ const setAiServiceFreeCallSignerAddress = address => ({
 export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
 
 const setAiServiceStateState = state => ({ type: SET_AI_SERVICE_STATE_STATE, payload: state });
+
+export const setServiceDetailsProtoUrl = url => ({ type: SET_SERVICE_DETAILS_PROTO_URL, payload: url });
+
+export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL, payload: url });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -146,7 +152,16 @@ const generateSaveServicePayload = serviceDetails => {
     description: serviceDetails.longDescription,
     project_url: serviceDetails.projectURL,
     proto: {},
-    assets: {},
+    assets: {
+      proto_files: {
+        url: serviceDetails.assets.protoFiles.url,
+        ipfs_hash: serviceDetails.assets.protoFiles.ipfsHash,
+      },
+      hero_image: {
+        url: serviceDetails.assets.heroImage.url,
+        ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
+      },
+    },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
@@ -217,11 +232,11 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceModel: price.price_model,
       priceInCogs: price.price_in_cogs,
     }));
-  const parseGroups = () => {
-    if (isEmpty(data.groups)) {
+  const parseGroups = groups => {
+    if (isEmpty(groups)) {
       return defaultGroups;
     }
-    data.groups.map(group => ({
+    return groups.map(group => ({
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
@@ -246,23 +261,27 @@ const parseServiceDetails = (data, serviceUuid) => {
       type: "",
     },
     assets: {
-      heroImage: {
-        url: "",
-        ipfsHash: "",
-      },
+      heroImage: data.assets.hero_image
+        ? {
+            url: data.assets.hero_image.url,
+            ipfsHash: "",
+          }
+        : {},
       demoFiles: {
         url: "",
         ipfsHash: "",
       },
-      protoFiles: {
-        url: "",
-        ipfsHash: "",
-      },
+      protoFiles: data.assets.proto_files
+        ? {
+            url: data.assets.proto_files.url,
+            ipfsHash: data.assets.proto_files.ipfs_hash,
+          }
+        : {},
     },
     contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
     contacts: [],
-    groups: parseGroups(),
+    groups: parseGroups(data.groups),
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
   };
@@ -388,6 +407,32 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
           reject(error);
         });
     });
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const uploadFileAPI = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.UTILITY.name;
+  const apiPath = APIPaths.UPLOAD_FILE;
+  const additionalHeaders = { "content-type": contentType };
+  const body = fileBinaryData;
+  const queryParams = { type: assetType, org_uuid: orgUuid, service_uuid: serviceUuid };
+  const apiOptions = initializeAPIOptions(token, body, queryParams, additionalHeaders);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const uploadFile = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.UPLOAD_FILE));
+    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBinaryData, contentType, orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

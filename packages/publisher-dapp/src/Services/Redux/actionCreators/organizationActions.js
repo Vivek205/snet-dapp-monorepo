@@ -11,6 +11,7 @@ import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../..
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -306,7 +307,7 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 
-export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
+export const createAndSaveTransaction = (organization, ipfsHash, history) => async dispatch => {
   try {
     const sdk = await initSDK();
     const orgId = organization.id;
@@ -324,6 +325,7 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+          history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           dispatch(loaderActions.stopAppLoader());
           await method.off();
         })
