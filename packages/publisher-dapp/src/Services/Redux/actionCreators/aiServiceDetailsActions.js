@@ -413,21 +413,18 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
   }
 };
 
-const uploadFileAPI = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+const uploadFileAPI = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.UTILITY.name;
-  const apiPath = APIPaths.UPLOAD_FILE;
-  const additionalHeaders = { "content-type": contentType };
-  const body = fileBinaryData;
-  const queryParams = { type: assetType, org_uuid: orgUuid, service_uuid: serviceUuid };
-  const apiOptions = initializeAPIOptions(token, body, queryParams, additionalHeaders);
-  return await API.post(apiName, apiPath, apiOptions);
+  const url = `${APIEndpoints.UTILITY.endpoint}${APIPaths.UPLOAD_FILE}?type=${assetType}&org_uuid=${orgUuid}&service_uuid=${serviceUuid}`;
+  const res = await fetch(url, { method: "POST", headers: { authorization: token }, body: fileBlob });
+  const response = await res.json();
+  return response;
 };
 
-export const uploadFile = (assetType, fileBinaryData, contentType, orgUuid, serviceUuid) => async dispatch => {
+export const uploadFile = (assetType, fileBlob, contentType, orgUuid, serviceUuid) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.UPLOAD_FILE));
-    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBinaryData, contentType, orgUuid, serviceUuid));
+    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBlob, contentType, orgUuid, serviceUuid));
     if (error.code) {
       throw new APIError(error.message);
     }

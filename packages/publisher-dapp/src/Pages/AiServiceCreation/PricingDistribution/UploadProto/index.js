@@ -9,7 +9,6 @@ import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
-import { getFileBinary } from "shared/dist/utils/FileUpload";
 
 const UploadProto = () => {
   const classes = useStyles();
@@ -36,11 +35,12 @@ const UploadProto = () => {
       }
       if (!isEmpty(acceptedFiles)) {
         try {
-          const { name, size, type } = acceptedFiles[0];
+          const fileBlob = acceptedFiles[0];
+          const { name, size, type } = fileBlob;
           setSelectedFile({ name, size, type });
-          const binaryFile = await getFileBinary(acceptedFiles[0]);
+
           const { url } = await dispatch(
-            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, binaryFile, type, orgUuid, serviceUuid)
+            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, type, orgUuid, serviceUuid)
           );
           dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });

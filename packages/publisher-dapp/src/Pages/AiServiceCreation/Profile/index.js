@@ -25,6 +25,7 @@ import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
 import { assetTypes } from "../../../Utils/FileUpload";
+import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
@@ -118,10 +119,12 @@ const Profile = ({ classes, _location }) => {
     setServiceTouchFlag();
   };
 
-  const handleImageChange = async (data, mimeType) => {
+  const handleImageChange = async (data, mimeType, _encoding, filename) => {
+    const arrayBuffer = base64ToArrayBuffer(data);
+    const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
     setServiceTouchFlag();
     const { url } = await dispatch(
-      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, data, mimeType, orgUuid, serviceDetails.uuid)
+      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, mimeType, orgUuid, serviceDetails.uuid)
     );
     dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
   };
@@ -242,6 +245,7 @@ const Profile = ({ classes, _location }) => {
                   outputImageType="url"
                   disableResetButton={false}
                   disableDownloadButton={true}
+                  // returnByteArray
                 />
               </div>
               <div className={classes.profileImgContent}>

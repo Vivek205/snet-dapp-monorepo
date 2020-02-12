@@ -12,16 +12,16 @@ var useStyles = function useStyles(MUITheme) {
       borderWidth: 1,
       borderStyle: "solid",
       borderRadius: 4,
-      display: 'flex',
-      alignItems: 'center'
+      display: "flex",
+      alignItems: "center"
     },
     content: {
-      textAlign: 'left',
-      '& p': {
-        margin: '0 !important',
+      textAlign: "left",
+      "& p": {
+        margin: "0 !important",
         color: MUITheme.palette.text.primary,
         fontSize: 14,
-        lineHeight: '18px'
+        lineHeight: "18px"
       }
     },
     messageBox: {
@@ -52,9 +52,9 @@ var useStyles = function useStyles(MUITheme) {
         color: MUITheme.palette.infoBoxLink,
         fontWeight: 600
       },
-      '& svg': {
+      "& svg": {
         paddingRight: 16,
-        color: '#FFC200 '
+        color: "#FFC200 "
       }
     },
     info: {
