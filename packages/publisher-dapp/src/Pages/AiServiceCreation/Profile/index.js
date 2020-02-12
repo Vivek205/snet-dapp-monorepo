@@ -21,12 +21,10 @@ import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { keyCodes } from "shared/dist/utils/keyCodes";
-//import { mimeTypeToFileType } from "shared/dist/utils/image";
-import { imgSrcInBase64 } from "shared/dist/utils/image";
-
 import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
+import { assetTypes } from "../../../Utils/FileUpload";
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
@@ -37,12 +35,6 @@ const Profile = ({ classes, _location }) => {
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
   const [alert, setAlert] = useState({});
-
-  // TODO: Get from the defaults
-  const [mimeType, setMimeType] = useState("");
-  //const [url, SetURL] = useState(undefined);
-  const url = "";
-  const [data, setData] = useState("");
 
   const setServiceTouchFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
@@ -126,19 +118,12 @@ const Profile = ({ classes, _location }) => {
     setServiceTouchFlag();
   };
 
-  const handleImageChange = (data, mimeType) => {
-    //const fileType = mimeTypeToFileType(mimeType);
-    // Call API to Store the Image
-    setData(data);
-    setMimeType(mimeType);
+  const handleImageChange = async (data, mimeType) => {
     setServiceTouchFlag();
-  };
-
-  const imgSource = () => {
-    if (url) {
-      return url;
-    }
-    return Boolean(data) ? imgSrcInBase64(mimeType, data) : "";
+    const { url } = await dispatch(
+      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, data, mimeType, orgUuid, serviceDetails.uuid)
+    );
+    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
   };
 
   return (
@@ -249,11 +234,11 @@ const Profile = ({ classes, _location }) => {
                   disableUrlTab
                   imageName="service-hero-image"
                   imageDataFunc={handleImageChange}
-                  outputImage={imgSource()}
+                  outputImage={serviceDetails.assets.heroImage.url}
                   outputImageName="service_hero_image"
-                  outputFormat={mimeType}
+                  outputFormat="image/*"
                   disableComparisonTab
-                  disableInputTab={Boolean(data) || Boolean(url)}
+                  disableInputTab={Boolean(serviceDetails.assets.heroImage.url)}
                   outputImageType="url"
                   disableResetButton={false}
                   disableDownloadButton={true}
@@ -272,11 +257,11 @@ const Profile = ({ classes, _location }) => {
             </div>
             <div className={classes.images}>
               <div className={classes.largeImg}>
-                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Large Size Image" />
+                <img src={serviceDetails.assets.heroImage.url || DummyCardImg} alt="Large Size" />
                 <Typography className={classes.imgDimensionDetails}>302 x 168 | 32-bit PNG or JPG </Typography>
               </div>
               <div className={classes.smallerImg}>
-                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Small Size Image" />
+                <img src={serviceDetails.assets.heroImage.url || DummyCardImg} alt="Small Size" />
                 <Typography className={classes.imgDimensionDetails}>207 x 115 | 32-bit PNG or JPG </Typography>
               </div>
             </div>
