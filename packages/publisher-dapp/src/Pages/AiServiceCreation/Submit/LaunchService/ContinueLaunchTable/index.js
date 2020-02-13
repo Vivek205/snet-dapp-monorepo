@@ -9,7 +9,7 @@ import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { serviceCreationStatus, serviceData } from "../../../constant";
 import { useStyles } from "../styles";
 
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 
 const ContinueLaunchTable = ({ classes, serviceDetails, handlePublishToBlockchain }) => {
@@ -66,7 +66,7 @@ const ContinueLaunchTable = ({ classes, serviceDetails, handlePublishToBlockchai
       </Grid>
       <div className={classes.alertBoxBtnContainer}>
         <AlertBox
-          type="warning"
+          type={alertTypes.WARNING}
           message="Please check back here for results"
           header="Review in progress..."
           icon={HourGlassIcon}

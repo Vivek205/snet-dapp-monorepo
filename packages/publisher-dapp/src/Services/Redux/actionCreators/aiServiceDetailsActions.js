@@ -11,6 +11,7 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -383,7 +384,13 @@ const saveTransaction = (orgUuid, serviceUuid, hash, ownerAddress) => async disp
   }
 };
 
-export const publishToBlockchain = (organization, serviceDetails, serviceMetadataURI, tags) => async dispatch => {
+export const publishToBlockchain = (
+  organization,
+  serviceDetails,
+  serviceMetadataURI,
+  tags,
+  history
+) => async dispatch => {
   const orgId = organization.id;
   const serviceId = serviceDetails.id;
   try {
@@ -398,7 +405,9 @@ export const publishToBlockchain = (organization, serviceDetails, serviceMetadat
           dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
+          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           dispatch(loaderActions.stopAppLoader());
+
           resolve();
           await method.off();
         })
