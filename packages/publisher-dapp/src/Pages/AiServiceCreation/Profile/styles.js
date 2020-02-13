@@ -114,4 +114,5 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
   },
   chip: { marginLeft: 10 },
+  alertBoxContainer: { paddingTop: 25 },
 });
