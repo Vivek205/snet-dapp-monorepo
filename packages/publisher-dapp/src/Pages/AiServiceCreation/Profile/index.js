@@ -197,7 +197,7 @@ const Profile = ({ classes, _location }) => {
             description="Enter all the TAGs separated by comma and press enter"
             value={tags}
             onKeyUp={handleAddTags}
-            onChange={e => setTags(e.target.value)}
+            onChange={e => setTags(e.target.value.toLowerCase())}
           />
           <Card className={classes.card}>
             {serviceDetails.tags.map(tag => (
