@@ -32,4 +32,12 @@ export const useStyles = MUITheme => ({
       },
     },
   },
+  topSectionContainer: { marginTop: 27 },
+  groupInfoContainer: {
+    padding: "31px 0 0",
+    borderTopColor: MUITheme.palette.text.disabled,
+    borderTopStyle: "solid",
+    borderTopWidth: 1,
+    marginTop: 30,
+  },
 });
