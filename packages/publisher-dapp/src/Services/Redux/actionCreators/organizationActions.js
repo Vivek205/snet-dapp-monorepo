@@ -325,7 +325,7 @@ export const createAndSaveTransaction = (organization, ipfsHash, history) => asy
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
-          history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           dispatch(loaderActions.stopAppLoader());
           await method.off();
         })

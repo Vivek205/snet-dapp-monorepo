@@ -160,7 +160,7 @@ const Profile = ({ classes, _location }) => {
             onChange={handleControlChange}
             onBlur={validateServiceId}
           />
-          <div>
+          <div className={classes.alertBoxContainer}>
             <AlertText
               type={serviceDetails.availability === "AVAILABLE" ? alertTypes.INFO : alertTypes.ERROR}
               message={!isEmpty(serviceDetails.id) ? `Service Id is ${serviceDetails.availability}` : ""}
