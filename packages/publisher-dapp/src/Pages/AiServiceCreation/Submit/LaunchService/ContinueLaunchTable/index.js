@@ -27,35 +27,18 @@ const ContinueLaunchTable = ({ classes, serviceDetails, handlePublishToBlockchai
             <Typography className={classes.th}>actions</Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableData}>
-          <Grid item xs={12} sm={3} md={4} lg={4}>
-            <Typography className={classes.mobileTH}>status:</Typography>
-            <div>
-              <DoneIcon className={classes.tickIcon} />
-              <Typography className={classes.td}>Submitted For Review</Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={7} md={6} lg={6}>
-            <Typography className={classes.mobileTH}>feedback:</Typography>
-            <Typography className={classes.td}>Submitted Mar 15, 2019 at 5:45PM by Greg Kuebler</Typography>
-          </Grid>
-          <Grid item xs={12} sm={1} md={2} lg={2} className={classes.actionsColumn}>
-            <Typography className={classes.mobileTH}>actions:</Typography>
-            <ArrowDownIcon className={classes.downCaretIcon} />
-          </Grid>
-        </Grid>
         {serviceData.map(data => (
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableData} key={data.status}>
             <Grid item xs={12} sm={3} md={4} lg={4}>
               <Typography className={classes.mobileTH}>status:</Typography>
               <div>
-                <HourGlassIcon className={classes.hourglassIcon} />
+                <DoneIcon className={classes.tickIcon} />
                 <Typography className={classes.td}>{data.status}</Typography>
               </div>
             </Grid>
             <Grid item xs={12} sm={7} md={6} lg={6}>
               <Typography className={classes.mobileTH}>feedback:</Typography>
-              <Typography className={classes.td}>-</Typography>
+              <Typography className={classes.td}>{data.feedback}</Typography>
             </Grid>
             <Grid item xs={12} sm={1} md={2} lg={2} className={classes.actionsColumn}>
               <Typography className={classes.mobileTH}>actions:</Typography>
