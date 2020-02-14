@@ -13,13 +13,15 @@ import { OrganizationSetupRoutes } from "../OrganizationSetup/OrganizationSetupR
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
+const selectState = state => ({
+  email: state.user.email,
+  ownerEmail: state.organization.owner,
+  orgStatus: state.organization.state.state,
+  orgUuid: state.organization.uuid,
+});
+
 const Onboarding = ({ location, history, classes }) => {
-  const { email, ownerEmail, orgStatus, orgUuid } = useSelector(state => ({
-    email: state.user.email,
-    ownerEmail: state.organization.owner,
-    orgStatus: state.organization.state.state,
-    orgUuid: state.organization.uuid,
-  }));
+  const { email, ownerEmail, orgStatus, orgUuid } = useSelector(selectState);
 
   useEffect(() => {
     if (
