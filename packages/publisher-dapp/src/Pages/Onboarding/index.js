@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { progressText, onboardingSections } from "./constant";
+import { onboardingSections, progressText } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
 import isEmpty from "lodash/isEmpty";
