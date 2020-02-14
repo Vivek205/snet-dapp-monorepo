@@ -19,6 +19,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import ValidationError from "shared/dist/utils/validationError";
 import { inviteEmailsConstraints } from "./validationConstraints";
 import validator from "shared/dist/utils/validator";
+import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 
 class TeamMembers extends Component {
   state = {
@@ -112,7 +113,7 @@ class TeamMembers extends Component {
   shouldAddToBlockChainBeEnabled = () =>
     this.props.members[memberStatus.ACCEPTED].length > 0 ||
     this.props.email === this.props.ownerEmail ||
-    this.props.orgStatus === "PUBLISHED";
+    this.props.orgStatus === organizationSetupStatuses.PUBLISHED;
 
   render() {
     const { classes, members } = this.props;
@@ -127,7 +128,7 @@ class TeamMembers extends Component {
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>
-              <Typography variant="h5">{TopSectionContent.description}</Typography>
+              <Typography className={classes.description}>{TopSectionContent.description}</Typography>
             </div>
             <div className={classes.topSectionMedia}>
               <img src={TopSectionContent.media} alt="Team Members" />
@@ -170,7 +171,7 @@ const mapStateToProps = state => ({
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
-  orgStatus: state.organization.status,
+  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({

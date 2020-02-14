@@ -9,11 +9,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+import { serviceValidationConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
@@ -21,9 +25,9 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   const dispatch = useDispatch();
-
+  const { orgUuid } = useParams();
   const [serviceName, setServiceName] = useState("");
-  const [apiError, setAPIError] = useState("");
+  const [alert, setAlert] = useState({});
   const history = useHistory();
 
   const handleCancel = () => {
@@ -31,14 +35,23 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   };
 
   const handleContinue = async () => {
-    // TODO: Need to get the Org UUID from Redux
-    const orgUuid = "test_org_uuid";
-    // Call the API to Save the Service Name
+    setAlert({ type: alertTypes.ERROR, message: undefined });
+
     try {
-      await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
-      history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
+      const isNotValid = validator({ serviceName }, serviceValidationConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+      // Call the API to Save the Service Name
+      const { service_uuid: serviceUuid } = await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
+      history.push(
+        GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+      );
     } catch (error) {
-      return setAPIError("Unable to process the request. Tray again later");
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Try again later" });
     }
   };
 
@@ -67,9 +80,9 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
             minCount="15"
             onChange={e => setServiceName(e.target.value)}
           />
+          <AlertBox type={alert.type} message={alert.message} />
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <AlertBox type={alertTypes.ERROR} message={apiError} />
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
           <SNETButton
             children="create"

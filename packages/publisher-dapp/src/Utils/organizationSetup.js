@@ -1,4 +1,5 @@
 export const organizationSetupStatuses = {
+  NOT_STARTED: "",
   ONBOARDING: "ONBOARDING",
   DRAFT: "DRAFT",
   APPROVAL_PENDING: "APPROVAL_PENDING",

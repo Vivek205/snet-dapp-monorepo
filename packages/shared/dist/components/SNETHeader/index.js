@@ -7,15 +7,13 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _Toolbar = _interopRequireDefault(require("@material-ui/core/Toolbar"));
-
-var _Container = _interopRequireDefault(require("@material-ui/core/Container"));
-
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _AppBar = _interopRequireDefault(require("@material-ui/core/AppBar"));
 
 var _CardMedia = _interopRequireDefault(require("@material-ui/core/CardMedia"));
+
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
 var _BlackLogo = _interopRequireDefault(require("../../assets/images/BlackLogo.svg"));
 
@@ -30,31 +28,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SNETHeader = function SNETHeader(_ref) {
   var isLoggedIn = _ref.isLoggedIn,
       color = _ref.color,
-      navbar = _ref.navbar,
+      NavigationBar = _ref.NavigationBar,
       LoggedInActions = _ref.LoggedInActions,
       LoggedOutActions = _ref.LoggedOutActions,
       portalName = _ref.portalName;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
-    color: color
-  }, _react.default.createElement(_Toolbar.default, null, _react.default.createElement(_Container.default, {
+    color: color,
+    className: classes.appBar
+  }, _react.default.createElement("div", {
     className: classes.logoContainer
   }, _react.default.createElement(_CardMedia.default, {
     component: "img",
     image: _BlackLogo.default,
     alt: "SingularityNET"
-  }), _react.default.createElement("span", {
-    className: classes.portalName
-  }, portalName)), _react.default.createElement(_Container.default, {
+  }), _react.default.createElement(_Typography.default, {
+    variant: "h5"
+  }, portalName)), _react.default.createElement("div", {
     className: classes.navContainer
-  }, _react.default.createElement(_Navbar.default, navbar)), _react.default.createElement(_Container.default, {
-    className: classes.actionsContainer
-  }, _react.default.createElement(_HeaderActions.default, {
+  }, _react.default.createElement(_Navbar.default, {
+    NavigationBar: NavigationBar
+  })), _react.default.createElement("div", null, _react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions
-  }))))));
+  })))));
 };
 
 SNETHeader.propTypes = {

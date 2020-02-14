@@ -104,4 +104,15 @@ export const useStyles = MUITheme => ({
       "&:nth-child(2)": { margin: "0 25px 0 35px" },
     },
   },
+
+  card: {
+    width: "100%",
+    minHeight: 100,
+    boxShadow: "none",
+    padding: 15,
+    border: "1px solid #828282",
+    borderRadius: 4,
+  },
+  chip: { marginLeft: 10 },
+  alertBoxContainer: { paddingTop: 25 },
 });

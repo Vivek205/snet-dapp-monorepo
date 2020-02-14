@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import userReducer from "./userReducer";
 import OrganizationReducer from "./organizationReducer";
 import loaderReducer from "./loaderReducer";
-import aiServiceDetailsReducer from "./aiServiceDetailsReducers";
+import aiServiceDetailsReducer from "./aiServiceDetailsReducer";
 import aiServiceListReducer from "./aiServiceListReducer";
 
 const rootReducer = combineReducers({

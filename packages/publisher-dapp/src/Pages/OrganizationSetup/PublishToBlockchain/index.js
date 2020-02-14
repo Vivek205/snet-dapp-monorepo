@@ -29,10 +29,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.PUBLISHED) {
+    if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
       setAlert({ type: alertTypes.SUCCESS, message: "Organization has been published in the blockchain" });
     }
-  }, [organization.status]);
+  }, [organization.state.state]);
 
   const handleSubmit = () => {
     setAlert({});
@@ -58,7 +58,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     try {
       await dispatch(organizationActions.submitForApproval(organization));
       const ipfsHash = await dispatch(organizationActions.publishToIPFS(uuid));
-      await dispatch(organizationActions.createAndSaveTransaction(organization, ipfsHash));
+      await dispatch(organizationActions.createAndSaveTransaction(organization, ipfsHash, history));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });

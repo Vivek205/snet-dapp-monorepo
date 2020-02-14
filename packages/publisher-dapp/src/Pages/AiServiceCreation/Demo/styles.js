@@ -129,4 +129,17 @@ export const useStyles = MUITheme => ({
     "& > div": { marginBottom: 8 },
     [MUITheme.breakpoints.down("sm")]: { paddingTop: 25 },
   },
+  stepThreeContainer: {
+    "& > div": { marginTop: 20 },
+  },
+  buttonsContainer: {
+    marginTop: 40,
+    marginBottom: 64,
+    display: "flex",
+    justifyContent: "center",
+    "& button": {
+      padding: " 13px 60px 11px",
+    },
+    [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
+  },
 });

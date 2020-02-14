@@ -17,9 +17,18 @@ var RatingsCount = function RatingsCount(_ref) {
   var ratingGiven = _ref.ratingGiven,
       totalRating = _ref.totalRating;
   var classes = (0, _styles.useStyles)();
+
+  var parseRatingGiven = function parseRatingGiven() {
+    if (!ratingGiven || isNaN(parseFloat(ratingGiven).toFixed(1))) {
+      return null;
+    }
+
+    return ratingGiven;
+  };
+
   return _react.default.createElement("span", {
     className: classes.ratedCount
-  }, parseFloat(ratingGiven).toFixed(1), " (", totalRating ? "".concat(totalRating) : 0, ")");
+  }, parseRatingGiven(), " (", totalRating ? "".concat(totalRating) : 0, ")");
 };
 
 RatingsCount.propTypes = {
