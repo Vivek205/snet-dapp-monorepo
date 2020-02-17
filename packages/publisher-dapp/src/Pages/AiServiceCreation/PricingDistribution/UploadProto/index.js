@@ -69,8 +69,8 @@ const UploadProto = () => {
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
         fileDownloadURL={serviceDetails.assets.protoFiles.url}
+        uploadSuccess={Boolean(serviceDetails.assets.protoFiles.url)}
       />
-
       <AlertBox type={alert.type} message={alert.message} />
     </Fragment>
   );

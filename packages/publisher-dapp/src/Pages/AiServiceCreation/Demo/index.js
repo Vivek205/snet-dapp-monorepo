@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
-import SNETFileUpload from "shared/dist/components/SNETFileUpload";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 import Actions from "./Actions";
+import UploadDemoFiles from "./UploadDemoFiles";
 
 const Demo = ({ classes }) => {
-  const [alert] = useState({ type: alertTypes.ERROR, message: "Lorem ipsum" });
+  const { orgUuid } = useParams();
+  const serviceDetails = useSelector(state => state.aiServiceDetails);
 
   return (
     <Grid container className={classes.demoContainer}>
@@ -80,20 +82,12 @@ const Demo = ({ classes }) => {
             <hr />
           </div>
 
-          <div className={classes.stepThreeContainer}>
-            <Typography variant="subtitle1" className={classes.stepsHeading}>
-              Step 3: Upload the Demo Files
-            </Typography>
-            <Typography variant="subtitle2">
-              Zip / Rar / compress all the project files and drop it here. Lorem ipsum dolor sit amet, eu nec aliquam
-              volutpat partiendo, id idque mentitum assentior vis, nam no tamquam principes gloriatur. Omnes intellegam
-              suscipiantur eu usu, vel tota senserit prodesset in. Nostrum probatus singulis id nec, virtute docendi
-              mnesarchum pri ea, eirmod maiorum scripserit quo ei.{" "}
-            </Typography>
-            <SNETFileUpload />
-          </div>
-
-          <AlertBox type={alert.type} message={alert.message} />
+          <UploadDemoFiles
+            classes={classes}
+            orgUuid={orgUuid}
+            serviceUuid={serviceDetails.uuid}
+            demoFilesUrl={serviceDetails.assets.demoFiles.url}
+          />
         </div>
       </Grid>
       <Actions classes={classes} />
