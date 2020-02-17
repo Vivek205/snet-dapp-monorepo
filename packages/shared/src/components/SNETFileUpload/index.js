@@ -22,6 +22,7 @@ const SNETFileUpload = props => {
     fileName,
     fileSize,
     fileDownloadURL,
+    uploadSuccess,
   } = props;
   const classes = useStyles();
 
@@ -48,7 +49,13 @@ const SNETFileUpload = props => {
         <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
-        <FileStats show={showFileDetails} fileName={fileName} fileSize={fileSize} fileDownloadURL={fileDownloadURL} />
+        <FileStats
+          show={showFileDetails}
+          fileName={fileName}
+          fileSize={fileSize}
+          fileDownloadURL={fileDownloadURL}
+          uploadSuccess={uploadSuccess}
+        />
       </Grid>
     </Grid>
   );
@@ -68,6 +75,7 @@ SNETFileUpload.prototypes = {
   fileName: PropTypes.string,
   fileSize: PropTypes.number,
   fileDownloadURL: PropTypes.string,
+  uploadSuccess: PropTypes.bool,
 };
 
 export default SNETFileUpload;

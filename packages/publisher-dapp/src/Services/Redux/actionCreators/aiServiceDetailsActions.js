@@ -27,6 +27,7 @@ export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 export const SET_AI_SERVICE_STATE_STATE = "SET_AI_SERVICE_STATE_STATE";
 export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
+export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -77,6 +78,8 @@ export const setServiceDetailsProtoUrl = url => ({ type: SET_SERVICE_DETAILS_PRO
 
 export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL, payload: url });
 
+export const setServiceDemoFilesUrl = url => ({ type: SET_SERVICE_DEMO_FILES_URL, payload: url });
+
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
@@ -113,21 +116,27 @@ const validateServiceIdAPI = (orgUuid, serviceId) => async dispatch => {
 
 export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   try {
+    dispatch(loaderActions.startValidateServiceIdLoader());
     const { data, error } = await dispatch(validateServiceIdAPI(orgUuid, serviceId));
     if (error.code) {
       throw new APIError(error.message);
     }
     dispatch(setServiceAvailability(data));
+    dispatch(loaderActions.stopValidateServiceIdLoader());
   } catch (error) {
     dispatch(setServiceAvailability("")); // In Case of error setting it to undefined
+    dispatch(loaderActions.stopValidateServiceIdLoader());
     throw error;
   }
 };
 
 const generateSaveServicePayload = serviceDetails => {
-  const generateEndpointsPayload = endpoints => endpoints.map(endpointValue => ({ endpoint: endpointValue }));
   const generatePricingpayload = pricing =>
-    pricing.map(price => ({ default: price.default, price_model: price.priceModel, price_in_cogs: price.priceInCogs }));
+    pricing.map(price => ({
+      default: price.default,
+      price_model: price.priceModel,
+      price_in_cogs: Number(price.priceInCogs),
+    }));
 
   const generateGroupsPayload = () =>
     serviceDetails.groups
@@ -141,7 +150,7 @@ const generateSaveServicePayload = serviceDetails => {
           free_calls: group.freeCallsAllowed,
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
-          endpoints: generateEndpointsPayload(group.endpoints),
+          endpoints: group.endpoints,
         };
       })
       .filter(el => el !== undefined);
@@ -226,7 +235,6 @@ export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
 };
 
 const parseServiceDetails = (data, serviceUuid) => {
-  const parseEndpoints = endpoints => endpoints.map(endpointValue => endpointValue.endpoint);
   const parsePricing = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -241,7 +249,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
-      endpoints: parseEndpoints(group.endpoints),
+      endpoints: group.endpoints,
       freeCallsAllowed: group.free_calls,
     }));
   };

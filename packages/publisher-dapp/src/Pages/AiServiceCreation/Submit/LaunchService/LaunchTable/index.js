@@ -5,11 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import DoneIcon from "@material-ui/icons/Done";
 import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import { serviceData } from "../../../constant";
 import { useStyles } from "../styles";
-
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 
 const LaunchTable = ({ classes, handlePublishToBlockchain }) => {
@@ -48,9 +48,14 @@ const LaunchTable = ({ classes, handlePublishToBlockchain }) => {
         ))}
       </Grid>
       <div className={classes.alertBoxBtnContainer}>
-        <AlertBox type="success" message="Your AI Service is Approved by SNET" />
         <AlertBox
-          type="warning"
+          type={alertTypes.SUCCESS}
+          header="Your AI Service is Approved by SNET"
+          icon={CheckCircleIcon}
+          message="Please proceed to Launch to complete the final step."
+        />
+        <AlertBox
+          type={alertTypes.WARNING}
           message="Final launch will require you to be logged into your Metamask and some ETH gas cost to activate the service."
           icon={ReportProblemIcon}
         />

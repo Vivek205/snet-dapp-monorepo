@@ -45,27 +45,6 @@ export const progressText = ["Ai Service Profile", "Setup Demo", "Pricing & Dist
 export const serviceData = [
   {
     status: "Submitted For Review",
-    feedback: "Submitted Mar 15, 2019 at 5:45PM by Greg Kuebler",
-  },
-  {
-    status: "AI Service Profile Content",
-    feedback: "Gallery images are optional, but it is recommended to input more examples of your outputs and results",
-  },
-  {
-    status: "Demo Configuration",
-    feedback:
-      "Configuration is acceptable.  Recommend refining your adjusting your Java script for more updated styles",
-  },
-  {
-    status: "AI Service functions",
-    feedback: "-",
-  },
-  {
-    status: "Pricing & Distribution",
-    feedback: "Increasing more daemon endpoints could help optimize processing speeds",
-  },
-  {
-    status: "Tutuorial Guide & Samples",
-    feedback: "-",
+    feedback: "",
   },
 ];

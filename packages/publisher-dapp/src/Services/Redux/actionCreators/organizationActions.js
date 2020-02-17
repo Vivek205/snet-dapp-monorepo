@@ -62,7 +62,7 @@ export const setOrgSameMailingAddress = value => ({ type: SET_ORG_SAME_MAILING_A
 
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
+  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
     contacts, assets, ownerFullName, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
@@ -74,7 +74,7 @@ const payloadForSubmit = organization => {
     duns_no: duns,
     org_type: type,
     owner_name: ownerFullName,
-    metadata_ipfs_hash: metadataIpfsHash,
+    metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
     url: website,
@@ -109,11 +109,11 @@ const payloadForSubmit = organization => {
     id: group.id,
     payment_address: group.paymentAddress,
     payment_config: {
-      payment_expiration_threshold: group.paymentConfig.paymentExpirationThreshold,
+      payment_expiration_threshold: Number(group.paymentConfig.paymentExpirationThreshold),
       payment_channel_storage_type: group.paymentConfig.paymentChannelStorageType,
       payment_channel_storage_client: {
-        connection_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
-        request_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        connection_timeout: `${group.paymentConfig.paymentChannelStorageClient.connectionTimeout}s`,
+        request_timeout: `${group.paymentConfig.paymentChannelStorageClient.requestTimeout}s`,
         endpoints: group.paymentConfig.paymentChannelStorageClient.endpoints,
       },
     },
@@ -203,8 +203,8 @@ export const getStatus = async dispatch => {
         paymentExpirationThreshold: group.payment_config.payment_expiration_threshold,
         paymentChannelStorageType: group.payment_config.payment_channel_storage_type,
         paymentChannelStorageClient: {
-          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
-          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
+          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
           endpoints: group.payment_config.payment_channel_storage_client.endpoints,
         },
       },
@@ -272,13 +272,13 @@ export const publishToIPFS = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
     const { status, data, error } = await dispatch(publishToIPFSAPI(uuid));
-    dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
+    dispatch(setOneBasicDetail("metadataIpfsUri", data.metadata_ipfs_uri));
     if (status !== responseStatus.SUCCESS) {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
-    return data.metadata_ipfs_hash;
+    return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -307,11 +307,11 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 
-export const createAndSaveTransaction = (organization, ipfsHash, history) => async dispatch => {
+export const createAndSaveTransaction = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
     const sdk = await initSDK();
     const orgId = organization.id;
-    const orgMetadataURI = ipfsHash;
+    const orgMetadataURI = metadataIpfsUri;
     const members = [organization.ownerAddress];
     dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
     return new Promise((resolve, reject) => {
