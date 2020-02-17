@@ -20,9 +20,9 @@ const OrganizationSetup = ({ classes, location, history }) => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } else if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
-      history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
+      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
     }
-  }, [organization.state.state, history]);
+  }, [organization.state.state, organization.uuid, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
