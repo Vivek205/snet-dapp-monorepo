@@ -15,15 +15,15 @@ export const useStyles = theme => ({
     },
   },
   WARNING: {
-    backgroundColor: theme.backgroundColor.offlineRedBg,
-    color: theme.palette.text.alertBoxColor,
+    backgroundColor: theme.palette.error,
+    color: theme.palette.text.primary,
     "& svg": {
       marginRight: 17,
-      color: theme.palette.text.offlineRed,
+      color: theme.palette.text.primary,
     },
   },
   INFORMATION: {
-    backgroundColor: theme.palette.text.informationBarBg,
+    backgroundColor: theme.palette.warning,
     color: theme.palette.text.white,
     "& svg": { marginRight: 21 },
   },
