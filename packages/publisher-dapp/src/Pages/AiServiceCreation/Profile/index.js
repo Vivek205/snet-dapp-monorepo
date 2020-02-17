@@ -199,7 +199,7 @@ const Profile = ({ classes, _location }) => {
             description="Enter all the TAGs separated by comma and press enter"
             value={tags}
             onKeyUp={handleAddTags}
-            onChange={e => setTags(e.target.value)}
+            onChange={e => setTags(e.target.value.toLowerCase())}
           />
 
           <div className={classes.addedTagsContainer}>
