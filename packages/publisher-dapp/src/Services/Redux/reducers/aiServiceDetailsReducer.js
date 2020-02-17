@@ -99,7 +99,9 @@ const serviceDetailsReducer = (state = initialState, action) => {
     case aiServiceDetailsActions.SET_SERVICE_DETAILS_PROTO_URL:
       return { ...state, assets: { ...state.assets, protoFiles: { ...state.assets.protoFiles, url: action.payload } } };
     case aiServiceDetailsActions.SET_SERVICE_HERO_IMAGE_URL:
-      return { ...state, assets: { ...state.assets, heroImage: { ...state.heroImage, url: action.payload } } };
+      return { ...state, assets: { ...state.assets, heroImage: { ...state.assets.heroImage, url: action.payload } } };
+    case aiServiceDetailsActions.SET_SERVICE_DEMO_FILES_URL:
+      return { ...state, assets: { ...state.assets, demoFiles: { ...state.assets.demoFiles, url: action.payload } } };
     default:
       return state;
   }

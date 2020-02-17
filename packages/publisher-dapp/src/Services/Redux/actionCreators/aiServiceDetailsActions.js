@@ -27,6 +27,7 @@ export const SET_SERVICE_PROVIDER_COMMENT = "SET_SERVICE_PROVIDER_COMMENT";
 export const SET_AI_SERVICE_STATE_STATE = "SET_AI_SERVICE_STATE_STATE";
 export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
+export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -76,6 +77,8 @@ const setAiServiceStateState = state => ({ type: SET_AI_SERVICE_STATE_STATE, pay
 export const setServiceDetailsProtoUrl = url => ({ type: SET_SERVICE_DETAILS_PROTO_URL, payload: url });
 
 export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL, payload: url });
+
+export const setServiceDemoFilesUrl = url => ({ type: SET_SERVICE_DEMO_FILES_URL, payload: url });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
