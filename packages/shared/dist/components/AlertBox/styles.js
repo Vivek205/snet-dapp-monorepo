@@ -42,7 +42,7 @@ var useStyles = function useStyles(MUITheme) {
       backgroundColor: MUITheme.palette.background.alertBox
     },
     success: {
-      borderColor: MUITheme.palette.success,
+      borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox
     },
     warning: {
