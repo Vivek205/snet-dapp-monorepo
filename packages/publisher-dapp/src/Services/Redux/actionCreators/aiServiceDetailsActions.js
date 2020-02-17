@@ -113,13 +113,16 @@ const validateServiceIdAPI = (orgUuid, serviceId) => async dispatch => {
 
 export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   try {
+    dispatch(loaderActions.startValidateServiceIdLoader());
     const { data, error } = await dispatch(validateServiceIdAPI(orgUuid, serviceId));
     if (error.code) {
       throw new APIError(error.message);
     }
     dispatch(setServiceAvailability(data));
+    dispatch(loaderActions.stopValidateServiceIdLoader());
   } catch (error) {
     dispatch(setServiceAvailability("")); // In Case of error setting it to undefined
+    dispatch(loaderActions.stopValidateServiceIdLoader());
     throw error;
   }
 };

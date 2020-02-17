@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,7 +13,6 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
 import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
@@ -26,12 +23,20 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 import { useStyles } from "./styles";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
+import ServiceIdAvailability from "./ServiceIdAvailability";
+
+let validateTimeout = "";
+
+const selectState = state => ({
+  serviceDetails: state.aiServiceDetails,
+  isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+});
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
+  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
@@ -42,18 +47,29 @@ const Profile = ({ classes, _location }) => {
     dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
   };
 
-  const handleControlChange = event => {
-    setServiceTouchFlag();
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(event.target.name, event.target.value));
-  };
-
-  const validateServiceId = async event => {
+  const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
     try {
-      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, event.target.value));
+      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
       dispatch(aiServiceDetailsActions.setServiceAvailability(""));
     }
+  };
+
+  const debouncedValidate = serviceId => {
+    if (validateTimeout) {
+      clearTimeout(validateTimeout);
+    }
+    validateTimeout = setTimeout(validateServiceId(serviceId), 200);
+  };
+
+  const handleControlChange = event => {
+    const { name, value } = event.target;
+    setServiceTouchFlag();
+    if (name === "id") {
+      debouncedValidate(value);
+    }
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
 
   const handleContinue = async () => {
@@ -158,15 +174,12 @@ const Profile = ({ classes, _location }) => {
             description="The Id of your service to uniquely identity in the organization."
             value={serviceDetails.id}
             onChange={handleControlChange}
-            onBlur={validateServiceId}
           />
-          <div className={classes.alertBoxContainer}>
-            <AlertText
-              type={serviceDetails.availability === "AVAILABLE" ? alertTypes.INFO : alertTypes.ERROR}
-              message={!isEmpty(serviceDetails.id) ? `Service Id is ${serviceDetails.availability}` : ""}
-            />
-          </div>
-
+          <ServiceIdAvailability
+            serviceDetails={serviceDetails}
+            classes={classes}
+            loading={isValidateServiceIdLoading}
+          />
           <SNETTextarea
             showInfoIcon
             name="shortDescription"
