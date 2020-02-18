@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
-import { verificationStatuses } from "../constant";
+import { onboardingStatusList } from "../constant";
 
 const Default = ({ history }) => {
   const { onboardingStatus } = useSelector(state => state.user);
 
   useEffect(() => {
     switch (onboardingStatus) {
-      case verificationStatuses.NOT_STARTED:
+      case onboardingStatusList.NOT_STARTED:
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
-      case verificationStatuses.SELECTED_ENTITY:
+      case onboardingStatusList.SELECTED_ENTITY:
         return history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
-      case verificationStatuses.ACCEPTED_AGREEMENT:
+      case onboardingStatusList.ACCEPTED_AGREEMENT:
         return history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
       default:
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);

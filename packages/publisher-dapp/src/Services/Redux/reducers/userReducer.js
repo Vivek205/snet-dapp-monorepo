@@ -1,5 +1,5 @@
 import { userActions } from "../actionCreators";
-import { verificationStatuses } from "../../../Pages/Onboarding/constant";
+import { onboardingStatusList } from "../../../Pages/Onboarding/constant";
 
 const initialState = {
   entity: "",
@@ -8,7 +8,7 @@ const initialState = {
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
-  onboardingStatus: verificationStatuses.NOT_STARTED,
+  onboardingStatus: onboardingStatusList.NOT_STARTED,
   jwt: {
     exp: "",
   },
