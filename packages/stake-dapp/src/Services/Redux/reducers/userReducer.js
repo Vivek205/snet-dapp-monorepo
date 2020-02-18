@@ -8,7 +8,7 @@ const initialState = {
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
-  verificationStatus: verificationStatuses.NOT_STARTED,
+  onboardingStatus: verificationStatuses.NOT_STARTED,
   jwt: {
     exp: "",
   },

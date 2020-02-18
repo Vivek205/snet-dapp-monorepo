@@ -4,10 +4,10 @@ import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import { verificationStatuses } from "../constant";
 
 const Default = ({ history }) => {
-  const { verificationStatus } = useSelector(state => state.user);
+  const { onboardingStatus } = useSelector(state => state.user);
 
   useEffect(() => {
-    switch (verificationStatus) {
+    switch (onboardingStatus) {
       case verificationStatuses.NOT_STARTED:
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
       case verificationStatuses.SELECTED_ENTITY:
@@ -17,7 +17,7 @@ const Default = ({ history }) => {
       default:
         return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
     }
-  }, [history, verificationStatus]);
+  }, [history, onboardingStatus]);
 
   return <div />;
 };

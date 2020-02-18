@@ -1,6 +1,7 @@
 import Organization from "../Organization";
 import Invitee from "../Invitee";
 import Default from "../_default";
+import Individual from "../Individual";
 
 const basePath = "/onboarding/authenticate";
 
@@ -16,6 +17,11 @@ export const AuthenticateRoutes = {
     name: "invitee",
     path: fullPath("/acceptinvite"),
     component: Invitee,
+  },
+  INDIVIDUAL: {
+    name: "invitee",
+    path: fullPath("/individual"),
+    component: Individual,
   },
   DEFAULT: {
     name: "default",
