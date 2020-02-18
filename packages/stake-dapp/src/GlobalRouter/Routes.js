@@ -7,7 +7,7 @@ const Signup = lazy(() => import("../Pages/Signup"));
 const Overview = lazy(() => import("../Pages/Overview"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
-const Onboarding = lazy(() => import("../Pages/Onboarding"));
+const AcceptAgreement = lazy(() => import("../Pages/AcceptServiceAgreement"));
 
 const Landing = lazy(() => import("../Pages/Landing"));
 
@@ -19,7 +19,8 @@ const SignupComponent = withRegistrationHeader(Signup, "Already have an account?
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
-const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
+
+const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 
@@ -49,15 +50,15 @@ export const GlobalRoutes = {
     path: "/howitworks",
     component: HowItWorksComponent,
   },
-  ONBOARDING: {
-    name: "onboarding",
-    path: "/onboarding",
-    component: OnboardingComponent,
-  },
   LANDING: {
     name: "landing",
     path: "/landing",
     component: LandingComponent,
+  },
+  ACCEPT_AGREEMENT: {
+    name: "acceptagreement",
+    path: "/acceptagreement",
+    component: AcceptAgreementComponent,
   },
 };
 
