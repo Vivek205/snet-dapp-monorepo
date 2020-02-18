@@ -30,3 +30,16 @@ export const cardDetails = [
     unit: "AGI",
   },
 ];
+
+export const btnDetails = [
+  {
+    color: "primary",
+    variant: "text",
+    text: "widthdraw",
+  },
+  {
+    color: "primary",
+    variant: "contained",
+    text: "add stake amount",
+  },
+];

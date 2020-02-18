@@ -10,37 +10,41 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import Card from "./Card";
 
-const StackSession = ({ cardDetails }) => {
+const StackSession = ({ cardDetails, incubationProgressDetails, date, id, btnDetails }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.StackSessionContainer}>
       <div className={classes.header}>
-        <Typography variant="h6">Session Time - Feb 2020 #1234</Typography>
+        <Typography variant="h6">
+          Stake Session - {date} {id}
+        </Typography>
       </div>
       <div className={classes.content}>
-        <div className={classes.incubationContainer}>
-          <div className={classes.dayCountContainer}>
-            <div>
-              <InfoIcon />
-              <Typography className={classes.incubationText}>Incubation Progress</Typography>
+        {incubationProgressDetails ? (
+          <div className={classes.incubationContainer}>
+            <div className={classes.dayCountContainer}>
+              <div>
+                <InfoIcon />
+                <Typography className={classes.incubationText}>Incubation Progress</Typography>
+              </div>
+              <div className={classes.daysCount}>
+                <Typography className={classes.value}>12/30</Typography>
+                <Typography className={classes.unit}> days</Typography>
+              </div>
             </div>
-            <div className={classes.daysCount}>
-              <Typography className={classes.value}>12/30</Typography>
-              <Typography className={classes.unit}> days</Typography>
+            <div className={classes.progressBarContainer}>
+              <div className={classes.startFinishDate}>
+                <Typography>Started 01/1/2020</Typography>
+                <Typography>Finished 01/30/2020</Typography>
+              </div>
+              <LinearProgress variant="determinate" value={30} className={classes.linearProgress} />
             </div>
           </div>
-          <div className={classes.progressBarContainer}>
-            <div className={classes.startFinishDate}>
-              <Typography>Started 01/1/2020</Typography>
-              <Typography>Finished 01/30/2020</Typography>
-            </div>
-            <LinearProgress variant="determinate" value={30} className={classes.linearProgress} />
-          </div>
-        </div>
+        ) : null}
         <div className={classes.cards}>
           {cardDetails.map(item => (
-            <Card key="item.title" title={item.title} value={item.value} unit={item.unit} />
+            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} />
           ))}
         </div>
         <div className={classes.checkboxContent}>
@@ -66,10 +70,13 @@ const StackSession = ({ cardDetails }) => {
           </div>
         </div>
       </div>
-      <div className={classes.btnContainer}>
-        <SNETButton color="primary" variant="text" children="withdraw" />
-        <SNETButton color="primary" variant="contained" children="add stake amount" />
-      </div>
+      {btnDetails ? (
+        <div className={classes.btnContainer}>
+          {btnDetails.map(button => (
+            <SNETButton key={button.text} color={button.color} variant={button.variant} children={button.text} />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

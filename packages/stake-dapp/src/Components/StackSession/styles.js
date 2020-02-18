@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   StackSessionContainer: {
+    paddingBottom: 33,
     borderRadius: 4,
-    marginLeft: 23,
     background: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
   },
@@ -33,7 +33,7 @@ export const useStyles = makeStyles(MUITheme => ({
     lineHeight: "20px",
   },
   daysCount: {
-    marginLeft: 190,
+    marginLeft: "24%",
     alignItems: "baseline",
   },
   value: {
@@ -111,8 +111,5 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "18px",
     },
   },
-  btnContainer: {
-    paddingBottom: 33,
-    textAlign: "center",
-  },
+  btnContainer: { textAlign: "center" },
 }));
