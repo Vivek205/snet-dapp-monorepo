@@ -12,6 +12,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "shared": "*",
+    "singularitynet-token-contracts": "^2.0.1",
     "web3": "1.2.2"
   },
   "peerDependencies": {

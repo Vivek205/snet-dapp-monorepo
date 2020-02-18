@@ -7,6 +7,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
+import AccountBalance from "../AccountBalance";
+
 import { useStyles } from "./styles";
 
 class StakeTab extends Component {
@@ -43,6 +45,7 @@ class StakeTab extends Component {
             {selectedTab === 0 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
                 <h1>Open Staking Placeholder</h1>
+                <AccountBalance />
               </Typography>
             )}
             {selectedTab === 1 && (
