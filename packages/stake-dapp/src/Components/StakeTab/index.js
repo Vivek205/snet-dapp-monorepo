@@ -7,7 +7,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
-import AccountBalance from "../AccountBalance";
+import CreateStake from "../CreateStake";
+import UserStake from "../UserStake";
+import ClaimStake from "../ClaimStake";
 
 import { useStyles } from "./styles";
 
@@ -44,23 +46,22 @@ class StakeTab extends Component {
             </AppBar>
             {selectedTab === 0 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
-                <h1>Open Staking Placeholder</h1>
-                <AccountBalance />
+                <CreateStake />
               </Typography>
             )}
             {selectedTab === 1 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
-                <h1>Incubating Placeholder</h1>
+                <UserStake />
               </Typography>
             )}
             {selectedTab === 2 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
-                <h1>Ready to Claim Placeholder</h1>
+                <ClaimStake />
               </Typography>
             )}
             {selectedTab === 3 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
-                <h1>Transaction placceholder</h1>
+                <h1>Transaction placceholder - Design is still in progress...</h1>
               </Typography>
             )}
           </div>
