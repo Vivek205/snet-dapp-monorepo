@@ -25,7 +25,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
           setSelectedFile({ name, size, type });
 
           const { url } = await dispatch(
-            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PAGE_COMPONENTS, fileBlob, type, orgUuid, serviceUuid)
+            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PAGE_COMPONENTS, fileBlob, orgUuid, serviceUuid)
           );
           dispatch(aiServiceDetailsActions.setServiceDemoFilesUrl(url));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
