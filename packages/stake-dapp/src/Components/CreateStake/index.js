@@ -4,7 +4,8 @@ import Grid from "@material-ui/core/Grid";
 
 import SessionTime from "./SessionTime";
 import AccountBalance from "../AccountBalance";
-import StackSession from "./StackSession";
+import StackSession from "../StackSession";
+import { cardDetails } from "./content";
 
 const CreateStake = () => {
   return (
@@ -14,7 +15,7 @@ const CreateStake = () => {
         <AccountBalance />
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={8}>
-        <StackSession />
+        <StackSession cardDetails={cardDetails} />
       </Grid>
     </Grid>
   );

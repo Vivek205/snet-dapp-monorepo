@@ -11,10 +11,10 @@ const UserStake = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container justify="center" spacing={3}>
-        <Grid item xs={9}>
+      <Grid container spacing={3}>
+        <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <Typography variant="h4">User Stake Coming Soon...</Typography>
+            <Typography> coming soon ...</Typography>{" "}
           </Paper>
         </Grid>
       </Grid>

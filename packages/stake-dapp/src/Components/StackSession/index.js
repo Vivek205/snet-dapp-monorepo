@@ -4,13 +4,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
-import { cardDetails } from "./content";
 import Card from "./Card";
 
-const StackSession = () => {
+const StackSession = ({ cardDetails }) => {
   const classes = useStyles();
 
   return (
@@ -19,6 +19,25 @@ const StackSession = () => {
         <Typography variant="h6">Session Time - Feb 2020 #1234</Typography>
       </div>
       <div className={classes.content}>
+        <div className={classes.incubationContainer}>
+          <div className={classes.dayCountContainer}>
+            <div>
+              <InfoIcon />
+              <Typography className={classes.incubationText}>Incubation Progress</Typography>
+            </div>
+            <div className={classes.daysCount}>
+              <Typography className={classes.value}>12/30</Typography>
+              <Typography className={classes.unit}> days</Typography>
+            </div>
+          </div>
+          <div className={classes.progressBarContainer}>
+            <div className={classes.startFinishDate}>
+              <Typography>Started 01/1/2020</Typography>
+              <Typography>Finished 01/30/2020</Typography>
+            </div>
+            <LinearProgress variant="determinate" value={30} className={classes.linearProgress} />
+          </div>
+        </div>
         <div className={classes.cards}>
           {cardDetails.map(item => (
             <Card key="item.title" title={item.title} value={item.value} unit={item.unit} />

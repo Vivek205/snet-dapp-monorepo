@@ -17,6 +17,50 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "50px",
     },
   },
+  incubationContainer: { padding: "14px 23px" },
+  dayCountContainer: {
+    paddingBottom: 5,
+    display: "flex",
+    alignItems: "center",
+    "& > div": {
+      display: "flex",
+    },
+  },
+  incubationText: {
+    marginLeft: 12,
+    color: MUITheme.palette.text.lightGrey,
+    fontSize: 16,
+    lineHeight: "20px",
+  },
+  daysCount: {
+    marginLeft: 190,
+    alignItems: "baseline",
+  },
+  value: {
+    color: MUITheme.palette.text.darkGrey,
+    fontSize: 28,
+    fontWeight: 600,
+    lineHeight: "35px",
+  },
+  unit: {
+    paddingLeft: 5,
+    color: MUITheme.palette.text.lightGrey,
+    fontSize: 16,
+    lineHeight: "20px",
+    textTransform: "uppercase",
+  },
+  startFinishDate: {
+    paddingBottom: 3,
+    display: "flex",
+    justifyContent: "space-between",
+    "& p": {
+      color: MUITheme.palette.text.lightGrey,
+      fontSize: 12,
+      lineHeight: "15px",
+      textTransform: "uppercase",
+    },
+  },
+  linearProgress: { height: 15 },
   cards: { padding: "30px 58px 11px" },
   checkboxContent: {
     padding: "0 33px 0 57px",
