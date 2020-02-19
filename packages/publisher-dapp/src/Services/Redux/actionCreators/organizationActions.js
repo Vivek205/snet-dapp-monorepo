@@ -236,7 +236,7 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = payload => async dispatch => {
+const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
@@ -250,6 +250,29 @@ export const submitForApproval = organization => async dispatch => {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_SUBMIT_FOR_APPROVAL));
     const payload = payloadForSubmit(organization);
     const { status, error } = await dispatch(submitForApprovalAPI(payload));
+    if (status !== responseStatus.SUCCESS) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const createOrganizationAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.CREATE_ORG;
+  const apiOptions = initializeAPIOptions(token, payload);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const createOrganization = organization => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_CREATE));
+    const payload = payloadForSubmit(organization);
+    const { status, error } = await dispatch(createOrganizationAPI(payload));
     if (status !== responseStatus.SUCCESS) {
       throw new APIError(error.message);
     }
