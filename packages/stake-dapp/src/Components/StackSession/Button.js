@@ -4,13 +4,15 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const StackSession = ({ details }) => {
+const Button = ({ details }) => {
   const classes = useStyles();
 
   if (details) {
     return (
       <div className={classes.btnContainer}>
-        <SNETButton key={details.text} color={details.color} variant={details.variant} children={details.text} />
+        {details.map(button => (
+          <SNETButton key={button.text} color={button.color} variant={button.variant} children={button.text} />
+        ))}
       </div>
     );
   }
@@ -18,4 +20,4 @@ const StackSession = ({ details }) => {
   return null;
 };
 
-export default StackSession;
+export default Button;

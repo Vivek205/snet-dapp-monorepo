@@ -91,6 +91,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   infoBox: {
+    padding: "0 25px",
     display: "flex",
     justifyContent: "center",
     "& > p": { display: "flex" },

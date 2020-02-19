@@ -4,14 +4,22 @@ import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import SNETButton from "shared/dist/components/SNETButton";
 
 import IncubationProgressDetails from "./IncubationProgressDetails";
 import Agreement from "./Agreement";
 import Card from "./Card";
+import Button from "./Button";
 import { useStyles } from "./styles";
 
-const StackSession = ({ cardDetails, incubationProgressDetails, agreementDetails, date, id, btnDetails }) => {
+const StackSession = ({
+  cardDetails,
+  incubationProgressDetails,
+  agreementDetails,
+  date,
+  id,
+  btnDetails,
+  handleClick,
+}) => {
   const classes = useStyles();
 
   return (
@@ -42,13 +50,7 @@ const StackSession = ({ cardDetails, incubationProgressDetails, agreementDetails
             </div>
           </AlertBox>
         </div>
-        {btnDetails ? (
-          <div className={classes.btnContainer}>
-            {btnDetails.map(button => (
-              <SNETButton key={button.text} color={button.color} variant={button.variant} children={button.text} />
-            ))}
-          </div>
-        ) : null}
+        <Button details={btnDetails} handleClick={handleClick} />
       </div>
     </div>
   );
