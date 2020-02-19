@@ -1,6 +1,5 @@
 export const useStyles = theme => ({
   accountBalanceContainer: {
-    maxWidth: 411,
     paddingBottom: 27,
     borderRadius: 4,
     marginBottom: 30,
