@@ -30,3 +30,10 @@ export const onboardingStatusList = {
   ACCEPTED_AGREEMENT: "ACCEPTED_AGREEMENT",
   VERIFICATION_PENDING: "VERIFICATION_PENDING",
 };
+
+export const individualVerificationStatusList = {
+  NOT_STARTED: "",
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  DENIED: "DENIED",
+};
