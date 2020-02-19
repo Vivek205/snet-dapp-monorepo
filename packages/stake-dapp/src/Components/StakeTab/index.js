@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CreateStake from "../CreateStake";
 import UserStake from "../UserStake";
 import ClaimStake from "../ClaimStake";
+import StakeTransitions from "../StakeTransitions";
 
 import { useStyles } from "./styles";
 
@@ -61,7 +62,7 @@ class StakeTab extends Component {
             )}
             {selectedTab === 3 && (
               <Typography component="div" className={classes.tabDetailsContainer}>
-                <h1>Transaction placceholder - Design is still in progress...</h1>
+                <StakeTransitions />
               </Typography>
             )}
           </div>
