@@ -6,7 +6,7 @@ import { useStyles } from "./styles";
 import SessionTime from "./SessionTime";
 import AccountBalance from "../AccountBalance";
 import StackSession from "../StackSession";
-import { cardDetails, btnDetails } from "./content";
+import { cardDetails, btnDetails, agreementDetails } from "./content";
 
 const CreateStake = () => {
   const classes = useStyles();
@@ -17,7 +17,13 @@ const CreateStake = () => {
         <AccountBalance />
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>
-        <StackSession cardDetails={cardDetails} btnDetails={btnDetails} date="Feb 2020" id="#1234" />
+        <StackSession
+          cardDetails={cardDetails}
+          btnDetails={btnDetails}
+          date="Feb 2020"
+          id="#1234"
+          agreementDetails={agreementDetails}
+        />
       </Grid>
     </Grid>
   );

@@ -1,10 +1,10 @@
 export const sortByCategories = [{ value: "newest", label: "Newest" }];
 
 export const firstIncubationProgressDetails = {
-  minCount: "12",
-  maxCount: "30",
-  staredDate: "01/1/2020",
-  finishedDate: "01/30/2020",
+  daysLeft: "12",
+  totalDays: "30",
+  started: "01/1/2020",
+  finished: "01/30/2020",
 };
 
 export const firstCardDetails = [
@@ -41,10 +41,10 @@ export const firstCardDetails = [
 ];
 
 export const secondIncubationProgressDetails = {
-  minCount: "24",
-  maxCount: "30",
-  staredDate: "12/24/2019",
-  finishedDate: "01/23/2020",
+  daysLeft: "24",
+  totalDays: "30",
+  started: "12/24/2019",
+  finished: "01/23/2020",
 };
 
 export const secondCardDetails = [

@@ -91,15 +91,9 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   infoBox: {
-    boxSizing: "border-box",
-    padding: 12,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: MUITheme.palette.primary.main,
-    borderRadius: 2,
-    margin: "15px 33px 28px",
     display: "flex",
-    backgroundColor: MUITheme.palette.background.infoBox,
+    justifyContent: "center",
+    "& > p": { display: "flex" },
     "& svg": {
       marginRight: 17,
       color: MUITheme.palette.primary.main,

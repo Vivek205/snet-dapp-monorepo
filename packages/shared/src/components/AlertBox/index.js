@@ -20,7 +20,11 @@ const backgroundColor = {
   info: alertTypes.INFO,
 };
 
-const AlertBox = ({ classes, message, type, link }) => {
+const AlertBox = ({ classes, message, type, link, children }) => {
+  if (children) {
+    return <p className={clsx(classes.messageBox, classes[backgroundColor[type]])}>{children}</p>;
+  }
+
   if (message) {
     return (
       <p className={clsx(classes.messageBox, classes[backgroundColor[type]])}>

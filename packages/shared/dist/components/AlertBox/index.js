@@ -37,7 +37,14 @@ var AlertBox = function AlertBox(_ref) {
   var classes = _ref.classes,
       message = _ref.message,
       type = _ref.type,
-      link = _ref.link;
+      link = _ref.link,
+      children = _ref.children;
+
+  if (children) {
+    return _react.default.createElement("p", {
+      className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
+    }, children);
+  }
 
   if (message) {
     return _react.default.createElement("p", {
