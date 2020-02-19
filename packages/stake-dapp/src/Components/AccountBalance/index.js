@@ -20,7 +20,8 @@ const AccountBalance = ({ classes, metamaskDetails }) => {
           <div className={classes.warningBox}>
             <span>You need Metamask wallet to create stake.</span>
             <Typography>
-              Please Login or Install to your Metamask wallet account and connect to SingularityNet.{" "}
+              Please <a href="#">Login</a> or <a href="#">Install </a> to your Metamask wallet account and connect to
+              SingularityNet.{" "}
             </Typography>
             <Typography>
               <a href="https://metamask.io/" target="_new">

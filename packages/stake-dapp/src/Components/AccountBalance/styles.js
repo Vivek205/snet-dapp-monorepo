@@ -1,19 +1,18 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   accountBalanceContainer: {
-    maxWidth: 411,
     paddingBottom: 27,
     borderRadius: 4,
     marginBottom: 30,
-    backgroundColor: theme.palette.text.white,
+    backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
     flexBasis: "30%",
     "& h3": {
       padding: "0 22px",
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
-      borderBottomColor: theme.palette.text.gray1,
+      borderBottomColor: MUITheme.palette.border.primary,
       margin: 0,
-      color: theme.palette.text.darkShadedGray,
+      color: MUITheme.palette.text.darkGrey,
       fontSize: 20,
       fontWeight: 600,
       lineHeight: "50px",
@@ -29,15 +28,14 @@ export const useStyles = theme => ({
   warningBox: {
     borderWidth: 1,
     borderStyle: "solid",
-    borderColor: theme.palette.text.warningBoxBorder,
+    borderColor: MUITheme.palette.border.warningBox,
     borderRadius: 4,
     padding: "13px 20px",
     margin: "28px 20px 0",
-    backgroundColor: theme.palette.text.warningBoxBg,
+    backgroundColor: MUITheme.palette.background.warningBox,
     "& p, & span": {
-      color: theme.palette.text.alertBoxColor,
-      fontFamily: theme.typography.fontFamily,
-
+      color: "rgba(0,0,0,0.6)",
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 14,
       lineHeight: "20px",
       letterSpacing: 0.25,
