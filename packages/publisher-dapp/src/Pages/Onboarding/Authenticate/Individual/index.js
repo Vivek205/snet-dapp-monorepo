@@ -1,9 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import SNETButton from "shared/dist/components/SNETButton";
+import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
 
 const Individual = () => {
-  const handleVerify = () => {
-    //  TODO call initiate API of Jumio-Marketplace
+  const dispatch = useDispatch();
+
+  const handleVerify = async () => {
+    const { redirectUrl } = await dispatch(individualVerificationActions.initiateVerificationAPI());
+    await window.location.replace(redirectUrl);
   };
   return (
     <div>
