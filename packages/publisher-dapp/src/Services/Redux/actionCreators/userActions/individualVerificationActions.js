@@ -5,6 +5,7 @@ import { initializeAPIOptions } from "../../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "../index";
 import { LoaderContent } from "../../../../Utils/Loader";
+import { startAppLoader, stopAppLoader } from "../loaderActions";
 
 export const SET_INDIVIDUAL_VERIFICATION_STATUS = "SET_INDIVIDUAL_VERIFICATION_STATUS";
 
@@ -26,7 +27,7 @@ export const initiateVerification = () => async dispatch => {
     dispatch(loaderActions.startAppLoader(LoaderContent.USER_VERIFICATION_INITIATE));
     const { error, data } = await dispatch(initiateVerificationAPI());
     if (error.code) {
-      throw APIError(error.message);
+      throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
     return data;
@@ -35,4 +36,27 @@ export const initiateVerification = () => async dispatch => {
     throw e;
   }
   // TODO initate the verification process for jumio and redirect to jumio screen
+};
+
+const getVerificationStatusAPI = () => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.VERIFICATION.name;
+  const apiPath = APIPaths.USER_VERIFICATION_STATUS;
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getVerificationStatus = () => async dispatch => {
+  try {
+    dispatch(startAppLoader(LoaderContent.USER_VERIFICATION_STATUS));
+    const { error, data } = await dispatch(getVerificationStatusAPI());
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(stopAppLoader());
+    return data;
+  } catch (e) {
+    dispatch(stopAppLoader());
+    throw e;
+  }
 };
