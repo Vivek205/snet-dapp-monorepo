@@ -15,7 +15,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: "8px 15px",
       flexDirection: "row",
       alignItems: "center",
-      zIndex: 9999
+      zIndex: 1110
     },
     logoContainer: _defineProperty({
       display: "flex",
