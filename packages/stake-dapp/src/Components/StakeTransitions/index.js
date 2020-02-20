@@ -1,57 +1,44 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-import Grid from "@material-ui/core/Grid";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/styles";
 
-import BySession from "./BySession";
+import SNETPagination from "shared/dist/components/SNETPagination";
 
 import { useStyles } from "./styles";
+import TableRow from "./TableRow";
+import ExpandedTable from "./ExpandedTable";
+import { itemsPerPageOptions } from "./content";
 
-class StakeTransitions extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: 0,
-    };
-  }
+const StakeTransitions = () => {
+  const classes = useStyles();
+  const [expandTable, setExpandTable] = useState(false);
 
-  handleTabChange = (_event, value) => {
-    this.setState({ selectedTab: value });
+  const handleExpandeTable = () => {
+    setExpandTable(!expandTable);
   };
 
-  render() {
-    const { selectedTab } = this.state;
-    const { classes } = this.props;
-    return (
-      <Grid container className={classes.stakeTransactionContainer}>
-        <div className={classes.header}>
-          <Typography variant="h6">Transaction History</Typography>
-        </div>
-        <div className={classes.tabsContainer}>
-          <AppBar position="static" color="default" className={classes.appBar}>
-            <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
-              <Tab className="singularity-tab" label="By Session" value={0} />
-              <Tab className="singularity-tab" label="Chronological Log" value={1} />
-            </Tabs>
-          </AppBar>
-          {selectedTab === 0 && (
-            <Typography component="div" className={classes.tabDetailsContainer}>
-              <BySession />
-            </Typography>
-          )}
-          {selectedTab === 1 && (
-            <Typography component="div" className={classes.tabDetailsContainer}>
-              Chronological Logs component will go here
-            </Typography>
-          )}
-        </div>
-      </Grid>
-    );
-  }
-}
+  return (
+    <div className={classes.stakeTransactionContainer}>
+      <div className={classes.header}>
+        <Typography variant="h6">Transaction History</Typography>
+      </div>
+      <Typography className={classes.pageTitle}>Stake Session</Typography>
+      <div className={classes.table}>
+        <TableRow expandTable={expandTable} handleExpandeTable={handleExpandeTable} />
+        <ExpandedTable showTable={expandTable} />
+      </div>
+      <div className={classes.pagination}>
+        <SNETPagination
+          itemsPerPageOptions={itemsPerPageOptions}
+          itemsPerPage="50"
+          onItemsPerPageChange="0"
+          limit="4"
+          offset="1"
+          totalCount="100"
+        />
+      </div>
+    </div>
+  );
+};
 
-export default withStyles(useStyles)(StakeTransitions);
+export default StakeTransitions;
