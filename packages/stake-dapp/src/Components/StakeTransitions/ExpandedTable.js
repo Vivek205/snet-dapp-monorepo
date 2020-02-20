@@ -39,7 +39,7 @@ const ExpandedTable = ({ showTable }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Typography className={classes.mobileTitle}>Status:</Typography>
-            <Typography>Success</Typography>
+            <Typography className={classes.statusValue}>Success</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Typography className={classes.mobileTitle}>Transaction:</Typography>

@@ -143,4 +143,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "@media(max-width: 800px)": { display: "inline-block" },
   },
   pagination: { padding: "125px 56px 0 9px" },
+  statusValue: {
+    color: `${MUITheme.palette.success.main} !important`,
+  },
 }));
