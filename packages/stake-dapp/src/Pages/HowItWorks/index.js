@@ -110,6 +110,15 @@ const HowItWorks = ({ classes }) => {
         <input type="text" />
         <SNETButton children="subscribe" color="primary" variant="contained" />
       </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.howItWorksSection}>
+        <Typography variant="h2">How It Works</Typography>
+        <Typography className={classes.howItWorksDesc}>
+          Lorem ipsum dolor sit amet, mei te indoctum convenire. Sumo urbanitas moderatius eam ut, pro ex prima harum ri
+          de ns. Vis obli que nusquam te, cum ex minim molestie. Eam ex modus luptatum adipiscing, pri id patrioque
+          instructior, mel id tale definitionem.
+        </Typography>
+        <SNETButton children="start staking tokens" color="primary" variant="contained" />
+      </Grid>
     </Grid>
   );
 };

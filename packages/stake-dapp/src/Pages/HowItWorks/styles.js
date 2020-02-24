@@ -226,4 +226,18 @@ export const useStyles = MUITheme => ({
       margin: "0 8px 0 13px",
     },
   },
+
+  // How It Works
+  howItWorksSection: {
+    padding: "64px 215px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  howItWorksDesc: {
+    padding: "32px 0",
+    color: "#616161",
+    fontSize: 18,
+    lineHeight: "28px",
+  },
 });
