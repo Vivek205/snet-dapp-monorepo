@@ -1,4 +1,5 @@
 export const useStyles = MUITheme => ({
+  howItWorksContainer: { backgroundColor: MUITheme.palette.background.mainContent },
   bannerContainer: {
     padding: "24px 137px 0",
     backgroundColor: "rgba(34,13,58,0.6)",
@@ -161,6 +162,7 @@ export const useStyles = MUITheme => ({
       textAlign: "center",
     },
   },
+
   // Benefits Styling
   benefitsContainer: {
     padding: "64px 60px",
@@ -197,5 +199,31 @@ export const useStyles = MUITheme => ({
       },
     },
     "& button": { padding: "13px 98px 11px" },
+  },
+
+  // SignUp container
+  signUpContainer: {
+    padding: "16px 0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: MUITheme.palette.purple.main,
+    opacity: 0.87,
+    textAlign: "center",
+    "& p": {
+      color: MUITheme.palette.text.white,
+      fontSize: 20,
+      letterSpacing: 0.19,
+      lineHeight: "24px",
+    },
+    "& input": {
+      boxSizing: "border-box",
+      width: 255,
+      height: "90%",
+      padding: "0 15px",
+      border: "none",
+      borderRadius: 2,
+      margin: "0 8px 0 13px",
+    },
   },
 });

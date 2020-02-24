@@ -105,6 +105,11 @@ const HowItWorks = ({ classes }) => {
         </Grid>
       </Grid>
       <Benefits />
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.signUpContainer}>
+        <Typography>Sign up for Staking Notifications</Typography>
+        <input type="text" />
+        <SNETButton children="subscribe" color="primary" variant="contained" />
+      </Grid>
     </Grid>
   );
 };
