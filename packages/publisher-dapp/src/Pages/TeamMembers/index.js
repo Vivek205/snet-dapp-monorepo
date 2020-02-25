@@ -128,7 +128,7 @@ class TeamMembers extends Component {
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>
-              <Typography variant="h5">{TopSectionContent.description}</Typography>
+              <Typography className={classes.description}>{TopSectionContent.description}</Typography>
             </div>
             <div className={classes.topSectionMedia}>
               <img src={TopSectionContent.media} alt="Team Members" />

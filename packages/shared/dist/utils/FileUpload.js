@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getFileBinary = void 0;
+exports.base64ToArrayBuffer = exports.getFileBinary = void 0;
 
 var getFileBinary = function getFileBinary(file) {
   return new Promise(function (resolve, reject) {
@@ -22,3 +22,17 @@ var getFileBinary = function getFileBinary(file) {
 };
 
 exports.getFileBinary = getFileBinary;
+
+var base64ToArrayBuffer = function base64ToArrayBuffer(base64) {
+  var binary_string = atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+
+  for (var i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i);
+  }
+
+  return bytes.buffer;
+};
+
+exports.base64ToArrayBuffer = base64ToArrayBuffer;
