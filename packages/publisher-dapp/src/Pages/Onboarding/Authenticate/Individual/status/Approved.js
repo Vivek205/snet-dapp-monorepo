@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 import orgSetupApprovedImg from "shared/dist/assets/images/orgSetupApproved.png";
 
 const Approved = () => {
-  const { email, ownerEmail } = useSelector(state => ({
+  const { email, ownerEmail, orgUuid } = useSelector(state => ({
     email: state.user.email,
     ownerEmail: state.organization.owner,
+    orgUuid: state.organization.uuid,
   }));
   const history = useHistory();
 
@@ -18,7 +19,7 @@ const Approved = () => {
   };
 
   const handleInviteSetup = () => {
-    history.push(GlobalRoutes.INVITE_MEMBERS.path);
+    history.push(GlobalRoutes.INVITE_MEMBERS.path.replace(":orgUuid", orgUuid));
   };
 
   const shouldInviteMembersBeEnabled = () => email === ownerEmail;

@@ -75,12 +75,12 @@ export const GlobalRoutes = {
   },
   ORG_SETUP_STATUS: {
     name: "organization setup",
-    path: "/orgsetupstatus",
+    path: "/org/:orgUuid/status",
     component: OrgSetupStatusComponent,
   },
   INVITE_MEMBERS: {
     name: "team memebrs",
-    path: "/invitemembers",
+    path: "/org/:orgUuid/invitemembers",
     component: TeamMembersComponent,
   },
   SERVICES: {
