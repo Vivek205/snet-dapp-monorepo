@@ -42,11 +42,11 @@ var useStyles = function useStyles(MUITheme) {
       "& button": {
         marginTop: 24,
         "&:first-of-type": {
-          padding: '13px 18px 11px',
+          padding: "13px 18px 11px",
           marginRight: 22
         },
-        '&:last-of-type': {
-          padding: '13px 23px 11px'
+        "&:last-of-type": {
+          padding: "13px 23px 11px"
         }
       }
     },
