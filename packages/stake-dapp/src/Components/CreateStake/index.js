@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
+
+import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 import SessionTime from "./SessionTime";
@@ -9,11 +12,22 @@ import StackSession from "../StackSession";
 import { cardDetails, btnDetails, agreementDetails, withdrawStakeAmountDetails } from "./content";
 import WithdrawStake from "./WithdrawStake";
 
-import SNETButton from "shared/dist/components/SNETButton";
+import { stakeActions } from "../../Services/Redux/actionCreators";
 
 const CreateStake = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
+
+  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
+
+  useEffect(() => {
+    try {
+      dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
+    } catch (_error) {
+      //console.log("error - ", error);
+    }
+  }, [dispatch, metamaskDetails]);
 
   const openPopup = () => {
     setShowPopup(true);
