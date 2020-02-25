@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -21,11 +21,18 @@ const LaunchService = ({ classes }) => {
   const { organization, serviceDetails } = useSelector(selectState);
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
+  const history = useHistory();
 
   const handlePublishToBlockchain = async () => {
     const { metadata_ipfs_hash } = await dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid));
     await dispatch(
-      aiServiceDetailsActions.publishToBlockchain(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags)
+      aiServiceDetailsActions.publishToBlockchain(
+        organization,
+        serviceDetails,
+        metadata_ipfs_hash,
+        serviceDetails.tags,
+        history
+      )
     );
   };
 
