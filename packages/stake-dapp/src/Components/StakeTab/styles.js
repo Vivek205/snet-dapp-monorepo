@@ -24,9 +24,6 @@ export const useStyles = MUITheme => ({
       fontSize: 20,
       textTransform: "capitalize",
       lineHeight: "25px",
-      "&:nth-child(n+3)": {
-        "@media(max-width:720px)": { display: "none" },
-      },
     },
     "& .MuiTab-textColorPrimary.Mui-selected": { fontWeight: 600 },
     "& .PrivateTabIndicator-colorPrimary-289": {
