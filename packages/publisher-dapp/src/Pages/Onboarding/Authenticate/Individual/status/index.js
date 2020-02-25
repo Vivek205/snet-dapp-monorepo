@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import { individualVerificationStatusList } from "../../../constant";
 import Pending from "./Pending";
@@ -13,7 +13,9 @@ const StatusComponents = {
 };
 
 const IndividualStatus = () => {
-  const status = useSelector(state => state.user.individualVerificationStatus);
+  // const status = useSelector(state => state.user.individualVerificationStatus);
+  const status = individualVerificationStatusList.APPROVED;
+
   const Component = StatusComponents[status];
 
   if (Component) {
