@@ -32,7 +32,6 @@ export const useStyles = MUITheme => ({
       "&:first-of-type": { marginRight: 40 },
     },
   },
-  pendingtitle: {
-    color: MUITheme.palette.warning,
-  },
+  pendingtitle: { color: MUITheme.palette.warning.main },
+  rejectedtitle: { color: MUITheme.palette.text.red },
 });

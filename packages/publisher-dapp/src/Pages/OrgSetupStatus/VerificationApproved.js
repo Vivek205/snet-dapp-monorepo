@@ -1,5 +1,5 @@
 import React from "react";
-import StatusBanner from "./StatusBanner";
+import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
 import { useHistory } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const VerificationApproved = () => {
   const shouldInviteMembersBeEnabled = () => email === ownerEmail;
 
   return (
-    <StatusBanner
+    <SNETStatusBanner
       title="Congratulations! Your organization entity is approved."
       img={orgSetupApprovedImg}
       description="Setup your company details and publish your organization entity to the blockchain.  After that you will be ready to create and publish your new services to the AI Marketplace.  You can also invite team members to help setup and manage your AI services more efficiently."
