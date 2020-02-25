@@ -20,7 +20,7 @@ const StatusComponents = {
 
 const IndividualStatus = ({ classes }) => {
   // const status = useSelector(state => state.user.individualVerificationStatus);
-  const status = individualVerificationStatusList.PENDING;
+  const status = individualVerificationStatusList.DENIED;
 
   const Component = StatusComponents[status];
 

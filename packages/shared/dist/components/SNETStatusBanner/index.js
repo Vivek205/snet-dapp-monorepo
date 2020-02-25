@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.statusTitleType = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -23,14 +23,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+var statusTitleType = {
+  PENDING: "PENDING",
+  REJECTED: "REJECTED"
+};
+exports.statusTitleType = statusTitleType;
+
 var SNETStatusBanner = function SNETStatusBanner(_ref) {
   var classes = _ref.classes,
       title = _ref.title,
       img = _ref.img,
       description = _ref.description,
       actions = _ref.actions,
-      pending = _ref.pending,
-      rejected = _ref.rejected;
+      type = _ref.type;
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
@@ -54,7 +59,7 @@ var SNETStatusBanner = function SNETStatusBanner(_ref) {
     className: classes.statusBannerContent
   }, _react.default.createElement(_Typography.default, {
     variant: "h6",
-    className: pending ? classes.pendingtitle : rejected ? classes.rejectedtitle : null
+    className: classes[statusTitleType[type]]
   }, title), _react.default.createElement(_Typography.default, null, description), actions.map(function (action) {
     return _react.default.createElement(_SNETButton.default, _extends({
       key: action.children

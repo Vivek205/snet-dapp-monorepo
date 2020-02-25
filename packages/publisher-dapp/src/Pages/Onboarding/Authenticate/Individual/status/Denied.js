@@ -1,5 +1,5 @@
 import React from "react";
-import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
 
 const Denied = () => {
   return (
@@ -11,7 +11,7 @@ const Denied = () => {
         { children: "access jumio verification", variant: "contained", color: "primary" },
         { children: "contact support", variant: "outlined", color: "primary" },
       ]}
-      rejected
+      type={statusTitleType.REJECTED}
     />
   );
 };
