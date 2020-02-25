@@ -21,7 +21,7 @@ const initialState = {
   phone: "",
   shortDescription: "",
   longDescription: "",
-  metadataIpfsHash: "",
+  metadataIpfsUri: "",
   contacts: [
     { type: ContactsTypes.GENERAL, email: "", phone: "" },
     { type: ContactsTypes.SUPPORT, email: "", phone: "" },

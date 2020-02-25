@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { progressText, onboardingSections } from "./constant";
+import { onboardingSections, progressText } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
 import isEmpty from "lodash/isEmpty";
@@ -10,18 +10,35 @@ import { OnboardingRoutes } from "./OnboardingRouter/Routes";
 import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
 import { OrganizationSetupRoutes } from "../OrganizationSetup/OrganizationSetupRouter/Routes";
+import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
+
+const selectState = state => ({
+  email: state.user.email,
+  ownerEmail: state.organization.owner,
+  orgStatus: state.organization.state.state,
+  orgUuid: state.organization.uuid,
+});
 
 const Onboarding = ({ location, history, classes }) => {
-  const { email, ownerEmail } = useSelector(state => ({
-    email: state.user.email,
-    ownerEmail: state.organization.owner,
-  }));
+  const { email, ownerEmail, orgStatus, orgUuid } = useSelector(selectState);
 
   useEffect(() => {
-    if (!isEmpty(email) && !isEmpty(ownerEmail) && email === ownerEmail) {
+    if (
+      !isEmpty(email) &&
+      !isEmpty(ownerEmail) &&
+      email === ownerEmail &&
+      orgStatus !== organizationSetupStatuses.PUBLISHED
+    ) {
       history.push(OrganizationSetupRoutes.DEFAULT_PAGE.path);
     }
   });
+
+  useEffect(() => {
+    if (orgStatus === organizationSetupStatuses.PUBLISHED) {
+      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
+    }
+  }, [orgStatus, orgUuid, history]);
 
   const activeSection = () => {
     const { pathname: path } = location;
