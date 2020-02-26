@@ -72,3 +72,22 @@ export const withdrawStakeAmountDetails = activeStake => [
     amount: fromWei(activeStake.windowMaxCap),
   },
 ];
+
+export const addStakeAmountDetails = activeStake => [
+  {
+    title: "Total Stake Amount",
+    amount: fromWei(activeStake.myStake),
+  },
+  {
+    title: "Total Max Reward",
+    amount: "TBD??",
+  },
+  {
+    title: "Current Pool Size",
+    amount: fromWei(activeStake.totalStakedAmount),
+  },
+  {
+    title: "Max Pool Size",
+    amount: fromWei(activeStake.windowMaxCap),
+  },
+];
