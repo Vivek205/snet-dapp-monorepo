@@ -1,10 +1,10 @@
-export const useStyles = theme => ({
+export const useStyles = menuItem => ({
   button: {
     "& span": {
       textTransform: "none",
     },
   },
   menuItem: {
-    fontFamily: theme.typography.primary.main,
+    fontFamily: menuItem.typography.fontFamily,
   },
 });

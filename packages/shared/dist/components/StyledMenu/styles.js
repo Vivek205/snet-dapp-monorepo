@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(menuItem) {
   return {
     button: {
       "& span": {
@@ -13,7 +13,7 @@ var useStyles = function useStyles(theme) {
       }
     },
     menuItem: {
-      fontFamily: theme.typography.primary.main
+      fontFamily: menuItem.typography.fontFamily
     }
   };
 };

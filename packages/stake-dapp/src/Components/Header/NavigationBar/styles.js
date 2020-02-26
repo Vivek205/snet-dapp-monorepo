@@ -9,8 +9,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& li": {
       width: "auto",
       padding: 0,
-      marginRight: 49,
-      "&:last-of-type": { marginRight: 0 },
+      marginRight: 25,
     },
   },
   navLink: {
@@ -49,6 +48,25 @@ export const useStyles = makeStyles(MUITheme => ({
     "& .MuiSelect-selectMenu": {
       color: MUITheme.palette.text.lightGrey,
       fontSize: 20,
+    },
+  },
+  headerDropDown: {
+    "& > div": {
+      display: "flex",
+      alignItems: "flex-start",
+    },
+    "& button": {
+      padding: 0,
+      "& span": {
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 16,
+        "&:hover": { color: MUITheme.palette.primary.main },
+      },
+    },
+    "& svg": {
+      paddingTop: 2,
+      color: MUITheme.palette.text.lightGrey,
+      "&:hover": { color: MUITheme.palette.primary.main },
     },
   },
 }));
