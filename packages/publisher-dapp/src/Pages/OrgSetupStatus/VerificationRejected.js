@@ -1,13 +1,14 @@
 import React from "react";
 import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const VerificationRejected = () => {
   const history = useHistory();
+  const { orgUuid } = useParams();
 
   const handleOrgSetup = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path);
+    history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
   };
 
   return (

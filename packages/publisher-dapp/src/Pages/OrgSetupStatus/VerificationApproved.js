@@ -15,7 +15,7 @@ const VerificationApproved = () => {
   const history = useHistory();
 
   const handleOrgSetup = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path);
+    history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
   };
 
   const handleInviteSetup = () => {
