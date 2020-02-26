@@ -15,6 +15,10 @@ export const LoaderContent = {
     title: "Waiting for Blockchain Submission",
     content: "Waiting for the transaction to get completed in the blockchain",
   },
+  ORG_SETUP_CREATE: {
+    title: "Creating Organization",
+    content: "Just a moment. We are creating organization to draft",
+  },
   ORG_SETUP_FINISH_LATER: {
     title: "Saving Draft",
     content: "Just a moment. We are saving your changes to draft",

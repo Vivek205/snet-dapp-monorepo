@@ -26,7 +26,7 @@ const GlobalRouter = () => {
     <ReactRouter>
       <Suspense fallback={<LinearProgress />}>
         <Switch>
-          <Route path="/" exact component={routes.OVERVIEW.component} />
+          <Route path="/" exact component={routes.LANDING.component} />
           {Object.values(routes).map(route => {
             if (route.redirectTo) {
               return (

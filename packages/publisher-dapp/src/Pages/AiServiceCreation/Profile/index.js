@@ -140,7 +140,7 @@ const Profile = ({ classes, _location }) => {
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
     setServiceTouchFlag();
     const { url } = await dispatch(
-      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, mimeType, orgUuid, serviceDetails.uuid)
+      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
     dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
   };

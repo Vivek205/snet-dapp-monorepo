@@ -25,4 +25,5 @@ export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   WALLET: "/wallet",
   REGISTER_WALLET: "/wallet/register",
+  ACTIVE_STAKE_WINDOW: (status, staker) => `/stake-window?status=${status}&staker=${staker}`,
 };
