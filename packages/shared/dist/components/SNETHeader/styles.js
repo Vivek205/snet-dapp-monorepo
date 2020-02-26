@@ -14,7 +14,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     appBar: {
       padding: "8px 15px",
       flexDirection: "row",
-      alignItems: "center"
+      alignItems: "center",
+      zIndex: 1110
     },
     logoContainer: _defineProperty({
       display: "flex",

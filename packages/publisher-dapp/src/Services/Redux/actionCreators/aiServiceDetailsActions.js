@@ -171,6 +171,10 @@ const generateSaveServicePayload = serviceDetails => {
         url: serviceDetails.assets.heroImage.url,
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
+      demo_files: {
+        url: serviceDetails.assets.demoFiles.url,
+        ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
+      },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
@@ -276,10 +280,12 @@ const parseServiceDetails = (data, serviceUuid) => {
             ipfsHash: "",
           }
         : {},
-      demoFiles: {
-        url: "",
-        ipfsHash: "",
-      },
+      demoFiles: data.assets.demo_files
+        ? {
+            url: data.assets.demo_files.url,
+            ipfsHash: data.assets.demo_files.ipfs_hash,
+          }
+        : {},
       protoFiles: data.assets.proto_files
         ? {
             url: data.assets.proto_files.url,
@@ -438,10 +444,10 @@ const uploadFileAPI = (assetType, fileBlob, orgUuid, serviceUuid) => async dispa
   return response;
 };
 
-export const uploadFile = (assetType, fileBlob, contentType, orgUuid, serviceUuid) => async dispatch => {
+export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.UPLOAD_FILE));
-    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBlob, contentType, orgUuid, serviceUuid));
+    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBlob, orgUuid, serviceUuid));
     if (error.code) {
       throw new APIError(error.message);
     }

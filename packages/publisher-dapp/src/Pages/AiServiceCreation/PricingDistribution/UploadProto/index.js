@@ -40,7 +40,7 @@ const UploadProto = () => {
           setSelectedFile({ name, size, type });
 
           const { url } = await dispatch(
-            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, type, orgUuid, serviceUuid)
+            aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
           dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });

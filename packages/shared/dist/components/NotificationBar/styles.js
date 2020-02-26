@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     NotificationBar: {
       paddingLeft: "0 !important",
@@ -23,16 +23,16 @@ var useStyles = function useStyles(theme) {
       }
     },
     WARNING: {
-      backgroundColor: theme.palette.error,
-      color: theme.palette.text.primary,
+      backgroundColor: MUITheme.palette.background.warningBox,
+      color: MUITheme.palette.text.primary,
       "& svg": {
         marginRight: 17,
-        color: theme.palette.text.primary
+        color: MUITheme.palette.text.primary
       }
     },
     INFORMATION: {
-      backgroundColor: theme.palette.warning,
-      color: theme.palette.text.white,
+      backgroundColor: MUITheme.palette.background.infoBox,
+      color: MUITheme.palette.text.white,
       "& svg": {
         marginRight: 21
       }
