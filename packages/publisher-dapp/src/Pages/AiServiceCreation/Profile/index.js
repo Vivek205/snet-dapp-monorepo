@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-
+import { useHistory, useParams } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,55 +13,63 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
-import { serviceValidationConstraints } from "./validationConstraints";
+import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { keyCodes } from "shared/dist/utils/keyCodes";
-//import { mimeTypeToFileType } from "shared/dist/utils/image";
-import { imgSrcInBase64 } from "shared/dist/utils/image";
-
 import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { useStyles } from "./styles";
+import { assetTypes } from "../../../Utils/FileUpload";
+import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
+import ServiceIdAvailability from "./ServiceIdAvailability";
+
+let validateTimeout = "";
+
+const selectState = state => ({
+  serviceDetails: state.aiServiceDetails,
+  isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+});
 
 const Profile = ({ classes, _location }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
+  const { orgUuid } = useParams();
+  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
   const [alert, setAlert] = useState({});
-
-  // TODO: Get from the defaults
-  const [mimeType, setMimeType] = useState("");
-  //const [url, SetURL] = useState(undefined);
-  const url = "";
-  const [data, setData] = useState("");
-
-  // TODO: Need to get the Org UUID from Redux
-  const orgUuid = "test_org_uuid";
 
   const setServiceTouchFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
     dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
   };
 
-  const handleControlChange = event => {
-    setServiceTouchFlag();
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(event.target.name, event.target.value));
-  };
-
-  const validateServiceId = async event => {
+  const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
     try {
-      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, event.target.value));
+      await dispatch(aiServiceDetailsActions.validateServiceId(orgUuid, serviceId));
     } catch (error) {
       dispatch(aiServiceDetailsActions.setServiceAvailability(""));
     }
+  };
+
+  const debouncedValidate = serviceId => {
+    if (validateTimeout) {
+      clearTimeout(validateTimeout);
+    }
+    validateTimeout = setTimeout(validateServiceId(serviceId), 200);
+  };
+
+  const handleControlChange = event => {
+    const { name, value } = event.target;
+    setServiceTouchFlag();
+    if (name === "id") {
+      debouncedValidate(value);
+    }
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
 
   const handleContinue = async () => {
@@ -71,7 +77,7 @@ const Profile = ({ classes, _location }) => {
       const serviceName = serviceDetails.name;
       const serviceId = serviceDetails.id;
 
-      const isNotValid = validator({ serviceName, serviceId }, serviceValidationConstraints);
+      const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
 
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
@@ -82,7 +88,9 @@ const Profile = ({ classes, _location }) => {
         await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
       }
 
-      history.push(ServiceCreationRoutes.DEMO.path);
+      history.push(
+        ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
+      );
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -127,19 +135,14 @@ const Profile = ({ classes, _location }) => {
     setServiceTouchFlag();
   };
 
-  const handleImageChange = (data, mimeType) => {
-    //const fileType = mimeTypeToFileType(mimeType);
-    // Call API to Store the Image
-    setData(data);
-    setMimeType(mimeType);
+  const handleImageChange = async (data, mimeType, _encoding, filename) => {
+    const arrayBuffer = base64ToArrayBuffer(data);
+    const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
     setServiceTouchFlag();
-  };
-
-  const imgSource = () => {
-    if (url) {
-      return url;
-    }
-    return Boolean(data) ? imgSrcInBase64(mimeType, data) : "";
+    const { url } = await dispatch(
+      aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
+    );
+    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
   };
 
   return (
@@ -171,15 +174,12 @@ const Profile = ({ classes, _location }) => {
             description="The Id of your service to uniquely identity in the organization."
             value={serviceDetails.id}
             onChange={handleControlChange}
-            onBlur={validateServiceId}
           />
-          <div>
-            <AlertText
-              type={serviceDetails.availability === "AVAILABLE" ? alertTypes.INFO : alertTypes.ERROR}
-              message={!isEmpty(serviceDetails.id) ? `Service Id is ${serviceDetails.availability}` : ""}
-            />
-          </div>
-
+          <ServiceIdAvailability
+            serviceDetails={serviceDetails}
+            classes={classes}
+            loading={isValidateServiceIdLoading}
+          />
           <SNETTextarea
             showInfoIcon
             name="shortDescription"
@@ -250,14 +250,15 @@ const Profile = ({ classes, _location }) => {
                   disableUrlTab
                   imageName="service-hero-image"
                   imageDataFunc={handleImageChange}
-                  outputImage={imgSource()}
+                  outputImage={serviceDetails.assets.heroImage.url}
                   outputImageName="service_hero_image"
-                  outputFormat={mimeType}
+                  outputFormat="image/*"
                   disableComparisonTab
-                  disableInputTab={Boolean(data) || Boolean(url)}
+                  disableInputTab={Boolean(serviceDetails.assets.heroImage.url)}
                   outputImageType="url"
                   disableResetButton={false}
                   disableDownloadButton={true}
+                  // returnByteArray
                 />
               </div>
               <div className={classes.profileImgContent}>
@@ -273,11 +274,11 @@ const Profile = ({ classes, _location }) => {
             </div>
             <div className={classes.images}>
               <div className={classes.largeImg}>
-                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Large Size Image" />
+                <img src={serviceDetails.assets.heroImage.url || DummyCardImg} alt="Large Size" />
                 <Typography className={classes.imgDimensionDetails}>302 x 168 | 32-bit PNG or JPG </Typography>
               </div>
               <div className={classes.smallerImg}>
-                <img src={Boolean(data) ? `data:${mimeType};base64,${data}` : DummyCardImg} alt="Small Size Image" />
+                <img src={serviceDetails.assets.heroImage.url || DummyCardImg} alt="Small Size" />
                 <Typography className={classes.imgDimensionDetails}>207 x 115 | 32-bit PNG or JPG </Typography>
               </div>
             </div>

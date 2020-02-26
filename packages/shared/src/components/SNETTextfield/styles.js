@@ -16,7 +16,7 @@ export const useStyles = MUITheme => ({
     flexDirection: "column",
   },
   description: {
-    paddingLeft: 30,
+    paddingLeft: 40,
     "& p": {
       marginTop: 20,
       color: MUITheme.palette.text.lightGrey,

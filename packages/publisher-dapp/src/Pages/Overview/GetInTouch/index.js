@@ -3,12 +3,13 @@ import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 
 import { getInTouch } from "../content";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { useStyles } from "./styles";
-import StyledButton from "shared/dist/components/StyledButton";
+
+import SNETTextfield from "shared/dist/components/SNETTextfield";
+import SNETButton from "shared/dist/components/SNETButton";
 
 const GetInTouch = ({ classes }) => {
   return (
@@ -17,18 +18,9 @@ const GetInTouch = ({ classes }) => {
         <Typography variant="h2">{getInTouch.title}</Typography>
         <Typography variant="body2">{getInTouch.description}</Typography>
         <form>
-          <TextField
-            id="outlined-number"
-            label="Email"
-            type="text"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-            variant="outlined"
-          />
+          <SNETTextfield name="email" label="email" />
           <Link to={GlobalRoutes.ENROLL.path}>
-            <StyledButton btnText="get in touch" type="blue" />
+            <SNETButton children="get in touch" color="primary" variant="contained" />
           </Link>
         </form>
       </Grid>

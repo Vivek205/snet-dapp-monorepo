@@ -30,4 +30,21 @@ export const serviceCreationSections = {
   },
 };
 
+export const serviceCreationStatus = {
+  NOT_STARTED: "",
+  DRAFT: "DRAFT",
+  APPROVAL_PENDING: "APPROVAL_PENDING",
+  APPROVED: "APPROVED",
+  REJECTED: "REJECTED",
+  BLOCKCHAIN_SUBMITTED: "BLOCKCHAIN_SUBMITTED",
+  PUBLISHED: "PUBLISHED",
+};
+
 export const progressText = ["Ai Service Profile", "Setup Demo", "Pricing & Distribution", "Submit for Review"];
+
+export const serviceData = [
+  {
+    status: "Submitted For Review",
+    feedback: "",
+  },
+];

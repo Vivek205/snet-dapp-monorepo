@@ -37,6 +37,8 @@ const BasicDetails = ({ classes }) => {
         label="Organization Name"
         description="The organziation name is displayed to users on the AI Marketplace."
         onChange={handleFormInputsChange}
+        minCount="15"
+        maxCount="50"
       />
       <SNETTextarea
         label="Short Description"
@@ -47,6 +49,7 @@ const BasicDetails = ({ classes }) => {
         name="shortDescription"
         value={shortDescription}
         onChange={handleFormInputsChange}
+        showInfoIcon
       />
       <SNETTextarea
         label="Long Description"
@@ -57,6 +60,7 @@ const BasicDetails = ({ classes }) => {
         name="longDescription"
         value={longDescription}
         onChange={handleFormInputsChange}
+        showInfoIcon
       />
       <div className={classes.orgWebsiteUrl}>
         <SNETTextfield

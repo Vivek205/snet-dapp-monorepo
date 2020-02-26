@@ -11,11 +11,16 @@ export const APIEndpoints = {
     name: "signer",
     endpoint: process.env.REACT_APP_SIGNER_ENDPOINT,
   },
+  UTILITY: {
+    name: "utility",
+    endpoint: process.env.REACT_APP_UTILITY_ENDPOINT,
+  },
 };
 
 export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
+  CREATE_ORG: "/org/create",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
   GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
@@ -26,8 +31,12 @@ export const APIPaths = {
   VERIFY_INIVITATION: "/org/member/verify",
   AI_SERVICE_LIST: orgUuid => `/org/${orgUuid}/services`,
   AI_CREATE_SERVICE: orgUuid => `/org/${orgUuid}/service`,
-  SAVE_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
+  SAVE_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/save`,
+  SUBMIT_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/submit`,
+  PUBLISH_TO_BLOCKCHAIN: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/ipfs_publish`,
   FETCH_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
   AI_SERVICE_ID_VALIDATE: (orgUuid, serviceId) => `/org/${orgUuid}/verify?service_id=${serviceId}`,
+  SAVE_SERVICE_TRANSACTION: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/transaction`,
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
+  UPLOAD_FILE: "/upload",
 };

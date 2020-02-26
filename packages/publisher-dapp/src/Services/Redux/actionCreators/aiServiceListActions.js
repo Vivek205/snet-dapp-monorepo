@@ -6,6 +6,7 @@ import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
 import { loaderActions } from "./";
+import { defaultPagination } from "../reducers/aiServiceListReducer";
 
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
 export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
@@ -53,7 +54,7 @@ const parseAiServiceData = service => ({
   orgUuid: service.org_uuid,
   uuid: service.service_uuid,
   id: service.service_id,
-  state: service.state,
+  state: service.service_state,
   displayName: service.display_name,
   shortDescription: service.short_description,
   description: service.description,
@@ -83,7 +84,7 @@ const parseAiServiceData = service => ({
 
 const parseAiServiceListResponse = response => response.map(parseAiServiceData);
 
-export const getAiServiceList = (orgUuid, pagination) => async dispatch => {
+export const getAiServiceList = (orgUuid, pagination = defaultPagination) => async dispatch => {
   try {
     dispatch(loaderActions.startAiServiceListLoader());
     const { data, error } = await dispatch(getAiServiceListAPI(orgUuid, pagination));

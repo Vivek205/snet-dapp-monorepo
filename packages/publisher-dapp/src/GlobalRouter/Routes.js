@@ -85,13 +85,14 @@ export const GlobalRoutes = {
   },
   SERVICES: {
     name: "services",
-    path: "/services",
+    path: "/org/:orgUuid/services",
     component: AiServicesComponent,
   },
   AI_SERVICE_CREATION: {
     name: "ai service creation",
-    path: "/servicecreation",
+    path: "/org/:orgUuid/service/:serviceUuid/create",
     component: AiServiceCreationComponent,
+    match: new RegExp(/org\/[^]*\/service\/[^]*\/create?/gi),
   },
 };
 

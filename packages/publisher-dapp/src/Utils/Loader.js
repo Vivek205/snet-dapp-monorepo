@@ -15,6 +15,10 @@ export const LoaderContent = {
     title: "Waiting for Blockchain Submission",
     content: "Waiting for the transaction to get completed in the blockchain",
   },
+  ORG_SETUP_CREATE: {
+    title: "Creating Organization",
+    content: "Just a moment. We are creating organization to draft",
+  },
   ORG_SETUP_FINISH_LATER: {
     title: "Saving Draft",
     content: "Just a moment. We are saving your changes to draft",
@@ -56,12 +60,44 @@ export const LoaderContent = {
     title: "Publishing Members to blockchain",
     content: "Just a moment. We are publishing members to the blockchain",
   },
+  GET_ALL_SERVICES: {
+    title: "Retrieving the list of services",
+    content: "Just a moment. We are retrieving the list of services",
+  },
+  INIT_SERVICE_CREATION: {
+    title: "Initializing Service Creation",
+    content: "Just a moment. We are initializing the service creation page",
+  },
   CREATE_SERVICE: {
     title: "Creating Service",
     content: "Just a moment. We are creating a service",
   },
+  SAVE_SERVICE_DETAILS: {
+    title: "Saving service details",
+    content: "Just a moment. We are saving the service details",
+  },
   FREE_CALL_SIGNER_ADDRESS: {
     title: "Retrieving Signer Address",
     content: "Just a moment. We are creating a service",
+  },
+  SUBMIT_SERVICE_FOR_REVIEW: {
+    title: "Submitting for review",
+    content: "Just a moment. We are submitting the service for review",
+  },
+  PUBLISH_SERVICE_TO_IPFS: {
+    title: "Publish service to IPFS",
+    content: "Just a moment. We are publishing to IPFS",
+  },
+  PUBLISH_SERVICE_TO_BLOCKCHAIN: {
+    title: "Publish service to blockchain",
+    content: "Just a moment. We are publishing to blockchain",
+  },
+  SAVE_SERVICE_TRANSACTION: {
+    title: "Saving service transaction",
+    content: "Just a moment. We are saving the transaction hash",
+  },
+  UPLOAD_FILE: {
+    title: "Uploading...",
+    content: "Just a moment. We are uploading the file",
   },
 };

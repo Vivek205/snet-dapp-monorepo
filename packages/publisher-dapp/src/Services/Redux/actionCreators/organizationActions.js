@@ -11,8 +11,9 @@ import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../..
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
-export const SET_ALL_ATTRIBUTES = "SET_ALL_ATTRIBUTES";
+export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
 export const RESET_ORGANIZATION_DATA = "RESET_ORGANIZATION_DATA";
 export const SET_CONTACTS = "SET_CONTACTS";
@@ -30,7 +31,7 @@ export const SET_ORG_STATE_UPDATED_BY = "SET_ORG_STATE_UPDATED_BY";
 export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 
-export const setAllAttributes = value => ({ type: SET_ALL_ATTRIBUTES, payload: value });
+export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
 export const setOneBasicDetail = (name, value) => ({ type: SET_ONE_BASIC_DETAIL, payload: { [name]: value } });
 
@@ -61,7 +62,7 @@ export const setOrgSameMailingAddress = value => ({ type: SET_ORG_SAME_MAILING_A
 
 const payloadForSubmit = organization => {
   // prettier-ignore
-  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsHash,
+  const { id, uuid,duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
     contacts, assets, ownerFullName, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
@@ -73,7 +74,7 @@ const payloadForSubmit = organization => {
     duns_no: duns,
     org_type: type,
     owner_name: ownerFullName,
-    metadata_ipfs_hash: metadataIpfsHash,
+    metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
     url: website,
@@ -108,11 +109,11 @@ const payloadForSubmit = organization => {
     id: group.id,
     payment_address: group.paymentAddress,
     payment_config: {
-      payment_expiration_threshold: group.paymentConfig.paymentExpirationThreshold,
+      payment_expiration_threshold: Number(group.paymentConfig.paymentExpirationThreshold),
       payment_channel_storage_type: group.paymentConfig.paymentChannelStorageType,
       payment_channel_storage_client: {
-        connection_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
-        request_timeout: group.paymentConfig.paymentChannelStorageClient.connectionTimeout,
+        connection_timeout: `${group.paymentConfig.paymentChannelStorageClient.connectionTimeout}s`,
+        request_timeout: `${group.paymentConfig.paymentChannelStorageClient.requestTimeout}s`,
         endpoints: group.paymentConfig.paymentChannelStorageClient.endpoints,
       },
     },
@@ -178,8 +179,7 @@ export const getStatus = async dispatch => {
     id: selectedOrg.org_id,
     uuid: selectedOrg.org_uuid,
     ownerFullName: selectedOrg.owner_name,
-    // TODO selectedOrg].name to data[0].org_name
-    name: selectedOrg.name,
+    name: selectedOrg.org_name,
     type: selectedOrg.org_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
@@ -203,8 +203,8 @@ export const getStatus = async dispatch => {
         paymentExpirationThreshold: group.payment_config.payment_expiration_threshold,
         paymentChannelStorageType: group.payment_config.payment_channel_storage_type,
         paymentChannelStorageClient: {
-          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
-          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout,
+          connectionTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
+          requestTimeout: group.payment_config.payment_channel_storage_client.connection_timeout.replace("s", ""),
           endpoints: group.payment_config.payment_channel_storage_client.endpoints,
         },
       },
@@ -236,7 +236,7 @@ export const finishLater = organization => async dispatch => {
   }
 };
 
-export const submitForApprovalAPI = payload => async dispatch => {
+const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.ORG_SETUP;
@@ -260,6 +260,29 @@ export const submitForApproval = organization => async dispatch => {
   }
 };
 
+const createOrganizationAPI = payload => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.CREATE_ORG;
+  const apiOptions = initializeAPIOptions(token, payload);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const createOrganization = organization => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_CREATE));
+    const payload = payloadForSubmit(organization);
+    const { status, error } = await dispatch(createOrganizationAPI(payload));
+    if (status !== responseStatus.SUCCESS) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
 const publishToIPFSAPI = uuid => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
@@ -272,13 +295,13 @@ export const publishToIPFS = uuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_PUBLISH_TO_IPFS));
     const { status, data, error } = await dispatch(publishToIPFSAPI(uuid));
-    dispatch(setOneBasicDetail("metadataIpfsHash", data.metadata_ipfs_hash));
+    dispatch(setOneBasicDetail("metadataIpfsUri", data.metadata_ipfs_uri));
     if (status !== responseStatus.SUCCESS) {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
-    return data.metadata_ipfs_hash;
+    return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -307,16 +330,17 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 
-export const createAndSaveTransaction = (organization, ipfsHash) => async dispatch => {
+export const createAndSaveTransaction = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
     const sdk = await initSDK();
     const orgId = organization.id;
-    const orgMetadataURI = ipfsHash;
+    const orgMetadataURI = metadataIpfsUri;
     const members = [organization.ownerAddress];
     dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
     return new Promise((resolve, reject) => {
       const method = sdk._registryContract
         .createOrganization(orgId, orgMetadataURI, members)
+        .send()
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
@@ -324,6 +348,7 @@ export const createAndSaveTransaction = (organization, ipfsHash) => async dispat
         })
         .once(blockChainEvents.CONFIRMATION, async () => {
           dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           dispatch(loaderActions.stopAppLoader());
           await method.off();
         })

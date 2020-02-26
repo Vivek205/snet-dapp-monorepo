@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
       flexDirection: "column"
     },
     description: _defineProperty({
-      paddingLeft: 30,
+      paddingLeft: 40,
       "& p": _defineProperty({
         marginTop: 20,
         color: MUITheme.palette.text.lightGrey,
