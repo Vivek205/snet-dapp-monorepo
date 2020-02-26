@@ -2,7 +2,7 @@ export const useStyles = MUITheme => ({
   membersWithAccessContainer: {
     paddingBottom: 30,
     borderRadius: 4,
-    marginTop: 25,
+    marginTop: 18,
     background: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
     "& h6": {

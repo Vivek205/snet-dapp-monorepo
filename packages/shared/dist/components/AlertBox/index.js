@@ -17,6 +17,10 @@ var _styles2 = require("./styles");
 
 var _AlertLink = _interopRequireDefault(require("./AlertLink"));
 
+var _AlertIcon = _interopRequireDefault(require("./AlertIcon"));
+
+var _AlertHeader = _interopRequireDefault(require("./AlertHeader"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var alertTypes = {
@@ -38,7 +42,9 @@ var AlertBox = function AlertBox(_ref) {
       message = _ref.message,
       type = _ref.type,
       link = _ref.link,
-      children = _ref.children;
+      children = _ref.children,
+      icon = _ref.icon,
+      header = _ref.header;
 
   if (children) {
     return _react.default.createElement("p", {
@@ -54,7 +60,21 @@ var AlertBox = function AlertBox(_ref) {
     }));
   }
 
-  return null;
+  if (!message) {
+    return null;
+  }
+
+  return _react.default.createElement("div", {
+    className: (0, _clsx.default)(classes.alertBoxContainer, classes[backgroundColor[type]])
+  }, _react.default.createElement(_AlertIcon.default, {
+    icon: icon
+  }), _react.default.createElement("div", {
+    className: classes.content
+  }, _react.default.createElement(_AlertHeader.default, {
+    header: header
+  }), _react.default.createElement("p", null, message, " ", _react.default.createElement(_AlertLink.default, {
+    link: link
+  }))));
 };
 
 AlertBox.propTypes = {

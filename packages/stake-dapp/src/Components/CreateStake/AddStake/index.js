@@ -15,7 +15,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDate, stakeMapIndex, minStake }) => {
+const AddStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDate, stakeMapIndex, minStake }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -28,7 +28,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeSta
         <Card className={classes.card}>
           <CardHeader
             className={classes.CardHeader}
-            title="Withdraw Stake Amount"
+            title="Add Stake Amount"
             action={
               <IconButton onClick={handleCancel}>
                 <CloseIcon />
@@ -81,4 +81,4 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeSta
   );
 };
 
-export default WithdrawStake;
+export default AddStake;

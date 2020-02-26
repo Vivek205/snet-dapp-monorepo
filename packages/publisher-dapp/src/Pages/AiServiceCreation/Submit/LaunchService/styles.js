@@ -81,11 +81,13 @@ export const useStyles = MUITheme => ({
   },
   downCaretIcon: { color: MUITheme.palette.text.lightGrey },
   alertBoxBtnContainer: {
+    marginTop: 25,
     textAlign: "center",
-    "& p": { margin: "25px 32px 30px" },
+    "& > div": { margin: "0 32px" },
+    "& p": { margin: "0 32px 20px" },
     "& button": {
       padding: "13px 135px 13px",
-      marginBottom: 32,
+      margin: "25px 0 32px",
     },
   },
   messageReviewContainer: {

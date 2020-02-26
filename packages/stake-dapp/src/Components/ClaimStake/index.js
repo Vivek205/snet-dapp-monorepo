@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { firstCardDetails, firstBtnDetails, secondCardDetails, secondBtnDetails } from "./content";
 import { useStyles } from "./styles";
 import AccountBalance from "../AccountBalance";
-import Card from "../StackSession/Card";
+import Card from "../StakeSession/Card";
 
 import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";

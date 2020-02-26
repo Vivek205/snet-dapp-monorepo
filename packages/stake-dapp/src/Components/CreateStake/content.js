@@ -1,43 +1,47 @@
-export const cardDetails = [
+import { fromWei } from "../../Utils/GenHelperFunctions";
+
+export const cardDetails = activeStake => [
   {
     title: "Stack Session",
-    value: "0",
+    value: fromWei(activeStake.myStake),
     unit: "AGI",
   },
   {
     title: "Max Reward",
-    value: "0",
+    value: "TBD??",
     unit: "AGI",
   },
   {
     title: "Incubating Period",
-    value: "30",
+    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
     unit: "days",
   },
   {
     title: "Current Stakers",
-    value: "25",
+    value: activeStake.totalStakers,
     unit: "people",
   },
   {
     title: "Current Pool Size",
-    value: "7,000",
+    value: fromWei(activeStake.totalStakedAmount),
     unit: "AGI",
   },
   {
     title: "Max Pool Size",
-    value: "10,000",
+    value: fromWei(activeStake.windowMaxCap),
     unit: "AGI",
   },
 ];
 
 export const btnDetails = [
   {
+    action: "withdraw",
     color: "primary",
     variant: "text",
     text: "widthdraw",
   },
   {
+    action: "addStake",
     color: "primary",
     variant: "contained",
     text: "add stake amount",
@@ -50,21 +54,21 @@ export const agreementDetails = {
     "Renewing stakes (and profit margins) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
 };
 
-export const withdrawStakeAmountDetails = [
+export const withdrawStakeAmountDetails = activeStake => [
   {
     title: "Total Stake Amount",
-    amount: "600.023",
+    amount: fromWei(activeStake.myStake),
   },
   {
     title: "Total Max Reward",
-    amount: "345",
+    amount: "TBD??",
   },
   {
     title: "Current Pool Size",
-    amount: "7,004",
+    amount: fromWei(activeStake.totalStakedAmount),
   },
   {
     title: "Max Pool Size",
-    amount: "10,000",
+    amount: fromWei(activeStake.windowMaxCap),
   },
 ];

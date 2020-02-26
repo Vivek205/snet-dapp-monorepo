@@ -1,7 +1,8 @@
-export const useStyles = MUITheme => ({
-  basicDetailsContainer: { padding: "16px 21px 0 24px" },
+export const useStyles = () => ({
+  basicDetailsContainer: { padding: "16px 24px 0" },
   description: {
-    paddingBottom: 14,
+    padding: "0 0 25px !important",
+    borderBottomWidth: "0 !important",
     "& + div": {
       padding: "0 30px",
       marginBottom: 16,
