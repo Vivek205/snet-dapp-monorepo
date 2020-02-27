@@ -22,7 +22,10 @@ export const useStyles = makeStyles(MUITheme => ({
       letterSpacing: "0.29px",
       textTransform: "uppercase",
     },
-    "& button": { width: "100%" },
+    "& button": {
+      width: "100%",
+      marginTop: 25,
+    },
     [MUITheme.breakpoints.down("xs")]: {
       width: "auto",
       margin: "40px 30px 0",
@@ -40,7 +43,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& div": { color: "#212121 !important" },
   },
   checkboxAndLink: {
-    margin: "10px 0 91px",
+    margin: "10px 0 65px",
     display: "flex",
     alignItems: "baseline",
     justifyContent: "space-between",

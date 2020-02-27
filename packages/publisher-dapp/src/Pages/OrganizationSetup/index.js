@@ -18,7 +18,7 @@ const OrganizationSetup = ({ classes, location, history }) => {
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     } else if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
       history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
     }
@@ -31,12 +31,11 @@ const OrganizationSetup = ({ classes, location, history }) => {
   const activeSection = () => {
     const { pathname: path } = location;
     const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
-
-    if (path.includes(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path)) {
+    if (path.includes(path.match(OrganizationSetupRoutes.ORGANIZATION_PROFILE.match))) {
       return ORGANIZATION_PROFILE;
-    } else if (path.includes(OrganizationSetupRoutes.REGION.path)) {
+    } else if (path.includes(path.match(OrganizationSetupRoutes.REGION.match))) {
       return REGION;
-    } else if (path.includes(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path)) {
+    } else if (path.includes(path.match(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.match))) {
       return PUBLISH_TO_BLOCKCHAIN;
     }
     return ORGANIZATION_PROFILE;
