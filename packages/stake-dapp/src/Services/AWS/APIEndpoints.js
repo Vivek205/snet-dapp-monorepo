@@ -26,4 +26,7 @@ export const APIPaths = {
   WALLET: "/wallet",
   REGISTER_WALLET: "/wallet/register",
   ACTIVE_STAKE_WINDOW: (status, staker) => `/stake-window?status=${status}&staker=${staker}`,
+  ACTIVE_USER_STAKE: staker => `/stake-holder/active?address=${staker}`,
+  CLAIM_STAKE: staker => `/stake-holder/claim?address=${staker}`,
+  STAKE_TRANSACTIONS: staker => `/transactions?address=${staker}`,
 };

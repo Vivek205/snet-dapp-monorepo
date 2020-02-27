@@ -4,14 +4,20 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const Button = ({ details }) => {
+const Button = ({ details, handleClick }) => {
   const classes = useStyles();
 
-  if (details) {
+  if ((details, handleClick)) {
     return (
       <div className={classes.btnContainer}>
         {details.map(button => (
-          <SNETButton key={button.text} color={button.color} variant={button.variant} children={button.text} />
+          <SNETButton
+            key={button.text}
+            color={button.color}
+            variant={button.variant}
+            children={button.text}
+            onClick={_e => handleClick(button.action)}
+          />
         ))}
       </div>
     );
