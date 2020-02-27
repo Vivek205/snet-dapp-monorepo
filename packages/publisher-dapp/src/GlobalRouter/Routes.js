@@ -97,7 +97,7 @@ export const GlobalRoutes = {
     match: new RegExp(/org\/[^]*\/service\/[^]*\/create/gi),
   },
   WALLET_ACCOUNT: {
-    name: "wallet accoun",
+    name: "wallet account",
     path: "/walletaccount",
     component: WalletAccountComponent,
   },
