@@ -382,13 +382,13 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
   });
 };
 
-export const createAndSaveTransaction = (organization, metadataIpfsUri, history) => async dispatch => {
+export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
     const sdk = await initSDK();
     const orgId = organization.id;
     const orgMetadataURI = metadataIpfsUri;
     const OrganizationDetailsFromBlockChain = await sdk._registryContract.getOrganizationById(orgId).call();
-    if (!OrganizationDetailsFromBlockChain) {
+    if (!OrganizationDetailsFromBlockChain.found) {
       return await dispatch(registerOrganizationInBlockChain(orgId, orgMetadataURI, history));
     }
     return await dispatch(updateOrganizationInBlockChain(orgId, orgMetadataURI, history));
