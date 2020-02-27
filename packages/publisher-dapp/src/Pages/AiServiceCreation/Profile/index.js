@@ -204,6 +204,7 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextfield
+            disabled={serviceDetails.foundInBlockchain}
             icon
             name="tags"
             label="Service Tags"
@@ -215,6 +216,7 @@ const Profile = ({ classes, _location }) => {
           <Card className={classes.card}>
             {serviceDetails.tags.map(tag => (
               <Chip
+                disabled={serviceDetails.foundInBlockchain}
                 className={classes.chip}
                 key={tag}
                 label={tag}
