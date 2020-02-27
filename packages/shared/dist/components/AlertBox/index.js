@@ -58,23 +58,8 @@ var AlertBox = function AlertBox(_ref) {
     }, message, " ", _react.default.createElement(_AlertLink.default, {
       link: link
     }));
-  }
-
-  if (!message) {
+    
     return null;
-  }
-
-  return _react.default.createElement("div", {
-    className: (0, _clsx.default)(classes.alertBoxContainer, classes[backgroundColor[type]])
-  }, _react.default.createElement(_AlertIcon.default, {
-    icon: icon
-  }), _react.default.createElement("div", {
-    className: classes.content
-  }, _react.default.createElement(_AlertHeader.default, {
-    header: header
-  }), _react.default.createElement("p", null, message, " ", _react.default.createElement(_AlertLink.default, {
-    link: link
-  }))));
 };
 
 AlertBox.propTypes = {

@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
+import InfoIcon from "@material-ui/icons/Info";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import DummyCardImg from "shared/dist/assets/images/dummy-card.png";
@@ -191,6 +192,7 @@ const Profile = ({ classes, _location }) => {
             value={serviceDetails.shortDescription}
             onChange={handleControlChange}
           />
+
           <SNETTextarea
             showInfoIcon
             name="longDescription"
@@ -210,27 +212,34 @@ const Profile = ({ classes, _location }) => {
             description="Enter all the TAGs separated by comma and press enter"
             value={tags}
             onKeyUp={handleAddTags}
-            onChange={e => setTags(e.target.value)}
+            onChange={e => setTags(e.target.value.toLowerCase())}
           />
-          <Card className={classes.card}>
-            {serviceDetails.tags.map(tag => (
-              <Chip
-                className={classes.chip}
-                key={tag}
-                label={tag}
-                color="primary"
-                onDelete={() => handleDeleteTag(tag)}
-              />
-            ))}
-          </Card>
 
-          <SNETTextfield
-            name="projectURL"
-            label="Project URL"
-            description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
-            value={serviceDetails.projectURL}
-            onChange={handleControlChange}
-          />
+          <div className={classes.addedTagsContainer}>
+            <InfoIcon />
+            <span>Added Tags</span>
+            <Card className={classes.card}>
+              {serviceDetails.tags.map(tag => (
+                <Chip
+                  className={classes.chip}
+                  key={tag}
+                  label={tag}
+                  color="primary"
+                  onDelete={() => handleDeleteTag(tag)}
+                />
+              ))}
+            </Card>
+          </div>
+
+          <div className={classes.projUrlContainer}>
+            <SNETTextfield
+              name="projectURL"
+              label="Project URL"
+              description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
+              value={serviceDetails.projectURL}
+              onChange={handleControlChange}
+            />
+          </div>
 
           <SNETTextfield
             icon
