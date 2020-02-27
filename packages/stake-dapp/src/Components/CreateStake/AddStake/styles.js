@@ -25,7 +25,28 @@ export const useStyles = makeStyles(MUITheme => ({
       "&:last-of-type": { color: MUITheme.palette.text.primary },
     },
   },
-  withdrawStakeTextfield: { padding: "13px 27px" },
+  addStakeTextfieldSection: {
+    borderBottom: "1px solid #e2e2e2",
+    margin: "24px 23px 24px 21px",
+    display: "flex",
+    alignItems: "flex-start",
+    "& > div": {
+      width: 302,
+      "& > div": {
+        maxWidth: "100%",
+        flexBasis: "100%",
+        "& .MuiTextField-root": { marginTop: 0 },
+      },
+    },
+    "& svg": {
+      padding: "15px 25px 0",
+      color: MUITheme.palette.text.disabled,
+      fontSize: 25,
+      [MUITheme.breakpoints.down("xs")]: { padding: "15px 10px 0" },
+      "@media(max-width: 480px)": { display: "none" },
+    },
+    "@media(max-width: 480px)": { flexDirection: "column" },
+  },
   stakeAmtDetailsContainer: {
     padding: "0 27px",
     display: "flex",
@@ -83,7 +104,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   alertBoxContainer: {
-    padding: "31px 31px 11px",
+    padding: "24px 31px 11px",
     "& > p": {
       "&:first-of-type": {
         margin: 0,
@@ -93,6 +114,7 @@ export const useStyles = makeStyles(MUITheme => ({
           fontSize: 20,
         },
       },
+      "&:last-of-type": { marginTop: 8 },
     },
   },
   infoAlertMessage: {

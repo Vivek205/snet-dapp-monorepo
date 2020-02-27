@@ -10,11 +10,16 @@ import { useStyles } from "./styles";
 import SessionTime from "./SessionTime";
 import AccountBalance from "../AccountBalance";
 import StakeSession from "../StakeSession";
-import { cardDetails, btnDetails, agreementDetails, withdrawStakeAmountDetails } from "./content";
+import {
+  cardDetails,
+  btnDetails,
+  agreementDetails,
+  withdrawStakeAmountDetails,
+  addStakeAmountDetails,
+} from "./content";
 import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
 import { stakeActions } from "../../Services/Redux/actionCreators";
-
 import { fromWei } from "../../Utils/GenHelperFunctions";
 
 const CreateStake = () => {
@@ -90,7 +95,7 @@ const CreateStake = () => {
       <AddStake
         open={showAddStakePopup}
         handleClose={closeAddStakePopup}
-        withdrawStakeAmountDetails={withdrawStakeAmountDetails(activeStake)}
+        addStakeAmountDetails={addStakeAmountDetails(activeStake)}
         stakeStartDate={stakeStartDate}
         stakeMapIndex={activeStake.stakeMapIndex}
         minStake={fromWei(activeStake.minStake)}

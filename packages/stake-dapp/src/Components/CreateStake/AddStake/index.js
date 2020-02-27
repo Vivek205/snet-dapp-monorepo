@@ -8,6 +8,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
+import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
@@ -15,7 +16,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const AddStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDate, stakeMapIndex, minStake }) => {
+const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeStartDate, stakeMapIndex, minStake }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -43,11 +44,13 @@ const AddStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDat
                 {stakeStartDate} #{stakeMapIndex}
               </Typography>
             </div>
-            <div className={classes.withdrawStakeTextfield}>
-              <SNETTextfield label="Withdraw Stake Amount" />
+            <div className={classes.addStakeTextfieldSection}>
+              <SNETTextfield label="Input Stake Amount" extraInfo="Avaialble Balance: {availBal}" />
+              <SwapHorizontalCircleIcon />
+              <SNETTextfield label="Reward Amount" extraInfo="Approximate Estimate" />
             </div>
             <div className={classes.stakeAmtDetailsContainer}>
-              {withdrawStakeAmountDetails.map(item => (
+              {addStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
                   <div className={classes.iconTitleContainer}>
                     <InfoIcon />
@@ -73,7 +76,7 @@ const AddStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDat
           </CardContent>
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" />
-            <SNETButton children="submit withdraw" color="primary" variant="contained" disabled />
+            <SNETButton children="submit funds" color="primary" variant="contained" />
           </CardActions>
         </Card>
       </Modal>
