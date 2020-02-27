@@ -4,7 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
-import StackSession from "../StackSession";
+import StakeSession from "../StakeSession";
+
 import {
   sortByCategories,
   firstCardDetails,
@@ -12,6 +13,7 @@ import {
   secondIncubationProgressDetails,
   secondCardDetails,
 } from "./content";
+
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 
 const UserStake = ({ incubatingCount }) => {
@@ -29,7 +31,7 @@ const UserStake = ({ incubatingCount }) => {
         </div>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <StackSession
+        <StakeSession
           incubationProgressDetails={firstIncubationProgressDetails}
           cardDetails={firstCardDetails}
           date="Jan 2020"
@@ -37,7 +39,7 @@ const UserStake = ({ incubatingCount }) => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.bottomBox}>
-        <StackSession
+        <StakeSession
           incubationProgressDetails={secondIncubationProgressDetails}
           cardDetails={secondCardDetails}
           date="Dec 2019"
