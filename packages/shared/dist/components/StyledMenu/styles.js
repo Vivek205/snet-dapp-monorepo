@@ -13,7 +13,7 @@ var useStyles = function useStyles(MUITheme) {
       }
     },
     menuItem: {
-      '& a': {
+      "& a": {
         color: MUITheme.palette.text.lightGrey,
         fontSize: 16
       }
