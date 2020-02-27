@@ -28,28 +28,6 @@ export const useStyles = makeStyles(MUITheme => ({
       fontWeight: 600,
     },
   },
-  serviceNameDropdown: {
-    marginLeft: 24,
-    "& > div": {
-      width: "auto",
-      paddingLeft: 9,
-    },
-    "& fieldset": { border: "none" },
-    "& svg": { right: -20 },
-    "&::before": {
-      content: '" "',
-      width: 1,
-      height: 36,
-      display: "inline-block",
-      background: "rgba(155,155,155,0.4)",
-      position: "absolute",
-      top: 15,
-    },
-    "& .MuiSelect-selectMenu": {
-      color: MUITheme.palette.text.lightGrey,
-      fontSize: 20,
-    },
-  },
   headerDropDown: {
     "& > div": {
       display: "flex",

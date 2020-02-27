@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(menuItem) {
+var useStyles = function useStyles(MUITheme) {
   return {
     button: {
       "& span": {
@@ -13,7 +13,10 @@ var useStyles = function useStyles(menuItem) {
       }
     },
     menuItem: {
-      fontFamily: menuItem.typography.fontFamily
+      '& a': {
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 16
+      }
     }
   };
 };
