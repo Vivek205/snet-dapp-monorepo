@@ -15,6 +15,7 @@ const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
 const AiServices = lazy(() => import("../Pages/AiServices"));
 const AiServiceCreation = lazy(() => import("../Pages/AiServiceCreation"));
+const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -31,6 +32,7 @@ const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
 const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 const AiServicesComponent = withDashboardMenu(AiServices);
 const AiServiceCreationComponent = withLightHeaderAndFooter(AiServiceCreation);
+const WalletAccountComponent = withDashboardMenu(WalletAccount);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -70,17 +72,17 @@ export const GlobalRoutes = {
   },
   ORGANIZATION_SETUP: {
     name: "organizationsetup",
-    path: "/organizationsetup",
+    path: "/org/:orgUuid/setup",
     component: OrganizationsetupComponent,
   },
   ORG_SETUP_STATUS: {
     name: "organization setup",
-    path: "/orgsetupstatus",
+    path: "/org/:orgUuid/status",
     component: OrgSetupStatusComponent,
   },
   INVITE_MEMBERS: {
     name: "team memebrs",
-    path: "/invitemembers",
+    path: "/org/:orgUuid/invitemembers",
     component: TeamMembersComponent,
   },
   SERVICES: {
@@ -92,7 +94,12 @@ export const GlobalRoutes = {
     name: "ai service creation",
     path: "/org/:orgUuid/service/:serviceUuid/create",
     component: AiServiceCreationComponent,
-    match: new RegExp(/org\/[^]*\/service\/[^]*\/create?/gi),
+    match: new RegExp(/org\/[^]*\/service\/[^]*\/create/gi),
+  },
+  WALLET_ACCOUNT: {
+    name: "wallet account",
+    path: "/walletaccount",
+    component: WalletAccountComponent,
   },
 };
 
