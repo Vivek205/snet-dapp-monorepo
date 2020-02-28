@@ -3,11 +3,10 @@ import ListItem from "@material-ui/core/ListItem";
 import PropTypes from "prop-types";
 
 import SNETList from "shared/dist/components/SNETList";
-import StyledMenu from "shared/dist/components/StyledMenu";
 
 import { useStyles } from "./styles";
 import NavbarLink from "./NavbarLink";
-import { navbarItems, dropdowns } from "./constant";
+import { navbarItems } from "./constant";
 
 const NavigationBar = props => {
   const { headerColor } = props;
@@ -24,11 +23,6 @@ const NavigationBar = props => {
           }
           return null;
         })}
-        {dropdowns.map(dropdown => (
-          <div key={dropdown.label} className={classes.headerDropDown}>
-            <StyledMenu label={dropdown.label} list={dropdown.list} />
-          </div>
-        ))}
       </SNETList>
     </nav>
   );

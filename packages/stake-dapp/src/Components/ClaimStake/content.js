@@ -1,48 +1,89 @@
-import moment from "moment";
-import { fromWei } from "../../Utils/GenHelperFunctions";
-
-export const cardDetails = stakeDetails => [
+export const firstCardDetails = [
   {
-    title: "Claim Account",
-    value: fromWei(stakeDetails.approvedAmount),
+    title: "Total Claim Account",
+    value: "337.123",
     unit: "AGI",
   },
   {
     title: "Reward Earnings",
-    value: "TBD?",
+    value: "23",
     unit: "AGI",
   },
   {
     title: "Incubating Completed",
-    value: moment.unix(stakeDetails.endPeriod).format("DD MMM YYYY"),
+    value: "03/25/2020",
     unit: " ",
   },
   {
     title: "Stakers",
-    value: stakeDetails.numOfStakers,
+    value: "88",
     unit: "people",
   },
   {
     title: "Stake Pool Size",
-    value: fromWei(stakeDetails.windowTotalStake),
+    value: "3,457",
     unit: "AGI",
   },
   {
     title: "Max Pool Size",
-    value: fromWei(stakeDetails.windowMaxCap),
+    value: "10,000",
     unit: "AGI",
   },
 ];
 
-export const btnDetails = [
+export const firstBtnDetails = [
   {
-    action: "reStake",
     color: "primary",
     variant: "text",
     text: "re-stake",
   },
   {
-    action: "claimStake",
+    color: "primary",
+    variant: "contained",
+    text: "widthdraw claim",
+  },
+];
+
+export const secondCardDetails = [
+  {
+    title: "Total Claim Account",
+    value: "1000.3",
+    unit: "AGI",
+  },
+  {
+    title: "Reward Earnings",
+    value: "437",
+    unit: "AGI",
+  },
+  {
+    title: "Incubating Completed",
+    value: "03/25/2020",
+    unit: " ",
+  },
+  {
+    title: "Stakers",
+    value: "88",
+    unit: "people",
+  },
+  {
+    title: "Stake Pool Size",
+    value: "3,457",
+    unit: "AGI",
+  },
+  {
+    title: "Max Pool Size",
+    value: "10,000",
+    unit: "AGI",
+  },
+];
+
+export const secondBtnDetails = [
+  {
+    color: "primary",
+    variant: "text",
+    text: "re-stake",
+  },
+  {
     color: "primary",
     variant: "contained",
     text: "widthdraw claim",

@@ -17,7 +17,7 @@ const RFAILanding = ({ classes }) => {
         <div className={classes.mainWrapper}>
           <Grid container spacing={24} className={classes.topSectionCotainer}>
             <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
-              <Typography variant="h3">AGI Staking</Typography>
+              <Typography variant="h3">Staking</Typography>
             </Grid>
           </Grid>
           <div>

@@ -11,14 +11,12 @@ import Card from "./Card";
 import Button from "./Button";
 import { useStyles } from "./styles";
 
-const StakeSession = ({
+const StackSession = ({
   cardDetails,
   incubationProgressDetails,
   agreementDetails,
-  stakeStartDate,
-  stakeMapIndex,
-  minStake,
-  maxStake,
+  date,
+  id,
   btnDetails,
   handleClick,
 }) => {
@@ -28,7 +26,7 @@ const StakeSession = ({
     <div className={classes.StackSessionContainer}>
       <div className={classes.header}>
         <Typography variant="h6">
-          Stake Session - {stakeStartDate} #{stakeMapIndex}
+          Stake Session - {date} {id}
         </Typography>
       </div>
       <div className={classes.content}>
@@ -43,9 +41,7 @@ const StakeSession = ({
           <AlertBox type={alertTypes.INFO}>
             <InfoIcon />
             <div>
-              <Typography>
-                - Stake amount must be minimum {minStake} AGI and maximum {maxStake} AGI
-              </Typography>
+              <Typography>- Stake amount must be minimum 500 AGI and maximum 1000 AGI</Typography>
               <Typography>- SNET foundation will accept all or a partial amount of your stake.</Typography>
               <Typography>
                 - Rejected stake portions not accepted will be returned to your wallet account automatically (no gas
@@ -60,4 +56,4 @@ const StakeSession = ({
   );
 };
 
-export default StakeSession;
+export default StackSession;

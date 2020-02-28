@@ -1,47 +1,43 @@
-import { fromWei } from "../../Utils/GenHelperFunctions";
-
-export const cardDetails = activeStake => [
+export const cardDetails = [
   {
     title: "Stack Session",
-    value: fromWei(activeStake.myStake),
+    value: "0",
     unit: "AGI",
   },
   {
     title: "Max Reward",
-    value: "TBD??",
+    value: "0",
     unit: "AGI",
   },
   {
     title: "Incubating Period",
-    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
+    value: "30",
     unit: "days",
   },
   {
     title: "Current Stakers",
-    value: activeStake.totalStakers,
+    value: "25",
     unit: "people",
   },
   {
     title: "Current Pool Size",
-    value: fromWei(activeStake.totalStakedAmount),
+    value: "7,000",
     unit: "AGI",
   },
   {
     title: "Max Pool Size",
-    value: fromWei(activeStake.windowMaxCap),
+    value: "10,000",
     unit: "AGI",
   },
 ];
 
 export const btnDetails = [
   {
-    action: "withdraw",
     color: "primary",
     variant: "text",
     text: "widthdraw",
   },
   {
-    action: "addStake",
     color: "primary",
     variant: "contained",
     text: "add stake amount",
@@ -54,40 +50,21 @@ export const agreementDetails = {
     "Renewing stakes (and profit margins) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
 };
 
-export const withdrawStakeAmountDetails = activeStake => [
+export const withdrawStakeAmountDetails = [
   {
     title: "Total Stake Amount",
-    amount: fromWei(activeStake.myStake),
+    amount: "600.023",
   },
   {
     title: "Total Max Reward",
-    amount: "TBD??",
+    amount: "345",
   },
   {
     title: "Current Pool Size",
-    amount: fromWei(activeStake.totalStakedAmount),
+    amount: "7,004",
   },
   {
     title: "Max Pool Size",
-    amount: fromWei(activeStake.windowMaxCap),
-  },
-];
-
-export const addStakeAmountDetails = activeStake => [
-  {
-    title: "Total Stake Amount",
-    amount: fromWei(activeStake.myStake),
-  },
-  {
-    title: "Total Max Reward",
-    amount: "TBD??",
-  },
-  {
-    title: "Current Pool Size",
-    amount: fromWei(activeStake.totalStakedAmount),
-  },
-  {
-    title: "Max Pool Size",
-    amount: fromWei(activeStake.windowMaxCap),
+    amount: "10,000",
   },
 ];
