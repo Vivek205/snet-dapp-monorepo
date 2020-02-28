@@ -5,13 +5,13 @@ export const useStyles = MUITheme => ({
     justifyContent: "flex-end",
   },
   AccountCircleIcon: {
-    marginRight: 10,
-    color: "#4a4a4a",
+    marginRight: 22,
+    color: MUITheme.palette.text.lightGrey,
     fontSize: 42,
     cursor: "pointer",
   },
   NotificationsIcon: {
-    margin: "0px 40px 0 0",
+    margin: "0px 22px 0 0",
     color: MUITheme.palette.text.lightGrey,
     cursor: "pointer",
     fontSize: 25,

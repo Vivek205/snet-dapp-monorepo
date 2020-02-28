@@ -17,6 +17,8 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _BlackLogo = _interopRequireDefault(require("../../assets/images/BlackLogo.svg"));
 
+var _WhiteLogo = _interopRequireDefault(require("../../assets/images/WhiteLogo.svg"));
+
 var _styles = require("./styles");
 
 var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
@@ -36,12 +38,12 @@ var SNETHeader = function SNETHeader(_ref) {
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_AppBar.default, {
     position: "fixed",
     color: color,
-    className: classes.appBar
+    className: "".concat(classes.appBar, " ").concat(color === "purple" ? classes.purple : null)
   }, _react.default.createElement("div", {
     className: classes.logoContainer
   }, _react.default.createElement(_CardMedia.default, {
     component: "img",
-    image: _BlackLogo.default,
+    image: color === 'purple' ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
   }), _react.default.createElement(_Typography.default, {
     variant: "h5"
