@@ -206,7 +206,6 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextfield
-            disabled={serviceDetails.foundInBlockchain}
             icon
             name="tags"
             label="Service Tags"
@@ -215,13 +214,13 @@ const Profile = ({ classes, _location }) => {
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
           />
+
           <div className={classes.addedTagsContainer}>
             <InfoIcon />
             <span>Added Tags</span>
             <Card className={classes.card}>
               {serviceDetails.tags.map(tag => (
                 <Chip
-                  disabled={serviceDetails.foundInBlockchain}
                   className={classes.chip}
                   key={tag}
                   label={tag}

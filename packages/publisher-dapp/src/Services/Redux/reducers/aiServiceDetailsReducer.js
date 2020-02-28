@@ -62,7 +62,6 @@ const initialState = {
   comments: {
     serviceProvider: [],
   },
-  foundInBlockchain: false,
 };
 
 const serviceDetailsReducer = (state = initialState, action) => {
@@ -103,8 +102,6 @@ const serviceDetailsReducer = (state = initialState, action) => {
       return { ...state, assets: { ...state.assets, heroImage: { ...state.assets.heroImage, url: action.payload } } };
     case aiServiceDetailsActions.SET_SERVICE_DEMO_FILES_URL:
       return { ...state, assets: { ...state.assets, demoFiles: { ...state.assets.demoFiles, url: action.payload } } };
-    case aiServiceDetailsActions.SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN:
-      return { ...state, foundInBlockchain: action.payload };
     default:
       return state;
   }
