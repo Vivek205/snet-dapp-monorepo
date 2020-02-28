@@ -5,8 +5,8 @@ import { AuthenticateRoutes } from "./Routes";
 const AuthenticateRouter = () => {
   return (
     <Switch>
-      {Object.values(AuthenticateRoutes).map(({ name, path, component, exact }) => (
-        <Route key={name} path={path} component={component} exact={exact} />
+      {Object.values(AuthenticateRoutes).map(({ name, path, component }) => (
+        <Route key={name} path={path} component={component} />
       ))}
       <Route path={AuthenticateRoutes.DEFAULT.path} component={AuthenticateRoutes.DEFAULT.component} />
     </Switch>

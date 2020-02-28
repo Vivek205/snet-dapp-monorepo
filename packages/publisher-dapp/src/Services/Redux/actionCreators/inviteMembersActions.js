@@ -1,6 +1,4 @@
 import { API } from "aws-amplify";
-import isEmpty from "lodash/isEmpty";
-
 import { initializeAPIOptions } from "../../../Utils/API";
 import { memberStatus } from "../../../Utils/TeamMembers";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -89,14 +87,8 @@ export const acceptInvitationAndGetLatestOrgStatus = payload => async dispatch =
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
     await dispatch(acceptInvitation(payload));
-    const orgList = await dispatch(organizationActions.getStatus);
-
+    await dispatch(organizationActions.getStatus);
     dispatch(loaderActions.stopAppLoader());
-    if (isEmpty(orgList)) {
-      return null;
-    }
-    const selectedOrg = orgList[0];
-    return selectedOrg;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

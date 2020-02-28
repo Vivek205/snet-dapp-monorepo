@@ -39,7 +39,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
       return setAlert({ type: alertTypes.ERROR, message: errorMsg.IMAGE_NOT_FOUND });
     }
 
-    history.push(OrganizationSetupRoutes.REGION.path.replace("orgUuid", organization.uuid));
+    history.push(OrganizationSetupRoutes.REGION.path);
   };
 
   const onFinishLater = async () => {

@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
   statusBannerContainer: {
-    padding: "14px 14px 14px 0",
+    padding: "38px 14px",
     marginTop: 40,
     borderWidth: 1,
     borderStyle: "solid",
@@ -20,10 +20,8 @@ export const useStyles = MUITheme => ({
     },
   },
   statusBannerContent: {
-    paddingTop: 20,
     paddingLeft: 24,
     "& p": {
-      paddingRight: 50,
       margin: "24px 0 0",
       color: MUITheme.palette.text.primary,
       fontSize: 14,
@@ -31,13 +29,10 @@ export const useStyles = MUITheme => ({
     },
     "& button": {
       marginTop: 24,
-      "&:first-of-type": {
-        padding: "13px 18px 11px",
-        marginRight: 22,
-      },
-      "&:last-of-type": { padding: "13px 23px 11px" },
+      "&:first-of-type": { marginRight: 40 },
     },
   },
-  PENDING: { color: MUITheme.palette.warning.main },
-  REJECTED: { color: MUITheme.palette.text.red },
+  pendingtitle: {
+    color: MUITheme.palette.warning,
+  },
 });

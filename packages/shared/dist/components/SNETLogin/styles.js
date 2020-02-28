@@ -33,8 +33,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         textTransform: "uppercase"
       },
       "& button": {
-        width: "100%",
-        marginTop: 25
+        width: "100%"
       }
     }, MUITheme.breakpoints.down("xs"), {
       width: "auto",
@@ -56,7 +55,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     checkboxAndLink: {
-      margin: "10px 0 65px",
+      margin: "10px 0 91px",
       display: "flex",
       alignItems: "baseline",
       justifyContent: "space-between",

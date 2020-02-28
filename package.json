@@ -33,7 +33,6 @@
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
     "start:rfai": "cd packages/rfai-dapp && yarn start",
     "start:publisher": "cd packages/publisher-dapp && yarn start",
-    "start:stake": "cd packages/stake-dapp && yarn start",
     "build:marketplace": "cd packages/marketplace-dapp && yarn build",
     "build:publisher": "cd packages/publisher-dapp && yarn build",
     "build:rfai": "cd packages/rfai-dapp && yarn build",

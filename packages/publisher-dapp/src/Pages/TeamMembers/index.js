@@ -30,7 +30,7 @@ class TeamMembers extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getAllMembers(this.props.match.params.orgUuid);
+    this.props.getAllMembers(this.props.uuid);
   };
 
   handleInviteMembersOpen = () => {
@@ -78,7 +78,7 @@ class TeamMembers extends Component {
     try {
       const allEmails = this.state.textareaValue.split(",");
       validateIfEmailAlreadyExists(allEmails);
-      await this.props.inviteMembers(allEmails, this.props.match.params.orgUuid);
+      await this.props.inviteMembers(allEmails, this.props.uuid);
       this.setState({
         inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
       });
@@ -167,6 +167,7 @@ class TeamMembers extends Component {
 const mapStateToProps = state => ({
   [memberStatus.PUBLISHED]: state.organization.members[memberStatus.PUBLISHED],
   orgId: state.organization.id,
+  uuid: state.organization.uuid,
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,

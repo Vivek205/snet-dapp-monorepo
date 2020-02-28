@@ -15,10 +15,6 @@ export const APIEndpoints = {
     name: "utility",
     endpoint: process.env.REACT_APP_UTILITY_ENDPOINT,
   },
-  VERIFICATION: {
-    name: "verification",
-    endpoint: process.env.REACT_APP_VERIFICATION_ENDPOINT,
-  },
 };
 
 export const APIPaths = {
@@ -43,6 +39,4 @@ export const APIPaths = {
   SAVE_SERVICE_TRANSACTION: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/transaction`,
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
   UPLOAD_FILE: "/upload",
-  USER_VERIFICATION_INITIATE: "/initiate",
-  USER_VERIFICATION_STATUS: "/status",
 };

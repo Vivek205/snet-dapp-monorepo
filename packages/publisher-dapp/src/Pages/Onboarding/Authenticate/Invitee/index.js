@@ -42,10 +42,8 @@ const Invitee = ({ classes, history }) => {
         invite_code: inviteCode,
         wallet_address: address,
       };
-      const org = await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
-      if (org) {
-        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", org.uuid));
-      }
+      await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
