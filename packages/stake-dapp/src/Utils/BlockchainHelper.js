@@ -1,13 +1,9 @@
 import Web3 from "web3";
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
-//import stakingNetworks from "singularitynet-rfai-contracts/networks/ServiceRequest";
-//import stakingABI from "singularitynet-rfai-contracts/abi/ServiceRequest";
+import rfaiNetworks from "singularitynet-rfai-contracts/networks/ServiceRequest";
+import rfaiABI from "singularitynet-rfai-contracts/abi/ServiceRequest";
 
-import stakingNetworks from "./TokenStake/networks/TokenStake";
-import stakingABI from "./TokenStake/abi/TokenStake";
-
-// TODO - Come up with a different approach here....
 export const waitForTransaction = async hash => {
   let receipt;
 
@@ -36,10 +32,9 @@ export const waitForTransaction = async hash => {
   });
 };
 
-// Approve AGI Token for the Staking Contract Address
 export const approveToken = (metamaskDetails, amountBN) => {
   const tokenContractAddress = getTokenContractAddress();
-  const stakingContractAddress = getStakingContractAddress();
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
@@ -48,7 +43,7 @@ export const approveToken = (metamaskDetails, amountBN) => {
   const tokenInstance = window.web3.eth.contract(tokenABI).at(tokenContractAddress);
 
   return new Promise((resolve, reject) => {
-    tokenInstance.approve(stakingContractAddress, amountBN.toString(), { from: accountAddress }, (err, hash) => {
+    tokenInstance.approve(rfaiContractAddress, amountBN.toString(), { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -57,39 +52,179 @@ export const approveToken = (metamaskDetails, amountBN) => {
   });
 };
 
-export const createStakePeriod = (
-  metamaskDetails,
-  startPeriod,
-  endSubmission,
-  endApproval,
-  requestWithdrawStartPeriod,
-  endPeriod,
-  rewardAmount,
-  maxCap,
-  minStake,
-  maxStake,
-  openForExternal
-) => {
-  const stakingContractAddress = getStakingContractAddress();
+export const depositTokenToEscrow = (metamaskDetails, amountBN) => {
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.openForStake(
-      startPeriod,
+    rfaiInstance.deposit(amountBN.toString(), { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const withdrawTokenFromEscrow = (metamaskDetails, amountBN) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.withdraw(amountBN.toString(), { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const createRequest = (metamaskDetails, initialStakeBN, expiration, docURIinBytes) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.createRequest(
+      initialStakeBN.toString(),
+      expiration,
+      docURIinBytes,
+      { from: accountAddress },
+      (err, hash) => {
+        if (err) {
+          reject(hash);
+        }
+        resolve(hash);
+      }
+    );
+  });
+};
+
+export const submitSolutionForRequest = (metamaskDetails, requestId, docURIinBytes) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.createOrUpdateSolutionProposal(requestId, docURIinBytes, { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const stakeForRequest = (metamaskDetails, requestId, stakeAmountBN) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.addFundsToRequest(requestId, stakeAmountBN.toString(), { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const voteForSolution = (metamaskDetails, requestId, votedForSubmitter) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.vote(requestId, votedForSubmitter, { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const claimRequest = (metamaskDetails, requestId) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.requestClaim(requestId, { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const claimBackRequest = (metamaskDetails, requestId) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.requestClaimBack(requestId, { from: accountAddress }, (err, hash) => {
+      if (err) {
+        reject(hash);
+      }
+      resolve(hash);
+    });
+  });
+};
+
+export const approveRequest = (metamaskDetails, requestId, endSubmission, endEvaluation, newExpiration) => {
+  const rfaiContractAddress = getRFAIContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
+
+  return new Promise((resolve, reject) => {
+    rfaiInstance.approveRequest(
+      requestId,
       endSubmission,
-      endApproval,
-      requestWithdrawStartPeriod,
-      endPeriod,
-      rewardAmount,
-      maxCap,
-      minStake,
-      maxStake,
-      openForExternal,
+      endEvaluation,
+      newExpiration,
       { from: accountAddress },
       (err, hash) => {
         if (err) {
@@ -101,18 +236,18 @@ export const createStakePeriod = (
   });
 };
 
-// Function to create a new stake in the Current Stake Window
-export const submitStake = (metamaskDetails, stakeAmount, autoRenewal) => {
-  const stakingContractAddress = getStakingContractAddress();
+// Can by Owner or by Active Foundation Member only
+export const rejectRequest = (metamaskDetails, requestId) => {
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.submitStake(stakeAmount, autoRenewal, { from: accountAddress }, (err, hash) => {
+    rfaiInstance.rejectRequest(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -121,17 +256,18 @@ export const submitStake = (metamaskDetails, stakeAmount, autoRenewal) => {
   });
 };
 
-export const approveStake = (metamaskDetails, staker, approvedAmount) => {
-  const stakingContractAddress = getStakingContractAddress();
+// Can be called by Owner/Foundation Member or Requester when it is in Open State
+export const closeRequest = (metamaskDetails, requestId) => {
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.approveStake(staker, approvedAmount, { from: accountAddress }, (err, hash) => {
+    rfaiInstance.closeRequest(requestId, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -140,185 +276,19 @@ export const approveStake = (metamaskDetails, staker, approvedAmount) => {
   });
 };
 
-export const rejectStake = (metamaskDetails, stakeMapIndex, staker) => {
-  const stakingContractAddress = getStakingContractAddress();
+// Can be done only owner or other member with role=1
+// Role can be 0 or 1 & active will be true/false
+export const addOrUpdateFoundationMembers = (metamaskDetails, member, role, active) => {
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.rejectStake(stakeMapIndex, staker, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-export const requestForClaim = (metamaskDetails, stakeMapIndex, autoRenew) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.requestForClaim(stakeMapIndex, autoRenew, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-export const claimStake = (metamaskDetails, stakeMapIndex) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.claimStake(stakeMapIndex, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-// Only for Token Operator to withdraw Tokens from liquid pool
-export const withdrawToken = (metamaskDetails, amount) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.withdrawToken(amount, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-// Only for Token Operator to Deposit Tokens to liquid Pool
-export const depositToken = (metamaskDetails, amount) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.depositToken(amount, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-// Only for the token Operator
-export const autoRenewStake = (metamaskDetails, existingStakeMapIndex, staker, approvedAmount) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.autoRenewStake(
-      existingStakeMapIndex,
-      staker,
-      approvedAmount,
-      { from: accountAddress },
-      (err, hash) => {
-        if (err) {
-          reject(hash);
-        }
-        resolve(hash);
-      }
-    );
-  });
-};
-
-export const renewStake = (metamaskDetails, existingStakeMapIndex, stakeAmount, autoRenewal) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.renewStake(
-      existingStakeMapIndex,
-      stakeAmount,
-      autoRenewal,
-      { from: accountAddress },
-      (err, hash) => {
-        if (err) {
-          reject(hash);
-        }
-        resolve(hash);
-      }
-    );
-  });
-};
-
-export const withdrawStake = (metamaskDetails, existingStakeMapIndex, stakeAmount) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.withdrawStake(existingStakeMapIndex, stakeAmount, { from: accountAddress }, (err, hash) => {
-      if (err) {
-        reject(hash);
-      }
-      resolve(hash);
-    });
-  });
-};
-
-// Only for Token Operator
-export const enableOrDisableOperations = (metamaskDetails, disableOperations) => {
-  const stakingContractAddress = getStakingContractAddress();
-  const accountAddress = metamaskDetails.account;
-
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
-
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
-
-  return new Promise((resolve, reject) => {
-    stakingInstance.enableOrDisableOperations(disableOperations, { from: accountAddress }, (err, hash) => {
+    rfaiInstance.addOrUpdateFoundationMembers(member, role, active, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -329,16 +299,16 @@ export const enableOrDisableOperations = (metamaskDetails, disableOperations) =>
 
 // Can be done only by owner
 export const updateOwner = (metamaskDetails, newOwner) => {
-  const stakingContractAddress = getStakingContractAddress();
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.updateOwner(newOwner, { from: accountAddress }, (err, hash) => {
+    rfaiInstance.updateOwner(newOwner, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -347,17 +317,18 @@ export const updateOwner = (metamaskDetails, newOwner) => {
   });
 };
 
-export const updateOperator = (metamaskDetails, tokenOperator) => {
-  const stakingContractAddress = getStakingContractAddress();
+// Can be done by only owner
+export const updateConfigLimits = (metamaskDetails, minStake, maxStakers) => {
+  const rfaiContractAddress = getRFAIContractAddress();
   const accountAddress = metamaskDetails.account;
 
   const ethereum = window.ethereum;
   window.web3 = new window.Web3(ethereum);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const rfaiInstance = window.web3.eth.contract(rfaiABI).at(rfaiContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.updateOperator(tokenOperator, { from: accountAddress }, (err, hash) => {
+    rfaiInstance.updateLimits(minStake, maxStakers, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }
@@ -394,8 +365,8 @@ export const getBlockNumber = () => {
   }
 };
 
-const getStakingContractAddress = () => {
-  return stakingNetworks[process.env.REACT_APP_ETH_NETWORK].address;
+const getRFAIContractAddress = () => {
+  return rfaiNetworks[process.env.REACT_APP_ETH_NETWORK].address;
 };
 
 const getTokenContractAddress = () => {

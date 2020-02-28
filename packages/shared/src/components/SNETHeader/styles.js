@@ -5,7 +5,6 @@ export const useStyles = makeStyles(MUITheme => ({
     padding: "8px 15px",
     flexDirection: "row",
     alignItems: "center",
-    zIndex: 1110,
   },
   logoContainer: {
     display: "flex",

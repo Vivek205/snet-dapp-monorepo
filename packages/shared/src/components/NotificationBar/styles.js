@@ -1,4 +1,4 @@
-export const useStyles = MUITheme => ({
+export const useStyles = theme => ({
   NotificationBar: {
     paddingLeft: "0 !important",
     paddingRight: "0 !important",
@@ -15,16 +15,16 @@ export const useStyles = MUITheme => ({
     },
   },
   WARNING: {
-    backgroundColor: MUITheme.palette.background.warningBox,
-    color: MUITheme.palette.text.primary,
+    backgroundColor: theme.palette.error,
+    color: theme.palette.text.primary,
     "& svg": {
       marginRight: 17,
-      color: MUITheme.palette.text.primary,
+      color: theme.palette.text.primary,
     },
   },
   INFORMATION: {
-    backgroundColor: MUITheme.palette.background.infoBox,
-    color: MUITheme.palette.text.white,
+    backgroundColor: theme.palette.warning,
+    color: theme.palette.text.white,
     "& svg": { marginRight: 21 },
   },
 });

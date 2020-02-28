@@ -4,19 +4,26 @@ export const useStyles = MUITheme => ({
   },
   mainWrapper: {
     width: "92%",
-    paddingTop: 30,
     margin: "0 auto",
     "@media(max-width:1280px)": { width: "98%" },
   },
   topSectionCotainer: {
-    "& h3": {
-      paddingLeft: 28,
-      lineHeight: "48px",
-    },
+    marginTop: 24,
     "@media(max-width: 960px)": {
       flexDirection: "column",
       alignItems: "center",
     },
+  },
+  titleContainer: {
+    "@media(max-width: 1024px)": { maxWidth: "100%" },
+  },
+  title: {
+    margin: 0,
+    color: MUITheme.palette.text.darkShadedGray,
+    fontSize: 32,
+    fontWeight: 600,
+    letterSpacing: -0.5,
+    lineHeight: "48px",
   },
   descriptionContainer: {
     "@media(max-width: 1024px)": {
@@ -26,7 +33,7 @@ export const useStyles = MUITheme => ({
   },
   description: {
     margin: 0,
-    color: MUITheme.palette.text.darkGrey,
+    color: MUITheme.palette.text.darkShadedGray,
     fontSize: 22,
     fontWeight: 600,
     lineHeight: "32px",
@@ -45,7 +52,7 @@ export const useStyles = MUITheme => ({
   signupLink: { textDecoration: "none" },
   loginContainer: {
     "& p": {
-      color: MUITheme.palette.text.darkGrey,
+      color: MUITheme.palette.text.darkShadedGray,
       fontSize: 22,
       fontWeight: 200,
       lineHeight: "28px",
