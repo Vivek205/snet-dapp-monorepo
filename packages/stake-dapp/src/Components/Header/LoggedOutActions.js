@@ -10,6 +10,12 @@ const LoggedOutActions = () => {
   return (
     <Fragment>
       <SNETButton children="login" color="primary" onClick={() => history.push(GlobalRoutes.LOGIN.path)} />
+      <SNETButton
+        children="enroll"
+        color="primary"
+        variant="contained"
+        onClick={() => history.push(GlobalRoutes.ENROLL.path)}
+      />
     </Fragment>
   );
 };
