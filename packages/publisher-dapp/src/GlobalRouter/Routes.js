@@ -70,17 +70,17 @@ export const GlobalRoutes = {
   },
   ORGANIZATION_SETUP: {
     name: "organizationsetup",
-    path: "/org/:orgUuid/setup",
+    path: "/organizationsetup",
     component: OrganizationsetupComponent,
   },
   ORG_SETUP_STATUS: {
     name: "organization setup",
-    path: "/org/:orgUuid/status",
+    path: "/orgsetupstatus",
     component: OrgSetupStatusComponent,
   },
   INVITE_MEMBERS: {
     name: "team memebrs",
-    path: "/org/:orgUuid/invitemembers",
+    path: "/invitemembers",
     component: TeamMembersComponent,
   },
   SERVICES: {
@@ -92,7 +92,7 @@ export const GlobalRoutes = {
     name: "ai service creation",
     path: "/org/:orgUuid/service/:serviceUuid/create",
     component: AiServiceCreationComponent,
-    match: new RegExp(/org\/[^]*\/service\/[^]*\/create/gi),
+    match: new RegExp(/org\/[^]*\/service\/[^]*\/create?/gi),
   },
 };
 

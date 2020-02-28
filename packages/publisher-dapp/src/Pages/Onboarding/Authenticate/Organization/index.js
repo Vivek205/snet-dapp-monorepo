@@ -24,7 +24,7 @@ const Organization = props => {
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace("orgUuid", organization.uuid));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     }
   });
 
@@ -42,7 +42,7 @@ const Organization = props => {
       await dispatch(organizationActions.createOrganization(organization));
       await dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
       await dispatch(organizationActions.initializeOrg);
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
