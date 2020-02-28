@@ -8,8 +8,6 @@
     "@material-ui/core": "^4.4.0",
     "@material-ui/icons": "^4.1.0",
     "@material-ui/styles": "^4.0.2",
-    "material-ui-flat-pagination": "^4.0.0",
-    "react-dropzone": "^10.2.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^4.3.0",
@@ -20,10 +18,12 @@
     "husky": "^2.7.0",
     "lerna": "^3.19.0",
     "lint-staged": "^8.2.0",
+    "material-ui-flat-pagination": "^4.0.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-dropzone": "^10.2.1",
     "react-helmet": "^5.2.1",
     "react-scripts": "3.2.0",
     "typescript": "^3.7.3",
@@ -33,8 +33,10 @@
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
     "start:rfai": "cd packages/rfai-dapp && yarn start",
     "start:publisher": "cd packages/publisher-dapp && yarn start",
+    "start:stake": "cd packages/stake-dapp && yarn start",
     "build:marketplace": "cd packages/marketplace-dapp && yarn build",
     "build:publisher": "cd packages/publisher-dapp && yarn build",
+    "build:stake": "cd packages/stake-dapp && yarn build",
     "build:rfai": "cd packages/rfai-dapp && yarn build",
     "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
     "storybook": "lerna exec --scope shared  -- yarn run storybook",
@@ -56,6 +58,7 @@
     "eslint-plugin-react-hooks": "^2.3.0"
   },
   "dependencies": {
-    "@sentry/browser": "^5.11.2"
+    "@sentry/browser": "^5.11.2",
+    "scrypt": "^6.0.3"
   }
 }

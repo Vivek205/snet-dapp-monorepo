@@ -29,6 +29,12 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     case stakeActions.UPDATE_ACTIVE_STAKE_WINDOW: {
       return { ...state, activeStake: action.payload };
     }
+    case stakeActions.UPDATE_ACTIVE_STAKES: {
+      return { ...state, incubationStakes: action.payload };
+    }
+    case stakeActions.UPDATE_CLAIM_STAKES: {
+      return { ...state, claimStakes: action.payload };
+    }
     default: {
       return state;
     }
