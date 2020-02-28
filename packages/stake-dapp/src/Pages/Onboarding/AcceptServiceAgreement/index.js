@@ -2,16 +2,24 @@ import React, { useState } from "react";
 
 import { TermsAndConditionsDetails } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
+import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
-import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
   const [agreed, setAgreed] = useState(false);
 
   const handleAccept = () => {
-    history.push(GlobalRoutes.LANDING.path);
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
+  };
+
+  const handleNavigateBack = () => {
+    history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
+  };
+
+  const handleCancel = () => {
+    // TODO - Need to handle the functionality
   };
 
   return (
@@ -23,6 +31,8 @@ const AcceptServiceAgreement = ({ history }) => {
         onChangeAgreed={() => setAgreed(!agreed)}
       />
       <div className={classes.buttonsContainer}>
+        <SNETButton color="primary" children="cancel" onClick={handleCancel} />
+        <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
         <SNETButton color="primary" variant="contained" children="accept" onClick={handleAccept} disabled={!agreed} />
       </div>
     </div>

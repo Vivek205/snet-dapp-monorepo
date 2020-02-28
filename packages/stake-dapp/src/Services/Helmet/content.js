@@ -1,4 +1,4 @@
 export const helmet = {
-  title: "Staking portal",
-  metaTags: [{ name: "description", content: "A dapp which enables AGI staking." }],
+  title: "Publisher portal",
+  metaTags: [{ name: "description", content: "A dapp which assists the user to publish his service" }],
 };
