@@ -43,10 +43,22 @@ var AlertBox = function AlertBox(_ref) {
       type = _ref.type,
       link = _ref.link,
       icon = _ref.icon,
-      header = _ref.header;
+      header = _ref.header,
+      children = _ref.children;
 
-  if (!message) {
-    return null;
+  if (children) {
+    return _react.default.createElement("p", {
+      className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
+    }, children);
+  }
+
+  if (message) {
+    return _react.default.createElement("p", {
+      className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
+    }, message, " ", _react.default.createElement(_AlertLink.default, {
+      link: link
+    }));
+
   }
 
   return _react.default.createElement("div", {
