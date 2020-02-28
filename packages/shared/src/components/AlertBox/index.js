@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/styles";
 
 import { useStyles } from "./styles";
 import AlertLink from "./AlertLink";
+import AlertIcon from "./AlertIcon";
+import AlertHeader from "./AlertHeader";
 
 export const alertTypes = {
   ERROR: "error",
@@ -26,21 +28,20 @@ const AlertBox = ({ classes, message, type, link, children, icon, header }) => {
   }
 
   if (message) {
-     return (
-    <div className={clsx(classes.alertBoxContainer, classes[backgroundColor[type]])}>
-      <AlertIcon icon={icon} />
-      <div className={classes.content}>
-        <AlertHeader header={header} />
-        <p>
-          {message} <AlertLink link={link} />
-        </p>
+    return (
+      <div className={clsx(classes.alertBoxContainer, classes[backgroundColor[type]])}>
+        <AlertIcon icon={icon} />
+        <div className={classes.content}>
+          <AlertHeader header={header} />
+          <p>
+            {message} <AlertLink link={link} />
+          </p>
+        </div>
       </div>
-    </div>
-  );
-  } 
-    
-return null;
-  
+    );
+  }
+
+  return null;
 };
 
 AlertBox.propTypes = {
