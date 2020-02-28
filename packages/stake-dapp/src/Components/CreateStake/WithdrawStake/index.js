@@ -15,7 +15,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 
-const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeStartDate, stakeMapIndex, minStake }) => {
+const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -37,11 +37,8 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeSta
           />
           <CardContent className={classes.CardContent}>
             <div className={classes.sessionDetails}>
-              <Typography>Session : </Typography>
-              <Typography>
-                {" "}
-                {stakeStartDate} #{stakeMapIndex}
-              </Typography>
+              <Typography>Session :</Typography>
+              <Typography> Feb 2020 #1234</Typography>
             </div>
             <div className={classes.withdrawStakeTextfield}>
               <SNETTextfield label="Withdraw Stake Amount" />
@@ -64,8 +61,8 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeSta
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  You can withdraw amount of that keeps the minimum of {minStake} AGI stake amount or you can withdraw
-                  all stake amount for a balance of 0 AGI.
+                  You can withdraw amount of that keeps the minimum of 500 AGI stake amount or you can withdraw all
+                  stake amount for a balance of 0 AGI.
                 </Typography>
               </AlertBox>
               <AlertBox type={alertTypes.ERROR} message="error state message" />

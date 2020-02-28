@@ -9,7 +9,8 @@ export const useStyles = makeStyles(MUITheme => ({
     "& li": {
       width: "auto",
       padding: 0,
-      marginRight: 25,
+      marginRight: 49,
+      "&:last-of-type": { marginRight: 0 },
     },
   },
   navLink: {
@@ -28,23 +29,26 @@ export const useStyles = makeStyles(MUITheme => ({
       fontWeight: 600,
     },
   },
-  headerDropDown: {
+  serviceNameDropdown: {
+    marginLeft: 24,
     "& > div": {
-      display: "flex",
-      alignItems: "flex-start",
+      width: "auto",
+      paddingLeft: 9,
     },
-    "& button": {
-      padding: 0,
-      "& span": {
-        color: MUITheme.palette.text.lightGrey,
-        fontSize: 16,
-        "&:hover": { color: MUITheme.palette.primary.main },
-      },
+    "& fieldset": { border: "none" },
+    "& svg": { right: -20 },
+    "&::before": {
+      content: '" "',
+      width: 1,
+      height: 36,
+      display: "inline-block",
+      background: "rgba(155,155,155,0.4)",
+      position: "absolute",
+      top: 15,
     },
-    "& svg": {
-      paddingTop: 2,
+    "& .MuiSelect-selectMenu": {
       color: MUITheme.palette.text.lightGrey,
-      "&:hover": { color: MUITheme.palette.primary.main },
+      fontSize: 20,
     },
   },
 }));
