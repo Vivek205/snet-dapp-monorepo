@@ -15,6 +15,7 @@ const OrgSetupStatus = lazy(() => import("../Pages/OrgSetupStatus"));
 const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
 const AiServices = lazy(() => import("../Pages/AiServices"));
 const AiServiceCreation = lazy(() => import("../Pages/AiServiceCreation"));
+const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -31,6 +32,7 @@ const OrgSetupStatusComponent = withLightHeaderAndFooter(OrgSetupStatus);
 const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 const AiServicesComponent = withDashboardMenu(AiServices);
 const AiServiceCreationComponent = withLightHeaderAndFooter(AiServiceCreation);
+const WalletAccountComponent = withDashboardMenu(WalletAccount);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -93,6 +95,11 @@ export const GlobalRoutes = {
     path: "/org/:orgUuid/service/:serviceUuid/create",
     component: AiServiceCreationComponent,
     match: new RegExp(/org\/[^]*\/service\/[^]*\/create/gi),
+  },
+  WALLET_ACCOUNT: {
+    name: "wallet account",
+    path: "/walletaccount",
+    component: WalletAccountComponent,
   },
 };
 
