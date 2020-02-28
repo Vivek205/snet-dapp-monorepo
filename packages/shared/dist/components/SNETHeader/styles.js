@@ -18,8 +18,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       zIndex: 1110
     },
     purple: {
-      backgroundColor: "".concat(MUITheme.palette.purple.main, " !important"),
-      '& h5': {
+      "& h5": {
         color: "".concat(MUITheme.palette.text.white, " !important")
       }
     },

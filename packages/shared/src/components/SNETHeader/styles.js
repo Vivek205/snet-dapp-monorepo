@@ -8,7 +8,6 @@ export const useStyles = makeStyles(MUITheme => ({
     zIndex: 1110,
   },
   purple: {
-    backgroundColor: `${MUITheme.palette.purple.main} !important`,
     "& h5": { color: `${MUITheme.palette.text.white} !important` },
   },
   logoContainer: {

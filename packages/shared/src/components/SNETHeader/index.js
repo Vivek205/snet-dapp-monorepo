@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
+import SNETAppBar from "../SNETAppBar";
 import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
 import WhiteSnetLogo from "../../assets/images/WhiteLogo.svg";
 import { useStyles } from "./styles";
@@ -15,7 +15,7 @@ const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedO
   return (
     <div>
       <header>
-        <AppBar
+        <SNETAppBar
           position="fixed"
           color={color}
           className={`${classes.appBar} ${color === "purple" ? classes.purple : null}`}
@@ -34,7 +34,7 @@ const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedO
               LoggedOutActions={LoggedOutActions}
             />
           </div>
-        </AppBar>
+        </SNETAppBar>
       </header>
     </div>
   );

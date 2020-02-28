@@ -27,4 +27,10 @@ export const useStyles = MUITheme => ({
     fontSize: 12,
     lineHeight: "15px",
   },
+  loginBtn: {
+    color: MUITheme.palette.text.white,
+    cursor: "pointer",
+    fontSize: 16,
+    lineHeight: "20px",
+  },
 });
