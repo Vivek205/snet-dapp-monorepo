@@ -166,7 +166,6 @@ const parseAndTransformStakes = data => {
     return [];
   }
 
-  // TODO - There are hard codes, need to fix once the API changes are completed
   // First Section of transformation for the Stake Window
   // Second Section of transformation for the Stake Holder
   const stakes = data.map(stake => ({
@@ -183,7 +182,7 @@ const parseAndTransformStakes = data => {
     windowTotalStake: stake.stake_window.total_stake,
     rewardAmount: stake.stake_window.reward_amount,
     tokenOperator: stake.stake_window.token_operator,
-    numOfStakers: 0, //stake.stake_window.no_of_stakers,
+    numOfStakers: stake.stake_window.no_of_stakers,
 
     staker: stake.stake_holder.staker,
     pendingForApprovalAmount: stake.stake_holder.amount_pending_for_approval,
