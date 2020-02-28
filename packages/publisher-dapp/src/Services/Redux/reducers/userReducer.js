@@ -1,5 +1,5 @@
 import { userActions } from "../actionCreators";
-import { verificationStatuses } from "../../../Pages/Onboarding/constant";
+import { individualVerificationStatusList, onboardingStatusList } from "../../../Pages/Onboarding/constant";
 
 const initialState = {
   entity: "",
@@ -8,7 +8,8 @@ const initialState = {
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
-  verificationStatus: verificationStatuses.NOT_STARTED,
+  onboardingStatus: onboardingStatusList.NOT_STARTED,
+  individualVerificationStatus: individualVerificationStatusList.NOT_STARTED,
   jwt: {
     exp: "",
   },
@@ -47,6 +48,8 @@ const userReducer = (state = initialState, action) => {
     }
     case userActions.onboardingActions.SET_USER_INVITE_CODE:
       return { ...state, inviteCode: action.payload };
+    case userActions.individualVerificationActions.SET_INDIVIDUAL_VERIFICATION_STATUS:
+      return { ...state, individualVerificationStatus: action.payload };
     default:
       return state;
   }

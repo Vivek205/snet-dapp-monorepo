@@ -1,17 +1,18 @@
 import React from "react";
-import StatusBanner from "./StatusBanner";
-import { useHistory } from "react-router-dom";
+import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
+import { useHistory, useParams } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const VerificationRejected = () => {
   const history = useHistory();
+  const { orgUuid } = useParams();
 
   const handleOrgSetup = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path);
+    history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
   };
 
   return (
-    <StatusBanner
+    <SNETStatusBanner
       title="Verification rejected."
       img="http://placehold.it/302x242"
       description={`You can continue finishing setting up your company details and publish your company entity to the blockchain.
