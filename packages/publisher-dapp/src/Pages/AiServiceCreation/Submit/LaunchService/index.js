@@ -26,7 +26,7 @@ const LaunchService = ({ classes }) => {
   const handlePublishToBlockchain = async () => {
     const { metadata_ipfs_hash } = await dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid));
     await dispatch(
-      aiServiceDetailsActions.publishService(
+      aiServiceDetailsActions.publishToBlockchain(
         organization,
         serviceDetails,
         metadata_ipfs_hash,
