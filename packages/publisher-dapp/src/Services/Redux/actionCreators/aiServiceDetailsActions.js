@@ -28,7 +28,6 @@ export const SET_AI_SERVICE_STATE_STATE = "SET_AI_SERVICE_STATE_STATE";
 export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
-export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -80,11 +79,6 @@ export const setServiceDetailsProtoUrl = url => ({ type: SET_SERVICE_DETAILS_PRO
 export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL, payload: url });
 
 export const setServiceDemoFilesUrl = url => ({ type: SET_SERVICE_DEMO_FILES_URL, payload: url });
-
-export const setServiceDetailsFoundInBlockchain = found => ({
-  type: SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN,
-  payload: found,
-});
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -231,13 +225,9 @@ const getServiceDetailsAPI = (orgUuid, serviceUuid) => async dispatch => {
   return await API.get(apiName, apiPath, apiOptions);
 };
 
-export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch => {
+export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
   try {
     const { data, error } = await dispatch(getServiceDetailsAPI(orgUuid, serviceUuid));
-    const serviceDetailsFromBlockchain = await getServiceDetailsFromBlockchain(orgId, data.service_id);
-    if (serviceDetailsFromBlockchain.found) {
-      dispatch(setServiceDetailsFoundInBlockchain(true));
-    }
     if (error.code) {
       throw new APIError(error.message);
     }
@@ -479,14 +469,12 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
   });
 };
 
-const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getServiceRegistrationById(orgId, serviceId).call();
-};
-
 export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
   try {
-    const serviceDetailsFromBlockchain = getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
+    const sdk = await initSDK();
+    const serviceDetailsFromBlockchain = await sdk._registryContract
+      .getServiceRegistrationById(organization.id, serviceDetails.id)
+      .call();
     if (!serviceDetailsFromBlockchain.found) {
       return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, tags, history));
     }

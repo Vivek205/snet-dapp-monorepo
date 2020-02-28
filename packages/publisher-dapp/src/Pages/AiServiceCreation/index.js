@@ -20,11 +20,10 @@ class AiServiceCreation extends Component {
       getServiceDetails,
       initServiceCreationLoader,
       stopInitServiceCreationLoader,
-      orgId,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
-    await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid)]);
     stopInitServiceCreationLoader();
   };
 
@@ -71,7 +70,6 @@ class AiServiceCreation extends Component {
 }
 
 const mapStateToProps = state => ({
-  orgId: state.organization.id,
   orgUuid: state.organization.uuid,
   serviceUuid: state.aiServiceDetails.uuid,
 });
@@ -81,7 +79,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loaderActions.startInitServiceCreationLoader(LoaderContent.INIT_SERVICE_CREATION)),
   stopInitServiceCreationLoader: () => dispatch(loaderActions.stopInitServiceCreationLoader()),
   getAiServiceList: (orgUuid, pagination) => dispatch(aiServiceListActions.getAiServiceList(orgUuid, pagination)),
-  getServiceDetails: (orgUuid, serviceUuid, orgId) =>
-    dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId)),
+  getServiceDetails: (orgUuid, serviceUuid) =>
+    dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));
