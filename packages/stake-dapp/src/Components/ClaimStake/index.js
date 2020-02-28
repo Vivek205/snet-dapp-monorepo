@@ -7,12 +7,12 @@ import moment from "moment";
 
 import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
+import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { cardDetails, btnDetails } from "./content";
 import { useStyles } from "./styles";
 import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
-
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
 const ClaimStake = () => {
@@ -35,8 +35,12 @@ const ClaimStake = () => {
   }, [dispatch, metamaskDetails]);
 
   if (claimStakes.length === 0) {
-    // TODO - Need to handle the No Data Found Here as per the Invision App Designs
-    return null;
+    return (
+      <div className={classes.noDataFoundSection}>
+        <img src={NoDataFoundImg} alt="No Data Found" />
+        <Typography>You have no stakes to claim</Typography>
+      </div>
+    );
   }
 
   const handleClick = (btnAction, stakeMapIndex) => {

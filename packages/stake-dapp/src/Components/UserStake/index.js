@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import Grid from "@material-ui/core/Grid";
 import moment from "moment";
+
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
-
 import { cardDetails, incubationProgressDetails } from "./content";
-
 import { stakeActions } from "../../Services/Redux/actionCreators";
+
+import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 const UserStake = () => {
   const classes = useStyles();
@@ -34,8 +35,16 @@ const UserStake = () => {
   //console.log("incubationStakes length - ", incubationStakes.length);
 
   if (incubationStakes.length === 0) {
-    // TODO - Need to handle the No Data Found Here as per the Invision App Designs
-    return null;
+    return (
+      <div className={classes.noDataFoundSection}>
+        <img src={NoDataFoundImg} alt="No Data Found" />
+        <Typography>You have no incubating stakes.</Typography>
+        <Typography>
+          {" "}
+          Refer to <span>Open Staking</span> to make a stake.
+        </Typography>
+      </div>
+    );
   }
 
   return (
