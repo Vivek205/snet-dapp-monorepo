@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 
 import { useStyles } from "./styles";
@@ -16,7 +17,7 @@ const RFAILanding = ({ classes }) => {
         <div className={classes.mainWrapper}>
           <Grid container spacing={24} className={classes.topSectionCotainer}>
             <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
-              <h2 className={classes.title}>Staking</h2>
+              <Typography variant="h3">Staking</Typography>
             </Grid>
           </Grid>
           <div>

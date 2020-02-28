@@ -1,4 +1,4 @@
 export const navbarItems = [
-  { label: "Overview", type: "link", openInNewTab: false, activeLinks: ["/", "/overview"], to: "/overview" },
+  { label: "Home", type: "link", openInNewTab: false, activeLinks: ["/", "/landing"], to: "/landing" },
   { label: "How It Works", type: "link", openInNewTab: false, activeLinks: ["/howitworks"], to: "/howitworks" },
 ];

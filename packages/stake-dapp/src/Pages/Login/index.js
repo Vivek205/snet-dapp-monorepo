@@ -13,14 +13,14 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(GlobalRoutes.ONBOARDING.path);
+      history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
     }
   }, [isLoggedIn, history]);
 
   const handleSubmit = async (email, password) => {
     try {
       await dispatch(loginActions.login(email, password));
-      history.push(GlobalRoutes.ONBOARDING.path);
+      history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
     } catch (error) {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
