@@ -1,81 +1,42 @@
+import { fromWei } from "../../Utils/GenHelperFunctions";
+
 export const sortByCategories = [{ value: "newest", label: "Newest" }];
 
-export const firstIncubationProgressDetails = {
-  daysLeft: "12",
-  totalDays: "30",
-  started: "01/1/2020",
-  finished: "01/30/2020",
-};
+export const incubationProgressDetails = stakeDetails => ({
+  startPeriod: stakeDetails.startPeriod,
+  submissionEndPeriod: stakeDetails.submissionEndPeriod,
+  endPeriod: stakeDetails.endPeriod,
+});
 
-export const firstCardDetails = [
+export const cardDetails = stakeDetails => [
   {
     title: "Accepted Stack Amount",
-    value: "1000",
+    value: fromWei(stakeDetails.approvedAmount),
     unit: "AGI",
   },
   {
     title: "Reward Amount",
-    value: "345",
+    value: "TBD??",
     unit: "AGI",
   },
   {
     title: "Refunded Amount",
-    value: "0",
+    value: "TBD??",
     unit: "AGI",
   },
   {
     title: "Current Stakers",
-    value: "25",
+    value: stakeDetails.numOfStakers,
     unit: "people",
   },
   {
     title: "Current Pool Size",
-    value: "7,000",
+    value: fromWei(stakeDetails.windowTotalStake),
     unit: "AGI",
   },
   {
     title: "Max Pool Size",
-    value: "10,000",
-    unit: "AGI",
-  },
-];
-
-export const secondIncubationProgressDetails = {
-  daysLeft: "24",
-  totalDays: "30",
-  started: "12/24/2019",
-  finished: "01/23/2020",
-};
-
-export const secondCardDetails = [
-  {
-    title: "Accepted Stack Amount",
-    value: "600",
-    unit: "AGI",
-  },
-  {
-    title: "Reward Amount",
-    value: "240",
-    unit: "AGI",
-  },
-  {
-    title: "Refunded Amount",
-    value: "400",
-    unit: "AGI",
-  },
-  {
-    title: "Current Stakers",
-    value: "25",
-    unit: "people",
-  },
-  {
-    title: "Current Pool Size",
-    value: "7,000",
-    unit: "AGI",
-  },
-  {
-    title: "Max Pool Size",
-    value: "10,000",
+    value: fromWei(stakeDetails.windowMaxCap),
     unit: "AGI",
   },
 ];
