@@ -36,6 +36,7 @@ const ClaimStake = () => {
 
   if (claimStakes.length === 0) {
     // TODO - Need to handle the No Data Found Here as per the Invision App Designs
+    return null;
   }
 
   const handleClick = (btnAction, stakeMapIndex) => {

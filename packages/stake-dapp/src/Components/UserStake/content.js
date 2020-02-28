@@ -1,7 +1,5 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
 
-export const sortByCategories = [{ value: "newest", label: "Newest" }];
-
 export const incubationProgressDetails = stakeDetails => ({
   startPeriod: stakeDetails.startPeriod,
   submissionEndPeriod: stakeDetails.submissionEndPeriod,

@@ -2,18 +2,16 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
 
-import { sortByCategories, cardDetails, incubationProgressDetails } from "./content";
+import { cardDetails, incubationProgressDetails } from "./content";
 
-import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
-const UserStake = ({ incubatingCount }) => {
+const UserStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -42,16 +40,6 @@ const UserStake = ({ incubatingCount }) => {
 
   return (
     <Grid container className={classes.userStakeContainer}>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.toolBar}>
-        <div className={classes.sortBySection}>
-          <span className={classes.sortbyTxt}>Sort by:</span>
-          <StyledDropdown list={sortByCategories} labelTxt="select" />
-        </div>
-        <div className={classes.incubatingCount}>
-          <Typography>{incubatingCount} incubating</Typography>
-        </div>
-      </Grid>
-
       {incubationStakes.map(stake => (
         <Grid key={stake.stakeMapIndex} item xs={12} sm={12} md={12} lg={12}>
           <StakeSession
@@ -62,15 +50,6 @@ const UserStake = ({ incubatingCount }) => {
           />
         </Grid>
       ))}
-
-      {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.bottomBox}>
-        <StakeSession
-          incubationProgressDetails={secondIncubationProgressDetails}
-          cardDetails={secondCardDetails}
-          date="Dec 2019"
-          id="#9283"
-        />
-      </Grid> */}
     </Grid>
   );
 };
