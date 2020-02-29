@@ -13,7 +13,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { itemsPerPageOptions } from "./content";
 import { useStyles } from "./styles";
+import { ControlServiceRequest } from "../../Utils/Daemon/Claims";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
+const controlServiceRequest = new ControlServiceRequest("https://example-service-a.singularitynet.io:8088");
 const WalletAccount = ({ classes }) => {
   const { limit, offset, totalCount } = useSelector(state => ({
     limit: state.aiServiceList.pagination.limit,
@@ -27,6 +30,16 @@ const WalletAccount = ({ classes }) => {
 
   const handlePageChange = () => {
     return null;
+  };
+
+  const handleClick = async () => {
+    try {
+      await controlServiceRequest.getListUnclaimed();
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        // TODO set alert error
+      }
+    }
   };
 
   return (
@@ -83,7 +96,7 @@ const WalletAccount = ({ classes }) => {
           claims at a time.
         </Typography>
         <div className={classes.claimSelectedSection}>
-          <SNETButton children="claim" color="primary" variant="outlined" disabled />
+          <SNETButton children="click here to claim list" color="primary" variant="outlined" onClick={handleClick} />
           <Typography>Selected (0)</Typography>
         </div>
         <div className={classes.table}>
