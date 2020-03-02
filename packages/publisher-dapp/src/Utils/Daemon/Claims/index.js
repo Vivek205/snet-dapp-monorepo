@@ -4,6 +4,7 @@ import Web3 from "web3";
 
 import { ProviderControlService } from "./stubs/control_service_pb_service";
 import { GrpcError } from "shared/dist/utils/error";
+import { uint8ArrayToBN } from "../../Grpc";
 
 export class ControlServiceRequest {
   constructor(serviceHost) {
@@ -27,10 +28,10 @@ export class ControlServiceRequest {
 
     const parseResponseMessage = message => {
       const paymentsList = message.getPaymentsList().map(payment => ({
-        channelId: btoa(payment.getChannelId()),
-        channelNonce: btoa(payment.getChannelNonce()),
-        signedAmount: btoa(payment.getSignedAmount()),
-        signature: btoa(payment.getSignature()),
+        channelId: uint8ArrayToBN(payment.getChannelId()).toString(),
+        channelNonce: uint8ArrayToBN(payment.getChannelNonce()).toString(),
+        signedAmount: uint8ArrayToBN(payment.getSignedAmount()).toString(),
+        signature: payment.getSignature(),
       }));
       return paymentsList;
     };
