@@ -15,6 +15,7 @@ export const defaultGroups = [
       },
     ],
     endpoints: [],
+    testEndpoints: [],
     freeCallsAllowed: "",
   },
 ];
