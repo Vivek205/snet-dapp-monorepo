@@ -16122,10 +16122,10 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snet-sdk-web@^1.0.0-beta.12:
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/snet-sdk-web/-/snet-sdk-web-1.0.0-beta.12.tgz#e096bf3fb5803aababb6a8c0537440de481a3014"
-  integrity sha512-ASd5hJeK+uEDAb36+6az5+ZdQwRcB8eB6o0PrWWIFxSPF9/2tMXMk1i4bcqVYvmaayr3qviKH4MvqqwXwzWCjw==
+snet-sdk-web@^1.0.0-beta.13:
+  version "1.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/snet-sdk-web/-/snet-sdk-web-1.0.0-beta.13.tgz#f991c470388000934fd25b9a9929842faa037c83"
+  integrity sha512-C1tUGfxwmtPAb+l3YQvwXe8DRanyA4/gpNqqVX1ADmvL2l/MaxEXBLoqC373QCjplkS6skaz+4UnCoT1HfwTrg==
   dependencies:
     bignumber.js "^8.1.1"
     es6-promise "^4.2.6"
