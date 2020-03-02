@@ -27,10 +27,10 @@ export class ControlServiceRequest {
 
     const parseResponseMessage = message => {
       const paymentsList = message.getPaymentsList().map(payment => ({
-        channelId: btoa(payment.getChannelId_asB64()),
-        channelNonce: btoa(payment.getChannelNonce_asB64()),
-        signedAmount: btoa(payment.getSignedAmount_asB64()),
-        signature: btoa(payment.getSignature_asB64()),
+        channelId: btoa(payment.getChannelId()),
+        channelNonce: btoa(payment.getChannelNonce()),
+        signedAmount: btoa(payment.getSignedAmount()),
+        signature: btoa(payment.getSignature()),
       }));
       return paymentsList;
     };
