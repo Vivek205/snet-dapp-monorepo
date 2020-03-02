@@ -28,6 +28,7 @@ const initialState = {
   uuid: "",
   name: "",
   id: "",
+  newId: "",
   availability: "",
   shortDescription: "",
   longDescription: "",
