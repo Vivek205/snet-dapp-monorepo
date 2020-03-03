@@ -1,8 +1,13 @@
+import { validBlockChainAdressEquality } from "../../../Utils/validation";
+
 export const orgSetupRegionValidationConstraints = {
   groups: {
     array: {
       name: { presence: { allowEmpty: false, message: "^Group name cannot be empty" } },
-      paymentAddress: { presence: { allowEmpty: false, message: "^Payment address cannot be empty" } },
+      paymentAddress: {
+        presence: { allowEmpty: false, message: "^Payment address cannot be empty" },
+        equality: validBlockChainAdressEquality("paymentAddress"),
+      },
       "paymentConfig.paymentExpirationThreshold": {
         presence: { allowEmpty: false, message: "^Payment expiration threshold cannot be empty" },
       },
