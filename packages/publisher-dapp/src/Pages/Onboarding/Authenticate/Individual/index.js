@@ -10,6 +10,7 @@ import { useStyles } from "./styles";
 import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { checkIfKnownError } from "shared/src/utils/error";
+import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
 
 class Individual extends Component {
   state = {
@@ -18,6 +19,7 @@ class Individual extends Component {
 
   componentDidMount = async () => {
     await this.props.getVerificationStatus();
+    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS);
   };
 
   handleVerify = async () => {
