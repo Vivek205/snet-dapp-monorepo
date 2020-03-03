@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { TermsAndConditionsDetails } from "./content";
@@ -7,11 +7,19 @@ import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
+  const { isInitialized, isLoggedIn } = useSelector(state => state.user);
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isInitialized && !isLoggedIn) {
+      history.push(GlobalRoutes.LOGIN.path);
+    }
+  }, [history, isInitialized, isLoggedIn]);
 
   const handleAccept = () => {
     history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
