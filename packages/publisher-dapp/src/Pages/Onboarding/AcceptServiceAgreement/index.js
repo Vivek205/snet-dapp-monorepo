@@ -19,7 +19,7 @@ const selectState = state => ({
 });
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
-  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState());
+  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState);
 
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
