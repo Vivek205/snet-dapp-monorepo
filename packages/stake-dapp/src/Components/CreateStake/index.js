@@ -44,7 +44,7 @@ const CreateStake = () => {
 
       loadData();
     } catch (_error) {
-      //console.log("error - ", error);
+      //console.log("error - ", error); // TODO - Take them to the error page
     }
   }, [dispatch, metamaskDetails]);
 
