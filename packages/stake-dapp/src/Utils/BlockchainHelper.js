@@ -156,7 +156,7 @@ export const rejectStake = (metamaskDetails, stakeMapIndex, staker) => {
   });
 };
 
-export const requestForClaim = (metamaskDetails, stakeMapIndex, autoRenew) => {
+export const updateAutoRenewal = (metamaskDetails, stakeMapIndex, autoRenew) => {
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
@@ -166,7 +166,7 @@ export const requestForClaim = (metamaskDetails, stakeMapIndex, autoRenew) => {
   const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.requestForClaim(stakeMapIndex, autoRenew, { from: accountAddress }, (err, hash) => {
+    stakingInstance.updateAutoRenewal(stakeMapIndex, autoRenew, { from: accountAddress }, (err, hash) => {
       if (err) {
         reject(hash);
       }

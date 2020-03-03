@@ -28,14 +28,12 @@ import { tokenActions, stakeActions, loaderActions } from "../../../Services/Red
 
 const BN = web3.utils.BN;
 
-const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) => {
+const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, autoRenewal }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const [stakeAmount, setStakeAmount] = useState(0);
   const [rewardAmount, setRewardAmount] = useState(0);
-  const [autoRenewal] = useState(true);
-  //setAutoRenewal
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
@@ -76,6 +74,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
 
         // Initiate the SubmitStake Operation
         txHash = await submitStake(metamaskDetails, stakeAmountBN, autoRenewal);
+
         if (!bAllowanceCalled) {
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
         }

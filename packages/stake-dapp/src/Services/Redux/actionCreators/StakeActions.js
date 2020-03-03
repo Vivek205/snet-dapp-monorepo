@@ -106,12 +106,16 @@ const parseAndTransformStakeWindow = data => {
 };
 
 export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => async dispatch => {
-  const [, pendingForApprovalAmount, approvedAmount, autoRenewal] = await getStakeInfo(metamaskDetails, stakeMapIndex);
+  const [found, pendingForApprovalAmount, approvedAmount, autoRenewal] = await getStakeInfo(
+    metamaskDetails,
+    stakeMapIndex
+  );
 
   const stakeWindowDetails = {
     myStake: pendingForApprovalAmount,
     autoRenewal,
     approvedAmount,
+    userExist: found,
   };
 
   dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
@@ -123,7 +127,7 @@ export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => 
 
 // TODO - Change the address to 0x0 after API error fixes...
 const fetchActiveStakesAPI = metamaskDetails => async dispatch => {
-  let staker = "0xC4f3BFE7D69461B7f363509393D44357c084404c";
+  let staker = "0x0";
   if (metamaskDetails.isTxnsAllowed) {
     staker = metamaskDetails.account;
   }

@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import moment from "moment";
 
 import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
-// import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 import SessionTime from "./SessionTime";
@@ -22,7 +20,6 @@ import {
 import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
 import { stakeActions } from "../../Services/Redux/actionCreators";
-import { fromWei } from "../../Utils/GenHelperFunctions";
 
 const CreateStake = () => {
   const classes = useStyles();
@@ -31,10 +28,10 @@ const CreateStake = () => {
   const [showWithdrawPopup, setShowWithdrawPopup] = useState(false);
   const [showAddStakePopup, setShowAddStakePopup] = useState(false);
 
+  const [autoRenewal, setAutoRenewal] = useState(true);
+
   const { activeStake } = useSelector(state => state.stakeReducer);
   const { metamaskDetails } = useSelector(state => state.metamaskReducer);
-
-  const stakeStartDate = moment.unix(activeStake.startPeriod).format("MMM YYYY");
 
   useEffect(() => {
     try {
@@ -59,10 +56,13 @@ const CreateStake = () => {
     setShowAddStakePopup(false);
   };
 
-  const handleClick = btnAction => {
+  const handleClick = (btnAction, autoRenewalOption) => {
     if (btnAction === "withdraw") setShowWithdrawPopup(true);
 
-    if (btnAction === "addStake") setShowAddStakePopup(true);
+    if (btnAction === "addStake") {
+      setAutoRenewal(autoRenewalOption);
+      setShowAddStakePopup(true);
+    }
   };
 
   // No Data Found Scenario
@@ -93,15 +93,11 @@ const CreateStake = () => {
         <StakeSession
           cardDetails={cardDetails(activeStake)}
           btnDetails={btnDetails}
-          stakeStartDate={stakeStartDate}
-          stakeMapIndex={activeStake.stakeMapIndex}
-          minStake={fromWei(activeStake.minStake)}
-          maxStake={fromWei(activeStake.maxStake)}
           agreementDetails={agreementDetails}
           handleClick={handleClick}
+          stakeDetails={activeStake}
         />
       </Grid>
-      {/* <SNETButton children="open popup" color="primary" onClick={openWithdrawPopup} /> */}
       <WithdrawStake
         open={showWithdrawPopup}
         handleClose={closeWithdrawPopup}
@@ -113,6 +109,7 @@ const CreateStake = () => {
         handleClose={closeAddStakePopup}
         addStakeAmountDetails={addStakeAmountDetails(activeStake)}
         stakeDetails={activeStake}
+        autoRenewal={autoRenewal}
       />
     </Grid>
   );

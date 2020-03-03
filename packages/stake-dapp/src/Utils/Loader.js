@@ -35,4 +35,8 @@ export const LoaderContent = {
     title: "Fetching Data",
     loaderText: "Just a moment. Data is getting loaded",
   },
+  UPDATE_STAKE_AUTO_RENEWAL: {
+    title: "Updating auto renewal Option",
+    loaderText: "Updating auto renewal option, please wait for transaction to confirm",
+  },
 };
