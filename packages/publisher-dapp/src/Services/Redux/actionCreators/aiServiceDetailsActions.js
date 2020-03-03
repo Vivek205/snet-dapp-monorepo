@@ -28,6 +28,7 @@ export const SET_AI_SERVICE_STATE_STATE = "SET_AI_SERVICE_STATE_STATE";
 export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
+export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -80,6 +81,11 @@ export const setServiceHeroImageUrl = url => ({ type: SET_SERVICE_HERO_IMAGE_URL
 
 export const setServiceDemoFilesUrl = url => ({ type: SET_SERVICE_DEMO_FILES_URL, payload: url });
 
+export const setServiceDetailsFoundInBlockchain = found => ({
+  type: SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN,
+  payload: found,
+});
+
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
@@ -121,10 +127,9 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
     if (error.code) {
       throw new APIError(error.message);
     }
-    dispatch(setServiceAvailability(data));
     dispatch(loaderActions.stopValidateServiceIdLoader());
+    return data;
   } catch (error) {
-    dispatch(setServiceAvailability("")); // In Case of error setting it to undefined
     dispatch(loaderActions.stopValidateServiceIdLoader());
     throw error;
   }
@@ -151,12 +156,13 @@ const generateSaveServicePayload = serviceDetails => {
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
+          test_endpoints: group.testEndpoints,
         };
       })
       .filter(el => el !== undefined);
   // TODO: Certain values are hard coded here.... Need to look at for complete integration
   const payloadForSubmit = {
-    service_id: serviceDetails.id,
+    service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
     short_description: serviceDetails.shortDescription,
     description: serviceDetails.longDescription,
@@ -225,9 +231,13 @@ const getServiceDetailsAPI = (orgUuid, serviceUuid) => async dispatch => {
   return await API.get(apiName, apiPath, apiOptions);
 };
 
-export const getServiceDetails = (orgUuid, serviceUuid) => async dispatch => {
+export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch => {
   try {
     const { data, error } = await dispatch(getServiceDetailsAPI(orgUuid, serviceUuid));
+    const serviceDetailsFromBlockchain = await getServiceDetailsFromBlockchain(orgId, data.service_id);
+    if (serviceDetailsFromBlockchain.found) {
+      dispatch(setServiceDetailsFoundInBlockchain(true));
+    }
     if (error.code) {
       throw new APIError(error.message);
     }
@@ -254,6 +264,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints,
+      testEndpoints: group.test_endpoints,
       freeCallsAllowed: group.free_calls,
     }));
   };
@@ -398,50 +409,37 @@ const saveTransaction = (orgUuid, serviceUuid, hash, ownerAddress) => async disp
   }
 };
 
-export const publishToBlockchain = (
-  organization,
-  serviceDetails,
-  serviceMetadataURI,
-  tags,
-  history
-) => async dispatch => {
+const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
   const orgId = organization.id;
   const serviceId = serviceDetails.id;
-  try {
-    const sdk = await initSDK();
-    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
-    return new Promise((resolve, reject) => {
-      const method = sdk._registryContract
-        .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
-        .send()
-        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-          await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, sdk.account.address));
-          dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
-        })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
-          dispatch(loaderActions.stopAppLoader());
-
-          resolve();
-          await method.off();
-        })
-        .on(blockChainEvents.ERROR, error => {
-          dispatch(loaderActions.stopAppLoader());
-          reject(error);
-        });
-    });
-  } catch (error) {
-    dispatch(loaderActions.stopAppLoader());
-    throw error;
-  }
+  const sdk = await initSDK();
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+  return new Promise((resolve, reject) => {
+    const method = sdk._registryContract
+      .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
+      .send()
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, sdk.account.address));
+        dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
+      })
+      .once(blockChainEvents.CONFIRMATION, async () => {
+        await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        dispatch(loaderActions.stopAppLoader());
+        resolve();
+        await method.off();
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader());
+        reject(error);
+      });
+  });
 };
 
 const uploadFileAPI = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const url = `${APIEndpoints.UTILITY.endpoint}${APIPaths.UPLOAD_FILE}?type=${assetType}&org_uuid=${orgUuid}&service_uuid=${serviceUuid}`;
   const res = await fetch(url, { method: "POST", headers: { authorization: token }, body: fileBlob });
-  const response = await res.json();
-  return response;
+  return await res.json();
 };
 
 export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
@@ -453,6 +451,47 @@ export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async d
     }
     dispatch(loaderActions.stopAppLoader());
     return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
+  const sdk = await initSDK();
+  return new Promise((resolve, reject) => {
+    const method = sdk._registryContract
+      .updateServiceRegistration(organization.id, serviceDetails.id, serviceMetadataURI)
+      .send()
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, sdk.account.address));
+        dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
+      })
+      .once(blockChainEvents.CONFIRMATION, async hash => {
+        await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        dispatch(loaderActions.stopAppLoader());
+        resolve(hash);
+        await method.off();
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader());
+        reject(error);
+      });
+  });
+};
+
+const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
+  const sdk = await initSDK();
+  return await sdk._registryContract.getServiceRegistrationById(orgId, serviceId).call();
+};
+
+export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
+  try {
+    const serviceDetailsFromBlockchain = getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
+    if (!serviceDetailsFromBlockchain.found) {
+      return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, tags, history));
+    }
+    return await dispatch(updateInBlockchain(organization, serviceDetails, serviceMetadataURI, history));
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

@@ -1,10 +1,13 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   button: {
     "& span": {
       textTransform: "none",
     },
   },
   menuItem: {
-    fontFamily: theme.typography.primary.main,
+    "& a": {
+      color: MUITheme.palette.text.lightGrey,
+      fontSize: 16,
+    },
   },
 });

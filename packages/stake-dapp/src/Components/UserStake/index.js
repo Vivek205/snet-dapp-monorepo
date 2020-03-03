@@ -1,49 +1,64 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
 
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import { useStyles } from "./styles";
-import StackSession from "../StackSession";
-import {
-  sortByCategories,
-  firstCardDetails,
-  firstIncubationProgressDetails,
-  secondIncubationProgressDetails,
-  secondCardDetails,
-} from "./content";
-import StyledDropdown from "shared/dist/components/StyledDropdown";
+import StakeSession from "../StakeSession";
+import { cardDetails, incubationProgressDetails } from "./content";
+import { stakeActions } from "../../Services/Redux/actionCreators";
 
-const UserStake = ({ incubatingCount }) => {
+import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
+
+const UserStake = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { incubationStakes } = useSelector(state => state.stakeReducer);
+  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
+
+  //const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
+
+  useEffect(() => {
+    try {
+      // TODO: Convert the same to async Constant based on the need...
+      dispatch(stakeActions.fetchActiveStakes(metamaskDetails));
+    } catch (_error) {
+      //console.log("error - ", error);
+      // TODO - Need to handle the error based on overall Web App
+    }
+  }, [dispatch, metamaskDetails]);
+
+  //console.log("incubationStakes - ", incubationStakes);
+  //console.log("incubationStakes length - ", incubationStakes.length);
+
+  if (incubationStakes.length === 0) {
+    return (
+      <div className={classes.noDataFoundSection}>
+        <img src={NoDataFoundImg} alt="No Data Found" />
+        <Typography>You have no incubating stakes.</Typography>
+        <Typography>
+          {" "}
+          Refer to <span>Open Staking</span> to make a stake.
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <Grid container className={classes.userStakeContainer}>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.toolBar}>
-        <div className={classes.sortBySection}>
-          <span className={classes.sortbyTxt}>Sort by:</span>
-          <StyledDropdown list={sortByCategories} labelTxt="select" />
-        </div>
-        <div className={classes.incubatingCount}>
-          <Typography>{incubatingCount} incubating</Typography>
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <StackSession
-          incubationProgressDetails={firstIncubationProgressDetails}
-          cardDetails={firstCardDetails}
-          date="Jan 2020"
-          id="#5555"
-        />
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.bottomBox}>
-        <StackSession
-          incubationProgressDetails={secondIncubationProgressDetails}
-          cardDetails={secondCardDetails}
-          date="Dec 2019"
-          id="#9283"
-        />
-      </Grid>
+      {incubationStakes.map(stake => (
+        <Grid key={stake.stakeMapIndex} item xs={12} sm={12} md={12} lg={12}>
+          <StakeSession
+            incubationProgressDetails={incubationProgressDetails(stake)}
+            cardDetails={cardDetails(stake)}
+            stakeStartDate={moment.unix(stake.startPeriod).format("MMM YYYY")}
+            stakeMapIndex={stake.stakeMapIndex}
+          />
+        </Grid>
+      ))}
     </Grid>
   );
 };

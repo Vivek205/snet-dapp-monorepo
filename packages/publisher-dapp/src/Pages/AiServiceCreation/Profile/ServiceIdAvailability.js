@@ -3,16 +3,22 @@ import isEmpty from "lodash/isEmpty";
 
 import AlertText from "shared/dist/components/AlertText";
 import { alertTypes } from "shared/dist/components/AlertBox";
+import { serviceIdAvailability } from "../constant";
 
-const ServiceIdAvailability = ({ classes, serviceDetails, loading }) => {
+const ServiceIdAvailability = ({ classes, id, availability, loading }) => {
   if (loading) {
-    return <AlertText type={alertTypes.INFO} message="validating..." />;
+    return (
+      <div className={classes.alertTextContainer}>
+        <AlertText type={alertTypes.INFO} message="validating..." />;
+      </div>
+    );
   }
+
   return (
-    <div className={classes.alertBoxContainer}>
+    <div className={classes.alertTextContainer}>
       <AlertText
-        type={serviceDetails.availability === "AVAILABLE" ? alertTypes.SUCCESS : alertTypes.ERROR}
-        message={!isEmpty(serviceDetails.id) ? `Service Id is ${serviceDetails.availability}` : ""}
+        type={availability === serviceIdAvailability.AVAILABLE ? alertTypes.SUCCESS : alertTypes.ERROR}
+        message={!isEmpty(id) ? `Service Id is ${availability}` : ""}
       />
     </div>
   );

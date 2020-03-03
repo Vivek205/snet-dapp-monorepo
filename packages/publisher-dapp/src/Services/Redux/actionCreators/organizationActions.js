@@ -329,34 +329,69 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
     throw error;
   }
 };
+const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  const sdk = await initSDK();
+  const orgId = organization.id;
+  const orgMetadataURI = metadataIpfsUri;
+  const members = [organization.ownerAddress];
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
+  return new Promise((resolve, reject) => {
+    const method = sdk._registryContract
+      .createOrganization(orgId, orgMetadataURI, members)
+      .send()
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+        resolve(hash);
+      })
+      .once(blockChainEvents.CONFIRMATION, async () => {
+        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+        await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        dispatch(loaderActions.stopAppLoader());
+        await method.off();
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader());
+        reject(error);
+      });
+  });
+};
+const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  const sdk = await initSDK();
+  const orgId = organization.id;
+  const orgMetadataURI = metadataIpfsUri;
+  return new Promise((resolve, reject) => {
+    const method = sdk._registryContract
+      .changeOrganizationMetadataURI(orgId, orgMetadataURI)
+      .send()
+      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+        resolve(hash);
+      })
+      .once(blockChainEvents.CONFIRMATION, async () => {
+        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+        await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        dispatch(loaderActions.stopAppLoader());
+        await method.off();
+      })
+      .on(blockChainEvents.ERROR, error => {
+        dispatch(loaderActions.stopAppLoader());
+        reject(error);
+      });
+  });
+};
 
-export const createAndSaveTransaction = (organization, metadataIpfsUri, history) => async dispatch => {
+export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
     const sdk = await initSDK();
     const orgId = organization.id;
     const orgMetadataURI = metadataIpfsUri;
-    const members = [organization.ownerAddress];
-    dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
-    return new Promise((resolve, reject) => {
-      const method = sdk._registryContract
-        .createOrganization(orgId, orgMetadataURI, members)
-        .send()
-        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-          await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
-          dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
-          resolve(hash);
-        })
-        .once(blockChainEvents.CONFIRMATION, async () => {
-          dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
-          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
-          dispatch(loaderActions.stopAppLoader());
-          await method.off();
-        })
-        .on(blockChainEvents.ERROR, error => {
-          dispatch(loaderActions.stopAppLoader());
-          reject(error);
-        });
-    });
+    const OrganizationDetailsFromBlockChain = await sdk._registryContract.getOrganizationById(orgId).call();
+    if (!OrganizationDetailsFromBlockChain.found) {
+      return await dispatch(registerOrganizationInBlockChain(orgId, orgMetadataURI, history));
+    }
+    return await dispatch(updateOrganizationInBlockChain(orgId, orgMetadataURI, history));
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

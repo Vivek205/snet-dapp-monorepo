@@ -16,7 +16,7 @@ var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
       color: MuiTheme.palette.error.main
     },
     success: {
-      color: MuiTheme.palette.success
+      color: MuiTheme.palette.success.main
     },
     warning: {
       color: MuiTheme.palette.text.warningBorder
