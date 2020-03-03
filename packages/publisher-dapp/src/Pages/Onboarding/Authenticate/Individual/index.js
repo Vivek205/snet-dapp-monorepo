@@ -47,7 +47,12 @@ class Individual extends Component {
             </ul>
           </Grid>
           <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-            <SNETButton children="process with jumio verification" color="primary" variant="contained" />
+            <SNETButton
+              children="process with jumio verification"
+              color="primary"
+              variant="contained"
+              onClick={this.handleVerify}
+            />
           </Grid>
         </Grid>
       </Grid>
