@@ -203,6 +203,7 @@ export const getStatus = async dispatch => {
       mailingAddress: !mailingAddressData
         ? {}
         : {
+            apartment: mailingAddressData.apartment,
             city: mailingAddressData.city,
             zip: mailingAddressData.pincode,
             country: mailingAddressData.country,
