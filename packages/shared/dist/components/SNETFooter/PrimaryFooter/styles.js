@@ -5,9 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var _styles = require("@material-ui/styles");
-
-var useStyles = (0, _styles.makeStyles)(function (theme) {
+var useStyles = function useStyles(theme) {
   return {
     PrimaryFooter: {
       width: "100%",
@@ -20,7 +18,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       padding: "12px 30px 0 0",
       borderRightWidth: 1,
       borderRightStyle: "solid",
-      borderRightColor: 'rgba(219, 227, 231, 0.5)',
+      borderRightColor: "rgba(219, 227, 231, 0.5)",
       "@media (max-width:1023px)": {
         borderBottom: 1,
         borderBottomStyle: "solid",
@@ -73,5 +71,6 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       }
     }
   };
-});
+};
+
 exports.useStyles = useStyles;

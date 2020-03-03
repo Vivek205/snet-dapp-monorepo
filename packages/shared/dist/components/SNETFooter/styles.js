@@ -51,7 +51,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,
       fontWeight: 600,
-      lineHeight: '25px',
+      lineHeight: "25px",
       opacity: 0.8,
       "@media (max-width:1023px) and (min-width:768px)": {
         fontSize: 18
