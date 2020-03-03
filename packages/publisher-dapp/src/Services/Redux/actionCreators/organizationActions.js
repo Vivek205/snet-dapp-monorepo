@@ -69,20 +69,17 @@ export const setServiceTouchFlag = touchFlag => ({
   payload: touchFlag,
 });
 
-const uploadFileAPI = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
+const uploadFileAPI = (assetType, fileBlob, orgUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   let url = `${APIEndpoints.UTILITY.endpoint}${APIPaths.UPLOAD_FILE}?type=${assetType}&org_uuid=${orgUuid}`;
-  if (Boolean(serviceUuid)) {
-    url = `${url}&service_uuid=${serviceUuid}`;
-  }
   const res = await fetch(url, { method: "POST", headers: { authorization: token }, body: fileBlob });
   return await res.json();
 };
 
-export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async dispatch => {
+export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.UPLOAD_FILE));
-    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBlob, orgUuid, serviceUuid));
+    const { data, error } = await dispatch(uploadFileAPI(assetType, fileBlob, orgUuid));
     if (error.code) {
       throw new APIError(error.message);
     }
