@@ -27,6 +27,11 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 
 const BN = web3.utils.BN;
+const stateSelector = state => ({
+  tokenBalance: state.tokenReducer.tokenBalance,
+  tokenAllowance: state.tokenReducer.tokenAllowance,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+});
 
 const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, autoRenewal }) => {
   const classes = useStyles();
@@ -37,9 +42,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
-  const tokenBalance = useSelector(state => state.tokenReducer.tokenBalance);
-  const tokenAllowance = useSelector(state => state.tokenReducer.tokenAllowance);
-  const metamaskDetails = useSelector(state => state.metamaskReducer.metamaskDetails);
+  const { tokenBalance, tokenAllowance, metamaskDetails } = useSelector(state => stateSelector(state));
 
   const stakeStartDate = moment.unix(stakeDetails.startPeriod).format("MMM YYYY");
 
@@ -138,7 +141,6 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
             <div className={classes.sessionDetails}>
               <Typography>Session : </Typography>
               <Typography>
-                {" "}
                 {stakeStartDate} #{stakeDetails.stakeMapIndex}
               </Typography>
             </div>
