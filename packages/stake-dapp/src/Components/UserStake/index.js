@@ -36,7 +36,6 @@ const UserStake = () => {
         <img src={NoDataFoundImg} alt="No Data Found" />
         <Typography>You have no incubating stakes.</Typography>
         <Typography>
-          {" "}
           Refer to <span>Open Staking</span> to make a stake.
         </Typography>
       </div>
