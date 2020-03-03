@@ -1,6 +1,10 @@
 import { stakeActions } from "../actionCreators";
 
 const InitialRequestDetails = {
+  stakeSummary: {
+    incubatingCount: 0,
+    readyToClaimCount: 0,
+  },
   activeStake: {
     stakeMapIndex: 0,
     startPeriod: 0,
@@ -26,6 +30,9 @@ const InitialRequestDetails = {
 
 const stakeReducer = (state = InitialRequestDetails, action) => {
   switch (action.type) {
+    case stakeActions.UPDATE_STAKE_SUMMARY: {
+      return { ...state, stakeSummary: { ...state.stakeSummary, ...action.payload } };
+    }
     case stakeActions.UPDATE_ACTIVE_STAKE_WINDOW: {
       return { ...state, activeStake: action.payload };
     }

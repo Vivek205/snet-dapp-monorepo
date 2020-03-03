@@ -15,6 +15,8 @@ export const UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN = "UPDATE_ACTIVE_STAKE_WINDOW
 export const UPDATE_ACTIVE_STAKES = "UPDATE_ACTIVE_STAKES";
 export const UPDATE_CLAIM_STAKES = "UPDATE_CLAIM_STAKES";
 
+export const UPDATE_STAKE_SUMMARY = "UPDATE_STAKE_SUMMARY";
+
 export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,
   payload: stakeWindowDetails,
@@ -32,6 +34,11 @@ export const setActiveStakes = activeStakes => ({
 export const setClaimStakes = claimStakes => ({
   type: UPDATE_CLAIM_STAKES,
   payload: claimStakes,
+});
+
+export const setStakeSummary = stakeSummary => ({
+  type: UPDATE_STAKE_SUMMARY,
+  payload: stakeSummary,
 });
 
 // **************************
@@ -151,6 +158,7 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
     //console.log("fetchActiveStakes - ", data);
     const activeStakes = parseAndTransformStakes(data);
     dispatch(setActiveStakes(activeStakes));
+    dispatch(setStakeSummary({ incubatingCount: data.length }));
 
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
@@ -188,6 +196,7 @@ export const fetchClaimStakes = metamaskDetails => async dispatch => {
     //console.log("fetchClaimStakes - ", data);
     const claimStakes = parseAndTransformStakes(data);
     dispatch(setClaimStakes(claimStakes));
+    dispatch(setStakeSummary({ readyToClaimCount: data.length }));
 
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
