@@ -19,6 +19,7 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
 
   const handleSignout = () => {
     dispatch(userActions.loginActions.signout);
+    //testing
   };
 
   return (
