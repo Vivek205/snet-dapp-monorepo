@@ -11,9 +11,11 @@ export const orgSetupRegionValidationConstraints = {
       },
       "paymentConfig.paymentChannelStorageClient.connectionTimeout": {
         presence: { allowEmpty: false, message: "^Connection timeout cannot be empty" },
+        numericality: { greaterThan: 0 },
       },
       "paymentConfig.paymentChannelStorageClient.requestTimeout": {
-        presence: { allowEmpty: false, message: "Request timeout cannot be empty" },
+        presence: { allowEmpty: false, message: "^Request timeout cannot be empty" },
+        numericality: { greaterThan: 0 },
       },
       "paymentConfig.paymentChannelStorageClient.endpoints": {
         presence: { allowEmpty: false, message: "^Endpoints cannot be empty" },
