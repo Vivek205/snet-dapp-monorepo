@@ -15,7 +15,7 @@ import { assetTypes } from "../../../../Utils/FileUpload";
 
 const OrgImg = ({ classes }) => {
   const { url } = useSelector(state => state.organization.assets.heroImage);
-  const { organization, orgUuid } = useParams();
+  const { orgUuid } = useParams();
   const dispatch = useDispatch();
 
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
@@ -51,10 +51,10 @@ const OrgImg = ({ classes }) => {
           <div className={classes.previewImg}>
             <div className={classes.previewLargeImg}>
               <Typography>Preview</Typography>
-              <Avatar alt="Singularity" src={organization.assets.heroImage.url} className={classes.largePreviewImg} />
+              <Avatar alt="Singularity" src={url} className={classes.largePreviewImg} />
             </div>
             <div className={classes.previewSmallImg}>
-              <Avatar alt="Singularity" src={organization.assets.heroImage.url} className={classes.smallPreviewImg} />
+              <Avatar alt="Singularity" src={url} className={classes.smallPreviewImg} />
             </div>
           </div>
         </Grid>
