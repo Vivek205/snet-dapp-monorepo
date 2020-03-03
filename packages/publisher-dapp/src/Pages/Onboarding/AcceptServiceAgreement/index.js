@@ -8,10 +8,19 @@ import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { userEntities } from "../../../Utils/user";
+import { organizationTypes } from "../../../Utils/organizationSetup";
 
+const selectState = state => ({
+  isInitialized: state.user.isInitialized,
+  isLoggedIn: state.user.isLoggedIn,
+  entity: state.user.entity,
+  organization: state.organization,
+});
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
-  const { isInitialized, isLoggedIn } = useSelector(state => state.user);
+  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState());
+
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
 
@@ -21,7 +30,10 @@ const AcceptServiceAgreement = ({ history }) => {
     }
   }, [history, isInitialized, isLoggedIn]);
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
+    if (entity === userEntities.INDIVIDUAL) {
+      await organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL });
+    }
     history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
