@@ -25,6 +25,7 @@ const Onboarding = ({ location, history, classes }) => {
   useEffect(() => {
     if (
       !isEmpty(email) &&
+      Boolean(orgUuid) &&
       !isEmpty(ownerEmail) &&
       email === ownerEmail &&
       orgStatus !== organizationSetupStatuses.PUBLISHED
