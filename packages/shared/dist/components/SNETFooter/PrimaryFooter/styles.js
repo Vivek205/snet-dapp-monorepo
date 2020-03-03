@@ -20,6 +20,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       padding: "12px 30px 0 0",
       borderRightWidth: 1,
       borderRightStyle: "solid",
+      borderRightColor: 'rgba(219, 227, 231, 0.5)',
       "@media (max-width:1023px)": {
         borderBottom: 1,
         borderBottomStyle: "solid",

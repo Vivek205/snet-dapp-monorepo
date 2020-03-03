@@ -45,7 +45,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     passwordCriteriaContainer: {
-      marginBottom: 99,
+      marginBottom: 20,
       color: MUITheme.palette.text.primary,
       fontSize: 12,
       letterSpacing: 0.39,

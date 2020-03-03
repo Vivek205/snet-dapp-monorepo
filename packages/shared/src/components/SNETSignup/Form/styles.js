@@ -29,7 +29,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& div": { width: "100%" },
   },
   passwordCriteriaContainer: {
-    marginBottom: 99,
+    marginBottom: 20,
     color: MUITheme.palette.text.primary,
     fontSize: 12,
     letterSpacing: 0.39,

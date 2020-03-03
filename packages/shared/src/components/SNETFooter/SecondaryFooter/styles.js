@@ -2,10 +2,11 @@ import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
   secondaryFooter: {
-    paddingTop: 15,
+    padding: "15px 4px 12px 23px",
     borderTopWidth: 1,
     borderTopStyle: "solid",
-    marginTop: 11,
+    marginTop: 23,
+    opacity: 0.6,
     "& div": {
       "@media (max-width:1023px) and (min-width:768px)": { maxWidth: "50%" },
     },
@@ -22,7 +23,6 @@ export const useStyles = makeStyles(theme => ({
   copyrightText: {
     margin: 0,
     color: theme.palette.text.white,
-    opacity: 0.6,
     fontSize: 12,
     lineHeight: "17px",
     "@media (max-width:1023px) and (min-width:768px)": { width: 353 },
