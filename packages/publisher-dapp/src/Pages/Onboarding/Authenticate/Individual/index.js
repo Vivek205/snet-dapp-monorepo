@@ -1,28 +1,42 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import SNETButton from "shared/dist/components/SNETButton";
-
 import { documentList } from "./content";
 import { useStyles } from "./styles";
 import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { checkIfKnownError } from "shared/src/utils/error";
 
 class Individual extends Component {
+  state = {
+    alert: {},
+  };
+
   componentDidMount = async () => {
     await this.props.getVerificationStatus();
   };
 
   handleVerify = async () => {
-    const { redirectUrl } = await this.props.initiateVerification();
-    await window.location.replace(redirectUrl);
+    try {
+      const { redirect_url: redirectUrl } = await this.props.initiateVerification();
+      await window.location.replace(redirectUrl);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      return this.setState({
+        alert: { type: alertTypes.ERROR, message: "Unable to initiate Jumio verification. Please try again" },
+      });
+    }
   };
 
   render() {
     const { classes } = this.props;
+    const { alert } = this.state;
     return (
       <Grid container className={classes.individualContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -54,6 +68,7 @@ class Individual extends Component {
               onClick={this.handleVerify}
             />
           </Grid>
+          <AlertBox type={alert.type} message={alert.message} />
         </Grid>
       </Grid>
     );
