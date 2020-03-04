@@ -108,6 +108,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, orgAddress: { ...state.orgAddress, sameMailingAddress: action.payload } };
     case organizationActions.SET_ORG_HERO_IMAGE_URL:
       return { ...state, assets: { ...state.assets, heroImage: { ...state.assets.heroImage, url: action.payload } } };
+    case organizationActions.SET_ORG_FOUND_IN_BLOCKCHAIN:
+      return { ...state, foundInBlockchain: action.payload };
     default:
       return state;
   }

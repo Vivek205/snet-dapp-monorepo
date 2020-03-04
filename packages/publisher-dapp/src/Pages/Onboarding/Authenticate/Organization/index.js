@@ -51,7 +51,7 @@ const Organization = props => {
       }
       let orgUuid;
       if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
-        const data = dispatch(organizationActions.finishLater(organization, "ONBOARDING"));
+        const data = await dispatch(organizationActions.finishLater(organization, "ONBOARDING"));
         orgUuid = data.org_uuid;
       } else {
         const data = await dispatch(organizationActions.createOrganization(organization));
