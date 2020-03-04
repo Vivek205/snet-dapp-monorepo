@@ -42,7 +42,7 @@ const InfoBox = ({ stakeDetails }) => {
             - Auto Renewal options will be editable one week prior before the incubation period ends
           </Typography>
           <Typography>
-            - Any partial amounts not accepted by SNET Foundation will be automatically refunded to yoour wallet account
+            - Any partial amounts not accepted by SNET Foundation will be automatically refunded to your wallet account
           </Typography>
           <Typography>- You can review the Transaction History for full details of this stake session</Typography>
         </div>

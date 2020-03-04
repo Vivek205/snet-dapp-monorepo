@@ -21,17 +21,20 @@ import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
+const stateSelector = state => ({
+  activeStake: state.stakeReducer.activeStake,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+});
+
 const CreateStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const [showWithdrawPopup, setShowWithdrawPopup] = useState(false);
   const [showAddStakePopup, setShowAddStakePopup] = useState(false);
-
   const [autoRenewal, setAutoRenewal] = useState(true);
 
-  const { activeStake } = useSelector(state => state.stakeReducer);
-  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
+  const { activeStake, metamaskDetails } = useSelector(state => stateSelector(state));
 
   useEffect(() => {
     try {

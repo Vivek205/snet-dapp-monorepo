@@ -213,7 +213,7 @@ const parseAndTransformStakes = data => {
   // First Section of transformation for the Stake Window
   // Second Section of transformation for the Stake Holder
   const stakes = data.map(stake => ({
-    stakeMapIndex: stake.stake_holder.blockchain_id,
+    stakeMapIndex: stake.stake_window.blockchain_id,
     startPeriod: stake.stake_window.start_period,
     submissionEndPeriod: stake.stake_window.submission_end_period,
     approvalEndPeriod: stake.stake_window.approval_end_period,
