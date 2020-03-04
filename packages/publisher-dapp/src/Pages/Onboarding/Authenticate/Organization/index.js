@@ -28,6 +28,16 @@ const Organization = props => {
     }
   });
 
+  useEffect(() => {
+    if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message:
+          "Your organization has been rejected. Please validate the details provided and submit again for approval",
+      });
+    }
+  }, [organization.state.state, setAlert]);
+
   const handleNavigateBack = () => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
