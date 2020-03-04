@@ -32,7 +32,10 @@ const Onboarding = ({ location, history, classes }) => {
       orgStatus !== organizationSetupStatuses.PUBLISHED
     ) {
       if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
-        return history.push(AuthenticateRoutes.ORGANIZATION.path);
+        if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+          return history.push(AuthenticateRoutes.ORGANIZATION.path);
+        }
+        return;
       }
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
     }
