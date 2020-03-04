@@ -5,8 +5,10 @@ import YoutubeVideoFrame from "shared/dist/assets/images/youtubeVideoFrame.png";
 export const overViewArticles = [
   {
     title: "Try Publisher Free Today",
-    description:
-      "Publish your AI services to the largest open decentralized AI marketplace blockchain and reach customers around the world. You’ll also get access to beta software, advanced AI app capabilities, extensive beta testing tools, and AI usage analytics.",
+    description: [
+      "Publish your AI services to the largest open decentralized AI marketplace blockchain and reach customers around the world.",
+      " You’ll also get access to beta software, advanced AI app capabilities, extensive beta testing tools, and AI usage analytics.",
+    ],
     media: YoutubeVideoFrame,
     btnDetails: {
       text: "get started",

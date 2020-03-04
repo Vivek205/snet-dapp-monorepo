@@ -6,6 +6,7 @@ import withDashboardMenu from "../HOC/withDashboardMenu";
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
+const ForgotPassword = lazy(() => import("../Pages/Login/ForgotPassword"));
 const Overview = lazy(() => import("../Pages/Overview"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
@@ -19,11 +20,18 @@ const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
+const FORGOTPASSWORD_PATH = "/forgotpassword";
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
 const SignupComponent = withRegistrationHeader(Signup, "Already have an account?", "Login", LOGIN_PATH);
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
+const ForgotPasswordComponent = withRegistrationHeader(
+  ForgotPassword,
+  "Switch to another account?",
+  "Login",
+  FORGOTPASSWORD_PATH
+);
 const OverviewComponent = withLightHeaderAndFooter(Overview);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const OnboardingComponent = withLightHeaderAndFooter(Onboarding);
@@ -33,6 +41,7 @@ const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 const AiServicesComponent = withDashboardMenu(AiServices);
 const AiServiceCreationComponent = withLightHeaderAndFooter(AiServiceCreation);
 const WalletAccountComponent = withDashboardMenu(WalletAccount);
+
 export const GlobalRoutes = {
   LOGIN: {
     name: "login",
@@ -48,6 +57,11 @@ export const GlobalRoutes = {
     name: "signup confirm",
     path: "/signupconfirmation",
     component: SingupConfirmComponent,
+  },
+  FORGOT_PASSWORD: {
+    name: "forgot password",
+    path: "/forgotpassword",
+    component: ForgotPasswordComponent,
   },
   OVERVIEW: {
     name: "overview",

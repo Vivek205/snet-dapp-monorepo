@@ -31,7 +31,7 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
   return (
     <Grid container spacing={24} className={classes.forgotPwdMainContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.forgotPwdContent}>
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant="h3">{title}</Typography>
         <p>We'll email you instructions on how to reset it.</p>
         <form noValidate autoComplete="off" className={classes.forgotPwdForm}>
           <TextField
@@ -45,7 +45,9 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
             value={localEmail}
             onChange={e => setEmail(e.target.value)}
           />
-          <AlertBox type="error" message={validationErr || forgotPasswordError} />
+          <div className={classes.alertBoxContainer}>
+            <AlertBox type="error" message={validationErr || forgotPasswordError} />
+          </div>
           <SNETButton
             color="primary"
             variant="contained"

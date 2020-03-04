@@ -23,7 +23,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
     >
       <Grid item xs={12} sm={12} md={12} lg={6} className={classes.overviewArticleContent}>
         <Typography variant="h2">{title}</Typography>
-        {description ? <Typography className={classes.description}>{description}</Typography> : null}
+        <Typography className={classes.description}>{description}</Typography>
         {list ? (
           <List>
             {list.map((item, index) => (
