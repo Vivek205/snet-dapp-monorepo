@@ -111,8 +111,8 @@ class TeamMembers extends Component {
   };
 
   shouldAddToBlockChainBeEnabled = () =>
-    this.props.members[memberStatus.ACCEPTED].length > 0 ||
-    this.props.email === this.props.ownerEmail ||
+    this.props.members[memberStatus.ACCEPTED].length > 0 &&
+    this.props.email === this.props.ownerEmail &&
     this.props.orgStatus === organizationSetupStatuses.PUBLISHED;
 
   render() {
