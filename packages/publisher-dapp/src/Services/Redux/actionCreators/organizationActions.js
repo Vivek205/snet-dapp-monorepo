@@ -31,6 +31,7 @@ export const SET_ORG_STATE_UPDATED_BY = "SET_ORG_STATE_UPDATED_BY";
 export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
+export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -60,7 +61,10 @@ export const setOrgStateAll = state => ({ type: SET_ORG_STATE_ALL, payload: stat
 export const setOrgStateState = state => ({ type: SET_ORG_STATE_STATE, payload: state });
 
 export const setOrgSameMailingAddress = value => ({ type: SET_ORG_SAME_MAILING_ADDRESS, payload: value });
+
 export const setOrgHeroImageUrl = url => ({ type: SET_ORG_HERO_IMAGE_URL, payload: url });
+
+export const setOrgFoundInBlockchain = found => ({ type: SET_ORG_FOUND_IN_BLOCKCHAIN, payload: found });
 
 const uploadFileAPI = (assetType, fileBlob, orgUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -245,7 +249,9 @@ export const getStatus = async dispatch => {
     }));
     organization.groups = parsedGroups;
   }
+  const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(organization.id);
   dispatch(setAllAttributes(organization));
+  dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
   return data;
 };
 
@@ -421,12 +427,17 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
   });
 };
 
+const findOrganizationInBlockchain = async orgId => {
+  const sdk = await initSDK();
+  return await sdk._registryContract.getOrganizationById(orgId).call();
+};
+
 export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
-    const sdk = await initSDK();
     const orgId = organization.id;
     const orgMetadataURI = metadataIpfsUri;
-    const OrganizationDetailsFromBlockChain = await sdk._registryContract.getOrganizationById(orgId).call();
+    const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(orgId);
+
     if (!OrganizationDetailsFromBlockChain.found) {
       return await dispatch(registerOrganizationInBlockChain(organization, orgMetadataURI, history));
     }

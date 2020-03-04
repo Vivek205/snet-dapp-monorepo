@@ -14,6 +14,7 @@ const initialState = {
   id: "",
   uuid: "",
   name: "",
+  foundInBlockchain: false,
   type: organizationTypes.ORGANIZATION,
   duns: "",
   website: "",
