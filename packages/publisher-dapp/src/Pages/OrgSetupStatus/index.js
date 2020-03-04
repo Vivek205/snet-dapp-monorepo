@@ -16,6 +16,7 @@ const Banners = {
   [organizationSetupStatuses.ONBOARDING]: VerificationPending,
   [organizationSetupStatuses.ONBOARDING_APPROVED]: VerificationApproved,
   [organizationSetupStatuses.APPROVED]: VerificationApproved,
+  [organizationSetupStatuses.ONBOARDING_REJECTED]: VerificationRejected,
   [organizationSetupStatuses.REJECTED]: VerificationRejected,
 };
 

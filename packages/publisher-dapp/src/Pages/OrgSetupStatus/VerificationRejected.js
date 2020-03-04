@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 
 const VerificationRejected = () => {
-  const { status } = useSelector(state => state.organization.state.state);
+  const status = useSelector(state => state.organization.state.state);
   const history = useHistory();
   const { orgUuid } = useParams();
 
