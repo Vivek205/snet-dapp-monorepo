@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
-import { cardDetails, incubationProgressDetails } from "./content";
+import { cardDetails, incubationProgressDetails, agreementDetails } from "./content";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
 import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
@@ -31,16 +30,12 @@ const UserStake = () => {
     }
   }, [dispatch, metamaskDetails]);
 
-  //console.log("incubationStakes - ", incubationStakes);
-  //console.log("incubationStakes length - ", incubationStakes.length);
-
   if (incubationStakes.length === 0) {
     return (
       <div className={classes.noDataFoundSection}>
         <img src={NoDataFoundImg} alt="No Data Found" />
         <Typography>You have no incubating stakes.</Typography>
         <Typography>
-          {" "}
           Refer to <span>Open Staking</span> to make a stake.
         </Typography>
       </div>
@@ -54,8 +49,8 @@ const UserStake = () => {
           <StakeSession
             incubationProgressDetails={incubationProgressDetails(stake)}
             cardDetails={cardDetails(stake)}
-            stakeStartDate={moment.unix(stake.startPeriod).format("MMM YYYY")}
-            stakeMapIndex={stake.stakeMapIndex}
+            agreementDetails={agreementDetails}
+            stakeDetails={stake}
           />
         </Grid>
       ))}
