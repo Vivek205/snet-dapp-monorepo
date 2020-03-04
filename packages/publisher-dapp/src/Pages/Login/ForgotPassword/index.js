@@ -1,10 +1,12 @@
 import React, { Fragment } from "react";
 
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+
 import SNETForgotPassword from "shared/dist/components/SNETForgotPassword";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ history }) => {
   const handleSubmit = () => {
-    // hanlde submit function
+    history.push(GlobalRoutes.LOGIN.path);
   };
 
   return (

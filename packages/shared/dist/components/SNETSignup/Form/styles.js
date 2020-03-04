@@ -17,7 +17,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       width: 410,
       margin: " 0 0 0 auto",
       boxSizing: "border-box",
-      padding: "20px 20px 30px",
+      padding: "20px 20px 38px",
       borderRadius: 4,
       backgroundColor: MUITheme.palette.background.white,
       boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
@@ -54,6 +54,30 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         display: "inline-block",
         paddingRight: 4
       }
+    },
+    charLength: _defineProperty({
+      marginBottom: 15,
+      display: "block",
+      paddingLeft: 14,
+      color: MUITheme.palette.text.primary,
+      fontSize: 12,
+      letterSpacing: 0.39
+    }, MUITheme.breakpoints.down("sm"), {
+      marginBottom: 10
+    }),
+    emailContainer: {
+      marginBottom: 12,
+      '& > span': {
+        paddingLeft: 16,
+        display: 'inline-block',
+        color: MUITheme.palette.error.main,
+        fontSize: 12.17,
+        letterSpacing: 0.4,
+        lineHeight: '16px'
+      }
+    },
+    alertBoxContainer: {
+      marginBottom: 30
     }
   };
 });

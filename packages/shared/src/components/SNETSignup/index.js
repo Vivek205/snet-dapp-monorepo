@@ -12,10 +12,10 @@ const SNETSignup = props => {
   return (
     <div className={classes.signupContainer}>
       <Grid container className={classes.signupWrapper}>
-        <Grid item xs={12} sm={12} md={5} lg={5} className={classes.signupInfo}>
+        <Grid item xs={12} sm={12} md={6} lg={6} className={classes.signupInfo}>
           <Info {...info} />
         </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <Form onSubmit={onSubmit} signupError={signupError} />
         </Grid>
       </Grid>

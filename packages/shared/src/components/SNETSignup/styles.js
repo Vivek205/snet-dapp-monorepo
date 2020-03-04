@@ -6,7 +6,7 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   signupWrapper: {
     width: "71%",
-    margin: "0 auto",
+    margin: "0 auto 10%",
     [MUITheme.breakpoints.down("sm")]: { width: "90%" },
   },
   signupInfo: {
@@ -21,6 +21,7 @@ export const useStyles = makeStyles(MUITheme => ({
       fontWeight: 600,
     },
     "& p": {
+      paddingRight: 50,
       margin: "23px 0 24px",
       color: MUITheme.palette.text.primary,
       fontSize: 20,
@@ -37,7 +38,7 @@ export const useStyles = makeStyles(MUITheme => ({
       listStyle: "none",
       "& svg": {
         marginRight: 15,
-        color: MUITheme.palette.success,
+        color: MUITheme.palette.success.main,
         fontSize: 20,
       },
       "& p": {
@@ -46,7 +47,6 @@ export const useStyles = makeStyles(MUITheme => ({
         letterSpacing: "0.29px",
         display: "inline-block",
         margin: 0,
-        width: "84%",
         verticalAlign: "top",
       },
     },

@@ -20,7 +20,6 @@ const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
-const FORGOTPASSWORD_PATH = "/forgotpassword";
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
@@ -30,7 +29,7 @@ const ForgotPasswordComponent = withRegistrationHeader(
   ForgotPassword,
   "Switch to another account?",
   "Login",
-  FORGOTPASSWORD_PATH
+  LOGIN_PATH
 );
 const OverviewComponent = withLightHeaderAndFooter(Overview);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);

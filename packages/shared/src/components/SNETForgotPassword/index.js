@@ -24,7 +24,6 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
       setValidationErr(isNotValid[0]);
       return;
     }
-
     onSubmit(localEmail);
   };
 
