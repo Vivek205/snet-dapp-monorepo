@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles() {
   return {
     PrimaryFooter: {
       width: "100%",

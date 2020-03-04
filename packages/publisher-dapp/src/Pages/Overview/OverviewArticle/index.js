@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { withStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/CheckCircle";
@@ -32,7 +31,10 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
                 <ListItemIcon>
                   <CheckIcon className={classes.checkCircleIcon} />
                 </ListItemIcon>
-                <ListItemText primary={item} />
+                <Typography className={classes.listItemText}>
+                  <span>{item.title}</span>
+                  {item.description}
+                </Typography>
               </ListItem>
             ))}
           </List>
@@ -41,7 +43,7 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
           <StyledButton btnText={btnDetails.text} type={btnDetails.type} />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={6}>
+      <Grid item xs={12} sm={12} md={12} lg={6} className={classes.mediaContainer}>
         <img src={media} alt="media" />
       </Grid>
     </Grid>

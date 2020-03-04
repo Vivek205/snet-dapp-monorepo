@@ -15,6 +15,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: "14px 60px",
       flexDirection: "row",
       alignItems: "center",
+      boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',
       zIndex: 1110
     },
     purple: {
