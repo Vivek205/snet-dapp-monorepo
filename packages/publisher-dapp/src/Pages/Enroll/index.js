@@ -55,7 +55,7 @@ const Enroll = ({ classes, history }) => {
             Your organization must have a D-U-N-S Number so that we can verify your organization’s identity and legal
             entity status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as
             standard business identifiers. You can check to see if your organization already has a D-U-N-S Number and
-            request one if necessary. They are free in most jurisdictions. <a href="#">Learn more,</a>
+            request one if necessary. They are free in most jurisdictions. <a href="#">Learn more</a>
           </Typography>
         </div>
         <div>

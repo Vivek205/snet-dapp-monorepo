@@ -58,6 +58,7 @@ export const useStyles = MUITheme => ({
   },
   joiningTeamMember: {
     "& p": { marginBottom: "0 !important" },
+    "& a": { padding: "auto 2px" },
   },
   website: {
     "& p": { marginBottom: "0 !important" },

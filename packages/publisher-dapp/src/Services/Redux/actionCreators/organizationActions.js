@@ -258,10 +258,13 @@ const finishLaterAPI = payload => async dispatch => {
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const finishLater = organization => async dispatch => {
+export const finishLater = (organization, type = "") => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
     const payload = payloadForSubmit(organization);
+    if (type === "ONBOARDING") {
+      payload.groups = [];
+    }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
