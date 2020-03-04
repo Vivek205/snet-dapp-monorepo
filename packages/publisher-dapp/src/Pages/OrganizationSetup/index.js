@@ -27,6 +27,10 @@ const OrganizationSetup = ({ classes, location, history }) => {
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
+    if (organization.foundInBlockchain) {
+      return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+    }
+    history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
   };
 
   const activeSection = () => {

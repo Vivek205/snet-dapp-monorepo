@@ -11,6 +11,7 @@ import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { AuthenticateRoutes } from "./Authenticate/AuthenitcateRouter/Routes";
 
 const selectState = state => ({
   email: state.user.email,
@@ -30,6 +31,12 @@ const Onboarding = ({ location, history, classes }) => {
       email === ownerEmail &&
       orgStatus !== organizationSetupStatuses.PUBLISHED
     ) {
+      if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
+        if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+          return history.push(AuthenticateRoutes.ORGANIZATION.path);
+        }
+        return;
+      }
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
     }
   });

@@ -28,6 +28,16 @@ const Organization = props => {
     }
   });
 
+  useEffect(() => {
+    if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message:
+          "Your organization has been rejected. Please validate the details provided and submit again for approval",
+      });
+    }
+  }, [organization.state.state, setAlert, alert]);
+
   const handleNavigateBack = () => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
   };
@@ -39,11 +49,17 @@ const Organization = props => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      const { org_uuid } = await dispatch(organizationActions.createOrganization(organization));
-
-      await dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
-      await dispatch(organizationActions.initializeOrg);
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", org_uuid));
+      let orgUuid;
+      if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+        const data = await dispatch(organizationActions.finishLater(organization, "ONBOARDING"));
+        orgUuid = data.org_uuid;
+      } else {
+        const data = await dispatch(organizationActions.createOrganization(organization));
+        orgUuid = data.org_uuid;
+      }
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+      dispatch(organizationActions.initializeOrg);
+      dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
