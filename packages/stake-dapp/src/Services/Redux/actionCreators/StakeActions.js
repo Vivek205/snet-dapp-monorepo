@@ -5,7 +5,7 @@ import { APIError } from "shared/dist/utils/API";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { getStakeInfo } from "../../../Utils/BlockchainHelper";
+import { getStakeInfo, getUserStakeBalance } from "../../../Utils/BlockchainHelper";
 import { loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 
@@ -14,8 +14,10 @@ export const UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN = "UPDATE_ACTIVE_STAKE_WINDOW
 
 export const UPDATE_ACTIVE_STAKES = "UPDATE_ACTIVE_STAKES";
 export const UPDATE_CLAIM_STAKES = "UPDATE_CLAIM_STAKES";
+export const UPDATE_STAKE_TRANSACTIONS = "UPDATE_STAKE_TRANSACTIONS";
 
 export const UPDATE_STAKE_SUMMARY = "UPDATE_STAKE_SUMMARY";
+export const UPDATE_STAKE_BALANCE = "UPDATE_STAKE_BALANCE";
 
 export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,
@@ -36,9 +38,19 @@ export const setClaimStakes = claimStakes => ({
   payload: claimStakes,
 });
 
+export const setTransactionStakes = txnStakes => ({
+  type: UPDATE_STAKE_TRANSACTIONS,
+  payload: txnStakes,
+});
+
 export const setStakeSummary = stakeSummary => ({
   type: UPDATE_STAKE_SUMMARY,
   payload: stakeSummary,
+});
+
+export const setUserStakeBalance = stakeBalance => ({
+  type: UPDATE_STAKE_BALANCE,
+  payload: stakeBalance,
 });
 
 // **************************
@@ -113,19 +125,21 @@ const parseAndTransformStakeWindow = data => {
 };
 
 export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => async dispatch => {
-  const [found, pendingForApprovalAmount, approvedAmount, autoRenewal] = await getStakeInfo(
-    metamaskDetails,
-    stakeMapIndex
-  );
+  if (metamaskDetails.isTxnsAllowed) {
+    const [found, pendingForApprovalAmount, approvedAmount, autoRenewal] = await getStakeInfo(
+      metamaskDetails,
+      stakeMapIndex
+    );
 
-  const stakeWindowDetails = {
-    myStake: pendingForApprovalAmount,
-    autoRenewal,
-    approvedAmount,
-    userExist: found,
-  };
+    const stakeWindowDetails = {
+      myStake: pendingForApprovalAmount,
+      autoRenewal,
+      approvedAmount,
+      userExist: found,
+    };
 
-  dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
+    dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
+  }
 };
 
 // *********************************
@@ -236,6 +250,89 @@ const parseAndTransformStakes = data => {
   }));
 
   return stakes;
+};
+
+// **************************************
+// User Stake Transactions Functionality
+// **************************************
+
+const fetchStakeTransactionsAPI = metamaskDetails => async dispatch => {
+  let staker = "0x0";
+  if (metamaskDetails.isTxnsAllowed) {
+    staker = metamaskDetails.account;
+  }
+
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.STAKE.name;
+  const apiPath = APIPaths.STAKE_TRANSACTIONS(staker);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const fetchStakeTransactions = metamaskDetails => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.LOAD_DATA));
+
+    const { data, error } = await dispatch(fetchStakeTransactionsAPI(metamaskDetails));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+
+    //console.log("fetchStakeTransactions - ", data);
+    const txnStakes = parseAndTransformStakeTransactions(data);
+    dispatch(setTransactionStakes(txnStakes));
+
+    dispatch(loaderActions.stopAppLoader());
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
+const parseAndTransformStakeTransactions = data => {
+  if (data.length === 0) {
+    return [];
+  }
+
+  // First Section of transformation for the Stake Window
+  // Second Section of transformation for the Stake Holder
+  const stakes = data.map(stake => ({
+    stakeMapIndex: stake.stake_window.blockchain_id,
+    startPeriod: stake.stake_window.start_period,
+    submissionEndPeriod: stake.stake_window.submission_end_period,
+    approvalEndPeriod: stake.stake_window.approval_end_period,
+    requestWithdrawStartPeriod: stake.stake_window.request_withdraw_start_period,
+    endPeriod: stake.stake_window.end_period,
+    minStake: stake.stake_window.min_stake,
+    maxStake: stake.stake_window.max_stake,
+    windowMaxCap: stake.stake_window.window_max_cap,
+    openForExternal: stake.stake_window.open_for_external,
+    windowTotalStake: stake.stake_window.total_stake,
+    rewardAmount: stake.stake_window.reward_amount,
+    tokenOperator: stake.stake_window.token_operator,
+    numOfStakers: stake.stake_window.no_of_stakers,
+
+    txnList: stake.transactions.map(t => ({
+      txnHash: t.TransactionHash,
+      txnDate: t.TransactionDate,
+      blockNumber: t.BlockNumber,
+      eventName: t.EventName,
+      eventData: t.EventData,
+    })),
+  }));
+
+  return stakes;
+};
+
+// *********************************
+// User Stake Balance Functionality
+// *********************************
+
+export const fetchUserStakeBalanceFromBlockchain = metamaskDetails => async dispatch => {
+  if (metamaskDetails.isTxnsAllowed) {
+    const stakeBalance = await getUserStakeBalance(metamaskDetails);
+    dispatch(setUserStakeBalance(stakeBalance.toString()));
+  }
 };
 
 // TODO - Sample Structured returned from the API - TO BE Deleted from this file after the complete implementation:

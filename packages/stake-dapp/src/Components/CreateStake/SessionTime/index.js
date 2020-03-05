@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -7,9 +8,25 @@ import ArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import InfoIcon from "@material-ui/icons/Info";
 
 import { useStyles } from "./styles";
+import { userPreferenceTypes } from "../../../Utils/user";
+import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 
 const SessionTime = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  // TODO - Get the state from the Redux to set as Default Checked value
+  const [stakeNotification, setStakeNotification] = useState(false);
+
+  const handleStakeNotificationChange = event => {
+    setStakeNotification(event.target.checked);
+
+    const emailPreferences = {
+      [userPreferenceTypes.STAKE_NOTIFICATION]: event.target.checked,
+    };
+
+    dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
+  };
 
   return (
     <div className={classes.sessionTimeContainer}>
@@ -40,7 +57,10 @@ const SessionTime = () => {
         <Typography className={classes.closingTime}>Closes: 02/25/2020</Typography>
         <div className={classes.checkbox}>
           <InfoIcon />
-          <FormControlLabel control={<Checkbox checked={true} color="primary" />} label="Staking notifications" />
+          <FormControlLabel
+            control={<Checkbox color="primary" checked={stakeNotification} onClick={handleStakeNotificationChange} />}
+            label="Staking notifications"
+          />
         </div>
       </div>
     </div>

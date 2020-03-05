@@ -55,8 +55,18 @@ export const GlobalRoutes = {
   },
 };
 
-export const setupRouteAuthentications = _state => ({
+export const setupRouteAuthentications = state => ({
   ...GlobalRoutes,
+  LANDING: {
+    ...GlobalRoutes.LANDING,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
+  ACCEPT_AGREEMENT: {
+    ...GlobalRoutes.ACCEPT_AGREEMENT,
+    isAllowed: state.user.isLoggedIn,
+    redirectTo: GlobalRoutes.LOGIN.path,
+  },
   // ORGANIZATION_SETUP: {
   //   ...GlobalRoutes.ORGANIZATION_SETUP,
   //   isAllowed: state.user.isLoggedIn,

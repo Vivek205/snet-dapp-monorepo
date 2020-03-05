@@ -367,6 +367,25 @@ export const getStakeInfo = (metamaskDetails, stakeMapIndex) => {
   });
 };
 
+export const getUserStakeBalance = metamaskDetails => {
+  const stakingContractAddress = getStakingContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  const ethereum = window.ethereum;
+  window.web3 = new window.Web3(ethereum);
+
+  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+
+  return new Promise((resolve, reject) => {
+    stakingInstance.balances(accountAddress, { from: accountAddress }, (err, result) => {
+      if (err) {
+        reject(result);
+      }
+      resolve(result);
+    });
+  });
+};
+
 export const getBlockNumber = () => {
   // Check for Metamask
   if (window.ethereum) {

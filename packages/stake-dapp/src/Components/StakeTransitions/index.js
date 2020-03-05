@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import Typography from "@material-ui/core/Typography";
 
-import SNETPagination from "shared/dist/components/SNETPagination";
+//import SNETPagination from "shared/dist/components/SNETPagination";
 
 import { useStyles } from "./styles";
 import TableRow from "./TableRow";
 import ExpandedTable from "./ExpandedTable";
-import { itemsPerPageOptions } from "./content";
+//import { itemsPerPageOptions } from "./content";
 
 const StakeTransitions = () => {
   const classes = useStyles();
@@ -27,7 +27,7 @@ const StakeTransitions = () => {
         <TableRow expandTable={expandTable} handleExpandeTable={handleExpandeTable} />
         <ExpandedTable showTable={expandTable} />
       </div>
-      <div className={classes.pagination}>
+      {/* <div className={classes.pagination}>
         <SNETPagination
           itemsPerPageOptions={itemsPerPageOptions}
           itemsPerPage="50"
@@ -36,7 +36,7 @@ const StakeTransitions = () => {
           offset="1"
           totalCount="100"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
