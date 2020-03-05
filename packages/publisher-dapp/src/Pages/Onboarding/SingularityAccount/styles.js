@@ -11,10 +11,11 @@ export const useStyles = MUITheme => ({
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
     "& > h6": {
-      padding: "0 23px",
+      padding: "0 24px",
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
+      fontWeight: 400,
       lineHeight: "50px !important",
     },
     "& > div": {
@@ -26,10 +27,9 @@ export const useStyles = MUITheme => ({
     },
   },
   singularityAccDescription: {
-    padding: "0 23px",
-    margin: "7px 0 34px",
+    padding: "19px  20px 34px 24px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "21px",
   },
   signInBtns: {
@@ -52,6 +52,7 @@ export const useStyles = MUITheme => ({
     marginRight: 10,
     display: "flex",
     wordBreak: "break-word",
+    "& img": { width: 260 },
   },
   avatar: {
     width: 70,

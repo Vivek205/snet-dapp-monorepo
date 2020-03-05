@@ -150,7 +150,7 @@ var Form = function Form(props) {
   })), _react.default.createElement("div", {
     className: classes.alertBoxContainer
   }, _react.default.createElement(_AlertBox.default, {
-    message: "error"
+    message: signupError || validationErr
   })), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",

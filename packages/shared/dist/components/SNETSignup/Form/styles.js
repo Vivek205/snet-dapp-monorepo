@@ -67,13 +67,13 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }),
     emailContainer: {
       marginBottom: 12,
-      '& > span': {
+      "& > span": {
         paddingLeft: 16,
-        display: 'inline-block',
+        display: "inline-block",
         color: MUITheme.palette.error.main,
         fontSize: 12.17,
         letterSpacing: 0.4,
-        lineHeight: '16px'
+        lineHeight: "16px"
       }
     },
     alertBoxContainer: {
