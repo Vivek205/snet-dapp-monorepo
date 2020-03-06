@@ -4,19 +4,25 @@ import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
+import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
+
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
 import { cardDetails, incubationProgressDetails, agreementDetails } from "./content";
 import { stakeActions } from "../../Services/Redux/actionCreators";
+import InlineLoader from "../InlineLoader";
 
-import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
+const stateSelector = state => ({
+  incubationStakes: state.stakeReducer.incubationStakes,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  isLoading: state.loader.incubationStakeList.isLoading,
+});
 
 const UserStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { incubationStakes } = useSelector(state => state.stakeReducer);
-  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
+  const { incubationStakes, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
   //const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
 
@@ -29,6 +35,10 @@ const UserStake = () => {
       // TODO - Need to handle the error based on overall Web App
     }
   }, [dispatch, metamaskDetails]);
+
+  if (isLoading) {
+    return <InlineLoader />;
+  }
 
   if (incubationStakes.length === 0) {
     return (

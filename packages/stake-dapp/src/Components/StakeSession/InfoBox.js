@@ -72,6 +72,33 @@ const InfoBox = ({ stakeDetails }) => {
     );
   }
 
+  // Ready to Claim
+  const gracePeriod = stakeDetails.endPeriod + (stakeDetails.endPeriod - stakeDetails.requestWithdrawStartPeriod);
+  if (currentTime > stakeDetails.endPeriod && currentTime < gracePeriod) {
+    return (
+      <AlertBox type={alertTypes.SUCCESS}>
+        <InfoIcon />
+        <div>
+          <Typography>Auto Renewal Pending</Typography>
+          <Typography>
+            When the next session is available, the total claim amount will be renewed to that session.
+          </Typography>
+        </div>
+      </AlertBox>
+    );
+  }
+  if (currentTime > stakeDetails.endPeriod && currentTime > gracePeriod) {
+    return (
+      <AlertBox type={alertTypes.INFO}>
+        <InfoIcon />
+        <div>
+          <Typography>Auto Renewal Disabled</Typography>
+          <Typography>We appologize for the inconvenience. You can review the detailed explaination here.</Typography>
+        </div>
+      </AlertBox>
+    );
+  }
+
   return null;
 };
 

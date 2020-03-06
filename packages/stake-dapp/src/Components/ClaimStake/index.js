@@ -13,17 +13,25 @@ import { cardDetails, btnDetails } from "./content";
 import { useStyles } from "./styles";
 import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
+import InfoBox from "../StakeSession/InfoBox";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 import { LoaderContent } from "../../Utils/Loader";
 import { loaderActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, claimStake } from "../../Utils/BlockchainHelper";
 
+import InlineLoader from "../InlineLoader";
+
+const stateSelector = state => ({
+  claimStakes: state.stakeReducer.claimStakes,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  isLoading: state.loader.claimStakeList.isLoading,
+});
+
 const ClaimStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { claimStakes } = useSelector(state => state.stakeReducer);
-  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
+  const { claimStakes, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
   const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
 
@@ -36,6 +44,10 @@ const ClaimStake = () => {
       // TODO - Need to handle the error based on overall Web App
     }
   }, [dispatch, metamaskDetails]);
+
+  if (isLoading) {
+    return <InlineLoader />;
+  }
 
   if (claimStakes.length === 0) {
     return (
@@ -79,6 +91,32 @@ const ClaimStake = () => {
     }
   };
 
+  const disableUserStakeActions = stakeDetails => {
+    const currentTimestamp = moment().unix();
+
+    // Check for Metamask Connection
+    if (!metamaskDetails.isTxnsAllowed) {
+      return true;
+    }
+
+    // Check if the Stake is in Submission Phase and Not Open For external
+    if (
+      currentTimestamp > stakeDetails.startPeriod &&
+      currentTimestamp < stakeDetails.submissionEndPeriod &&
+      stakeDetails.openForExternal === false
+    ) {
+      return true;
+    }
+
+    // Check for the Claim Actions
+    const gracePeriod = stakeDetails.endPeriod + (stakeDetails.endPeriod - stakeDetails.requestWithdrawStartPeriod);
+
+    if (currentTimestamp > stakeDetails.endPeriod && currentTimestamp < gracePeriod) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Grid container>
       <Grid item xs={12} sm={12} md={4} lg={4}>
@@ -97,6 +135,9 @@ const ClaimStake = () => {
                 <Card key={card.title} title={card.title} value={card.value} unit={card.unit} />
               ))}
             </div>
+            <div className={classes.infoBox}>
+              <InfoBox stakeDetails={stake} />
+            </div>
             <AlertBox
               type="error"
               message={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].message : undefined}
@@ -109,6 +150,7 @@ const ClaimStake = () => {
                   color={button.color}
                   variant={button.variant}
                   onClick={_e => handleClick(button.action, stake.stakeMapIndex)}
+                  disabled={disableUserStakeActions(stake)}
                 />
               ))}
             </div>
