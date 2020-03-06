@@ -9,7 +9,7 @@ import { organizationActions } from "../../../../../Services/Redux/actionCreator
 import { ContactsTypes } from "../../../../../Utils/Contacts";
 
 const BasicDetails = () => {
-  const { id, name, website, duns, ownerFullName, contacts } = useSelector(state => state.organization);
+  const { id, name, website, duns, contacts } = useSelector(state => state.organization);
   const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
   let phone = "";
   if (contact) {
@@ -41,7 +41,6 @@ const BasicDetails = () => {
       <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.OWNERS_FULL_NAME} value={ownerFullName} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );
@@ -52,7 +51,6 @@ BasicDetails.propTypes = {
     name: PropTypes.string,
     duns: PropTypes.string,
     website: PropTypes.string,
-    ownerFullName: PropTypes.string,
     phone: PropTypes.string,
   }),
 };

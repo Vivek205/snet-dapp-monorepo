@@ -23,7 +23,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     email: state.user.email,
     ownerEmail: state.organization.owner,
   }));
-  const { name, type, status, uuid, ownerFullName, ownerAddress } = organization;
+  const { name, type, status, uuid, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -98,13 +98,6 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
             name="name"
             disabled
             value={name}
-          />
-          <SNETTextfield
-            label="Owners Full Name"
-            description="You should be owner of your company’s legal entity."
-            name="ownerFullName"
-            disabled
-            value={ownerFullName}
           />
         </div>
         <TechnicalInfo />
