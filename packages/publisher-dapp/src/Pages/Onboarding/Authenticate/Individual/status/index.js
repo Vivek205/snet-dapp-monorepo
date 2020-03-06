@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useStyles } from "./styles";
 import { individualVerificationStatusList } from "../../../constant";
@@ -10,6 +10,9 @@ import Pending from "./Pending";
 import Denied from "./Denied";
 import Approved from "./Approved";
 import RelatedLinks from "./RelatedLinks";
+import { checkIfKnownError } from "shared/src/utils/error";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
 
 const StatusComponents = {
   [individualVerificationStatusList.PENDING]: Pending,
@@ -21,8 +24,22 @@ const StatusComponents = {
 
 const IndividualStatus = ({ classes }) => {
   const status = useSelector(state => state.user.individualVerificationStatus);
+  const [alert, setAlert] = useState({});
+  const dispatch = useDispatch();
 
   const Component = StatusComponents[status];
+
+  const handleVerify = async () => {
+    try {
+      const { redirect_url: redirectUrl } = await dispatch(individualVerificationActions.initiateVerification());
+      await window.location.replace(redirectUrl);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return setAlert({ type: alertTypes.ERROR, message: e.message });
+      }
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to initiate Jumio verification. Please try again" });
+    }
+  };
 
   if (Component) {
     return (
@@ -34,7 +51,8 @@ const IndividualStatus = ({ classes }) => {
             services, demos, and tutorial content.
           </Typography>
         </Grid>
-        <Component />
+        <Component handleVerify={handleVerify} />
+        <AlertBox type={alert.type} message={alert.message} />
         <RelatedLinks />
       </Grid>
     );

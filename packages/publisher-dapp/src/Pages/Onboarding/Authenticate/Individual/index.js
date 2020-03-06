@@ -19,8 +19,11 @@ class Individual extends Component {
   };
 
   componentDidMount = async () => {
-    await this.props.getVerificationStatus();
-    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS);
+    const { status, getVerificationStatus } = this.props;
+    await getVerificationStatus(status);
+    if (status !== individualVerificationStatusList.NOT_STARTED) {
+      this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
+    }
   };
 
   componentDidUpdate(prevProps) {

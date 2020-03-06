@@ -49,12 +49,15 @@ const getVerificationStatusAPI = () => async dispatch => {
   return await API.get(apiName, apiPath, apiOptions);
 };
 
-export const getVerificationStatus = () => async dispatch => {
+export const getVerificationStatus = (currentStatus = "") => async dispatch => {
   try {
     dispatch(startAppLoader(LoaderContent.USER_VERIFICATION_STATUS));
     const { error, data } = await dispatch(getVerificationStatusAPI());
     if (error.code) {
       throw new APIError(error.message);
+    }
+    if (currentStatus !== data.status) {
+      dispatch(setIndividualVerificationStatus(data.status));
     }
     dispatch(stopAppLoader());
     return data;
