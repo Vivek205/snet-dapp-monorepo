@@ -5,16 +5,16 @@ export const useStyles = MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
   backToHomeLink: {
+    cursor: "pointer",
     "& svg": {
       marginRight: 7,
       color: MUITheme.palette.primary.main,
       verticalAlign: "middle",
     },
-    "& a": {
+    "& span": {
       color: MUITheme.palette.primary.main,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 16,
-      textDecoration: "none",
       "&:hover": { textDecoration: "underline" },
     },
   },
