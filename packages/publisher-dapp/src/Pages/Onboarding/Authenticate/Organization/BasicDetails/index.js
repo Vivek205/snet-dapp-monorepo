@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
@@ -7,6 +7,10 @@ import { basicDetailsFormData } from "./content";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 import { ContactsTypes } from "../../../../../Utils/Contacts";
+import AlertText from "shared/dist/components/AlertText";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/OrganizationProfile/validationConstraints";
 
 const BasicDetails = () => {
   const { id, name, website, duns, contacts } = useSelector(state => state.organization);
@@ -15,11 +19,23 @@ const BasicDetails = () => {
   if (contact) {
     phone = contact.phone;
   }
+  const [websiteValidation, setWebsiteValidation] = useState({});
+
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+    }
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
 
   const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
+    if (name === basicDetailsFormData.WEBSITE.name) {
+      handleWebsiteValidation(value);
+    }
     dispatch(organizationActions.setOneBasicDetail(name, value));
   };
 
@@ -41,6 +57,7 @@ const BasicDetails = () => {
       <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
+      <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );
