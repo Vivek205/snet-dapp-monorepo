@@ -7,8 +7,13 @@ export const orgProfileValidationConstraints = {
 };
 
 export const contactConstraints = {
-  email: { presence: { allowEmpty: false } },
-  phone: { presence: { allowEmpty: false } },
+  email: {
+    email: {
+      message: value => `${value} is not a valid email`,
+    },
+    presence: { allowEmpty: true },
+  },
+  phone: { presence: { allowEmpty: true } },
 };
 
 export const errorMsg = {

@@ -21,12 +21,20 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
 
   const validateForm = () => {
-    const supportContacts = organization.contacts.find(el => el.type === ContactsTypes.SUPPORT);
     let isNotValid = validator(organization, orgProfileValidationConstraints);
     if (isNotValid) {
       return isNotValid;
     }
-    isNotValid = validator(supportContacts, contactConstraints);
+    const supportContacts = organization.contacts.find(el => el.type === ContactsTypes.SUPPORT);
+    if (supportContacts) {
+      if (Boolean(supportContacts.email)) {
+        isNotValid = validator.single(supportContacts.email, contactConstraints.email);
+      }
+      if (Boolean(supportContacts.phone)) {
+        isNotValid = validator.single(supportContacts.email, contactConstraints.phone);
+      }
+    }
+
     return isNotValid;
   };
 
