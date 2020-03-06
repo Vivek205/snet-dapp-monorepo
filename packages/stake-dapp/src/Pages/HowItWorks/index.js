@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/styles";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
+import ComputeMailsImage from "shared/dist/assets/images/ComputeMails.png";
 import BankImage from "shared/dist/assets/images/bank.png";
 import PiggyBankImage from "shared/dist/assets/images/piggyBank.png";
 import CalculatorImage from "shared/dist/assets/images/calculator.png";
@@ -19,23 +20,30 @@ const HowItWorks = ({ classes }) => {
       <Banner />
       <Benefits />
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.signUpContainer}>
-        <Typography>Sign up for Staking Notifications</Typography>
-        <form>
-          <input type="text" />
-          <SNETButton children="subscribe" color="primary" variant="contained" />
-        </form>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Typography variant="h2">Subscribe for Staking Updates</Typography>
+          <Typography>
+            Get email notifications when the staking status is open and when there are any updates. Don’t miss out!{" "}
+          </Typography>
+          <form>
+            <input type="text" />
+            <SNETButton children="subscribe" color="primary" variant="contained" />
+          </form>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <img src={ComputeMailsImage} alt="Computer And Mails" />
+        </Grid>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.howItWorksSection}>
         <Typography variant="h2">How It Works</Typography>
         <Typography className={classes.howItWorksDesc}>
-          Lorem ipsum dolor sit amet, mei te indoctum convenire. Sumo urbanitas moderatius eam ut, pro ex prima harum ri
-          de ns. Vis obli que nusquam te, cum ex minim molestie. Eam ex modus luptatum adipiscing, pri id patrioque
-          instructior, mel id tale definitionem.
+          Staking is the process of holding funds in a cryptocurrency wallet to support the operations of a blockchain
+          network. Essentially, it consists of locking cryptocurrencies to receive rewards. The process relies on users
+          participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet.
         </Typography>
+        <img src="http://placehold.it/738x416" alt="Youtube Video" />
         <SNETButton children="start staking tokens" color="primary" variant="contained" />
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>
-        <ul>
+        <ul className={classes.titlesContainer}>
           <li>
             <img src={BankImage} alt="Bank" />
             <Typography variant="h4">Title One</Typography>
