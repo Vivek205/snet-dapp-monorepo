@@ -6,6 +6,9 @@ export const useStyles = makeStyles(MUITheme => ({
     margin: "0 auto",
     [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
+  userStakeContainerItem: {
+    marginBottom: "32px",
+  },
   bottomBox: { marginTop: 67 },
   toolBar: {
     display: "flex",

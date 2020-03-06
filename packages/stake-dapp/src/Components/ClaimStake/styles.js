@@ -6,6 +6,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& > div": {
       "&:last-of-type": { marginTop: 35 },
     },
+    marginBottom: "32px",
   },
   box: {
     paddingBottom: 33,
@@ -34,5 +35,47 @@ export const useStyles = makeStyles(MUITheme => ({
       fontWeight: 200,
       lineHeight: "30px",
     },
+  },
+  infoBox: {
+    padding: "0 25px",
+    display: "flex",
+    justifyContent: "center",
+    "& > p": { display: "flex" },
+    "& svg": {
+      marginRight: 17,
+      color: MUITheme.palette.primary.main,
+      fontSize: 20,
+    },
+    "& p": {
+      color: MUITheme.palette.text.primary,
+      fontSize: 14,
+      lineHeight: "18px",
+    },
+  },
+  circularProgressContainer: {
+    paddingTop: 20,
+    textAlign: "center",
+    height: 500,
+    display: "table",
+    width: "100%",
+    "& div": {
+      color: MUITheme.palette.text.primary,
+    },
+  },
+  loaderChild: {
+    display: "table-cell",
+    verticalAlign: "middle",
+    margin: "0 auto",
+  },
+  circularProgress: {
+    display: "inline-block",
+    width: 48,
+    height: 48,
+  },
+  loaderText: {
+    color: MUITheme.palette.text.lightShadedGray,
+    fontSize: 14,
+    fontWeight: 600,
+    letterSpacing: 0.25,
   },
 }));

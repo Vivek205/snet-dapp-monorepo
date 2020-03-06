@@ -5,7 +5,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
-import { tokenActions, loaderActions } from "../../../Services/Redux/actionCreators";
+import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { NetworkNames } from "../../../Utils/constants/NetworkNames";
 
 import { fromWei } from "../../../Utils/GenHelperFunctions";
@@ -17,15 +17,23 @@ class MetaMaskAccountBalance extends Component {
     this.state = {
       amount: 0,
     };
+  }
 
-    const { metamaskDetails, updateTokenBalance, updateTokenAllowance } = this.props;
+  componentDidMount = () => {
+    const {
+      metamaskDetails,
+      updateTokenBalance,
+      updateTokenAllowance,
+      fetchUserStakeBalanceFromBlockchain,
+    } = this.props;
 
     updateTokenBalance(metamaskDetails);
     updateTokenAllowance(metamaskDetails);
-  }
+    fetchUserStakeBalanceFromBlockchain(metamaskDetails);
+  };
 
   render() {
-    const { classes, metamaskDetails, tokenBalance, tokenAllowance } = this.props;
+    const { classes, metamaskDetails, tokenBalance, tokenAllowance, stakeBalance } = this.props;
 
     const networkNames = NetworkNames.filter(nw => nw.networkId.toString() === metamaskDetails.networkId.toString());
 
@@ -74,7 +82,7 @@ class MetaMaskAccountBalance extends Component {
               <InfoIcon className={classes.infoIcon} />
               <span>Staking Balance</span>
             </div>
-            <span>{/*fromWei(rfaiTokenBalance)*/ "Placeholder"} AGI</span>
+            <span>{fromWei(stakeBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -94,11 +102,14 @@ const mapStateToProps = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   tokenBalance: state.tokenReducer.tokenBalance,
   tokenAllowance: state.tokenReducer.tokenAllowance,
+  stakeBalance: state.stakeReducer.stakeBalance,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
+  fetchUserStakeBalanceFromBlockchain: metamaskDetails =>
+    dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails)),
   startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
   stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
