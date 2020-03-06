@@ -91,7 +91,7 @@ export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
-    contacts, assets, ownerFullName, orgAddress } = organization;
+    contacts, assets, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
@@ -101,7 +101,6 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
-    owner_name: ownerFullName,
     metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
@@ -210,7 +209,6 @@ export const getStatus = async dispatch => {
     state: selectedOrg.state,
     id: selectedOrg.org_id,
     uuid: selectedOrg.org_uuid,
-    ownerFullName: selectedOrg.owner_name,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
     longDescription: selectedOrg.description,
@@ -392,6 +390,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       .once(blockChainEvents.CONFIRMATION, async () => {
         dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        await dispatch(setOrgFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
         await method.off();
       })

@@ -18,7 +18,6 @@ const initialState = {
   type: organizationTypes.ORGANIZATION,
   duns: "",
   website: "",
-  ownerFullName: "",
   phone: "",
   shortDescription: "",
   longDescription: "",

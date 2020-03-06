@@ -37,7 +37,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
           will be able to configure this during the AI service level.
         </Typography>
         {groups.map((group, index) => (
-          <Settings groups={groups} groupIndex={index} group={group} key={group.id} />
+          <Settings
+            groups={groups}
+            groupIndex={index}
+            group={group}
+            key={group.id}
+            foundInBlockchain={organization.foundInBlockchain}
+          />
         ))}
         <AlertBox type={alert.type} message={alert.message} />
       </div>

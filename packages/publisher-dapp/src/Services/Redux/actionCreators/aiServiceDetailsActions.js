@@ -424,6 +424,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
         resolve();
         await method.off();
