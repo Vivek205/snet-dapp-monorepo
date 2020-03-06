@@ -22,6 +22,7 @@ export const useStyles = MUITheme => ({
     "& h3": { marginBottom: 15 },
     "& span": {
       color: MUITheme.palette.text.primary,
+      fontFamily: MUITheme.typography.main,
       fontSize: 20,
       fontWeight: 300,
       lineHeight: "28px",

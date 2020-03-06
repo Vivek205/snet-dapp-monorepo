@@ -16,7 +16,7 @@ const Enroll = ({ classes, history }) => {
     if (isLoggedIn) {
       return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
     }
-    history.push(GlobalRoutes.LOGIN.path);
+    history.push(GlobalRoutes.SIGNUP.path);
   };
 
   return (
@@ -34,10 +34,10 @@ const Enroll = ({ classes, history }) => {
           address.
         </Typography>
         <Typography variant="subtitle1" display="inline">
-          Valid Documents:
+          Valid Documents:{" "}
         </Typography>
         <Typography variant="body2" display="inline">
-          Passport, Driving Licence, Social Security Card, next item
+          Passport, Driving Licence, Social Security Card, next item{" "}
         </Typography>
       </Grid>
 
@@ -74,7 +74,7 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="h4">Metamask</Typography>
         <Typography variant="body2">
           In order to publish your AI services and company or individual entity to the blockchain, you will need to use
-          Metamask app plugin. It is recommended that you <a href="#">setup and install Metamask </a>Wallet account so
+          Metamask app plugin. It is recommended that you <a href="#">setup and install Metamask Wallet</a> account so
           that you will be perform the publishing actions to the blockchain as well as collect AGI tokens that your AI
           services gains from customers purchases.
         </Typography>
@@ -115,10 +115,11 @@ const Enroll = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.joiningTeamMember}>
         <Typography variant="h4">Joining Team Members</Typography>
         <Typography variant="body2">
-          Joining team members will be required to provided the
+          Joining team members will be required to provided the{" "}
           <a href="#" title="Metamask">
-            Metamask address
-          </a>
+            {" "}
+            Metamask address{" "}
+          </a>{" "}
           in order to securly gain permissions to company organization or individual enttiy’s blockchain. They will NOT
           be charged ETH gas cost to join. The owner of the company or individual entity will be responsible to add the
           team members to the blockchain. .

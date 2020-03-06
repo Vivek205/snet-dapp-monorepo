@@ -2,7 +2,7 @@ export const useStyles = MUITheme => ({
   getInTouchContainer: { background: MUITheme.palette.background.mainContent },
   getInTouch: {
     maxWidth: 870,
-    padding: "97px 30px 91px !important",
+    padding: "97px 30px 71px !important",
     margin: "0 auto",
     textAlign: "center",
     "& p": { textAlign: "initial" },
@@ -11,12 +11,19 @@ export const useStyles = MUITheme => ({
       display: "flex",
       justifyContent: "center",
       alignItems: "baseline",
+      "& label": {
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 16,
+      },
       "& > div": {
         width: 370,
         marginRight: 24,
         "& > div": {
           maxWidth: "100%",
-          "& .MuiFormControl-root": { background: MUITheme.palette.border.mainContent },
+          "& .MuiFormControl-root": {
+            margin: 0,
+            background: MUITheme.palette.border.mainContent,
+          },
         },
       },
       "& a": { marginTop: "0 !important" },

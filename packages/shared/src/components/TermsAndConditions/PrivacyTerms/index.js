@@ -4,7 +4,6 @@ const PrivacyTerms = () => {
   return (
     <html>
       <body>
-        <h2>Terms of service</h2>
         <p>
           <span>The following terms and conditions govern all use of the </span>
           <span>

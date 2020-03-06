@@ -38,17 +38,19 @@ const Form = props => {
 
   return (
     <form noValidate autoComplete="off" className={classes.signupForm}>
-      <TextField
-        id="outlined-user-name"
-        label="Nickname"
-        className={classes.textField}
-        value={nickname}
-        onChange={e => setNickname(e.target.value)}
-        margin="normal"
-        variant="outlined"
-        autoFocus
-      />
       <div>
+        <TextField
+          id="outlined-user-name"
+          label="Username"
+          className={classes.textField}
+          value={nickname}
+          margin="normal"
+          variant="outlined"
+          onChange={e => setNickname(e.target.value)}
+        />
+        <span className={classes.charLength}>16/20 char</span>
+      </div>
+      <div className={classes.emailContainer}>
         <TextField
           id="outlined-email-input"
           label="Email"
@@ -78,8 +80,9 @@ const Form = props => {
         <p>Include:</p>
         <PasswordInlineValidation password={password} />
       </div>
-      <AlertBox message={signupError || validationErr} />
-      <div />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox message={signupError || validationErr} />
+      </div>
       <SNETButton color="primary" variant="contained" children="Create Account" onClick={handleSubmit} type="submit" />
     </form>
   );
