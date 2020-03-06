@@ -36,6 +36,14 @@ class StakeTab extends Component {
     fetchClaimStakes(metamaskDetails);
   };
 
+  componentDidUpdate = async (prevProps, _prevState) => {
+    const { metamaskDetails, fetchActiveStakes, fetchClaimStakes } = this.props;
+    if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
+      await fetchActiveStakes(metamaskDetails);
+      await fetchClaimStakes(metamaskDetails);
+    }
+  };
+
   render() {
     const { selectedTab } = this.state;
     const { classes, stakeSummary } = this.props;

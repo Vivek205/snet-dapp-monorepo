@@ -18,7 +18,7 @@ const generateEmailPreferencesPayload = emailPreferences => {
   const preferences = Object.entries(emailPreferences).map(([key, value]) => ({
     preference_type: key,
     communication_type: userPreferenceCommunicationTypes.EMAIL,
-    source: clientTypes.PUBLISHER_DAPP,
+    source: clientTypes.STAKE_DAPP,
     status: value,
     opt_out_reason: !value ? "" : undefined,
   }));

@@ -45,7 +45,7 @@ const UserStake = () => {
   return (
     <Grid container className={classes.userStakeContainer}>
       {incubationStakes.map(stake => (
-        <Grid key={stake.stakeMapIndex} item xs={12} sm={12} md={12} lg={12}>
+        <Grid key={stake.stakeMapIndex} item xs={12} sm={12} md={12} lg={12} className={classes.userStakeContainerItem}>
           <StakeSession
             incubationProgressDetails={incubationProgressDetails(stake)}
             cardDetails={cardDetails(stake)}

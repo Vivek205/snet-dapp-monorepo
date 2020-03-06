@@ -6,14 +6,16 @@ import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 
-const Agreement = ({ details, autoRenewal, handleChange }) => {
+const Agreement = ({ details, autoRenewal, handleChange, disableAutoRenewal }) => {
   const classes = useStyles();
 
   if (details) {
     return (
       <div className={classes.checkboxContent}>
         <FormControlLabel
-          control={<Checkbox checked={autoRenewal} onClick={handleChange} color="primary" />}
+          control={
+            <Checkbox checked={autoRenewal} disabled={disableAutoRenewal} onClick={handleChange} color="primary" />
+          }
           label={details.label}
         />
         <Typography>{details.description}</Typography>

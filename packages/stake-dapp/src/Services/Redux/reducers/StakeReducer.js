@@ -1,6 +1,7 @@
 import { stakeActions } from "../actionCreators";
 
 const InitialRequestDetails = {
+  stakeBalance: 0,
   stakeSummary: {
     incubatingCount: 0,
     readyToClaimCount: 0,
@@ -30,6 +31,9 @@ const InitialRequestDetails = {
 
 const stakeReducer = (state = InitialRequestDetails, action) => {
   switch (action.type) {
+    case stakeActions.UPDATE_STAKE_BALANCE: {
+      return { ...state, stakeBalance: action.payload };
+    }
     case stakeActions.UPDATE_STAKE_SUMMARY: {
       return { ...state, stakeSummary: { ...state.stakeSummary, ...action.payload } };
     }
@@ -48,6 +52,10 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     case stakeActions.UPDATE_CLAIM_STAKES: {
       return { ...state, claimStakes: action.payload };
     }
+    case stakeActions.UPDATE_STAKE_TRANSACTIONS: {
+      return { ...state, myTransactions: action.payload };
+    }
+
     default: {
       return state;
     }

@@ -15,6 +15,16 @@ const InfoBox = ({ stakeDetails }) => {
 
   // Open Stake
   if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
+    if (stakeDetails.openForExternal === false) {
+      return (
+        <AlertBox type={alertTypes.INFO}>
+          <InfoIcon />
+          <div>
+            <Typography>- This stake window has not opened for external staking</Typography>
+          </div>
+        </AlertBox>
+      );
+    }
     return (
       <AlertBox type={alertTypes.INFO}>
         <InfoIcon />
