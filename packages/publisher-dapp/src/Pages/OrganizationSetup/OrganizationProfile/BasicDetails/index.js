@@ -10,7 +10,9 @@ import { useStyles } from "./styles";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 
 const BasicDetails = ({ classes }) => {
-  const { id, name, shortDescription, longDescription, website } = useSelector(state => state.organization);
+  const { id, name, shortDescription, longDescription, website, foundInBlockchain } = useSelector(
+    state => state.organization
+  );
   const dispatch = useDispatch();
 
   const handleFormInputsChange = event => {
@@ -30,6 +32,7 @@ const BasicDetails = ({ classes }) => {
         label="Organization id"
         description="The organziation id is the unique id for the organization."
         onChange={handleFormInputsChange}
+        disabled
       />
       <SNETTextfield
         name="name"
@@ -39,6 +42,7 @@ const BasicDetails = ({ classes }) => {
         onChange={handleFormInputsChange}
         minCount="15"
         maxCount="50"
+        disabled={foundInBlockchain}
       />
       <SNETTextarea
         label="Short Description"
@@ -50,6 +54,7 @@ const BasicDetails = ({ classes }) => {
         value={shortDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        disabled={foundInBlockchain}
       />
       <SNETTextarea
         label="Long Description"
@@ -61,6 +66,7 @@ const BasicDetails = ({ classes }) => {
         value={longDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        disabled={foundInBlockchain}
       />
       <div className={classes.orgWebsiteUrl}>
         <SNETTextfield

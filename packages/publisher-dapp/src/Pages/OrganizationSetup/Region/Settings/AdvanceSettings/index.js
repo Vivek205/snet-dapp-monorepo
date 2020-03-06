@@ -7,7 +7,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
+const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBlockchain }) => {
   const dispatch = useDispatch();
   const { paymentExpirationThreshold, paymentChannelStorageClient } = group.paymentConfig;
   const { connectionTimeout, requestTimeout } = paymentChannelStorageClient;
@@ -55,6 +55,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
         label="Expiration Threashold"
         onChange={handleThresholdChange}
         description="Lorem ipsum dolor sit amet, pri no agam elit salutatus. An duo odio idque. "
+        disabled={foundInBlockchain}
       />
       <SNETTextfield
         icon
