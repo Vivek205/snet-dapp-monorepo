@@ -27,12 +27,19 @@ const Onboarding = ({ location, history, classes }) => {
   useEffect(() => {
     if (
       !isEmpty(email) &&
+      Boolean(orgUuid) &&
       !isEmpty(ownerEmail) &&
       email === ownerEmail &&
       orgStatus !== organizationSetupStatuses.PUBLISHED
     ) {
       if (orgType === organizationTypes.INDIVIDUAL) {
         return history.push(AuthenticateRoutes.INDIVIDUAL.path);
+      }
+      if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
+        if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+          return history.push(AuthenticateRoutes.ORGANIZATION.path);
+        }
+        return;
       }
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
     }

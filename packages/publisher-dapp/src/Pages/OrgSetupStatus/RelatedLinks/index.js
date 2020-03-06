@@ -15,7 +15,7 @@ const RelatedLinks = ({ classes }) => {
         <LaunchIcon />
         <Typography>Related Links</Typography>
       </div>
-      {relatedLinks.map((item, index) => (
+      {relatedLinks.map(item => (
         <AnchorLink label={item.label} href={item.linkTo} key={item.label} />
       ))}
     </Grid>
