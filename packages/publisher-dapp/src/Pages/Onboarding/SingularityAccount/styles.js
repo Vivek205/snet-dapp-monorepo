@@ -107,4 +107,18 @@ export const useStyles = MUITheme => ({
       },
     },
   },
+  dropDownContainer: {
+    paddingRight: 29,
+    display: "flex",
+    "& > div": {
+      "& > p": {
+        paddingLeft: 20,
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 14,
+        letterSpacing: 0.25,
+        lineHeight: "20px",
+      },
+    },
+  },
+  infoBoxContainer: { padding: "16px 22px 0" },
 });
