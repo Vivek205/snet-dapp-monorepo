@@ -33,7 +33,7 @@ const SessionTime = ({ stakeDetails }) => {
     let sessionTitle = "Currently no staking enabled";
 
     if (currentTime < stakeDetails.startPeriod) {
-      sessionTitle = "Staking will Open in:";
+      sessionTitle = "Next Session in:";
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.endPeriod) {
       sessionTitle = "Open Staking for:";

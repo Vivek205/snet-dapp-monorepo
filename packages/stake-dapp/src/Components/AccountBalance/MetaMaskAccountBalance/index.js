@@ -17,12 +17,6 @@ class MetaMaskAccountBalance extends Component {
     this.state = {
       amount: 0,
     };
-
-    //const { metamaskDetails, updateTokenBalance, updateTokenAllowance, fetchUserStakeBalanceFromBlockchain } = this.props;
-
-    // updateTokenBalance(metamaskDetails);
-    // updateTokenAllowance(metamaskDetails);
-    // fetchUserStakeBalanceFromBlockchain(metamaskDetails);
   }
 
   componentDidMount = () => {

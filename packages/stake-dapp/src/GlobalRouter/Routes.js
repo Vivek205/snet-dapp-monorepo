@@ -67,24 +67,4 @@ export const setupRouteAuthentications = state => ({
     isAllowed: state.user.isLoggedIn,
     redirectTo: GlobalRoutes.LOGIN.path,
   },
-  // ORGANIZATION_SETUP: {
-  //   ...GlobalRoutes.ORGANIZATION_SETUP,
-  //   isAllowed: state.user.isLoggedIn,
-  //   redirectTo: GlobalRoutes.LOGIN.path,
-  // },
-  // ORG_SETUP_STATUS: {
-  //   ...GlobalRoutes.ORG_SETUP_STATUS,
-  //   isAllowed: state.user.isLoggedIn,
-  //   redirectTo: GlobalRoutes.LOGIN.path,
-  // },
-  // INVITE_MEMBERS: {
-  //   ...GlobalRoutes.INVITE_MEMBERS,
-  //   isAllowed: state.user.isLoggedIn,
-  //   redirectTo: GlobalRoutes.LOGIN.path,
-  // },
-  // AI_SERVICE_CREATION: {
-  //   ...GlobalRoutes.AI_SERVICE_CREATION,
-  //   isAllowed: state.user.isLoggedIn,
-  //   redirectTo: GlobalRoutes.LOGIN.path,
-  // },
 });
