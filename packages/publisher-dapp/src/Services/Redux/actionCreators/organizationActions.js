@@ -390,6 +390,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       .once(blockChainEvents.CONFIRMATION, async () => {
         dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        await dispatch(setOrgFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
         await method.off();
       })
