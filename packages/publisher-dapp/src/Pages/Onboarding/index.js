@@ -33,15 +33,18 @@ const Onboarding = ({ location, history, classes }) => {
       orgStatus !== organizationSetupStatuses.PUBLISHED
     ) {
       if (orgType === organizationTypes.INDIVIDUAL) {
-        return history.push(AuthenticateRoutes.INDIVIDUAL.path);
-      }
-      if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
-        if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
-          return history.push(AuthenticateRoutes.ORGANIZATION.path);
+        if (location.pathname !== AuthenticateRoutes.INDIVIDUAL.path) {
+          return history.push(AuthenticateRoutes.INDIVIDUAL.path);
         }
-        return;
+      } else {
+        if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
+          if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+            return history.push(AuthenticateRoutes.ORGANIZATION.path);
+          }
+          return;
+        }
+        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
       }
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
     }
   });
 
