@@ -26,6 +26,12 @@ const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
+// TODO - Delete this element
+const testStake = {
+  startPeriod: 1583476850,
+  endPeriod: 1583476950,
+};
+
 const CreateStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -73,6 +79,7 @@ const CreateStake = () => {
     return (
       <Grid container>
         <Grid item xs={12} sm={12} md={4} lg={4}>
+          <SessionTime stakeDetails={testStake} />
           <AccountBalance />
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>
@@ -89,7 +96,7 @@ const CreateStake = () => {
   return (
     <Grid container>
       <Grid item xs={12} sm={12} md={4} lg={4}>
-        <SessionTime />
+        <SessionTime stakeDetails={testStake} />
         <AccountBalance />
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>

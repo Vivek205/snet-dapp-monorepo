@@ -36,9 +36,67 @@ const StakeSession = ({
   const stakeStartDate = moment.unix(stakeDetails.startPeriod).format("MMM YYYY");
   const stakeMapIndex = stakeDetails.stakeMapIndex;
 
+  const currentTimestamp = moment().unix();
+
+  const disableAutoRenewal = () => {
+    // Check for Metamask Connection
+    if (!metamaskDetails.isTxnsAllowed) {
+      return true;
+    }
+
+    // Check if the Stake is in Submission Phase and Not Open For external
+    if (
+      currentTimestamp >= stakeDetails.startPeriod &&
+      currentTimestamp <= stakeDetails.submissionEndPeriod &&
+      stakeDetails.openForExternal === false
+    ) {
+      return true;
+    }
+
+    // Check for Non Auto Renewal Period
+    if (
+      (currentTimestamp > stakeDetails.submissionEndPeriod &&
+        currentTimestamp < stakeDetails.requestWithdrawStartPeriod) ||
+      currentTimestamp > stakeDetails.endPeriod
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const disableUserStakeActions = () => {
+    // Check for Metamask Connection
+    if (!metamaskDetails.isTxnsAllowed) {
+      return true;
+    }
+
+    // Check if the Stake is in Submission Phase and Not Open For external
+    if (
+      currentTimestamp > stakeDetails.startPeriod &&
+      currentTimestamp < stakeDetails.submissionEndPeriod &&
+      stakeDetails.openForExternal === false
+    ) {
+      return true;
+    }
+
+    // Check for the Claim Actions
+    const gracePeriod = stakeDetails.endPeriod + (stakeDetails.endPeriod - stakeDetails.requestWithdrawStartPeriod);
+
+    if (currentTimestamp > stakeDetails.endPeriod && currentTimestamp < gracePeriod) {
+      return true;
+    }
+
+    return false;
+  };
+
   const handleAutoRenewalChange = async event => {
     // TODO - Check in case of Open Stake or Incubating - condition might change
-    if (stakeDetails.myStake === 0) {
+    if (
+      stakeDetails.myStake === 0 &&
+      currentTimestamp > stakeDetails.startPeriod &&
+      currentTimestamp < stakeDetails.submissionEndPeriod
+    ) {
       setAutoRenewal(event.target.checked);
       return;
     }
@@ -81,12 +139,22 @@ const StakeSession = ({
             <Card key={item.title} title={item.title} value={item.value} unit={item.unit} />
           ))}
         </div>
-        <Agreement details={agreementDetails} autoRenewal={autoRenewal} handleChange={handleAutoRenewalChange} />
+        <Agreement
+          details={agreementDetails}
+          autoRenewal={autoRenewal}
+          handleChange={handleAutoRenewalChange}
+          disableAutoRenewal={disableAutoRenewal()}
+        />
         <div className={classes.infoBox}>
           <InfoBox stakeDetails={stakeDetails} />
         </div>
         <AlertBox type={alert.type} message={alert.message} />
-        <Button details={btnDetails} handleClick={handleClick} autoRenewal={autoRenewal} />
+        <Button
+          details={btnDetails}
+          handleClick={handleClick}
+          autoRenewal={autoRenewal}
+          disableUserStakeActions={disableUserStakeActions()}
+        />
       </div>
     </div>
   );

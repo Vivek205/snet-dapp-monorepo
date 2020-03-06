@@ -6,6 +6,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& > div": {
       "&:last-of-type": { marginTop: 35 },
     },
+    marginBottom: "20px",
   },
   box: {
     paddingBottom: 33,
