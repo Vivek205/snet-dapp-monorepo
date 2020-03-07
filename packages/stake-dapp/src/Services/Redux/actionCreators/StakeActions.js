@@ -246,6 +246,7 @@ const parseAndTransformStakes = data => {
     approvedAmount: stake.stake_holder.amount_approved,
     autoRenewal: stake.stake_holder.auto_renewal,
     stakedBlockNumber: stake.stake_holder.block_no_created,
+    refundAmount: stake.stake_holder.refund_amount,
   }));
 
   return stakes;
@@ -311,12 +312,12 @@ const parseAndTransformStakeTransactions = data => {
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
 
-    txnList: stake.transactions.map(t => ({
-      txnHash: t.TransactionHash,
-      txnDate: t.TransactionDate,
-      blockNumber: t.BlockNumber,
-      eventName: t.EventName,
-      eventData: t.EventData,
+    transactionList: stake.transactions.map(t => ({
+      txnHash: t.transaction_hash,
+      txnDate: t.transaction_date,
+      blockNumber: t.block_no,
+      eventName: t.event,
+      eventData: t.event_data,
     })),
   }));
 

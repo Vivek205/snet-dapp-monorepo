@@ -24,7 +24,7 @@ export const cardDetails = stakeDetails => [
   },
   {
     title: "Refunded Amount",
-    value: "TBD??",
+    value: fromWei(stakeDetails.refundAmount),
     unit: "AGI",
   },
   {

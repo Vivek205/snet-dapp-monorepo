@@ -1,43 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
-//import CircularProgress from "@material-ui/core/CircularProgress";
 //import SNETPagination from "shared/dist/components/SNETPagination";
+import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { useStyles } from "./styles";
 import TableRow from "./TableRow";
 import ExpandedTable from "./ExpandedTable";
-//import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
+import { stakeActions } from "../../Services/Redux/actionCreators";
+import InlineLoader from "../InlineLoader";
+
 //import { itemsPerPageOptions } from "./content";
-//import InlineLoader from "../InlineLoader";
+
+const stateSelector = state => ({
+  myTransactions: state.stakeReducer.myTransactions,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  isLoading: state.loader.txnList.isLoading,
+});
 
 const StakeTransitions = () => {
   const classes = useStyles();
-  const [expandTable, setExpandTable] = useState(false);
+  const dispatch = useDispatch();
 
-  //const { isLoading } = useSelector(state => state.loader.txnList);
+  const [expandTable, setExpandTable] = useState({ 0: false });
 
-  const handleExpandeTable = () => {
-    setExpandTable(!expandTable);
+  const { myTransactions, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
+
+  useEffect(() => {
+    try {
+      // TODO: Convert the same to async Constant based on the need...
+      dispatch(stakeActions.fetchStakeTransactions(metamaskDetails));
+    } catch (_error) {
+      //console.log("error - ", error);
+      // TODO - Need to handle the error based on overall Web App
+    }
+  }, [dispatch, metamaskDetails]);
+
+  const handleExpandeTable = siteMapIndex => {
+    const currentValue = expandTable[siteMapIndex] ? expandTable[siteMapIndex] : false;
+    const setValue = { [siteMapIndex]: !currentValue };
+    setExpandTable({ ...expandTable, ...setValue });
   };
 
-  // if (isLoading) {
-  //   return (
-  //        <InlineLoader />
-  //   );
-  // }
+  if (isLoading) {
+    return <InlineLoader />;
+  }
 
-  // if (txnStakes.length === 0) {
-  //   return (
-  //     <div className={classes.noDataFoundSection}>
-  //       <img src={NoDataFoundImg} alt="No Data Found" />
-  //       <Typography>You have no incubating stakes.</Typography>
-  //       <Typography>
-  //         Refer to <span>Open Staking</span> to make a stake.
-  //       </Typography>
-  //     </div>
-  //   );
-  // }
+  if (myTransactions.length === 0) {
+    return (
+      <div className={classes.noDataFoundSection}>
+        <img src={NoDataFoundImg} alt="No Data Found" />
+        <Typography>You have no stakes.</Typography>
+        <Typography>
+          Refer to <span>Open Staking</span> to make a stake.
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.stakeTransactionContainer}>
@@ -45,10 +65,21 @@ const StakeTransitions = () => {
         <Typography variant="h6">Transaction History</Typography>
       </div>
       <Typography className={classes.pageTitle}>Stake Session</Typography>
-      <div className={classes.table}>
-        <TableRow expandTable={expandTable} handleExpandeTable={handleExpandeTable} />
-        <ExpandedTable showTable={expandTable} />
-      </div>
+
+      {myTransactions.map(stakeWindow => (
+        <div key={stakeWindow.stakeMapIndex} className={classes.table}>
+          <TableRow
+            stakeWindow={stakeWindow}
+            expandTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
+            handleExpandeTable={handleExpandeTable}
+          />
+          <ExpandedTable
+            transactionList={stakeWindow.transactionList}
+            showTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
+          />
+        </div>
+      ))}
+      {/* TODO - Will Add the Pagination Functionality based on the need */}
       {/* <div className={classes.pagination}>
         <SNETPagination
           itemsPerPageOptions={itemsPerPageOptions}
