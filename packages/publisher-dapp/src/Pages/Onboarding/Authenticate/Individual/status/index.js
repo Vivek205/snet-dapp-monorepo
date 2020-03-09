@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -13,6 +13,7 @@ import RelatedLinks from "./RelatedLinks";
 import { checkIfKnownError } from "shared/src/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
+import { AuthenticateRoutes } from "../../AuthenitcateRouter/Routes";
 
 const StatusComponents = {
   [individualVerificationStatusList.PENDING]: Pending,
@@ -22,10 +23,16 @@ const StatusComponents = {
   [individualVerificationStatusList.ERROR]: Denied,
 };
 
-const IndividualStatus = ({ classes }) => {
+const IndividualStatus = ({ classes, history }) => {
   const status = useSelector(state => state.user.individualVerificationStatus);
   const [alert, setAlert] = useState({});
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === individualVerificationStatusList.NOT_STARTED) {
+      history.push(AuthenticateRoutes.INDIVIDUAL.path);
+    }
+  }, [history, status]);
 
   const Component = StatusComponents[status];
 

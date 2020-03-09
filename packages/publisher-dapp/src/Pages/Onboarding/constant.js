@@ -32,7 +32,7 @@ export const onboardingStatusList = {
 };
 
 export const individualVerificationStatusList = {
-  NOT_STARTED: "",
+  NOT_STARTED: undefined,
   PENDING: "PENDING",
   APPROVED: "APPROVED",
   REJECTED: "REJECTED",
