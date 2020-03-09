@@ -87,11 +87,12 @@ const ExpandedTable = ({ showTable, transactionList }) => {
       case "AutoRenewStake":
         txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
         txnDetails +=
-          "Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
+          " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
         break;
       case "RenewStake":
         txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
-        txnDetails += "Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
+        txnDetails +=
+          " Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
         break;
       case "WithdrawStake":
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";

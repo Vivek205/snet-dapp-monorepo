@@ -95,7 +95,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       </div>
       <div className={classes.tableData}>
         <Typography className={classes.title}>Stakers</Typography>
-        <Typography className={classes.value}>NEW???</Typography>
+        <Typography className={classes.value}>{stakeWindow.numOfStakers}</Typography>
         <Typography className={classes.unit}>people</Typography>
       </div>
       <div className={classes.tableData}>
