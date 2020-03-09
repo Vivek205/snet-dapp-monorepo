@@ -66,7 +66,6 @@ export const useStyles = MUITheme => ({
       textAlign: "left",
     },
     "& form": {
-      height: "100%",
       display: "flex",
       [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
     },
@@ -80,7 +79,10 @@ export const useStyles = MUITheme => ({
       "@media(max-width: 480px)": { width: "100%" },
     },
     "& button": { padding: "19px 33px 17px" },
-    "& img": { width: 478 },
+    "& img": {
+      width: 478,
+      "@media(max-width: 1098px)": { width: "100%" },
+    },
     [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
 
@@ -91,6 +93,9 @@ export const useStyles = MUITheme => ({
     flexDirection: "column",
     alignItems: "center",
     "& button": { margin: "32px 0 63px" },
+    "& img": {
+      [MUITheme.breakpoints.down("sm")]: { width: "100%" },
+    },
     [MUITheme.breakpoints.down("sm")]: { padding: "34px 15px" },
   },
   howItWorksDesc: {
@@ -99,44 +104,47 @@ export const useStyles = MUITheme => ({
     color: "#616161",
     fontSize: 18,
     lineHeight: "28px",
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
 
   // Titles
   titlesContainer: {
-    padding: 0,
-    margin: 0,
-    display: "flex",
-    justifyContent: "center",
-    textAlign: "center",
-    "& li": {
-      boxSizing: "border-box",
-      width: 410,
-      padding: "34px 22px 33px",
-      borderRadius: 4,
-      marginRight: 24,
-      backgroundColor: MUITheme.palette.background.white,
-      boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
-      listStyle: "none",
-      "& img": { width: 96 },
-      "& h4": {
-        padding: "32px 0 17px",
-        fontWeight: "normal",
+    "& ul": {
+      padding: "0 25px",
+      margin: 0,
+      display: "flex",
+      justifyContent: "center",
+      textAlign: "center",
+      "& li": {
+        boxSizing: "border-box",
+        width: 410,
+        padding: "34px 22px 33px",
+        borderRadius: 4,
+        marginRight: 24,
+        backgroundColor: MUITheme.palette.background.white,
+        boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
+        listStyle: "none",
+        "& img": { width: 96 },
+        "& h4": {
+          padding: "32px 0 17px",
+          fontWeight: "normal",
+        },
+        "& p": {
+          color: MUITheme.palette.text.primary,
+          fontSize: 16,
+          lineHeight: "21px",
+        },
+        "&:last-of-type": {
+          marginRight: 0,
+          [MUITheme.breakpoints.down("sm")]: { marginBottom: 0 },
+        },
+        [MUITheme.breakpoints.down("xs")]: { margin: "0 0 25px 0" },
+        "@media(max-width: 420px)": { width: "100%" },
       },
-      "& p": {
-        color: MUITheme.palette.text.primary,
-        fontSize: 16,
-        lineHeight: "21px",
+      [MUITheme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        alignItems: "center",
       },
-      "&:last-of-type": {
-        marginRight: 0,
-        [MUITheme.breakpoints.down("sm")]: { marginBottom: 0 },
-      },
-      [MUITheme.breakpoints.down("xs")]: { margin: "0 0 25px 0" },
-      "@media(max-width: 420px)": { width: "100%" },
-    },
-    [MUITheme.breakpoints.down("xs")]: {
-      flexDirection: "column",
-      alignItems: "center",
     },
   },
 });

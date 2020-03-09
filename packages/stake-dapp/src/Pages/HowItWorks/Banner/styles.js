@@ -7,8 +7,10 @@ export const useStyles = MUITheme => ({
     backgroundSize: "cover",
   },
   bannerDesFormContainer: {
+    boxSizing: "content-box",
     maxWidth: "1400px",
-    margin: "32px auto",
+    padding: "32px 60px",
+    margin: "0 auto",
     display: "flex",
     "& > div": {
       [MUITheme.breakpoints.down("md")]: {
@@ -61,7 +63,6 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
-    [MUITheme.breakpoints.down("md")]: { width: 628 },
     "@media(max-width: 675px)": { width: "100%" },
   },
   formHeader: {

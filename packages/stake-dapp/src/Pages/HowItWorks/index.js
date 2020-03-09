@@ -43,6 +43,8 @@ const HowItWorks = ({ classes }) => {
         </Typography>
         <img src="http://placehold.it/738x416" alt="Youtube Video" />
         <SNETButton children="start staking tokens" color="primary" variant="contained" />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>
         <ul className={classes.titlesContainer}>
           <li>
             <img src={BankImage} alt="Bank" />
