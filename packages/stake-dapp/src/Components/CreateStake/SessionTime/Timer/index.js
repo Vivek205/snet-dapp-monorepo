@@ -13,11 +13,11 @@ const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
 
   useInterval(() => {
     // Time decrement
-    setDisplayTime(displayTime > 0 ? displayTime - 1 : 0);
     if (displayTime === 0) {
-      handleTimerCompletion();
       setDelay(null);
+      handleTimerCompletion();
     }
+    setDisplayTime(displayTime > 0 ? displayTime - 1 : 0);
   }, delay);
 
   const convertSectoDays = n => {
