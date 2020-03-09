@@ -20,6 +20,7 @@ export const useStyles = makeStyles(MUITheme => ({
   footerLinks: { listStyle: "none" },
   footerLinkText: {
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
     lineHeight: "28px",
     opacity: 0.6,
@@ -30,6 +31,7 @@ export const useStyles = makeStyles(MUITheme => ({
     marginBottom: 8,
     display: "inline-block",
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 20,
     fontWeight: 600,
     opacity: 0.8,

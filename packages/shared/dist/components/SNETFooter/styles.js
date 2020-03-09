@@ -36,6 +36,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     footerLinkText: {
       color: MUITheme.palette.text.white,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 14,
       lineHeight: "28px",
       opacity: 0.6,
@@ -48,6 +49,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       marginBottom: 8,
       display: "inline-block",
       color: MUITheme.palette.text.white,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,
       fontWeight: 600,
       opacity: 0.8,

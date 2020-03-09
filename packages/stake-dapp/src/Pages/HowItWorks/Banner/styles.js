@@ -7,8 +7,10 @@ export const useStyles = MUITheme => ({
     backgroundSize: "cover",
   },
   bannerDesFormContainer: {
-    maxWidth: "1230px",
-    margin: "24px auto",
+    boxSizing: "content-box",
+    maxWidth: "1400px",
+    padding: "32px 60px",
+    margin: "0 auto",
     display: "flex",
     "& > div": {
       [MUITheme.breakpoints.down("md")]: {
@@ -30,7 +32,7 @@ export const useStyles = MUITheme => ({
     lineHeight: "48px",
   },
   bannerDescPara1: {
-    paddingTop: 44,
+    paddingTop: 32,
     color: MUITheme.palette.text.white,
     fontSize: 22,
     fontWeight: 600,
@@ -38,7 +40,7 @@ export const useStyles = MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { paddingTop: 15 },
   },
   bannerDescPara2: {
-    paddingTop: 48,
+    padding: "32px 60px 0 0",
     color: MUITheme.palette.text.white,
     fontSize: 22,
     fontWeight: 200,
@@ -58,9 +60,9 @@ export const useStyles = MUITheme => ({
     },
   },
   form: {
+    borderRadius: 4,
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
-    [MUITheme.breakpoints.down("md")]: { width: 628 },
     "@media(max-width: 675px)": { width: "100%" },
   },
   formHeader: {
@@ -155,7 +157,7 @@ export const useStyles = MUITheme => ({
     justifyContent: "center",
   },
   countDownContainer: {
-    padding: "11px 15px",
+    padding: "23px 15px",
     borderRadius: "0 4px 4px 4px",
     marginTop: 20,
     display: "flex",
@@ -194,13 +196,16 @@ export const useStyles = MUITheme => ({
   countDownValue: {
     color: MUITheme.palette.text.white,
     fontSize: 50,
-    lineHeight: "63px",
+    fontWeight: 200,
+    lineHeight: "38px",
     "@media(max-width:480px)": { fontSize: 42 },
   },
   countDownUnit: {
+    paddingTop: 20,
     color: MUITheme.palette.text.white,
     fontSize: 14,
-    lineHeight: "21px",
+    fontWeight: 200,
+    lineHeight: "14px",
     textTransform: "uppercase",
     "@media(max-width:480px)": { fontSize: 12 },
   },

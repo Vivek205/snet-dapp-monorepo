@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(MUITheme => ({
   secondaryFooter: {
     paddingTop: 15,
     borderTopWidth: 1,
@@ -21,8 +21,9 @@ export const useStyles = makeStyles(theme => ({
   },
   copyrightText: {
     margin: 0,
-    color: theme.palette.text.white,
+    color: MUITheme.palette.text.white,
     opacity: 0.6,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 12,
     lineHeight: "17px",
     "@media (max-width:1023px) and (min-width:768px)": { width: 353 },
