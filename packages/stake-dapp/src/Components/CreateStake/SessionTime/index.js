@@ -22,9 +22,13 @@ const SessionTime = ({ stakeDetails }) => {
 
   // TODO - Get the state from the Redux to set as Default Checked value
   const [stakeNotification, setStakeNotification] = useState(false);
-  const [startTime] = useState(currentTime < stakeDetails.startPeriod ? currentTime : stakeDetails.startPeriod);
-  const [endTime] = useState(
-    currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.endPeriod
+
+  const [showSubmissionTimer, setShowSubmissionTimer] = useState(currentTime < stakeDetails.startPeriod ? false : true);
+
+  // currentTime < stakeDetails.startPeriod ? currentTime : stakeDetails.startPeriod
+  const [startTime, setStartTime] = useState(currentTime);
+  const [endTime, setEndTime] = useState(
+    currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.submissionEndPeriod
   );
 
   const interval = 1000;
@@ -55,6 +59,19 @@ const SessionTime = ({ stakeDetails }) => {
     return closeTime;
   };
 
+  const handleTimerCompletion = () => {
+    const _currentTime = moment().unix();
+    if (_currentTime < stakeDetails.startPeriod) {
+      setShowSubmissionTimer(false);
+    } else if (_currentTime > stakeDetails.startPeriod && _currentTime > stakeDetails.submissionEndPeriod) {
+      setStartTime(_currentTime);
+      setEndTime(stakeDetails.submissionEndPeriod);
+      setShowSubmissionTimer(true);
+    } else {
+      // TODO - Call the Fetch API Call
+    }
+  };
+
   const handleStakeNotificationChange = event => {
     setStakeNotification(event.target.checked);
 
@@ -73,7 +90,24 @@ const SessionTime = ({ stakeDetails }) => {
       </div>
       <div className={classes.content}>
         <Typography variant="subtitle1">{getSessionTitle()}</Typography>
-        <Timer key={startTime} startTime={startTime} endTime={endTime} interval={interval} />
+        {showSubmissionTimer === false && (
+          <Timer
+            key="waitToOpen"
+            startTime={startTime}
+            endTime={endTime}
+            interval={interval}
+            handleTimerCompletion={handleTimerCompletion}
+          />
+        )}
+        {showSubmissionTimer === true && (
+          <Timer
+            key="waitToCloseSubmission"
+            startTime={startTime}
+            endTime={endTime}
+            interval={interval}
+            handleTimerCompletion={handleTimerCompletion}
+          />
+        )}
         <Typography className={classes.closingTime}>{getClosingTime()}</Typography>
         <div className={classes.checkbox}>
           <InfoIcon />

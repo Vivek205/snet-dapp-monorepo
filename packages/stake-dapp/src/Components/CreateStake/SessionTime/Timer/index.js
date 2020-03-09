@@ -2,16 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 
-const Timer = ({ startTime, endTime, interval }) => {
+const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
   const classes = useStyles();
 
-  const [displayTime, setDisplayTime] = useState(parseInt(endTime) - parseInt(startTime));
+  // Make sure that the endTime > startTime
+  const [displayTime, setDisplayTime] = useState(
+    parseInt(endTime) - parseInt(startTime) > 0 ? parseInt(endTime) - parseInt(startTime) : 0
+  );
   const [delay, setDelay] = useState(interval);
 
   useInterval(() => {
-    // Your custom logic here
-    setDisplayTime(displayTime - 1);
-    if (displayTime === 0) setDelay(null);
+    // Time decrement
+    setDisplayTime(displayTime > 0 ? displayTime - 1 : 0);
+    if (displayTime === 0) {
+      handleTimerCompletion();
+      setDelay(null);
+    }
   }, delay);
 
   const convertSectoDays = n => {

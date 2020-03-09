@@ -58,6 +58,8 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const tokenBalanceBN = new BN(tokenBalance);
     const tokenAllowanceBN = new BN(tokenAllowance);
 
+    //console.log("Auto Renewal Option - ", autoRenewal);
+
     if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN)) {
       let txHash;
       let bAllowanceCalled = false;
@@ -80,6 +82,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
         if (!bAllowanceCalled) {
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
+          setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
         }
 
         await waitForTransaction(txHash);
@@ -120,7 +123,10 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
   const calcRewardAmount = _stakeAmount => {
     // Calc the reward on window max cap
+
+    //console.log(_stakeAmount, "---", stakeDetails.rewardAmount, "---", stakeDetails.windowMaxCap);
     const _rewardAmount = Math.floor((toWei(_stakeAmount) * stakeDetails.rewardAmount) / stakeDetails.windowMaxCap);
+    //console.log("_rewardAmount - ", _rewardAmount);
     return _rewardAmount;
   };
 
@@ -145,10 +151,11 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               </Typography>
             </div>
             <div className={classes.addStakeTextfieldSection}>
+              {/* extraInfo= Avaialble Balance: {availBal} */}
               <SNETTextfield
                 name="stakeAmount"
                 label="Input Stake Amount"
-                extraInfo="Avaialble Balance: {availBal}"
+                extraInfo=""
                 value={stakeAmount}
                 onChange={handleAmountChange}
               />
