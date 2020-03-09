@@ -13,9 +13,15 @@ import Reset from "./Reset";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import { assetTypes } from "../../../../Utils/FileUpload";
 
+const selectState = state => ({
+  url: state.organization.assets.heroImage.url,
+  foundInBlockchain: state.organization.foundInBlockchain,
+});
+
 const OrgImg = ({ classes }) => {
-  const { url } = useSelector(state => state.organization.assets.heroImage);
+  const { url, foundInBlockchain } = useSelector(selectState);
   const { orgUuid } = useParams();
+
   const dispatch = useDispatch();
 
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
@@ -41,7 +47,7 @@ const OrgImg = ({ classes }) => {
             disableInputTab={Boolean(url)}
             outputImageType="url"
           />
-          <Reset onReset={() => handleImageChange(null, null)} />
+          <Reset onReset={() => handleImageChange(null, null)} disabled={foundInBlockchain} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.previewContainer}>
           <Typography className={classes.previewText}>

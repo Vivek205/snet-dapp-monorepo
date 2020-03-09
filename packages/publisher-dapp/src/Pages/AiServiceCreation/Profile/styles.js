@@ -106,23 +106,11 @@ export const useStyles = MUITheme => ({
   },
   addedTagsContainer: {
     paddingTop: 30,
-    display: "flex",
-    position: "relative",
+    // display: "flex",
     "& svg": {
       color: MUITheme.palette.text.disabled,
       padding: "5px 10px 0 0",
       fontSize: 20,
-    },
-    "& span": {
-      padding: "0 20px 0 4px",
-      position: "absolute",
-      top: 21,
-      left: 35,
-      background: MUITheme.palette.background.white,
-      color: MUITheme.palette.text.darkGrey,
-      fontSize: 12,
-      letterSpacing: 0.4,
-      lineHeight: "16px",
     },
   },
   card: {

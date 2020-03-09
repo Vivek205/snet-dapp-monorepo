@@ -18,7 +18,24 @@ class PricingDistribution extends Component {
   };
 
   componentDidMount = async () => {
-    await this.props.getFreeCallSignerAddress();
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
+    await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+  };
+
+  componentDidUpdate = async prevProps => {
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
+    if (
+      Boolean(orgId) &&
+      Boolean(groupId) &&
+      Boolean(serviceId) &&
+      Boolean(username) &&
+      (orgId !== prevProps.orgId ||
+        groupId !== prevProps.groupId ||
+        serviceId !== prevProps.serviceId ||
+        username !== prevProps.username)
+    ) {
+      await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+    }
   };
 
   render() {
@@ -44,8 +61,15 @@ class PricingDistribution extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  getFreeCallSignerAddress: (orgId, groupId, serviceId) =>
-    dispatch(aiServiceDetailsActions.getFreeCallSignerAddress(orgId, groupId, serviceId)),
+const mapStateToProps = state => ({
+  orgId: state.organization.id,
+  groupId: state.organization.groups[0].id,
+  serviceId: state.aiServiceDetails.id,
+  username: state.user.email,
 });
-export default connect(null, mapDispatchToProps)(withStyles(useStyles)(PricingDistribution));
+
+const mapDispatchToProps = dispatch => ({
+  getFreeCallSignerAddress: (orgId, groupId, serviceId, username) =>
+    dispatch(aiServiceDetailsActions.getFreeCallSignerAddress(orgId, groupId, serviceId, username)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(PricingDistribution));

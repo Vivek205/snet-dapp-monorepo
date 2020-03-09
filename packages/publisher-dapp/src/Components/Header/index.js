@@ -13,7 +13,7 @@ const Header = () => {
     <SNETHeader
       isLoggedIn={isLoggedIn}
       portalName="Publisher"
-      color="default"
+      color="white"
       NavigationBar={NavigationBar}
       LoggedInActions={LoggedInActions}
       LoggedOutActions={LoggedOutActions}

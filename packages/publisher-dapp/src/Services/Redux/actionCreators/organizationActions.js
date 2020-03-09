@@ -31,6 +31,7 @@ export const SET_ORG_STATE_UPDATED_BY = "SET_ORG_STATE_UPDATED_BY";
 export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
+export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -60,7 +61,10 @@ export const setOrgStateAll = state => ({ type: SET_ORG_STATE_ALL, payload: stat
 export const setOrgStateState = state => ({ type: SET_ORG_STATE_STATE, payload: state });
 
 export const setOrgSameMailingAddress = value => ({ type: SET_ORG_SAME_MAILING_ADDRESS, payload: value });
+
 export const setOrgHeroImageUrl = url => ({ type: SET_ORG_HERO_IMAGE_URL, payload: url });
+
+export const setOrgFoundInBlockchain = found => ({ type: SET_ORG_FOUND_IN_BLOCKCHAIN, payload: found });
 
 const uploadFileAPI = (assetType, fileBlob, orgUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -87,7 +91,7 @@ export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
-    contacts, assets, ownerFullName, orgAddress } = organization;
+    contacts, assets, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
@@ -97,7 +101,6 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
-    owner_name: ownerFullName,
     metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
@@ -127,7 +130,7 @@ const payloadForSubmit = organization => {
     assets: {
       hero_image: {
         url: organization.assets.heroImage.url,
-        ipfs_uri: organization.assets.heroImage.ipfsUri,
+        ipfs_uri: organization.assets.heroImage.ipfsUri || "",
       },
     },
     ownerAddress: organization.ownerAddress,
@@ -206,7 +209,6 @@ export const getStatus = async dispatch => {
     state: selectedOrg.state,
     id: selectedOrg.org_id,
     uuid: selectedOrg.org_uuid,
-    ownerFullName: selectedOrg.owner_name,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
     longDescription: selectedOrg.description,
@@ -245,7 +247,9 @@ export const getStatus = async dispatch => {
     }));
     organization.groups = parsedGroups;
   }
+  const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(organization.id);
   dispatch(setAllAttributes(organization));
+  dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
   return data;
 };
 
@@ -258,10 +262,13 @@ const finishLaterAPI = payload => async dispatch => {
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const finishLater = organization => async dispatch => {
+export const finishLater = (organization, type = "") => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_FINISH_LATER));
     const payload = payloadForSubmit(organization);
+    if (type === "ONBOARDING") {
+      payload.groups = [];
+    }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
@@ -306,8 +313,9 @@ export const createOrganization = organization => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_CREATE));
     const payload = payloadForSubmit(organization);
-    const { status, data, error } = await dispatch(createOrganizationAPI(payload));
-    if (status !== responseStatus.SUCCESS) {
+    payload.groups = [];
+    const { data, error } = await dispatch(createOrganizationAPI(payload));
+    if (error.code) {
       throw new APIError(error.message);
     }
     dispatch(loaderActions.stopAppLoader());
@@ -382,6 +390,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       .once(blockChainEvents.CONFIRMATION, async () => {
         dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        await dispatch(setOrgFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
         await method.off();
       })
@@ -417,12 +426,17 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
   });
 };
 
+const findOrganizationInBlockchain = async orgId => {
+  const sdk = await initSDK();
+  return await sdk._registryContract.getOrganizationById(orgId).call();
+};
+
 export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {
   try {
-    const sdk = await initSDK();
     const orgId = organization.id;
     const orgMetadataURI = metadataIpfsUri;
-    const OrganizationDetailsFromBlockChain = await sdk._registryContract.getOrganizationById(orgId).call();
+    const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(orgId);
+
     if (!OrganizationDetailsFromBlockChain.found) {
       return await dispatch(registerOrganizationInBlockChain(organization, orgMetadataURI, history));
     }

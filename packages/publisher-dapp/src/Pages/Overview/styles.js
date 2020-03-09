@@ -11,14 +11,6 @@ export const useStyles = MUITheme => ({
       alignItems: "flex-start",
       "&:last-of-type": { marginBottom: 0 },
     },
-    "& .MuiListItemText-root": {
-      margin: 0,
-      "& span": {
-        color: MUITheme.palette.text.primary,
-        fontSize: 16,
-        lineHeight: "24px",
-      },
-    },
     "& .MuiListItemIcon-root": { minWidth: "auto" },
     "& button, & a": { marginTop: 32 },
     "& img": { width: "100%" },

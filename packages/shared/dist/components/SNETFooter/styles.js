@@ -10,7 +10,7 @@ var _styles = require("@material-ui/styles");
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     footer: {
-      padding: "23px 0",
+      padding: "11px 0",
       position: "absolute",
       right: 0,
       left: 0,
@@ -52,6 +52,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,
       fontWeight: 600,
+      lineHeight: "25px",
       opacity: 0.8,
       "@media (max-width:1023px) and (min-width:768px)": {
         fontSize: 18
@@ -63,7 +64,6 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     socialIcon: {
       color: MUITheme.palette.text.white,
-      opacity: 0.6,
       "& span": {
         fontSize: 20,
         "@media (max-width:767px)": {

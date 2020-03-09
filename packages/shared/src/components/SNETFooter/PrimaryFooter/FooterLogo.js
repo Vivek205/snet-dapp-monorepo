@@ -1,11 +1,10 @@
 import React from "react";
-
-import Logo from "../../../assets/images/WhiteLogo.svg";
+import { withStyles } from "@material-ui/styles";
 
 import { useStyles } from "./styles";
+import Logo from "../../../assets/images/WhiteLogo.svg";
 
-const FooterLogo = () => {
-  const classes = useStyles();
+const FooterLogo = ({ classes }) => {
   return (
     <div className={classes.FooterLogo}>
       <h1>
@@ -17,4 +16,4 @@ const FooterLogo = () => {
   );
 };
 
-export default FooterLogo;
+export default withStyles(useStyles)(FooterLogo);
