@@ -263,8 +263,8 @@ const parseServiceDetails = (data, serviceUuid) => {
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
-      endpoints: group.endpoints,
-      testEndpoints: group.test_endpoints,
+      endpoints: group.endpoints || [],
+      testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
     }));
   };
