@@ -17,8 +17,16 @@ class PricingDistribution extends Component {
     alert: { type: alertTypes.ERROR, message: "Lorem ipsum" },
   };
 
-  componentDidMount = async () => {
-    await this.props.getFreeCallSignerAddress();
+  componentDidUpdate = async prevProps => {
+    const { orgId, groupId, serviceId, getFreeCallSignerAddress } = this.props;
+    if (
+      Boolean(orgId) &&
+      Boolean(groupId) &&
+      Boolean(serviceId) &&
+      (orgId !== prevProps.orgId || groupId !== prevProps.groupId || serviceId !== prevProps.serviceId)
+    ) {
+      await getFreeCallSignerAddress(orgId, groupId, serviceId);
+    }
   };
 
   render() {
@@ -44,8 +52,14 @@ class PricingDistribution extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  orgId: state.organization.id,
+  groupId: state.organization.groups[0].id,
+  serviceId: state.aiServiceDetails.id,
+});
+
 const mapDispatchToProps = dispatch => ({
   getFreeCallSignerAddress: (orgId, groupId, serviceId) =>
     dispatch(aiServiceDetailsActions.getFreeCallSignerAddress(orgId, groupId, serviceId)),
 });
-export default connect(null, mapDispatchToProps)(withStyles(useStyles)(PricingDistribution));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(PricingDistribution));
