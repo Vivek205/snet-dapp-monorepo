@@ -315,19 +315,19 @@ const parseServiceDetails = (data, serviceUuid) => {
   return service;
 };
 
-const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {
+const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId, username) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.SIGNER.name;
   const apiPath = APIPaths.FREE_CALL_SIGNER_ADDRESS;
-  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId };
+  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId, username };
   const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
-export const getFreeCallSignerAddress = (orgId, serviceId, groupId) => async dispatch => {
+export const getFreeCallSignerAddress = (orgId, serviceId, groupId, username) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
-    const { data, error } = await dispatch(getFreeCallSignerAddressAPI(orgId, serviceId, groupId));
+    const { data, error } = await dispatch(getFreeCallSignerAddressAPI(orgId, serviceId, groupId, username));
     if (error.code) {
       throw new APIError(error.message);
     }

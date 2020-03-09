@@ -22,6 +22,6 @@ export const orgSubmitActions = {
 };
 
 export const organizationTypes = {
-  INDIVIDUAL: "inidividual",
+  INDIVIDUAL: "individual",
   ORGANIZATION: "organization",
 };
