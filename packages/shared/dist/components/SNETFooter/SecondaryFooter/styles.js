@@ -7,7 +7,7 @@ exports.useStyles = void 0;
 
 var _styles = require("@material-ui/styles");
 
-var useStyles = (0, _styles.makeStyles)(function (theme) {
+var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     secondaryFooter: {
       paddingTop: 15,
@@ -31,7 +31,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     copyrightText: {
       margin: 0,
-      color: theme.palette.text.white,
+      color: MUITheme.palette.text.white,
       opacity: 0.6,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 12,

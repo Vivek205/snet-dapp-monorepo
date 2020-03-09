@@ -15,11 +15,11 @@ var _SecondaryFooter = _interopRequireDefault(require("./SecondaryFooter"));
 
 var _styles = require("./styles");
 
-var _data = require("./data");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Footer = function Footer() {
+var Footer = function Footer(_ref) {
+  var data = _ref.data;
+  console.log('data', data);
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("footer", {
     className: classes.footer
@@ -28,10 +28,10 @@ var Footer = function Footer() {
     spacing: 24,
     className: classes.footerWrapper
   }, _react.default.createElement(_PrimaryFooter.default, {
-    leftData: _data.FooterData.PrimaryFooterLeft,
-    mainData: _data.FooterData.PrimaryFooterMain
+    leftData: data.PrimaryFooterLeft,
+    mainData: data.PrimaryFooterMain
   }), _react.default.createElement(_SecondaryFooter.default, {
-    data: _data.FooterData.SecondaryFooter
+    data: data.SecondaryFooter
   })));
 };
 

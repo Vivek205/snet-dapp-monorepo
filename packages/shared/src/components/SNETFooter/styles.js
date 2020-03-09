@@ -20,6 +20,7 @@ export const useStyles = makeStyles(MUITheme => ({
   footerLinks: { listStyle: "none" },
   footerLinkText: {
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
     lineHeight: "28px",
     opacity: 0.6,
