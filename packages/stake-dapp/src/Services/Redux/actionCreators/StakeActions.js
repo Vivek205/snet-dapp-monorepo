@@ -125,7 +125,7 @@ const parseAndTransformStakeWindow = data => {
 
 export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => async dispatch => {
   if (metamaskDetails.isTxnsAllowed) {
-    const [found, pendingForApprovalAmount, approvedAmount, autoRenewal] = await getStakeInfo(
+    const { found, pendingForApprovalAmount, approvedAmount, autoRenewal } = await getStakeInfo(
       metamaskDetails,
       stakeMapIndex
     );

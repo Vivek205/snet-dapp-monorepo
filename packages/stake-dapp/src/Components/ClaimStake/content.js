@@ -40,12 +40,12 @@ export const cardDetails = stakeDetails => [
 ];
 
 export const btnDetails = [
-  {
-    action: "reStake",
-    color: "primary",
-    variant: "text",
-    text: "re-stake",
-  },
+  // {
+  //   action: "reStake",
+  //   color: "primary",
+  //   variant: "text",
+  //   text: "re-stake",
+  // },
   {
     action: "claimStake",
     color: "primary",

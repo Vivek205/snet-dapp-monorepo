@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -9,32 +9,17 @@ import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
 import { cardDetails, incubationProgressDetails, agreementDetails } from "./content";
-import { stakeActions } from "../../Services/Redux/actionCreators";
 import InlineLoader from "../InlineLoader";
 
 const stateSelector = state => ({
   incubationStakes: state.stakeReducer.incubationStakes,
-  metamaskDetails: state.metamaskReducer.metamaskDetails,
   isLoading: state.loader.incubationStakeList.isLoading,
 });
 
 const UserStake = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
-  const { incubationStakes, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
-
-  //const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
-
-  useEffect(() => {
-    try {
-      // TODO: Convert the same to async Constant based on the need...
-      dispatch(stakeActions.fetchActiveStakes(metamaskDetails));
-    } catch (_error) {
-      //console.log("error - ", error);
-      // TODO - Need to handle the error based on overall Web App
-    }
-  }, [dispatch, metamaskDetails]);
+  const { incubationStakes, isLoading } = useSelector(state => stateSelector(state));
 
   if (isLoading) {
     return <InlineLoader />;

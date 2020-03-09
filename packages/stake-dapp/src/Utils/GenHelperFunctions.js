@@ -76,3 +76,7 @@ export const toChecksumAddress = address => {
   if (web3.utils.isAddress(address)) return web3.utils.toChecksumAddress(address);
   return address;
 };
+
+export const toBigNumber = value => {
+  return new BN(value);
+};

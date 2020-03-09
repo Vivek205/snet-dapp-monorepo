@@ -44,6 +44,11 @@ const StakeSession = ({
       return true;
     }
 
+    // Wait till the Stake Window is Opened
+    if (currentTimestamp < stakeDetails.startPeriod) {
+      return true;
+    }
+
     // Check if the Stake is in Submission Phase and Not Open For external
     if (
       currentTimestamp >= stakeDetails.startPeriod &&
@@ -68,6 +73,11 @@ const StakeSession = ({
   const disableUserStakeActions = () => {
     // Check for Metamask Connection
     if (!metamaskDetails.isTxnsAllowed) {
+      return true;
+    }
+
+    // Wait for the Stake Window to Open
+    if (currentTimestamp < stakeDetails.startPeriod) {
       return true;
     }
 
