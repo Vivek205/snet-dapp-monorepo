@@ -17,6 +17,11 @@ class PricingDistribution extends Component {
     alert: { type: alertTypes.ERROR, message: "Lorem ipsum" },
   };
 
+  componentDidMount = async () => {
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
+    await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+  };
+
   componentDidUpdate = async prevProps => {
     const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
     if (

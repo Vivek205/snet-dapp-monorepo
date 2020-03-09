@@ -182,7 +182,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
+    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
     groups: generateGroupsPayload(),
@@ -263,8 +263,8 @@ const parseServiceDetails = (data, serviceUuid) => {
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
-      endpoints: group.endpoints,
-      testEndpoints: group.test_endpoints,
+      endpoints: group.endpoints || [],
+      testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
     }));
   };

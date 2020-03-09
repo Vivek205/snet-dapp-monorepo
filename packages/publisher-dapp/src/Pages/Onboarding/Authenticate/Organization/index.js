@@ -57,9 +57,9 @@ const Organization = props => {
         const data = await dispatch(organizationActions.createOrganization(organization));
         orgUuid = data.org_uuid;
       }
+      dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
       dispatch(organizationActions.initializeOrg);
-      dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
