@@ -17,15 +17,20 @@ const OrganizationSetup = ({ classes, location, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
+    if (
+      organization.state.state === organizationSetupStatuses.APPROVAL_PENDING ||
+      organization.state.state === organizationSetupStatuses.ONBOARDING
+    ) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
-    } else if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
-      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
     }
   }, [organization.state.state, organization.uuid, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
+    if (organization.foundInBlockchain) {
+      return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+    }
+    history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
   };
 
   const activeSection = () => {

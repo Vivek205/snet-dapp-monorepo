@@ -13,7 +13,7 @@ import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import ValidationError from "shared/dist/utils/validationError";
 import validator from "shared/dist/utils/validator";
-import { orgProfileValidationConstraints, errorMsg } from "./validationConstraints";
+import { orgProfileValidationConstraints, errorMsg, contactConstraints } from "./validationConstraints";
 import { ContactsTypes } from "../../../Utils/Contacts";
 
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
@@ -21,12 +21,20 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
 
   const validateForm = () => {
-    const supportContacts = organization.contacts.find(el => el.type === ContactsTypes.SUPPORT);
     let isNotValid = validator(organization, orgProfileValidationConstraints);
     if (isNotValid) {
       return isNotValid;
     }
-    isNotValid = validator(supportContacts);
+    const supportContacts = organization.contacts.find(el => el.type === ContactsTypes.SUPPORT);
+    if (supportContacts) {
+      if (Boolean(supportContacts.email)) {
+        isNotValid = validator.single(supportContacts.email, contactConstraints.email);
+      }
+      if (Boolean(supportContacts.phone)) {
+        isNotValid = validator.single(supportContacts.email, contactConstraints.phone);
+      }
+    }
+
     return isNotValid;
   };
 

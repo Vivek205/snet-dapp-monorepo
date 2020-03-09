@@ -16,8 +16,10 @@ import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { onboardingActions, preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
+import InformationBox from "./InformationBox";
 
 const SingularityAccount = ({ classes, history }) => {
+  const userEntity = useSelector(state => state.user.entity);
   const [emailPreferences, setEmailPreferences] = useState({
     [userPreferenceTypes.FEATURE_RELEASE]: false,
     [userPreferenceTypes.WEEKLY_SUMMARY]: false,
@@ -69,18 +71,32 @@ const SingularityAccount = ({ classes, history }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">{entityTypeDetails.title}</Typography>
         <Typography className={classes.singularityAccDescription}>{entityTypeDetails.description}</Typography>
-        <StyledDropdown
-          labelTxt="Please Select"
-          inputLabel="Entity Type"
-          value={entity}
-          list={[
-            { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
-            { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
-            { value: userEntities.INVITEE, label: "Accept Invitation" },
-          ]}
-          onChange={handleEntityChange}
-        />
+        <div className={classes.dropDownContainer}>
+          <Grid item sx={12} sm={12} md={6} lg={6} className={classes.dropDown}>
+            <StyledDropdown
+              labelTxt="Please Select"
+              inputLabel="Entity Type"
+              value={entity}
+              list={[
+                { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
+                { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
+                { value: userEntities.INVITEE, label: "Accept Invitation" },
+              ]}
+              onChange={handleEntityChange}
+            />
+          </Grid>
+          {userEntity == userEntities.INVITEE ? (
+            <Grid item sx={12} sm={12} md={6} lg={6}>
+              <Typography>
+                Owner of an existing approved company entity will need to send you an invitation through your email.
+              </Typography>
+            </Grid>
+          ) : null}
+        </div>
         <VerifyInvitation verifiedInvitation={verifiedInvitation} setVerifiedInvitation={setVerifiedInvitation} />
+        <div className={classes.infoBoxContainer}>
+          <InformationBox />
+        </div>
       </Grid>
       <LoginBanner classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>

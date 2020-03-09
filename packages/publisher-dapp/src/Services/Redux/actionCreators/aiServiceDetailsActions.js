@@ -182,7 +182,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email: "" })),
+    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     contacts: [],
     groups: generateGroupsPayload(),
@@ -263,8 +263,8 @@ const parseServiceDetails = (data, serviceUuid) => {
       name: group.group_name,
       id: group.group_id,
       pricing: parsePricing(group.pricing),
-      endpoints: group.endpoints,
-      testEndpoints: group.test_endpoints,
+      endpoints: group.endpoints || [],
+      testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
     }));
   };
@@ -315,19 +315,19 @@ const parseServiceDetails = (data, serviceUuid) => {
   return service;
 };
 
-const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId) => async dispatch => {
+const getFreeCallSignerAddressAPI = (orgId, serviceId, groupId, username) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.SIGNER.name;
   const apiPath = APIPaths.FREE_CALL_SIGNER_ADDRESS;
-  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId };
+  const queryParams = { org_id: orgId, service_id: serviceId, group_id: groupId, username };
   const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
-export const getFreeCallSignerAddress = (orgId, serviceId, groupId) => async dispatch => {
+export const getFreeCallSignerAddress = (orgId, serviceId, groupId, username) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
-    const { data, error } = await dispatch(getFreeCallSignerAddressAPI(orgId, serviceId, groupId));
+    const { data, error } = await dispatch(getFreeCallSignerAddressAPI(orgId, serviceId, groupId, username));
     if (error.code) {
       throw new APIError(error.message);
     }
@@ -424,6 +424,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+        await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
         resolve();
         await method.off();

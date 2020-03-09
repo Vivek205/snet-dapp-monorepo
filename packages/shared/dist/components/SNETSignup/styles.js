@@ -16,7 +16,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     signupWrapper: _defineProperty({
       width: "71%",
-      margin: "0 auto"
+      margin: "0 auto 10%"
     }, MUITheme.breakpoints.down("sm"), {
       width: "90%"
     }),
@@ -34,6 +34,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         fontWeight: 600
       },
       "& p": {
+        paddingRight: 50,
         margin: "23px 0 24px",
         color: MUITheme.palette.text.primary,
         fontSize: 20,
@@ -50,7 +51,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         listStyle: "none",
         "& svg": {
           marginRight: 15,
-          color: MUITheme.palette.success,
+          color: MUITheme.palette.success.main,
           fontSize: 20
         },
         "& p": {
@@ -59,7 +60,6 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
           letterSpacing: "0.29px",
           display: "inline-block",
           margin: 0,
-          width: "84%",
           verticalAlign: "top"
         }
       }

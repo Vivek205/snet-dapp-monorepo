@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import { keyCodes } from "shared/dist/utils/keyCodes";
 
-const Settings = ({ classes, groups, group, groupIndex }) => {
+const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [localEndpoints, setLocalEndpoints] = useState("");
   const dispatch = useDispatch();
@@ -101,6 +101,7 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
               onChange={handlePaymentAddressChange}
               label="Payment Address"
               description="The Metamask address associated with this region."
+              disabled={foundInBlockchain}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -128,7 +129,13 @@ const Settings = ({ classes, groups, group, groupIndex }) => {
               ))}
             </Card>
           </Grid>
-          <AdvanceSettings show={showAdvancedSettings} groups={groups} groupIndex={groupIndex} group={group} />
+          <AdvanceSettings
+            show={showAdvancedSettings}
+            groups={groups}
+            groupIndex={groupIndex}
+            group={group}
+            foundInBlockchain={foundInBlockchain}
+          />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
             <SNETButton
               children={showAdvancedSettings ? "hide advanced settings" : "show advanced setting"}

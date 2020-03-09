@@ -8,11 +8,11 @@ const selectState = state => ({
   orgUuid: state.organization.uuid,
 });
 const Default = ({ history }) => {
-  const { onboardingStatus, orgUuid } = useSelector(selectState);
+  const { orgUuid } = useSelector(selectState);
 
   useEffect(() => {
     return history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path.replace(":orgUuid", orgUuid));
-  }, [history, onboardingStatus, orgUuid]);
+  }, [history, orgUuid]);
 
   return <div />;
 };

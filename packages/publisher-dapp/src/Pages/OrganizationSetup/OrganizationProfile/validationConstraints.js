@@ -6,6 +6,16 @@ export const orgProfileValidationConstraints = {
   longDescription: { presence: { allowEmpty: false } },
 };
 
+export const contactConstraints = {
+  email: {
+    email: {
+      message: value => `${value} is not a valid email`,
+    },
+    presence: { allowEmpty: true },
+  },
+  phone: { presence: { allowEmpty: true } },
+};
+
 export const errorMsg = {
   IMAGE_NOT_FOUND: "Please upload an image to proceed",
 };

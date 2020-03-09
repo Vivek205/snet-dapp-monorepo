@@ -1,46 +1,63 @@
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import { onboardingSections, progressText } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
 import isEmpty from "lodash/isEmpty";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "./OnboardingRouter/Routes";
 import OnboardingRouter from "./OnboardingRouter";
 import Heading from "./Heading";
-import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+import { organizationSetupStatuses, organizationTypes } from "../../Utils/organizationSetup";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { AuthenticateRoutes } from "./Authenticate/AuthenitcateRouter/Routes";
 
-const selectState = state => ({
-  email: state.user.email,
-  ownerEmail: state.organization.owner,
-  orgStatus: state.organization.state.state,
-  orgUuid: state.organization.uuid,
-});
-
-const Onboarding = ({ location, history, classes }) => {
-  const { email, ownerEmail, orgStatus, orgUuid } = useSelector(selectState);
-
-  useEffect(() => {
+class Onboarding extends Component {
+  navigateToAppropriatePage = () => {
+    const { email, ownerEmail, orgStatus, orgUuid, orgType, location, history } = this.props;
     if (
       !isEmpty(email) &&
+      Boolean(orgUuid) &&
       !isEmpty(ownerEmail) &&
       email === ownerEmail &&
       orgStatus !== organizationSetupStatuses.PUBLISHED
     ) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+      if (orgType === organizationTypes.INDIVIDUAL) {
+        if (location.pathname !== AuthenticateRoutes.INDIVIDUAL.path) {
+          return history.push(AuthenticateRoutes.INDIVIDUAL.path);
+        }
+      } else if (orgType === organizationTypes.ORGANIZATION) {
+        if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
+          if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+            return history.push(AuthenticateRoutes.ORGANIZATION.path);
+          }
+          return;
+        }
+        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+      }
     }
-  });
+  };
 
-  useEffect(() => {
-    if (orgStatus === organizationSetupStatuses.PUBLISHED) {
-      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
+  componentDidMount = () => {
+    this.navigateToAppropriatePage();
+  };
+
+  componentDidUpdate = prevProps => {
+    const { email, ownerEmail, orgStatus, orgUuid, orgType } = this.props;
+    if (
+      prevProps.email !== email ||
+      prevProps.ownerEmail !== ownerEmail ||
+      prevProps.orgStatus !== orgStatus ||
+      prevProps.orgUuid !== orgUuid ||
+      prevProps.orgType !== orgType
+    ) {
+      this.navigateToAppropriatePage();
     }
-  }, [orgStatus, orgUuid, history]);
+  };
 
-  const activeSection = () => {
-    const { pathname: path } = location;
+  activeSection = () => {
+    const { pathname: path } = this.props.location;
     const { SINGULARITY_ACCOUNT, ACCEPT_SERVICE_AGREEMENT, AUTHENTICATE_ID } = onboardingSections;
 
     if (path.includes(OnboardingRoutes.SINGULARITY_ACCOUNT.path)) {
@@ -53,13 +70,24 @@ const Onboarding = ({ location, history, classes }) => {
     return SINGULARITY_ACCOUNT;
   };
 
-  return (
-    <div className={classes.onboardingContainer}>
-      <Heading {...activeSection().heading} />
-      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
-      <OnboardingRouter />
-    </div>
-  );
-};
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.onboardingContainer}>
+        <Heading {...this.activeSection().heading} />
+        <ProgressBar activeSection={this.activeSection().key} progressText={progressText} />
+        <OnboardingRouter />
+      </div>
+    );
+  }
+}
 
-export default withStyles(useStyles)(Onboarding);
+const mapStateToProps = state => ({
+  email: state.user.email,
+  ownerEmail: state.organization.owner,
+  orgStatus: state.organization.state.state,
+  orgUuid: state.organization.uuid,
+  orgType: state.organization.type,
+});
+
+export default withStyles(useStyles)(connect(mapStateToProps)(Onboarding));

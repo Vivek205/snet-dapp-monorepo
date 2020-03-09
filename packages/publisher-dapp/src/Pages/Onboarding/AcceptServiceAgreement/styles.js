@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   buttonsContainer: {
-    marginTop: 40,
     marginBottom: 64,
     display: "flex",
     justifyContent: "center",
