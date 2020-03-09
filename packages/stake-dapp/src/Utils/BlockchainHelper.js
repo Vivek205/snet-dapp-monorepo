@@ -358,7 +358,7 @@ export const getStakeInfo = (metamaskDetails, stakeMapIndex) => {
   const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
 
   return new Promise((resolve, reject) => {
-    stakingInstance.getStakeInfo(stakeMapIndex, accountAddress, null, (err, result) => {
+    stakingInstance.getStakeInfo(stakeMapIndex, accountAddress, { from: accountAddress }, (err, result) => {
       if (err) {
         reject(result);
       }

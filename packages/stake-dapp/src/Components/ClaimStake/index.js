@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+//, useEffect
 import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
@@ -14,7 +15,7 @@ import { useStyles } from "./styles";
 import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
 import InfoBox from "../StakeSession/InfoBox";
-import { stakeActions } from "../../Services/Redux/actionCreators";
+//import { stakeActions } from "../../Services/Redux/actionCreators";
 import { LoaderContent } from "../../Utils/Loader";
 import { loaderActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, claimStake } from "../../Utils/BlockchainHelper";
@@ -35,15 +36,15 @@ const ClaimStake = () => {
 
   const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
 
-  useEffect(() => {
-    try {
-      // TODO: Convert the same to async Constant based on the need...
-      dispatch(stakeActions.fetchClaimStakes(metamaskDetails));
-    } catch (_error) {
-      //console.log("error - ", error);
-      // TODO - Need to handle the error based on overall Web App
-    }
-  }, [dispatch, metamaskDetails]);
+  // useEffect(() => {
+  //   try {
+  //     // TODO: Convert the same to async Constant based on the need...
+  //     dispatch(stakeActions.fetchClaimStakes(metamaskDetails));
+  //   } catch (_error) {
+  //     //console.log("error - ", error);
+  //     // TODO - Need to handle the error based on overall Web App
+  //   }
+  // }, [dispatch, metamaskDetails]);
 
   if (isLoading) {
     return <InlineLoader />;
@@ -139,7 +140,7 @@ const ClaimStake = () => {
               <InfoBox stakeDetails={stake} />
             </div>
             <AlertBox
-              type="error"
+              type={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].type : undefined}
               message={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].message : undefined}
             />
             <div className={classes.btnContainer}>

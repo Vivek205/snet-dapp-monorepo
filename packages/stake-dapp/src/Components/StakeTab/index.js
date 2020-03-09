@@ -29,16 +29,18 @@ class StakeTab extends Component {
   };
 
   componentDidMount = () => {
-    const { metamaskDetails, fetchActiveStakes, fetchClaimStakes } = this.props;
+    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
 
     // Initiate the Fetch Calls
+    fetchCurrentActiveStakeWindow(metamaskDetails);
     fetchActiveStakes(metamaskDetails);
     fetchClaimStakes(metamaskDetails);
   };
 
   componentDidUpdate = async (prevProps, _prevState) => {
-    const { metamaskDetails, fetchActiveStakes, fetchClaimStakes } = this.props;
+    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
     if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
+      await fetchCurrentActiveStakeWindow(metamaskDetails);
       await fetchActiveStakes(metamaskDetails);
       await fetchClaimStakes(metamaskDetails);
     }
@@ -97,6 +99,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchCurrentActiveStakeWindow: metamaskDetails =>
+    dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails)),
   fetchActiveStakes: metamaskDetails => dispatch(stakeActions.fetchActiveStakes(metamaskDetails)),
   fetchClaimStakes: metamaskDetails => dispatch(stakeActions.fetchClaimStakes(metamaskDetails)),
 });

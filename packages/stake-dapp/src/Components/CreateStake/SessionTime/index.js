@@ -22,9 +22,11 @@ const SessionTime = ({ stakeDetails }) => {
 
   // TODO - Get the state from the Redux to set as Default Checked value
   const [stakeNotification, setStakeNotification] = useState(false);
-  const [startTime] = useState(currentTime < stakeDetails.startPeriod ? currentTime : stakeDetails.startPeriod);
+
+  // currentTime < stakeDetails.startPeriod ? currentTime : stakeDetails.startPeriod
+  const [startTime] = useState(currentTime);
   const [endTime] = useState(
-    currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.endPeriod
+    currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.submissionEndPeriod
   );
 
   const interval = 1000;

@@ -9,8 +9,8 @@ const Timer = ({ startTime, endTime, interval }) => {
   const [delay, setDelay] = useState(interval);
 
   useInterval(() => {
-    // Your custom logic here
-    setDisplayTime(displayTime - 1);
+    // Time decrement
+    setDisplayTime(displayTime > 0 ? displayTime - 1 : 0);
     if (displayTime === 0) setDelay(null);
   }, delay);
 
