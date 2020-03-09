@@ -27,7 +27,7 @@ class Onboarding extends Component {
         if (location.pathname !== AuthenticateRoutes.INDIVIDUAL.path) {
           return history.push(AuthenticateRoutes.INDIVIDUAL.path);
         }
-      } else {
+      } else if (orgType === organizationTypes.ORGANIZATION) {
         if (orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED) {
           if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
             return history.push(AuthenticateRoutes.ORGANIZATION.path);
