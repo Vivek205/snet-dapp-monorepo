@@ -24,15 +24,8 @@ export const onboardingSections = {
 
 export const progressText = ["Singularity Account", "Accept Service Agreement", "Authenticate ID"];
 
-export const onboardingStatusList = {
-  NOT_STARTED: "NOT_STARTED",
-  SELECTED_ENTITY: "SELECTED_ENTITY",
-  ACCEPTED_AGREEMENT: "ACCEPTED_AGREEMENT",
-  VERIFICATION_PENDING: "VERIFICATION_PENDING",
-};
-
 export const individualVerificationStatusList = {
-  NOT_STARTED: "",
+  NOT_STARTED: undefined,
   PENDING: "PENDING",
   APPROVED: "APPROVED",
   REJECTED: "REJECTED",

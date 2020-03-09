@@ -90,7 +90,7 @@ const Profile = ({ classes, _location }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      if (serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+      if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
         throw new ValidationError("Service id is not available. Try with a different service id");
       }
       if (serviceDetails.touch) {

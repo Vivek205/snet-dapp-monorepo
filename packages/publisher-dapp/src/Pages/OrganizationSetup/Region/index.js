@@ -21,11 +21,11 @@ const Region = ({ history, classes, handleFinishLater }) => {
     if (isNotValid) {
       return setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
     }
-    history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace("orgUuid", organization.uuid));
+    history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
 
   const handleBack = () => {
-    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path.replace("orgUuid", organization.uuid));
+    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path.replace(":orgUuid", organization.uuid));
   };
 
   return (
@@ -37,7 +37,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
           will be able to configure this during the AI service level.
         </Typography>
         {groups.map((group, index) => (
-          <Settings groups={groups} groupIndex={index} group={group} key={group.id} />
+          <Settings
+            groups={groups}
+            groupIndex={index}
+            group={group}
+            key={group.id}
+            foundInBlockchain={organization.foundInBlockchain}
+          />
         ))}
         <AlertBox type={alert.type} message={alert.message} />
       </div>

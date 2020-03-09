@@ -31,6 +31,10 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
     history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
   };
 
+  const handleTeamMembers = () => {
+    history.push(GlobalRoutes.INVITE_MEMBERS.path.replace(":orgUuid", orgUuid));
+  };
+
   return (
     <Modal open={show} onClose={handleClose}>
       <div className={classes.UserProfilePopUpContainer}>
@@ -46,6 +50,10 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
               <li onClick={handleEdit}>
                 <DeviceHubIcon />
                 <span>Edit</span>
+              </li>
+              <li onClick={handleTeamMembers}>
+                <DeviceHubIcon />
+                <span>Team Members</span>
               </li>
             </Fragment>
           ) : null}

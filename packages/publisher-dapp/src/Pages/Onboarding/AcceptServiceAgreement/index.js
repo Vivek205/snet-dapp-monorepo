@@ -19,7 +19,7 @@ const selectState = state => ({
 });
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
-  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState());
+  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState);
 
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const AcceptServiceAgreement = ({ history }) => {
 
   const handleAccept = async () => {
     if (entity === userEntities.INDIVIDUAL) {
-      await organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL });
+      await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
     }
     history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,7 +15,7 @@ import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
-import { organizationTypes, organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { organizationTypes } from "../../../Utils/organizationSetup";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, email, ownerEmail } = useSelector(state => ({
@@ -23,16 +23,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     email: state.user.email,
     ownerEmail: state.organization.owner,
   }));
-  const { name, type, status, uuid, ownerFullName, ownerAddress } = organization;
+  const { name, type, status, uuid, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
-      setAlert({ type: alertTypes.SUCCESS, message: "Organization has been published in the blockchain" });
-    }
-  }, [organization.state.state]);
 
   const handleSubmit = () => {
     setAlert({});
@@ -98,13 +92,6 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
             name="name"
             disabled
             value={name}
-          />
-          <SNETTextfield
-            label="Owners Full Name"
-            description="You should be owner of your company’s legal entity."
-            name="ownerFullName"
-            disabled
-            value={ownerFullName}
           />
         </div>
         <TechnicalInfo />

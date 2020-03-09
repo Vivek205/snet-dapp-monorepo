@@ -2,6 +2,7 @@ export const organizationSetupStatuses = {
   NOT_STARTED: "",
   ONBOARDING: "ONBOARDING",
   ONBOARDING_APPROVED: "ONBOARDING_APPROVED",
+  ONBOARDING_REJECTED: "ONBOARDING_REJECTED",
   DRAFT: "DRAFT",
   APPROVAL_PENDING: "APPROVAL_PENDING",
   APPROVED: "APPROVED",
@@ -21,6 +22,6 @@ export const orgSubmitActions = {
 };
 
 export const organizationTypes = {
-  INDIVIDUAL: "inidividual",
+  INDIVIDUAL: "individual",
   ORGANIZATION: "organization",
 };

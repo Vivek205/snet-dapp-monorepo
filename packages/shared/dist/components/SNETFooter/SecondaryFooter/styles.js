@@ -10,10 +10,11 @@ var _styles = require("@material-ui/styles");
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     secondaryFooter: {
-      paddingTop: 15,
+      padding: "15px 4px 12px 23px",
       borderTopWidth: 1,
       borderTopStyle: "solid",
-      marginTop: 11,
+      marginTop: 23,
+      opacity: 0.6,
       "& div": {
         "@media (max-width:1023px) and (min-width:768px)": {
           maxWidth: "50%"

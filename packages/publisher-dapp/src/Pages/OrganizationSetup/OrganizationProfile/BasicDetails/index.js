@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,13 +8,31 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { useStyles } from "./styles";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
+import AlertText from "shared/dist/components/AlertText";
+import validator from "shared/dist/utils/validator";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import { orgProfileValidationConstraints } from "../validationConstraints";
 
 const BasicDetails = ({ classes }) => {
-  const { id, name, shortDescription, longDescription, website } = useSelector(state => state.organization);
+  const { id, name, shortDescription, longDescription, website, foundInBlockchain } = useSelector(
+    state => state.organization
+  );
   const dispatch = useDispatch();
+  const [websiteValidation, setWebsiteValidation] = useState({});
+
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+    }
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
 
   const handleFormInputsChange = event => {
     const { name, value } = event.target;
+    if (name === "website") {
+      handleWebsiteValidation(value);
+    }
     dispatch(organizationActions.setOneBasicDetail(name, value));
   };
 
@@ -30,6 +48,7 @@ const BasicDetails = ({ classes }) => {
         label="Organization id"
         description="The organziation id is the unique id for the organization."
         onChange={handleFormInputsChange}
+        disabled
       />
       <SNETTextfield
         name="name"
@@ -39,6 +58,7 @@ const BasicDetails = ({ classes }) => {
         onChange={handleFormInputsChange}
         minCount="15"
         maxCount="50"
+        disabled={foundInBlockchain}
       />
       <SNETTextarea
         label="Short Description"
@@ -50,6 +70,7 @@ const BasicDetails = ({ classes }) => {
         value={shortDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        disabled={foundInBlockchain}
       />
       <SNETTextarea
         label="Long Description"
@@ -61,6 +82,7 @@ const BasicDetails = ({ classes }) => {
         value={longDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
+        disabled={foundInBlockchain}
       />
       <div className={classes.orgWebsiteUrl}>
         <SNETTextfield
@@ -70,6 +92,9 @@ const BasicDetails = ({ classes }) => {
           label="Organization Website URL"
           description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
         />
+      </div>
+      <div className={classes.orgWebsiteUrl}>
+        <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
     </Grid>
   );
