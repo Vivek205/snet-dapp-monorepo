@@ -4,9 +4,105 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import { useStyles } from "./styles";
+import { fromWei } from "../../Utils/GenHelperFunctions";
 
-const ExpandedTable = ({ showTable }) => {
+const processState = {
+  SubmitStake: "New State",
+  ClaimStake: "Claim",
+  ApproveStake: "Approved",
+  RejectStake: "Reject",
+  AutoRenewStake: "Auto Renewal",
+  RenewStake: "Renewed",
+  WithdrawStake: "Withdrawn",
+};
+
+const ExpandedTable = ({ showTable, transactionList }) => {
   const classes = useStyles();
+
+  const getStakeAmount = transaction => {
+    let stakeAmount = 0;
+    let rewardAmount = 0;
+
+    const eventData = JSON.parse(
+      transaction.eventData.json_str
+        .replace(/'/gi, '"')
+        .replace(/True/gi, "true")
+        .replace(/False/gi, "false")
+    );
+
+    switch (transaction.eventName) {
+      case "SubmitStake":
+        stakeAmount = "+" + fromWei(eventData.stakeAmount);
+        break;
+      case "ClaimStake":
+        stakeAmount = "-" + fromWei(eventData.rewardAmount);
+        break;
+      case "ApproveStake":
+        stakeAmount = "-" + fromWei(eventData.returnAmount);
+        break;
+      case "RejectStake":
+        stakeAmount = "-" + fromWei(eventData.returnAmount);
+        break;
+      case "AutoRenewStake":
+        stakeAmount = "-" + fromWei(eventData.returnAmount);
+        break;
+      case "RenewStake":
+        // Getting Reward Amount
+        rewardAmount = eventData.stakeAmount - eventData.stakeAmount;
+        stakeAmount = "+" + fromWei(rewardAmount);
+        break;
+      case "WithdrawStake":
+        stakeAmount = "-" + fromWei(eventData.stakeAmount);
+        break;
+      default:
+        stakeAmount = "0";
+        break;
+    }
+    return stakeAmount;
+  };
+
+  const getTransactionDetails = transaction => {
+    let txnDetails = "";
+
+    const eventData = JSON.parse(
+      transaction.eventData.json_str
+        .replace(/'/gi, '"')
+        .replace(/True/gi, "true")
+        .replace(/False/gi, "false")
+    );
+
+    switch (transaction.eventName) {
+      case "SubmitStake":
+        txnDetails = "New Stake";
+        break;
+      case "ClaimStake":
+        txnDetails = "Total Stake: " + fromWei(eventData.totalAmount) + " AGI";
+        break;
+      case "ApproveStake":
+        txnDetails = "Approved Stake: " + fromWei(eventData.approvedStakeAmount) + " AGI";
+        break;
+      case "RejectStake":
+        txnDetails = "Transferred to Metamask: " + fromWei(eventData.returnAmount) + " AGI";
+        break;
+      case "AutoRenewStake":
+        txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        txnDetails +=
+          "Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
+        break;
+      case "RenewStake":
+        txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        txnDetails += "Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
+        break;
+      case "WithdrawStake":
+        txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";
+        break;
+      default:
+        txnDetails = "";
+        break;
+    }
+    return txnDetails;
+  };
+
   if (showTable) {
     return (
       <Grid container className={classes.expandedTable}>
@@ -27,8 +123,34 @@ const ExpandedTable = ({ showTable }) => {
             <Typography>Detail</Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.expandedTableRow}>
-          <Grid item xs={12} sm={12} md={2} lg={2} className={classes.dateDetails}>
+
+        {transactionList.map(t => (
+          <Grid key={t.txnHash} item xs={12} sm={12} md={12} lg={12} className={classes.expandedTableRow}>
+            <Grid item xs={12} sm={12} md={2} lg={2} className={classes.dateDetails}>
+              <Typography className={classes.mobileTitle}>Date: </Typography>
+              <Typography>{t.txnDate}</Typography>
+              {/* <Typography>{"time??"}</Typography> */}
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
+              <Typography className={classes.mobileTitle}>Process State:</Typography>
+              <Typography>{`${processState[t.eventName]}`}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={2} lg={2}>
+              <Typography className={classes.mobileTitle}>Status:</Typography>
+              <Typography className={classes.statusValue}>Success</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={2} lg={2}>
+              <Typography className={classes.mobileTitle}>Transaction:</Typography>
+              <Typography>{getStakeAmount(t)} AGI</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
+              <Typography className={classes.mobileTitle}>Detail:</Typography>
+              <Typography>{getTransactionDetails(t)}</Typography>
+            </Grid>
+          </Grid>
+        ))}
+
+        {/* <Grid item xs={12} sm={12} md={2} lg={2} className={classes.dateDetails}>
             <Typography className={classes.mobileTitle}>Date: </Typography>
             <Typography>10 Feb 2020</Typography>
             <Typography>02:32 AM EST</Typography>
@@ -48,8 +170,7 @@ const ExpandedTable = ({ showTable }) => {
           <Grid item xs={12} sm={12} md={3} lg={3}>
             <Typography className={classes.mobileTitle}>Detail:</Typography>
             <Typography>Transfered to Metamask wallet</Typography>
-          </Grid>
-        </Grid>
+          </Grid> */}
       </Grid>
     );
   }

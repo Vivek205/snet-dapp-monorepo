@@ -2,8 +2,11 @@ import { loaderActions } from "../actionCreators";
 
 const initialState = {
   app: { isLoading: false, title: "", content: "" },
-  aiServiceList: { isLoading: false },
-  initServiceCreation: { isLoading: false, title: "", content: "" },
+
+  activeStakeWindow: { isLoading: false },
+  incubationStakeList: { isLoading: false },
+  claimStakeList: { isLoading: false },
+  txnList: { isLoading: false },
 };
 
 const loaderReducer = (state = initialState, action) => {
@@ -14,6 +17,14 @@ const loaderReducer = (state = initialState, action) => {
       return { ...state, aiServiceList: action.payload };
     case loaderActions.SET_INIT_SERVICE_CREATION_LOADER:
       return { ...state, initServiceCreation: action.payload };
+    case loaderActions.SET_STAKE_WINDOW_LOADER:
+      return { ...state, activeStakeWindow: action.payload };
+    case loaderActions.SET_STAKE_ACTIVE_LOADER:
+      return { ...state, incubationStakeList: action.payload };
+    case loaderActions.SET_STAKE_CLAIM_LOADER:
+      return { ...state, claimStakeList: action.payload };
+    case loaderActions.SET_STAKE_TXN_LOADER:
+      return { ...state, txnList: action.payload };
     default:
       return state;
   }

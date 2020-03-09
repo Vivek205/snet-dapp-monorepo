@@ -7,7 +7,6 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { getStakeInfo, getUserStakeBalance } from "../../../Utils/BlockchainHelper";
 import { loaderActions } from "./";
-import { LoaderContent } from "../../../Utils/Loader";
 
 export const UPDATE_ACTIVE_STAKE_WINDOW = "UPDATE_ACTIVE_STAKE_WINDOW";
 export const UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN = "UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN";
@@ -73,7 +72,7 @@ const fetchCurrentActiveStakeWindowAPI = metamaskDetails => async dispatch => {
 
 export const fetchCurrentActiveStakeWindow = metamaskDetails => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.LOAD_DATA));
+    dispatch(loaderActions.startStakeWindowLoader());
 
     const { data, error } = await dispatch(fetchCurrentActiveStakeWindowAPI(metamaskDetails));
     if (error.code) {
@@ -87,9 +86,9 @@ export const fetchCurrentActiveStakeWindow = metamaskDetails => async dispatch =
     // Get the latest State from Blockchain
     if (data.length === 0) dispatch(fetchUserStakeFromBlockchain(metamaskDetails, stakeWindowDetails.stakeMapIndex));
 
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopStakeWindowLoader());
   } catch (error) {
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopStakeWindowLoader());
     throw error;
   }
 };
@@ -162,7 +161,7 @@ const fetchActiveStakesAPI = metamaskDetails => async dispatch => {
 
 export const fetchActiveStakes = metamaskDetails => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.LOAD_DATA));
+    dispatch(loaderActions.startActiveStakeLoader());
 
     const { data, error } = await dispatch(fetchActiveStakesAPI(metamaskDetails));
     if (error.code) {
@@ -174,9 +173,9 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
     dispatch(setActiveStakes(activeStakes));
     dispatch(setStakeSummary({ incubatingCount: data.length }));
 
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopActiveStakeLoader());
   } catch (error) {
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopActiveStakeLoader());
     throw error;
   }
 };
@@ -200,7 +199,7 @@ const fetchClaimStakesAPI = metamaskDetails => async dispatch => {
 
 export const fetchClaimStakes = metamaskDetails => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.LOAD_DATA));
+    dispatch(loaderActions.startClaimStakeLoader());
 
     const { data, error } = await dispatch(fetchClaimStakesAPI(metamaskDetails));
     if (error.code) {
@@ -212,9 +211,9 @@ export const fetchClaimStakes = metamaskDetails => async dispatch => {
     dispatch(setClaimStakes(claimStakes));
     dispatch(setStakeSummary({ readyToClaimCount: data.length }));
 
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopClaimStakeLoader());
   } catch (error) {
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopClaimStakeLoader());
     throw error;
   }
 };
@@ -247,6 +246,7 @@ const parseAndTransformStakes = data => {
     approvedAmount: stake.stake_holder.amount_approved,
     autoRenewal: stake.stake_holder.auto_renewal,
     stakedBlockNumber: stake.stake_holder.block_no_created,
+    refundAmount: stake.stake_holder.refund_amount,
   }));
 
   return stakes;
@@ -271,7 +271,7 @@ const fetchStakeTransactionsAPI = metamaskDetails => async dispatch => {
 
 export const fetchStakeTransactions = metamaskDetails => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.LOAD_DATA));
+    dispatch(loaderActions.startTxnStakeLoader());
 
     const { data, error } = await dispatch(fetchStakeTransactionsAPI(metamaskDetails));
     if (error.code) {
@@ -282,9 +282,9 @@ export const fetchStakeTransactions = metamaskDetails => async dispatch => {
     const txnStakes = parseAndTransformStakeTransactions(data);
     dispatch(setTransactionStakes(txnStakes));
 
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopTxnStakeLoader());
   } catch (error) {
-    dispatch(loaderActions.stopAppLoader());
+    dispatch(loaderActions.stopTxnStakeLoader());
     throw error;
   }
 };
@@ -312,12 +312,12 @@ const parseAndTransformStakeTransactions = data => {
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
 
-    txnList: stake.transactions.map(t => ({
-      txnHash: t.TransactionHash,
-      txnDate: t.TransactionDate,
-      blockNumber: t.BlockNumber,
-      eventName: t.EventName,
-      eventData: t.EventData,
+    transactionList: stake.transactions.map(t => ({
+      txnHash: t.transaction_hash,
+      txnDate: t.transaction_date,
+      blockNumber: t.block_no,
+      eventName: t.event,
+      eventData: t.event_data,
     })),
   }));
 

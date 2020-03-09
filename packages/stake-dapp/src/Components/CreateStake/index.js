@@ -20,10 +20,12 @@ import {
 import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
 import { stakeActions } from "../../Services/Redux/actionCreators";
+import InlineLoader from "../InlineLoader";
 
 const stateSelector = state => ({
   activeStake: state.stakeReducer.activeStake,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
+  isLoading: state.loader.activeStakeWindow.isLoading,
 });
 
 const CreateStake = () => {
@@ -34,7 +36,7 @@ const CreateStake = () => {
   const [showAddStakePopup, setShowAddStakePopup] = useState(false);
   const [autoRenewal, setAutoRenewal] = useState(true);
 
-  const { activeStake, metamaskDetails } = useSelector(state => stateSelector(state));
+  const { activeStake, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
   useEffect(() => {
     try {
@@ -67,6 +69,10 @@ const CreateStake = () => {
       setShowAddStakePopup(true);
     }
   };
+
+  if (isLoading) {
+    return <InlineLoader />;
+  }
 
   // No Data Found Scenario
   if (!activeStake.stakeMapIndex) {

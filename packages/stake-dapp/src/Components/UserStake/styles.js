@@ -7,7 +7,7 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
   userStakeContainerItem: {
-    marginBottom: "20px",
+    marginBottom: "32px",
   },
   bottomBox: { marginTop: 67 },
   toolBar: {
