@@ -30,6 +30,7 @@ export const useStyles = makeStyles(MUITheme => ({
     marginBottom: 8,
     display: "inline-block",
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 20,
     fontWeight: 600,
     opacity: 0.8,

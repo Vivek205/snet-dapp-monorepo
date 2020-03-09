@@ -157,7 +157,7 @@ export const useStyles = MUITheme => ({
     justifyContent: "center",
   },
   countDownContainer: {
-    padding: "17px 15px",
+    padding: "23px 15px",
     borderRadius: "0 4px 4px 4px",
     marginTop: 20,
     display: "flex",
@@ -196,13 +196,16 @@ export const useStyles = MUITheme => ({
   countDownValue: {
     color: MUITheme.palette.text.white,
     fontSize: 50,
-    lineHeight: "63px",
+    fontWeight: 200,
+    lineHeight: "38px",
     "@media(max-width:480px)": { fontSize: 42 },
   },
   countDownUnit: {
+    paddingTop: 20,
     color: MUITheme.palette.text.white,
     fontSize: 14,
-    lineHeight: "21px",
+    fontWeight: 200,
+    lineHeight: "14px",
     textTransform: "uppercase",
     "@media(max-width:480px)": { fontSize: 12 },
   },

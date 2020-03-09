@@ -88,7 +88,7 @@ export const useStyles = MUITheme => ({
 
   // How It Works
   howItWorksSection: {
-    padding: "64px 14%",
+    padding: "64px 14% 0",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -110,7 +110,7 @@ export const useStyles = MUITheme => ({
   // Titles
   titlesContainer: {
     "& ul": {
-      padding: "0 25px",
+      padding: "0 25px 64px",
       margin: 0,
       display: "flex",
       justifyContent: "center",

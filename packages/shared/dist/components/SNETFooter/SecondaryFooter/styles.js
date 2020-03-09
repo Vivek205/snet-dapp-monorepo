@@ -33,6 +33,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       margin: 0,
       color: theme.palette.text.white,
       opacity: 0.6,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 12,
       lineHeight: "17px",
       "@media (max-width:1023px) and (min-width:768px)": {
