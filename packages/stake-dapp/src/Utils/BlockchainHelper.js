@@ -5,6 +5,8 @@ import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNe
 import stakingNetworks from "./TokenStake/networks/TokenStake";
 import stakingABI from "./TokenStake/abi/TokenStake";
 
+import { toBigNumber } from "./GenHelperFunctions";
+
 // TODO - Come up with a different approach here....
 export const waitForTransaction = async hash => {
   let receipt;
@@ -348,23 +350,20 @@ export const updateOperator = (metamaskDetails, tokenOperator) => {
   });
 };
 
-export const getStakeInfo = (metamaskDetails, stakeMapIndex) => {
+// Read Operation for this method is performed using the Infura Call as Metamask web3 has a bug
+export const getStakeInfo = async (metamaskDetails, stakeMapIndex) => {
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  const ethereum = window.ethereum;
-  window.web3 = new window.Web3(ethereum);
+  var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
 
-  const stakingInstance = window.web3.eth.contract(stakingABI).at(stakingContractAddress);
+  const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
 
-  return new Promise((resolve, reject) => {
-    stakingInstance.getStakeInfo(stakeMapIndex, accountAddress, { from: accountAddress }, (err, result) => {
-      if (err) {
-        reject(result);
-      }
-      resolve(result);
-    });
-  });
+  const result = await stakingInstance.methods
+    .getStakeInfo(toBigNumber(stakeMapIndex).toString(), accountAddress)
+    .call();
+
+  return result;
 };
 
 export const getUserStakeBalance = metamaskDetails => {

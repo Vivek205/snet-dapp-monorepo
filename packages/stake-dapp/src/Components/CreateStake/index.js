@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// , useEffect
 import { useSelector } from "react-redux";
-// , useDispatch
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
@@ -20,40 +18,21 @@ import {
 } from "./content";
 import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
-//import { stakeActions } from "../../Services/Redux/actionCreators";
 import InlineLoader from "../InlineLoader";
 
 const stateSelector = state => ({
   activeStake: state.stakeReducer.activeStake,
   isLoading: state.loader.activeStakeWindow.isLoading,
 });
-// metamaskDetails: state.metamaskReducer.metamaskDetails,
 
 const CreateStake = () => {
   const classes = useStyles();
-  //const dispatch = useDispatch();
 
   const [showWithdrawPopup, setShowWithdrawPopup] = useState(false);
   const [showAddStakePopup, setShowAddStakePopup] = useState(false);
   const [autoRenewal, setAutoRenewal] = useState(true);
 
-  // , metamaskDetails
   const { activeStake, isLoading } = useSelector(state => stateSelector(state));
-
-  // useEffect(() => {
-  //   try {
-  //     // TODO: Convert the same to async Constant based on the need...
-  //     //dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
-
-  //     const loadData = async () => {
-  //       await dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
-  //     };
-
-  //     loadData();
-  //   } catch (_error) {
-  //     //console.log("error - ", error); // TODO - Take them to the error page
-  //   }
-  // }, [metamaskDetails]);
 
   const closeWithdrawPopup = () => {
     setShowWithdrawPopup(false);

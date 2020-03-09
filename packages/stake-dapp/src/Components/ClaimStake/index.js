@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//, useEffect
 import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +14,6 @@ import { useStyles } from "./styles";
 import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
 import InfoBox from "../StakeSession/InfoBox";
-//import { stakeActions } from "../../Services/Redux/actionCreators";
 import { LoaderContent } from "../../Utils/Loader";
 import { loaderActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, claimStake } from "../../Utils/BlockchainHelper";
@@ -35,16 +33,6 @@ const ClaimStake = () => {
   const { claimStakes, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
   const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
-
-  // useEffect(() => {
-  //   try {
-  //     // TODO: Convert the same to async Constant based on the need...
-  //     dispatch(stakeActions.fetchClaimStakes(metamaskDetails));
-  //   } catch (_error) {
-  //     //console.log("error - ", error);
-  //     // TODO - Need to handle the error based on overall Web App
-  //   }
-  // }, [dispatch, metamaskDetails]);
 
   if (isLoading) {
     return <InlineLoader />;
