@@ -13,8 +13,13 @@ import CalculatorImage from "shared/dist/assets/images/calculator.png";
 import Banner from "./Banner";
 import Benefits from "./Benefits";
 import { useStyles } from "./styles";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
-const HowItWorks = ({ classes }) => {
+const HowItWorks = ({ classes, history }) => {
+  const navigateToLanding = () => {
+    history.push(GlobalRoutes.LANDING.path);
+  };
+
   return (
     <Grid container className={classes.howItWorksContainer}>
       <Banner />
@@ -42,7 +47,7 @@ const HowItWorks = ({ classes }) => {
           participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet.
         </Typography>
         <img src="http://placehold.it/738x416" alt="Youtube Video" />
-        <SNETButton children="start staking tokens" color="primary" variant="contained" />
+        <SNETButton children="start staking tokens" color="primary" variant="contained" onClick={navigateToLanding} />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>
         <ul className={classes.titlesContainer}>
