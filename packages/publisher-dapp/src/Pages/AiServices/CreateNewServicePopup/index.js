@@ -34,7 +34,8 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
     handleClose();
   };
 
-  const handleContinue = async () => {
+  const handleContinue = async e => {
+    e.preventDefault();
     setAlert({ type: alertTypes.ERROR, message: undefined });
 
     try {
@@ -67,31 +68,27 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
             </IconButton>
           }
         />
-        <CardContent className={classes.popupContent}>
-          <Typography className={classes.popupDescription}>
-            Your AI service needs to have a unique name that does not duplicate any other existing service on the AI
-            Marketpalce.
-          </Typography>
-          <SNETTextfield
-            name="AI Service Name"
-            label="AI Service Name"
-            icon
-            maxCount="50"
-            minCount="15"
-            onChange={e => setServiceName(e.target.value)}
-          />
-          <AlertBox type={alert.type} message={alert.message} />
-        </CardContent>
-        <CardActions className={classes.btnContainer}>
-          <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
-          <SNETButton
-            children="create"
-            color="primary"
-            variant="contained"
-            disabled={!serviceName}
-            onClick={handleContinue}
-          />
-        </CardActions>
+        <form onSubmit={handleContinue}>
+          <CardContent className={classes.popupContent}>
+            <Typography className={classes.popupDescription}>
+              Your AI service needs to have a unique name that does not duplicate any other existing service on the AI
+              Marketpalce.
+            </Typography>
+            <SNETTextfield
+              name="AI Service Name"
+              label="AI Service Name"
+              icon
+              maxCount="50"
+              minCount="15"
+              onChange={e => setServiceName(e.target.value)}
+            />
+            <AlertBox type={alert.type} message={alert.message} />
+          </CardContent>
+          <CardActions className={classes.btnContainer}>
+            <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
+            <SNETButton type="submit" children="create" color="primary" variant="contained" disabled={!serviceName} />
+          </CardActions>
+        </form>
       </Card>
     </Modal>
   );

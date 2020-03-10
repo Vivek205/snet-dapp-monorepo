@@ -1,5 +1,6 @@
 import { API } from "aws-amplify";
 import isEmpty from "lodash/isEmpty";
+import MPENetworks from "singularitynet-platform-contracts/networks/MultiPartyEscrow";
 
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -184,7 +185,6 @@ const generateSaveServicePayload = serviceDetails => {
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
-    contacts: [],
     groups: generateGroupsPayload(),
     // groups: undefined,
     tags: serviceDetails.tags,
@@ -193,6 +193,7 @@ const generateSaveServicePayload = serviceDetails => {
     comment: {
       service_provider: serviceDetails.comments.serviceProvider,
     },
+    mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
 
   return payloadForSubmit;
@@ -306,7 +307,6 @@ const parseServiceDetails = (data, serviceUuid) => {
     },
     contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
-    contacts: [],
     groups: parseGroups(data.groups),
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
