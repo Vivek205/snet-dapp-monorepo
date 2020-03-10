@@ -17,8 +17,8 @@ export const cardDetails = activeStake => [
     unit: "days",
   },
   {
-    title: "Current Stakers",
-    value: activeStake.totalStakers,
+    title: "Reward Pool",
+    value: fromWei(activeStake.rewardAmount),
     unit: "people",
   },
   {
