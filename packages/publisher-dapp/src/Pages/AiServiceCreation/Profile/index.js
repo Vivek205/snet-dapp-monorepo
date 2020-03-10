@@ -172,7 +172,6 @@ const Profile = ({ classes, _location }) => {
             maxCount={50}
             description="The name of your service cannot be same name as another serviceDetails."
             value={serviceDetails.name}
-            disabled={serviceDetails.foundInBlockchain}
             onChange={handleControlChange}
           />
           <SNETTextfield
@@ -193,7 +192,6 @@ const Profile = ({ classes, _location }) => {
             loading={isValidateServiceIdLoading}
           />
           <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
             showInfoIcon
             name="shortDescription"
             label="Short Description"
@@ -206,7 +204,6 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
             showInfoIcon
             name="longDescription"
             label="Long Description"
@@ -219,7 +216,6 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextfield
-            disabled={serviceDetails.foundInBlockchain}
             icon
             name="tags"
             label="Service Tags"
@@ -234,7 +230,6 @@ const Profile = ({ classes, _location }) => {
             <Card className={classes.card}>
               {serviceDetails.tags.map(tag => (
                 <Chip
-                  disabled={serviceDetails.foundInBlockchain}
                   className={classes.chip}
                   key={tag}
                   label={tag}
@@ -247,7 +242,6 @@ const Profile = ({ classes, _location }) => {
 
           <div className={classes.projUrlContainer}>
             <SNETTextfield
-              disabled={serviceDetails.foundInBlockchain}
               name="projectURL"
               label="Project URL"
               description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
