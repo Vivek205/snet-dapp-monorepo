@@ -14,7 +14,7 @@ export const useStyles = MUITheme => ({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: "#e2e2e2",
-    marginBottom: 46,
+    marginBottom: 32,
     position: "relative",
     backgroundColor: "transparent",
     boxShadow: "none",

@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   StackSessionContainer: {
-    paddingBottom: 33,
+    paddingBottom: 40,
     borderRadius: 4,
     background: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
@@ -17,13 +17,18 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "50px",
     },
   },
-  incubationContainer: { padding: "14px 23px" },
+  incubationContainer: { padding: "32px 33px 0" },
   dayCountContainer: {
     paddingBottom: 5,
     display: "flex",
     alignItems: "center",
     "& > div": {
       display: "flex",
+      alignItems: "center",
+    },
+    "& svg": {
+      color: MUITheme.palette.text.disabled,
+      fontSize: 18,
     },
   },
   incubationText: {
@@ -33,7 +38,7 @@ export const useStyles = makeStyles(MUITheme => ({
     lineHeight: "20px",
   },
   daysCount: {
-    marginLeft: "24%",
+    marginLeft: 24,
     alignItems: "baseline",
   },
   value: {
@@ -47,7 +52,6 @@ export const useStyles = makeStyles(MUITheme => ({
     color: MUITheme.palette.text.lightGrey,
     fontSize: 16,
     lineHeight: "20px",
-    textTransform: "uppercase",
   },
   startFinishDate: {
     paddingBottom: 3,
@@ -57,7 +61,6 @@ export const useStyles = makeStyles(MUITheme => ({
       color: MUITheme.palette.text.lightGrey,
       fontSize: 12,
       lineHeight: "15px",
-      textTransform: "uppercase",
     },
   },
   linearProgress: { height: 15 },
@@ -69,23 +72,24 @@ export const useStyles = makeStyles(MUITheme => ({
     backgroundColor: MUITheme.palette.background.mainContent,
   },
   checkboxContent: {
-    padding: "0 33px 0 57px",
+    padding: "0 33px",
     display: "flex",
     alignItems: "flex-start",
     "& label": {
-      width: "100%",
+      width: 845,
+      marginRight: 56,
       display: "flex",
       alignItems: "flex-start",
+      "& .MuiFormControlLabel-label.Mui-disabled": { color: MUITheme.palette.text.darkGrey },
       "& .MuiCheckbox-root": { paddingTop: 0 },
       "& > span": {
-        color: "#4A4A4A",
+        color: MUITheme.palette.text.darkGrey,
         fontSize: 14,
         letterSpacing: 0.25,
         lineHeight: "20px",
       },
     },
     "& p": {
-      paddingLeft: 33,
       color: MUITheme.palette.text.lightGrey,
       fontSize: 14,
       letterSpacing: 0.25,
@@ -97,10 +101,13 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   infoBox: {
-    padding: "0 25px",
+    padding: "32px 33px 0",
     display: "flex",
     justifyContent: "center",
-    "& > p": { display: "flex" },
+    "& > p": {
+      margin: 0,
+      display: "flex",
+    },
     "& svg": {
       marginRight: 17,
       color: MUITheme.palette.primary.main,

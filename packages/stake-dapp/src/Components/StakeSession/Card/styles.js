@@ -8,12 +8,20 @@ export const useStyles = makeStyles(MUITheme => ({
       display: "flex",
       alignItems: "center",
     },
-    "& svg": { fontSize: 18 },
+    "& svg": {
+      color: MUITheme.palette.text.disabled,
+      fontSize: 18,
+    },
     "&:first-of-type": { paddingBottom: 34 },
     "@media(max-width: 760px)": {
       width: "50%",
+      "&:nth-child(3)": { paddingBottom: 34 },
     },
-    [MUITheme.breakpoints.down("xs")]: { width: "100%" },
+    [MUITheme.breakpoints.down("xs")]: {
+      width: "100%",
+      paddingBottom: 34,
+      "&:last-of-type": { paddingBottom: 0 },
+    },
   },
   title: {
     paddingLeft: 12,
