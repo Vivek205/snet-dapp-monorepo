@@ -91,7 +91,10 @@ export const useStyles = MUITheme => ({
       "& > div": {
         maxWidth: "100%",
         flexBasis: "100%",
-        "& .MuiTextField-root": { marginTop: 0 },
+        "& .MuiTextField-root": {
+          marginTop: 0,
+          "& + span": { marginLeft: 10 },
+        },
       },
     },
     "& svg": {

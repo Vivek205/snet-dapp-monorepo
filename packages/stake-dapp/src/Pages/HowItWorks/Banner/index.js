@@ -36,7 +36,7 @@ const Banner = ({ classes }) => {
             <div className={classes.stakedRewardAmt}>
               <SNETTextfield label="Staked Amount" />
               <SwapHorizontalCircleIcon />
-              <SNETTextfield label="Reward Amount" extraInfo="Approximate Estimate" />
+              <SNETTextfield label="Reward Amount" extraInfo="~ Approximate for 30 day Incubation" />
             </div>
             <div className={classes.stakingDetails}>
               <div>
@@ -52,7 +52,7 @@ const Banner = ({ classes }) => {
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography># of Stakers</Typography>
+                  <Typography>Max Pool Size</Typography>
                 </div>
                 <div className={classes.valuesContainer}>
                   <Typography className={classes.values}>4000</Typography>
@@ -62,7 +62,7 @@ const Banner = ({ classes }) => {
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                  <Typography>Reward Pool</Typography>
                 </div>
                 <div className={classes.incubationValuesContainer}>
                   <Typography className={classes.values}>30</Typography>
@@ -71,7 +71,7 @@ const Banner = ({ classes }) => {
               </div>
             </div>
             <div className={classes.formBtnContainer}>
-              <SNETButton children="stake & earntokens" color="primary" variant="contained" />
+              <SNETButton children="stake & earn tokens" color="primary" variant="contained" />
             </div>
           </div>
         </Grid>
