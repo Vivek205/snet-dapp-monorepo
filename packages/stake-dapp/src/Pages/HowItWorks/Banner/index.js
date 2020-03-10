@@ -1,6 +1,7 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
@@ -11,8 +12,55 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+
+const calculaterFields = {
+  stakeAmount: 750,
+  userRewardAmount: 0,
+  poolStakeAmount: 68000,
+  maxStakeAmount: 100000,
+  stakeRewardAmount: 5000,
+  numOfStakers: 20,
+  incubationPeriodInDays: 30,
+};
 
 const Banner = ({ classes }) => {
+  const history = useHistory();
+
+  const [stakeCalculatorFields, setStakeCalculatorFields] = useState(calculaterFields);
+
+  const getRewardAmount = () => {
+    const _finalPoolStakeAmount =
+      parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
+
+    let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
+    if (
+      _stakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount) ||
+      _finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)
+    ) {
+      _stakeAmount = parseInt(stakeCalculatorFields.maxStakeAmount);
+    }
+
+    const rewardAmount = Math.floor(
+      (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
+        Math.min(_finalPoolStakeAmount, parseInt(stakeCalculatorFields.maxStakeAmount))
+    );
+
+    return isNaN(rewardAmount) ? 0 : rewardAmount;
+  };
+
+  const handleDataChange = event => {
+    if (!isNaN(event.target.value) && event.target.value > 0) {
+      setStakeCalculatorFields({ ...stakeCalculatorFields, [event.target.name]: event.target.value });
+    } else {
+      setStakeCalculatorFields({ ...stakeCalculatorFields, [event.target.name]: "" });
+    }
+  };
+
+  const navigateToLanding = () => {
+    history.push(GlobalRoutes.LANDING.path);
+  };
+
   return (
     <Grid container className={classes.bannerContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.bannerDesFormContainer}>
@@ -34,9 +82,21 @@ const Banner = ({ classes }) => {
               <Typography>Staking Calculator</Typography>
             </div>
             <div className={classes.stakedRewardAmt}>
-              <SNETTextfield label="Staked Amount" />
+              <SNETTextfield
+                type="Number"
+                name="stakeAmount"
+                label="Staked Amount"
+                value={stakeCalculatorFields.stakeAmount}
+                InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount } }}
+                onChange={handleDataChange}
+              />
               <SwapHorizontalCircleIcon />
-              <SNETTextfield label="Reward Amount" extraInfo="Approximate Estimate" />
+              <SNETTextfield
+                name="userRewardAmount"
+                label="Reward Amount"
+                extraInfo="~Approximate for 30 day incubation"
+                value={getRewardAmount()}
+              />
             </div>
             <div className={classes.stakingDetails}>
               <div>
@@ -45,33 +105,61 @@ const Banner = ({ classes }) => {
                   <Typography>Stake Pool Size</Typography>
                 </div>
                 <div className={classes.valuesConatiner}>
-                  <Typography className={classes.values}>6,000</Typography>
-                  <Typography className={classes.unit}>AGI</Typography>
+                  <TextField
+                    type="Number"
+                    name="poolStakeAmount"
+                    value={stakeCalculatorFields.poolStakeAmount}
+                    InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.maxStakeAmount } }}
+                    onChange={handleDataChange}
+                  />
+                  {/* <Typography className={classes.values}>6,000</Typography>
+                  <Typography className={classes.unit}>AGI</Typography> */}
                 </div>
               </div>
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography># of Stakers</Typography>
+                  <Typography>Max Pool Size</Typography>
                 </div>
                 <div className={classes.valuesConatiner}>
-                  <Typography className={classes.values}>4000</Typography>
-                  <Typography className={classes.unit}>people</Typography>
+                  <TextField
+                    type="Number"
+                    name="maxStakeAmount"
+                    value={stakeCalculatorFields.maxStakeAmount}
+                    InputProps={{ inputProps: { min: 1 } }}
+                    onChange={handleDataChange}
+                  />
+                  {/* <Typography className={classes.values}>4000</Typography>
+                  <Typography className={classes.unit}>people</Typography> */}
                 </div>
               </div>
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                  <Typography>Reward pool</Typography>
                 </div>
-                <div className={classes.incubationValuesConatiner}>
+                <div className={classes.valuesConatiner}>
+                  <TextField
+                    type="Number"
+                    name="stakeRewardAmount"
+                    value={stakeCalculatorFields.stakeRewardAmount}
+                    InputProps={{ inputProps: { min: 1 } }}
+                    onChange={handleDataChange}
+                  />
+                </div>
+                {/* <div className={classes.incubationValuesConatiner}>
                   <Typography className={classes.values}>30</Typography>
                   <Typography className={classes.unit}>days</Typography>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className={classes.formBtnContainer}>
-              <SNETButton children="stake & earntokens" color="primary" variant="contained" />
+              <SNETButton
+                children="stake & earntokens"
+                color="primary"
+                variant="contained"
+                onClick={navigateToLanding}
+              />
             </div>
           </div>
         </Grid>

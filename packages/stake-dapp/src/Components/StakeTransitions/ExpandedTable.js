@@ -7,13 +7,13 @@ import { useStyles } from "./styles";
 import { fromWei } from "../../Utils/GenHelperFunctions";
 
 const processState = {
-  SubmitStake: "New State",
+  SubmitStake: "New Stake",
   ClaimStake: "Claim",
-  ApproveStake: "Approved",
+  ApproveStake: "Approve",
   RejectStake: "Reject",
   AutoRenewStake: "Auto Renewal",
-  RenewStake: "Renewed",
-  WithdrawStake: "Withdrawn",
+  RenewStake: "Renew",
+  WithdrawStake: "Withdraw",
 };
 
 const ExpandedTable = ({ showTable, transactionList }) => {

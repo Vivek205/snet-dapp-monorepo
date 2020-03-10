@@ -51,7 +51,13 @@ const Benefits = ({ classes }) => {
               </div>
             </li>
           </ul>
-          <SNETButton children="learn more" variant="outlined" color="primary" />
+          <SNETButton
+            children="learn more"
+            variant="outlined"
+            color="primary"
+            href="https://dev.singularitynet.io/products/staking"
+            target="_new"
+          />
         </Grid>
       </Grid>
     </Grid>
