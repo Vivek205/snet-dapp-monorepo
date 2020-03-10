@@ -19,7 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Footer = function Footer(_ref) {
   var data = _ref.data;
-  console.log('data', data);
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("footer", {
     className: classes.footer

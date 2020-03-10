@@ -23,7 +23,7 @@ var useStyles = function useStyles(MUITheme) {
       "& h3": {
         padding: "12px 22px",
         borderBottomWidth: 1,
-        borderBottomStyle: 'solid',
+        borderBottomStyle: "solid",
         borderBottomColor: MUITheme.palette.border.primary,
         margin: 0,
         color: MUITheme.palette.text.darkGrey,
@@ -38,14 +38,14 @@ var useStyles = function useStyles(MUITheme) {
       height: 280,
       padding: "0 18.5px 15.5px 19.5px",
       borderRadius: 4,
-      margin: '15px 15px 0 13px',
+      margin: "15px 15px 0 13px",
       overflow: "auto",
       fontSize: 14,
       textAlign: "left",
       borderColor: "#f1f1f1",
       borderStyle: "solid",
       borderWidth: 1,
-      backgroundColor: '#f6f6f6',
+      backgroundColor: "#f6f6f6",
       "& p": {
         color: MUITheme.palette.text.lightGrey,
         lineHeight: "21px"
