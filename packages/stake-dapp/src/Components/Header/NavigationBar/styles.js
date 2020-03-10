@@ -1,7 +1,10 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
-  navigationLinks: { marginLeft: 170 },
+  navigationLinks: {
+    paddingTop: 10,
+    marginLeft: 170,
+  },
   navlist: {
     padding: 0,
     margin: 0,
@@ -13,14 +16,15 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   navLink: {
+    paddingBottom: 8,
     textDecoration: "none",
     color: MUITheme.palette.text.lightGrey,
+    fontFamily: MUITheme.typography.fontFamily,
   },
   navLinkActive: {
-    borderBottom: `2px solid ${MUITheme.palette.text.white}`,
-    paddingBottom: 3,
+    borderBottom: `1.5px solid ${MUITheme.palette.text.white}`,
+    paddingBottom: 7,
     color: MUITheme.palette.text.white,
-    fontWeight: 400,
     "&: visited": {
       borderBottom: `2px solid ${MUITheme.palette.primary.main}`,
       paddingBottom: 3,
@@ -36,6 +40,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& button": {
       padding: 0,
       "& span": {
+        paddingBottom: 8,
         color: MUITheme.palette.text.lightGrey,
         fontSize: 16,
         "&:hover": { color: MUITheme.palette.primary.main },

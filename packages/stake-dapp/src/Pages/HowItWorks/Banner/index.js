@@ -23,9 +23,9 @@ const Banner = ({ classes }) => {
             tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
-            Every month there will be open staking sessions for you to add your AGI tokens to be vested for 6 months.
-            The SingularityNET foundation will use all or partial amount of your staked amounted and you will be
-            rewarded with compounded interest.
+            Every month there will be open staking sessions for you to add your AGI tokens to be vested for 30 days. The
+            SingularityNET foundation will use all or partial amount of your staked amounted. You can always auto renew
+            for continual compounded rewards and benefits.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerForm}>
