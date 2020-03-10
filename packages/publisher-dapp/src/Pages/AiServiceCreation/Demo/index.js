@@ -36,7 +36,9 @@ const Demo = ({ classes }) => {
               environment. Click here to see the contents of the package.
             </Typography>
             <div className={classes.downloadBtn}>
-              <SNETButton children="download demo ui package v1.03" color="primary" variant="contained" />
+              <a href="https://github.com/singnet/snet-dapp/archive/master.zip" download>
+                <SNETButton children="download demo ui package v1.03" color="primary" variant="contained" />
+              </a>
             </div>
             <hr />
           </div>

@@ -40,6 +40,9 @@ export const useStyles = MUITheme => ({
   downloadBtn: {
     padding: "43px 0 54px",
     textAlign: "center",
+    "& a": {
+      textDecoration: "none",
+    },
   },
   stepsHeading: { paddingBottom: 16 },
   stepOneContainer: { paddingBottom: 32 },
