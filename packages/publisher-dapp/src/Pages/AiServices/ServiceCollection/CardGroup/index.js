@@ -28,28 +28,35 @@ const CardGroup = () => {
     return <NoServicesFound />;
   }
 
-  return serviceList.map(service => (
-    <Grid container className={classes.gridViewCardCollection} key={service.uuid}>
-      <Grid item xs={12} sm={12} md={3} lg={3} className={classes.serviceDetailCard}>
-        <Link
-          to={ServiceCreationRoutes.PROFILE.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", service.uuid)}
-          className={classes.routerLink}
-        >
-          <GridViewItem
-            cardTitle={service.displayName}
-            cardSubheader="sub header"
-            ratingGiven={service.rating.rating}
-            totalRating={service.rating.totalUsersRated}
-            cardDescription={service.shortDescription}
-            isAvailable={isAvailable}
+  return serviceList.map(service => {
+    const editServiceLink = ServiceCreationRoutes.PROFILE.path
+      .replace(":orgUuid", orgUuid)
+      .replace(":serviceUuid", service.uuid);
+
+    return (
+      <Grid container className={classes.gridViewCardCollection} key={service.uuid}>
+        <Grid item xs={12} sm={12} md={3} lg={3} className={classes.serviceDetailCard}>
+          <Link to={editServiceLink} className={classes.routerLink}>
+            <GridViewItem
+              cardTitle={service.displayName}
+              cardSubheader="sub header"
+              ratingGiven={service.rating.rating}
+              totalRating={service.rating.totalUsersRated}
+              cardDescription={service.shortDescription}
+              isAvailable={isAvailable}
+            />
+          </Link>
+        </Grid>
+        <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
+          <ServiceStatusDetails
+            status={service.state.state}
+            groups={service.groups}
+            editServiceLink={editServiceLink}
           />
-        </Link>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
-        <ServiceStatusDetails status={service.state.state} groups={service.groups} />
-      </Grid>
-    </Grid>
-  ));
+    );
+  });
 };
 
 export default CardGroup;

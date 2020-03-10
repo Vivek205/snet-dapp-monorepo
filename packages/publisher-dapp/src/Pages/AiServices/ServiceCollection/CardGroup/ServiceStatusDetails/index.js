@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { Link } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -14,7 +15,7 @@ import Changelog from "./Changelog";
 import { useStyles } from "./styles";
 
 const ServiceStatusDetails = props => {
-  const { classes, status, groups } = props;
+  const { classes, status, groups, editServiceLink } = props;
   const [activeTab] = useState(2);
 
   const tabs = [
@@ -45,7 +46,9 @@ const ServiceStatusDetails = props => {
         </div>
       </div>
       <div className={classes.serviceStatusActions}>
-        <SNETButton children="edit" color="primary" variant="contained" />
+        <Link to={editServiceLink}>
+          <SNETButton children="edit" color="primary" variant="contained" />
+        </Link>
         <SNETButton children="pause service" color="primary" variant="contained" />
       </div>
     </div>

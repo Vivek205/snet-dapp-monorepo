@@ -198,7 +198,7 @@ const generateSaveServicePayload = (serviceDetails, orgId) => {
 
   // TODO remove orgId. MPS has to figure out orgId from orgUuid
   if (orgId) {
-    payloadForSubmit.org_id = orgId;
+    payloadForSubmit.org_id = "curation";
   }
   return payloadForSubmit;
 };
