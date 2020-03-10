@@ -44,7 +44,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography>Stake Pool Size</Typography>
                 </div>
-                <div className={classes.valuesConatiner}>
+                <div className={classes.valuesContainer}>
                   <Typography className={classes.values}>6,000</Typography>
                   <Typography className={classes.unit}>AGI</Typography>
                 </div>
@@ -54,7 +54,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography># of Stakers</Typography>
                 </div>
-                <div className={classes.valuesConatiner}>
+                <div className={classes.valuesContainer}>
                   <Typography className={classes.values}>4000</Typography>
                   <Typography className={classes.unit}>people</Typography>
                 </div>
@@ -64,7 +64,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography>Incubation Period</Typography>
                 </div>
-                <div className={classes.incubationValuesConatiner}>
+                <div className={classes.incubationValuesContainer}>
                   <Typography className={classes.values}>30</Typography>
                   <Typography className={classes.unit}>days</Typography>
                 </div>

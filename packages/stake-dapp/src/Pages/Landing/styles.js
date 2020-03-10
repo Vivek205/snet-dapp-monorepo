@@ -10,7 +10,7 @@ export const useStyles = MUITheme => ({
   },
   topSectionCotainer: {
     "& h3": {
-      paddingLeft: 28,
+      paddingLeft: 22,
       lineHeight: "48px",
     },
     "@media(max-width: 960px)": {

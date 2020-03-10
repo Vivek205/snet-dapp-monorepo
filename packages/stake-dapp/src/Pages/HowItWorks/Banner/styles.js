@@ -7,7 +7,6 @@ export const useStyles = MUITheme => ({
     backgroundSize: "cover",
   },
   bannerDesFormContainer: {
-    boxSizing: "content-box",
     maxWidth: "1400px",
     padding: "32px 60px",
     margin: "0 auto",
@@ -49,7 +48,6 @@ export const useStyles = MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { paddingTop: 15 },
   },
   bannerForm: {
-    paddingLeft: 24,
     [MUITheme.breakpoints.down("md")]: {
       maxWidth: "100%",
       paddingLeft: 0,
@@ -60,9 +58,16 @@ export const useStyles = MUITheme => ({
     },
   },
   form: {
+    width: "90%",
+    margin: "0 0 0 auto",
     borderRadius: 4,
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
+    "@media(max-width: 1365px)": { width: "97%" },
+    [MUITheme.breakpoints.down("lg")]: {
+      width: "auto",
+      margin: "25px auto",
+    },
     "@media(max-width: 675px)": { width: "100%" },
   },
   formHeader: {
@@ -99,6 +104,10 @@ export const useStyles = MUITheme => ({
   stakingDetails: {
     padding: "0 22px",
     display: "flex",
+    "& > div": {
+      width: "34.42%",
+      "&:last-of-type": { width: "31%" },
+    },
     "& svg": {
       color: "#d6d6d6",
       fontSize: 20,
@@ -117,8 +126,7 @@ export const useStyles = MUITheme => ({
       lineHeight: "20px",
     },
   },
-  valuesConatiner: {
-    width: 175,
+  valuesContainer: {
     padding: "15px 0",
     border: "1px solid #828282",
     borderRadius: 4,
@@ -138,14 +146,13 @@ export const useStyles = MUITheme => ({
     fontSize: 12,
     lineHeight: "15px",
   },
-  incubationValuesConatiner: {
-    padding: "15px 44px",
+  incubationValuesContainer: {
+    padding: "15px 0",
     border: "1px solid #828282",
     borderRadius: 4,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F8F8F8",
     "@media(max-width: 640px)": {
       width: 180,
       padding: "15px 0",
