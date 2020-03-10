@@ -13,12 +13,12 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETButton from "shared/dist/components/SNETButton";
 
-const selectState = state => ({ serviceDetails: state.aiServiceDetails });
+const selectState = state => ({ serviceDetails: state.aiServiceDetails, orgId: state.organization.id });
 
 const SubmitForReview = ({ classes }) => {
   const [MMAddress, setMMAddress] = useState(undefined);
   const [disabledTextfield, setDisabledTextField] = useState(true);
-  const { serviceDetails } = useSelector(selectState);
+  const { serviceDetails, orgId } = useSelector(selectState);
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
 
@@ -35,7 +35,8 @@ const SubmitForReview = ({ classes }) => {
   };
 
   const handleSubmitForReview = async () => {
-    await dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails));
+    // TODO remove orgId. MPS has to figure out orgId from orgUuid
+    await dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgId, orgUuid, serviceUuid, serviceDetails));
   };
 
   return (
