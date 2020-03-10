@@ -28,6 +28,10 @@ export const useStyles = MUITheme => ({
     "& button": {
       "&:first-of-type": { marginRight: 40 },
     },
+    "& a": {
+      width: "auto",
+      textDecoration: "none",
+    },
     [MUITheme.breakpoints.down("sm")]: { marginTop: 50 },
   },
   tabsHeader: {

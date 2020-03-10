@@ -136,7 +136,8 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   }
 };
 
-const generateSaveServicePayload = serviceDetails => {
+// TODO remove orgId. MPS has to figure out orgId from orgUuid
+const generateSaveServicePayload = (serviceDetails, orgId) => {
   const generatePricingpayload = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -153,7 +154,7 @@ const generateSaveServicePayload = serviceDetails => {
         return {
           group_name: group.name,
           group_id: group.id,
-          free_calls: group.freeCallsAllowed,
+          free_calls: Number(group.freeCallsAllowed),
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
@@ -161,7 +162,7 @@ const generateSaveServicePayload = serviceDetails => {
         };
       })
       .filter(el => el !== undefined);
-  // TODO: Certain values are hard coded here.... Need to look at for complete integration
+
   const payloadForSubmit = {
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
@@ -186,7 +187,6 @@ const generateSaveServicePayload = serviceDetails => {
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
     ipfs_hash: serviceDetails.ipfsHash,
     groups: generateGroupsPayload(),
-    // groups: undefined,
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
@@ -196,6 +196,10 @@ const generateSaveServicePayload = serviceDetails => {
     mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
 
+  // TODO remove orgId. MPS has to figure out orgId from orgUuid
+  if (orgId) {
+    payloadForSubmit.org_id = "curation";
+  }
   return payloadForSubmit;
 };
 
@@ -267,6 +271,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       endpoints: group.endpoints || [],
       testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
+      freeCallSignerAddress: group.free_call_signer_address,
     }));
   };
   // TODO: Certain elements are hard coded need to update after all forms integration
@@ -310,6 +315,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     groups: parseGroups(data.groups),
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
+    freeCallSignerAddress: isEmpty(data.groups) ? "" : data.groups[0].free_call_signer_address,
   };
 
   return service;
@@ -348,10 +354,11 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
   return await API.put(apiName, apiPath, apiOptions);
 };
 
-export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+export const submitServiceDetailsForReview = (orgId, orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
-    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
+    // TODO remove orgId. MPS has to figure out orgId from orgUuid
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails, orgId);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);
