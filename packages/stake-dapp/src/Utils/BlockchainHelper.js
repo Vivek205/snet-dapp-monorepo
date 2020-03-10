@@ -366,6 +366,20 @@ export const getStakeInfo = async (metamaskDetails, stakeMapIndex) => {
   return result;
 };
 
+export const getRecentStakeWindow = async () => {
+  const stakingContractAddress = getStakingContractAddress();
+
+  var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+
+  const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+
+  const currentStakeMapIndex = await stakingInstance.methods.currentStakeMapIndex().call();
+
+  const result = await stakingInstance.methods.stakeMap(currentStakeMapIndex).call();
+
+  return result;
+};
+
 export const getUserStakeBalance = metamaskDetails => {
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;

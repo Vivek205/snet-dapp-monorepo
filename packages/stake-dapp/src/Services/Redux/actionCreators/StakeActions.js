@@ -5,11 +5,12 @@ import { APIError } from "shared/dist/utils/API";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { getStakeInfo, getUserStakeBalance } from "../../../Utils/BlockchainHelper";
+import { getStakeInfo, getUserStakeBalance, getRecentStakeWindow } from "../../../Utils/BlockchainHelper";
 import { loaderActions } from "./";
 
 export const UPDATE_ACTIVE_STAKE_WINDOW = "UPDATE_ACTIVE_STAKE_WINDOW";
 export const UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN = "UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN";
+export const UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN = "UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN";
 
 export const UPDATE_ACTIVE_STAKES = "UPDATE_ACTIVE_STAKES";
 export const UPDATE_CLAIM_STAKES = "UPDATE_CLAIM_STAKES";
@@ -22,9 +23,15 @@ export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,
   payload: stakeWindowDetails,
 });
+
 export const setActiveStakeWindowDetailsFromBlockchain = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN,
   payload: stakeWindowDetails,
+});
+
+export const setRecentStakeWindowFromBlockchain = recentStakeWindowDetails => ({
+  type: UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN,
+  payload: recentStakeWindowDetails,
 });
 
 export const setActiveStakes = activeStakes => ({
@@ -332,6 +339,19 @@ export const fetchUserStakeBalanceFromBlockchain = metamaskDetails => async disp
   if (metamaskDetails.isTxnsAllowed) {
     const stakeBalance = await getUserStakeBalance(metamaskDetails);
     dispatch(setUserStakeBalance(stakeBalance.toString()));
+  }
+};
+
+// *************************************************
+// Recent Stake Window from Blockchain Functionality
+// *************************************************
+
+export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
+  try {
+    const recentStakeWindowDetails = await getRecentStakeWindow();
+    dispatch(setRecentStakeWindowFromBlockchain(recentStakeWindowDetails));
+  } catch (_err) {
+    // Leave the defaults in the redux state
   }
 };
 

@@ -27,6 +27,19 @@ const InitialRequestDetails = {
   incubationStakes: [],
   claimStakes: [],
   myTransactions: [],
+  recentStakeWindow: {
+    startPeriod: 0,
+    submissionEndPeriod: 0,
+    approvalEndPeriod: 0,
+    requestWithdrawStartPeriod: 0,
+    endPeriod: 0,
+    minStake: 0,
+    maxStake: 0,
+    windowMaxCap: 0,
+    openForExternal: false,
+    windowTotalStake: 0,
+    windowRewardAmount: 0,
+  },
 };
 
 const stakeReducer = (state = InitialRequestDetails, action) => {
@@ -55,7 +68,9 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     case stakeActions.UPDATE_STAKE_TRANSACTIONS: {
       return { ...state, myTransactions: action.payload };
     }
-
+    case stakeActions.UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN: {
+      return { ...state, recentStakeWindow: action.payload };
+    }
     default: {
       return state;
     }

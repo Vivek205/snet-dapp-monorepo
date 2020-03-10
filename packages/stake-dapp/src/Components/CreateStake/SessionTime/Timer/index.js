@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 
-const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
+const Timer = ({ startTime, endTime, interval, handleTimerCompletion, onHowItWorks }) => {
   const classes = useStyles();
 
   // Make sure that the endTime > startTime
@@ -13,11 +13,12 @@ const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
 
   useInterval(() => {
     // Time decrement
+    setDisplayTime(displayTime - 1);
     if (displayTime === 0) {
+      setDisplayTime(-1);
       setDelay(null);
       handleTimerCompletion();
     }
-    setDisplayTime(displayTime > 0 ? displayTime - 1 : 0);
   }, delay);
 
   const convertSectoDays = n => {
@@ -31,6 +32,29 @@ const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
 
     n %= 60;
     const seconds = n;
+
+    if (onHowItWorks) {
+      return (
+        <div className={classes.countDown}>
+          <div>
+            <Typography className={classes.countDownValue}>{day}</Typography>
+            <Typography className={classes.countDownUnit}>days</Typography>
+          </div>
+          <div>
+            <Typography className={classes.countDownValue}>{hour}</Typography>
+            <Typography className={classes.countDownUnit}>hours</Typography>
+          </div>
+          <div>
+            <Typography className={classes.countDownValue}>{minutes}</Typography>
+            <Typography className={classes.countDownUnit}>minutes</Typography>
+          </div>
+          <div>
+            <Typography className={classes.countDownValue}>{seconds}</Typography>
+            <Typography className={classes.countDownUnit}>seconds</Typography>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className={classes.time}>
@@ -54,7 +78,7 @@ const Timer = ({ startTime, endTime, interval, handleTimerCompletion }) => {
     );
   };
 
-  return <div>{convertSectoDays(displayTime)}</div>;
+  return <div>{convertSectoDays(displayTime > 0 ? displayTime : 0)}</div>;
 };
 
 function useInterval(callback, delay) {
