@@ -19,7 +19,7 @@ const computeReward = stakeDetails => {
 
 export const cardDetails = stakeDetails => [
   {
-    title: "Accepted Stack Amount",
+    title: "Accepted Stak Amount",
     value: fromWei(stakeDetails.approvedAmount),
     unit: "AGI",
   },

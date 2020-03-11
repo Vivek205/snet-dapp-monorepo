@@ -2,7 +2,7 @@ import { fromWei } from "../../Utils/GenHelperFunctions";
 
 export const cardDetails = activeStake => [
   {
-    title: "Stack Session",
+    title: "Stak Session",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
   },
