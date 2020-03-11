@@ -1,6 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import Grid from "@material-ui/core/Grid";
@@ -16,7 +15,6 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import { stakeActions } from "../../../Services/Redux/actionCreators";
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
 
 const calculaterFields = {
@@ -29,16 +27,8 @@ const calculaterFields = {
   incubationPeriodInDays: 30,
 };
 
-// const recentStakeWindow = {
-//   startPeriod: moment().unix(),
-//   submissionEndPeriod: moment().unix() + 10,
-// }
-
-const Banner = ({ classes }) => {
+const Banner = ({ classes, recentStakeWindow }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
-
-  const { recentStakeWindow } = useSelector(state => state.stakeReducer);
 
   const currentTime = moment().unix();
   const [stakeCalculatorFields, setStakeCalculatorFields] = useState(calculaterFields);
@@ -48,10 +38,6 @@ const Banner = ({ classes }) => {
   const [startTime, setStartTime] = useState(currentTime);
   const [endTime, setEndTime] = useState(recentStakeWindow.submissionEndPeriod);
   const interval = 1000;
-
-  useEffect(() => {
-    dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
-  }, [dispatch]);
 
   const handleTimerCompletion = () => {
     setShowTimer(false);
