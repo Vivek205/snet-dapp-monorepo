@@ -505,3 +505,29 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
     throw error;
   }
 };
+
+const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = testDaemon
+    ? APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid)
+    : APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid);
+  const queryParams = testDaemon ? undefined : { networkId: process.env.REACT_APP_ETH_NETWORK };
+  const apiOptions = initializeAPIOptions(token, undefined, queryParams);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.SAMPLE_DAEMON_CONFIG));
+    const { data, error } = await dispatch(getSampleDaemonConfigAPI(orgUuid, serviceUuid, testDaemon));
+    if (error.code) {
+      dispatch(loaderActions.stopAppLoader());
+      throw new APIError(error.message);
+    }
+    return data;
+  } catch (e) {
+    dispatch(loaderActions.stopAppLoader());
+    throw e;
+  }
+};

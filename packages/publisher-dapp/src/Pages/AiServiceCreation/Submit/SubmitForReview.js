@@ -12,6 +12,7 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 
+// TODO remove once API is ready
 const sampleDaemonConfig = {
   allowed_user_flag: true,
   allowed_user_addresses: ["0x7DF35C98f41F3Af0df1dc4c7F7D4C19a71Dd059F"],
@@ -22,8 +23,18 @@ const sampleDaemonConfig = {
 };
 
 class SubmitForReview extends React.Component {
+  state = {
+    daemonConfig: sampleDaemonConfig,
+  };
+
   componentDidMount = async () => {
-    // TODO await getSampleDaemonConfig()
+    try {
+      const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
+      const data = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
+      this.setState({ daemonConfig: data });
+    } catch (e) {
+      // Alert user daemon config cannot be retrieved
+    }
   };
 
   handleConnectMM = async () => {
@@ -45,7 +56,7 @@ class SubmitForReview extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-    // const { MMAddress, disabledTextfield } = this.state;
+    const { daemonConfig } = this.state;
 
     return (
       <Grid container className={classes.submitContainer}>
@@ -58,7 +69,7 @@ class SubmitForReview extends React.Component {
               inputs needs to be refined. You will be able to review and respond to the feedback from the SNET Admins
               here.
             </Typography>
-            <DaemonConfig config={sampleDaemonConfig} />
+            <DaemonConfig config={daemonConfig} />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
@@ -99,6 +110,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getSampleDaemonConfig: (orgUuid, serviceUuid, testDaemon) =>
+    aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon),
   setServiceProviderComment: comment => dispatch(aiServiceDetailsActions.setServiceProviderComment(comment)),
   submitServiceDetailsForReview: (orgId, orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgId, orgUuid, serviceUuid, serviceDetails)),
