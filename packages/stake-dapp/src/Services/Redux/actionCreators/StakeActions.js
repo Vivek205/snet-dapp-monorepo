@@ -324,11 +324,21 @@ const parseAndTransformStakeTransactions = data => {
       txnDate: t.transaction_date,
       blockNumber: t.block_no,
       eventName: t.event,
-      eventData: t.event_data,
+      eventData: parseEventData(t.event_data),
     })),
   }));
 
   return stakes;
+};
+
+const parseEventData = eventData => {
+  const jsonStr = eventData.json_str;
+  return JSON.parse(
+    jsonStr
+      .replace(/'/gi, '"')
+      .replace(/True/gi, "true")
+      .replace(/False/gi, "false")
+  );
 };
 
 // *********************************

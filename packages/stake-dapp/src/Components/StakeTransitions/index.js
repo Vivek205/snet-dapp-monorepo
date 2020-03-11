@@ -74,6 +74,7 @@ const StakeTransitions = () => {
             handleExpandeTable={handleExpandeTable}
           />
           <ExpandedTable
+            stakeMapIndex={stakeWindow.stakeMapIndex}
             transactionList={stakeWindow.transactionList}
             showTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
           />
