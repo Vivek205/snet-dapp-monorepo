@@ -62,6 +62,10 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         (stakeAmount * stakeWindow.rewardAmount) / Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
       );
     } else if (submitStakeEvent.length > 0) {
+      // Check if the stake crossed Approval Period - No Reward
+      const currentTime = moment().unix();
+      if (currentTime > stakeWindow.approvalEndPeriod) return 0;
+
       const transaction = submitStakeEvent[0];
       const eventData = JSON.parse(
         transaction.eventData.json_str
