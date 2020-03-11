@@ -11,6 +11,16 @@ import ContinueLaunchTable from "./ContinueLaunchTable";
 import LaunchTable from "./LaunchTable";
 import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
+import DaemonConfig from "../DaemonConfig";
+
+const sampleDaemonConfig = {
+  allowed_user_flag: true,
+  allowed_user_addresses: ["0x7DF35C98f41F3Af0df1dc4c7F7D4C19a71Dd059F"],
+  blockchain_enabled: false,
+  passthrough_enabled: true,
+  daemon_end_point: "0.0.0.0:XXXX",
+  passthrough_endpoint: "http://localhost:YYYY",
+};
 
 const selectState = state => ({
   organization: state.organization,
@@ -47,6 +57,7 @@ const LaunchService = ({ classes }) => {
             needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
           </Typography>
           <ContinueLaunchTable handlePublishToBlockchain={handlePublishToBlockchain} serviceDetails={serviceDetails} />
+          <DaemonConfig config={sampleDaemonConfig} />
         </Grid>
         <MessageToReviewers />
       </div>
