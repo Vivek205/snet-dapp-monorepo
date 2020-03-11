@@ -119,5 +119,8 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "18px",
     },
   },
-  btnContainer: { textAlign: "center" },
+  btnContainer: {
+    marginTop: 24,
+    textAlign: "center",
+  },
 }));

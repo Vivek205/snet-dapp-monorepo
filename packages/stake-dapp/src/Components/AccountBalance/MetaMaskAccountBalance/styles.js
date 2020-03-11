@@ -1,18 +1,9 @@
-export const useStyles = theme => ({
+export const useStyles = MUITheme => ({
   metamaskAccBalanceContainer: { padding: "0 19px 0" },
-  description: {
-    marginTop: 40,
-    color: theme.palette.text.mediumShadeGray,
-    fontFamily: theme.typography.fontFamily,
-    fontSize: 14,
-    letterSpacing: 0.25,
-    lineHeight: "21px",
-  },
   accountDetails: {
-    marginTop: 32,
     "& div": {
       display: "flex",
-      margin: "7px 0 13px",
+      margin: "7px 0 8px",
       "@media(max-width:600px)": {
         flexDirection: "column",
         alignItems: "center",
@@ -25,7 +16,7 @@ export const useStyles = theme => ({
         "& span": {
           width: "auto",
           display: "inline-block",
-          color: theme.palette.text.mediumShadeGray,
+          color: MUITheme.palette.text.primary,
           fontSize: 16,
           lineHeight: "20px",
           "@media(max-width: 1122px)": { fontSize: 13 },
@@ -35,8 +26,9 @@ export const useStyles = theme => ({
       "& span": {
         width: "44%",
         display: "inline-block",
-        color: theme.palette.text.darkShadedGray,
+        color: MUITheme.palette.text.darkGrey,
         fontSize: 16,
+        lineHeight: "20px",
         "@media(max-width:600px)": { width: "100%" },
       },
     },
@@ -48,7 +40,7 @@ export const useStyles = theme => ({
         paddingBottom: 15,
         borderBottomWidth: 1,
         borderBottomStyle: "solid",
-        borderBottomColor: theme.palette.text.lightShadedGray,
+        borderBottomColor: MUITheme.palette.text.lightGrey,
       },
       "@media(max-width:960px)": {
         flexDirection: "row",
@@ -58,18 +50,19 @@ export const useStyles = theme => ({
         paddingBottom: 20,
         borderBottomWidth: 1,
         borderBottomStyle: "solid",
-        borderBottomColor: theme.palette.text.disabledBtnBg,
+        borderBottomColor: MUITheme.palette.border.secondary,
       },
     },
   },
   infoIcon: {
-    color: theme.palette.text.lightShadedGray,
-    fontSize: 20,
-    marginRight: 11,
+    color: MUITheme.palette.text.disabled,
+    fontSize: 18,
+    marginRight: 9,
     verticalAlign: "middle",
     "@media(max-width: 1122px)": { marginRight: 5 },
     "@media(max-width: 960px)": { marginRight: 11 },
   },
+  walletIdContainer: { paddingBottom: 18 },
   walletId: {
     fontSize: "14px !important",
     wordBreak: "break-all",
@@ -81,16 +74,16 @@ export const useStyles = theme => ({
       padding: "14px 6px",
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: theme.palette.text.verticalTabLeftBorder,
+      borderColor: "#e2e2e2",
       borderRadius: 4,
-      backgroundColor: theme.palette.text.cardBackground,
+      backgroundColor: "#f8f8f8",
       textAlign: "center",
       "@media(max-width:600px)": { width: "90% !important" },
     },
   },
   tabsHeader: {
     backgroundColor: "transparent",
-    color: theme.palette.text.lightShadedGray,
+    color: MUITheme.palette.text.lightGrey,
     boxShadow: "none",
     "& button": {
       minWidth: "auto",
@@ -98,15 +91,15 @@ export const useStyles = theme => ({
       marginRight: 40,
       fontSize: 18,
       textTransform: "none",
-      color: theme.palette.text.lightShadedGray,
-      fontFamily: theme.typography.fontFamily,
+      color: MUITheme.palette.text.lightGrey,
+      fontFamily: MUITheme.typography.fontFamily,
     },
     "& .Mui-selected": {
-      color: theme.palette.text.primary,
+      color: MUITheme.palette.text.primary,
       fontWeight: 600,
     },
     "& .MuiTabs-indicator": {
-      backgroundColor: theme.palette.text.primary,
+      backgroundColor: MUITheme.palette.text.primary,
       "@media(max-width: 1122px)": { display: "none" },
       "@media(max-width: 960px)": { display: "block" },
     },
@@ -120,7 +113,7 @@ export const useStyles = theme => ({
     "& > div": {
       width: "100%",
       margin: "24px 0",
-      "& label": { color: theme.palette.text.alertBoxColor },
+      "& label": { color: MUITheme.palette.secondary.main },
       "& fieldset": { borderColor: "rgba(0, 0, 0, 0.87) !important" },
     },
   },

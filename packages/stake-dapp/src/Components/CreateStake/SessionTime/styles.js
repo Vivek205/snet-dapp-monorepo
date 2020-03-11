@@ -23,7 +23,10 @@ export const useStyles = makeStyles(MUITheme => ({
   content: {
     padding: "75px 0 10px",
     textAlign: "center",
-    "& h6": { lineHeight: "23px" },
+    "& h6": {
+      fontWeight: 600,
+      lineHeight: "23px",
+    },
   },
   time: {
     padding: "29px 0 46px",
@@ -52,8 +55,10 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   checkbox: {
     "& > svg": {
-      paddingRight: 16,
-      fontSize: 16,
+      paddingRight: 14,
+      color: MUITheme.palette.text.disabled,
+      fontSize: 18,
+      verticalAlign: "middle",
     },
     "& label": {
       "& svg": { width: 22 },
