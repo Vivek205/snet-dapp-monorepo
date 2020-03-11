@@ -7,13 +7,13 @@ import { useStyles } from "./styles";
 import { fromWei } from "../../Utils/GenHelperFunctions";
 
 const processState = {
-  SubmitStake: "New State",
+  SubmitStake: "New Stake",
   ClaimStake: "Claim",
-  ApproveStake: "Approved",
+  ApproveStake: "Approve",
   RejectStake: "Reject",
   AutoRenewStake: "Auto Renewal",
-  RenewStake: "Renewed",
-  WithdrawStake: "Withdrawn",
+  RenewStake: "Renew",
+  WithdrawStake: "Withdraw",
 };
 
 const ExpandedTable = ({ showTable, transactionList }) => {
@@ -87,11 +87,12 @@ const ExpandedTable = ({ showTable, transactionList }) => {
       case "AutoRenewStake":
         txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
         txnDetails +=
-          "Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
+          " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
         break;
       case "RenewStake":
         txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
-        txnDetails += "Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
+        txnDetails +=
+          " Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
         break;
       case "WithdrawStake":
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";

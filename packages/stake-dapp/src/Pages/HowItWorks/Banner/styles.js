@@ -134,9 +134,14 @@ export const useStyles = MUITheme => ({
     border: "1px solid #828282",
     borderRadius: 4,
     marginRight: 17,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    "& > div": {
+      width: "100%",
+      alignItems: "center",
+      "& input": { textAlign: "center" },
+    },
+    "& .MuiInput-underline": {
+      "&::before": { display: "none" },
+    },
   },
   values: {
     color: MUITheme.palette.text.darkGrey,

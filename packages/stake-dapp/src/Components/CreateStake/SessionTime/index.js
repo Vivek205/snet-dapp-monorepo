@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -11,10 +11,16 @@ import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles";
 import { userPreferenceTypes } from "../../../Utils/user";
 import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
+import { stakeActions } from "../../../Services/Redux/actionCreators";
 
 import Timer from "./Timer";
 
-const SessionTime = ({ stakeDetails }) => {
+const stakeDetails = {
+  startPeriod: moment().unix() + 30,
+  submissionEndPeriod: moment().unix() + 60,
+};
+
+const SessionTime = ({ _stakeDetails }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -25,11 +31,12 @@ const SessionTime = ({ stakeDetails }) => {
 
   const [showSubmissionTimer, setShowSubmissionTimer] = useState(currentTime < stakeDetails.startPeriod ? false : true);
 
-  // currentTime < stakeDetails.startPeriod ? currentTime : stakeDetails.startPeriod
   const [startTime, setStartTime] = useState(currentTime);
   const [endTime, setEndTime] = useState(
     currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.submissionEndPeriod
   );
+
+  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
 
   const interval = 1000;
 
@@ -39,7 +46,7 @@ const SessionTime = ({ stakeDetails }) => {
     if (currentTime < stakeDetails.startPeriod) {
       sessionTitle = "Next Session in:";
     }
-    if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.endPeriod) {
+    if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
       sessionTitle = "Open Staking for:";
     }
 
@@ -52,8 +59,8 @@ const SessionTime = ({ stakeDetails }) => {
     if (currentTime < stakeDetails.startPeriod) {
       closeTime = "Opens: " + moment.unix(stakeDetails.startPeriod).format("DD MMM YYYY");
     }
-    if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.endPeriod) {
-      closeTime = "Closes: " + moment.unix(stakeDetails.endPeriod).format("DD MMM YYYY");
+    if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
+      closeTime = "Closes: " + moment.unix(stakeDetails.submissionEndPeriod).format("DD MMM YYYY");
     }
 
     return closeTime;
@@ -61,14 +68,16 @@ const SessionTime = ({ stakeDetails }) => {
 
   const handleTimerCompletion = () => {
     const _currentTime = moment().unix();
+
     if (_currentTime < stakeDetails.startPeriod) {
       setShowSubmissionTimer(false);
-    } else if (_currentTime > stakeDetails.startPeriod && _currentTime > stakeDetails.submissionEndPeriod) {
+    } else if (_currentTime >= stakeDetails.startPeriod && _currentTime < stakeDetails.submissionEndPeriod) {
       setStartTime(_currentTime);
       setEndTime(stakeDetails.submissionEndPeriod);
       setShowSubmissionTimer(true);
     } else {
       // TODO - Call the Fetch API Call
+      dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
     }
   };
 

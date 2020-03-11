@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -19,6 +19,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [localEndpoints, setLocalEndpoints] = useState("");
   const dispatch = useDispatch();
+  const etcdEndpointsRef = useRef(null);
 
   const { name, paymentAddress, paymentConfig } = group;
 
@@ -50,6 +51,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
 
     endpointsEntered.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
+      if (!endpoint) return;
       const index = updatedEndpoints.findIndex(el => el === endpoint);
 
       if (index === -1) {
@@ -58,6 +60,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
       updatedGroups = updateEndpointsInGroup(updatedGroups, updatedEndpoints);
     });
     dispatch(organizationActions.setGroups(updatedGroups));
+    etcdEndpointsRef.current.value = "";
   };
 
   const handleAddEndpoints = event => {
@@ -111,6 +114,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               label="ETCD Endpoint"
               description="Enter all the ETCD end points that will be used. separated by comma and press enter"
               onKeyUp={handleAddEndpoints}
+              inputRef={etcdEndpointsRef}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.cardContainer}>

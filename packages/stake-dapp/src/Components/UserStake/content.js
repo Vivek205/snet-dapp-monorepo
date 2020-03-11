@@ -28,9 +28,9 @@ export const cardDetails = stakeDetails => [
     unit: "AGI",
   },
   {
-    title: "Current Stakers",
-    value: stakeDetails.numOfStakers,
-    unit: "people",
+    title: "Reward Pool",
+    value: fromWei(stakeDetails.rewardAmount),
+    unit: "AGI",
   },
   {
     title: "Current Pool Size",

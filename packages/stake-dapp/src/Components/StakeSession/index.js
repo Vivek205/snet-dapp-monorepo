@@ -112,12 +112,15 @@ const StakeSession = ({
     }
 
     try {
-      let txHash;
+      const selectedAutoRenewal = event.target.checked;
 
+      let txHash;
       // Initiate the Auto Renewal Flag Update
-      txHash = await updateAutoRenewal(metamaskDetails, stakeDetails.stakeMapIndex, event.target.checked);
+      txHash = await updateAutoRenewal(metamaskDetails, stakeDetails.stakeMapIndex, selectedAutoRenewal);
 
       dispatch(loaderActions.startAppLoader(LoaderContent.UPDATE_STAKE_AUTO_RENEWAL));
+
+      setAlert({ type: alertTypes.INFO, message: "Transaction is in progress" });
 
       await waitForTransaction(txHash);
 
@@ -126,7 +129,7 @@ const StakeSession = ({
       dispatch(loaderActions.stopAppLoader());
 
       // set the checkbox only when the transaction is allowed otherwise revert it
-      setAutoRenewal(event.target.checked);
+      setAutoRenewal(selectedAutoRenewal);
 
       // TODO - Update the Auto Renewal flag in the Redux store accordingly...
     } catch (err) {

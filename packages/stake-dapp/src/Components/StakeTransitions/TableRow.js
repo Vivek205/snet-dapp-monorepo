@@ -94,9 +94,9 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         <Typography className={classes.unit}>AGI</Typography>
       </div>
       <div className={classes.tableData}>
-        <Typography className={classes.title}>Stakers</Typography>
-        <Typography className={classes.value}>NEW???</Typography>
-        <Typography className={classes.unit}>people</Typography>
+        <Typography className={classes.title}>Reward Pool</Typography>
+        <Typography className={classes.value}>{fromWei(stakeWindow.rewardAmount)}</Typography>
+        <Typography className={classes.unit}>AGI</Typography>
       </div>
       <div className={classes.tableData}>
         <Typography className={classes.title}>Pool Size</Typography>

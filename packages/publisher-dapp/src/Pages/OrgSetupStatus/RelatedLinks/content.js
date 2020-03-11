@@ -8,8 +8,13 @@ export const relatedLinks = [
     linkTo: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en",
   },
   {
+    label: "How to set up ETCD Cluster.",
+    href: "https://dev.singularitynet.io/docs/ai-developers/etcdsetup/",
+    newTab: true,
+  },
+  {
     label: "Support request",
     // TODO email onClick
-    linkTo: "support@singularitynet.io",
+    linkTo: "mailto:support@singularitynet.io",
   },
 ];

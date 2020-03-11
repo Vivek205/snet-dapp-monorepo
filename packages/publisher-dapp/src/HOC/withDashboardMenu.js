@@ -5,6 +5,7 @@ import SNETFooter from "shared/dist/components/SNETFooter";
 import VerticalTabs from "shared/dist/components/VerticalTabs";
 import { upperTabs, lowerTabs } from "./dashboardMenuContent";
 import Header from "../Components/Header";
+import { FooterData } from "./footerContent";
 
 const withDashboardMenu = Component => {
   return props => (
@@ -18,7 +19,7 @@ const withDashboardMenu = Component => {
           <Component {...props} />
         </Grid>
       </Grid>
-      <SNETFooter />
+      <SNETFooter data={FooterData} />
     </div>
   );
 };
