@@ -36,14 +36,10 @@ const Banner = ({ classes, recentStakeWindow }) => {
   const [showTimer, setShowTimer] = useState(
     currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod ? true : false
   );
-  const [startTime, setStartTime] = useState(currentTime);
-  const [endTime, setEndTime] = useState(recentStakeWindow.submissionEndPeriod);
   const interval = 1000;
 
   const handleTimerCompletion = () => {
     setShowTimer(false);
-    setStartTime(0);
-    setEndTime(0);
   };
 
   const getRewardAmount = () => {
@@ -79,7 +75,10 @@ const Banner = ({ classes, recentStakeWindow }) => {
   };
 
   const CounterTitle = () => {
-    if (showTimer === true) {
+    if (
+      showTimer ||
+      (currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod)
+    ) {
       return (
         <Fragment>
           <Typography>Current Session</Typography>
@@ -92,12 +91,15 @@ const Banner = ({ classes, recentStakeWindow }) => {
   };
 
   const ShowTimer = () => {
-    if (showTimer === true) {
+    if (
+      showTimer ||
+      (currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod)
+    ) {
       return (
         <Timer
           key="waitToOpen"
-          startTime={startTime}
-          endTime={endTime}
+          startTime={currentTime}
+          endTime={recentStakeWindow.submissionEndPeriod}
           interval={interval}
           handleTimerCompletion={handleTimerCompletion}
           onHowItWorks={true}
