@@ -111,7 +111,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getSampleDaemonConfig: (orgUuid, serviceUuid, testDaemon) =>
-    aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon),
+    dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   setServiceProviderComment: comment => dispatch(aiServiceDetailsActions.setServiceProviderComment(comment)),
   submitServiceDetailsForReview: (orgId, orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgId, orgUuid, serviceUuid, serviceDetails)),
