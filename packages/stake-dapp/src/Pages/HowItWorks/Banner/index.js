@@ -163,7 +163,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography>Stake Pool Size</Typography>
                 </div>
-                <div className={classes.valuesConatiner}>
+                <div className={classes.valuesContainer}>
                   <TextField
                     type="Number"
                     name="poolStakeAmount"
@@ -171,8 +171,6 @@ const Banner = ({ classes }) => {
                     InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.maxStakeAmount } }}
                     onChange={handleDataChange}
                   />
-                  {/* <Typography className={classes.values}>6,000</Typography>
-                  <Typography className={classes.unit}>AGI</Typography> */}
                 </div>
               </div>
               <div>
@@ -180,7 +178,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography>Max Pool Size</Typography>
                 </div>
-                <div className={classes.valuesConatiner}>
+                <div className={classes.valuesContainer}>
                   <TextField
                     type="Number"
                     name="maxStakeAmount"
@@ -188,8 +186,6 @@ const Banner = ({ classes }) => {
                     InputProps={{ inputProps: { min: 1 } }}
                     onChange={handleDataChange}
                   />
-                  {/* <Typography className={classes.values}>4000</Typography>
-                  <Typography className={classes.unit}>people</Typography> */}
                 </div>
               </div>
               <div>
@@ -197,7 +193,7 @@ const Banner = ({ classes }) => {
                   <InfoIcon />
                   <Typography>Reward pool</Typography>
                 </div>
-                <div className={classes.valuesConatiner}>
+                <div className={classes.valuesContainer}>
                   <TextField
                     type="Number"
                     name="stakeRewardAmount"
@@ -206,10 +202,6 @@ const Banner = ({ classes }) => {
                     onChange={handleDataChange}
                   />
                 </div>
-                {/* <div className={classes.incubationValuesConatiner}>
-                  <Typography className={classes.values}>30</Typography>
-                  <Typography className={classes.unit}>days</Typography>
-                </div> */}
               </div>
             </div>
             <div className={classes.formBtnContainer}>

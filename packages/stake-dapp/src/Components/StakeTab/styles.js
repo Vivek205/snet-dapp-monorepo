@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
   mainSection: {
-    padding: "32px 0 60px",
+    padding: "20px 0 60px",
     "& div": {
       "@media(max-width: 1024px)": { maxWidth: "100%" },
     },
@@ -14,11 +14,12 @@ export const useStyles = MUITheme => ({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: "#e2e2e2",
-    marginBottom: 46,
+    marginBottom: 32,
     position: "relative",
     backgroundColor: "transparent",
     boxShadow: "none",
     "& button": {
+      padding: "6px 23px",
       color: MUITheme.palette.text.lightGrey,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,

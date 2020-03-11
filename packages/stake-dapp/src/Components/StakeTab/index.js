@@ -77,10 +77,10 @@ class StakeTab extends Component {
             <AppBar position="static" color="default" className={classes.header}>
               <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
                 <Tab className="singularity-tab" label="Open Staking" value={0} />
-                <Tab className="singularity-tab" label={`Incubating(${stakeSummary.incubatingCount})`} value={1} />
+                <Tab className="singularity-tab" label={`Incubating (${stakeSummary.incubatingCount})`} value={1} />
                 <Tab
                   className="singularity-tab"
-                  label={`Ready to Claim(${stakeSummary.readyToClaimCount})`}
+                  label={`Ready to Claim (${stakeSummary.readyToClaimCount})`}
                   value={2}
                 />
                 <Tab className="singularity-tab" label="Transactions" value={3} />
