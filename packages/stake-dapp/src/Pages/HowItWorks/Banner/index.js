@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/styles";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import InfoIcon from "@material-ui/icons/Info";
 import TimerIcon from "@material-ui/icons/Timer";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -109,7 +110,10 @@ const Banner = ({ classes }) => {
                     type="Number"
                     name="poolStakeAmount"
                     value={stakeCalculatorFields.poolStakeAmount}
-                    InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.maxStakeAmount } }}
+                    InputProps={{
+                      inputProps: { min: 1, max: stakeCalculatorFields.maxStakeAmount },
+                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                    }}
                     onChange={handleDataChange}
                   />
                 </div>
@@ -121,10 +125,13 @@ const Banner = ({ classes }) => {
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
-                    type="Number"
+                    type="text"
                     name="maxStakeAmount"
                     value={stakeCalculatorFields.maxStakeAmount}
-                    InputProps={{ inputProps: { min: 1 } }}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                    }}
                     onChange={handleDataChange}
                   />
                 </div>
@@ -139,7 +146,10 @@ const Banner = ({ classes }) => {
                     type="Number"
                     name="stakeRewardAmount"
                     value={stakeCalculatorFields.stakeRewardAmount}
-                    InputProps={{ inputProps: { min: 1 } }}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                    }}
                     onChange={handleDataChange}
                   />
                 </div>

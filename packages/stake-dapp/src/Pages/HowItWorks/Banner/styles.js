@@ -137,22 +137,26 @@ export const useStyles = MUITheme => ({
     "& > div": {
       width: "100%",
       alignItems: "center",
+      "& > div": { width: "100%" },
       "& input": { textAlign: "center" },
     },
     "& .MuiInput-underline": {
       "&::before": { display: "none" },
+    },
+    "& .MuiInputAdornment-root": {
+      "& p": {
+        paddingLeft: 8,
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 12,
+        lineHeight: "15px",
+        textTransform: "uppercase",
+      },
     },
   },
   values: {
     color: MUITheme.palette.text.darkGrey,
     fontSize: 16,
     lineHeight: "20px",
-  },
-  unit: {
-    paddingLeft: 8,
-    color: MUITheme.palette.text.darkGrey,
-    fontSize: 12,
-    lineHeight: "15px",
   },
   incubationValuesContainer: {
     padding: "15px 0",
