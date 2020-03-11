@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -10,19 +11,29 @@ import ComputeMailsImage from "shared/dist/assets/images/ComputeMails.png";
 import BankImage from "shared/dist/assets/images/bank.png";
 import PiggyBankImage from "shared/dist/assets/images/piggyBank.png";
 import CalculatorImage from "shared/dist/assets/images/calculator.png";
+
 import Banner from "./Banner";
 import Benefits from "./Benefits";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { stakeActions } from "../../Services/Redux/actionCreators";
 
 const HowItWorks = ({ classes, history }) => {
+  const dispatch = useDispatch();
+
+  const { recentStakeWindow } = useSelector(state => state.stakeReducer);
+
+  useEffect(() => {
+    dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
+  }, [dispatch]);
+
   const navigateToLanding = () => {
     history.push(GlobalRoutes.LANDING.path);
   };
 
   return (
     <Grid container className={classes.howItWorksContainer}>
-      <Banner />
+      <Banner recentStakeWindow={recentStakeWindow} />
       <Benefits />
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.signUpContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
