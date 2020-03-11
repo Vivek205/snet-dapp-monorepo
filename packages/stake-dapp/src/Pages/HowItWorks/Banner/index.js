@@ -125,7 +125,7 @@ const Banner = ({ classes }) => {
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
-                    type="text"
+                    type="Number"
                     name="maxStakeAmount"
                     value={stakeCalculatorFields.maxStakeAmount}
                     InputProps={{
