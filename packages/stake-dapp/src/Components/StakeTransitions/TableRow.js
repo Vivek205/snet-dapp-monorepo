@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -57,33 +58,31 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
   };
 
   return (
-    <div className={classes.tableRow} onClick={_e => handleExpandeTable(stakeWindow.stakeMapIndex)}>
-      <div className={classes.tableData}>
-        <Typography className={classes.title}>{startPeriod}</Typography>
-        <Typography className={classes.id}>ID-{stakeWindow.stakeMapIndex}</Typography>
-      </div>
-      <div className={classes.tableData}>
-        <Typography className={classes.title}>Stake Amount</Typography>
+    <Grid containerer className={classes.tableRow} onClick={_e => handleExpandeTable(stakeWindow.stakeMapIndex)}>
+      <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
+        <Typography className={classes.dateId}>{startPeriod}</Typography>
+        <Typography className={classes.dateId}>ID-{stakeWindow.stakeMapIndex}</Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(getStakeAmount())}</Typography>
         <Typography className={classes.unit}>AGI</Typography>
-      </div>
-      <div className={classes.tableData}>
-        <Typography className={classes.title}>Reward Amount</Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={3} lg={3} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(calculateReward())}</Typography>
         <Typography className={classes.unit}>AGI</Typography>
-      </div>
-      <div className={classes.tableData}>
-        <Typography className={classes.title}>Reward Pool</Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(stakeWindow.rewardAmount)}</Typography>
         <Typography className={classes.unit}>AGI</Typography>
-      </div>
-      <div className={classes.tableData}>
-        <Typography className={classes.title}>Pool Size</Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(stakeWindow.windowTotalStake)}</Typography>
         <Typography className={classes.unit}>AGI</Typography>
-      </div>
-      <div className={classes.tableData}>{expandTable ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={12} md={1} lg={1} className={classes.tableData}>
+        {expandTable ? <ArrowUpIcon /> : <ArrowDownIcon />}
+      </Grid>
+    </Grid>
   );
 };
 

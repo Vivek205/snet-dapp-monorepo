@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { useStyles } from "./styles";
+import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 import ExpandedTable from "./ExpandedTable";
 import { stakeActions } from "../../Services/Redux/actionCreators";
@@ -64,22 +65,22 @@ const StakeTransitions = () => {
       <div className={classes.header}>
         <Typography variant="h6">Transaction History</Typography>
       </div>
-      <Typography className={classes.pageTitle}>Stake Session</Typography>
-
-      {myTransactions.map(stakeWindow => (
-        <div key={stakeWindow.stakeMapIndex} className={classes.table}>
-          <TableRow
-            stakeWindow={stakeWindow}
-            expandTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
-            handleExpandeTable={handleExpandeTable}
-          />
-          <ExpandedTable
-            stakeMapIndex={stakeWindow.stakeMapIndex}
-            transactionList={stakeWindow.transactionList}
-            showTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
-          />
-        </div>
-      ))}
+      <div className={classes.table}>
+        <TableHeader />
+        {myTransactions.map(stakeWindow => (
+          <div key={stakeWindow.stakeMapIndex} className={classes.table}>
+            <TableRow
+              stakeWindow={stakeWindow}
+              expandTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
+              handleExpandeTable={handleExpandeTable}
+            />
+            <ExpandedTable
+              transactionList={stakeWindow.transactionList}
+              showTable={expandTable[stakeWindow.stakeMapIndex] ? `${expandTable[stakeWindow.stakeMapIndex]}` : false}
+            />
+          </div>
+        ))}
+      </div>
       {/* TODO - Will Add the Pagination Functionality based on the need */}
       {/* <div className={classes.pagination}>
         <SNETPagination

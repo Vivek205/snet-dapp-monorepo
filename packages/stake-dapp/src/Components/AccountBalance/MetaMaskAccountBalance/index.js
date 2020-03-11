@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
-import Typography from "@material-ui/core/Typography";
 
 import { useStyles } from "./styles";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
@@ -39,9 +38,6 @@ class MetaMaskAccountBalance extends Component {
 
     return (
       <div className={classes.metamaskAccBalanceContainer}>
-        <Typography className={classes.description}>
-          Your Metamask wallet is connected. You will need available AGI tokens in your Token Balance to stake.
-        </Typography>
         <div className={classes.accountDetails}>
           <div>
             <div className={classes.label}>
@@ -61,7 +57,7 @@ class MetaMaskAccountBalance extends Component {
             </span>
           </div>
 
-          <div>
+          <div className={classes.walletIdContainer}>
             <div className={classes.label}>
               <InfoIcon className={classes.infoIcon} />
               <span>Wallet ID</span>
