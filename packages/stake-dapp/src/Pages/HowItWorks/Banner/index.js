@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
+
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +16,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import Timer from "../../../Components/CreateStake/SessionTime/Timer";
 
 const calculaterFields = {
   stakeAmount: 750,
@@ -25,10 +28,23 @@ const calculaterFields = {
   incubationPeriodInDays: 30,
 };
 
-const Banner = ({ classes }) => {
+const Banner = ({ classes, recentStakeWindow }) => {
   const history = useHistory();
 
+  const currentTime = moment().unix();
   const [stakeCalculatorFields, setStakeCalculatorFields] = useState(calculaterFields);
+  const [showTimer, setShowTimer] = useState(
+    currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod ? true : false
+  );
+  const [startTime, setStartTime] = useState(currentTime);
+  const [endTime, setEndTime] = useState(recentStakeWindow.submissionEndPeriod);
+  const interval = 1000;
+
+  const handleTimerCompletion = () => {
+    setShowTimer(false);
+    setStartTime(0);
+    setEndTime(0);
+  };
 
   const getRewardAmount = () => {
     const _finalPoolStakeAmount =
@@ -60,6 +76,35 @@ const Banner = ({ classes }) => {
 
   const navigateToLanding = () => {
     history.push(GlobalRoutes.LANDING.path);
+  };
+
+  const CounterTitle = () => {
+    if (showTimer === true) {
+      return (
+        <Fragment>
+          <Typography>Current Session</Typography>
+          <Typography>Open for</Typography>
+        </Fragment>
+      );
+    }
+
+    return <Typography>Next Session will open soon</Typography>;
+  };
+
+  const ShowTimer = () => {
+    if (showTimer === true) {
+      return (
+        <Timer
+          key="waitToOpen"
+          startTime={startTime}
+          endTime={endTime}
+          interval={interval}
+          handleTimerCompletion={handleTimerCompletion}
+          onHowItWorks={true}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -169,27 +214,9 @@ const Banner = ({ classes }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.countDownContainer}>
         <div className={classes.countDownTitle}>
           <TimerIcon />
-          <Typography>Current Session</Typography>
-          <Typography>Open for</Typography>
+          <CounterTitle />
         </div>
-        <div className={classes.countDown}>
-          <div>
-            <Typography className={classes.countDownValue}>05</Typography>
-            <Typography className={classes.countDownUnit}>days</Typography>
-          </div>
-          <div>
-            <Typography className={classes.countDownValue}>11</Typography>
-            <Typography className={classes.countDownUnit}>hours</Typography>
-          </div>
-          <div>
-            <Typography className={classes.countDownValue}>45</Typography>
-            <Typography className={classes.countDownUnit}>minutes</Typography>
-          </div>
-          <div>
-            <Typography className={classes.countDownValue}>23</Typography>
-            <Typography className={classes.countDownUnit}>seconds</Typography>
-          </div>
-        </div>
+        <ShowTimer />
       </Grid>
     </Grid>
   );

@@ -355,13 +355,27 @@ export const getStakeInfo = async (metamaskDetails, stakeMapIndex) => {
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
 
   const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
 
   const result = await stakingInstance.methods
     .getStakeInfo(toBigNumber(stakeMapIndex).toString(), accountAddress)
     .call();
+
+  return result;
+};
+
+export const getRecentStakeWindow = async () => {
+  const stakingContractAddress = getStakingContractAddress();
+
+  const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+
+  const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+
+  const currentStakeMapIndex = await stakingInstance.methods.currentStakeMapIndex().call();
+
+  const result = await stakingInstance.methods.stakeMap(currentStakeMapIndex).call();
 
   return result;
 };
@@ -401,7 +415,7 @@ export const getBlockNumber = () => {
     });
   } else {
     // Fallback to Infura to get the blocknumber
-    var web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
     return new Promise((_reject, resolve) => {
       web3.eth.getBlockNumber((err, blockNumber) => {
         if (err) {

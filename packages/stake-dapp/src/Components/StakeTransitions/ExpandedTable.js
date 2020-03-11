@@ -16,19 +16,13 @@ const processState = {
   WithdrawStake: "Withdraw",
 };
 
-const ExpandedTable = ({ showTable, transactionList }) => {
+const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
   const classes = useStyles();
 
   const getStakeAmount = transaction => {
     let stakeAmount = 0;
     let rewardAmount = 0;
-
-    const eventData = JSON.parse(
-      transaction.eventData.json_str
-        .replace(/'/gi, '"')
-        .replace(/True/gi, "true")
-        .replace(/False/gi, "false")
-    );
+    const eventData = transaction.eventData;
 
     switch (transaction.eventName) {
       case "SubmitStake":
@@ -64,12 +58,7 @@ const ExpandedTable = ({ showTable, transactionList }) => {
   const getTransactionDetails = transaction => {
     let txnDetails = "";
 
-    const eventData = JSON.parse(
-      transaction.eventData.json_str
-        .replace(/'/gi, '"')
-        .replace(/True/gi, "true")
-        .replace(/False/gi, "false")
-    );
+    const eventData = transaction.eventData;
 
     switch (transaction.eventName) {
       case "SubmitStake":
@@ -85,12 +74,18 @@ const ExpandedTable = ({ showTable, transactionList }) => {
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.returnAmount) + " AGI";
         break;
       case "AutoRenewStake":
-        txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        if (stakeMapIndex == eventData.oldStakeIndex)
+          txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
+
         txnDetails +=
           " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
         break;
       case "RenewStake":
-        txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        if (stakeMapIndex == eventData.oldStakeIndex)
+          txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
+        else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
+
         txnDetails +=
           " Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
         break;

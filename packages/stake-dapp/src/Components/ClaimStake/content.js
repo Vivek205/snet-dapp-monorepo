@@ -1,6 +1,17 @@
 import moment from "moment";
 import { fromWei } from "../../Utils/GenHelperFunctions";
 
+const computeReward = stakeDetails => {
+  if (stakeDetails.approvedAmount === 0) return 0;
+
+  const rewardAmount = Math.floor(
+    (stakeDetails.approvedAmount * stakeDetails.rewardAmount) /
+      Math.min(stakeDetails.windowTotalStake, stakeDetails.windowMaxCap)
+  );
+
+  return isNaN(rewardAmount) ? 0 : fromWei(rewardAmount);
+};
+
 export const cardDetails = stakeDetails => [
   {
     title: "Claim Account",
@@ -9,12 +20,7 @@ export const cardDetails = stakeDetails => [
   },
   {
     title: "Reward Earnings",
-    value: fromWei(
-      Math.floor(
-        (stakeDetails.approvedAmount * stakeDetails.rewardAmount) /
-          Math.min(stakeDetails.windowTotalStake, stakeDetails.windowMaxCap)
-      )
-    ),
+    value: computeReward(stakeDetails),
     unit: "AGI",
   },
   {

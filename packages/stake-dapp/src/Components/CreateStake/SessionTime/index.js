@@ -15,12 +15,12 @@ import { stakeActions } from "../../../Services/Redux/actionCreators";
 
 import Timer from "./Timer";
 
-const stakeDetails = {
-  startPeriod: moment().unix() + 30,
-  submissionEndPeriod: moment().unix() + 60,
-};
+// const stakeDetails = {
+//   startPeriod: moment().unix() + 30,
+//   submissionEndPeriod: moment().unix() + 60,
+// };
 
-const SessionTime = ({ _stakeDetails }) => {
+const SessionTime = ({ stakeDetails }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const SessionTime = ({ _stakeDetails }) => {
   // TODO - Get the state from the Redux to set as Default Checked value
   const [stakeNotification, setStakeNotification] = useState(false);
 
-  const [showSubmissionTimer, setShowSubmissionTimer] = useState(currentTime < stakeDetails.startPeriod ? false : true);
+  const [showTimer, setShowTimer] = useState(currentTime < stakeDetails.startPeriod ? 0 : 1);
 
   const [startTime, setStartTime] = useState(currentTime);
   const [endTime, setEndTime] = useState(
@@ -70,14 +70,18 @@ const SessionTime = ({ _stakeDetails }) => {
     const _currentTime = moment().unix();
 
     if (_currentTime < stakeDetails.startPeriod) {
-      setShowSubmissionTimer(false);
+      setShowTimer(0);
     } else if (_currentTime >= stakeDetails.startPeriod && _currentTime < stakeDetails.submissionEndPeriod) {
       setStartTime(_currentTime);
       setEndTime(stakeDetails.submissionEndPeriod);
-      setShowSubmissionTimer(true);
+      setShowTimer(1);
     } else {
-      // TODO - Call the Fetch API Call
-      dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
+      setShowTimer(2);
+      // Call API to change the Stake Window
+      if (showTimer !== 2) {
+        dispatch(stakeActions.fetchCurrentActiveStakeWindow(metamaskDetails));
+        dispatch(stakeActions.fetchActiveStakes(metamaskDetails));
+      }
     }
   };
 
@@ -99,22 +103,24 @@ const SessionTime = ({ _stakeDetails }) => {
       </div>
       <div className={classes.content}>
         <Typography variant="subtitle1">{getSessionTitle()}</Typography>
-        {showSubmissionTimer === false && (
+        {showTimer === 0 && (
           <Timer
             key="waitToOpen"
             startTime={startTime}
             endTime={endTime}
             interval={interval}
             handleTimerCompletion={handleTimerCompletion}
+            onHowItWorks={false}
           />
         )}
-        {showSubmissionTimer === true && (
+        {showTimer === 1 && (
           <Timer
             key="waitToCloseSubmission"
             startTime={startTime}
             endTime={endTime}
             interval={interval}
             handleTimerCompletion={handleTimerCompletion}
+            onHowItWorks={false}
           />
         )}
         <Typography className={classes.closingTime}>{getClosingTime()}</Typography>

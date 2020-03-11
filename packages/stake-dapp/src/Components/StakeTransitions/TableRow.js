@@ -19,59 +19,38 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     // Check if the approved Amount exists
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      const eventData = JSON.parse(
-        transaction.eventData.json_str
-          .replace(/'/gi, '"')
-          .replace(/True/gi, "true")
-          .replace(/False/gi, "false")
-      );
-      stakeAmount = eventData.approvedStakeAmount;
+      stakeAmount = transaction.eventData.approvedStakeAmount;
     } else if (submitStakeEvent.length > 0) {
-      const transaction = submitStakeEvent[0];
-      const eventData = JSON.parse(
-        transaction.eventData.json_str
-          .replace(/'/gi, '"')
-          .replace(/True/gi, "true")
-          .replace(/False/gi, "false")
-      );
-      stakeAmount = eventData.stakeAmount;
+      stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
     }
     return stakeAmount;
   };
 
   const calculateReward = () => {
     let rewardAmount = 0;
-
     let stakeAmount = 0;
 
     // Check if the approved Amount exists
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
+    // Check for Either Approved Stake or Submit Stake. If Approve Exists we can ignore Submit
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      const eventData = JSON.parse(
-        transaction.eventData.json_str
-          .replace(/'/gi, '"')
-          .replace(/True/gi, "true")
-          .replace(/False/gi, "false")
-      );
-      stakeAmount = eventData.approvedStakeAmount;
+      stakeAmount = transaction.eventData.approvedStakeAmount;
 
       rewardAmount = Math.floor(
         (stakeAmount * stakeWindow.rewardAmount) / Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
       );
     } else if (submitStakeEvent.length > 0) {
-      const transaction = submitStakeEvent[0];
-      const eventData = JSON.parse(
-        transaction.eventData.json_str
-          .replace(/'/gi, '"')
-          .replace(/True/gi, "true")
-          .replace(/False/gi, "false")
-      );
-      stakeAmount = eventData.stakeAmount;
+      // Check if the stake crossed Approval Period - No Reward
+      const currentTime = moment().unix();
+      if (currentTime > stakeWindow.approvalEndPeriod) return 0;
 
+      stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
       rewardAmount = Math.floor((stakeAmount * stakeWindow.rewardAmount) / stakeWindow.windowMaxCap);
     }
 

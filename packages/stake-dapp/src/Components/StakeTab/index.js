@@ -23,11 +23,6 @@ class StakeTab extends Component {
     };
   }
 
-  // Tab Change
-  handleTabChange = (_event, value) => {
-    this.setState({ selectedTab: value });
-  };
-
   componentDidMount = () => {
     const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
 
@@ -44,6 +39,31 @@ class StakeTab extends Component {
       await fetchActiveStakes(metamaskDetails);
       await fetchClaimStakes(metamaskDetails);
     }
+  };
+
+  refreshTabContent = async selectedTab => {
+    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
+
+    switch (selectedTab) {
+      case 0:
+        await fetchCurrentActiveStakeWindow(metamaskDetails);
+        break;
+      case 1:
+        await fetchActiveStakes(metamaskDetails);
+        break;
+      case 2:
+        await fetchClaimStakes(metamaskDetails);
+        break;
+      default:
+        // Do Nothing
+        break;
+    }
+  };
+
+  // Tab Change
+  handleTabChange = (_event, value) => {
+    this.setState({ selectedTab: value });
+    this.refreshTabContent(value);
   };
 
   render() {
