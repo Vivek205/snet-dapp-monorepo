@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
-  StackSessionContainer: {
+  StakeSessionContainer: {
     paddingBottom: 40,
     borderRadius: 4,
     background: MUITheme.palette.background.white,

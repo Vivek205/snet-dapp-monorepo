@@ -2,7 +2,7 @@ import { fromWei } from "../../Utils/GenHelperFunctions";
 
 export const cardDetails = activeStake => [
   {
-    title: "Stack Session",
+    title: "Stake Session",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
   },
@@ -17,8 +17,8 @@ export const cardDetails = activeStake => [
     unit: "days",
   },
   {
-    title: "Reward Pool",
-    value: fromWei(activeStake.rewardAmount),
+    title: "Stakers",
+    value: activeStake.totalStakers,
     unit: "people",
   },
   {
@@ -27,9 +27,9 @@ export const cardDetails = activeStake => [
     unit: "AGI",
   },
   {
-    title: "Max Pool Size",
-    value: fromWei(activeStake.windowMaxCap),
-    unit: "AGI",
+    title: "Reward Pool",
+    value: fromWei(activeStake.rewardAmount),
+    unit: "people",
   },
 ];
 
@@ -68,8 +68,8 @@ export const withdrawStakeAmountDetails = activeStake => [
     amount: fromWei(activeStake.totalStakedAmount),
   },
   {
-    title: "Max Pool Size",
-    amount: fromWei(activeStake.windowMaxCap),
+    title: "Stakers",
+    amount: fromWei(activeStake.totalStakers),
   },
 ];
 
@@ -87,7 +87,7 @@ export const addStakeAmountDetails = activeStake => [
     amount: fromWei(activeStake.totalStakedAmount),
   },
   {
-    title: "Max Pool Size",
-    amount: fromWei(activeStake.windowMaxCap),
+    title: "Stakers",
+    amount: fromWei(activeStake.totalStakers),
   },
 ];

@@ -139,7 +139,7 @@ const StakeSession = ({
   };
 
   return (
-    <div className={classes.StackSessionContainer}>
+    <div className={classes.StakeSessionContainer}>
       <div className={classes.header}>
         <Typography variant="h6">
           Stake Session - {stakeStartDate} #{stakeMapIndex}
