@@ -108,4 +108,8 @@ export const LoaderContent = {
     title: "Retrieving KYC status",
     content: "Just a moment. We're retrieving the status of your KYC",
   },
+  SAMPLE_DAEMON_CONFIG: {
+    title: "Retrieving Sample Daemon config",
+    content: "Just a moment. We are retrieving the sample daemon configuration",
+  },
 };

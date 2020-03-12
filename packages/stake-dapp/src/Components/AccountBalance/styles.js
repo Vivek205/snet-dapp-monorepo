@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
   accountBalanceContainer: {
-    paddingBottom: 27,
+    paddingBottom: 40,
     borderRadius: 4,
     marginBottom: 30,
     backgroundColor: MUITheme.palette.background.white,
@@ -14,7 +14,7 @@ export const useStyles = MUITheme => ({
       margin: 0,
       color: MUITheme.palette.text.darkGrey,
       fontSize: 20,
-      fontWeight: 600,
+      fontWeight: 400,
       lineHeight: "50px",
     },
     "@media(max-width:960px)": {
@@ -48,7 +48,7 @@ export const useStyles = MUITheme => ({
     },
   },
   btnContainer: {
-    margintop: 24,
+    marginTop: 24,
     display: "flex",
     justifyContent: "center",
   },

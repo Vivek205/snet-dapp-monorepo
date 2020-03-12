@@ -24,8 +24,14 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "50px",
     },
   },
-  pageTitle: {
-    padding: "19px 19px 5px",
+  tableHeaderContainer: {
+    padding: "12px 11px",
+    borderBottom: "1px solid #f6f6f7",
+    margin: "0 16px",
+    display: "flex",
+  },
+  tableHeader: {
+    padding: 0,
     opacity: 0.53,
     color: MUITheme.palette.text.lightGrey,
     fontSize: 14,
@@ -33,11 +39,11 @@ export const useStyles = makeStyles(MUITheme => ({
     textTransform: "uppercase",
   },
   tableRow: {
-    padding: "6px 15px",
+    padding: "14px 11px",
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.primary,
-    margin: "0 7px",
+    margin: "0 16px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -51,13 +57,13 @@ export const useStyles = makeStyles(MUITheme => ({
       },
     },
     "&:hover": {
-      backgroundColor: "#F6F6F7",
-      boxShadow: "0 2px 19px 0 rgba(227,227,227,0.32)",
+      backgroundColor: "#fafafa",
       "& svg": {
         color: MUITheme.palette.primary.main,
       },
     },
     "& > div": {
+      "&:last-of-type": { textAlign: "right" },
       "&:not(first-of-type)": {
         "@media(max-width: 800px)": {
           display: "flex",
@@ -71,45 +77,39 @@ export const useStyles = makeStyles(MUITheme => ({
       position: "relative",
     },
   },
-  id: {
-    color: MUITheme.palette.primary.main,
+  dateId: {
+    color: MUITheme.palette.text.primary,
     fontSize: 14,
     lineHeight: "18px",
     "@media(max-width: 800px)": { paddingLeft: 20 },
-  },
-  title: {
-    color: MUITheme.palette.text.lightGrey,
-    fontSize: 14,
-    lineHeight: "18px",
   },
   value: {
     display: "inline-block",
     color: MUITheme.palette.text.darkGrey,
-    fontSize: 28,
+    fontSize: 16,
     lineHeight: "35px",
     "@media(max-width: 800px)": { paddingLeft: 20 },
   },
   unit: {
-    paddingLeft: 10,
+    paddingLeft: 5,
     display: "inline-block",
     color: MUITheme.palette.text.lightGrey,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "18px",
   },
   expandedTable: {
     width: "auto",
-    padding: "0 14px",
     borderRadius: 2,
-    margin: "0 7px",
+    margin: "0 16px",
     backgroundColor: "#F5F5F5",
   },
   expandedTableCol: {
-    padding: "9px 0",
+    padding: "9px 11px",
     borderBottom: "1px solid #D8D8D8",
     display: "flex",
     justifyContent: "space-between",
     "& p": {
-      color: MUITheme.palette.text.darkGrey,
+      color: MUITheme.palette.text.lightGrey,
       fontSize: 14,
       letterSpacing: 0.17,
       lineHeight: "18px",
@@ -117,7 +117,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "@media(max-width: 800px)": { display: "none" },
   },
   expandedTableRow: {
-    padding: "6px 0",
+    padding: "6px 11px",
     borderBottom: "1px solid #D8D8D8",
     display: "flex",
     justifyContent: "space-between",
