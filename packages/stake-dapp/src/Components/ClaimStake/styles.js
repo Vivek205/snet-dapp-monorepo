@@ -4,7 +4,8 @@ export const useStyles = makeStyles(MUITheme => ({
   stakeSessionBoxContainer: {
     paddingLeft: 24,
     "& > div": {
-      "&:last-of-type": { marginTop: 35 },
+      marginTop: 35,
+      "&:first-of-type": { marginTop: 0 },
     },
     marginBottom: "32px",
   },
@@ -25,8 +26,17 @@ export const useStyles = makeStyles(MUITheme => ({
       lineHeight: "50px",
     },
   },
-  cards: { padding: "30px 58px 11px" },
-  btnContainer: { textAlign: "center" },
+  cards: {
+    padding: "15px 20px 21px",
+    border: "1px solid #f1f1f1",
+    borderRadius: 6,
+    margin: 32,
+    backgroundColor: MUITheme.palette.background.mainContent,
+  },
+  btnContainer: {
+    marginTop: 24,
+    textAlign: "center",
+  },
   noDataFoundSection: {
     textAlign: "center",
     "& p": {
@@ -38,9 +48,13 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   infoBox: {
     padding: "0 25px",
+    marginTop: 32,
     display: "flex",
     justifyContent: "center",
-    "& > p": { display: "flex" },
+    "& > p": {
+      margin: 0,
+      display: "flex",
+    },
     "& svg": {
       marginRight: 17,
       color: MUITheme.palette.primary.main,
