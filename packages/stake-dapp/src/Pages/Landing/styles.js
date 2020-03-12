@@ -56,4 +56,5 @@ export const useStyles = MUITheme => ({
       textDecoration: "none",
     },
   },
+  notificationContainer: { marginTop: 74 },
 });

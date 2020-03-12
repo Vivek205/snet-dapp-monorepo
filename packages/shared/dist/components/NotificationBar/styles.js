@@ -27,7 +27,7 @@ var useStyles = function useStyles(MUITheme) {
       color: MUITheme.palette.text.primary,
       "& svg": {
         marginRight: 17,
-        color: MUITheme.palette.text.primary
+        color: MUITheme.palette.border.warningBox
       }
     },
     INFORMATION: {
