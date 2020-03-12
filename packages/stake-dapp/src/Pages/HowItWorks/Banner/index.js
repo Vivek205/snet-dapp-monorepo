@@ -47,12 +47,6 @@ const Banner = ({ classes, recentStakeWindow }) => {
       parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
 
     let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
-    if (
-      _stakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount) ||
-      _finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)
-    ) {
-      _stakeAmount = parseInt(stakeCalculatorFields.maxStakeAmount);
-    }
 
     const rewardAmount = Math.floor(
       (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
@@ -142,7 +136,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate for 30 day incubation"
+                extraInfo="~Approximate"
                 value={getRewardAmount()}
               />
             </div>

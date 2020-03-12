@@ -15,10 +15,20 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
 
   const getStakeAmount = () => {
     let stakeAmount = 0;
+    let autoRenewApprovedAmount = 0;
 
     // Check if the approved Amount exists
+    const autoRenewStakeEvent = stakeWindow.transactionList.filter(
+      t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
+    );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
+    // Check for Auto Renewal Event
+    if (autoRenewStakeEvent.length > 0) {
+      const transaction = autoRenewStakeEvent[0];
+      autoRenewApprovedAmount = transaction.eventData.approvedAmount;
+    }
 
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
@@ -26,21 +36,32 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     } else if (submitStakeEvent.length > 0) {
       stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
     }
-    return stakeAmount;
+
+    return parseInt(stakeAmount) + parseInt(autoRenewApprovedAmount);
   };
 
   const calculateReward = () => {
     let rewardAmount = 0;
     let stakeAmount = 0;
+    let autoRenewApprovedAmount = 0;
 
     // Check if the approved Amount exists
+    const autoRenewStakeEvent = stakeWindow.transactionList.filter(
+      t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
+    );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
+    // Check for Auto Renewal Event
+    if (autoRenewStakeEvent.length > 0) {
+      const transaction = autoRenewStakeEvent[0];
+      autoRenewApprovedAmount = transaction.eventData.approvedAmount;
+    }
 
     // Check for Either Approved Stake or Submit Stake. If Approve Exists we can ignore Submit
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      stakeAmount = transaction.eventData.approvedStakeAmount;
+      stakeAmount = parseInt(transaction.eventData.approvedStakeAmount) + parseInt(autoRenewApprovedAmount);
 
       rewardAmount = Math.floor(
         (stakeAmount * stakeWindow.rewardAmount) / Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
@@ -48,9 +69,8 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
       const currentTime = moment().unix();
-      if (currentTime > stakeWindow.approvalEndPeriod) return 0;
-
-      stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
+      if (currentTime > stakeWindow.approvalEndPeriod)
+        stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
       rewardAmount = Math.floor((stakeAmount * stakeWindow.rewardAmount) / stakeWindow.windowMaxCap);
     }
 
