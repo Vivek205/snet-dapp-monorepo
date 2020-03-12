@@ -10,6 +10,10 @@ import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 const AccountBalance = ({ classes, metamaskDetails }) => {
   const isTxnsAllowed = metamaskDetails.isTxnsAllowed;
 
+  if (!isTxnsAllowed) {
+    return null;
+  }
+
   return (
     <div className={classes.accountBalanceContainer}>
       <h3>Account Balance</h3>

@@ -56,5 +56,14 @@ export const useStyles = MUITheme => ({
       textDecoration: "none",
     },
   },
-  notificationContainer: { marginTop: 74 },
+  notificationContainer: {
+    marginTop: 74,
+    "& svg": { fontSize: 25 },
+  },
+  divider: {
+    height: 1,
+    margin: 0,
+    backgroundColor: MUITheme.palette.text.darkGrey,
+    opacity: 0.12,
+  },
 });
