@@ -510,9 +510,9 @@ const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => a
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = testDaemon
-    ? APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid)
-    : APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid);
-  const queryParams = testDaemon ? undefined : { networkId: process.env.REACT_APP_ETH_NETWORK };
+    ? APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid)
+    : APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
+  const queryParams = testDaemon ? undefined : { network_id: process.env.REACT_APP_ETH_NETWORK };
   const apiOptions = initializeAPIOptions(token, undefined, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
@@ -525,6 +525,7 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
+    dispatch(loaderActions.stopAppLoader());
     return data;
   } catch (e) {
     dispatch(loaderActions.stopAppLoader());

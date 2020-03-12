@@ -12,26 +12,14 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 
-// TODO remove once API is ready
-const sampleDaemonConfig = {
-  allowed_user_flag: true,
-  allowed_user_addresses: ["0x7DF35C98f41F3Af0df1dc4c7F7D4C19a71Dd059F"],
-  blockchain_enabled: false,
-  passthrough_enabled: true,
-  daemon_end_point: "0.0.0.0:XXXX",
-  passthrough_endpoint: "http://localhost:YYYY",
-};
-
 class SubmitForReview extends React.Component {
-  state = {
-    daemonConfig: sampleDaemonConfig,
-  };
+  state = { daemonConfig: {} };
 
   componentDidMount = async () => {
     try {
       const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
-      const data = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
-      this.setState({ daemonConfig: data });
+      const { daemon_config } = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
+      this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
     }
