@@ -19,11 +19,11 @@ import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
 
 const calculaterFields = {
-  stakeAmount: 750,
+  stakeAmount: 7500,
   userRewardAmount: 0,
   poolStakeAmount: 68000,
-  maxStakeAmount: 100000,
-  stakeRewardAmount: 5000,
+  maxStakeAmount: 1000000000,
+  stakeRewardAmount: 100000,
   numOfStakers: 20,
   incubationPeriodInDays: 30,
 };
@@ -63,7 +63,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
   };
 
   const handleDataChange = event => {
-    if (!isNaN(event.target.value) && event.target.value > 0) {
+    if (!isNaN(event.target.value) && event.target.value >= 0) {
       setStakeCalculatorFields({ ...stakeCalculatorFields, [event.target.name]: event.target.value });
     } else {
       setStakeCalculatorFields({ ...stakeCalculatorFields, [event.target.name]: "" });
@@ -150,7 +150,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography>Stake Pool Size</Typography>
+                  <Typography>Current Pool Size</Typography>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -158,7 +158,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
                     name="poolStakeAmount"
                     value={stakeCalculatorFields.poolStakeAmount}
                     InputProps={{
-                      inputProps: { min: 1, max: stakeCalculatorFields.maxStakeAmount },
+                      inputProps: { min: 0, max: stakeCalculatorFields.maxStakeAmount },
                       endAdornment: <InputAdornment position="start">agi</InputAdornment>,
                     }}
                     onChange={handleDataChange}
@@ -168,25 +168,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <div>
                 <div className={classes.iconTitlContainer}>
                   <InfoIcon />
-                  <Typography>Max Pool Size</Typography>
-                </div>
-                <div className={classes.valuesContainer}>
-                  <TextField
-                    type="Number"
-                    name="maxStakeAmount"
-                    value={stakeCalculatorFields.maxStakeAmount}
-                    InputProps={{
-                      inputProps: { min: 1 },
-                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
-                    }}
-                    onChange={handleDataChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Reward pool</Typography>
+                  <Typography>Reward Pool</Typography>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -199,6 +181,16 @@ const Banner = ({ classes, recentStakeWindow }) => {
                     }}
                     onChange={handleDataChange}
                   />
+                </div>
+              </div>
+              <div>
+                <div className={classes.iconTitlContainer}>
+                  <InfoIcon />
+                  <Typography>Incubation Period</Typography>
+                </div>
+                <div className={classes.incubationValuesConatiner}>
+                  <Typography className={classes.values}>{stakeCalculatorFields.incubationPeriodInDays}</Typography>
+                  <Typography className={classes.unit}>days</Typography>
                 </div>
               </div>
             </div>
