@@ -42,8 +42,15 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
 
   const calculateReward = () => {
     let rewardAmount = 0;
+    let rewardAmountFromAutoRenewal = 0;
     let stakeAmount = 0;
     let autoRenewApprovedAmount = 0;
+
+    // Check if Claim Event exists to get the Reward Amount
+    const claimStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ClaimStake");
+    if (claimStakeEvent.length > 0) {
+      return claimStakeEvent[0].eventData.rewardAmount;
+    }
 
     // Check if the approved Amount exists
     const autoRenewStakeEvent = stakeWindow.transactionList.filter(
@@ -56,12 +63,17 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     if (autoRenewStakeEvent.length > 0) {
       const transaction = autoRenewStakeEvent[0];
       autoRenewApprovedAmount = transaction.eventData.approvedAmount;
+
+      rewardAmountFromAutoRenewal = Math.floor(
+        (autoRenewApprovedAmount * stakeWindow.rewardAmount) /
+          Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
+      );
     }
 
     // Check for Either Approved Stake or Submit Stake. If Approve Exists we can ignore Submit
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      stakeAmount = parseInt(transaction.eventData.approvedStakeAmount) + parseInt(autoRenewApprovedAmount);
+      stakeAmount = parseInt(transaction.eventData.approvedStakeAmount);
 
       rewardAmount = Math.floor(
         (stakeAmount * stakeWindow.rewardAmount) / Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
@@ -74,7 +86,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       rewardAmount = Math.floor((stakeAmount * stakeWindow.rewardAmount) / stakeWindow.windowMaxCap);
     }
 
-    return rewardAmount;
+    return parseInt(rewardAmount) + parseInt(rewardAmountFromAutoRenewal);
   };
 
   return (
