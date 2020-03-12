@@ -29,7 +29,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         stakeAmount = "+" + fromWei(eventData.stakeAmount);
         break;
       case "ClaimStake":
-        stakeAmount = "-" + fromWei(eventData.rewardAmount);
+        stakeAmount = "-" + fromWei(eventData.totalAmount);
         break;
       case "ApproveStake":
         stakeAmount = "-" + fromWei(eventData.returnAmount);
@@ -65,7 +65,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         txnDetails = "New Stake";
         break;
       case "ClaimStake":
-        txnDetails = "Total Stake: " + fromWei(eventData.totalAmount) + " AGI";
+        txnDetails = "Reward Amount: " + fromWei(eventData.rewardAmount) + " AGI";
         break;
       case "ApproveStake":
         txnDetails = "Approved Stake: " + fromWei(eventData.approvedStakeAmount) + " AGI";
@@ -74,7 +74,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.returnAmount) + " AGI";
         break;
       case "AutoRenewStake":
-        if (stakeMapIndex == eventData.oldStakeIndex)
+        if (stakeMapIndex === eventData.oldStakeIndex)
           txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
         else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
 
@@ -82,7 +82,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
           " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
         break;
       case "RenewStake":
-        if (stakeMapIndex == eventData.oldStakeIndex)
+        if (stakeMapIndex === eventData.oldStakeIndex)
           txnDetails = "Renewed to new Stake Id: " + eventData.newStakeIndex;
         else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
 

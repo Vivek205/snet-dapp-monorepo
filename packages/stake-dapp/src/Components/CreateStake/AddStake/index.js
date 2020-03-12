@@ -123,10 +123,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
   const calcRewardAmount = _stakeAmount => {
     // Calc the reward on window max cap
-
-    //console.log(_stakeAmount, "---", stakeDetails.rewardAmount, "---", stakeDetails.windowMaxCap);
     const _rewardAmount = Math.floor((toWei(_stakeAmount) * stakeDetails.rewardAmount) / stakeDetails.windowMaxCap);
-    //console.log("_rewardAmount - ", _rewardAmount);
     return _rewardAmount;
   };
 

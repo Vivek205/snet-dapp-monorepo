@@ -29,9 +29,9 @@ export const cardDetails = stakeDetails => [
     unit: " ",
   },
   {
-    title: "Reward Pool",
-    value: fromWei(stakeDetails.rewardAmount),
-    unit: "AGI",
+    title: "Stakers",
+    value: stakeDetails.numOfStakers,
+    unit: "people",
   },
   {
     title: "Stake Pool Size",
@@ -39,8 +39,8 @@ export const cardDetails = stakeDetails => [
     unit: "AGI",
   },
   {
-    title: "Max Pool Size",
-    value: fromWei(stakeDetails.windowMaxCap),
+    title: "Reward Pool",
+    value: fromWei(stakeDetails.rewardAmount),
     unit: "AGI",
   },
 ];
