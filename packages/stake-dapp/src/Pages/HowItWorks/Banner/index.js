@@ -189,8 +189,10 @@ const Banner = ({ classes, recentStakeWindow }) => {
                   <Typography>Incubation Period</Typography>
                 </div>
                 <div className={classes.incubationValuesConatiner}>
-                  <Typography className={classes.values}>{stakeCalculatorFields.incubationPeriodInDays}</Typography>
-                  <Typography className={classes.unit}>days</Typography>
+                  <Typography className={classes.incubationValue}>
+                    {stakeCalculatorFields.incubationPeriodInDays}
+                  </Typography>
+                  <Typography className={classes.incubationUnit}>days</Typography>
                 </div>
               </div>
             </div>

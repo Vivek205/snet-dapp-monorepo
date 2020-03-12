@@ -33,6 +33,13 @@ export const useStyles = MUITheme => ({
         lineHeight: "28px",
         letterSpacing: 0.5,
       },
+      "&:hover": {
+        "& svg": { color: MUITheme.palette.primary.main },
+        "& span": { color: MUITheme.palette.primary.main },
+      },
     },
+  },
+  signOutLink: {
+    borderTop: "1px solid rgba(0, 0, 0, 0.12)",
   },
 });
