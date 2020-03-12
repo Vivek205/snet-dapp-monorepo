@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   footer: {
-    padding: "23px 0",
+    padding: "11px 0",
     position: "absolute",
     right: 0,
     left: 0,
@@ -20,6 +20,7 @@ export const useStyles = makeStyles(MUITheme => ({
   footerLinks: { listStyle: "none" },
   footerLinkText: {
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
     lineHeight: "28px",
     opacity: 0.6,
@@ -30,8 +31,10 @@ export const useStyles = makeStyles(MUITheme => ({
     marginBottom: 8,
     display: "inline-block",
     color: MUITheme.palette.text.white,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 20,
     fontWeight: 600,
+    lineHeight: "25px",
     opacity: 0.8,
     "@media (max-width:1023px) and (min-width:768px)": {
       fontSize: 18,
@@ -43,7 +46,6 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   socialIcon: {
     color: MUITheme.palette.text.white,
-    opacity: 0.6,
     "& span": {
       fontSize: 20,
       "@media (max-width:767px)": {

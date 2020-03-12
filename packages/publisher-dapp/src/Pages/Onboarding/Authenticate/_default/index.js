@@ -12,6 +12,8 @@ const Default = ({ history }) => {
         return history.push(AuthenticateRoutes.ORGANIZATION.path);
       case userEntities.INVITEE:
         return history.push(AuthenticateRoutes.INVITEE.path);
+      case userEntities.INDIVIDUAL:
+        return history.push(AuthenticateRoutes.INDIVIDUAL.path);
       default:
         return;
     }

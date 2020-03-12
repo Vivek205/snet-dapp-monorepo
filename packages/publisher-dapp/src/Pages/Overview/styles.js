@@ -11,14 +11,6 @@ export const useStyles = MUITheme => ({
       alignItems: "flex-start",
       "&:last-of-type": { marginBottom: 0 },
     },
-    "& .MuiListItemText-root": {
-      margin: 0,
-      "& span": {
-        color: MUITheme.palette.text.primary,
-        fontSize: 16,
-        lineHeight: "24px",
-      },
-    },
     "& .MuiListItemIcon-root": { minWidth: "auto" },
     "& button, & a": { marginTop: 32 },
     "& img": { width: "100%" },
@@ -26,7 +18,7 @@ export const useStyles = MUITheme => ({
   checkCircleIcon: {
     width: 20,
     marginRight: 16,
-    color: MUITheme.palette.success,
+    color: MUITheme.palette.success.main,
   },
   features: {
     padding: "40px 60px !important",

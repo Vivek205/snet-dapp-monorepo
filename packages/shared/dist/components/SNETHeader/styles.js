@@ -11,34 +11,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
+    appBar: {
+      padding: "14px 60px",
+      flexDirection: "row",
+      alignItems: "center",
+      boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
+      zIndex: 1110
+    },
+    purple: {
+      "& h5": {
+        color: "".concat(MUITheme.palette.text.white, " !important")
+      }
+    },
     logoContainer: _defineProperty({
       display: "flex",
       alignItems: "center",
-      flexGrow: 1,
       "& img": {
         width: 172
+      },
+      "& h5": {
+        marginLeft: 11,
+        fontWeight: 300,
+        lineHeight: "30px"
       }
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
-    portalName: {
-      marginLeft: 8,
-      color: MUITheme.palette.text.darkGrey,
-      fontSize: 22,
-      fontWeight: 300,
-      lineHeight: "30px"
-    },
     navContainer: _defineProperty({
       flexGrow: 1
-    }, MUITheme.breakpoints.down("md"), {
-      padding: 0
-    }),
-    actionsContainer: _defineProperty({
-      flexGrow: 1,
-      "& *": {
-        marginLeft: 5
-      },
-      textAlign: "end"
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
     })

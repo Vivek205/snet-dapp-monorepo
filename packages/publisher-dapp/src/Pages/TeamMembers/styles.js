@@ -5,16 +5,16 @@ export const useStyles = MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
   backToHomeLink: {
+    cursor: "pointer",
     "& svg": {
       marginRight: 7,
       color: MUITheme.palette.primary.main,
       verticalAlign: "middle",
     },
-    "& a": {
+    "& span": {
       color: MUITheme.palette.primary.main,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 16,
-      textDecoration: "none",
       "&:hover": { textDecoration: "underline" },
     },
   },
@@ -33,8 +33,15 @@ export const useStyles = MUITheme => ({
     },
     [MUITheme.breakpoints.down("xs")]: { marginBottom: 20 },
   },
+  description: {
+    paddingTop: 30,
+    color: MUITheme.palette.text.primary,
+    fontSize: 18,
+    fontWeight: 300,
+    lineHeight: "26px",
+  },
   topSectionMedia: {
-    "& img": { width: 250 },
+    "& img": { width: 194 },
     [MUITheme.breakpoints.down("xs")]: { textAlign: "center" },
   },
   invitedAndAcceptedList: {

@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
       flexDirection: "column"
     },
     description: _defineProperty({
-      paddingLeft: 30,
+      paddingLeft: 40,
       "& p": _defineProperty({
         marginTop: 20,
         color: MUITheme.palette.text.lightGrey,
@@ -60,7 +60,15 @@ var useStyles = function useStyles(MUITheme) {
       letterSpacing: 0.39
     }, MUITheme.breakpoints.down("sm"), {
       marginBottom: 10
-    })
+    }),
+    extraInfo: {
+      marginLeft: 17,
+      color: MUITheme.palette.text.primary,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 12.17,
+      letterSpacing: 0.4,
+      lineHeight: "16px"
+    }
   };
 };
 

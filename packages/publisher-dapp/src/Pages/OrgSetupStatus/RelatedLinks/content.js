@@ -1,18 +1,20 @@
 export const relatedLinks = [
   {
-    label: "Prerequisites for  Company Organization",
-    linkTo: "#",
-  },
-  {
-    label: "What are Region / Groups",
-    linkTo: "#",
+    label: "Organization Metadata",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/organization/",
   },
   {
     label: "Download Metamask",
-    linkTo: "#",
+    linkTo: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en",
+  },
+  {
+    label: "How to set up ETCD Cluster.",
+    href: "https://dev.singularitynet.io/docs/ai-developers/etcdsetup/",
+    newTab: true,
   },
   {
     label: "Support request",
-    linkTo: "#",
+    // TODO email onClick
+    linkTo: "mailto:support@singularitynet.io",
   },
 ];

@@ -13,12 +13,15 @@ import VerificationRejected from "./VerificationRejected";
 
 const Banners = {
   [organizationSetupStatuses.APPROVAL_PENDING]: VerificationPending,
+  [organizationSetupStatuses.ONBOARDING]: VerificationPending,
+  [organizationSetupStatuses.ONBOARDING_APPROVED]: VerificationApproved,
   [organizationSetupStatuses.APPROVED]: VerificationApproved,
+  [organizationSetupStatuses.ONBOARDING_REJECTED]: VerificationRejected,
   [organizationSetupStatuses.REJECTED]: VerificationRejected,
 };
 
 const OrgSetupStatus = ({ classes }) => {
-  const { status } = useSelector(state => state.organization);
+  const status = useSelector(state => state.organization.state.state);
 
   const CurrentStatus = Banners[status];
 

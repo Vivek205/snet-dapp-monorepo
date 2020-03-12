@@ -3,29 +3,32 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
+import { useParams } from "react-router-dom";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import Reset from "./Reset";
-import { mimeTypeToFileType } from "shared/dist/utils/image";
-import { imgSrcInBase64 } from "shared/dist/utils/image";
+import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
+import { assetTypes } from "../../../../Utils/FileUpload";
+
+const selectState = state => ({
+  url: state.organization.assets.heroImage.url,
+  foundInBlockchain: state.organization.foundInBlockchain,
+});
 
 const OrgImg = ({ classes }) => {
-  const { raw: data, fileType: mimeType, url } = useSelector(state => state.organization.assets.heroImage);
+  const { url, foundInBlockchain } = useSelector(selectState);
+  const { orgUuid } = useParams();
+
   const dispatch = useDispatch();
 
-  const handleImageChange = (data, mimeType) => {
-    const fileType = mimeTypeToFileType(mimeType);
-    dispatch(organizationActions.setHeroImage(data, fileType));
-  };
-
-  const imgSource = () => {
-    if (url) {
-      return url;
-    }
-    return Boolean(data) ? imgSrcInBase64(mimeType, data) : "";
+  const handleImageChange = async (data, mimeType, _encoding, filename) => {
+    const arrayBuffer = base64ToArrayBuffer(data);
+    const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
+    const { url } = await dispatch(organizationActions.uploadFile(assetTypes.ORG_ASSETS, fileBlob, orgUuid));
+    dispatch(organizationActions.setOrgHeroImageUrl(url));
   };
 
   return (
@@ -37,14 +40,14 @@ const OrgImg = ({ classes }) => {
             disableUrlTab
             imageName="org-hero-image"
             imageDataFunc={handleImageChange}
-            outputImage={imgSource()}
+            outputImage={url}
             outputImageName="organization_hero_image"
-            outputFormat={mimeType}
+            outputFormat="image/*"
             disableComparisonTab
-            disableInputTab={Boolean(data) || Boolean(url)}
+            disableInputTab={Boolean(url)}
             outputImageType="url"
           />
-          <Reset onReset={() => handleImageChange(null, null)} />
+          <Reset onReset={() => handleImageChange(null, null)} disabled={foundInBlockchain} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.previewContainer}>
           <Typography className={classes.previewText}>
@@ -54,10 +57,10 @@ const OrgImg = ({ classes }) => {
           <div className={classes.previewImg}>
             <div className={classes.previewLargeImg}>
               <Typography>Preview</Typography>
-              <Avatar alt="Singularity" src={imgSource()} className={classes.largePreviewImg} />
+              <Avatar alt="Singularity" src={url} className={classes.largePreviewImg} />
             </div>
             <div className={classes.previewSmallImg}>
-              <Avatar alt="Singularity" src={imgSource()} className={classes.smallPreviewImg} />
+              <Avatar alt="Singularity" src={url} className={classes.smallPreviewImg} />
             </div>
           </div>
         </Grid>

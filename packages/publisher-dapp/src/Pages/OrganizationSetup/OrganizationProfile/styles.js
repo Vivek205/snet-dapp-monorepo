@@ -18,6 +18,7 @@ export const useStyles = MUITheme => ({
       margin: "31px 23px",
       backgroundColor: MUITheme.palette.background.grey,
     },
+    "& > p": { margin: "20px 24px 0" },
     [MUITheme.breakpoints.down("sm")]: { width: "auto" },
   },
   buttonsContainer: {

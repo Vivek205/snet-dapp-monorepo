@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
-import SingularityLogo from "shared/src/assets/images/avatar.png";
+import SingularityLogo from "shared/dist/assets/images/avatar.png";
 
 import { useStyles } from "./styles";
 

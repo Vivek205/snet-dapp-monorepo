@@ -7,6 +7,23 @@ exports.useStyles = void 0;
 
 var useStyles = function useStyles(MUITheme) {
   return {
+    alertBoxContainer: {
+      padding: 14,
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderRadius: 4,
+      display: "flex",
+      alignItems: "center"
+    },
+    content: {
+      textAlign: "left",
+      "& p": {
+        margin: "0 !important",
+        color: MUITheme.palette.text.primary,
+        fontSize: 14,
+        lineHeight: "18px"
+      }
+    },
     messageBox: {
       borderWidth: 1,
       borderStyle: "solid",
@@ -25,7 +42,7 @@ var useStyles = function useStyles(MUITheme) {
       backgroundColor: MUITheme.palette.background.alertBox
     },
     success: {
-      borderColor: MUITheme.palette.success,
+      borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox
     },
     warning: {
@@ -34,6 +51,10 @@ var useStyles = function useStyles(MUITheme) {
       "& a": {
         color: MUITheme.palette.infoBoxLink,
         fontWeight: 600
+      },
+      "& svg": {
+        paddingRight: 16,
+        color: "#FFC200 "
       }
     },
     info: {

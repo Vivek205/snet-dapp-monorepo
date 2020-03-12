@@ -29,12 +29,12 @@ var ProgressSection = function ProgressSection(_ref) {
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("li", {
     className: classes[progressStatus]
-  }, _react.default.createElement(_StatusToggler.default, {
+  }, _react.default.createElement("div", null, _react.default.createElement(_StatusToggler.default, {
     progressStatus: progressStatus,
     progressNumber: progressNumber
   }), _react.default.createElement("span", {
     className: classes.TabTitle
-  }, progressText));
+  }, progressText)));
 };
 
 ProgressSection.propTypes = {

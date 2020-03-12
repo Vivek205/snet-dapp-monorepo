@@ -11,33 +11,27 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     number: {
       borderRadius: 25,
-      padding: "4px 10px",
-      marginRight: 8,
+      padding: "3px 10px",
       backgroundColor: MUITheme.palette.text.lightGrey,
       color: MUITheme.palette.text.white,
       "@media(max-width:480px)": {
-        padding: "4px 8px",
+        padding: "3px 8px",
         fontSize: 12
       }
     },
     TabTitle: {
-      color: MUITheme.palette.lightGrey,
+      paddingTop: 10,
+      color: MUITheme.palette.text.lightGrey,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 14
     },
     completedIcon: {
       "& svg": {
-        color: MUITheme.palette.success,
-        fontSize: 28,
-        marginRight: 10,
-        "@media(max-width:480px)": {
-          padding: "0 !important",
-          marginRight: "0 !important",
-          fontSize: "21px !important"
-        }
+        color: MUITheme.palette.success.main,
+        fontSize: 28
       },
       "@media(max-width:480px)": {
-        padding: "0 !important",
-        margin: 0
+        padding: "0 !important"
       }
     },
     active: {

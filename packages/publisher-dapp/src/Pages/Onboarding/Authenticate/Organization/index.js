@@ -23,10 +23,20 @@ const Organization = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+    if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace("orgUuid", organization.uuid));
     }
   });
+
+  useEffect(() => {
+    if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message:
+          "Your organization has been rejected. Please validate the details provided and submit again for approval",
+      });
+    }
+  }, [organization.state.state, setAlert, alert]);
 
   const handleNavigateBack = () => {
     history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
@@ -39,10 +49,17 @@ const Organization = props => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      await dispatch(organizationActions.submitForApproval(organization));
-      await dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.APPROVAL_PENDING));
-      await dispatch(organizationActions.initializeOrg);
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+      let orgUuid;
+      if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+        const data = await dispatch(organizationActions.finishLater(organization, "ONBOARDING"));
+        orgUuid = data.org_uuid;
+      } else {
+        const data = await dispatch(organizationActions.createOrganization(organization));
+        orgUuid = data.org_uuid;
+      }
+      dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+      dispatch(organizationActions.initializeOrg);
     } catch (error) {
       if (error instanceof ValidationError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });

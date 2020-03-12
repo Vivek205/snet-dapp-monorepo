@@ -1,6 +1,4 @@
-import { makeStyles } from "@material-ui/styles";
-
-export const useStyles = makeStyles(theme => ({
+export const useStyles = () => ({
   PrimaryFooter: {
     width: "100%",
     display: "flex",
@@ -10,6 +8,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "12px 30px 0 0",
     borderRightWidth: 1,
     borderRightStyle: "solid",
+    borderRightColor: "rgba(219, 227, 231, 0.5)",
     "@media (max-width:1023px)": {
       borderBottom: 1,
       borderBottomStyle: "solid",
@@ -57,4 +56,4 @@ export const useStyles = makeStyles(theme => ({
     },
     "& img": { width: "100%" },
   },
-}));
+});

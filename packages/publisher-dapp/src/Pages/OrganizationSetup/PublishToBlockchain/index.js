@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,7 +15,7 @@ import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
-import { organizationTypes, organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { organizationTypes } from "../../../Utils/organizationSetup";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, email, ownerEmail } = useSelector(state => ({
@@ -23,16 +23,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     email: state.user.email,
     ownerEmail: state.organization.owner,
   }));
-  const { name, type, status, uuid, ownerFullName, ownerAddress } = organization;
+  const { name, type, status, uuid, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (organization.status === organizationSetupStatuses.PUBLISHED) {
-      setAlert({ type: alertTypes.SUCCESS, message: "Organization has been published in the blockchain" });
-    }
-  }, [organization.status]);
 
   const handleSubmit = () => {
     setAlert({});
@@ -57,8 +51,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     setAlert({});
     try {
       await dispatch(organizationActions.submitForApproval(organization));
-      const ipfsHash = await dispatch(organizationActions.publishToIPFS(uuid));
-      await dispatch(organizationActions.createAndSaveTransaction(organization, ipfsHash));
+      const metadataIpfsUri = await dispatch(organizationActions.publishToIPFS(uuid));
+      await dispatch(organizationActions.publishOrganizationInBlockchain(organization, metadataIpfsUri, history));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -68,7 +62,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   };
 
   const handleBack = () => {
-    history.push(OrganizationSetupRoutes.REGION.path);
+    history.push(OrganizationSetupRoutes.REGION.path.replace("orgUuid", organization.uuid));
   };
 
   const shouldPublishBeDisabled = () => !ownerAddress || email !== ownerEmail;
@@ -98,13 +92,6 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
             name="name"
             disabled
             value={name}
-          />
-          <SNETTextfield
-            label="Owners Full Name"
-            description="You should be owner of your company’s legal entity."
-            name="ownerFullName"
-            disabled
-            value={ownerFullName}
           />
         </div>
         <TechnicalInfo />
