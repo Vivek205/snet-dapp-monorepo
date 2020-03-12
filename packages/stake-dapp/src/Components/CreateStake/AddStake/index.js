@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import web3 from "web3";
 
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -11,14 +13,11 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
-
-import web3 from "web3";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-
-import moment from "moment";
 
 import { useStyles } from "./styles";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
@@ -148,13 +147,15 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               </Typography>
             </div>
             <div className={classes.addStakeTextfieldSection}>
-              {/* extraInfo= Avaialble Balance: {availBal} */}
               <SNETTextfield
                 name="stakeAmount"
                 label="Input Stake Amount"
-                extraInfo=""
+                extraInfo="Avaialble Balance:"
                 value={stakeAmount}
                 onChange={handleAmountChange}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
               <SwapHorizontalCircleIcon />
               <SNETTextfield
@@ -162,6 +163,9 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                 readOnly={true}
                 extraInfo="Approximate Estimate"
                 value={fromWei(rewardAmount)}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
             </div>
             <div className={classes.stakeAmtDetailsContainer}>
