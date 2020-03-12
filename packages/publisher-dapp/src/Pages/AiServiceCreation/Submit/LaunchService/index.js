@@ -13,26 +13,14 @@ import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
 
-// TODO remove once API is ready
-const sampleDaemonConfig = {
-  allowed_user_flag: true,
-  allowed_user_addresses: ["0x7DF35C98f41F3Af0df1dc4c7F7D4C19a71Dd059F"],
-  blockchain_enabled: false,
-  passthrough_enabled: true,
-  daemon_end_point: "0.0.0.0:XXXX",
-  passthrough_endpoint: "http://localhost:YYYY",
-};
-
 class LaunchService extends React.Component {
-  state = {
-    daemonConfig: sampleDaemonConfig,
-  };
+  state = { daemonConfig: {} };
 
   componentDidMount = async () => {
     try {
       const { organization, serviceDetails, getSampleDaemonConfig } = this.props;
-      const data = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
-      this.setState({ daemonConfig: data });
+      const { daemon_config } = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
+      this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
     }
@@ -46,7 +34,7 @@ class LaunchService extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-
+    const { daemonConfig } = this.state;
     if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
       return (
         <div className={classes.launchServiceContainer}>
@@ -62,7 +50,7 @@ class LaunchService extends React.Component {
               handlePublishToBlockchain={this.handlePublishToBlockchain}
               serviceDetails={serviceDetails}
             />
-            <DaemonConfig config={sampleDaemonConfig} />
+            <DaemonConfig config={daemonConfig} />
           </Grid>
           <MessageToReviewers />
         </div>

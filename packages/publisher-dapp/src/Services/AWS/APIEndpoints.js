@@ -45,6 +45,7 @@ export const APIPaths = {
   UPLOAD_FILE: "/upload",
   USER_VERIFICATION_INITIATE: "/initiate",
   USER_VERIFICATION_STATUS: "/status/?type=JUMIO",
-  SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/daemon/config`,
-  SAMPLE_DAEMON_CONFIG_TEST: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/daemon/config/test`,
+  SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
+  SAMPLE_DAEMON_CONFIG_TEST: (orgUuid, serviceuuid) =>
+    `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config/test`,
 };
