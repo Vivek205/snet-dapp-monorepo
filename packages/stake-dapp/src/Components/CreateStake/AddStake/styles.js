@@ -61,10 +61,11 @@ export const useStyles = makeStyles(MUITheme => ({
         textTransform: "uppercase",
       },
     },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": { transform: "translate(14px, -6px) scale(0.90)" },
     "@media(max-width: 480px)": { flexDirection: "column" },
   },
   stakeAmtDetailsContainer: {
-    padding: "0 27px",
+    padding: "0 23px 0 20px",
     display: "flex",
     flexWrap: "wrap",
     "& > div": {
@@ -106,7 +107,7 @@ export const useStyles = makeStyles(MUITheme => ({
     borderRadius: 4,
     marginLeft: 16,
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: "#F8F8F8",
     "& p": {
@@ -125,6 +126,7 @@ export const useStyles = makeStyles(MUITheme => ({
   alertBoxContainer: {
     padding: "24px 31px 0",
     "& > p": {
+      padding: "13px 11px",
       "&:first-of-type": {
         margin: 0,
         display: "flex",
@@ -134,6 +136,7 @@ export const useStyles = makeStyles(MUITheme => ({
         },
       },
       "&:last-of-type": { marginTop: 8 },
+      "& > p": { wordBreak: "break-word" },
     },
   },
   infoAlertMessage: {
