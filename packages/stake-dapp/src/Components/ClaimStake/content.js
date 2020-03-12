@@ -17,16 +17,20 @@ export const cardDetails = stakeDetails => [
     title: "Claim Account",
     value: fromWei(stakeDetails.approvedAmount),
     unit: "AGI",
+    toolTip:
+      "Total AGI tokens you can claim for this stake session.  This includes the original accepted stake amount plus the reward earnings amount.",
   },
   {
     title: "Reward Earnings",
     value: computeReward(stakeDetails),
     unit: "AGI",
+    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
   },
   {
     title: "Incubating Completed",
     value: moment.unix(stakeDetails.endPeriod).format("DD MMM YYYY"),
     unit: " ",
+    toolTip: "The date when the incubation period was completed",
   },
   {
     title: "Stakers",

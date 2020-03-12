@@ -125,7 +125,12 @@ const SessionTime = ({ stakeDetails }) => {
         )}
         <Typography className={classes.closingTime}>{getClosingTime()}</Typography>
         <div className={classes.checkbox}>
-          <InfoIcon />
+          <div className={classes.toolTipContainer}>
+            <InfoIcon />
+            <Typography>
+              Email notifications of when opne staking is available and the statuses of your stakes
+            </Typography>
+          </div>
           <FormControlLabel
             control={<Checkbox color="primary" checked={stakeNotification} onClick={handleStakeNotificationChange} />}
             label="Staking notifications"

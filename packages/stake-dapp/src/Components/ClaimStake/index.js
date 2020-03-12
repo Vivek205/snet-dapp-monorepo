@@ -121,7 +121,7 @@ const ClaimStake = () => {
             </div>
             <div className={classes.cards}>
               {cardDetails(stake).map(card => (
-                <Card key={card.title} title={card.title} value={card.value} unit={card.unit} />
+                <Card key={card.title} title={card.title} value={card.value} unit={card.unit} toolTip={card.toolTip} />
               ))}
             </div>
             <div className={classes.infoBox}>
