@@ -1,7 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import SettingIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { useStyles } from "./styles";
 import UserProfileCard from "shared/dist/components/UserProfileCard";
@@ -25,6 +27,14 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
         <UserProfileCard nickName={nickname} />
         <ul className={classes.userProfileMenuList}>
           <li>
+            <AccountCircleIcon />
+            <span>Account</span>
+          </li>
+          <li>
+            <SettingIcon />
+            <span>Settings</span>
+          </li>
+          <li className={classes.signOutLink}>
             <ExitToAppIcon />
             <span onClick={handleSignout}>Sign Out</span>
           </li>
