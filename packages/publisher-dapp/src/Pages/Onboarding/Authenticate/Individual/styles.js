@@ -22,6 +22,7 @@ export const useStyles = MUITheme => ({
   descriptionLogoSection: {
     padding: "16px 24px 17px",
     display: "flex",
+    alignItems: "center",
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
   description: {
