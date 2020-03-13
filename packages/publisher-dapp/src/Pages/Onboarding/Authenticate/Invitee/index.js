@@ -1,23 +1,27 @@
 import React, { useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch, useSelector } from "react-redux";
+
+import SNETTextField from "shared/dist/components/SNETTextfield";
+import SNETButton from "shared/dist/components/SNETButton";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import validator from "shared/dist/utils/validator";
 
 import { profileIdentityDetails } from "./content";
 import { useStyles } from "./styles";
 import MMAddress from "./MMAddress";
-import SNETButton from "shared/dist/components/SNETButton";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { inviteMembersActions } from "../../../../Services/Redux/actionCreators";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import { checkIfKnownError } from "shared/dist/utils/error";
-import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 
 const Invitee = ({ classes, history }) => {
+  const { yourFullName, phone } = useSelector(state => state.organization);
   const inviteCode = useSelector(state => state.user.inviteCode);
   const dispatch = useDispatch();
 
@@ -60,6 +64,8 @@ const Invitee = ({ classes, history }) => {
         <Typography variant="h6">{profileIdentityDetails.title}</Typography>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.acceptedInvitationContent}>
           <Typography variant="subtitle2">{profileIdentityDetails.description}</Typography>
+          <SNETTextField {...profileIdentityDetails.FULL_NAME} value={yourFullName} />
+          <SNETTextField {...profileIdentityDetails.PHONE_NUMBER} value={phone} />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.actionContainer}>
             <MMAddress address={address} setAddress={setAddress} />
           </Grid>

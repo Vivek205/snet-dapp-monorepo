@@ -10,14 +10,14 @@ export const basicDetailsFormData = {
     name: "name",
     label: "Organization Name",
     helperText: "15/50 char",
-    description: `The organization name is displayed to AI Marketplace users for all publish AI services.`,
+    description: `The organization name will be displayed on the AI Marketplace.`,
   },
   DUNS: {
     id: "DUNS Number",
     name: "duns",
     label: "DUNS Number",
     helperText: "",
-    description: `You can learn more about how to get a DUNS number. This can take up to 5 days to verify.`,
+    description: `The Dun & Bradstreet D‑U‑N‑S Number is a unique nine-digit identifier for businesses. Enter your DUNS number in the field provided. Please note that DUNS Number verification may take up to 5 days.`,
   },
   WEBSITE: {
     id: "Organization Website URL",
@@ -26,10 +26,17 @@ export const basicDetailsFormData = {
     helperText: "",
     description: `Your organization’s website must be publicly available and the domain name must be associated with your organization.`,
   },
+  OWNERS_FULLNAME: {
+    id: "Owner's Full Name",
+    name: "fullname",
+    label: "Owner's Full Name",
+    helperText: "",
+    description: `You should be the owner of your company’s legal entity.`,
+  },
   PHONE: {
     id: "Phone Number - 15/50 char",
     name: "phone",
     label: "Phone Number",
-    description: `Include plus sign, country code and area code.  For example +1-800-555-1234.`,
+    description: `Please include your country code. For example +1-800-555-1234.`,
   },
 };

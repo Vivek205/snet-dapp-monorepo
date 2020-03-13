@@ -23,7 +23,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       paddingTop: 10,
       color: MUITheme.palette.text.lightGrey,
       fontFamily: MUITheme.typography.fontFamily,
-      fontSize: 14
+      fontSize: 14,
+      letterSpacing: 0.13
     },
     completedIcon: {
       "& svg": {

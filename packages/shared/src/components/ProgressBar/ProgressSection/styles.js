@@ -16,6 +16,7 @@ export const useStyles = makeStyles(MUITheme => ({
     color: MUITheme.palette.text.lightGrey,
     fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
+    letterSpacing: 0.13,
   },
   completedIcon: {
     "& svg": {

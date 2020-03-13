@@ -57,8 +57,10 @@ class Individual extends Component {
           <Grid item sx={12} sm={12} md={12} lg={12} className={classes.descriptionLogoSection}>
             <Grid item sx={12} sm={12} md={8} lg={8} className={classes.description}>
               <Typography>
-                You need to verify your identification. We use the secured third party service <span>Jumio </span>to
-                verifiy your identity. After you complete Jumio’s process, you will be redirected back to AI Publiser.
+                To ensure the security and safety of our platform and to enable us to allow you to monetize your
+                services we need to verify your identification. Your privacy is paramount to us and so we have selected
+                a secured third-party service Jumio to verify your identity. Following the completion of Jumio’s
+                verification process, you will be redirected back to AI Publisher.
               </Typography>
             </Grid>
             <Grid item sx={12} sm={12} md={4} lg={4} className={classes.jumioLogo}>
