@@ -18,7 +18,7 @@ class SubmitForReview extends React.Component {
   componentDidMount = async () => {
     try {
       const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
-      const { daemon_config } = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
+      const daemon_config = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
