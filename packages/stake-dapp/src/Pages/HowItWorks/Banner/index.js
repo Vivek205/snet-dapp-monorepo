@@ -46,13 +46,9 @@ const Banner = ({ classes, recentStakeWindow }) => {
     const _finalPoolStakeAmount =
       parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
 
+    if (_finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)) return 0;
+
     let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
-    if (
-      _stakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount) ||
-      _finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)
-    ) {
-      _stakeAmount = parseInt(stakeCalculatorFields.maxStakeAmount);
-    }
 
     const rewardAmount = Math.floor(
       (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
@@ -134,6 +130,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 type="Number"
                 name="stakeAmount"
                 label="Staked Amount"
+                extraInfo={
+                  parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount) >
+                  parseInt(stakeCalculatorFields.maxStakeAmount)
+                    ? "* Exceeding AGI Total supply"
+                    : ""
+                }
                 value={stakeCalculatorFields.stakeAmount}
                 InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount } }}
                 onChange={handleDataChange}
@@ -142,7 +144,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate for 30 day incubation"
+                extraInfo="~Approximate"
                 value={getRewardAmount()}
               />
             </div>
