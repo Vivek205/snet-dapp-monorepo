@@ -25,8 +25,13 @@ const VerificationRejected = () => {
       img={VerificationFailed}
       description="Please check and re-prepare the required documents, then retry the Jumio ID verification process. If you believe there was an error by Jumio or by SingularityNET, please contact our support staff who will assist you."
       actions={[
-        { children: "Edit Details", variant: "contained", color: "primary", onClick: handleEditOrgDetails },
-        { children: "Invite Team Members", variant: "outlined", color: "primary", disabled: true },
+        {
+          children: "access jumio verification",
+          variant: "contained",
+          color: "primary",
+          onClick: handleEditOrgDetails,
+        },
+        { children: "contact support", variant: "outlined", color: "primary", disabled: true },
       ]}
       type="REJECTED"
     />

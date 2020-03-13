@@ -134,7 +134,7 @@ class TeamMembers extends Component {
             <span>Back to Home </span>
           </div>
         </Grid>
-        <Grid item xs={12} sm={12} md={9} lg={9}>
+        <Grid item xs={12} sm={12} md={9} lg={7} className={classes.rightSideSection}>
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>

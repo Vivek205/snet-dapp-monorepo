@@ -14,6 +14,7 @@ export const useStyles = MUITheme => ({
       width: "100%",
       padding: 10,
       borderRadius: 4,
+      fontFamily: MUITheme.typography.fontFamily,
       resize: "none",
     },
   },

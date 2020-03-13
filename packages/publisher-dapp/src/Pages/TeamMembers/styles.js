@@ -1,6 +1,6 @@
 export const useStyles = MUITheme => ({
   teammembersContainer: {
-    padding: "40px 60px 52px",
+    padding: "50px 60px 52px",
     background: MUITheme.palette.background.mainContent,
     [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
@@ -18,8 +18,16 @@ export const useStyles = MUITheme => ({
       "&:hover": { textDecoration: "underline" },
     },
   },
+  rightSideSection: {
+    maxWidth: "60.47%",
+    flexBasis: "60.47%",
+    "@media(max-width:1280px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   topSection: {
-    marginBottom: 33,
+    marginBottom: 48,
     display: "flex",
     [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
@@ -46,7 +54,7 @@ export const useStyles = MUITheme => ({
   },
   invitedAndAcceptedList: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     [MUITheme.breakpoints.down("xs")]: {
       flexDirection: "column",
       alignItems: "center",
