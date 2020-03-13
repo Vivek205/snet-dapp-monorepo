@@ -1,4 +1,5 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
+import BigNumber from "bignumber.js";
 
 export const incubationProgressDetails = stakeDetails => ({
   startPeriod: stakeDetails.startPeriod,
@@ -9,12 +10,20 @@ export const incubationProgressDetails = stakeDetails => ({
 const computeReward = stakeDetails => {
   if (stakeDetails.approvedAmount === 0) return 0;
 
-  const rewardAmount = Math.floor(
-    (stakeDetails.approvedAmount * stakeDetails.rewardAmount) /
-      Math.min(stakeDetails.windowTotalStake, stakeDetails.windowMaxCap)
-  );
+  const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
+  const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
+  const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake === 0 ? 1 : stakeDetails.windowTotalStake);
+  const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
-  return isNaN(rewardAmount) ? 0 : fromWei(rewardAmount);
+  let rewardAmount = new BigNumber(0);
+
+  if (windowTotalStake.lt(windowMaxCap)) {
+    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowTotalStake);
+  } else {
+    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowMaxCap);
+  }
+
+  return rewardAmount;
 };
 
 export const cardDetails = stakeDetails => [
@@ -25,7 +34,7 @@ export const cardDetails = stakeDetails => [
   },
   {
     title: "Reward Amount",
-    value: computeReward(stakeDetails),
+    value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
   },
   {

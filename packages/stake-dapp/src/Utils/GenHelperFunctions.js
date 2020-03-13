@@ -1,4 +1,5 @@
 import web3 from "web3";
+import BigNumber from "bignumber.js"; // Using BigNumber as web3.utils.BN throwing Assertion Fail for larger numbers
 
 const BN = web3.utils.BN;
 
@@ -9,11 +10,24 @@ export const toWei = val => {
 };
 
 export const fromWei = weiValue => {
-  var factor = Math.pow(10, 8);
-  //var valBN = new BN(weiValue / factor)
-  var valBN = weiValue / factor;
-  return valBN.toString();
+  const decimalsToDisplay = 2;
+  const factor = Math.pow(10, 8);
+
+  if (BigNumber.isBigNumber(weiValue)) {
+    return weiValue.div(factor).toFixed(decimalsToDisplay);
+  }
+
+  var valBN = new BigNumber(weiValue);
+  valBN = valBN.div(factor);
+  return valBN.toFixed(decimalsToDisplay);
 };
+
+// export const fromWei = weiValue => {
+//   var factor = Math.pow(10, 8);
+//   //var valBN = new BN(weiValue / factor)
+//   var valBN = weiValue / factor;
+//   return valBN.toString();
+// };
 
 export const toShortAddress = address => {
   const addressLength = address.length;

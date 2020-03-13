@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@sentry/browser": "^5.10.2",
+    "bignumber.js": "^9.0.0",
     "lodash": "latest",
     "moment": "^2.24.0",
     "react": "^16.12.0",
