@@ -20,6 +20,9 @@ var useStyles = function useStyles(MUITheme) {
       },
       "& p": {
         color: MUITheme.palette.text.disabled
+      },
+      '& .MuiInputLabel-outlined.MuiInputLabel-shrink': {
+        transform: 'translate(14px, -6px) scale(0.90)'
       }
     }
   };

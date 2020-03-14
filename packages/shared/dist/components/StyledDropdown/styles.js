@@ -20,7 +20,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         fontSize: 12,
         letterSpacing: 0.4
       },
-      '& .MuiOutlinedInput-notchedOutline': {
+      "& .MuiOutlinedInput-notchedOutline": {
         borderColor: MUITheme.palette.border.inputBorder
       }
     },
