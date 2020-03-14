@@ -23,8 +23,13 @@ const StatusComponents = {
   [individualVerificationStatusList.ERROR]: Denied,
 };
 
+const selectState = state => ({
+  status: state.user.individualVerificationStatus,
+  rejectReason: state.user.individualVerificationRejectReason,
+});
+
 const IndividualStatus = ({ classes, history }) => {
-  const status = useSelector(state => state.user.individualVerificationStatus);
+  const { status, rejectReason } = useSelector(selectState);
   const [alert, setAlert] = useState({});
   const dispatch = useDispatch();
 
@@ -58,7 +63,7 @@ const IndividualStatus = ({ classes, history }) => {
             services, demos, and tutorial content.
           </Typography>
         </Grid>
-        <Component handleVerify={handleVerify} />
+        <Component handleVerify={handleVerify} rejectReason={rejectReason} />
         <AlertBox type={alert.type} message={alert.message} />
         <RelatedLinks />
       </Grid>

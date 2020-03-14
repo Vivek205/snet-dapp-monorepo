@@ -9,10 +9,16 @@ import { startAppLoader, stopAppLoader } from "../loaderActions";
 import { verificationProviderType } from "../../../../Pages/Onboarding/Authenticate/Individual/content";
 
 export const SET_INDIVIDUAL_VERIFICATION_STATUS = "SET_INDIVIDUAL_VERIFICATION_STATUS";
+export const SET_INDIVIDUAL_VERIFICATION_REJECT_REASON = "SET_INDIVIDUAL_VERIFICATION_REJECT_REASON";
 
 export const setIndividualVerificationStatus = status => ({
   type: SET_INDIVIDUAL_VERIFICATION_STATUS,
   payload: status,
+});
+
+export const setIndividualVerificationRejectReason = reason => ({
+  type: SET_INDIVIDUAL_VERIFICATION_REJECT_REASON,
+  payload: reason,
 });
 
 export const initiateVerificationAPI = () => async dispatch => {
@@ -58,6 +64,7 @@ export const getVerificationStatus = (currentStatus = "") => async dispatch => {
     }
     if (currentStatus !== data.status) {
       dispatch(setIndividualVerificationStatus(data.status));
+      dispatch(setIndividualVerificationRejectReason(data.reject_reason));
     }
     dispatch(stopAppLoader());
     return data;
