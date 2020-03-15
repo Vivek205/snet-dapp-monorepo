@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 
@@ -17,6 +17,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
+import { fromWei } from "../../../Utils/GenHelperFunctions";
 
 const calculaterFields = {
   stakeAmount: 7500,
@@ -32,11 +33,28 @@ const Banner = ({ classes, recentStakeWindow }) => {
   const history = useHistory();
 
   const currentTime = moment().unix();
+
   const [stakeCalculatorFields, setStakeCalculatorFields] = useState(calculaterFields);
   const [showTimer, setShowTimer] = useState(
     currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod ? true : false
   );
   const interval = 1000;
+
+  useEffect(() => {
+    if (recentStakeWindow.startPeriod > 0) {
+      setStakeCalculatorFields({
+        ...stakeCalculatorFields,
+        stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
+        poolStakeAmount:
+          recentStakeWindow.windowTotalStake > 0
+            ? recentStakeWindow.windowTotalStake
+            : stakeCalculatorFields.poolStakeAmount,
+        incubationPeriodInDays: Math.floor(
+          (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
+        ),
+      });
+    }
+  }, [recentStakeWindow, stakeCalculatorFields]);
 
   const handleTimerCompletion = () => {
     setShowTimer(false);
