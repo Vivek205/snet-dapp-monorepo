@@ -58,4 +58,10 @@ export const useStyles = makeStyles(MUITheme => ({
   alertBoxContainer: {
     "& > div": { marginTop: 24 },
   },
+  websiteUrlContainer: {
+    "& .MuiFormControl-marginNormal": { marginBottom: 0 },
+    "& > span": {
+      paddingLeft: 16,
+    },
+  },
 }));

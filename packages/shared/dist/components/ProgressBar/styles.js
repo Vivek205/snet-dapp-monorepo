@@ -22,22 +22,22 @@ var useStyles = function useStyles(MUITheme) {
         }
       },
       "& li": {
-        width: '100%',
+        width: "100%",
         display: "flex",
-        flexDirection: 'column',
+        flexDirection: "column",
         alignItems: "center",
         listStyle: "none",
-        textAlign: 'center',
+        textAlign: "center",
         "& i": {
           marginRight: 5,
           color: MUITheme.palette.success,
           fontSize: 20
         },
-        '&:last-of-type': {
-          '& > div': {
-            '& span': {
-              '&::after': {
-                display: 'none'
+        "&:last-of-type": {
+          "& > div": {
+            "& span": {
+              "&::after": {
+                display: "none"
               }
             }
           }

@@ -14,14 +14,14 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: "3px 10px",
       backgroundColor: MUITheme.palette.text.lightGrey,
       color: MUITheme.palette.text.white,
-      '& span': {
+      "& span": {
         "&::after": {
           content: '""',
           width: 150,
           height: 1,
-          margin: '15px 0 0 20px',
+          margin: "15px 0 0 20px",
           display: "inline-block",
-          position: 'absolute',
+          position: "absolute",
           backgroundColor: MUITheme.palette.background.grey,
           "@media (max-width:660px)": {
             width: "18%"
@@ -31,7 +31,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
             marginTop: 11
           },
           "@media (max-width:470px)": {
-            display: 'none'
+            display: "none"
           }
         }
       },
@@ -48,7 +48,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       letterSpacing: 0.13
     },
     completedIcon: {
-      '&::after': {
+      "&::after": {
         marginLeft: "10px !important"
       },
       "& svg": {
@@ -63,9 +63,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     active: {
-      '& div': {
+      "& div": {
         backgroundColor: MUITheme.palette.primary.main,
-        '& span': {
+        "& span": {
           color: MUITheme.palette.text.white
         }
       },
@@ -74,11 +74,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     completed: {
-      '& > div': {
-        background: 'transparent'
+      "& > div": {
+        background: "transparent"
       },
       "& span": {
-        '&:last-of-type': {
+        "&:last-of-type": {
           paddingTop: 0,
           color: MUITheme.palette.text.darkGrey
         }
