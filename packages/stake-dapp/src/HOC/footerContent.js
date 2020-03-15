@@ -10,35 +10,34 @@ const PrimaryFooterMain = [
   {
     title: "AGI Staking",
     children: [
-      { label: "How it Works", link: "#" },
-      { label: "Stake Calculator", link: "#" },
-      { label: "open Window", link: "#" },
+      { label: "How it Works", link: "/howitworks" },
+      { label: "Stake Calculator", link: "/howitworks" },
     ],
   },
   {
     title: "Dev Docs",
     children: [
-      { label: "What is Staking", link: "#" },
-      { label: "Stages of Staking", link: "#" },
-      { label: "Renewing Stake", link: "#" },
-      { label: "Claiming Stake", link: "#" },
+      { label: "What is Staking", link: "https://dev.singularitynet.io/products/staking" },
+      { label: "Stages of Staking", link: "https://dev.singularitynet.io/products/staking" },
+      { label: "Renewing Stake", link: "https://dev.singularitynet.io/products/staking" },
+      { label: "Claiming Stake", link: "https://dev.singularitynet.io/products/staking" },
     ],
   },
   {
     title: "Products",
     children: [
-      { label: "Ai Marketpalce", link: "#" },
+      { label: "AI Marketpalce", link: "https://beta.singularitynet.io" },
       { label: "AI Publisher", link: "#" },
-      { label: "Request For AI (RFAI)", link: "#" },
-      { label: "Stake", link: "#" },
+      { label: "Request For AI (RFAI)", link: "https://rfai.singularitynet.io" },
+      { label: "Stake", link: "https://staking.singularitynet.io" },
     ],
   },
   {
     title: "Community",
     children: [
-      { label: "Blog", link: "#" },
-      { label: "Forum", link: "#" },
-      { label: "Telegram", link: "#" },
+      { label: "Blog", link: "http://blog.singularitynet.io/" },
+      { label: "Forum", link: "https://community.singularitynet.io/" },
+      { label: "Telegram", link: "https://telegram.me/singularitynet" },
     ],
   },
 ];
