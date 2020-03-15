@@ -27,6 +27,7 @@ const calculaterFields = {
   stakeRewardAmount: 100000,
   numOfStakers: 20,
   incubationPeriodInDays: 30,
+  recentWindowLoaded: false,
 };
 
 const Banner = ({ classes, recentStakeWindow }) => {
@@ -41,7 +42,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
   const interval = 1000;
 
   useEffect(() => {
-    if (recentStakeWindow.startPeriod > 0) {
+    if (recentStakeWindow.startPeriod > 0 && stakeCalculatorFields.recentWindowLoaded === false) {
       setStakeCalculatorFields({
         ...stakeCalculatorFields,
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
@@ -52,6 +53,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
         incubationPeriodInDays: Math.floor(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
         ),
+        recentWindowLoaded: true,
       });
     }
   }, [recentStakeWindow, stakeCalculatorFields]);
