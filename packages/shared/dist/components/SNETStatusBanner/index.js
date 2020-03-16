@@ -39,6 +39,7 @@ var SNETStatusBanner = function SNETStatusBanner(_ref) {
       actions = _ref.actions,
       type = _ref.type,
       anchorDetails = _ref.anchorDetails;
+  console.log('type', type);
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,

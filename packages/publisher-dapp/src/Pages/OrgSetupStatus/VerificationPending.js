@@ -1,5 +1,5 @@
 import React from "react";
-import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
 import { useHistory } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useSelector } from "react-redux";
@@ -40,7 +40,7 @@ const VerificationPending = () => {
           linkTo: "mailto:support@singularitynet.io",
         },
       ]}
-      type="PENDING"
+      type={statusTitleType.PENDING}
     />
   );
 };

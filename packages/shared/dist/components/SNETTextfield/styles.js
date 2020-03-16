@@ -70,7 +70,7 @@ var useStyles = function useStyles(MUITheme) {
       lineHeight: "16px"
     },
     errorField: {
-      '& .MuiOutlinedInput-notchedOutline': {
+      "& .MuiOutlinedInput-notchedOutline": {
         borderColor: MUITheme.palette.border.alertBox
       }
     }

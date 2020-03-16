@@ -1,6 +1,6 @@
 import React from "react";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
-import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
 import { useHistory, useParams } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
@@ -33,7 +33,7 @@ const VerificationRejected = () => {
         },
         { children: "contact support", variant: "outlined", color: "primary", disabled: true },
       ]}
-      type="REJECTED"
+      type={statusTitleType.REJECTED}
     />
   );
 };

@@ -49,7 +49,7 @@ var SNETTextfield = function SNETTextfield(_ref) {
 
   return _react.default.createElement(_Grid.default, {
     container: true,
-    className: error ? classes.errorField : ''
+    className: error ? classes.errorField : ""
   }, _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
