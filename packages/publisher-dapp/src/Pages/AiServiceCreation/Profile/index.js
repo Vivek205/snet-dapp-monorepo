@@ -160,8 +160,8 @@ const Profile = ({ classes, _location }) => {
         <Typography variant="h6">AI Service Profile Information</Typography>
         <div className={classes.wrapper}>
           <Typography className={classes.description}>
-            Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter
-            videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+            Please enter the description and details of the service you wish to add to the AI marketplace, making sure
+            your descriptions are clear as this will be displayed on the AI marketplace.
           </Typography>
 
           <SNETTextfield
@@ -170,9 +170,8 @@ const Profile = ({ classes, _location }) => {
             label="AI Service Name"
             minCount={0}
             maxCount={50}
-            description="The name of your service cannot be same name as another serviceDetails."
+            description="The name of your service cannot be same name as another service."
             value={serviceDetails.name}
-            disabled={serviceDetails.foundInBlockchain}
             onChange={handleControlChange}
           />
           <SNETTextfield
@@ -181,7 +180,7 @@ const Profile = ({ classes, _location }) => {
             label="AI Service Id"
             minCount={0}
             maxCount={50}
-            description="The Id of your service to uniquely identity in the organization."
+            description="The ID of your service cannot be same ID as another service."
             value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
             onChange={handleControlChange}
           />
@@ -193,7 +192,6 @@ const Profile = ({ classes, _location }) => {
             loading={isValidateServiceIdLoading}
           />
           <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
             showInfoIcon
             name="shortDescription"
             label="Short Description"
@@ -206,7 +204,6 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
             showInfoIcon
             name="longDescription"
             label="Long Description"
@@ -219,11 +216,10 @@ const Profile = ({ classes, _location }) => {
           />
 
           <SNETTextfield
-            disabled={serviceDetails.foundInBlockchain}
             icon
             name="tags"
             label="Service Tags"
-            description="Enter all the TAGs separated by comma and press enter"
+            description="Insert multiple items separated with commas, press enter to add"
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
@@ -234,7 +230,6 @@ const Profile = ({ classes, _location }) => {
             <Card className={classes.card}>
               {serviceDetails.tags.map(tag => (
                 <Chip
-                  disabled={serviceDetails.foundInBlockchain}
                   className={classes.chip}
                   key={tag}
                   label={tag}
@@ -247,10 +242,9 @@ const Profile = ({ classes, _location }) => {
 
           <div className={classes.projUrlContainer}>
             <SNETTextfield
-              disabled={serviceDetails.foundInBlockchain}
               name="projectURL"
               label="Project URL"
-              description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
+              description="The website URL of the service will be displayed to users under your AI service page. GitHub links are recommended."
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
             />
@@ -291,8 +285,8 @@ const Profile = ({ classes, _location }) => {
                   preview how it will look on the AI Marketplace.
                 </Typography>
                 <Typography variant="subtitle2">
-                  We encourage to find a representative image for your service to attract users explore your page and
-                  serviceDetails.
+                  We encourage to find a representative image for your service that will attract users to explore your
+                  page and service.
                 </Typography>
               </div>
             </div>

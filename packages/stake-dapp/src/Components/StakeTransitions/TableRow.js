@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import BigNumber from "bignumber.js";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -14,47 +15,87 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
   const startPeriod = moment.unix(stakeWindow.startPeriod).format("MMM YYYY");
 
   const getStakeAmount = () => {
-    let stakeAmount = 0;
+    let stakeAmount = new BigNumber(0);
+    let autoRenewApprovedAmount = new BigNumber(0);
 
     // Check if the approved Amount exists
+    const autoRenewStakeEvent = stakeWindow.transactionList.filter(
+      t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
+    );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
+    // Check for Auto Renewal Event
+    if (autoRenewStakeEvent.length > 0) {
+      const transaction = autoRenewStakeEvent[0];
+      autoRenewApprovedAmount = new BigNumber(transaction.eventData.approvedAmount);
+    }
 
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      stakeAmount = transaction.eventData.approvedStakeAmount;
+      stakeAmount = new BigNumber(transaction.eventData.approvedStakeAmount);
     } else if (submitStakeEvent.length > 0) {
-      stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
+      stakeAmount = new BigNumber(
+        submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+      );
     }
-    return stakeAmount;
+
+    return stakeAmount.plus(autoRenewApprovedAmount);
   };
 
   const calculateReward = () => {
-    let rewardAmount = 0;
-    let stakeAmount = 0;
+    const windowRewardAmount = new BigNumber(stakeWindow.rewardAmount);
+    const windowTotalStake = new BigNumber(stakeWindow.windowTotalStake !== 0 ? stakeWindow.windowTotalStake : 1);
+    const windowMaxCap = new BigNumber(stakeWindow.windowMaxCap);
+
+    let rewardAmount = new BigNumber(0);
+    let rewardAmountFromAutoRenewal = new BigNumber(0);
+    let stakeAmount = new BigNumber(0);
+    let autoRenewApprovedAmount = new BigNumber(0);
+
+    // Check if Claim Event exists to get the Reward Amount
+    const claimStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ClaimStake");
+    if (claimStakeEvent.length > 0) {
+      return new BigNumber(claimStakeEvent[0].eventData.rewardAmount);
+    }
 
     // Check if the approved Amount exists
+    const autoRenewStakeEvent = stakeWindow.transactionList.filter(
+      t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
+    );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+
+    // Check for Auto Renewal Event
+    if (autoRenewStakeEvent.length > 0) {
+      const transaction = autoRenewStakeEvent[0];
+      autoRenewApprovedAmount = new BigNumber(transaction.eventData.approvedAmount);
+
+      rewardAmountFromAutoRenewal = autoRenewApprovedAmount
+        .times(windowRewardAmount)
+        .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
+    }
 
     // Check for Either Approved Stake or Submit Stake. If Approve Exists we can ignore Submit
     if (approvedStakeEvent.length > 0) {
       const transaction = approvedStakeEvent[0];
-      stakeAmount = transaction.eventData.approvedStakeAmount;
+      stakeAmount = new BigNumber(transaction.eventData.approvedStakeAmount);
 
-      rewardAmount = Math.floor(
-        (stakeAmount * stakeWindow.rewardAmount) / Math.min(stakeWindow.windowTotalStake, stakeWindow.windowMaxCap)
-      );
+      rewardAmount = stakeAmount
+        .times(windowRewardAmount)
+        .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
       const currentTime = moment().unix();
-      if (currentTime > stakeWindow.approvalEndPeriod) return 0;
-
-      stakeAmount = submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0);
-      rewardAmount = Math.floor((stakeAmount * stakeWindow.rewardAmount) / stakeWindow.windowMaxCap);
+      if (currentTime < stakeWindow.approvalEndPeriod) {
+        stakeAmount = submitStakeEvent.map(s => new BigNumber(s.eventData.stakeAmount)).reduce((a, b) => a.plus(b), 0);
+        rewardAmount = stakeAmount
+          .times(windowRewardAmount)
+          .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
+      }
     }
 
-    return rewardAmount;
+    return rewardAmount.plus(rewardAmountFromAutoRenewal);
   };
 
   return (

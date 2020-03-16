@@ -133,4 +133,25 @@ export const useStyles = MUITheme => ({
     paddingRight: 16,
     textAlign: "right",
   },
+  configTitle: {
+    paddingLeft: 23,
+  },
+  configList: {
+    "& li": {
+      paddingLeft: 10,
+      paddingBottom: 5,
+      listStyleType: "none",
+    },
+    "& strong": {
+      fontWeight: "normal",
+      color: MUITheme.palette.text.darkGrey,
+      paddingRight: 10,
+      "&::after": {
+        content: `":"`,
+      },
+    },
+    "& span": {
+      color: MUITheme.palette.text.lightGrey,
+    },
+  },
 });

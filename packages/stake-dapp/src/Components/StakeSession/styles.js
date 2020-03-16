@@ -65,7 +65,7 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   linearProgress: { height: 15 },
   cards: {
-    padding: "15.5px 19.5px 21.5px 20.5px",
+    padding: "15px 20px 21px",
     border: "1px solid #f1f1f1",
     borderRadius: 6,
     margin: 32,

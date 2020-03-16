@@ -16,14 +16,21 @@ import DaemonConfig from "../DaemonConfig";
 class LaunchService extends React.Component {
   state = { daemonConfig: {} };
 
-  componentDidMount = async () => {
+  fetchSampleDaemonConfig = async () => {
     try {
       const { organization, serviceDetails, getSampleDaemonConfig } = this.props;
-      const { daemon_config } = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
+      if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
+        return;
+      }
+      const daemon_config = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
     }
+  };
+
+  componentDidMount = async () => {
+    await this.fetchSampleDaemonConfig();
   };
 
   handlePublishToBlockchain = async () => {
@@ -50,7 +57,6 @@ class LaunchService extends React.Component {
               handlePublishToBlockchain={this.handlePublishToBlockchain}
               serviceDetails={serviceDetails}
             />
-            <DaemonConfig config={daemonConfig} />
           </Grid>
           <MessageToReviewers />
         </div>
@@ -67,6 +73,7 @@ class LaunchService extends React.Component {
             needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
+          <DaemonConfig config={daemonConfig} />
         </Grid>
         <MessageToReviewers />
       </div>

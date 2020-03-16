@@ -130,7 +130,7 @@ export const useStyles = MUITheme => ({
     },
   },
   valuesContainer: {
-    padding: "15px 0",
+    padding: "9px 0",
     border: "1px solid #828282",
     borderRadius: 4,
     marginRight: 17,
@@ -153,22 +153,28 @@ export const useStyles = MUITheme => ({
       },
     },
   },
-  values: {
-    color: MUITheme.palette.text.darkGrey,
-    fontSize: 16,
-    lineHeight: "20px",
-  },
-  incubationValuesContainer: {
+  incubationValuesConatiner: {
     padding: "15px 0",
-    border: "1px solid #828282",
+    border: "1px solid #e2e2e2",
     borderRadius: 4,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    background: "#f8f8f8",
+    color: "#212121",
     "@media(max-width: 640px)": {
       width: 180,
       padding: "15px 0",
     },
+  },
+  incubationValue: {
+    fontSize: 16,
+    lineHeight: "20px",
+  },
+  incubationUnit: {
+    paddingLeft: 5,
+    fontSize: 12,
+    lineHeight: "15px",
   },
   formBtnContainer: {
     padding: "31px 0 29px",

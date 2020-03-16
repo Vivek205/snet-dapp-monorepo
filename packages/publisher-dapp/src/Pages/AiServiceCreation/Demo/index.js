@@ -20,24 +20,22 @@ const Demo = ({ classes }) => {
         <Typography variant="h6">Demo Setup</Typography>
         <div className={classes.wrapper}>
           <Typography className={classes.demoPageDescription}>
-            AI publishers can create a unique demo experience that users on the AI Marketpalce can engage with. A
-            positive demo experience will users engage and integrate your AI into their applications. We encourage to
-            follow our best pratices on how to properly setup your demo on our AI Marketplace. The steps for creating a
-            demo UI involves
+            AI publishers can create a unique demo experience that users on the AI Marketplace can engage with. A
+            positive demo experience will encourage users to engage and integrate your AI into their applications. We
+            encourage you to follow our best practices on how to properly set up your demo on our AI Marketplace.
           </Typography>
 
           <div className={classes.stepOneContainer}>
             <Typography variant="subtitle1" className={classes.stepsHeading}>
-              Step 1: Download Demo UI Package
+              Step 1: Download DApp source code
             </Typography>
             <Typography variant="subtitle2">
-              Using our starter node demo UI pacake will help you to set up a local development and testing environment.
-              Download the package from the following link and follow the instructions to set up a local working
-              environment. Click here to see the contents of the package.
+              Using our DApp source code will help you to set up a local development and testing environment. Download
+              the code from the following link and follow the instructions to set up a local working environment.
             </Typography>
             <div className={classes.downloadBtn}>
               <a href="https://github.com/singnet/snet-dapp/archive/master.zip" download>
-                <SNETButton children="download demo ui package v1.03" color="primary" variant="contained" />
+                <SNETButton children="download source code v1.03" color="primary" variant="contained" />
               </a>
             </div>
             <hr />
