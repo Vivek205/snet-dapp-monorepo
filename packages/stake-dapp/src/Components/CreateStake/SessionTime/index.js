@@ -16,9 +16,14 @@ import { stakeActions } from "../../../Services/Redux/actionCreators";
 import Timer from "./Timer";
 
 // const stakeDetails = {
-//   startPeriod: moment().unix() + 30,
-//   submissionEndPeriod: moment().unix() + 60,
+//   startPeriod: moment().unix() + 60,
+//   submissionEndPeriod: moment().unix() + 120,
 // };
+
+const stateSelector = state => ({
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
+  stakeNotification: state.user.userPreferences,
+});
 
 const SessionTime = ({ stakeDetails }) => {
   const classes = useStyles();
@@ -26,8 +31,7 @@ const SessionTime = ({ stakeDetails }) => {
 
   const currentTime = moment().unix();
 
-  // TODO - Get the state from the Redux to set as Default Checked value
-  const [stakeNotification, setStakeNotification] = useState(false);
+  const { metamaskDetails, stakeNotification } = useSelector(state => stateSelector(state));
 
   const [showTimer, setShowTimer] = useState(currentTime < stakeDetails.startPeriod ? 0 : 1);
 
@@ -35,8 +39,6 @@ const SessionTime = ({ stakeDetails }) => {
   const [endTime, setEndTime] = useState(
     currentTime < stakeDetails.startPeriod ? stakeDetails.startPeriod : stakeDetails.submissionEndPeriod
   );
-
-  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
 
   const interval = 1000;
 
@@ -86,7 +88,7 @@ const SessionTime = ({ stakeDetails }) => {
   };
 
   const handleStakeNotificationChange = event => {
-    setStakeNotification(event.target.checked);
+    //setStakeNotification(event.target.checked);
 
     const emailPreferences = {
       [userPreferenceTypes.TOKEN_STAKE_NOTIFICATION]: event.target.checked,
@@ -127,7 +129,9 @@ const SessionTime = ({ stakeDetails }) => {
         <div className={classes.checkbox}>
           <InfoIcon />
           <FormControlLabel
-            control={<Checkbox color="primary" checked={stakeNotification} onClick={handleStakeNotificationChange} />}
+            control={
+              <Checkbox color="primary" checked={stakeNotification.status} onClick={handleStakeNotificationChange} />
+            }
             label="Staking notifications"
           />
         </div>
