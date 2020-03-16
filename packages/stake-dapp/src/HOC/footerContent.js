@@ -27,7 +27,7 @@ const PrimaryFooterMain = [
   {
     title: "Products",
     children: [
-      { label: "Ai Marketpalce", link: "#" },
+      { label: "AI Marketplace", link: "#" },
       { label: "AI Publisher", link: "#" },
       { label: "Request For AI (RFAI)", link: "#" },
       { label: "Stake", link: "#" },

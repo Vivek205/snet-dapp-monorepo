@@ -10,38 +10,37 @@ const PrimaryFooterMain = [
   {
     title: "AI Publisher",
     children: [
-      { label: "Free Signup", link: "#", internalLink: true },
-      { label: "How it Works", link: "#" },
-      { label: "Get Started", link: "#" },
+      { label: "Free Signup", link: "/signup", internalLink: true },
+      { label: "How it Works", link: "/enroll" },
+      /*{ label: "Get Started", link: "#" },
       { label: "My AI Apps", link: "#" },
-      { label: "Create New AI Servcie", link: "#" },
+      { label: "Create New AI Servcie", link: "#" },*/
     ],
   },
   {
     title: "Dev Docs",
     children: [
-      { label: "Setting up Account", link: "#" },
-      { label: "Creating Organization", link: "#" },
-      { label: "Adding Regions", link: "#" },
-      { label: "Creating Service", link: "#" },
-      { label: "Claiming Service", link: "#" },
+      { label: "Getting Started", link: "https://dev.singularitynet.io/docs/ai-developers/" },
+      { label: "Creating Organization", link: "https://dev.singularitynet.io/docs/ai-developers/organization/" },
+      { label: "Creating Service", link: "https://dev.singularitynet.io/docs/ai-developers/service/" },
+      { label: "Tutorials", link: "https://dev.singularitynet.io/docs/ai-developers/setupguide/" },
     ],
   },
   {
     title: "Products",
     children: [
-      { label: "Ai Marketpalce", link: "#" },
+      { label: "AI Marketplace", link: "https://beta.singularitynet.io" },
       { label: "AI Publisher", link: "#" },
-      { label: "Request For AI (RFAI)", link: "#" },
-      { label: "Stake", link: "#" },
+      { label: "Request For AI (RFAI)", link: "https://rfai.singularitynet.io" },
+      { label: "Stake", link: "https://staking.singularitynet.io" },
     ],
   },
   {
     title: "Community",
     children: [
-      { label: "Blog", link: "#" },
-      { label: "Forum", link: "#" },
-      { label: "Telegram", link: "#" },
+      { label: "Blog", link: "http://blog.singularitynet.io/" },
+      { label: "Forum", link: "https://community.singularitynet.io/" },
+      { label: "Telegram", link: "https://telegram.me/singularitynet" },
     ],
   },
 ];
