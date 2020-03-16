@@ -12,6 +12,9 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { checkIfKnownError } from "shared/src/utils/error";
 import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
 import { individualVerificationStatusList } from "../../constant";
+import { getEmailDomain } from "../../../../Utils/validation";
+
+const domainsToBeAutoApproved = ["singularitynet.io"];
 
 class Individual extends Component {
   state = {
@@ -35,7 +38,13 @@ class Individual extends Component {
 
   handleVerify = async () => {
     try {
-      const { redirect_url: redirectUrl } = await this.props.initiateVerification();
+      const { history, initiateVerification, setStatus } = this.props;
+      const { redirect_url: redirectUrl } = await initiateVerification();
+      const userDomain = getEmailDomain(this.props.userEmail);
+      if (domainsToBeAutoApproved.includes(userDomain)) {
+        await setStatus(individualVerificationStatusList.APPROVED);
+        return history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
+      }
       await window.location.replace(redirectUrl);
     } catch (e) {
       if (checkIfKnownError(e)) {
@@ -92,11 +101,13 @@ class Individual extends Component {
 
 const mapStateToProps = state => ({
   status: state.user.individualVerificationStatus,
+  userEmail: state.user.email,
 });
 
 const mapDispatchToProps = dispatch => ({
   initiateVerification: () => dispatch(individualVerificationActions.initiateVerification()),
   getVerificationStatus: () => dispatch(individualVerificationActions.getVerificationStatus()),
+  setStatus: status => dispatch(individualVerificationActions.setIndividualVerificationStatus(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Individual));
