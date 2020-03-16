@@ -15,14 +15,25 @@ import DaemonConfig from "./DaemonConfig";
 class SubmitForReview extends React.Component {
   state = { daemonConfig: {} };
 
-  componentDidMount = async () => {
+  fetchSampleDaemonConfig = async () => {
     try {
       const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
-      const { daemon_config } = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
+      const daemon_config = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
     }
+  };
+
+  componentDidUpdate = async prevProps => {
+    const { serviceDetails } = this.props;
+    if (serviceDetails.uuid !== prevProps.serviceDetails.uuid) {
+      await this.fetchSampleDaemonConfig();
+    }
+  };
+
+  componentDidMount = async () => {
+    await this.fetchSampleDaemonConfig();
   };
 
   handleConnectMM = async () => {

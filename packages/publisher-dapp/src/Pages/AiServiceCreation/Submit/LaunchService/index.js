@@ -22,7 +22,7 @@ class LaunchService extends React.Component {
       if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
         return;
       }
-      const { daemon_config } = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
+      const daemon_config = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
