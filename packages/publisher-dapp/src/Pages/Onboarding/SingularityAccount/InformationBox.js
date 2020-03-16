@@ -21,7 +21,7 @@ const InformationBox = () => {
     return (
       <AlertBox
         type={alertTypes.INFO}
-        message="Please Note:  Individual / Sole Proprietor / Single Person Business will require you to verify your identification by uploading ID document that will be verified by the secured third party service Jumio."
+        message="Please Note:  Signing up as Individual / Sole Proprietor / Single Person Business requires you to verify your identity by the secured third party service Jumio."
       />
     );
   }
