@@ -495,7 +495,7 @@ const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
 
 export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
   try {
-    const serviceDetailsFromBlockchain = getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
+    const serviceDetailsFromBlockchain = await getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
     if (!serviceDetailsFromBlockchain.found) {
       return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, tags, history));
     }
