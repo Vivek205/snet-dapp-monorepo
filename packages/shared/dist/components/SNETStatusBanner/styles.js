@@ -47,13 +47,13 @@ var useStyles = function useStyles(MUITheme) {
           padding: "13px 23px 11px"
         }
       },
-      '& a': {
+      "& a": {
         fontFamily: MUITheme.typography.fontFamily,
         fontSize: 14,
         fontWeight: 600,
-        lineHeight: '16px',
+        lineHeight: "16px",
         letterSpacing: 1.25,
-        textTransform: 'uppercase'
+        textTransform: "uppercase"
       }
     },
     PENDING: {

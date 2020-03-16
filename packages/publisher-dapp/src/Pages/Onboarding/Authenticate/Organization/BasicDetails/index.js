@@ -19,7 +19,7 @@ import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/O
 
 const BasicDetails = () => {
   const classes = useStyles();
-  const { id, name, website, duns, contacts, fullname } = useSelector(state => state.organization);
+  const { id, name, website, duns, contacts } = useSelector(state => state.organization);
   const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
   let phone = "";
   if (contact) {
@@ -76,7 +76,6 @@ const BasicDetails = () => {
         <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
-      <SNETTextField {...basicDetailsFormData.OWNERS_FULLNAME} value={fullname} onChange={handleChange} />
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );

@@ -79,9 +79,13 @@ class TeamMembers extends Component {
       const allEmails = this.state.textareaValue.split(",");
       validateIfEmailAlreadyExists(allEmails);
       await this.props.inviteMembers(allEmails, this.props.match.params.orgUuid);
-      this.setState({
-        inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
-      });
+      this.setState(
+        { inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" } },
+        () =>
+          setTimeout(() => {
+            this.setState({ inviteMembersAlert: {} });
+          }, 3000)
+      );
       this.handleInviteMembersClose();
     } catch (error) {
       if (checkIfKnownError(error)) {

@@ -38,10 +38,7 @@ var SNETStatusBanner = function SNETStatusBanner(_ref) {
       description = _ref.description,
       actions = _ref.actions,
       type = _ref.type,
-      anchorDetails = _ref.anchorDetails,
-      linkTo = _ref.linkTo,
-      anchorLabel = _ref.anchorLabel,
-      newTab = _ref.newTab;
+      anchorDetails = _ref.anchorDetails;
   return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,

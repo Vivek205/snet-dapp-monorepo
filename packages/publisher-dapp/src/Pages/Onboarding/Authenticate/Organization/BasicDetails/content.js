@@ -26,13 +26,6 @@ export const basicDetailsFormData = {
     helperText: "",
     description: `Your organization’s website must be publicly available and the domain name must be associated with your organization.`,
   },
-  OWNERS_FULLNAME: {
-    id: "Owner's Full Name",
-    name: "fullname",
-    label: "Owner's Full Name",
-    helperText: "",
-    description: `You should be the owner of your company’s legal entity.`,
-  },
   PHONE: {
     id: "Phone Number - 15/50 char",
     name: "phone",

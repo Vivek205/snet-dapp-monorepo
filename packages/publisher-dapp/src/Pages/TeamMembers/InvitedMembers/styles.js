@@ -114,6 +114,7 @@ export const useStyles = MUITheme => ({
     },
   },
   alertContainer: {
+    width: "100%",
     padding: "0 22px",
   },
 });
