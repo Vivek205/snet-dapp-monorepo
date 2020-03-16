@@ -57,9 +57,16 @@ const BasicDetails = () => {
     dispatch(organizationActions.setContacts(updatedContacts));
   };
 
+  const condition = true;
+
   return (
     <Grid container>
-      <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
+      <SNETTextField
+        {...basicDetailsFormData.ORG_ID}
+        value={id}
+        onChange={handleChange}
+        className={condition ? classes.hightlightErr : ""}
+      />
       <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
       <div className={classes.dunsContainer}>
         <FormControlLabel control={<Checkbox color="primary" />} label="I have my DUNS number" />

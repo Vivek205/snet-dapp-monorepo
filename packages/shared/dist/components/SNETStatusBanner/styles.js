@@ -33,13 +33,12 @@ var useStyles = function useStyles(MUITheme) {
       paddingLeft: 70,
       "& p": {
         paddingRight: 50,
-        margin: "24px 0 0",
+        margin: "24px 0 32px",
         color: MUITheme.palette.text.primary,
         fontSize: 14,
         lineHeight: "21px"
       },
       "& button": {
-        marginTop: 32,
         "&:first-of-type": {
           padding: "13px 18px 11px",
           marginRight: 22
@@ -47,6 +46,14 @@ var useStyles = function useStyles(MUITheme) {
         "&:last-of-type": {
           padding: "13px 23px 11px"
         }
+      },
+      '& a': {
+        fontFamily: MUITheme.typography.fontFamily,
+        fontSize: 14,
+        fontWeight: 600,
+        lineHeight: '16px',
+        letterSpacing: 1.25,
+        textTransform: 'uppercase'
       }
     },
     PENDING: {

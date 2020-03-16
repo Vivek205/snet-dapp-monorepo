@@ -23,7 +23,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     email: state.user.email,
     ownerEmail: state.organization.owner,
   }));
-  const { name, type, status, uuid, ownerAddress } = organization;
+  const { name, type, status, uuid, ownerAddress, fullName } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
@@ -72,8 +72,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       <div className={classes.box}>
         <Typography variant="h6">Publish Organization to Blockchain</Typography>
         <Typography className={classes.description}>
-          Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter videbatur
-          hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+          Add your organisation to the blockchain, making sure you enter all relevant information correctly, as once the
+          data is submitted you will be unable to edit it.
         </Typography>
         <div className={classes.inputFields}>
           <SNETTextfield
@@ -92,6 +92,13 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
             name="name"
             disabled
             value={name}
+          />
+          <SNETTextfield
+            label="Owner Full Name"
+            description="You should be owner of your company’s legal entity."
+            name="full name"
+            disabled
+            value={fullName}
           />
         </div>
         <TechnicalInfo />

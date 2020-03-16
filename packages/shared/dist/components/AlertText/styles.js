@@ -12,7 +12,7 @@ var useStyles = (0, _styles.makeStyles)(function (MuiTheme) {
     errorMsg: {
       margin: 0,
       fontSize: 12.17,
-      lineHeight: '16px',
+      lineHeight: "16px",
       letterSpacing: 0.4
     },
     error: {

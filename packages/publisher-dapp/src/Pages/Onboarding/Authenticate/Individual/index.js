@@ -60,8 +60,8 @@ class Individual extends Component {
               <Typography>
                 To ensure the security and safety of our platform and to enable us to allow you to monetize your
                 services we need to verify your identification. Your privacy is paramount to us and so we have selected
-                a secured third-party service Jumio to verify your identity. Following the completion of Jumio’s
-                verification process, you will be redirected back to AI Publisher.
+                a secured third-party service <a href="https://www.jumio.com/">Jumio</a> to verify your identity.
+                Following the completion of Jumio’s verification process, you will be redirected back to AI Publisher.
               </Typography>
             </Grid>
             <Grid item sx={12} sm={12} md={4} lg={4} className={classes.jumioLogo}>
@@ -69,7 +69,7 @@ class Individual extends Component {
             </Grid>
           </Grid>
           <Grid item sx={12} sm={12} md={12} lg={12} className={classes.docListSection}>
-            <Typography>Please prepare the following documents and information:</Typography>
+            <Typography>Please enable your camera and prepare any of the following documents:</Typography>
             <ul>
               {documentList.map(item => (
                 <li key={item}>{item}</li>

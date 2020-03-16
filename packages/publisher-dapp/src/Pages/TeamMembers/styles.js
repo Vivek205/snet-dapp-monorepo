@@ -22,6 +22,10 @@ export const useStyles = MUITheme => ({
     maxWidth: "60.47%",
     flexBasis: "60.47%",
     "@media(max-width:1280px)": {
+      maxWidth: "69.47%",
+      flexBasis: "69.47%",
+    },
+    [MUITheme.breakpoints.down("sm")]: {
       maxWidth: "100%",
       flexBasis: "100%",
     },

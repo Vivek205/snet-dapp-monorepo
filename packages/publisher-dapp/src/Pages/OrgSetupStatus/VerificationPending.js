@@ -33,7 +33,12 @@ const VerificationPending = () => {
           onClick: handleInviteSetup,
           disabled: !shouldInviteMembersBeEnabled(),
         },
-        { children: "contact support", variant: "text", color: "primary" },
+      ]}
+      anchorDetails={[
+        {
+          label: "contact support",
+          linkTo: "mailto:support@singularitynet.io",
+        },
       ]}
       type="PENDING"
     />
