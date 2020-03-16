@@ -153,7 +153,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3}>
             <Typography className={classes.mobileTitle}>Process State:</Typography>
-            <Typography>Claims Withdraw</Typography>
+            <Typography>ControlService Withdraw</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Typography className={classes.mobileTitle}>Status:</Typography>

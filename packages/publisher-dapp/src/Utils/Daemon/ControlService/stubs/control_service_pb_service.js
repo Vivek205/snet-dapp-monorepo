@@ -7,7 +7,7 @@ var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var ProviderControlService = (function () {
   function ProviderControlService() {}
-  ProviderControlService.serviceName = "escrow.ProviderControlService";
+  ProviderControlService.serviceName = "escrow.ControlService";
   return ProviderControlService;
 }());
 
