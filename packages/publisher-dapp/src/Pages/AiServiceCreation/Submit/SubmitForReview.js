@@ -57,7 +57,7 @@ class SubmitForReview extends React.Component {
               inputs needs to be refined. You will be able to review and respond to the feedback from the SNET Admins
               here.
             </Typography>
-            <DaemonConfig config={daemonConfig} />
+            <DaemonConfig config={daemonConfig} footerNote="lore ipsum doler amet" />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
