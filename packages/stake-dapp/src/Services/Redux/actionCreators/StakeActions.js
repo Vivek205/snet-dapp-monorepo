@@ -367,7 +367,7 @@ export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
 
 // TODO - Sample Structured returned from the API - TO BE Deleted from this file after the complete implementation:
 
-/* 
+/*
   blockchain_id: 100
   start_period: 1582542242
   submission_end_period: 1582742242
@@ -383,7 +383,7 @@ export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
   token_operator: "0x0"
 */
 
-// TODO - Sample Structure for Claims
+// TODO - Sample Structure for ControlService
 
 /*
 
