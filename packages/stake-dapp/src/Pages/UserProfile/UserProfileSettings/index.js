@@ -92,7 +92,8 @@ class UserProfileSettings extends Component {
           <div className={classes.settingsContent}>
             <div>
               <TextField
-                id="outlined-name"
+                name="nickName"
+                id="nickName"
                 label="Nick Name (20 char max)"
                 className={classes.styledTextField}
                 value={nickname}
@@ -104,7 +105,8 @@ class UserProfileSettings extends Component {
             </div>
             <div>
               <TextField
-                id="outlined-name"
+                name="email"
+                id="email"
                 label="Email"
                 className={classes.styledTextField}
                 value={userEmail}
