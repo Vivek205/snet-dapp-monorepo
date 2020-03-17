@@ -2,6 +2,8 @@ import React from "react";
 import { Provider as ReactReduxProvider } from "react-redux";
 import { ThemeProvider as MUIThemeProvider } from "@material-ui/core/styles";
 import Amplify from "aws-amplify";
+import ReactGA from "react-ga";
+import { createBrowserHistory } from "history";
 
 import GlobalRouter from "./GlobalRouter";
 import store from "./Services/Redux/Store";
@@ -14,6 +16,13 @@ import initQuantcast from "shared/dist/scripts/quantcast";
 Amplify.configure(aws_config);
 
 initQuantcast();
+
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+const history = createBrowserHistory();
+history.listen(location => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+});
 
 function App() {
   return (
