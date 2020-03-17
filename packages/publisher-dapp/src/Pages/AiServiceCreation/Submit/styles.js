@@ -138,6 +138,13 @@ export const useStyles = MUITheme => ({
     border: "none !important",
     fontWeight: "normal",
   },
+  configFooter: {
+    marginTop: 16,
+    border: "none !important",
+    color: MUITheme.palette.text.primary,
+
+    fontWeight: "normal",
+  },
   configList: {
     "& li": {
       paddingLeft: 10,
