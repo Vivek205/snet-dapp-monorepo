@@ -44,9 +44,9 @@ const Profile = ({ classes, _location }) => {
 
   const [alert, setAlert] = useState({});
 
-  const setServiceTouchFlag = () => {
+  const setServiceTouchedFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
   };
 
   const validateServiceId = serviceId => async () => {
@@ -72,7 +72,7 @@ const Profile = ({ classes, _location }) => {
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
@@ -131,7 +131,7 @@ const Profile = ({ classes, _location }) => {
     });
 
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
   };
 
   const handleDeleteTag = tag => {
@@ -141,13 +141,13 @@ const Profile = ({ classes, _location }) => {
 
     // Set State
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
   };
 
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
