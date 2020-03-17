@@ -20,7 +20,10 @@ export const useStyles = MUITheme => ({
       backgroundColor: MUITheme.palette.background.grey,
     },
     "& > p": { margin: "20px 24px 0" },
-    [MUITheme.breakpoints.down("sm")]: { width: "auto" },
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "auto",
+      margin: "40px 25px 0",
+    },
   },
   errorContainer: { margin: "27px 42px 0 23px" },
   buttonsContainer: {
