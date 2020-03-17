@@ -21,7 +21,7 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
 
   const clearAlert = () => {
     clearTimeout(clearAlertTimeout);
-    clearAlertTimeout = setTimeout(() => setAlert({}), 6000);
+    clearAlertTimeout = setTimeout(() => setAlert({}), 2000);
   };
 
   const handleCopyToClipboard = () => {
