@@ -62,7 +62,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   };
 
   const handleBack = () => {
-    history.push(OrganizationSetupRoutes.REGION.path.replace("orgUuid", organization.uuid));
+    history.push(OrganizationSetupRoutes.REGION.path.replace(":orgUuid", organization.uuid));
   };
 
   const shouldPublishBeDisabled = () => !ownerAddress || email !== ownerEmail;

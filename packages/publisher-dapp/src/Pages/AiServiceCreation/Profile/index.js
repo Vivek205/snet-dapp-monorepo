@@ -26,6 +26,7 @@ import { assetTypes } from "../../../Utils/FileUpload";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 let validateTimeout = "";
 
@@ -34,7 +35,7 @@ const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes, _location }) => {
+const Profile = ({ classes }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
@@ -80,7 +81,7 @@ const Profile = ({ classes, _location }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
 
-  const handleContinue = async () => {
+  const handleSave = async () => {
     try {
       const serviceName = serviceDetails.name;
       const serviceId = serviceDetails.newId ? serviceDetails.newId : serviceDetails.id;
@@ -107,6 +108,13 @@ const Profile = ({ classes, _location }) => {
       }
       return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
     }
+  };
+
+  const handleContinue = async () => {
+    await handleSave();
+    history.push(
+      ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
+    );
   };
 
   const handleAddTags = event => {
@@ -152,6 +160,11 @@ const Profile = ({ classes, _location }) => {
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
     dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+  };
+
+  const handleFinishLater = async () => {
+    await handleSave();
+    history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
   };
 
   return (
@@ -307,7 +320,7 @@ const Profile = ({ classes, _location }) => {
       </Grid>
 
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="finish later" color="primary" variant="text" />
+        <SNETButton children="finish later" color="primary" variant="text" onClick={handleFinishLater} />
         <SNETButton children="preview" color="primary" variant="contained" />
         <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
       </Grid>
