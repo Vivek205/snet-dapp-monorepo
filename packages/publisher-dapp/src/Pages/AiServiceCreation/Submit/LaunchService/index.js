@@ -73,7 +73,7 @@ class LaunchService extends React.Component {
             needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
-          <DaemonConfig config={daemonConfig} />
+          <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
         <MessageToReviewers />
       </div>

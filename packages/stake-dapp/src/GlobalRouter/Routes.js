@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
+import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
@@ -62,21 +63,25 @@ export const GlobalRoutes = {
   },
 };
 
-export const setupRouteAuthentications = state => ({
-  ...GlobalRoutes,
-  LANDING: {
-    ...GlobalRoutes.LANDING,
-    isAllowed: state.user.isLoggedIn,
-    redirectTo: GlobalRoutes.LOGIN.path,
-  },
-  ACCEPT_AGREEMENT: {
-    ...GlobalRoutes.ACCEPT_AGREEMENT,
-    isAllowed: state.user.isLoggedIn,
-    redirectTo: GlobalRoutes.LOGIN.path,
-  },
-  USER_PROFILE: {
-    ...GlobalRoutes.USER_PROFILE,
-    isAllowed: state.user.isLoggedIn,
-    redirectTo: GlobalRoutes.LOGIN.path,
-  },
-});
+export const setupRouteAuthentications = () => {
+  const state = store.getState();
+  const { isLoggedIn } = state.user;
+  return {
+    ...GlobalRoutes,
+    LANDING: {
+      ...GlobalRoutes.LANDING,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    ACCEPT_AGREEMENT: {
+      ...GlobalRoutes.ACCEPT_AGREEMENT,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    USER_PROFILE: {
+      ...GlobalRoutes.USER_PROFILE,
+      isAllowed: state.user.isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+  };
+};
