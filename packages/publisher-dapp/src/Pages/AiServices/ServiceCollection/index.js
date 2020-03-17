@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
 import { useSelector, useDispatch } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 
 import ToolBar from "./ToolBar";
 import CardGroup from "./CardGroup";
@@ -10,6 +11,9 @@ import { useStyles } from "./styles";
 import { setAiServiceListPagination } from "../../../Services/Redux/actionCreators/aiServiceListActions";
 
 const ServiceCollection = ({ classes }) => {
+  const { serviceList } = useSelector(state => ({
+    serviceList: state.aiServiceList.data,
+  }));
   const { limit, offset, totalCount } = useSelector(state => ({
     limit: state.aiServiceList.pagination.limit,
     offset: state.aiServiceList.pagination.offset,
@@ -24,6 +28,10 @@ const ServiceCollection = ({ classes }) => {
   const handlePageChange = offset => {
     dispatch(setAiServiceListPagination({ offset }));
   };
+
+  if (isEmpty(serviceList)) {
+    return <CardGroup />;
+  }
 
   return (
     <div className={classes.serviceCollection}>

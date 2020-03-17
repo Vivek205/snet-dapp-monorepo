@@ -12,6 +12,10 @@ export const useStyles = MUITheme => ({
       lineHeight: "23px",
     },
   },
+  alertBoxBtnContainer: {
+    marginTop: 23,
+    alignItems: "flex-end",
+  },
   technicalInfo: {
     alignItems: "center",
     [MUITheme.breakpoints.down("sm")]: { marginBottom: 25 },
@@ -21,7 +25,7 @@ export const useStyles = MUITheme => ({
     marginBottom: 15,
     [MUITheme.breakpoints.down("sm")]: {
       paddingLeft: 0,
-      marginBottom: 0,
+      margin: "15px 0 0",
     },
   },
   owmnerMMTextfield: {
@@ -29,6 +33,7 @@ export const useStyles = MUITheme => ({
       "& div": {
         maxWidth: "100%",
         flexBasis: "100%",
+        "& + div": { display: "none" },
       },
     },
   },
