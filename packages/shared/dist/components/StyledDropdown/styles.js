@@ -19,6 +19,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
         letterSpacing: 0.4
+      },
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: MUITheme.palette.border.inputBorder
       }
     },
     selectEmpty: {

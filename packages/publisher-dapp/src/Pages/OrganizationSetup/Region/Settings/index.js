@@ -112,7 +112,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               icon
               name="id"
               label="ETCD Endpoint"
-              description="Enter all the ETCD end points that will be used. separated by comma and press enter"
+              description="Enter all the ETCD end points that will be used."
               onKeyUp={handleAddEndpoints}
               inputRef={etcdEndpointsRef}
             />

@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import JumioLogo from "shared/dist/assets/images/jumio.png";
 import SNETButton from "shared/dist/components/SNETButton";
 import { documentList } from "./content";
 import { useStyles } from "./styles";
@@ -73,7 +74,7 @@ class Individual extends Component {
               </Typography>
             </Grid>
             <Grid item sx={12} sm={12} md={4} lg={4} className={classes.jumioLogo}>
-              <img src="http://placehold.it/180x63" alt="Jumio" />
+              <img src={JumioLogo} alt="Jumio" />
             </Grid>
           </Grid>
           <Grid item sx={12} sm={12} md={12} lg={12} className={classes.docListSection}>
