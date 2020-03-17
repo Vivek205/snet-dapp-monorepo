@@ -27,7 +27,7 @@ var useStyles = function useStyles(MUITheme) {
         color: MUITheme.palette.text.darkGrey,
         fontFamily: MUITheme.typography.fontFamily,
         fontSize: 16,
-        lineHeight: '20px',
+        lineHeight: "20px",
         resize: "none"
       }
     },
@@ -41,7 +41,7 @@ var useStyles = function useStyles(MUITheme) {
       left: 0,
       padding: "0 10px 0 5px",
       color: MUITheme.palette.text.darkGrey,
-      transform: 'translate(5px, -9px) scale(0.90)'
+      transform: "translate(5px, -9px) scale(0.90)"
     },
     charLength: {
       marginBottom: 25,
