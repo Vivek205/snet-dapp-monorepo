@@ -12,6 +12,7 @@ import DefaultHelmet from "./Services/Helmet";
 import { aws_config } from "./Services/AWS/aws_config";
 import GlobalLoader from "./Components/GlobalLoader";
 import initQuantcast from "shared/dist/scripts/quantcast";
+import initHotjar from "snet-dapp-redesign/src/assets/externalScripts/hotjar";
 
 Amplify.configure(aws_config);
 
@@ -23,6 +24,10 @@ history.listen(location => {
   ReactGA.set({ page: location.pathname });
   ReactGA.pageview(location.pathname);
 });
+
+if (process.env.REACT_APP_HOTJAR_ID && process.env.REACT_APP_HOTJAR_SV) {
+  initHotjar(process.env.REACT_APP_HOTJAR_ID, process.env.REACT_APP_HOTJAR_SV);
+}
 
 function App() {
   return (
