@@ -21,7 +21,7 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
 
   const clearAlert = () => {
     clearTimeout(clearAlertTimeout);
-    clearAlertTimeout = setTimeout(() => setAlert({}), 2000);
+    clearAlertTimeout = setTimeout(() => setAlert({}), 1000);
   };
 
   const handleCopyToClipboard = () => {
@@ -31,15 +31,26 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
 
   return (
     <Grid Item>
-      <Typography variant="h6" className={classes.configTitle}>
+      <Typography variant="subtitle1" className={classes.configTitle}>
         Sample Daemon config
       </Typography>
-      <PrettyPrintJson data={config} />
-      <CopyToClipboard text={JSON.stringify(config)} onCopy={handleCopyToClipboard}>
-        <SNETButton color="primary" variant="text" children="copy config to clipboard" />
-      </CopyToClipboard>
-      <AlertText type={alert.type} message={alert.message} />
-      <p>{footerNote}</p>
+      <div className={classes.grayBoxContainer}>
+        <Grid container className={classes.grayBox}>
+          <PrettyPrintJson data={config} />
+
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.configBtnContainer}>
+            <CopyToClipboard text={JSON.stringify(config)} onCopy={handleCopyToClipboard}>
+              <SNETButton color="primary" variant="text" children="copy config to clipboard" />
+            </CopyToClipboard>
+            <div className={classes.alertText}>
+              <AlertText type={alert.type} message={alert.message} />
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+      <Typography variant="subtitle1" className={classes.configFooter}>
+        {footerNote}
+      </Typography>
     </Grid>
   );
 };
