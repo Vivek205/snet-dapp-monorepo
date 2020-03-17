@@ -45,7 +45,7 @@ const tabs = [
     newTab: false,
   },
   {
-    title: "Claims",
+    title: "ProviderControlService",
     link: `/${Routes.USER_PROFILE}/claims`,
     newTab: false,
   },

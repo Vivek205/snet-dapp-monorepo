@@ -16,7 +16,7 @@ export const useStyles = MUITheme => ({
     flexDirection: "column",
   },
   description: {
-    paddingLeft: 30,
+    paddingLeft: 40,
     "& p": {
       marginTop: 20,
       color: MUITheme.palette.text.lightGrey,
@@ -54,5 +54,8 @@ export const useStyles = MUITheme => ({
     fontSize: 12.17,
     letterSpacing: 0.4,
     lineHeight: "16px",
+  },
+  errorField: {
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: MUITheme.palette.border.alertBox },
   },
 });

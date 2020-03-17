@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,7 +15,7 @@ import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { APIError } from "shared/dist/utils/API";
-import { organizationTypes, organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { organizationTypes } from "../../../Utils/organizationSetup";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, email, ownerEmail } = useSelector(state => ({
@@ -23,16 +23,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     email: state.user.email,
     ownerEmail: state.organization.owner,
   }));
-  const { name, type, status, uuid, ownerFullName, ownerAddress } = organization;
+  const { name, type, status, uuid, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (organization.state.state === organizationSetupStatuses.PUBLISHED) {
-      setAlert({ type: alertTypes.SUCCESS, message: "Organization has been published in the blockchain" });
-    }
-  }, [organization.state.state]);
 
   const handleSubmit = () => {
     setAlert({});
@@ -57,8 +51,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     setAlert({});
     try {
       await dispatch(organizationActions.submitForApproval(organization));
-      const ipfsHash = await dispatch(organizationActions.publishToIPFS(uuid));
-      await dispatch(organizationActions.createAndSaveTransaction(organization, ipfsHash));
+      const metadataIpfsUri = await dispatch(organizationActions.publishToIPFS(uuid));
+      await dispatch(organizationActions.publishOrganizationInBlockchain(organization, metadataIpfsUri, history));
     } catch (error) {
       if (error instanceof APIError) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -68,7 +62,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   };
 
   const handleBack = () => {
-    history.push(OrganizationSetupRoutes.REGION.path);
+    history.push(OrganizationSetupRoutes.REGION.path.replace("orgUuid", organization.uuid));
   };
 
   const shouldPublishBeDisabled = () => !ownerAddress || email !== ownerEmail;
@@ -78,8 +72,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       <div className={classes.box}>
         <Typography variant="h6">Publish Organization to Blockchain</Typography>
         <Typography className={classes.description}>
-          Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter videbatur
-          hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+          Add your organisation to the blockchain, making sure you enter all relevant information correctly, as once the
+          data is submitted you will be unable to edit it.
         </Typography>
         <div className={classes.inputFields}>
           <SNETTextfield
@@ -94,17 +88,10 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
           />
           <SNETTextfield
             label="Company Organization Name"
-            description="The company name is displayed as the provider to users on the AI service page name.11111. "
+            description="The company name is displayed as the provider to users on the AI service page name. "
             name="name"
             disabled
             value={name}
-          />
-          <SNETTextfield
-            label="Owners Full Name"
-            description="You should be owner of your company’s legal entity."
-            name="ownerFullName"
-            disabled
-            value={ownerFullName}
           />
         </div>
         <TechnicalInfo />

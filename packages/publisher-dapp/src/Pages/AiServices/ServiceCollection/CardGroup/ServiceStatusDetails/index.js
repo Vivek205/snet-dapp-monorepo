@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { Link } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -12,9 +13,10 @@ import Usage from "./Usage";
 import Pricing from "./Pricing";
 import Changelog from "./Changelog";
 import { useStyles } from "./styles";
+import { ConfigurationServiceRequest } from "../../../../../Utils/Daemon/ConfigurationService";
 
 const ServiceStatusDetails = props => {
-  const { classes, status, groups } = props;
+  const { classes, status, groups, editServiceLink } = props;
   const [activeTab] = useState(2);
 
   const tabs = [
@@ -25,6 +27,12 @@ const ServiceStatusDetails = props => {
   ];
 
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
+
+  // TODO use the appropriate endpoint of the service's daemon
+  const validateDaemonConfig = async (serviceEndpoint = "https://example-service-a.singularitynet.io:8083") => {
+    const configurationServiceRequest = new ConfigurationServiceRequest(serviceEndpoint);
+    await configurationServiceRequest.getConfiguration();
+  };
 
   return (
     <div className={classes.serviceStatusDetailsMainContainer}>
@@ -45,8 +53,11 @@ const ServiceStatusDetails = props => {
         </div>
       </div>
       <div className={classes.serviceStatusActions}>
-        <SNETButton children="edit" color="primary" variant="contained" />
+        <Link to={editServiceLink}>
+          <SNETButton children="edit" color="primary" variant="contained" />
+        </Link>
         <SNETButton children="pause service" color="primary" variant="contained" />
+        <SNETButton children="validate daemon" color="primary" variant="contained" onClick={validateDaemonConfig} />
       </div>
     </div>
   );

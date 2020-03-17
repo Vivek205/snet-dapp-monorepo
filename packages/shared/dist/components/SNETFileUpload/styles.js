@@ -101,6 +101,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }),
     uploadBtns: {
       marginTop: 20,
+      "& a": {
+        textDecoration: "none"
+      },
       "& button": {
         padding: 0,
         "&:last-of-type": {

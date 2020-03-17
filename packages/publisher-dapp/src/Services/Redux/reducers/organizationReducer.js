@@ -14,14 +14,14 @@ const initialState = {
   id: "",
   uuid: "",
   name: "",
+  foundInBlockchain: false,
   type: organizationTypes.ORGANIZATION,
   duns: "",
   website: "",
-  ownerFullName: "",
   phone: "",
   shortDescription: "",
   longDescription: "",
-  metadataIpfsHash: "",
+  metadataIpfsUri: "",
   contacts: [
     { type: ContactsTypes.GENERAL, email: "", phone: "" },
     { type: ContactsTypes.SUPPORT, email: "", phone: "" },
@@ -44,8 +44,8 @@ const initialState = {
   ],
   assets: {
     heroImage: {
-      raw: "",
-      fileType: "",
+      url: "",
+      ipfsUri: "",
     },
   },
   orgAddress: {
@@ -67,7 +67,7 @@ const initialState = {
 
 const OrganizationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case organizationActions.SET_ALL_ATTRIBUTES:
+    case organizationActions.SET_ALL_ORG_ATTRIBUTES:
       return { ...state, ...action.payload };
     case organizationActions.SET_ONE_BASIC_DETAIL:
       return { ...state, ...action.payload };
@@ -105,6 +105,10 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, ["state"]: { ...state.state, ["state"]: action.payload } };
     case organizationActions.SET_ORG_SAME_MAILING_ADDRESS:
       return { ...state, orgAddress: { ...state.orgAddress, sameMailingAddress: action.payload } };
+    case organizationActions.SET_ORG_HERO_IMAGE_URL:
+      return { ...state, assets: { ...state.assets, heroImage: { ...state.assets.heroImage, url: action.payload } } };
+    case organizationActions.SET_ORG_FOUND_IN_BLOCKCHAIN:
+      return { ...state, foundInBlockchain: action.payload };
     default:
       return state;
   }

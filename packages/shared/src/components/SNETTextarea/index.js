@@ -18,6 +18,7 @@ const SNETTextarea = ({
   maxCount,
   showInfoIcon,
   extraInfo,
+  disabled,
 }) => {
   return (
     <div className={classes.textareaIconContainer}>
@@ -28,7 +29,7 @@ const SNETTextarea = ({
       ) : null}
       <div className={classes.textareaContainer}>
         <span className={classes.label}>{label}</span>
-        <textarea rows={rowCount} cols={colCount} name={name} value={value} onChange={onChange}>
+        <textarea rows={rowCount} cols={colCount} name={name} value={value} onChange={onChange} disabled={disabled}>
           {content}
         </textarea>
         {maxCount ? (

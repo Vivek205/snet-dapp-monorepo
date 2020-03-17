@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -25,7 +25,7 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 const CreateNewServicePopup = ({ classes, open, handleClose }) => {
   const dispatch = useDispatch();
-
+  const { orgUuid } = useParams();
   const [serviceName, setServiceName] = useState("");
   const [alert, setAlert] = useState({});
   const history = useHistory();
@@ -34,27 +34,25 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
     handleClose();
   };
 
-  const handleContinue = async () => {
-    // Reset Error
+  const handleContinue = async e => {
+    e.preventDefault();
     setAlert({ type: alertTypes.ERROR, message: undefined });
 
-    // TODO: Need to get the Org UUID from Redux
-    const orgUuid = "test_org_uuid";
-
     try {
-      // Do Validation
       const isNotValid = validator({ serviceName }, serviceValidationConstraints);
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
       // Call the API to Save the Service Name
-      await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
-      history.push(GlobalRoutes.AI_SERVICE_CREATION.path);
+      const { service_uuid: serviceUuid } = await dispatch(aiServiceDetailsActions.createService(orgUuid, serviceName));
+      history.push(
+        GlobalRoutes.AI_SERVICE_CREATION.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+      );
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
-      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Tray again later" });
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to process the request. Try again later" });
     }
   };
 
@@ -70,31 +68,27 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
             </IconButton>
           }
         />
-        <CardContent className={classes.popupContent}>
-          <Typography className={classes.popupDescription}>
-            Your AI service needs to have a unique name that does not duplicate any other existing service on the AI
-            Marketpalce.
-          </Typography>
-          <SNETTextfield
-            name="AI Service Name"
-            label="AI Service Name"
-            icon
-            maxCount="50"
-            minCount="15"
-            onChange={e => setServiceName(e.target.value)}
-          />
-          <AlertBox type={alert.type} message={alert.message} />
-        </CardContent>
-        <CardActions className={classes.btnContainer}>
-          <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
-          <SNETButton
-            children="create"
-            color="primary"
-            variant="contained"
-            disabled={!serviceName}
-            onClick={handleContinue}
-          />
-        </CardActions>
+        <form onSubmit={handleContinue}>
+          <CardContent className={classes.popupContent}>
+            <Typography className={classes.popupDescription}>
+              Your AI service needs to have a unique name that does not duplicate any other existing service on the AI
+              Marketpalce.
+            </Typography>
+            <SNETTextfield
+              name="AI Service Name"
+              label="AI Service Name"
+              icon
+              maxCount="50"
+              minCount="15"
+              onChange={e => setServiceName(e.target.value)}
+            />
+            <AlertBox type={alert.type} message={alert.message} />
+          </CardContent>
+          <CardActions className={classes.btnContainer}>
+            <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
+            <SNETButton type="submit" children="create" color="primary" variant="contained" disabled={!serviceName} />
+          </CardActions>
+        </form>
       </Card>
     </Modal>
   );

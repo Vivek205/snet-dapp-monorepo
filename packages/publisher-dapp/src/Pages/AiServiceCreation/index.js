@@ -1,54 +1,87 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import last from "lodash/last";
 
 import ProgressBar from "shared/dist/components/ProgressBar";
-
 import { progressText, serviceCreationSections } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
 import { useStyles } from "./styles";
+import { aiServiceDetailsActions, aiServiceListActions, loaderActions } from "../../Services/Redux/actionCreators";
+import Loader from "./Loader";
+import { LoaderContent } from "../../Utils/Loader";
 
-import { aiServiceDetailsActions } from "../../Services/Redux/actionCreators";
+class AiServiceCreation extends Component {
+  initData = async () => {
+    const {
+      getAiServiceList,
+      getServiceDetails,
+      initServiceCreationLoader,
+      stopInitServiceCreationLoader,
+      orgId,
+    } = this.props;
+    const { orgUuid, serviceUuid } = this.props.match.params;
+    initServiceCreationLoader();
+    await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    stopInitServiceCreationLoader();
+  };
 
-const AiServiceCreation = ({ classes, location }) => {
-  const dispatch = useDispatch();
+  componentDidMount = async () => {
+    await this.initData();
+  };
 
-  // TODO: Need to get the Org & service UUID from Redux
-  const orgUuid = "test_org_uuid";
-  const serviceUuid = "154a074ceecd4a7b9ae01d283823db8f";
+  componentDidUpdate = async prevProps => {
+    const { orgUuid, serviceUuid } = this.props;
+    if (orgUuid !== prevProps.orgUuid || serviceUuid !== prevProps.serviceUuid) {
+      await this.initData();
+    }
+  };
 
-  useEffect(() => {
-    dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid));
-  }, [dispatch]);
-
-  const activeSection = () => {
-    const { pathname: path } = location;
+  activeSection = () => {
+    const path = this.props.location.pathname;
     const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
-
-    if (path.includes(ServiceCreationRoutes.PROFILE.path)) {
+    if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
     }
-    if (path.includes(ServiceCreationRoutes.DEMO.path)) {
+    if (path.includes(last(ServiceCreationRoutes.DEMO.path.split("/")))) {
       return DEMO;
     }
-    if (path.includes(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path)) {
+    if (path.includes(last(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path.split("/")))) {
       return PRICING_AND_DISTRIBUTION;
     }
-    if (path.includes(ServiceCreationRoutes.SUBMIT.path)) {
+    if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
       return SUBMIT;
     }
     return PROFILE;
   };
 
-  return (
-    <div className={classes.serviceCreationContainer}>
-      <Heading {...activeSection().heading} />
-      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
-      <ServiceCreationRouter />
-    </div>
-  );
-};
-export default withStyles(useStyles)(AiServiceCreation);
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.serviceCreationContainer}>
+        <Heading {...this.activeSection().heading} />
+        <ProgressBar activeSection={this.activeSection().key} progressText={progressText} />
+        <ServiceCreationRouter />
+        <Loader />
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  orgId: state.organization.id,
+  orgUuid: state.organization.uuid,
+  serviceUuid: state.aiServiceDetails.uuid,
+});
+
+const mapDispatchToProps = dispatch => ({
+  initServiceCreationLoader: () =>
+    dispatch(loaderActions.startInitServiceCreationLoader(LoaderContent.INIT_SERVICE_CREATION)),
+  stopInitServiceCreationLoader: () => dispatch(loaderActions.stopInitServiceCreationLoader()),
+  getAiServiceList: (orgUuid, pagination) => dispatch(aiServiceListActions.getAiServiceList(orgUuid, pagination)),
+  getServiceDetails: (orgUuid, serviceUuid, orgId) =>
+    dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
       flexDirection: "column"
     },
     description: _defineProperty({
-      paddingLeft: 30,
+      paddingLeft: 40,
       "& p": _defineProperty({
         marginTop: 20,
         color: MUITheme.palette.text.lightGrey,
@@ -68,6 +68,11 @@ var useStyles = function useStyles(MUITheme) {
       fontSize: 12.17,
       letterSpacing: 0.4,
       lineHeight: "16px"
+    },
+    errorField: {
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: MUITheme.palette.border.alertBox
+      }
     }
   };
 };

@@ -104,8 +104,17 @@ export const useStyles = MUITheme => ({
       "&:nth-child(2)": { margin: "0 25px 0 35px" },
     },
   },
-
+  addedTagsContainer: {
+    paddingTop: 30,
+    // display: "flex",
+    "& svg": {
+      color: MUITheme.palette.text.disabled,
+      padding: "5px 10px 0 0",
+      fontSize: 20,
+    },
+  },
   card: {
+    boxSizing: "border-box",
     width: "100%",
     minHeight: 100,
     boxShadow: "none",
@@ -114,4 +123,12 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
   },
   chip: { marginLeft: 10 },
+  projUrlContainer: { paddingLeft: 29 },
+  alertTextContainer: {
+    paddingTop: 25,
+    "& span": {
+      padding: "10px 45px 20px",
+      display: "inline-block",
+    },
+  },
 });

@@ -12,6 +12,8 @@ import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 
+const devPortalUrl = "https://dev.singularitynet.io/";
+
 class AiServices extends Component {
   state = {
     showPopUp: false,
@@ -63,7 +65,14 @@ class AiServices extends Component {
                   variant="contained"
                   onClick={this.handleCreateService}
                 />
-                <SNETButton color="primary" variant="text" children="view documentation" />
+                <SNETButton
+                  color="primary"
+                  variant="text"
+                  children="view documentation"
+                  href={devPortalUrl}
+                  target="_blank"
+                  rel="noopener"
+                />
               </div>
             </Grid>
             <Grid item xs={12} sm={5} md={5} lg={5} className={classes.media}>

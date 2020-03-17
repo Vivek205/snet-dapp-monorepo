@@ -29,7 +29,8 @@ var SNETTextarea = function SNETTextarea(_ref) {
       minCount = _ref.minCount,
       maxCount = _ref.maxCount,
       showInfoIcon = _ref.showInfoIcon,
-      extraInfo = _ref.extraInfo;
+      extraInfo = _ref.extraInfo,
+      disabled = _ref.disabled;
   return _react.default.createElement("div", {
     className: classes.textareaIconContainer
   }, showInfoIcon ? _react.default.createElement("div", {
@@ -43,7 +44,8 @@ var SNETTextarea = function SNETTextarea(_ref) {
     cols: colCount,
     name: name,
     value: value,
-    onChange: onChange
+    onChange: onChange,
+    disabled: disabled
   }, content), maxCount ? _react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {

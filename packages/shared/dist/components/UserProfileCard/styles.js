@@ -8,20 +8,19 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     Userdetails: {
-      padding: "15px 25px",
+      padding: "12px 18px",
       display: "flex",
-      marginBottom: 10,
       "& svg": {
         color: MUITheme.palette.text.lightGrey,
-        fontSize: 66
+        fontSize: 81
       },
       "& div": {
-        marginLeft: 22,
+        marginLeft: 16,
         "& h4": {
           fontWeight: 600,
           margin: 0,
           color: MUITheme.palette.text.darkGrey,
-          lineHeight: "27px",
+          lineHeight: "25px",
           fontSize: 20
         },
         "& a": {

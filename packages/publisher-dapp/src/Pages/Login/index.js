@@ -33,8 +33,7 @@ const Login = ({ history }) => {
     <Fragment>
       <SNETLogin
         title="Welcome Back"
-        //   TODO : create a page for forgotPassword and pass the link here
-        //   forgotPasswordLink={}
+        forgotPasswordLink={GlobalRoutes.FORGOT_PASSWORD.path}
         loginError={error}
         onSubmit={handleSubmit}
       />
