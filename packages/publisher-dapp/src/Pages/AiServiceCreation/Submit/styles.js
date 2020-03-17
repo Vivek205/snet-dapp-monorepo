@@ -134,6 +134,7 @@ export const useStyles = MUITheme => ({
     textAlign: "right",
   },
   configTitle: {
+    marginTop: 16,
     border: "none !important",
     fontWeight: "normal",
   },

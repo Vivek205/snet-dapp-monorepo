@@ -48,7 +48,9 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
           </Grid>
         </Grid>
       </div>
-      <p>{footerNote}</p>
+      <Typography variant="subtitle1" className={classes.configTitle}>
+        {footerNote}
+      </Typography>
     </Grid>
   );
 };
