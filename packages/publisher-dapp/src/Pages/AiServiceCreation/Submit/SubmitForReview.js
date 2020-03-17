@@ -15,14 +15,25 @@ import DaemonConfig from "./DaemonConfig";
 class SubmitForReview extends React.Component {
   state = { daemonConfig: {} };
 
-  componentDidMount = async () => {
+  fetchSampleDaemonConfig = async () => {
     try {
       const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
-      const { daemon_config } = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
+      const daemon_config = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
     }
+  };
+
+  componentDidUpdate = async prevProps => {
+    const { serviceDetails } = this.props;
+    if (serviceDetails.uuid !== prevProps.serviceDetails.uuid) {
+      await this.fetchSampleDaemonConfig();
+    }
+  };
+
+  componentDidMount = async () => {
+    await this.fetchSampleDaemonConfig();
   };
 
   handleConnectMM = async () => {
@@ -57,7 +68,7 @@ class SubmitForReview extends React.Component {
               inputs needs to be refined. You will be able to review and respond to the feedback from the SNET Admins
               here.
             </Typography>
-            <DaemonConfig config={daemonConfig} />
+            <DaemonConfig config={daemonConfig} footerNote="lore ipsum doler amet" />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"

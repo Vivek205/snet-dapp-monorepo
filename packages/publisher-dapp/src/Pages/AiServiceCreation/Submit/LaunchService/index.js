@@ -22,7 +22,7 @@ class LaunchService extends React.Component {
       if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
         return;
       }
-      const { daemon_config } = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
+      const daemon_config = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
@@ -73,7 +73,7 @@ class LaunchService extends React.Component {
             needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
-          <DaemonConfig config={daemonConfig} />
+          <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
         <MessageToReviewers />
       </div>

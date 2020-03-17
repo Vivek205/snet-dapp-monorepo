@@ -13,7 +13,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { itemsPerPageOptions } from "./content";
 import { useStyles } from "./styles";
-import { ControlServiceRequest } from "../../Utils/Daemon/Claims";
+import { ControlServiceRequest } from "../../Utils/Daemon/ControlService";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
 const controlServiceRequest = new ControlServiceRequest("https://example-service-a.singularitynet.io:8088");
