@@ -65,8 +65,10 @@ class AiServiceCreation extends Component {
   };
 
   handleSubmit = () => {
-    const { orgUuid, serviceUuid, history } = this.props;
-    history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    const { orgUuid, serviceUuid, history, location } = this.props;
+    if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
+      history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    }
   };
 
   render() {
