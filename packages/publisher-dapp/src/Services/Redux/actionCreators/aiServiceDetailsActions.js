@@ -221,6 +221,7 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
+    dispatch(setAiServiceStateState(serviceCreationStatus.DRAFT));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -356,7 +357,7 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
 
 export const submitServiceDetailsForReview = (orgId, orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
+    dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_SERVICE_FOR_REVIEW));
     // TODO remove orgId. MPS has to figure out orgId from orgUuid
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails, orgId);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));

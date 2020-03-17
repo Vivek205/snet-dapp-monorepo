@@ -64,8 +64,9 @@ class AiServiceCreation extends Component {
     history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
   };
 
-  handleSubmit = () => {
-    const { orgUuid, serviceUuid, history, location } = this.props;
+  handleSubmit = async () => {
+    const { orgUuid, serviceUuid, history, location, saveServiceDetails, serviceDetails } = this.props;
+    await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
     if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
       history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
     }
@@ -98,6 +99,7 @@ const mapStateToProps = state => ({
   serviceUuid: state.aiServiceDetails.uuid,
   serviceFoundInBlockchain: state.aiServiceDetails.foundInBlockchain,
   serviceTouched: state.aiServiceDetails.touched,
+  serviceDetails: state.aiServiceDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -107,5 +109,7 @@ const mapDispatchToProps = dispatch => ({
   getAiServiceList: (orgUuid, pagination) => dispatch(aiServiceListActions.getAiServiceList(orgUuid, pagination)),
   getServiceDetails: (orgUuid, serviceUuid, orgId) =>
     dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId)),
+  saveServiceDetails: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));
