@@ -8,6 +8,7 @@ const Signup = lazy(() => import("../Pages/Signup"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const AcceptAgreement = lazy(() => import("../Pages/AcceptServiceAgreement"));
+const UserProfile = lazy(() => import("../Pages/UserProfile"));
 
 const Landing = lazy(() => import("../Pages/Landing"));
 
@@ -22,6 +23,7 @@ const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
+const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -54,6 +56,11 @@ export const GlobalRoutes = {
     path: "/acceptagreement",
     component: AcceptAgreementComponent,
   },
+  USER_PROFILE: {
+    name: "userprofile",
+    path: "/userprofile",
+    component: UserProfileComponent,
+  },
 };
 
 export const setupRouteAuthentications = () => {
@@ -69,6 +76,11 @@ export const setupRouteAuthentications = () => {
     ACCEPT_AGREEMENT: {
       ...GlobalRoutes.ACCEPT_AGREEMENT,
       isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    USER_PROFILE: {
+      ...GlobalRoutes.USER_PROFILE,
+      isAllowed: state.user.isLoggedIn,
       redirectTo: GlobalRoutes.LOGIN.path,
     },
   };
