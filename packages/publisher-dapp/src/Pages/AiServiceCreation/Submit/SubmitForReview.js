@@ -5,14 +5,12 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 
 import SNETTextarea from "shared/dist/components/SNETTextarea";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
-import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
-import { alertTypes } from "shared/dist/components/AlertBox";
 import { serviceCreationStatus } from "../constant";
 import { checkIfKnownError } from "shared/src/utils/error";
 
@@ -39,13 +37,6 @@ class SubmitForReview extends React.Component {
 
   componentDidMount = async () => {
     await this.fetchSampleDaemonConfig();
-  };
-
-  handleConnectMM = async () => {
-    const sdk = await initSDK();
-    if (sdk.account.address) {
-      this.setState({ MMAddress: sdk.account.address, disabledTextfield: false });
-    }
   };
 
   handleCommentChange = event => {
@@ -108,12 +99,6 @@ class SubmitForReview extends React.Component {
             </div>
             <AlertBox type={alert.type} message={alert.message} />
             <div className={classes.btnContainer}>
-              <SNETButton
-                children="connect metamask"
-                color="primary"
-                variant="contained"
-                onClick={this.handleConnectMM}
-              />
               <SNETButton
                 children="submit for review"
                 color="primary"
