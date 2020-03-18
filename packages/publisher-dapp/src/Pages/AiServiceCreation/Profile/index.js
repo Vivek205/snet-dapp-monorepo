@@ -174,16 +174,18 @@ const Profile = ({ classes, _location }) => {
             value={serviceDetails.name}
             onChange={handleControlChange}
           />
-          <SNETTextfield
-            icon
-            name="id"
-            label="AI Service Id"
-            minCount={0}
-            maxCount={50}
-            description="The ID of your service cannot be same ID as another service."
-            value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
-            onChange={handleControlChange}
-          />
+          <div className={classes.serviceIdContainer}>
+            <SNETTextfield
+              icon
+              name="id"
+              label="AI Service Id"
+              minCount={0}
+              maxCount={50}
+              description="The ID of your service cannot be same ID as another service."
+              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              onChange={handleControlChange}
+            />
+          </div>
           <ServiceIdAvailability
             serviceDetails={serviceDetails}
             id={serviceDetails.newId || serviceDetails.id}

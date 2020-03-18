@@ -186,11 +186,7 @@ export const useStyles = MUITheme => ({
     },
   },
   alertTextContainer: {
-    paddingTop: 25,
-    "& span": {
-      padding: "10px 45px 20px",
-      display: "inline-block",
-    },
+    "& span": { paddingLeft: 45 },
   },
   alertContainer: { marginTop: 40 },
 });

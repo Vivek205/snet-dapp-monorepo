@@ -41,7 +41,7 @@ const Demo = ({ classes }) => {
             </Typography>
             <div className={classes.downloadBtn}>
               <a href="https://github.com/singnet/snet-dapp/archive/master.zip" download>
-                <SNETButton children="download source code v1.03" color="primary" variant="contained" />
+                <SNETButton children="download source code" color="primary" variant="contained" />
               </a>
             </div>
             <hr />

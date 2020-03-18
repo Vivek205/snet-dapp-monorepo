@@ -24,7 +24,13 @@ export const useStyles = MUITheme => ({
   },
   wrapper: {
     padding: "21px 23px 21px",
-    "& h6": { fontWeight: 400 },
+    "& h6": {
+      fontWeight: 400,
+      "& a": {
+        color: MUITheme.palette.primary.main,
+        textDecoration: "none",
+      },
+    },
     "& hr": {
       margin: 0,
       backgroundColor: MUITheme.palette.text.lightGrey,
@@ -57,6 +63,7 @@ export const useStyles = MUITheme => ({
       "& li": {
         paddingTop: 24,
         listStyle: "none",
+        wordBreak: "break-word",
         "& span": { fontWeight: "bold" },
       },
     },

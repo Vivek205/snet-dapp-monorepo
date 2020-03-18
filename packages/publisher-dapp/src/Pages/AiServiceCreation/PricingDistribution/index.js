@@ -54,7 +54,7 @@ class PricingDistribution extends Component {
             <AdvancedFields />
             {alert.message ? (
               <div className={classes.alertContainer}>
-                <AlertBox type={alert.ERROR} message="message" />
+                <AlertBox type={alert.ERROR} message={alert.message} />
               </div>
             ) : null}
           </div>

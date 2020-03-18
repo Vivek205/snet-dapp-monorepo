@@ -13,7 +13,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 
 class SubmitForReview extends React.Component {
-  state = { daemonConfig: {} };
+  state = {
+    daemonConfig: {},
+    charCount: 0,
+  };
 
   fetchSampleDaemonConfig = async () => {
     try {
@@ -44,6 +47,7 @@ class SubmitForReview extends React.Component {
   };
 
   handleCommentChange = event => {
+    this.setState({ charCount: event.target.value.length });
     this.props.setServiceProviderComment(event.target.value);
   };
 
@@ -55,7 +59,7 @@ class SubmitForReview extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig } = this.state;
+    const { daemonConfig, MMAddress, charCount } = this.state;
 
     return (
       <Grid container className={classes.submitContainer}>
@@ -63,16 +67,14 @@ class SubmitForReview extends React.Component {
           <Typography variant="h6">Review Process</Typography>
           <div className={classes.wrapper}>
             <Typography className={classes.submitDescription}>
-              After you submitted your service, SNET admins will review your service protocals. This process could take
-              a few days. After the review you will be notified if your service as has been ACCEPTED or if some your
-              inputs needs to be refined. You will be able to review and respond to the feedback from the SNET Admins
-              here.
+              Once you have submitted your service, SingularityNET will review your service protocols. You will be
+              notified once the review has been completed, please be patient as this process could take a few days.
             </Typography>
             <DaemonConfig config={daemonConfig} footerNote="lore ipsum doler amet" />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
-                minCount={0}
+                minCount={charCount}
                 maxCount={5000}
                 rowCount={8}
                 colCount={105}
@@ -82,18 +84,21 @@ class SubmitForReview extends React.Component {
             </div>
             <AlertBox type={alert.type} message={alert.message} />
             <div className={classes.btnContainer}>
-              <SNETButton
-                children="connect metamask"
-                color="primary"
-                variant="contained"
-                onClick={this.handleConnectMM}
-              />
-              <SNETButton
-                children="submit for review"
-                color="primary"
-                variant="contained"
-                onClick={this.handleSubmitForReview}
-              />
+              {MMAddress ? (
+                <SNETButton
+                  children="submit for review"
+                  color="primary"
+                  variant="contained"
+                  onClick={this.handleSubmitForReview}
+                />
+              ) : (
+                <SNETButton
+                  children="connect metamask"
+                  color="primary"
+                  variant="contained"
+                  onClick={this.handleConnectMM}
+                />
+              )}
             </div>
           </div>
         </Grid>
