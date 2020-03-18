@@ -64,19 +64,21 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       },
       "& p": {
         marginLeft: 10,
-        color: "rgba(0,0,0,0.25)"
+        color: "rgba(0,0,0,0.25)",
+        fontSize: 18,
+        lineHeight: '23px'
       }
     },
     successfullUpload: {
       display: "flex",
       alignItems: "center",
       "& svg": {
-        color: MUITheme.palette.success,
+        color: MUITheme.palette.success.main,
         fontSize: 41
       },
       "& p": {
         marginLeft: 10,
-        color: MUITheme.palette.success
+        color: MUITheme.palette.success.main
       }
     },
     imgUploaderContainer: _defineProperty({

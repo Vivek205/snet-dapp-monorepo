@@ -16,7 +16,9 @@ export const useStyles = MUITheme => ({
     },
   },
   topSection: {
+    width: 590,
     padding: "0 10px",
+    margin: "0 auto",
     textAlign: "center",
     "& span": {
       marginTop: 16,
@@ -24,10 +26,9 @@ export const useStyles = MUITheme => ({
       color: MUITheme.palette.text.primary,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,
-      fontWeight: 200,
       lineHeight: "28px",
     },
-    "& + div": { paddingTop: 48 },
+    "& + div": { paddingTop: 33 },
   },
   description: {
     paddingTop: 15,

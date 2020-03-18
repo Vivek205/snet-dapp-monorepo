@@ -44,6 +44,7 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   uploadStatusContainer: {
     display: "flex",
+    alignItems: "center",
     fontSize: 18,
     lineHeight: "23px",
     "& svg": {
@@ -53,18 +54,20 @@ export const useStyles = makeStyles(MUITheme => ({
     "& p": {
       marginLeft: 10,
       color: "rgba(0,0,0,0.25)",
+      fontSize: 18,
+      lineHeight: "23px",
     },
   },
   successfullUpload: {
     display: "flex",
     alignItems: "center",
     "& svg": {
-      color: MUITheme.palette.success,
+      color: MUITheme.palette.success.main,
       fontSize: 41,
     },
     "& p": {
       marginLeft: 10,
-      color: MUITheme.palette.success,
+      color: MUITheme.palette.success.main,
     },
   },
   imgUploaderContainer: {
