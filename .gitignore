@@ -60,9 +60,7 @@ typings/
 # next.js build output
 .next
 
-# experimental: github workflows / actions
-.github/*
-
 # IDE
 .vscode/
 .idea/
+.history/

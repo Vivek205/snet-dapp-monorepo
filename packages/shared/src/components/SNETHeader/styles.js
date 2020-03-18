@@ -1,28 +1,29 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
+  appBar: {
+    padding: "14px 60px",
+    flexDirection: "row",
+    alignItems: "center",
+    boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
+    zIndex: 1110,
+  },
+  purple: {
+    "& h5": { color: `${MUITheme.palette.text.white} !important` },
+  },
   logoContainer: {
     display: "flex",
     alignItems: "center",
-    flexGrow: 1,
     "& img": { width: 172 },
+    "& h5": {
+      marginLeft: 11,
+      fontWeight: 300,
+      lineHeight: "30px",
+    },
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
-  },
-  portalName: {
-    marginLeft: 8,
-    color: MUITheme.palette.text.darkGrey,
-    fontSize: 22,
-    fontWeight: 300,
-    lineHeight: "30px",
   },
   navContainer: {
     flexGrow: 1,
-    [MUITheme.breakpoints.down("md")]: { padding: 0 },
-  },
-  actionsContainer: {
-    flexGrow: 1,
-    "& *": { marginLeft: 5 },
-    textAlign: "end",
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
   },
 }));

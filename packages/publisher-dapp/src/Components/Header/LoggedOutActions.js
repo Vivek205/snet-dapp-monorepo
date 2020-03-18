@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
 
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const LoggedOutActions = () => {
@@ -11,7 +11,7 @@ const LoggedOutActions = () => {
     <Fragment>
       <SNETButton children="login" color="primary" onClick={() => history.push(GlobalRoutes.LOGIN.path)} />
       <SNETButton
-        children="enroll"
+        children="get started"
         color="primary"
         variant="contained"
         onClick={() => history.push(GlobalRoutes.ENROLL.path)}

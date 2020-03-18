@@ -1,15 +1,17 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Link, useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 
+import signInImage from "shared/dist/assets/images/signIn.png";
+import SNETButton from "shared/dist/components/SNETButton";
+import DefaultUserIcon from "shared/dist/assets/images/defaultUser.png";
+
 import { loggedInDetails, loggedOutDetails } from "./content";
-import SNETButton from "shared/src/components/SNETButton";
-import { useSelector, useDispatch } from "react-redux";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import SingularityLogo from "shared/src/assets/images/avatar.png";
 import { useStyles } from "./styles";
 import { loginActions } from "../../../Services/Redux/actionCreators/userActions";
 
@@ -29,7 +31,7 @@ const LoginBanner = ({ classes, orgImg }) => {
         <Typography variant="h6">Sign in as</Typography>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.signInContent}>
           <Grid item sx={12} sm={4} md={4} lg={4} className={classes.signInMedia}>
-            <Avatar alt="Singularity" src={orgImg || SingularityLogo} className={classes.avatar} />
+            <Avatar alt="Singularity" src={orgImg || DefaultUserIcon} className={classes.avatar} />
             <div className={classes.userDetails}>
               <Typography variant="h6">{nickname}</Typography>
               <Typography variant="subtitle2">{email}</Typography>
@@ -60,7 +62,7 @@ const LoginBanner = ({ classes, orgImg }) => {
       <Typography variant="h6">Sign in</Typography>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.signInContent}>
         <Grid item sx={12} sm={4} md={4} lg={4} className={classes.signInMedia}>
-          <img src="http://placehold.it/250x150" alt="Login In" />
+          <img src={signInImage} alt="Login In" />
         </Grid>
         <Grid item sx={12} sm={8} md={8} lg={8} className={classes.signInRightContent}>
           <Typography className={classes.signInSubtitle}>{loggedOutDetails.subtitle}</Typography>

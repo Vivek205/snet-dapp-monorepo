@@ -5,9 +5,15 @@ import { useStyles } from "./styles";
 
 const RatingsCount = ({ ratingGiven, totalRating }) => {
   const classes = useStyles();
+  const parseRatingGiven = () => {
+    if (!ratingGiven || isNaN(parseFloat(ratingGiven).toFixed(1))) {
+      return null;
+    }
+    return ratingGiven;
+  };
   return (
     <span className={classes.ratedCount}>
-      {parseFloat(ratingGiven).toFixed(1)} ({totalRating ? `${totalRating}` : 0})
+      {parseRatingGiven()} ({totalRating ? `${totalRating}` : 0})
     </span>
   );
 };

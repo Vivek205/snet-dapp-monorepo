@@ -3,6 +3,8 @@ import { loaderActions } from "../actionCreators";
 const initialState = {
   app: { isLoading: false, title: "", content: "" },
   aiServiceList: { isLoading: false },
+  initServiceCreation: { isLoading: false, title: "", content: "" },
+  validateServiceId: { isLoading: false },
 };
 
 const loaderReducer = (state = initialState, action) => {
@@ -11,6 +13,10 @@ const loaderReducer = (state = initialState, action) => {
       return { ...state, app: action.payload };
     case loaderActions.SET_AI_SERVICE_LIST_LOADER:
       return { ...state, aiServiceList: action.payload };
+    case loaderActions.SET_INIT_SERVICE_CREATION_LOADER:
+      return { ...state, initServiceCreation: action.payload };
+    case loaderActions.SET_VALIDATE_SERVICE_ID_LOADER:
+      return { ...state, validateServiceId: action.payload };
     default:
       return state;
   }

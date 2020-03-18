@@ -33,7 +33,7 @@
     "react-async-script-loader": "^0.3.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
-    "react-dropzone": "^8.0.4",
+    "react-dropzone": "^10.2.1",
     "react-file-drop": "^0.2.8",
     "react-ga": "^2.6.0",
     "react-google-charts": "^3.0.10",

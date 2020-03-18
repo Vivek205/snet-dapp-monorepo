@@ -96,7 +96,6 @@ var snetBackgroundRed = _colors.red[100]; // Definitions
 
 var spacingUnit = 8;
 var snetFont = "Muli";
-var minimumWidth = "400px";
 var minimumTabHeight = 160;
 
 var SNETImageUpload =
@@ -229,7 +228,7 @@ function (_React$Component) {
 
   _createClass(SNETImageUpload, [{
     key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps, nextContent) {
+    value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
       var mimeType; //"data:" + this.state.outputImageMimeType + ";base64," +
@@ -608,7 +607,7 @@ function (_React$Component) {
 
   }, {
     key: "toDataUrl",
-    value: function toDataUrl(src, outputFormat) {
+    value: function toDataUrl(src) {
       var filename = src.substring(src.lastIndexOf("/") + 1);
       var img = new Image();
       var callback = this.verifyAndUpload;
@@ -917,7 +916,7 @@ function (_React$Component) {
 
   }, {
     key: "handleTabChange",
-    value: function handleTabChange(event, value) {
+    value: function handleTabChange(_event, value) {
       this.setState({
         value: value
       });
@@ -1230,9 +1229,7 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement("div", {
         style: {
-          width: this.props.width,
           minHeight: "264px",
-          minWidth: minimumWidth,
           position: "relative"
         }
       }, _react.default.createElement(_Grid.default, {
@@ -1479,7 +1476,6 @@ SNETImageUpload.propTypes = {
   comparisonTabTitle: _propTypes.default.string
 };
 SNETImageUpload.defaultProps = {
-  width: "500px",
   tabHeight: 300,
   imageName: "Content Image",
   disableUploadTab: false,

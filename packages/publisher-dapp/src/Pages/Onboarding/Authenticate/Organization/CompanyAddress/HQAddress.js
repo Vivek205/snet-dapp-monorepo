@@ -11,12 +11,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
 const HQAddress = ({ classes }) => {
-  const { street, apartment, city, zip, country } = useSelector(state => state.organization.hqAddress);
+  const { street, apartment, city, zip, country } = useSelector(state => state.organization.orgAddress.hqAddress);
   const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
-    dispatch(organizationActions.setHqAddressDetail(name, value));
+    dispatch(organizationActions.setOrgHqAddressDetail(name, value));
   };
 
   return (
@@ -38,7 +38,7 @@ const HQAddress = ({ classes }) => {
       />
       <StyledTextField {...hqAddressFormData.CITY} variant="outlined" value={city} onChange={handleChange} fullWidth />
       <Grid container>
-        <Grid item sx={12} sm={12} md={4} lg={4}>
+        <Grid item sx={12} sm={12} md={4} lg={4} className={classes.postalCode}>
           <StyledTextField
             {...hqAddressFormData.ZIP}
             variant="outlined"

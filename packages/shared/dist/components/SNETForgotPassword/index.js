@@ -86,7 +86,7 @@ var SNETForgotPassword = function SNETForgotPassword(_ref) {
     lg: 12,
     className: classes.forgotPwdContent
   }, _react.default.createElement(_Typography.default, {
-    variant: "h2"
+    variant: "h3"
   }, title), _react.default.createElement("p", null, "We'll email you instructions on how to reset it."), _react.default.createElement("form", {
     noValidate: true,
     autoComplete: "off",
@@ -103,10 +103,12 @@ var SNETForgotPassword = function SNETForgotPassword(_ref) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  }), _react.default.createElement(_AlertBox.default, {
+  }), _react.default.createElement("div", {
+    className: classes.alertBoxContainer
+  }, _react.default.createElement(_AlertBox.default, {
     type: "error",
     message: validationErr || forgotPasswordError
-  }), _react.default.createElement(_SNETButton.default, {
+  })), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",
     children: "reset password",

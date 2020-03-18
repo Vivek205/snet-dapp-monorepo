@@ -101,18 +101,21 @@ var Form = function Form(props) {
     noValidate: true,
     autoComplete: "off",
     className: classes.signupForm
-  }, _react.default.createElement(_TextField.default, {
+  }, _react.default.createElement("div", null, _react.default.createElement(_TextField.default, {
     id: "outlined-user-name",
-    label: "Nickname",
+    label: "Username",
     className: classes.textField,
     value: nickname,
-    onChange: function onChange(e) {
-      return setNickname(e.target.value);
-    },
     margin: "normal",
     variant: "outlined",
-    autoFocus: true
-  }), _react.default.createElement("div", null, _react.default.createElement(_TextField.default, {
+    onChange: function onChange(e) {
+      return setNickname(e.target.value);
+    }
+  }), _react.default.createElement("span", {
+    className: classes.charLength
+  }, "16/20 char")), _react.default.createElement("div", {
+    className: classes.emailContainer
+  }, _react.default.createElement(_TextField.default, {
     id: "outlined-email-input",
     label: "Email",
     className: classes.textField,
@@ -144,9 +147,11 @@ var Form = function Form(props) {
     className: classes.passwordCriteriaContainer
   }, _react.default.createElement("p", null, "Include:"), _react.default.createElement(_PasswordInlineValidation.default, {
     password: password
-  })), _react.default.createElement(_AlertBox.default, {
+  })), _react.default.createElement("div", {
+    className: classes.alertBoxContainer
+  }, _react.default.createElement(_AlertBox.default, {
     message: signupError || validationErr
-  }), _react.default.createElement("div", null), _react.default.createElement(_SNETButton.default, {
+  })), _react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",
     children: "Create Account",

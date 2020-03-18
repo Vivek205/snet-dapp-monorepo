@@ -11,7 +11,7 @@ var _styles = require("@material-ui/core/styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SNETButton = (0, _styles.withStyles)(function (theme) {
+var SNETButton = (0, _styles.withStyles)(function (MUITheme) {
   return {
     root: function root(props) {
       var rootStyles = {
@@ -23,28 +23,32 @@ var SNETButton = (0, _styles.withStyles)(function (theme) {
       };
 
       if (props.color === "purple" && props.variant === "contained-inverted") {
-        rootStyles.color = theme.palette.text.secondary;
-        rootStyles.backgroundColor = theme.palette.purple.main;
+        rootStyles.color = MUITheme.palette.text.white;
+        rootStyles.backgroundColor = MUITheme.palette.purple.main;
         rootStyles.border = "1px solid";
         rootStyles["&:hover"] = {
-          backgroundColor: theme.palette.purple.light,
+          backgroundColor: MUITheme.palette.purple.light,
           // Reset on touch devices, it doesn't add specificity
           "@media (hover: none)": {
-            backgroundColor: theme.palette.purple.main
+            backgroundColor: MUITheme.palette.purple.main
           }
         };
       }
 
       if (props.color === "white" && props.variant === "text") {
-        rootStyles.color = theme.palette.primary.main;
-        rootStyles.backgroundColor = theme.palette.background.white;
+        rootStyles.color = MUITheme.palette.primary.main;
+        rootStyles.backgroundColor = MUITheme.palette.background.white;
         rootStyles.boxShadow = "0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24)";
+      }
+
+      if (props.color === "red") {
+        rootStyles.color = MUITheme.palette.text.red;
       }
 
       return rootStyles;
     },
     containedSecondary: {
-      color: theme.palette.text.secondary
+      color: MUITheme.palette.text.white
     }
   };
 })(_Button.default);

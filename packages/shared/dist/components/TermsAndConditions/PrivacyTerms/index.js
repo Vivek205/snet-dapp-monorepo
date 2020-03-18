@@ -10,7 +10,7 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PrivacyTerms = function PrivacyTerms() {
-  return _react.default.createElement("html", null, _react.default.createElement("body", null, _react.default.createElement("h2", null, "Terms of service"), _react.default.createElement("p", null, _react.default.createElement("span", null, "The following terms and conditions govern all use of the "), _react.default.createElement("span", null, _react.default.createElement("a", {
+  return _react.default.createElement("html", null, _react.default.createElement("body", null, _react.default.createElement("p", null, _react.default.createElement("span", null, "The following terms and conditions govern all use of the "), _react.default.createElement("span", null, _react.default.createElement("a", {
     href: "http://singularitynet.io/&sa=D&ust=1563446694791000"
   }, "SingularityNET.io")), _react.default.createElement("span", null, "\xA0website and all content, services and products available at or through the website, including, but not limited to,"), _react.default.createElement("span", null, _react.default.createElement("a", {
     href: "http://singularitynet.io/&sa=D&ust=1563446694791000"

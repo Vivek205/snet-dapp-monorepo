@@ -13,7 +13,7 @@ var useStyles = function useStyles(MUITheme) {
       padding: "1px 0 40px",
       backgroundColor: MUITheme.palette.background.mainContent
     },
-    termsAndConditionsContainer: {
+    termsAndConditionsContainer: _defineProperty({
       width: 846,
       paddingBottom: 30,
       margin: "40px auto 0",
@@ -21,31 +21,35 @@ var useStyles = function useStyles(MUITheme) {
       boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
       textAlign: "center",
       "& h3": {
-        padding: "15px 0 15px 25px",
+        padding: "12px 22px",
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid",
+        borderBottomColor: MUITheme.palette.border.primary,
         margin: 0,
         color: MUITheme.palette.text.darkGrey,
+        fontFamily: MUITheme.typography.fontFamily,
         fontSize: 20,
         fontWeight: 400,
         textAlign: "left"
-      },
-      "@media (max-width:724px)": {
-        width: "90%"
       }
-    },
+    }, MUITheme.breakpoints.down("sm"), {
+      width: "100%"
+    }),
     termsAndConditions: {
-      height: 247,
-      margin: "0 12px",
-      padding: "9px 7px",
+      height: 280,
+      padding: "0 18.5px 15.5px 19.5px",
       borderRadius: 4,
+      margin: "15px 15px 0 13px",
       overflow: "auto",
       fontSize: 14,
       textAlign: "left",
       borderColor: "#f1f1f1",
       borderStyle: "solid",
       borderWidth: 1,
-      backgroundColor: MUITheme.palette.background.mainContent,
+      backgroundColor: "#f6f6f6",
       "& p": {
         color: MUITheme.palette.text.lightGrey,
+        fontFamily: MUITheme.typography.fontFamily,
         lineHeight: "21px"
       },
       "& span": {
@@ -57,20 +61,17 @@ var useStyles = function useStyles(MUITheme) {
       }
     },
     checkboxAndButton: _defineProperty({
-      padding: "30px 15px 0",
+      padding: "37px 15px 0",
       display: "flex",
       justifyContent: "space-between",
       "& label": {
         "& span:last-of-type": {
-          color: MUITheme.palette.text.primary,
+          color: MUITheme.palette.text.darkGrey,
           fontSize: 14,
           letterSpacing: 0.25,
           lineHeight: "20px"
         },
         "& span": {
-          "&:last-of-type": {
-            color: MUITheme.palette.text.primary
-          },
           "&.MuiCheckbox-colorPrimary": {
             color: MUITheme.palette.text.primary
           },

@@ -21,25 +21,35 @@ const Region = ({ history, classes, handleFinishLater }) => {
     if (isNotValid) {
       return setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
     }
-    history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
+    history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
 
   const handleBack = () => {
-    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path);
+    history.push(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path.replace(":orgUuid", organization.uuid));
   };
 
   return (
     <Fragment>
       <div className={classes.box}>
-        <Typography variant="h6">Region Groups Configuration</Typography>
+        <Typography variant="h6">Regional Groups Configuration</Typography>
         <Typography variant="subtitle2">
           Every AI service your company publishes can be optimized for users based in various regions and groups. You
           will be able to configure this during the AI service level.
         </Typography>
         {groups.map((group, index) => (
-          <Settings groups={groups} groupIndex={index} group={group} key={group.id} />
+          <Settings
+            groups={groups}
+            groupIndex={index}
+            group={group}
+            key={group.id}
+            foundInBlockchain={organization.foundInBlockchain}
+          />
         ))}
-        <AlertBox type={alert.type} message={alert.message} />
+        {alert.message ? (
+          <div className={classes.alertContainer}>
+            <AlertBox type={alert.type} message={alert.message} />
+          </div>
+        ) : null}
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />

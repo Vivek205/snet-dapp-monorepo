@@ -1,37 +1,48 @@
 # SingularityNET Frontend Monorepo
 
 ## Prerequisites
-- Node >= 10.16.0
-- Yarn >= 1.15.0
+### Windows
+- Node >= 10.14.1 < 12.0.0
+- yarn >= 1.15.0 < 2.0.0
+### Linux
+- Node >= 10.16.0 < 12.0.0
+- Yarn >= 1.15.0  < 2.0.0
 
 ## Initial setup
-- git clone `Repo link`
-- cd `Repo name`
-- yarn
+- `git clone https://github.com/singnet/snet-dapp-monorepo.git`
+- `cd snet-dapp-monorepo`
+- `yarn`
 
 That's it you're all set up. You can start play with the repo.
 
 ## Starting Marketplace
-- cd `packages/marketplace-dapp`
-- cp `.env.example` `.env`
+- `cd packages/marketplace-dapp`
+- `cp .env.example .env`
 - Add the appropriate values for the keys in the `.env` file
-- cd `../../`
-- yarn start:marketplace
+- `cd ../../`
+- `yarn start:marketplace`
 
 Marketplace is ready for you. 
 
 ## Starting RFAI
-- cd `packages/rfai-dapp`
-- cp `.env.example` `.env`
+- `cd packages/rfai-dapp`
+- `cp .env.example .env`
 - Add the appropriate values for the keys in the `.env` file
-- cd `../../`
-- yarn start:rfai
+- `cd ../../`
+- `yarn start:rfai`
+
+## Starting PUBLISHER
+- `cd packages/publisher-dapp`
+- `cp .env.example .env`
+- Add the appropriate values for the keys in the `.env` file
+- `cd ../../`
+- `yarn start:publisher`
 
 ## Building new components
-- cd `packages/shared`
+- `cd packages/shared`
 - Add the component in the `src/components` folder
 - Add story for it in the `index.stories.js` file
-- yarn build:shared
+- `yarn build:shared`
   
 Awesome. You can start using your components in any other project. Just import it from the path `shared/dist/components/[ComponentName]`
 
