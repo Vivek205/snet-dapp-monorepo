@@ -26,7 +26,7 @@ const Organization = props => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
-  });
+  }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
