@@ -3,7 +3,16 @@ export const useStyles = MUITheme => ({
     paddingTop: 60,
     "& h3": { lineHeight: "48px" },
     "& > div": {
-      "&:nth-child(2)": { width: 700 },
+      "&:nth-child(2)": {
+        width: 700,
+        "& span": {
+          "&:after": {
+            "@media(max-width:720px)": { width: 80 },
+            "@media(max-width:580px)": { width: 50 },
+          },
+        },
+        "@media(max-width:720px)": { width: "90%" },
+      },
     },
     "& ul": {
       "& li": {
@@ -16,7 +25,7 @@ export const useStyles = MUITheme => ({
     },
   },
   topSection: {
-    width: 590,
+    width: 600,
     padding: "0 10px",
     margin: "0 auto",
     textAlign: "center",
@@ -29,6 +38,11 @@ export const useStyles = MUITheme => ({
       lineHeight: "28px",
     },
     "& + div": { paddingTop: 33 },
+    [MUITheme.breakpoints.down("xs")]: {
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "0 20px",
+    },
   },
   description: {
     paddingTop: 15,

@@ -56,6 +56,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     uploadStatusContainer: {
       display: "flex",
+      alignItems: "center",
       fontSize: 18,
       lineHeight: "23px",
       "& svg": {
@@ -66,7 +67,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginLeft: 10,
         color: "rgba(0,0,0,0.25)",
         fontSize: 18,
-        lineHeight: '23px'
+        lineHeight: "23px"
       }
     },
     successfullUpload: {

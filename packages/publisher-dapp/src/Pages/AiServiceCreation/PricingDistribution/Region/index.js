@@ -149,7 +149,7 @@ const Region = () => {
                 onChange={handlePriceChange}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} className={classes.entityTypeDropDown}>
               <StyledDropdown
                 inputLabel="Entity Type"
                 value={selectedServicePricing && selectedServicePricing.priceModel}
