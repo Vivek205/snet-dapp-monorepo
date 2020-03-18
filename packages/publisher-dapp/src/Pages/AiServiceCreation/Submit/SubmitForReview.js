@@ -5,22 +5,26 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 
 import SNETTextarea from "shared/dist/components/SNETTextarea";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
-import { initSDK } from "shared/dist/utils/snetSdk";
 import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
+import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
+import { serviceCreationStatus } from "../constant";
+import { checkIfKnownError } from "shared/src/utils/error";
 
 class SubmitForReview extends React.Component {
   state = {
     daemonConfig: {},
     charCount: 0,
+    alert: {},
   };
 
   fetchSampleDaemonConfig = async () => {
     try {
       const { getSampleDaemonConfig, orgUuid, serviceDetails } = this.props;
+
       const daemon_config = await getSampleDaemonConfig(orgUuid, serviceDetails.uuid, true);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
@@ -39,28 +43,41 @@ class SubmitForReview extends React.Component {
     await this.fetchSampleDaemonConfig();
   };
 
-  handleConnectMM = async () => {
-    const sdk = await initSDK();
-    if (sdk.account.address) {
-      this.setState({ MMAddress: sdk.account.address, disabledTextfield: false });
-    }
-  };
-
   handleCommentChange = event => {
     this.setState({ charCount: event.target.value.length });
     this.props.setServiceProviderComment(event.target.value);
   };
 
   handleSubmitForReview = async () => {
-    // TODO remove orgId. MPS has to figure out orgId from orgUuid
-    const { submitServiceDetailsForReview, orgId, orgUuid, serviceDetails } = this.props;
-    await submitServiceDetailsForReview(orgId, orgUuid, serviceDetails.uuid, serviceDetails);
+    try {
+      this.setState({ alert: {} });
+      const { submitServiceDetailsForReview, orgId, orgUuid, orgStatus, serviceDetails } = this.props;
+      if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+        return this.setState({
+          alert: {
+            type: alertTypes.ERROR,
+            message: "Organization is not published. Please publish the organization before publishing the service",
+          },
+        });
+      }
+      if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
+        return this.setState({
+          alert: { type: alertTypes.ERROR, message: "No changes in draft. Please edit a field before submitting" },
+        });
+      }
+      // TODO remove orgId. MPS has to figure out orgId from orgUuid
+      await submitServiceDetailsForReview(orgId, orgUuid, serviceDetails.uuid, serviceDetails);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+    }
   };
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig, MMAddress, charCount } = this.state;
-
+    const { daemonConfig, MMAddress, charCount, alert } = this.state;
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -111,6 +128,7 @@ const mapStateToProps = state => ({
   serviceDetails: state.aiServiceDetails,
   orgId: state.organization.id,
   orgUuid: state.organization.uuid,
+  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({

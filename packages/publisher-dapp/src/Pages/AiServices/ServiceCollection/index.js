@@ -1,43 +1,41 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
-import { useSelector, useDispatch } from "react-redux";
-import isEmpty from "lodash/isEmpty";
 
-import ToolBar from "./ToolBar";
+// import { useSelector, useDispatch } from "react-redux";
+
+// import ToolBar from "./ToolBar";
 import CardGroup from "./CardGroup";
-import { itemsPerPageOptions } from "./content";
-import SNETPagination from "shared/dist/components/SNETPagination";
+// import { itemsPerPageOptions } from "./content";
+// import SNETPagination from "shared/dist/components/SNETPagination";
 import { useStyles } from "./styles";
-import { setAiServiceListPagination } from "../../../Services/Redux/actionCreators/aiServiceListActions";
+// import { setAiServiceListPagination } from "../../../Services/Redux/actionCreators/aiServiceListActions";
 
+// TODO uncomment pagination and toolbox once it is ready
 const ServiceCollection = ({ classes }) => {
-  const { serviceList } = useSelector(state => ({
-    serviceList: state.aiServiceList.data,
-  }));
-  const { limit, offset, totalCount } = useSelector(state => ({
-    limit: state.aiServiceList.pagination.limit,
-    offset: state.aiServiceList.pagination.offset,
-    totalCount: state.aiServiceList.totalCount,
-  }));
-  const dispatch = useDispatch();
+  // const { limit, offset, totalCount } = useSelector(state => ({
+  //   limit: state.aiServiceList.pagination.limit,
+  //   offset: state.aiServiceList.pagination.offset,
+  //   totalCount: state.aiServiceList.totalCount,
+  // }));
+  // const dispatch = useDispatch();
 
-  const onItemsPerPageChange = itemsPerPage => {
-    dispatch(setAiServiceListPagination({ limit: itemsPerPage }));
-  };
+  // const onItemsPerPageChange = itemsPerPage => {
+  //   dispatch(setAiServiceListPagination({ limit: itemsPerPage }));
+  // };
+  //
+  // const handlePageChange = offset => {
+  //   dispatch(setAiServiceListPagination({ offset }));
+  // };
 
-  const handlePageChange = offset => {
-    dispatch(setAiServiceListPagination({ offset }));
-  };
-
-  if (isEmpty(serviceList)) {
-    return <CardGroup />;
-  }
+  // if (isEmpty(serviceList)) {
+  //   return <CardGroup />;
+  // }
 
   return (
     <div className={classes.serviceCollection}>
-      <ToolBar />
+      {/*<ToolBar />*/}
       <CardGroup />
-      <SNETPagination
+      {/* <SNETPagination
         itemsPerPageOptions={itemsPerPageOptions}
         itemsPerPage={limit}
         onItemsPerPageChange={onItemsPerPageChange}
@@ -45,7 +43,7 @@ const ServiceCollection = ({ classes }) => {
         offset={offset}
         totalCount={totalCount}
         onPageChange={handlePageChange}
-      />
+      />*/}
     </div>
   );
 };
