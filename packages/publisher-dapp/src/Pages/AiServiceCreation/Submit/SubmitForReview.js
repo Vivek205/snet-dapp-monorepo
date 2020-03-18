@@ -64,7 +64,7 @@ class SubmitForReview extends React.Component {
           },
         });
       }
-      if (serviceDetails.state.state !== serviceCreationStatus.DRAFT) {
+      if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
         return this.setState({
           alert: { type: alertTypes.ERROR, message: "No changes in draft. Please edit a field before submitting" },
         });
