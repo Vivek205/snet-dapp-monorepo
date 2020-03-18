@@ -1,15 +1,16 @@
 export const useStyles = MUITheme => ({
   serviceCreationContainer: {
-    paddingTop: 40,
+    paddingTop: 60,
     "& h3": { lineHeight: "48px" },
     "& > div": {
       "&:nth-child(2)": { width: 700 },
     },
     "& ul": {
       "& li": {
-        "&::before": {
-          [MUITheme.breakpoints.down("xs")]: { width: 50 },
-          "@media (max-width:470px)": { display: "none" },
+        "& div": {
+          "& span": {
+            "&::after": { width: 125 },
+          },
         },
       },
     },
@@ -17,6 +18,16 @@ export const useStyles = MUITheme => ({
   topSection: {
     padding: "0 10px",
     textAlign: "center",
+    "& span": {
+      marginTop: 16,
+      display: "inline-block",
+      color: MUITheme.palette.text.primary,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 20,
+      fontWeight: 200,
+      lineHeight: "28px",
+    },
+    "& + div": { paddingTop: 48 },
   },
   description: {
     paddingTop: 15,

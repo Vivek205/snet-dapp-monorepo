@@ -191,53 +191,60 @@ const Profile = ({ classes, _location }) => {
             classes={classes}
             loading={isValidateServiceIdLoading}
           />
-          <SNETTextarea
-            showInfoIcon
-            name="shortDescription"
-            label="Short Description"
-            minCount={0}
-            maxCount={160}
-            rowCount={3}
-            colCount={105}
-            value={serviceDetails.shortDescription}
-            onChange={handleControlChange}
-          />
+          <div className={classes.shortDescContainer}>
+            <SNETTextarea
+              showInfoIcon
+              name="shortDescription"
+              label="Short Description"
+              minCount={0}
+              maxCount={160}
+              rowCount={3}
+              colCount={105}
+              value={serviceDetails.shortDescription}
+              onChange={handleControlChange}
+            />
+          </div>
 
-          <SNETTextarea
-            showInfoIcon
-            name="longDescription"
-            label="Long Description"
-            minCount={0}
-            maxCount={5000}
-            rowCount={8}
-            colCount={105}
-            value={serviceDetails.longDescription}
-            onChange={handleControlChange}
-          />
+          <div className={classes.longDescContainer}>
+            <SNETTextarea
+              showInfoIcon
+              name="longDescription"
+              label="Long Description"
+              minCount={0}
+              maxCount={5000}
+              rowCount={8}
+              colCount={105}
+              value={serviceDetails.longDescription}
+              onChange={handleControlChange}
+            />
+          </div>
 
           <SNETTextfield
             icon
             name="tags"
-            label="Service Tags"
-            description="Insert multiple items separated with commas, press enter to add"
+            label="Input Tags"
+            extraInfo="Insert multiple items separated with commas, press hit enter"
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
           />
           <div className={classes.addedTagsContainer}>
-            <InfoIcon />
-            <span>Added Tags</span>
-            <Card className={classes.card}>
-              {serviceDetails.tags.map(tag => (
-                <Chip
-                  className={classes.chip}
-                  key={tag}
-                  label={tag}
-                  color="primary"
-                  onDelete={() => handleDeleteTag(tag)}
-                />
-              ))}
-            </Card>
+            <div>
+              <InfoIcon />
+              <span className={classes.addTagLabel}>Added Tags</span>
+              <Card className={classes.card}>
+                {serviceDetails.tags.map(tag => (
+                  <Chip
+                    className={classes.chip}
+                    key={tag}
+                    label={tag}
+                    color="primary"
+                    onDelete={() => handleDeleteTag(tag)}
+                  />
+                ))}
+              </Card>
+            </div>
+            <span className={classes.addTagExtraInfo}>You can add up to 20 tag items</span>
           </div>
 
           <div className={classes.projUrlContainer}>
@@ -250,12 +257,22 @@ const Profile = ({ classes, _location }) => {
             />
           </div>
 
+          <div className={classes.contributorsContainer}>
+            <SNETTextfield
+              icon
+              name="contributors"
+              label="Contributors"
+              minCount={0}
+              maxCount={100}
+              value={serviceDetails.contributors}
+              onChange={handleControlChange}
+            />
+          </div>
+
           <SNETTextfield
-            icon
-            name="contributors"
-            label="Contributors"
-            minCount={0}
-            maxCount={100}
+            name="suppportEmail"
+            label="Support Email"
+            description="Email address of the user who will receive the alert when the service is down or any error occurs."
             value={serviceDetails.contributors}
             onChange={handleControlChange}
           />
@@ -301,8 +318,11 @@ const Profile = ({ classes, _location }) => {
               </div>
             </div>
           </div>
-
-          <AlertBox type={alert.type} message={alert.message} />
+          {alert.message ? (
+            <div className={classes.alertContainer}>
+              <AlertBox type={alert.type} message={alert.message} />
+            </div>
+          ) : null}
         </div>
       </Grid>
 
