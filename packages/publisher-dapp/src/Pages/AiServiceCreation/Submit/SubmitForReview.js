@@ -77,6 +77,10 @@ class SubmitForReview extends React.Component {
   render() {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert } = this.state;
+    const charCount = serviceDetails.comments.serviceProvider[0]
+      ? serviceDetails.comments.serviceProvider[0].length
+      : 0;
+
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -90,7 +94,7 @@ class SubmitForReview extends React.Component {
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
-                minCount={0}
+                minCount={charCount}
                 maxCount={5000}
                 rowCount={8}
                 colCount={105}
