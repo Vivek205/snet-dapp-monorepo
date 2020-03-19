@@ -48,6 +48,15 @@ class SubmitForReview extends React.Component {
       this.setState({ alert: {} });
       const { submitServiceDetailsForReview, orgId, orgUuid, orgStatus, serviceDetails } = this.props;
       if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+        if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+          return this.setState({
+            alert: {
+              type: alertTypes.ERROR,
+              message:
+                "Organization is being published in blockchain. Service can be submitted only when organization is published",
+            },
+          });
+        }
         return this.setState({
           alert: {
             type: alertTypes.ERROR,
