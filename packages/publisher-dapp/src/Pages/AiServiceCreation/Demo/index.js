@@ -34,7 +34,7 @@ const Demo = ({ classes }) => {
               Using our starter node demo UI package will help you to set up a local development and testing
               environment. Download the package from the following link and follow the instructions to set up a local
               <a href="#" alt="Click Here">
-                Click here{" "}
+                Click here
               </a>
               to see the contents of the package.
             </Typography>
