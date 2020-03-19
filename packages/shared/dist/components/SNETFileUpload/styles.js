@@ -12,7 +12,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
     grayBox: {
-      padding: "0 45px",
+      padding: "50px 45px",
       borderWidth: 1,
       borderStyle: "dashed",
       borderColor: MUITheme.palette.border.grey,
@@ -22,6 +22,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: "#F8F8F8",
+      cursor: 'pointer',
       textAlign: "center",
       "& svg": {
         color: MUITheme.palette.primary.main,

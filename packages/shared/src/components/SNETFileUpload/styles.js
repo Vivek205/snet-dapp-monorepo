@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
   grayBox: {
-    padding: "0 45px",
+    padding: "50px 45px",
     borderWidth: 1,
     borderStyle: "dashed",
     borderColor: MUITheme.palette.border.grey,
@@ -12,6 +12,7 @@ export const useStyles = makeStyles(MUITheme => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#F8F8F8",
+    cursor: "pointer",
     textAlign: "center",
     "& svg": {
       color: MUITheme.palette.primary.main,
