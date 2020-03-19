@@ -33,11 +33,9 @@ const Demo = ({ classes }) => {
             <Typography variant="subtitle2">
               Using our starter node demo UI package will help you to set up a local development and testing
               environment. Download the package from the following link and follow the instructions to set up a local
-              working environment.{" "}
               <a href="#" alt="Click Here">
-                {" "}
                 Click here{" "}
-              </a>{" "}
+              </a>
               to see the contents of the package.
             </Typography>
             <div className={classes.downloadBtn}>
