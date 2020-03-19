@@ -44,7 +44,6 @@ class SubmitForReview extends React.Component {
   };
 
   handleCommentChange = event => {
-    this.setState({ charCount: event.target.value.length });
     this.props.setServiceProviderComment(event.target.value);
   };
 
@@ -77,7 +76,7 @@ class SubmitForReview extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig, MMAddress, charCount, alert } = this.state;
+    const { daemonConfig, alert } = this.state;
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -91,7 +90,7 @@ class SubmitForReview extends React.Component {
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
-                minCount={charCount}
+                minCount={0}
                 maxCount={5000}
                 rowCount={8}
                 colCount={105}
@@ -101,21 +100,12 @@ class SubmitForReview extends React.Component {
             </div>
             <AlertBox type={alert.type} message={alert.message} />
             <div className={classes.btnContainer}>
-              {MMAddress ? (
-                <SNETButton
-                  children="submit for review"
-                  color="primary"
-                  variant="contained"
-                  onClick={this.handleSubmitForReview}
-                />
-              ) : (
-                <SNETButton
-                  children="connect metamask"
-                  color="primary"
-                  variant="contained"
-                  onClick={this.handleConnectMM}
-                />
-              )}
+              <SNETButton
+                children="submit for review"
+                color="primary"
+                variant="contained"
+                onClick={this.handleSubmitForReview}
+              />
             </div>
           </div>
         </Grid>
