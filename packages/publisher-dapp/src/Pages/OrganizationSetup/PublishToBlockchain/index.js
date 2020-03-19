@@ -8,14 +8,14 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import TechnicalInfo from "./TechnicalInfo";
 import { OrganizationSetupRoutes } from "../OrganizationSetupRouter/Routes";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SubmitAction from "./SubmitAction";
 import validator from "shared/dist/utils/validator";
 import { submitOrganizationCostraints } from "../validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
-import { APIError } from "shared/dist/utils/API";
 import { organizationTypes } from "../../../Utils/organizationSetup";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, email, ownerEmail } = useSelector(state => ({
@@ -25,10 +25,9 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   }));
   const { name, type, status, uuid, ownerAddress } = organization;
   const [alert, setAlert] = useState({});
-
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handlePublish = async () => {
     setAlert({});
     try {
       const isNotValid = validator(organization, submitOrganizationCostraints);
@@ -38,26 +37,11 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (email !== ownerEmail) {
         throw new ValidationError("Only owner can publish the organization");
       }
-      dispatch(organizationActions.publishToIPFS(organization));
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        return setAlert({ type: alertTypes.ERROR, message: error.message });
-      }
-      if (error instanceof APIError) {
-        return setAlert({ type: alertTypes.ERROR, message: error.message });
-      }
-      setAlert({ type: alertTypes.ERROR, message: "unable to submit. please try later" });
-    }
-  };
-
-  const handlePublish = async () => {
-    setAlert({});
-    try {
       await dispatch(organizationActions.submitForApproval(organization));
       const metadataIpfsUri = await dispatch(organizationActions.publishToIPFS(uuid));
       await dispatch(organizationActions.publishOrganizationInBlockchain(organization, metadataIpfsUri, history));
     } catch (error) {
-      if (error instanceof APIError) {
+      if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
       }
       setAlert({ type: alertTypes.ERROR, message: "unable to publish. please try later" });
@@ -103,12 +87,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="back" onClick={handleBack} />
-        <SubmitAction
-          status={status}
-          disablePublish={shouldPublishBeDisabled()}
-          handlePublish={handlePublish}
-          handleSubmit={handleSubmit}
-        />
+        <SubmitAction status={status} disablePublish={shouldPublishBeDisabled()} handlePublish={handlePublish} />
       </div>
     </Fragment>
   );
