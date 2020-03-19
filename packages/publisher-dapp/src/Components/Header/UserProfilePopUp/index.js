@@ -1,20 +1,23 @@
 import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
 import { withStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PeopleIcon from "@material-ui/icons/People";
-import MoodIcon from "@material-ui/icons/Mood";
 import CheckIcon from "@material-ui/icons/Check";
 import DeviceHubIcon from "@material-ui/icons/DeviceHub";
+import Avatar from "@material-ui/core/Avatar";
+import { Modal } from "@material-ui/core";
+
+import SingularityLogo from "shared/dist/assets/images/avatar.png";
+import UserProfileCard from "shared/dist/components/UserProfileCard";
 
 import { useStyles } from "./styles";
-import UserProfileCard from "shared/dist/components/UserProfileCard";
-import { Modal } from "@material-ui/core";
 import { userActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
-const UserProfilePopUp = ({ classes, show, handleClose }) => {
+const UserProfilePopUp = ({ classes, show, handleClose, orgImg }) => {
   const { nickname, orgName, orgUuid } = useSelector(state => ({
     orgUuid: state.organization.uuid,
     nickname: state.user.nickname,
@@ -45,7 +48,7 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
             <Fragment>
               <li className={classes.orgNameContainer}>
                 <div>
-                  <MoodIcon />
+                  <Avatar aria-label="recipe" className={classes.avatar} src={orgImg || SingularityLogo} />
                   <span>{orgName}</span>
                 </div>
                 <CheckIcon />
