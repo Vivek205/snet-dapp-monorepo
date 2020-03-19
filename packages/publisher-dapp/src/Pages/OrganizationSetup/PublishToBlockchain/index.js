@@ -35,6 +35,9 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
+      if (email !== ownerEmail) {
+        throw new ValidationError("Only owner can publish the organization");
+      }
       dispatch(organizationActions.publishToIPFS(organization));
     } catch (error) {
       if (error instanceof ValidationError) {
