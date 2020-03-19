@@ -25,15 +25,6 @@ export const submitOrganizationCostraints = {
       "paymentConfig.paymentExpirationThreshold": {
         presence: { allowEmpty: false, message: "^Please enter payment expiration threshold" },
       },
-      "paymentConfig.paymentChannelStorageType": {
-        presence: { allowEmpty: false, message: "^Please enter payment channel storage type" },
-      },
-      "paymentConfig.paymentChannelStorageClient.connectionTimeout": {
-        presence: { allowEmpty: false, message: "^Please enter connection timeout" },
-      },
-      "paymentConfig.paymentChannelStorageClient.requestTimeout": {
-        presence: { allowEmpty: false, message: "^Please enter request timeout" },
-      },
     },
   },
 };
