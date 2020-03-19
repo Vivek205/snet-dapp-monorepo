@@ -33,7 +33,12 @@ export const useStyles = MUITheme => ({
         lineHeight: "28px",
         letterSpacing: 0.5,
       },
+      "&:hover": { background: MUITheme.palette.background.mainContent },
     },
+  },
+  orgNameContainer: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   signoutLink: {
     borderTopWidth: 1,

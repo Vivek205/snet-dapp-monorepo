@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PeopleIcon from "@material-ui/icons/People";
 import MoodIcon from "@material-ui/icons/Mood";
 import CheckIcon from "@material-ui/icons/Check";
 import DeviceHubIcon from "@material-ui/icons/DeviceHub";
@@ -42,18 +43,20 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
         <ul className={classes.userProfileMenuList}>
           {orgUuid ? (
             <Fragment>
-              <li>
-                <MoodIcon />
-                <span>{orgName}</span>
+              <li className={classes.orgNameContainer}>
+                <div>
+                  <MoodIcon />
+                  <span>{orgName}</span>
+                </div>
                 <CheckIcon />
               </li>
               <li onClick={handleEdit}>
                 <DeviceHubIcon />
-                <span>Edit</span>
+                <span>Edit Companies</span>
               </li>
               <li onClick={handleTeamMembers}>
-                <DeviceHubIcon />
-                <span>Team Members</span>
+                <PeopleIcon />
+                <span>Team</span>
               </li>
             </Fragment>
           ) : null}
