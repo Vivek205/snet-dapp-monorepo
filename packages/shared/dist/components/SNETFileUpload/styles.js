@@ -22,7 +22,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: "#F8F8F8",
-      cursor: 'pointer',
+      cursor: "pointer",
       textAlign: "center",
       "& svg": {
         color: MUITheme.palette.primary.main,

@@ -186,7 +186,7 @@ const Profile = ({ classes }) => {
             icon
             name="name"
             label="AI Service Name"
-            minCount={0}
+            minCount={serviceDetails.name.length}
             maxCount={50}
             description="The name of your service cannot be same name as another service."
             value={serviceDetails.name}
@@ -197,7 +197,7 @@ const Profile = ({ classes }) => {
               icon
               name="id"
               label="AI Service Id"
-              minCount={0}
+              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
               maxCount={50}
               description="The ID of your service cannot be same ID as another service."
               value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
@@ -216,7 +216,7 @@ const Profile = ({ classes }) => {
               showInfoIcon
               name="shortDescription"
               label="Short Description"
-              minCount={0}
+              minCount={serviceDetails.shortDescription.length}
               maxCount={160}
               rowCount={3}
               colCount={105}
@@ -230,7 +230,7 @@ const Profile = ({ classes }) => {
               showInfoIcon
               name="longDescription"
               label="Long Description"
-              minCount={0}
+              minCount={serviceDetails.longDescription.length}
               maxCount={5000}
               rowCount={8}
               colCount={105}
@@ -282,7 +282,7 @@ const Profile = ({ classes }) => {
               icon
               name="contributors"
               label="Contributors"
-              minCount={0}
+              minCount={serviceDetails.contributors.length}
               maxCount={100}
               value={serviceDetails.contributors}
               onChange={handleControlChange}
