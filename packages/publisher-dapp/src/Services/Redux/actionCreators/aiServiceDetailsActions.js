@@ -72,7 +72,7 @@ const setAiServiceFreeCallSignerAddress = address => ({
   payload: address,
 });
 
-export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
+export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: comment });
 
 const setAiServiceStateState = state => ({ type: SET_AI_SERVICE_STATE_STATE, payload: state });
 
