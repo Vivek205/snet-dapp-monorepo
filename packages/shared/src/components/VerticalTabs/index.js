@@ -28,18 +28,22 @@ const VerticalTabs = ({ upperTabs, lowerTabs }) => {
         <ToggleMenu classes={classes} isOpen={open} setIsOpen={setOpen} />
         <List className={classes.list}>
           {upperTabs.map(item => (
-            <ListItem button key={item.title} className={classes.listItem}>
-              <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.title} />
+            <ListItem button key={item.title} className={classes.listItem} onClick={item.onRowClick}>
+              <a href={item.href} target={item.openInNewTab ? "_blank" : ""} rel="noreferrer noopener">
+                <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </a>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List className={classes.list}>
           {lowerTabs.map(item => (
-            <ListItem button key={item.title} className={classes.listItem}>
-              <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.title} />
+            <ListItem button key={item.title} className={classes.listItem} onClick={item.onRowClick}>
+              <a href={item.href} target={item.openInNewTab ? "_blank" : ""} rel="noreferrer noopener">
+                <ListItemIcon className={classes.listItemIcon}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </a>
             </ListItem>
           ))}
         </List>

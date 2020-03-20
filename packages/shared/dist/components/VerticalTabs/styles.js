@@ -93,6 +93,9 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       padding: 0
     },
     listItem: {
+      "& a": {
+        textDecoration: "none"
+      },
       "& span": {
         marginLeft: 11,
         color: "#9b9b9b",
