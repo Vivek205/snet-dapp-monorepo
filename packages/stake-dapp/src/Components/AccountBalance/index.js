@@ -10,7 +10,7 @@ import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 const AccountBalance = ({ classes }) => {
   const { metamaskDetails } = useSelector(state => state.metamaskReducer);
 
-  if (!isTxnsAllowed) {
+  if (!metamaskDetails.isTxnsAllowed) {
     return null;
   }
 
