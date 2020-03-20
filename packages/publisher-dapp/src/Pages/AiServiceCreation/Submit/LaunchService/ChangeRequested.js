@@ -9,7 +9,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 
-const Rejected = ({ classes, onContinueToEdit }) => {
+const ChangeRequested = ({ classes, onContinueToEdit }) => {
   return (
     <div className={classes.launchServiceContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -20,8 +20,8 @@ const Rejected = ({ classes, onContinueToEdit }) => {
           needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
         </Typography>
         <AlertBox
-          type={alertTypes.ERROR}
-          header="Your AI Service is Rejected by SNET"
+          type={alertTypes.WARNING}
+          header="Your AI Service is ChangeRequested by SNET"
           icon={BlockIcon}
           message="Please make the appropriate changes and submit again for approval."
         />
@@ -34,4 +34,4 @@ const Rejected = ({ classes, onContinueToEdit }) => {
   );
 };
 
-export default withStyles(useStyles)(Rejected);
+export default withStyles(useStyles)(ChangeRequested);
