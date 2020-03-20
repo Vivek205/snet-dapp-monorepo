@@ -12,7 +12,10 @@ import StakeTab from "../../Components/StakeTab";
 const RFAILanding = ({ classes }) => {
   return (
     <Fragment>
-      <Notification />
+      <div className={classes.notificationContainer}>
+        <Notification />
+      </div>
+      <hr className={classes.divider} />
       <div className={classes.LandingContainer}>
         <div className={classes.mainWrapper}>
           <Grid container spacing={24} className={classes.topSectionCotainer}>

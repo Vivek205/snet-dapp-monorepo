@@ -16,8 +16,8 @@ export const submitOrganizationCostraints = {
   },
   groups: {
     array: {
-      name: { presence: { allowEmpty: false, message: "^Please enter group details" } },
-      id: { presence: { allowEmpty: false, message: "^Please enter group details" } },
+      name: { presence: { allowEmpty: true, message: "^Please enter group details" } },
+      id: { presence: { allowEmpty: true, message: "^Please enter group details" } },
       paymentAddress: {
         presence: { allowEmpty: false },
         equality: validBlockChainAdressEquality("paymentAddress"),

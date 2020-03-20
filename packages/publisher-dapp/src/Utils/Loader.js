@@ -3,6 +3,10 @@ export const LoaderContent = {
     title: "Logging in",
     content: "Just a moment. We are logging you in",
   },
+  SIGNUP_CONFIRM: {
+    title: "Confirming Account",
+    content: "Just a moment. We are confirming your account",
+  },
   SIGN_OUT: {
     title: "Signing out",
     content: "Just a moment. We are signing you out",

@@ -31,16 +31,21 @@ export const cardDetails = stakeDetails => [
     title: "Accepted Stake Amount",
     value: fromWei(stakeDetails.approvedAmount),
     unit: "AGI",
+    toolTip:
+      "The amount of AGI tokens that network accepted from your stake.  Any partial amounts not accepted by SNET Foundation will be automatically refunded to your wallet account.",
   },
   {
     title: "Reward Amount",
     value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
+    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
   },
   {
     title: "Refunded Amount",
     value: fromWei(stakeDetails.refundAmount),
     unit: "AGI",
+    toolTip:
+      "The amount of AGI tokens refunded automatically to your wallet account  from the unused portion of your original stake not accepted by the network.",
   },
   {
     title: "Stakers",

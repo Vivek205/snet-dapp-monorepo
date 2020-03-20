@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
 import { withStyles } from "@material-ui/styles";
-import NotificationIcon from "@material-ui/icons/Warning";
+import NotificationIcon from "@material-ui/icons/ErrorOutline";
 
 import NotificationBar, { notificationBarTypes } from "shared/dist/components/NotificationBar";
 

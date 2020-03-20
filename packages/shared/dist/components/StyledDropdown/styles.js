@@ -29,6 +29,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       color: "".concat(MUITheme.palette.text.darkGrey, " !important"),
       "& .MuiSelect-root": {
         padding: "15.5px 15px !important",
+        fontSize: 16,
         letterSpacing: 0.15,
         lineHeight: "24px"
       },

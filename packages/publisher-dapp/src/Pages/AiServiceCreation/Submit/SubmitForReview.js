@@ -12,7 +12,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
-import { checkIfKnownError } from "shared/src/utils/error";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import validator from "shared/dist/utils/validator";
+import { submitServiceConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -50,7 +53,7 @@ class SubmitForReview extends React.Component {
   handleSubmitForReview = async () => {
     try {
       this.setState({ alert: {} });
-      const { submitServiceDetailsForReview, orgId, orgUuid, orgStatus, serviceDetails } = this.props;
+      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
       if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
         if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
           return this.setState({
@@ -73,8 +76,12 @@ class SubmitForReview extends React.Component {
           alert: { type: alertTypes.ERROR, message: "No changes in draft. Please edit a field before submitting" },
         });
       }
-      // TODO remove orgId. MPS has to figure out orgId from orgUuid
-      await submitServiceDetailsForReview(orgId, orgUuid, serviceDetails.uuid, serviceDetails);
+
+      const isNotValid = validator(serviceDetails, submitServiceConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+      await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
       if (checkIfKnownError(e)) {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
@@ -129,7 +136,6 @@ class SubmitForReview extends React.Component {
 
 const mapStateToProps = state => ({
   serviceDetails: state.aiServiceDetails,
-  orgId: state.organization.id,
   orgUuid: state.organization.uuid,
   orgStatus: state.organization.state.state,
 });
@@ -138,8 +144,8 @@ const mapDispatchToProps = dispatch => ({
   getSampleDaemonConfig: (orgUuid, serviceUuid, testDaemon) =>
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   setServiceProviderComment: comment => dispatch(aiServiceDetailsActions.setServiceProviderComment(comment)),
-  submitServiceDetailsForReview: (orgId, orgUuid, serviceUuid, serviceDetails) =>
-    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgId, orgUuid, serviceUuid, serviceDetails)),
+  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SubmitForReview));

@@ -148,7 +148,12 @@ const SessionTime = ({ stakeDetails }) => {
         </CircularProgressbarWithChildren>
 
         <div className={classes.checkbox}>
-          <InfoIcon />
+          <div className={classes.toolTipContainer}>
+            <InfoIcon />
+            <Typography>
+              Email notifications of when opne staking is available and the statuses of your stakes
+            </Typography>
+          </div>
           <FormControlLabel
             control={
               <Checkbox color="primary" checked={stakeNotification.status} onClick={handleStakeNotificationChange} />

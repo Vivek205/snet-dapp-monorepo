@@ -13,6 +13,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& label": { top: -3 },
     "& input": {
       color: MUITheme.palette.text.darkGrey,
+      fontSize: 16,
       letterSpacing: 0.15,
     },
     "& .MuiInputLabel-outlined.MuiInputLabel-shrink": { transform: "translate(14px, -6px) scale(0.90)" },

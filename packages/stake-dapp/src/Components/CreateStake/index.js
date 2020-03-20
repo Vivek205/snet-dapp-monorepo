@@ -55,7 +55,7 @@ const CreateStake = () => {
     return <InlineLoader />;
   }
 
-  // No Data Found Scenario
+  //No Data Found Scenario
   if (!activeStake.stakeMapIndex) {
     return (
       <Grid container>

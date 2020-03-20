@@ -6,8 +6,10 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     display: "flex",
     alignItems: "center",
+    "& svg": { paddingRight: 16 },
   },
   content: {
+    fontFamily: MUITheme.typography.fontFamily,
     textAlign: "left",
     "& p": {
       margin: "0 !important",
@@ -36,6 +38,7 @@ export const useStyles = MUITheme => ({
   success: {
     borderColor: MUITheme.palette.success.main,
     backgroundColor: MUITheme.palette.background.succesBox,
+    "& svg": { color: MUITheme.palette.success.main },
   },
   warning: {
     borderColor: MUITheme.palette.border.warningBox,
@@ -44,10 +47,7 @@ export const useStyles = MUITheme => ({
       color: MUITheme.palette.infoBoxLink,
       fontWeight: 600,
     },
-    "& svg": {
-      paddingRight: 16,
-      color: "#FFC200 ",
-    },
+    "& svg": { color: "#FFC200" },
   },
   info: {
     borderColor: MUITheme.palette.primary.main,
