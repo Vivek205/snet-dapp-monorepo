@@ -94,7 +94,10 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
         await waitForTransaction(txHash);
 
-        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+        setAlert({
+          type: alertTypes.SUCCESS,
+          message: "Congratulations! You have successfully staked your tokens. You can safely close this window.",
+        });
 
         dispatch(loaderActions.stopAppLoader());
 

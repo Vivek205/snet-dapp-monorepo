@@ -101,7 +101,10 @@ class LaunchService extends React.Component {
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
           <AlertBox type={alert.type} message={alert.message} />
-          <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
+          <DaemonConfig
+            config={daemonConfig}
+            footerNote="Please use the above configuration values in your daemon configuration. This is to ensure that your daemon is not in the curation mode anymore. Once the Service has been successfully published on the SingularityNet Platform, restart the daemon."
+          />
         </Grid>
         <MessageToReviewers />
       </div>

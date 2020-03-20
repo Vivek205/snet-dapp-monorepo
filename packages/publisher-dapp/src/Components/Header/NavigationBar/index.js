@@ -45,7 +45,7 @@ const NavigationBar = props => {
           <div className={classes.serviceNameDropdown}>
             <StyledDropdown
               name="service_list_dropdown"
-              labelTxt="select a service"
+              labelTxt="Select a Service"
               value={serviceUuid}
               list={serviceDropdownList}
               onChange={serviceDropdownChange}

@@ -1,18 +1,22 @@
 export const relatedLinks = [
   {
-    label: "Prerequisites for  Company Organization",
-    linkTo: "#",
+    label: "Creating Ethereum Identity",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/ethereum-identity",
+    newTab: true,
   },
   {
-    label: "What are Region / Groups",
-    linkTo: "#",
+    label: "Organization Setup",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/organization-setup/",
+    newTab: true,
   },
   {
-    label: "Download Metamask",
-    linkTo: "#",
+    label: "Payment Storage",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/etcd",
+    newTab: true,
   },
   {
-    label: "Support request",
-    linkTo: "#",
+    label: "Request Support",
+    linkTo: "mailto:support@singularitynet.io",
+    newTab: true,
   },
 ];

@@ -200,7 +200,7 @@ const Profile = ({ classes }) => {
             label="AI Service Name"
             minCount={serviceDetails.name.length}
             maxCount={50}
-            description="The name of your service cannot be same name as another service."
+            description="The name of your service has to be unique within your organization"
             value={serviceDetails.name}
             onChange={handleControlChange}
           />
@@ -211,7 +211,7 @@ const Profile = ({ classes }) => {
               label="AI Service Id"
               minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
               maxCount={50}
-              description="The ID of your service cannot be same ID as another service."
+              description="The ID of your service has to be unique withing your organization"
               value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
               onChange={handleControlChange}
             />

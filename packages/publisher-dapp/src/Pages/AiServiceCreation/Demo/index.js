@@ -74,8 +74,13 @@ const Demo = ({ classes }) => {
                 target="_blank"
                 rel="noopener nofollow"
               />
-              <SNETButton children="f.a.q" color="primary" variant="text" />
-              <SNETButton children="contact us" color="primary" variant="text" />
+              {/*<SNETButton children="f.a.q" color="primary" variant="text" />*/}
+              <SNETButton
+                children="contact us"
+                href="mailto:support@singularitynet.io"
+                color="primary"
+                variant="text"
+              />
             </div>
             <hr />
           </div>
