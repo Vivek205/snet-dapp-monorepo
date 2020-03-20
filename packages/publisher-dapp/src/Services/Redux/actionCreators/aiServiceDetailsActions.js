@@ -13,6 +13,7 @@ import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import ValidationError from "shared/dist/utils/validationError";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -210,6 +211,11 @@ const saveServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => a
 
 export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
     dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
@@ -354,6 +360,11 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
 
 export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
     dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_SERVICE_FOR_REVIEW));
     // TODO remove orgId. MPS has to figure out orgId from orgUuid
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
