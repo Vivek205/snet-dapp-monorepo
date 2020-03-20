@@ -293,7 +293,7 @@ const Profile = ({ classes }) => {
             name="suppportEmail"
             label="Support Email"
             description="Email address of the user who will receive the alert when the service is down or any error occurs."
-            value={serviceDetails.contributors}
+            value={serviceDetails.supportemail}
             onChange={handleControlChange}
           />
 
