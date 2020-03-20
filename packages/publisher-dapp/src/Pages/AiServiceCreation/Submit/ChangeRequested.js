@@ -12,7 +12,7 @@ import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
-  const comments = useSelector(state => state.aiServiceDetails.comments.serviceProvider);
+  const comments = useSelector(state => state.aiServiceDetails.comments);
   const dispatch = useDispatch();
 
   const handleCommentChange = e => {
@@ -34,8 +34,12 @@ const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
           icon={BlockIcon}
           message="Please make the appropriate changes and submit again for approval."
         />
+        <Typography variant="h6">Approvers Comment</Typography>
+        <SNETTextarea label="Text Input" rowCount={8} value={comments.approver} />
+
         <Typography variant="h6">Message to Reviewers</Typography>
-        <SNETTextarea label="Text Input" rowCount={8} value={comments} onChange={handleCommentChange} />
+        <SNETTextarea label="Text Input" rowCount={8} value={comments.serviceProvider} onChange={handleCommentChange} />
+
         <SNETButton color="primary" variant="contained" children="provide more details" onClick={onSubmitComment} />
         <SNETButton color="primary" variant="contained" children="Go back to edit" onClick={onContinueToEdit} />
       </Grid>
