@@ -8,7 +8,9 @@ const computeReward = activeStake => {
   const myStake = new BigNumber(activeStake.myStake);
   const windowRewardAmount = new BigNumber(activeStake.rewardAmount);
   const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
-  const totalStakedAmount = new BigNumber(activeStake.totalStakedAmount === 0 ? 1 : activeStake.totalStakedAmount);
+  const totalStakedAmount = new BigNumber(
+    activeStake.totalStakedAmount === 0 ? myStake : activeStake.totalStakedAmount
+  );
 
   let rewardAmount = new BigNumber(0);
 
