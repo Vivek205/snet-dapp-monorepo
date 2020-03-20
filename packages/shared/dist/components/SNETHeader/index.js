@@ -33,14 +33,16 @@ var SNETHeader = function SNETHeader(_ref) {
       NavigationBar = _ref.NavigationBar,
       LoggedInActions = _ref.LoggedInActions,
       LoggedOutActions = _ref.LoggedOutActions,
-      portalName = _ref.portalName;
+      portalName = _ref.portalName,
+      onLogoClick = _ref.onLogoClick;
   var classes = (0, _styles.useStyles)();
   return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_SNETAppBar.default, {
     position: "fixed",
     color: color,
     className: "".concat(classes.appBar, " ").concat(color === "purple" ? classes.purple : null)
   }, _react.default.createElement("div", {
-    className: classes.logoContainer
+    className: classes.logoContainer,
+    onClick: onLogoClick
   }, _react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
@@ -71,7 +73,8 @@ SNETHeader.propTypes = {
     }))
   }),
   LoggedInActions: _propTypes.default.elementType,
-  LoggedOutActions: _propTypes.default.elementType
+  LoggedOutActions: _propTypes.default.elementType,
+  onLogoClick: _propTypes.default.func
 };
 var _default = SNETHeader;
 exports.default = _default;

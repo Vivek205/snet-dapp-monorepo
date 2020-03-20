@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import VerificationApproved from "./VerificationApproved";
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import VerificationRejected from "./VerificationRejected";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const Banners = {
   [organizationSetupStatuses.APPROVAL_PENDING]: VerificationPending,
@@ -20,8 +21,19 @@ const Banners = {
   [organizationSetupStatuses.REJECTED]: VerificationRejected,
 };
 
-const OrgSetupStatus = ({ classes }) => {
-  const status = useSelector(state => state.organization.state.state);
+const selectState = state => ({
+  status: state.organization.state.state,
+  uuid: state.organization.uuid,
+});
+
+const OrgSetupStatus = ({ classes, history }) => {
+  const { status, uuid } = useSelector(selectState);
+
+  useEffect(() => {
+    if (status === organizationSetupStatuses.PUBLISHED || status === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", uuid));
+    }
+  }, [history, status, uuid]);
 
   const CurrentStatus = Banners[status];
 
