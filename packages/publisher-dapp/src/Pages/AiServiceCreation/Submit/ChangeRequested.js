@@ -2,14 +2,23 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import BlockIcon from "@material-ui/icons/Block";
-
+import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import { useStyles } from "./styles";
+
+import { useStyles } from "./LaunchService/styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
-const ChangeRequested = ({ classes, onContinueToEdit }) => {
+const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
+  const comments = useSelector(state => state.aiServiceDetails.comments.serviceProvider);
+  const dispatch = useDispatch();
+
+  const handleCommentChange = e => {
+    dispatch(aiServiceDetailsActions.setServiceProviderComment(e.target.value));
+  };
+
   return (
     <div className={classes.launchServiceContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -21,13 +30,13 @@ const ChangeRequested = ({ classes, onContinueToEdit }) => {
         </Typography>
         <AlertBox
           type={alertTypes.WARNING}
-          header="Your AI Service is ChangeRequested by SNET"
+          header="SNET requested changes"
           icon={BlockIcon}
           message="Please make the appropriate changes and submit again for approval."
         />
         <Typography variant="h6">Message to Reviewers</Typography>
-        <SNETTextarea label="Text Input" rowCount={8} />
-        <SNETButton color="primary" variant="contained" children="provide more details" />
+        <SNETTextarea label="Text Input" rowCount={8} value={comments} onChange={handleCommentChange} />
+        <SNETButton color="primary" variant="contained" children="provide more details" onClick={onSubmitComment} />
         <SNETButton color="primary" variant="contained" children="Go back to edit" onClick={onContinueToEdit} />
       </Grid>
     </div>

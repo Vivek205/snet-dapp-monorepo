@@ -20,11 +20,10 @@ const Rejected = ({ classes, onContinueToEdit }) => {
         </Typography>
         <AlertBox
           type={alertTypes.ERROR}
-          header="Your AI Service is ChangeRequested by SNET"
+          header="Your AI Service is Rejected by SNET"
           icon={BlockIcon}
           message="Please make the appropriate changes and submit again for approval."
         />
-        <SNETButton color="primary" variant="contained" children="provide more details" />
         <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
       </Grid>
     </div>

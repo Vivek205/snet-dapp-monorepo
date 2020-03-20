@@ -63,6 +63,7 @@ const initialState = {
   tags: [],
   comments: {
     serviceProvider: "",
+    approver: "",
   },
   foundInBlockchain: false,
 };
