@@ -360,7 +360,7 @@ const Profile = ({ classes }) => {
 
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
         <SNETButton children="finish later" color="primary" variant="text" onClick={handleFinishLater} />
-        <SNETButton children="preview" color="primary" variant="contained" />
+        {/*<SNETButton children="preview" color="primary" variant="contained" />*/}
         <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
       </Grid>
     </Grid>

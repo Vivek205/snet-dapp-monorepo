@@ -3,6 +3,7 @@ export const useStyles = MUITheme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
+    cursor: "pointer",
   },
   AccountCircleIcon: {
     marginRight: 10,
