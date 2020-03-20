@@ -83,7 +83,6 @@ class LaunchService extends React.Component {
             <ContinueLaunchTable />
             <AlertBox type={alert.type} message={alert.message} />
           </Grid>
-          <MessageToReviewers />
         </div>
       );
     }

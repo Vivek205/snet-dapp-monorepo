@@ -93,9 +93,7 @@ class SubmitForReview extends React.Component {
   render() {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert } = this.state;
-    const charCount = serviceDetails.comments.serviceProvider[0]
-      ? serviceDetails.comments.serviceProvider[0].length
-      : 0;
+    const charCount = serviceDetails.comments.serviceProvider.length;
 
     return (
       <Grid container className={classes.submitContainer}>
@@ -114,7 +112,7 @@ class SubmitForReview extends React.Component {
                 maxCount={5000}
                 rowCount={8}
                 colCount={105}
-                value={serviceDetails.comments.serviceProvider[0]}
+                value={serviceDetails.comments.serviceProvider}
                 onChange={this.handleCommentChange}
               />
             </div>

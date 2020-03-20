@@ -62,7 +62,7 @@ const initialState = {
   groups: defaultGroups,
   tags: [],
   comments: {
-    serviceProvider: [],
+    serviceProvider: "",
   },
   foundInBlockchain: false,
 };
