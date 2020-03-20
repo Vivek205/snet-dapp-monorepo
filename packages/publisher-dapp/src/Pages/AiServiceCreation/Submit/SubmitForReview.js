@@ -12,7 +12,10 @@ import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
-import { checkIfKnownError } from "shared/src/utils/error";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import validator from "shared/dist/utils/validator";
+import { submitServiceConstraints } from "./validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -72,6 +75,11 @@ class SubmitForReview extends React.Component {
         return this.setState({
           alert: { type: alertTypes.ERROR, message: "No changes in draft. Please edit a field before submitting" },
         });
+      }
+
+      const isNotValid = validator(serviceDetails, submitServiceConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
       }
       // TODO remove orgId. MPS has to figure out orgId from orgUuid
       await submitServiceDetailsForReview(orgId, orgUuid, serviceDetails.uuid, serviceDetails);
