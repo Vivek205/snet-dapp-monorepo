@@ -320,6 +320,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
     freeCallSignerAddress: isEmpty(data.groups) ? "" : data.groups[0].free_call_signer_address,
+    // TODO uncomment once the backend is ready
     // comments: { approver: data.comments.approver || "" },
   };
 

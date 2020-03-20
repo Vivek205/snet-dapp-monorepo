@@ -16,11 +16,13 @@ import EditHeader from "./EditHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 class AiServiceCreation extends Component {
-  navigateToSubmitIfRejected = status => {
+  navigateToSubmitIfRejected = async status => {
     if (status === serviceCreationStatus.REJECTED) {
       const { history, match } = this.props;
       const { orgUuid, serviceUuid } = match.params;
-      history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+      await history.push(
+        ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+      );
     }
   };
 
@@ -36,7 +38,6 @@ class AiServiceCreation extends Component {
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    // console.log("response", serviceDetails);
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
@@ -83,10 +84,12 @@ class AiServiceCreation extends Component {
     }
   };
 
-  handleSectionClick = progressNumber => {
-    const { history, match } = this.props;
+  handleSectionClick = async progressNumber => {
+    const { history, match, serviceDetails } = this.props;
     const { orgUuid, serviceUuid } = match.params;
-    // const clickedSection = Object.values(serviceCreationSections).find(el => el.key === progressNumber);
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      return;
+    }
     const [key] = Object.entries(serviceCreationSections).find(([_key, value]) => value.key === progressNumber);
     if (ServiceCreationRoutes[key]) {
       history.push(ServiceCreationRoutes[key].path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
