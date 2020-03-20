@@ -83,8 +83,8 @@ export const login = (email, password) => async dispatch => {
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     if (error.code === "UserNotConfirmedException") {
-      await dispatch(organizationActions.initializeOrg);
       await dispatch(handleUserNotConfirmed(email));
+      throw error;
     }
     throw error;
   }
