@@ -83,7 +83,10 @@ export const useStyles = MUITheme => ({
   alertBoxBtnContainer: {
     marginTop: 25,
     textAlign: "center",
-    "& > div": { margin: "0 32px" },
+    "& > div": {
+      margin: "0 32px",
+      "&:first-of-type": { marginBottom: 15 },
+    },
     "& p": { margin: "0 32px 20px" },
     "& button": {
       padding: "13px 135px 13px",
