@@ -14,7 +14,7 @@ var useStyles = function useStyles(MUITheme) {
       borderRadius: 4,
       display: "flex",
       alignItems: "center",
-      '& svg': {
+      "& svg": {
         paddingRight: 16
       }
     },
@@ -48,7 +48,7 @@ var useStyles = function useStyles(MUITheme) {
     success: {
       borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox,
-      '& svg': {
+      "& svg": {
         color: MUITheme.palette.success.main
       }
     },
