@@ -9,7 +9,6 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import { serviceCreationStatus } from "../../constant";
 import ContinueLaunchTable from "./ContinueLaunchTable";
 import LaunchTable from "./LaunchTable";
-import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
@@ -108,7 +107,6 @@ class LaunchService extends React.Component {
           <AlertBox type={alert.type} message={alert.message} />
           <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
-        <MessageToReviewers />
       </div>
     );
   }
