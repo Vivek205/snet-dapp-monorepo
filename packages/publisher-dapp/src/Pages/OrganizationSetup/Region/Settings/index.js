@@ -109,7 +109,27 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               value={paymentAddress}
               onChange={handlePaymentAddressChange}
               label="Payment Address"
-              description="The ethereum address to which all payments will be processed for this group."
+              description={
+                <p>
+                  The ethereum address to which all payments will be processed for this group. See Payment Address
+                  section{" "}
+                  <a
+                    href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    here
+                  </a>{" "}
+                  and creating ethereum identity{" "}
+                  <a
+                    href="http://dev.singularitynet.io/docs/ai-developers/ethereum-identity/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    page
+                  </a>
+                </p>
+              }
               disabled={foundInBlockchain}
             />
           </Grid>
@@ -118,7 +138,18 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               icon
               name="id"
               label="ETCD Endpoint"
-              description="Enter all the ETCD end points that will be used."
+              description={
+                <p>
+                  Enter all the ETCD end points that will be used. Details{" "}
+                  <a
+                    href="http://dev.singularitynet.io/docs/ai-developers/etcd/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    here
+                  </a>
+                </p>
+              }
               onKeyUp={handleAddEndpoints}
               inputRef={etcdEndpointsRef}
             />

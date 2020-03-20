@@ -243,7 +243,7 @@ const Profile = ({ classes }) => {
             icon
             name="tags"
             label="Input Tags"
-            extraInfo="Insert multiple items separated with commas, press hit enter"
+            extraInfo="Insert multiple items separated by comma, hit enter to add"
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}

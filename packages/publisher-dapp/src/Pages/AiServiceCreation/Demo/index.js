@@ -31,8 +31,16 @@ const Demo = ({ classes }) => {
               Step 1: Download DApp source code
             </Typography>
             <Typography variant="subtitle2">
-              Using our starter node demo UI package will help you to set up a local development and testing
-              environment. Download the package from the following link and follow the instructions to set up a local
+              The DApp source code enables you to build and test the interface for your service. You can also peruse
+              available UI components at{" "}
+              <a
+                href="http://custom-ui.singularitynet.io.s3-website-us-east-1.amazonaws.com/?path=/story/alerts-alertbox--live-source"
+                target="_blank"
+              >
+                SingularityNet storybook
+              </a>
+              . This lists all common components used in the marketplace and can be reused for your service. Download
+              the package from the following link and follow the instructions to set up a local
               <a href="#" alt="Click Here">
                 Click here
               </a>
