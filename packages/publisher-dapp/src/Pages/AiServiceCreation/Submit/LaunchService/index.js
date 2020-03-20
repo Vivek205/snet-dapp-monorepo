@@ -9,7 +9,6 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import { serviceCreationStatus } from "../../constant";
 import ContinueLaunchTable from "./ContinueLaunchTable";
 import LaunchTable from "./LaunchTable";
-import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
@@ -17,6 +16,11 @@ import AlertBox from "shared/dist/components/AlertBox";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
 import ChangeRequested from "../ChangeRequested";
 import Rejected from "../Rejected";
+import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
+import validator from "shared/dist/utils/validator";
+import { submitServiceConstraints } from "../validationConstraints";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 class LaunchService extends React.Component {
   state = { daemonConfig: {}, alert: {} };
@@ -66,6 +70,40 @@ class LaunchService extends React.Component {
     history.push(ServiceCreationRoutes.PROFILE.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
   };
 
+  handleSubmitComment = async () => {
+    try {
+      this.setState({ alert: {} });
+      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+      if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+        if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+          return this.setState({
+            alert: {
+              type: alertTypes.ERROR,
+              message:
+                "Organization is being published in blockchain. Service can be submitted only when organization is published",
+            },
+          });
+        }
+        return this.setState({
+          alert: {
+            type: alertTypes.ERROR,
+            message: "Organization is not published. Please publish the organization before publishing the service",
+          },
+        });
+      }
+      const isNotValid = validator(serviceDetails, submitServiceConstraints);
+      if (isNotValid) {
+        throw new ValidationError(isNotValid[0]);
+      }
+      await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+    }
+  };
+
   render() {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert } = this.state;
@@ -85,13 +123,12 @@ class LaunchService extends React.Component {
               <AlertBox type={alert.type} message={alert.message} />
             </div>
           </Grid>
-          <MessageToReviewers />
         </div>
       );
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.CHANGE_REQUESTED) {
-      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} />;
+      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmit={this.handleSubmitComment} />;
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
@@ -111,7 +148,6 @@ class LaunchService extends React.Component {
           <AlertBox type={alert.type} message={alert.message} />
           <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
-        <MessageToReviewers />
       </div>
     );
   }
