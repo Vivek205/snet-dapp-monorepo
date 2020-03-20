@@ -112,7 +112,8 @@ var SNETSignupConfirm = function SNETSignupConfirm(props) {
     color: "primary",
     variant: "contained",
     children: "validate",
-    onClick: handleSubmit
+    onClick: handleSubmit,
+    type: "submit"
   })))));
 };
 

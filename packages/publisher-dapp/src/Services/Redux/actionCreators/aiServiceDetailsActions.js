@@ -137,7 +137,7 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
 };
 
 // TODO remove orgId. MPS has to figure out orgId from orgUuid
-const generateSaveServicePayload = (serviceDetails, orgId) => {
+const generateSaveServicePayload = serviceDetails => {
   const generatePricingpayload = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -196,10 +196,6 @@ const generateSaveServicePayload = (serviceDetails, orgId) => {
     mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
 
-  // TODO remove orgId. MPS has to figure out orgId from orgUuid
-  if (orgId) {
-    payloadForSubmit.org_id = "curation";
-  }
   return payloadForSubmit;
 };
 
@@ -355,11 +351,11 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
   return await API.put(apiName, apiPath, apiOptions);
 };
 
-export const submitServiceDetailsForReview = (orgId, orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_SERVICE_FOR_REVIEW));
     // TODO remove orgId. MPS has to figure out orgId from orgUuid
-    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails, orgId);
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);

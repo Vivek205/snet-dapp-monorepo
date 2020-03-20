@@ -52,7 +52,7 @@ const SNETSignupConfirm = props => {
           <AlertBox {...alert()} />
           <div className={classes.buttonsContainer}>
             <SNETButton variant="text" children="Resend code" onClick={onResendOtp} />
-            <SNETButton color="primary" variant="contained" children="validate" onClick={handleSubmit} />
+            <SNETButton color="primary" variant="contained" children="validate" onClick={handleSubmit} type="submit" />
           </div>
         </form>
       </div>

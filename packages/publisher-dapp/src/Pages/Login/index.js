@@ -17,6 +17,10 @@ const Login = ({ history }) => {
     }
   }, [isLoggedIn, history]);
 
+  const handleUserNotConfirmed = () => {
+    history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
+  };
+
   const handleSubmit = async (email, password) => {
     try {
       await dispatch(loginActions.login(email, password));
@@ -24,6 +28,9 @@ const Login = ({ history }) => {
     } catch (error) {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
+      }
+      if (error.code === "UserNotConfirmedException") {
+        return handleUserNotConfirmed();
       }
       setError(loginErrorMsg);
     }
