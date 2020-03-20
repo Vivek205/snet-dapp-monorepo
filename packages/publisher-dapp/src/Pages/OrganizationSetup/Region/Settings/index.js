@@ -109,7 +109,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               value={paymentAddress}
               onChange={handlePaymentAddressChange}
               label="Payment Address"
-              description="The Metamask address associated with this region."
+              description="The ethereum address to which all payments will be processed for this group."
               disabled={foundInBlockchain}
             />
           </Grid>
