@@ -24,15 +24,16 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& button": {
         width: "100%"
       },
-      '& label': {
+      "& label": {
         top: -3
       },
-      '& input': {
+      "& input": {
         color: MUITheme.palette.text.darkGrey,
+        fontSize: 16,
         letterSpacing: 0.15
       },
-      '& .MuiInputLabel-outlined.MuiInputLabel-shrink': {
-        transform: 'translate(14px, -6px) scale(0.90)'
+      "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+        transform: "translate(14px, -6px) scale(0.90)"
       }
     }, _defineProperty(_signupForm, MUITheme.breakpoints.down("xs"), {
       width: "auto",

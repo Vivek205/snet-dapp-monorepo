@@ -16,6 +16,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
 
   const getStakeAmount = () => {
     let stakeAmount = new BigNumber(0);
+    let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
     // Check if the approved Amount exists
@@ -24,6 +25,14 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+    const withdrawStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "WithdrawStake");
+
+    // Check for withdraw Amount
+    if (withdrawStakeEvent.length > 0) {
+      withdrawStakeAmount = new BigNumber(
+        withdrawStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+      );
+    }
 
     // Check for Auto Renewal Event
     if (autoRenewStakeEvent.length > 0) {
@@ -40,7 +49,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       );
     }
 
-    return stakeAmount.plus(autoRenewApprovedAmount);
+    return stakeAmount.plus(autoRenewApprovedAmount).minus(withdrawStakeAmount);
   };
 
   const calculateReward = () => {
@@ -51,6 +60,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     let rewardAmount = new BigNumber(0);
     let rewardAmountFromAutoRenewal = new BigNumber(0);
     let stakeAmount = new BigNumber(0);
+    let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
     // Check if Claim Event exists to get the Reward Amount
@@ -65,6 +75,14 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+    const withdrawStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "WithdrawStake");
+
+    // Check for withdraw Amount
+    if (withdrawStakeEvent.length > 0) {
+      withdrawStakeAmount = new BigNumber(
+        withdrawStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+      );
+    }
 
     // Check for Auto Renewal Event
     if (autoRenewStakeEvent.length > 0) {
@@ -88,13 +106,19 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       // Check if the stake crossed Approval Period - No Reward
       const currentTime = moment().unix();
       if (currentTime < stakeWindow.approvalEndPeriod) {
-        stakeAmount = submitStakeEvent.map(s => new BigNumber(s.eventData.stakeAmount)).reduce((a, b) => a.plus(b), 0);
+        stakeAmount = new BigNumber(
+          submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+        );
+
+        // Reduce the withdraw amount in case if it exists
+        stakeAmount = stakeAmount.minus(withdrawStakeAmount);
+
+        // TODO - Need to get Total Pending Amount from API
         rewardAmount = stakeAmount
           .times(windowRewardAmount)
-          .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
+          .div(windowTotalStake.lt(windowMaxCap) ? stakeAmount : windowMaxCap);
       }
     }
-
     return rewardAmount.plus(rewardAmountFromAutoRenewal);
   };
 

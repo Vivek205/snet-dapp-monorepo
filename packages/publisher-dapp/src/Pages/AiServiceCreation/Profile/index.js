@@ -27,6 +27,7 @@ import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { ContactsTypes } from "../../../Utils/Contacts";
 
 let validateTimeout = "";
 
@@ -172,6 +173,17 @@ const Profile = ({ classes }) => {
     }
   };
 
+  const handleSupportEmailChange = e => {
+    setServiceTouchedFlag();
+    const { value } = e.target;
+    const updatedSupportContacts = [...serviceDetails.contacts];
+    const index = updatedSupportContacts.findIndex(el => el.type === ContactsTypes.SUPPORT);
+    updatedSupportContacts[index] = { ...updatedSupportContacts[index], email: value };
+    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("contacts", updatedSupportContacts));
+  };
+
+  const supportEmail = serviceDetails.contacts.find(el => el.type === ContactsTypes.SUPPORT).email;
+
   return (
     <Grid container className={classes.profileContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -293,8 +305,8 @@ const Profile = ({ classes }) => {
             name="suppportEmail"
             label="Support Email"
             description="Email address of the user who will receive the alert when the service is down or any error occurs."
-            value={serviceDetails.contributors}
-            onChange={handleControlChange}
+            value={supportEmail}
+            onChange={handleSupportEmailChange}
           />
 
           <div className={classes.profileImgContainer}>

@@ -40,6 +40,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
   const [stakeAmount, setStakeAmount] = useState(0);
   const [rewardAmount, setRewardAmount] = useState(0);
 
+  const [disableAction, setDisableAction] = useState(false);
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
   const { tokenBalance, tokenAllowance, metamaskDetails } = useSelector(state => stateSelector(state));
@@ -49,18 +50,24 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
   // TODO - Check for the Current Time to allow the Operation or Not
 
   const handleCancel = () => {
+    // Reset the error state
+    setAlert({ type: alertTypes.ERROR, message: undefined });
+
     handleClose();
   };
 
   const handleSubmitFunds = async () => {
+    // Reset the error state
+    setAlert({ type: alertTypes.ERROR, message: undefined });
+
     const zeroBN = new BN(0);
     const stakeAmountBN = new BN(toWei(stakeAmount));
     const tokenBalanceBN = new BN(tokenBalance);
     const tokenAllowanceBN = new BN(tokenAllowance);
 
-    //console.log("Auto Renewal Option - ", autoRenewal);
+    const minStakeBN = new BN(stakeDetails.minStake);
 
-    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN)) {
+    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && stakeAmountBN.gte(minStakeBN)) {
       let txHash;
       let bAllowanceCalled = false;
 
@@ -91,6 +98,9 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
         dispatch(loaderActions.stopAppLoader());
 
+        // Disable the submit operation
+        setDisableAction(true);
+
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
@@ -101,6 +111,12 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
       }
+    } else if (stakeAmountBN.lt(minStakeBN)) {
+      // Display the alert message
+      setAlert({
+        type: alertTypes.ERROR,
+        message: `Oops! Needs to stake atleast minimum amount.`,
+      });
     } else {
       // Display the alert message
       setAlert({
@@ -122,12 +138,15 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
   };
 
   const computeReward = _stakeAmount => {
-    if (_stakeAmount === 0) return 0;
+    const stakeAmount = new BigNumber(toWei(_stakeAmount));
 
-    const stakeAmount = new BigNumber(_stakeAmount);
+    if (stakeAmount.lte(0)) return 0;
+
     const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
-    let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount === 0 ? 1 : stakeDetails.totalStakedAmount);
+    let totalStakedAmount = new BigNumber(
+      stakeDetails.totalStakedAmount === 0 ? _stakeAmount : stakeDetails.totalStakedAmount
+    );
 
     // Assuming that the new Stake will be part of total stake amount
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
@@ -210,19 +229,13 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
             </div>
           </CardContent>
           <CardActions className={classes.CardActions}>
-            <SNETButton
-              children="cancel"
-              color="primary"
-              variant="text"
-              onClick={handleCancel}
-              disabled={!metamaskDetails.isTxnsAllowed}
-            />
+            <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
             <SNETButton
               children="submit funds"
               color="primary"
               variant="contained"
               onClick={handleSubmitFunds}
-              disabled={!metamaskDetails.isTxnsAllowed}
+              disabled={!metamaskDetails.isTxnsAllowed || disableAction}
             />
           </CardActions>
         </Card>

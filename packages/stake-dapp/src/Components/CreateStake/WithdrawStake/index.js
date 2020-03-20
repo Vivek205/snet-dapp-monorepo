@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import web3 from "web3";
 
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -10,9 +12,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-
-import moment from "moment";
-import web3 from "web3";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
@@ -114,6 +114,9 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                 label="Withdraw Stake Amount"
                 onChange={handleAmountChange}
                 value={withdrawAmount}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
             </div>
             <div className={classes.stakeAmtDetailsContainer}>

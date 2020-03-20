@@ -149,7 +149,7 @@ const StakeSession = ({
         <IncubationProgressDetails details={incubationProgressDetails} />
         <div className={classes.cards}>
           {cardDetails.map(item => (
-            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} />
+            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} toolTip={item.toolTip} />
           ))}
         </div>
         <Agreement
