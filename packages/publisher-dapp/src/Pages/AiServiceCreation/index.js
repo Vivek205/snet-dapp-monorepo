@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { progressText, serviceCreationSections } from "./constant";
+import { progressText, serviceCreationSections, serviceCreationStatus } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -16,6 +16,14 @@ import EditHeader from "./EditHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 class AiServiceCreation extends Component {
+  navigateToSubmitIfRejected = status => {
+    if (status === serviceCreationStatus.REJECTED) {
+      const { history, match } = this.props;
+      const { orgUuid, serviceUuid } = match.params;
+      history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    }
+  };
+
   initData = async () => {
     const {
       getAiServiceList,
@@ -26,7 +34,10 @@ class AiServiceCreation extends Component {
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
-    await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    const serviceDetails = response[0];
+    // console.log("response", serviceDetails);
+    this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
 

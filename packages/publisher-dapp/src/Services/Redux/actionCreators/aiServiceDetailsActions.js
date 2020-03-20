@@ -251,6 +251,7 @@ export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch
     }
     const service = parseServiceDetails(data, serviceUuid);
     dispatch(setAllAttributes(service));
+    return service;
   } catch (error) {
     throw error;
   }
