@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,17 +15,7 @@ import { serviceCreationStatus } from "../constant";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
-
-const generateErrorMessageFromValidation = validation => (
-  <Fragment>
-    Please fix the following errors:-
-    <ul>
-      {validation.map(msg => (
-        <li key={msg}>{msg}</li>
-      ))}
-    </ul>
-  </Fragment>
-);
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -89,7 +79,7 @@ class SubmitForReview extends React.Component {
 
       const isNotValid = validator(serviceDetails, submitServiceConstraints);
       if (isNotValid) {
-        const errorMessage = generateErrorMessageFromValidation(isNotValid);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
