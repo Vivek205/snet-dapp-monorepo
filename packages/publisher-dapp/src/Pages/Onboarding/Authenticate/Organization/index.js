@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
+import { useDispatch, useSelector } from "react-redux";
 
 import BasicDetails from "./BasicDetails";
 import CompanyAddress from "./CompanyAddress";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
-import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import validator from "shared/dist/utils/validator";
 import { orgOnboardingConstraints } from "./validationConstraints";
@@ -19,14 +19,15 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
+  const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace("orgUuid", organization.uuid));
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
-  });
+  }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
@@ -50,11 +51,12 @@ const Organization = props => {
         throw new ValidationError(isNotValid[0]);
       }
       let orgUuid;
-      if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
-        const data = await dispatch(organizationActions.finishLater(organization, "ONBOARDING"));
+      const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
+      if (orgData.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+        const data = await dispatch(organizationActions.finishLater(orgData, "ONBOARDING"));
         orgUuid = data.org_uuid;
       } else {
-        const data = await dispatch(organizationActions.createOrganization(organization));
+        const data = await dispatch(organizationActions.createOrganization(orgData));
         orgUuid = data.org_uuid;
       }
       dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
@@ -80,12 +82,16 @@ const Organization = props => {
     <Fragment>
       <div className={classes.box}>
         <Typography variant="h6">Organization Verification Required</Typography>
-        <Typography>
-          You need to provide your company organization details and your DUNS number for the verification process.
-        </Typography>
-        <BasicDetails />
-        <CompanyAddress />
-        <AlertBox type={alert.type} message={alert.message} />
+        <div className={classes.wrapper}>
+          <Typography>
+            Please provide your company organization details and your DUNS number for the verification process.
+          </Typography>
+          <BasicDetails allowDuns={allowDuns} setAllowDuns={setAllowDuns} />
+          <CompanyAddress />
+          <div className={classes.alertBoxContainer}>
+            <AlertBox type={alert.type} message={alert.message} />
+          </div>
+        </div>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" onClick={handleCancel} />

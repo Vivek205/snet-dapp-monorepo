@@ -26,6 +26,7 @@ import { assetTypes } from "../../../Utils/FileUpload";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 let validateTimeout = "";
 
@@ -34,7 +35,7 @@ const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes, _location }) => {
+const Profile = ({ classes }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
@@ -44,9 +45,9 @@ const Profile = ({ classes, _location }) => {
 
   const [alert, setAlert] = useState({});
 
-  const setServiceTouchFlag = () => {
+  const setServiceTouchedFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchFlag(true));
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
   };
 
   const validateServiceId = serviceId => async () => {
@@ -72,7 +73,7 @@ const Profile = ({ classes, _location }) => {
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
@@ -80,24 +81,29 @@ const Profile = ({ classes, _location }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
 
+  const handleSave = async () => {
+    const serviceName = serviceDetails.name;
+    const serviceId = serviceDetails.newId ? serviceDetails.newId : serviceDetails.id;
+
+    const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
+
+    if (isNotValid) {
+      throw new ValidationError(isNotValid[0]);
+    }
+    if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+      throw new ValidationError("Service id is not available. Try with a different service id");
+    }
+    if (serviceDetails.touched) {
+      // Call API to save
+      await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
+    }
+
+    return;
+  };
+
   const handleContinue = async () => {
     try {
-      const serviceName = serviceDetails.name;
-      const serviceId = serviceDetails.newId ? serviceDetails.newId : serviceDetails.id;
-
-      const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
-
-      if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
-      }
-      if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
-        throw new ValidationError("Service id is not available. Try with a different service id");
-      }
-      if (serviceDetails.touch) {
-        // Call API to save
-        await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
-      }
-
+      await handleSave();
       history.push(
         ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
       );
@@ -131,7 +137,7 @@ const Profile = ({ classes, _location }) => {
     });
 
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
   };
 
   const handleDeleteTag = tag => {
@@ -141,17 +147,29 @@ const Profile = ({ classes, _location }) => {
 
     // Set State
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
   };
 
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchFlag();
+    setServiceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
     dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+  };
+
+  const handleFinishLater = async () => {
+    try {
+      await handleSave();
+      history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
+    } catch (error) {
+      if (checkIfKnownError(error)) {
+        return setAlert({ type: alertTypes.ERROR, message: error.message });
+      }
+      return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
+    }
   };
 
   return (
@@ -160,31 +178,32 @@ const Profile = ({ classes, _location }) => {
         <Typography variant="h6">AI Service Profile Information</Typography>
         <div className={classes.wrapper}>
           <Typography className={classes.description}>
-            Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter
-            videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+            Please enter the description and details of the service you wish to add to the AI marketplace, making sure
+            your descriptions are clear as this will be displayed on the AI marketplace.
           </Typography>
 
           <SNETTextfield
             icon
             name="name"
             label="AI Service Name"
-            minCount={0}
+            minCount={serviceDetails.name.length}
             maxCount={50}
-            description="The name of your service cannot be same name as another serviceDetails."
+            description="The name of your service cannot be same name as another service."
             value={serviceDetails.name}
-            disabled={serviceDetails.foundInBlockchain}
             onChange={handleControlChange}
           />
-          <SNETTextfield
-            icon
-            name="id"
-            label="AI Service Id"
-            minCount={0}
-            maxCount={50}
-            description="The Id of your service to uniquely identity in the organization."
-            value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
-            onChange={handleControlChange}
-          />
+          <div className={classes.serviceIdContainer}>
+            <SNETTextfield
+              icon
+              name="id"
+              label="AI Service Id"
+              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
+              maxCount={50}
+              description="The ID of your service cannot be same ID as another service."
+              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              onChange={handleControlChange}
+            />
+          </div>
           <ServiceIdAvailability
             serviceDetails={serviceDetails}
             id={serviceDetails.newId || serviceDetails.id}
@@ -192,76 +211,88 @@ const Profile = ({ classes, _location }) => {
             classes={classes}
             loading={isValidateServiceIdLoading}
           />
-          <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
-            showInfoIcon
-            name="shortDescription"
-            label="Short Description"
-            minCount={0}
-            maxCount={160}
-            rowCount={3}
-            colCount={105}
-            value={serviceDetails.shortDescription}
-            onChange={handleControlChange}
-          />
-
-          <SNETTextarea
-            disabled={serviceDetails.foundInBlockchain}
-            showInfoIcon
-            name="longDescription"
-            label="Long Description"
-            minCount={0}
-            maxCount={5000}
-            rowCount={8}
-            colCount={105}
-            value={serviceDetails.longDescription}
-            onChange={handleControlChange}
-          />
-
-          <SNETTextfield
-            disabled={serviceDetails.foundInBlockchain}
-            icon
-            name="tags"
-            label="Service Tags"
-            description="Enter all the TAGs separated by comma and press enter"
-            value={tags}
-            onKeyUp={handleAddTags}
-            onChange={e => setTags(e.target.value.toLowerCase())}
-          />
-          <div className={classes.addedTagsContainer}>
-            <InfoIcon />
-            <span>Added Tags</span>
-            <Card className={classes.card}>
-              {serviceDetails.tags.map(tag => (
-                <Chip
-                  disabled={serviceDetails.foundInBlockchain}
-                  className={classes.chip}
-                  key={tag}
-                  label={tag}
-                  color="primary"
-                  onDelete={() => handleDeleteTag(tag)}
-                />
-              ))}
-            </Card>
+          <div className={classes.shortDescContainer}>
+            <SNETTextarea
+              showInfoIcon
+              name="shortDescription"
+              label="Short Description"
+              minCount={serviceDetails.shortDescription.length}
+              maxCount={160}
+              rowCount={3}
+              colCount={105}
+              value={serviceDetails.shortDescription}
+              onChange={handleControlChange}
+            />
           </div>
 
-          <div className={classes.projUrlContainer}>
-            <SNETTextfield
-              disabled={serviceDetails.foundInBlockchain}
-              name="projectURL"
-              label="Project URL"
-              description="The Website URL will be displayed to users under your AI service page. Recommend Github links"
-              value={serviceDetails.projectURL}
+          <div className={classes.longDescContainer}>
+            <SNETTextarea
+              showInfoIcon
+              name="longDescription"
+              label="Long Description"
+              minCount={serviceDetails.longDescription.length}
+              maxCount={5000}
+              rowCount={8}
+              colCount={105}
+              value={serviceDetails.longDescription}
               onChange={handleControlChange}
             />
           </div>
 
           <SNETTextfield
             icon
-            name="contributors"
-            label="Contributors"
-            minCount={0}
-            maxCount={100}
+            name="tags"
+            label="Input Tags"
+            extraInfo="Insert multiple items separated with commas, press hit enter"
+            value={tags}
+            onKeyUp={handleAddTags}
+            onChange={e => setTags(e.target.value.toLowerCase())}
+          />
+          <div className={classes.addedTagsContainer}>
+            <div>
+              <InfoIcon />
+              <span className={classes.addTagLabel}>Added Tags</span>
+              <Card className={classes.card}>
+                {serviceDetails.tags.map(tag => (
+                  <Chip
+                    className={classes.chip}
+                    key={tag}
+                    label={tag}
+                    color="primary"
+                    onDelete={() => handleDeleteTag(tag)}
+                  />
+                ))}
+              </Card>
+            </div>
+            <span className={classes.addTagExtraInfo}>You can add up to 20 tag items</span>
+          </div>
+
+          <div className={classes.projUrlContainer}>
+            <SNETTextfield
+              name="projectURL"
+              label="Project URL"
+              description="The website URL of the service will be displayed to users under your AI service page. GitHub links are recommended."
+              value={serviceDetails.projectURL}
+              onChange={handleControlChange}
+            />
+          </div>
+
+          <div className={classes.contributorsContainer}>
+            <SNETTextfield
+              icon
+              name="contributors"
+              label="Contributors"
+              minCount={serviceDetails.contributors.length}
+              maxCount={100}
+              value={serviceDetails.contributors}
+              onChange={handleControlChange}
+            />
+          </div>
+
+          <SNETTextfield
+            name="suppportEmail"
+            label="Support Email"
+            description="Email address of the user who will receive the alert when the service is down or any error occurs."
             value={serviceDetails.contributors}
             onChange={handleControlChange}
           />
@@ -291,8 +322,8 @@ const Profile = ({ classes, _location }) => {
                   preview how it will look on the AI Marketplace.
                 </Typography>
                 <Typography variant="subtitle2">
-                  We encourage to find a representative image for your service to attract users explore your page and
-                  serviceDetails.
+                  We encourage to find a representative image for your service that will attract users to explore your
+                  page and service.
                 </Typography>
               </div>
             </div>
@@ -307,13 +338,16 @@ const Profile = ({ classes, _location }) => {
               </div>
             </div>
           </div>
-
-          <AlertBox type={alert.type} message={alert.message} />
+          {alert.message ? (
+            <div className={classes.alertContainer}>
+              <AlertBox type={alert.type} message={alert.message} />
+            </div>
+          ) : null}
         </div>
       </Grid>
 
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-        <SNETButton children="finish later" color="primary" variant="text" />
+        <SNETButton children="finish later" color="primary" variant="text" onClick={handleFinishLater} />
         <SNETButton children="preview" color="primary" variant="contained" />
         <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
       </Grid>

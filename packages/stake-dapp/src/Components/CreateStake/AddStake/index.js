@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import web3 from "web3";
+import BigNumber from "bignumber.js";
 
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -112,7 +113,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
   const handleAmountChange = event => {
     if (isValidInputAmount(event.target.value)) {
       setStakeAmount(event.target.value);
-      setRewardAmount(calcRewardAmount(event.target.value));
+      setRewardAmount(computeReward(event.target.value));
     } else if (event.target.value === "") {
       setStakeAmount("");
     } else {
@@ -120,9 +121,25 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     }
   };
 
-  const calcRewardAmount = _stakeAmount => {
-    // Calc the reward on window max cap
-    const _rewardAmount = Math.floor((toWei(_stakeAmount) * stakeDetails.rewardAmount) / stakeDetails.windowMaxCap);
+  const computeReward = _stakeAmount => {
+    if (_stakeAmount === 0) return 0;
+
+    const stakeAmount = new BigNumber(_stakeAmount);
+    const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
+    const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
+    let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount === 0 ? 1 : stakeDetails.totalStakedAmount);
+
+    // Assuming that the new Stake will be part of total stake amount
+    totalStakedAmount = totalStakedAmount.plus(stakeAmount);
+
+    let _rewardAmount = new BigNumber(0);
+
+    if (totalStakedAmount.lt(windowMaxCap)) {
+      _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
+    } else {
+      _rewardAmount = stakeAmount.times(windowRewardAmount).div(windowMaxCap);
+    }
+
     return _rewardAmount;
   };
 

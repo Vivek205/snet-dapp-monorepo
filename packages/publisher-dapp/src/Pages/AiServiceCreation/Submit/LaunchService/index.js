@@ -12,9 +12,11 @@ import LaunchTable from "./LaunchTable";
 import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import AlertBox from "shared/dist/components/AlertBox";
 
 class LaunchService extends React.Component {
-  state = { daemonConfig: {} };
+  state = { daemonConfig: {}, alert: {} };
 
   fetchSampleDaemonConfig = async () => {
     try {
@@ -22,7 +24,7 @@ class LaunchService extends React.Component {
       if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
         return;
       }
-      const { daemon_config } = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
+      const daemon_config = await getSampleDaemonConfig(organization.uuid, serviceDetails.uuid, false);
       this.setState({ daemonConfig: daemon_config });
     } catch (e) {
       // Alert user daemon config cannot be retrieved
@@ -34,14 +36,30 @@ class LaunchService extends React.Component {
   };
 
   handlePublishToBlockchain = async () => {
+    this.setState({ alert: {} });
     const { publishToIPFS, organization, serviceDetails, history, publishService } = this.props;
+    if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISHED) {
+      return this.setState({
+        alert: { type: alertTypes.ERROR, message: "Service is already published. No new changes to be published " },
+      });
+    }
+    if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISH_IN_PROGRESS) {
+      return this.setState({
+        alert: { type: alertTypes.ERROR, message: "Service is already being published. Please wait." },
+      });
+    }
+    if (serviceDetails.serviceState.state !== serviceCreationStatus.APPROVED) {
+      return this.setState({
+        alert: { type: alertTypes.ERROR, message: "Service is not yet approved. Please submit for approval " },
+      });
+    }
     const { metadata_ipfs_hash } = await publishToIPFS(organization.uuid, serviceDetails.uuid);
     await publishService(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags, history);
   };
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig } = this.state;
+    const { daemonConfig, alert } = this.state;
     if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
       return (
         <div className={classes.launchServiceContainer}>
@@ -53,10 +71,8 @@ class LaunchService extends React.Component {
               inputs needs to be refined. You will be able to review and respond to the feedback from the SNET Admins
               here.
             </Typography>
-            <ContinueLaunchTable
-              handlePublishToBlockchain={this.handlePublishToBlockchain}
-              serviceDetails={serviceDetails}
-            />
+            <ContinueLaunchTable />
+            <AlertBox type={alert.type} message={alert.message} />
           </Grid>
           <MessageToReviewers />
         </div>
@@ -73,7 +89,8 @@ class LaunchService extends React.Component {
             needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
-          <DaemonConfig config={daemonConfig} />
+          <AlertBox type={alert.type} message={alert.message} />
+          <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
         <MessageToReviewers />
       </div>
