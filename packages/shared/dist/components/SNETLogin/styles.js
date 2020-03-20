@@ -48,7 +48,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         letterSpacing: 0.4,
         lineHeight: "16px"
       },
-      '& input': {
+      "& input": {
         color: MUITheme.palette.text.darkGrey,
         fontSize: 16,
         letterSpacing: 0.15

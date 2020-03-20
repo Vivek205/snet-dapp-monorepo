@@ -25,6 +25,7 @@ var useStyles = function useStyles(MUITheme) {
         transform: "translate(14px, -6px) scale(0.90)"
       },
       "& input": {
+        fontSize: 16,
         letterSpacing: 0.15,
         lineHeight: "24px",
         "&:disabled": {
