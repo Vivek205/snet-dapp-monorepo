@@ -15,7 +15,7 @@ import { serviceCreationStatus } from "../constant";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -79,7 +79,8 @@ class SubmitForReview extends React.Component {
 
       const isNotValid = validator(serviceDetails, submitServiceConstraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
@@ -94,7 +95,6 @@ class SubmitForReview extends React.Component {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert } = this.state;
     const charCount = serviceDetails.comments.serviceProvider.length;
-
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -116,7 +116,7 @@ class SubmitForReview extends React.Component {
                 onChange={this.handleCommentChange}
               />
             </div>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
             <div className={classes.btnContainer}>
               <SNETButton
                 children="submit for review"
