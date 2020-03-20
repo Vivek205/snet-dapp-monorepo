@@ -35,7 +35,7 @@ class AiServiceCreation extends Component {
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
-    const serviceDetails = response[0];
+    const serviceDetails = response[1];
     // console.log("response", serviceDetails);
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
