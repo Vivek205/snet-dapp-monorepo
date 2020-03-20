@@ -48,6 +48,11 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         letterSpacing: 0.4,
         lineHeight: "16px"
       },
+      "& input": {
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 16,
+        letterSpacing: 0.15
+      },
       "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
         transform: "translate(14px, -6px) scale(0.90)"
       },

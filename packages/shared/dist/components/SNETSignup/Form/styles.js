@@ -29,6 +29,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       },
       "& input": {
         color: MUITheme.palette.text.darkGrey,
+        fontSize: 16,
         letterSpacing: 0.15
       },
       "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {

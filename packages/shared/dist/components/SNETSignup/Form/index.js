@@ -113,7 +113,7 @@ var Form = function Form(props) {
     }
   }), _react.default.createElement("span", {
     className: classes.charLength
-  }, "16/20 char")), _react.default.createElement("div", {
+  }, nickname.length, "/20 char")), _react.default.createElement("div", {
     className: classes.emailContainer
   }, _react.default.createElement(_TextField.default, {
     id: "outlined-email-input",
