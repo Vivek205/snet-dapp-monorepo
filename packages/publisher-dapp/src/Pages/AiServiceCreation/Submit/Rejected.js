@@ -7,8 +7,11 @@ import { withStyles } from "@material-ui/core";
 import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
+import { useSelector } from "react-redux";
 
 const Rejected = ({ classes, onContinueToEdit }) => {
+  const comments = useSelector(state => state.aiServiceDetails.comments.approver);
+
   return (
     <div className={classes.launchServiceContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -25,6 +28,10 @@ const Rejected = ({ classes, onContinueToEdit }) => {
             icon={BlockIcon}
             message="Please make the appropriate changes and submit again for approval."
           />
+          <div className={classes.approvalCommentSection}>
+            <Typography variant="h6">Reviewers Comment</Typography>
+            <Typography>{comments}</Typography>
+          </div>
           <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
         </div>
       </Grid>

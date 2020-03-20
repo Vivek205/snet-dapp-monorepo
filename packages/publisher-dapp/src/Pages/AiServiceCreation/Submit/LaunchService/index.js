@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { serviceCreationStatus } from "../../constant";
 import ContinueLaunchTable from "./ContinueLaunchTable";
-// import LaunchTable from "./LaunchTable";
+import LaunchTable from "./LaunchTable";
 import MessageToReviewers from "./MessageToReviewers";
 import { useStyles } from "./styles";
-// import DaemonConfig from "../DaemonConfig";
+import DaemonConfig from "../DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import AlertBox from "shared/dist/components/AlertBox";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
@@ -68,7 +68,7 @@ class LaunchService extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { alert } = this.state;
+    const { daemonConfig, alert } = this.state;
     if (serviceDetails.serviceState.state === serviceCreationStatus.APPROVAL_PENDING) {
       return (
         <div className={classes.launchServiceContainer}>
@@ -99,8 +99,7 @@ class LaunchService extends React.Component {
     }
 
     return (
-      <Rejected onContinueToEdit={this.handleContinueEdit} />
-      /*<div className={classes.launchServiceContainer}>
+      <div className={classes.launchServiceContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
           <Typography variant="h6">Review Process</Typography>
           <Typography className={classes.reviewProcessDescription}>
@@ -113,7 +112,7 @@ class LaunchService extends React.Component {
           <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
         </Grid>
         <MessageToReviewers />
-      </div> */
+      </div>
     );
   }
 }

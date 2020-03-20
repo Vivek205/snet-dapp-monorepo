@@ -5,14 +5,14 @@ import BlockIcon from "@material-ui/icons/Block";
 import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core";
 
-import { useStyles } from "./LaunchService/styles";
+import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
-  const comments = useSelector(state => state.aiServiceDetails.comments.serviceProvider);
+  const comments = useSelector(state => state.aiServiceDetails.comments);
   const dispatch = useDispatch();
 
   const handleCommentChange = e => {
@@ -28,16 +28,32 @@ const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
           few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
           needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
         </Typography>
-        <AlertBox
-          type={alertTypes.WARNING}
-          header="SNET requested changes"
-          icon={BlockIcon}
-          message="Please make the appropriate changes and submit again for approval."
-        />
-        <Typography variant="h6">Message to Reviewers</Typography>
-        <SNETTextarea label="Text Input" rowCount={8} value={comments} onChange={handleCommentChange} />
-        <SNETButton color="primary" variant="contained" children="provide more details" onClick={onSubmitComment} />
-        <SNETButton color="primary" variant="contained" children="Go back to edit" onClick={onContinueToEdit} />
+        <div className={classes.changesReqAlertContainer}>
+          <AlertBox
+            type={alertTypes.WARNING}
+            header="SNET requested changes"
+            icon={BlockIcon}
+            message="Please make the appropriate changes and submit again for approval."
+          />
+        </div>
+
+        <div className={classes.changeReqTextarea}>
+          <Typography variant="h6">Reviews Comment</Typography>
+          <Typography>reviewers comments will go here...</Typography>
+
+          <Typography variant="h6">Message to Reviewers</Typography>
+          <SNETTextarea
+            label="Text Input"
+            rowCount={8}
+            value={comments.serviceProvider}
+            onChange={handleCommentChange}
+          />
+        </div>
+
+        <div className={classes.changeReqBtnContainer}>
+          <SNETButton color="primary" variant="outlined" children="Reply" onClick={onSubmitComment} />
+          <SNETButton color="primary" variant="contained" children="Go back to edit" onClick={onContinueToEdit} />
+        </div>
       </Grid>
     </div>
   );
