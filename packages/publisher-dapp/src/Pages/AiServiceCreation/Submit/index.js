@@ -17,9 +17,9 @@ const Submit = () => {
     serviceDetails.serviceState.state === serviceCreationStatus.DRAFT;
 
   if (allowSubmitForReview) {
-    return <SubmitForReview />;
+    return <LaunchService />;
   }
 
-  return <LaunchService />;
+  return <SubmitForReview />;
 };
 export default withStyles(useStyles)(Submit);

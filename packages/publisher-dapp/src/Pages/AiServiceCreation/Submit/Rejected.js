@@ -18,13 +18,15 @@ const Rejected = ({ classes, onContinueToEdit }) => {
           few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
           needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
         </Typography>
-        <AlertBox
-          type={alertTypes.ERROR}
-          header="Your AI Service is Rejected by SNET"
-          icon={BlockIcon}
-          message="Please make the appropriate changes and submit again for approval."
-        />
-        <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
+        <div className={classes.rejectedAlertAndBtnContainer}>
+          <AlertBox
+            type={alertTypes.ERROR}
+            header="Your AI Service is Rejected by SNET"
+            icon={BlockIcon}
+            message="Please make the appropriate changes and submit again for approval."
+          />
+          <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
+        </div>
       </Grid>
     </div>
   );

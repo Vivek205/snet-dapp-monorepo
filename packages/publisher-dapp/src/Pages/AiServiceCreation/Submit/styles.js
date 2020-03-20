@@ -180,4 +180,17 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     backgroundColor: "#F6F6F6",
   },
+  launchServiceContainer: {
+    width: 845,
+    margin: "48px auto 0",
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "0 25px",
+    },
+  },
+  rejectedAlertAndBtnContainer: {
+    padding: "0 30px 25px",
+    textAlign: "center",
+    "& button": { marginTop: 25 },
+  },
 });
