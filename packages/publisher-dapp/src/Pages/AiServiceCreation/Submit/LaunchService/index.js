@@ -14,8 +14,9 @@ import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import AlertBox from "shared/dist/components/AlertBox";
-import Rejected from "./Rejected";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
+import ChangeRequested from "./ChangeRequested";
+import Rejected from "../Rejected";
 
 class LaunchService extends React.Component {
   state = { daemonConfig: {}, alert: {} };
@@ -85,6 +86,10 @@ class LaunchService extends React.Component {
           <MessageToReviewers />
         </div>
       );
+    }
+
+    if (serviceDetails.serviceState.state === serviceCreationStatus.CHANGE_REQUESTED) {
+      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} />;
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
