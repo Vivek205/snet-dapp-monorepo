@@ -1,5 +1,5 @@
 import React from "react";
-import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
 import { useHistory } from "react-router-dom";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useSelector } from "react-redux";
@@ -24,7 +24,9 @@ const VerificationPending = () => {
     <SNETStatusBanner
       title="Your Organization entity review is in progress…"
       img={orgSetupPendingImg}
-      description="This review may take a day or two.  In the meantime you can add team memebers to your organization to help you setup and manage your AI services more efficiently.   You can also view our guides and tutorials."
+      description="This review may take a day or two. In the meantime,
+      you can add team members to your organization to help you set up and manage your AI services more efficiently.
+       You can also view our guides and tutorials."
       actions={[
         {
           children: "Invite Team members",
@@ -33,9 +35,14 @@ const VerificationPending = () => {
           onClick: handleInviteSetup,
           disabled: !shouldInviteMembersBeEnabled(),
         },
-        { children: "contact support", variant: "text", color: "primary" },
       ]}
-      pending
+      anchorDetails={[
+        {
+          label: "contact support",
+          linkTo: "mailto:support@singularitynet.io",
+        },
+      ]}
+      type={statusTitleType.PENDING}
     />
   );
 };

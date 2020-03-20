@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import SNETTextField from "shared/dist/components/SNETTextfield";
+import AlertText from "shared/dist/components/AlertText";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+
+import { useStyles } from "../styles";
 import { basicDetailsFormData } from "./content";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 import { ContactsTypes } from "../../../../../Utils/Contacts";
-import AlertText from "shared/dist/components/AlertText";
-import { alertTypes } from "shared/dist/components/AlertBox";
-import validator from "shared/dist/utils/validator";
 import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/OrganizationProfile/validationConstraints";
 
-const BasicDetails = () => {
+const BasicDetails = ({ allowDuns, setAllowDuns }) => {
+  const classes = useStyles();
   const { id, name, website, duns, contacts } = useSelector(state => state.organization);
   const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
   let phone = "";
@@ -54,10 +60,24 @@ const BasicDetails = () => {
   return (
     <Grid container>
       <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
-      <AlertText type={websiteValidation.type} message={websiteValidation.message} />
+      <SNETTextField
+        {...basicDetailsFormData.ORGANIZATION_NAME}
+        value={name}
+        minCount={name.length}
+        maxCount={50}
+        onChange={handleChange}
+      />
+      <div className={classes.dunsContainer}>
+        <FormControlLabel
+          control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
+          label="I have my DUNS number"
+        />
+        <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} disabled={!allowDuns} />
+      </div>
+      <div className={classes.websiteUrlContainer}>
+        <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
+        <AlertText type={websiteValidation.type} message={websiteValidation.message} />
+      </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
@@ -7,8 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import MetaMaskAccountBalance from "./MetaMaskAccountBalance";
 
-const AccountBalance = ({ classes, metamaskDetails }) => {
-  const isTxnsAllowed = metamaskDetails.isTxnsAllowed;
+const AccountBalance = ({ classes }) => {
+  const { metamaskDetails } = useSelector(state => state.metamaskReducer);
 
   if (!isTxnsAllowed) {
     return null;
@@ -17,7 +17,7 @@ const AccountBalance = ({ classes, metamaskDetails }) => {
   return (
     <div className={classes.accountBalanceContainer}>
       <h3>Account Balance</h3>
-      {isTxnsAllowed ? (
+      {metamaskDetails.isTxnsAllowed ? (
         <MetaMaskAccountBalance description />
       ) : (
         <div>
@@ -47,8 +47,4 @@ const AccountBalance = ({ classes, metamaskDetails }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  metamaskDetails: state.metamaskReducer.metamaskDetails,
-});
-
-export default connect(mapStateToProps)(withStyles(useStyles)(AccountBalance));
+export default withStyles(useStyles)(AccountBalance);

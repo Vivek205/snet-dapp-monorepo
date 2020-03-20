@@ -9,6 +9,7 @@ const initialState = {
   nickname: undefined,
   isEmailVerified: false,
   individualVerificationStatus: individualVerificationStatusList.NOT_STARTED,
+  individualVerificationRejectReason: "",
   jwt: {
     exp: "",
   },
@@ -49,6 +50,8 @@ const userReducer = (state = initialState, action) => {
       return { ...state, inviteCode: action.payload };
     case userActions.individualVerificationActions.SET_INDIVIDUAL_VERIFICATION_STATUS:
       return { ...state, individualVerificationStatus: action.payload };
+    case userActions.individualVerificationActions.SET_INDIVIDUAL_VERIFICATION_REJECT_REASON:
+      return { ...state, individualVerificationRejectReason: action.payload };
     default:
       return state;
   }

@@ -25,8 +25,19 @@ export const useStyles = MUITheme => ({
             background: MUITheme.palette.border.mainContent,
           },
         },
+        [MUITheme.breakpoints.down("xs")]: {
+          width: "100%",
+          marginRight: 0,
+        },
       },
-      "& a": { marginTop: "0 !important" },
+      "& a": {
+        marginTop: "0 !important",
+        [MUITheme.breakpoints.down("xs")]: { marginTop: "15px !important" },
+      },
+      [MUITheme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        alignItems: "center",
+      },
     },
     "& input": {
       width: 411,

@@ -79,9 +79,13 @@ class TeamMembers extends Component {
       const allEmails = this.state.textareaValue.split(",");
       validateIfEmailAlreadyExists(allEmails);
       await this.props.inviteMembers(allEmails, this.props.match.params.orgUuid);
-      this.setState({
-        inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
-      });
+      this.setState(
+        { inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" } },
+        () =>
+          setTimeout(() => {
+            this.setState({ inviteMembersAlert: {} });
+          }, 3000)
+      );
       this.handleInviteMembersClose();
     } catch (error) {
       if (checkIfKnownError(error)) {
@@ -95,8 +99,8 @@ class TeamMembers extends Component {
 
   handleAddToBlockChain = async () => {
     try {
-      const { members, orgId, uuid, addAndPublishMembers } = this.props;
-      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid);
+      const { members, orgId, uuid, addAndPublishMembers, ownerAddress } = this.props;
+      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid, ownerAddress);
       this.setState({
         addBlockChainAlert: { type: alertTypes.SUCCESS, message: "Members have been added to blockchain" },
       });
@@ -134,7 +138,7 @@ class TeamMembers extends Component {
             <span>Back to Home </span>
           </div>
         </Grid>
-        <Grid item xs={12} sm={12} md={9} lg={9}>
+        <Grid item xs={12} sm={12} md={7} lg={7} className={classes.rightSideSection}>
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>
@@ -181,6 +185,7 @@ const mapStateToProps = state => ({
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
+  ownerAddress: state.organization.ownerAddress,
   orgStatus: state.organization.state.state,
   orgFoundInBlockchain: state.organization.foundInBlockchain,
 });
@@ -188,8 +193,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
-  addAndPublishMembers: (members, orgId, uuid) =>
-    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid)),
+  addAndPublishMembers: (members, orgId, uuid, ownerAddress) =>
+    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid, ownerAddress)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TeamMembers));

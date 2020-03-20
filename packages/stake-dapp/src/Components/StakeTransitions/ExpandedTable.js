@@ -145,28 +145,6 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
             </Grid>
           </Grid>
         ))}
-
-        {/* <Grid item xs={12} sm={12} md={2} lg={2} className={classes.dateDetails}>
-            <Typography className={classes.mobileTitle}>Date: </Typography>
-            <Typography>10 Feb 2020</Typography>
-            <Typography>02:32 AM EST</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3}>
-            <Typography className={classes.mobileTitle}>Process State:</Typography>
-            <Typography>Claims Withdraw</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={2} lg={2}>
-            <Typography className={classes.mobileTitle}>Status:</Typography>
-            <Typography className={classes.statusValue}>Success</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={2} lg={2}>
-            <Typography className={classes.mobileTitle}>Transaction:</Typography>
-            <Typography>-750 AGI</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3}>
-            <Typography className={classes.mobileTitle}>Detail:</Typography>
-            <Typography>Transfered to Metamask wallet</Typography>
-          </Grid> */}
       </Grid>
     );
   }

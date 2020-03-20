@@ -6,6 +6,10 @@ import { ProviderControlService } from "./stubs/control_service_pb_service";
 import { GrpcError } from "shared/dist/utils/error";
 import { uint8ArrayToBN } from "../../Grpc";
 
+const methods = {
+  GetListUnclaimed: "GetListUnclaimed",
+};
+
 export class ControlServiceRequest {
   constructor(serviceHost) {
     this._serviceHost = serviceHost;
@@ -21,7 +25,7 @@ export class ControlServiceRequest {
   _getCurrentBlockNumber = async () => await this._web3.eth.getBlockNumber();
 
   getListUnclaimed = async () => {
-    const methodDescriptor = this._getMethodDescriptor("GetListUnclaimed");
+    const methodDescriptor = this._getMethodDescriptor(methods.GetListUnclaimed);
     const request = new methodDescriptor.requestType();
     request.setMpeAddress(this._getMpeAddress());
     request.setCurrentBlock(await this._getCurrentBlockNumber());

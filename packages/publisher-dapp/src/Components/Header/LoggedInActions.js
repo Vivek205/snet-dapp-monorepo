@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+// import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -22,7 +22,7 @@ const LoggedInActions = ({ classes }) => {
   if (location.pathname.includes(location.pathname.match(GlobalRoutes.AI_SERVICE_CREATION.match))) {
     return (
       <div className={classes.loggedInActionsContainer}>
-        <NotificationsIcon fontSize="large" className={classes.NotificationsIcon} />
+        {/* <NotificationsIcon fontSize="large" className={classes.NotificationsIcon} /> */}
         <AccountCircleIcon fontSize="large" onClick={handleProfileIconClick} className={classes.AccountCircleIcon} />
         <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
         <div className={classes.orgNameContainer}>
@@ -35,7 +35,7 @@ const LoggedInActions = ({ classes }) => {
 
   return (
     <div className={classes.loggedInActionsContainer}>
-      <NotificationsIcon fontSize="large" className={classes.NotificationsIcon} />
+      {/*<NotificationsIcon fontSize="large" className={classes.NotificationsIcon} /> */}
       <AccountCircleIcon fontSize="large" onClick={handleProfileIconClick} className={classes.AccountCircleIcon} />
       <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
     </div>

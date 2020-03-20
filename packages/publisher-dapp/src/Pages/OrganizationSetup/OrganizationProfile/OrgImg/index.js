@@ -52,7 +52,7 @@ const OrgImg = ({ classes }) => {
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.previewContainer}>
           <Typography className={classes.previewText}>
             Every organization will have has a profile image. We recommend an image that is 906 x 504 in size. You can
-            preview how it will look on the AI Marketpalce.
+            preview how it will look on the AI Marketplace.
           </Typography>
           <div className={classes.previewImg}>
             <div className={classes.previewLargeImg}>

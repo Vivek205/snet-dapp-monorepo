@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
+// import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import truncate from "lodash/truncate";
@@ -13,14 +13,14 @@ import { withStyles } from "@material-ui/styles";
 import RatingsCount from "shared/dist/components/RatingsCount";
 import CardImg from "shared/dist/assets/images/SnetDefaultServiceImage.png";
 import SingularityLogo from "shared/dist/assets/images/avatar.png";
-import SNETButton from "shared/dist/components/SNETButton";
+// import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const GridViewItem = ({
   classes,
   orgImg,
   cardTitle,
-  cardMedia,
+  serviceImg,
   cardDescription,
   title,
   cardSubheader,
@@ -41,7 +41,7 @@ const GridViewItem = ({
         title={truncate(cardTitle, { length: GridViewHeaderLength })}
         subheader={cardSubheader}
       />
-      <CardMedia className={classes.CardMedia} image={cardMedia || CardImg} title={title} />
+      <CardMedia className={classes.CardMedia} image={serviceImg || CardImg} title={title} />
       <CardContent className={classes.cardContent}>
         <div className={classes.ratingSection}>
           <StarRatingComponent
@@ -56,9 +56,9 @@ const GridViewItem = ({
           {cardDescription}
         </Typography>
       </CardContent>
-      <CardActions className={classes.cardActions}>
+      {/* <CardActions className={classes.cardActions}>
         <SNETButton children="preview" variant="text" color="primary" />
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

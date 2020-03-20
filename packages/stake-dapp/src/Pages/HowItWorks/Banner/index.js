@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 
@@ -17,6 +17,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
+import { fromWei } from "../../../Utils/GenHelperFunctions";
 
 const calculaterFields = {
   stakeAmount: 7500,
@@ -26,17 +27,36 @@ const calculaterFields = {
   stakeRewardAmount: 100000,
   numOfStakers: 20,
   incubationPeriodInDays: 30,
+  recentWindowLoaded: false,
 };
 
 const Banner = ({ classes, recentStakeWindow }) => {
   const history = useHistory();
 
   const currentTime = moment().unix();
+
   const [stakeCalculatorFields, setStakeCalculatorFields] = useState(calculaterFields);
   const [showTimer, setShowTimer] = useState(
     currentTime >= recentStakeWindow.startPeriod && currentTime < recentStakeWindow.submissionEndPeriod ? true : false
   );
   const interval = 1000;
+
+  useEffect(() => {
+    if (recentStakeWindow.startPeriod > 0 && stakeCalculatorFields.recentWindowLoaded === false) {
+      setStakeCalculatorFields({
+        ...stakeCalculatorFields,
+        stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
+        poolStakeAmount:
+          recentStakeWindow.windowTotalStake > 0
+            ? recentStakeWindow.windowTotalStake
+            : stakeCalculatorFields.poolStakeAmount,
+        incubationPeriodInDays: Math.floor(
+          (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
+        ),
+        recentWindowLoaded: true,
+      });
+    }
+  }, [recentStakeWindow, stakeCalculatorFields]);
 
   const handleTimerCompletion = () => {
     setShowTimer(false);
@@ -46,13 +66,9 @@ const Banner = ({ classes, recentStakeWindow }) => {
     const _finalPoolStakeAmount =
       parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
 
+    if (_finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)) return 0;
+
     let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
-    if (
-      _stakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount) ||
-      _finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)
-    ) {
-      _stakeAmount = parseInt(stakeCalculatorFields.maxStakeAmount);
-    }
 
     const rewardAmount = Math.floor(
       (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
@@ -115,13 +131,14 @@ const Banner = ({ classes, recentStakeWindow }) => {
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerDescriptionContainer}>
           <Typography className={classes.bannerTitle}>Earn more while holding AGI tokens</Typography>
           <Typography className={classes.bannerDescPara1}>
-            By staking AGI coins, you support the operations of a blockchain network as well as rewarded with more AGI
-            tokens for your contributions.
+            By staking AGI coins, you support the operations of our blockchain network and in doing so you will be
+            rewarded with more AGI tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
-            Every month there will be open staking sessions for you to add your AGI tokens to be vested for 30 days. The
-            SingularityNET foundation will use all or partial amount of your staked amounted. You can always auto renew
-            for continual compounded rewards and benefits.
+            Vest your AGI tokens in 30 day staking sessions. Tokens staked in this way will be used to fulfill
+            blockchain transactions on the SingularityNET platform. At the end of the 30 day period you can either
+            continue to allow your tokens to vest or withdraw them along with any reward earned during the staking
+            period.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerForm}>
@@ -134,6 +151,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 type="Number"
                 name="stakeAmount"
                 label="Staked Amount"
+                extraInfo={
+                  parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount) >
+                  parseInt(stakeCalculatorFields.maxStakeAmount)
+                    ? "* Exceeding AGI Total supply"
+                    : ""
+                }
                 value={stakeCalculatorFields.stakeAmount}
                 InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount } }}
                 onChange={handleDataChange}
@@ -142,7 +165,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate for 30 day incubation"
+                extraInfo="~Approximate"
                 value={getRewardAmount()}
               />
             </div>

@@ -1,4 +1,25 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
+import BigNumber from "bignumber.js";
+
+// Do the Calculation in AGI rather than wei
+const computeReward = activeStake => {
+  if (activeStake.myStake === 0) return 0;
+
+  const myStake = new BigNumber(activeStake.myStake);
+  const windowRewardAmount = new BigNumber(activeStake.rewardAmount);
+  const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
+  const totalStakedAmount = new BigNumber(activeStake.totalStakedAmount === 0 ? 1 : activeStake.totalStakedAmount);
+
+  let rewardAmount = new BigNumber(0);
+
+  if (totalStakedAmount.lt(windowMaxCap)) {
+    rewardAmount = myStake.times(windowRewardAmount).div(totalStakedAmount);
+  } else {
+    rewardAmount = myStake.times(windowRewardAmount).div(windowMaxCap);
+  }
+
+  return rewardAmount;
+};
 
 export const cardDetails = activeStake => [
   {
@@ -9,7 +30,7 @@ export const cardDetails = activeStake => [
   },
   {
     title: "Max Reward",
-    value: fromWei(Math.floor((activeStake.myStake * activeStake.rewardAmount) / activeStake.windowMaxCap)),
+    value: fromWei(computeReward(activeStake)),
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation",
   },
@@ -34,7 +55,7 @@ export const cardDetails = activeStake => [
   {
     title: "Reward Pool",
     value: fromWei(activeStake.rewardAmount),
-    unit: "people",
+    unit: "AGI",
     toolTip: "",
   },
 ];
@@ -67,7 +88,7 @@ export const withdrawStakeAmountDetails = activeStake => [
   },
   {
     title: "Total Max Reward",
-    amount: fromWei(Math.floor((activeStake.myStake * activeStake.rewardAmount) / activeStake.windowMaxCap)),
+    amount: fromWei(computeReward(activeStake)),
   },
   {
     title: "Current Pool Size",
@@ -86,7 +107,7 @@ export const addStakeAmountDetails = activeStake => [
   },
   {
     title: "Total Max Reward",
-    amount: fromWei(Math.floor((activeStake.myStake * activeStake.rewardAmount) / activeStake.windowMaxCap)),
+    amount: fromWei(computeReward(activeStake)),
   },
   {
     title: "Current Pool Size",
