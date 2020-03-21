@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { progressText, serviceCreationSections } from "./constant";
+import { progressText, serviceCreationSections, serviceCreationStatus } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -16,6 +16,16 @@ import EditHeader from "./EditHeader";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 class AiServiceCreation extends Component {
+  navigateToSubmitIfRejected = async status => {
+    if (status === serviceCreationStatus.REJECTED) {
+      const { history, match } = this.props;
+      const { orgUuid, serviceUuid } = match.params;
+      await history.push(
+        ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
+      );
+    }
+  };
+
   initData = async () => {
     const {
       getAiServiceList,
@@ -26,7 +36,9 @@ class AiServiceCreation extends Component {
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
-    await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
+    const serviceDetails = response[1];
+    this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
 
@@ -72,10 +84,12 @@ class AiServiceCreation extends Component {
     }
   };
 
-  handleSectionClick = progressNumber => {
-    const { history, match } = this.props;
+  handleSectionClick = async progressNumber => {
+    const { history, match, serviceDetails } = this.props;
     const { orgUuid, serviceUuid } = match.params;
-    // const clickedSection = Object.values(serviceCreationSections).find(el => el.key === progressNumber);
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      return;
+    }
     const [key] = Object.entries(serviceCreationSections).find(([_key, value]) => value.key === progressNumber);
     if (ServiceCreationRoutes[key]) {
       history.push(ServiceCreationRoutes[key].path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));

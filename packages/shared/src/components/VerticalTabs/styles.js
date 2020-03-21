@@ -71,6 +71,9 @@ export const useStyles = makeStyles(theme => ({
   },
   list: { padding: 0 },
   listItem: {
+    "& a": {
+      textDecoration: "none",
+    },
     "& span": {
       marginLeft: 11,
       color: "#9b9b9b",
