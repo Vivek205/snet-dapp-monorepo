@@ -72,6 +72,7 @@ export const useStyles = makeStyles(theme => ({
   list: { padding: 0 },
   listItem: {
     "& a": {
+      display: "flex",
       textDecoration: "none",
     },
     "& span": {
