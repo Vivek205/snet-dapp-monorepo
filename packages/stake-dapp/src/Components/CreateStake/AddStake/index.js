@@ -51,6 +51,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
   const handleCancel = () => {
     // Reset the error state
+    setDisableAction(false);
     setAlert({ type: alertTypes.ERROR, message: undefined });
 
     handleClose();
@@ -145,7 +146,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
     let totalStakedAmount = new BigNumber(
-      stakeDetails.totalStakedAmount === 0 ? _stakeAmount : stakeDetails.totalStakedAmount
+      stakeDetails.totalStakedAmount === 0 ? stakeDetails.myStake : stakeDetails.totalStakedAmount
     );
 
     // Assuming that the new Stake will be part of total stake amount

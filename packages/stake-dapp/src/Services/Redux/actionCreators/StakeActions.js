@@ -91,7 +91,7 @@ export const fetchCurrentActiveStakeWindow = metamaskDetails => async dispatch =
     dispatch(setActiveStakeWindowDetails(stakeWindowDetails));
 
     // Get the latest State from Blockchain
-    if (data.length === 0) dispatch(fetchUserStakeFromBlockchain(metamaskDetails, stakeWindowDetails.stakeMapIndex));
+    dispatch(fetchUserStakeFromBlockchain(metamaskDetails, stakeWindowDetails.stakeMapIndex));
 
     dispatch(loaderActions.stopStakeWindowLoader());
   } catch (error) {
@@ -143,7 +143,6 @@ export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => 
       approvedAmount,
       userExist: found,
     };
-
     dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
   }
 };
@@ -247,6 +246,7 @@ const parseAndTransformStakes = data => {
     rewardAmount: stake.stake_window.reward_amount,
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
+    totalStakedAmount: stake.stake_window.total_stake_deposited,
 
     staker: stake.stake_holder.staker,
     pendingForApprovalAmount: stake.stake_holder.amount_pending_for_approval,
@@ -318,6 +318,7 @@ const parseAndTransformStakeTransactions = data => {
     rewardAmount: stake.stake_window.reward_amount,
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
+    totalStakedAmount: stake.stake_window.total_stake_deposited,
 
     transactionList: stake.transactions.map(t => ({
       txnHash: t.transaction_hash,
@@ -364,84 +365,3 @@ export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
     // Leave the defaults in the redux state
   }
 };
-
-// TODO - Sample Structured returned from the API - TO BE Deleted from this file after the complete implementation:
-
-/*
-  blockchain_id: 100
-  start_period: 1582542242
-  submission_end_period: 1582742242
-  approval_end_period: 1582842242
-  request_withdraw_start_period: 1583142242
-  end_period: 1583242242
-  min_stake: 100000000
-  max_stake: 1000000000000
-  window_max_cap: 100000000000000
-  open_for_external: true
-  total_stake: 0
-  reward_amount: 100000
-  token_operator: "0x0"
-*/
-
-// TODO - Sample Structure for ControlService
-
-/*
-
-{
-    "status": "success",
-    "data": [
-        {
-            "stake_holder": {
-                "blockchain_id": 101,
-                "staker": "0xC4f3BFE7D69461B7f363509393D44357c084404c",
-                "amount_pending_for_approval": 20000000000,
-                "amount_approved": 0,
-                "auto_renewal": true,
-                "block_no_created": 12345
-            },
-            "stake_window": {
-                "blockchain_id": 101,
-                "start_period": 1572618187,
-                "submission_end_period": 1572877387,
-                "approval_end_period": 1573136587,
-                "request_withdraw_start_period": 1574691787,
-                "end_period": 1575123787,
-                "min_stake": 100000000,
-                "max_stake": 1000000000000,
-                "window_max_cap": 100000000000000,
-                "open_for_external": true,
-                "total_stake": 0,
-                "reward_amount": 100000,
-                "token_operator": "0x0"
-            }
-        },
-        {
-            "stake_holder": {
-                "blockchain_id": 102,
-                "staker": "0xC4f3BFE7D69461B7f363509393D44357c084404c",
-                "amount_pending_for_approval": 30000000000,
-                "amount_approved": 0,
-                "auto_renewal": true,
-                "block_no_created": 12346
-            },
-            "stake_window": {
-                "blockchain_id": 102,
-                "start_period": 1575210187,
-                "submission_end_period": 1575469387,
-                "approval_end_period": 1575728587,
-                "request_withdraw_start_period": 1577283787,
-                "end_period": 1577715787,
-                "min_stake": 200000000,
-                "max_stake": 2000000000000,
-                "window_max_cap": 200000000000000,
-                "open_for_external": true,
-                "total_stake": 0,
-                "reward_amount": 200000,
-                "token_operator": "0x0"
-            }
-        }
-    ],
-    "error": {}
-}
-
-*/
