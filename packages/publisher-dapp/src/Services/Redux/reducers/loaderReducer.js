@@ -5,6 +5,7 @@ const initialState = {
   aiServiceList: { isLoading: false },
   initServiceCreation: { isLoading: false, title: "", content: "" },
   validateServiceId: { isLoading: false },
+  validateOrgId: { isLoading: false },
 };
 
 const loaderReducer = (state = initialState, action) => {
@@ -17,6 +18,9 @@ const loaderReducer = (state = initialState, action) => {
       return { ...state, initServiceCreation: action.payload };
     case loaderActions.SET_VALIDATE_SERVICE_ID_LOADER:
       return { ...state, validateServiceId: action.payload };
+    case loaderActions.SET_VALIDATE_ORGANIZATION_ID_LOADER:
+      return { ...state, validateOrgId: action.payload };
+
     default:
       return state;
   }

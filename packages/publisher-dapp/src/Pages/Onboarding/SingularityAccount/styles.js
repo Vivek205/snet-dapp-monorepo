@@ -102,7 +102,6 @@ export const useStyles = MUITheme => ({
         "& > div": {
           maxWidth: "100%",
           flexBasis: "91%",
-          "&:last-of-type": { display: "none" },
           "& > div": {
             "& > div": { marginBottom: 0 },
           },

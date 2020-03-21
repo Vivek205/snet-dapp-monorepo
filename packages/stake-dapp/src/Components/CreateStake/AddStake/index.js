@@ -95,7 +95,10 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
         await waitForTransaction(txHash);
 
-        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+        setAlert({
+          type: alertTypes.SUCCESS,
+          message: "Congratulations! You have successfully staked your tokens. You can safely close this window.",
+        });
 
         dispatch(loaderActions.stopAppLoader());
 
@@ -223,8 +226,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  You can withdraw amount of that keeps the minimum of {fromWei(stakeDetails.minStake)} AGI stake amount
-                  or you can withdraw all stake amount for a balance of 0 AGI.
+                  Minimum stake amount is {fromWei(stakeDetails.minStake)} AGI
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />

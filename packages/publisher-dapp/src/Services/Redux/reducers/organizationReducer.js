@@ -20,6 +20,7 @@ const initialState = {
   website: "",
   phone: "",
   shortDescription: "",
+  availability: "",
   longDescription: "",
   metadataIpfsUri: "",
   contacts: [
@@ -81,6 +82,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, groups: action.payload };
     case organizationActions.SET_ORGANIZATION_STATUS:
       return { ...state, status: action.payload };
+    case organizationActions.SET_ORGANIZATION_AVAILABILITY:
+      return { ...state, availability: action.payload };
     case organizationActions.SET_ORG_HQ_ADDRESS_DETAIL:
       return {
         ...state,

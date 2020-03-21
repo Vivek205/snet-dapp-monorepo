@@ -81,7 +81,10 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         await waitForTransaction(txHash);
 
-        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+        setAlert({
+          type: alertTypes.SUCCESS,
+          message: "You have successfully withdrawn tokens to your account. You can safely close this window.",
+        });
 
         dispatch(loaderActions.stopAppLoader());
 
@@ -158,8 +161,8 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  You can withdraw amount of that keeps the minimum of {fromWei(stakeDetails.minStake)} AGI stake amount
-                  or you can withdraw all stake amount for a balance of 0 AGI.
+                  If you want to cancel your stake then please withdraw the entire amount. Partial withdrawals are only
+                  allowed if the minimum stake amount of {fromWei(stakeDetails.minStake)} AGI is maintained.
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />

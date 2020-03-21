@@ -29,14 +29,11 @@ const InfoBox = ({ stakeDetails }) => {
       <AlertBox type={alertTypes.INFO}>
         <InfoIcon />
         <div>
-          <Typography>
-            - Stake amount must be minimum {fromWei(stakeDetails.minStake)} AGI and maximum{" "}
-            {fromWei(stakeDetails.maxStake)} AGI
-          </Typography>
-          <Typography>- SNET foundation will accept all or a partial amount of your stake.</Typography>
+          <Typography>- Stake amount must be a minimum of {fromWei(stakeDetails.minStake)} AGI</Typography>
+          {/*<Typography>- SNET foundation will accept all or a partial amount of your stake.</Typography>
           <Typography>
             - Rejected stake portions not accepted will be returned to your wallet account automatically (no gas cost).
-          </Typography>
+          </Typography>*/}
         </div>
       </AlertBox>
     );

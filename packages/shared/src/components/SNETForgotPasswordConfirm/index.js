@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
@@ -9,56 +9,55 @@ import SNETButton from "../SNETButton";
 import validator from "../../utils/validator";
 import { forgotPassworSubmitConstraints } from "./validationConstraints";
 
-const SNETForgotPasswordConfirm = ({ title, forgotPasswordConfirmError, onSubmit }) => {
+const SNETForgotPasswordConfirm = ({ title, email, forgotPasswordConfirmError, onSubmit }) => {
   const classes = useStyles();
-
-  const [showEmailSentAlert, setShowEmailSentAlert] = useState(true);
+  const [localEmail, setLocalEmail] = useState(email);
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validationErr, setValidationErr] = useState("");
 
-  const handleEnterOtp = event => {
-    event.preventDefault();
-    setShowEmailSentAlert(false);
-  };
+  useEffect(() => {
+    setLocalEmail(email);
+  }, [email]);
 
   const handleSubmit = event => {
     event.preventDefault();
     setValidationErr("");
-    const isNotValid = validator({ password, confirmPassword, code }, forgotPassworSubmitConstraints);
+    const isNotValid = validator({ password, confirmPassword, code, localEmail }, forgotPassworSubmitConstraints);
     if (isNotValid) {
       setValidationErr(isNotValid[0]);
       return;
     }
-
-    // Assuming the user state has the email, no need to explicitly pass it to this comp
-    onSubmit(code, password);
+    // Assuming the user state has the email, no need to explicitly pass it to this component
+    onSubmit(localEmail, code, password);
   };
-
-  if (showEmailSentAlert) {
-    return (
-      <section className={classes.resetPasswordContainer}>
-        <span>Reset Password Email Sent.</span>
-        <p>
-          Click <a onClick={handleEnterOtp}>here</a> to enter the verification code.
-        </p>
-      </section>
-    );
-  }
 
   return (
     <Grid container spacing={24}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.forgotPwdContent}>
         <Typography variant="h2">{title}</Typography>
         <p>Enter the verification code and new password.</p>
-        <form autoComplete="off" className={classes.forgotPwdForm}>
+        <form className={classes.forgotPwdForm} noValidate="">
+          <TextField
+            id="outlined-email-input"
+            label="Email"
+            className={classes.textField}
+            autoComplete="off"
+            type="email"
+            name="email"
+            margin="normal"
+            variant="outlined"
+            value={localEmail}
+            required
+            onChange={e => setLocalEmail(e.target.value)}
+          />
           <TextField
             id="outlined-code-input"
             label="Code"
             className={classes.textField}
             autoComplete="off"
-            type="text"
+            type="code"
             name="code"
             margin="normal"
             variant="outlined"

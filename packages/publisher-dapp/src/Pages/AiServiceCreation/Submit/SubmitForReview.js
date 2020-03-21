@@ -15,7 +15,7 @@ import { serviceCreationStatus } from "../constant";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -79,7 +79,8 @@ class SubmitForReview extends React.Component {
 
       const isNotValid = validator(serviceDetails, submitServiceConstraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
@@ -93,10 +94,7 @@ class SubmitForReview extends React.Component {
   render() {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert } = this.state;
-    const charCount = serviceDetails.comments.serviceProvider[0]
-      ? serviceDetails.comments.serviceProvider[0].length
-      : 0;
-
+    const charCount = serviceDetails.comments.serviceProvider.length;
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -106,7 +104,10 @@ class SubmitForReview extends React.Component {
               Once you have submitted your service, SingularityNET will review your service protocols. You will be
               notified once the review has been completed, please be patient as this process could take a few days.
             </Typography>
-            <DaemonConfig config={daemonConfig} footerNote="lore ipsum doler amet" />
+            <DaemonConfig
+              config={daemonConfig}
+              footerNote="Please use the above configuration values in your daemon configuration and restart your daemon. This will allow your AI service to be tested by the curation team of the SingularityNet foundation. This is essential for approving your service."
+            />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"
@@ -114,11 +115,11 @@ class SubmitForReview extends React.Component {
                 maxCount={5000}
                 rowCount={8}
                 colCount={105}
-                value={serviceDetails.comments.serviceProvider[0]}
+                value={serviceDetails.comments.serviceProvider}
                 onChange={this.handleCommentChange}
               />
             </div>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
             <div className={classes.btnContainer}>
               <SNETButton
                 children="submit for review"

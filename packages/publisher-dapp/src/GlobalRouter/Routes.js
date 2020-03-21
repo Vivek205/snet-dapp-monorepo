@@ -7,7 +7,8 @@ import store from "../Services/Redux/Store";
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
-const ForgotPassword = lazy(() => import("../Pages/Login/ForgotPassword"));
+const ForgotPassword = lazy(() => import("../Pages/ForgotPassword"));
+const ForgotPasswordConfirm = lazy(() => import("../Pages/ForgotPasswordConfirm"));
 const Overview = lazy(() => import("../Pages/Overview"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
@@ -21,6 +22,8 @@ const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
+const FORGOT_PASSWORD_PATH = "/forgotpassword";
+const FORGOT_PASSWORD_CONFIRM_PATH = "/forgotpasswordconfirm";
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
@@ -28,6 +31,12 @@ const SignupComponent = withRegistrationHeader(Signup, "Already have an account?
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
 const ForgotPasswordComponent = withRegistrationHeader(
   ForgotPassword,
+  "Switch to another account?",
+  "Login",
+  LOGIN_PATH
+);
+const ForgotPasswordConfirmComponent = withRegistrationHeader(
+  ForgotPasswordConfirm,
   "Switch to another account?",
   "Login",
   LOGIN_PATH
@@ -60,8 +69,13 @@ export const GlobalRoutes = {
   },
   FORGOT_PASSWORD: {
     name: "forgot password",
-    path: "/forgotpassword",
+    path: FORGOT_PASSWORD_PATH,
     component: ForgotPasswordComponent,
+  },
+  FORGOT_PASSWORD_CONFIRM: {
+    name: "forgot password",
+    path: FORGOT_PASSWORD_CONFIRM_PATH,
+    component: ForgotPasswordConfirmComponent,
   },
   OVERVIEW: {
     name: "overview",
