@@ -28,7 +28,10 @@ const StakeSession = ({
   const dispatch = useDispatch();
 
   // The default options is to be checked
-  const [autoRenewal, setAutoRenewal] = useState(stakeDetails.userExist ? stakeDetails.autoRenewal : true);
+  const [autoRenewal, setAutoRenewal] = useState(
+    stakeDetails.autoRenewal === undefined ? true : stakeDetails.autoRenewal
+  );
+
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
   const metamaskDetails = useSelector(state => state.metamaskReducer.metamaskDetails);
@@ -103,7 +106,7 @@ const StakeSession = ({
   const handleAutoRenewalChange = async event => {
     setAlert({ type: alertTypes.INFO, message: undefined });
 
-    // TODO - Check in case of Open Stake or Incubating - condition might change
+    //Check in case of Open Stake or Incubating
     if (
       stakeDetails.myStake === "0" &&
       currentTimestamp > stakeDetails.startPeriod &&

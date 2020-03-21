@@ -19,6 +19,8 @@ export const UPDATE_STAKE_TRANSACTIONS = "UPDATE_STAKE_TRANSACTIONS";
 export const UPDATE_STAKE_SUMMARY = "UPDATE_STAKE_SUMMARY";
 export const UPDATE_STAKE_BALANCE = "UPDATE_STAKE_BALANCE";
 
+export const UPDATE_ACTIVE_STAKE_AUTO_RENEWAL = "UPDATE_ACTIVE_STAKE_AUTO_RENEWAL";
+
 export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,
   payload: stakeWindowDetails,
@@ -139,7 +141,7 @@ export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => 
 
     const stakeWindowDetails = {
       myStake: pendingForApprovalAmount,
-      autoRenewal,
+      autoRenewal: found ? autoRenewal : true,
       approvedAmount,
       userExist: found,
     };
@@ -176,6 +178,7 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
 
     //console.log("fetchActiveStakes - ", data);
     const activeStakes = parseAndTransformStakes(data);
+
     dispatch(setActiveStakes(activeStakes));
     dispatch(setStakeSummary({ incubatingCount: data.length }));
 
