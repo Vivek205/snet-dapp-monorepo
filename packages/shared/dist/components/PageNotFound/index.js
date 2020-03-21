@@ -69,10 +69,10 @@ var PageNotFound = function PageNotFound(_ref) {
     md: 12,
     lg: 12,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at ", _react.default.createElement(_AnchorLink.default, {
+  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", _react.default.createElement(_AnchorLink.default, {
     label: "support@singularitynet.io",
     href: "/"
-  }), " and we will look into it.")));
+  }), "and we will look into it.")));
 };
 
 PageNotFound.propTypes = {

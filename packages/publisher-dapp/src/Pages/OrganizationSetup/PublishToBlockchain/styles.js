@@ -38,4 +38,12 @@ export const useStyles = MUITheme => ({
     "& button": { padding: " 13px 60px 11px" },
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
+  publishAlertContainer: {
+    width: 845,
+    margin: "25px auto",
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "auto",
+      margin: "25px 25px 0",
+    },
+  },
 });

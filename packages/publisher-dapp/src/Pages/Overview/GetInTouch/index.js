@@ -20,6 +20,7 @@ const GetInTouch = ({ classes }) => {
           method="post"
           target="_blank"
           name="mc-embedded-subscribe-form"
+          noValidate=""
         >
           <SNETTextfield name="EMAIL" label="email" type="email" />
           <SNETButton

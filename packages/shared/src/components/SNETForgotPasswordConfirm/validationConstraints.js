@@ -1,4 +1,11 @@
 export const forgotPassworSubmitConstraints = {
+  localEmail: {
+    presence: {
+      allowEmpty: false,
+      message: "^Email cannot be empty",
+    },
+    email: { message: "^Please provide a valid email" },
+  },
   password: {
     presence: { allowEmpty: false },
     hasLowerCase: true,
