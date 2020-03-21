@@ -67,5 +67,5 @@ export const cardDetails = stakeDetails => [
 export const agreementDetails = {
   label: "Auto Renew to next stake session",
   description:
-    "Renewing stakes (and profit margins) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
+    "Renewing stakes (and rewards) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
 };

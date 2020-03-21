@@ -77,7 +77,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
           />
           <SNETTextfield
             label="Company Organization Name"
-            description="The company name is displayed as the provider to users on the AI service page name. "
+            description="The company name is displayed as the provider to users on the AI Marketplace page. "
             name="name"
             disabled
             value={name}
@@ -85,7 +85,9 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
         </div>
         <TechnicalInfo />
       </div>
-      <AlertBox message={alert.message} type={alert.type} children={alert.children} />
+      <div className={classes.publishAlertContainer}>
+        <AlertBox message={alert.message} type={alert.type} />
+      </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="back" onClick={handleBack} />

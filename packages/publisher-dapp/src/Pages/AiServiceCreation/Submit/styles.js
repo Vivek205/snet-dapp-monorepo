@@ -180,4 +180,55 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     backgroundColor: "#F6F6F6",
   },
+  launchServiceContainer: {
+    width: 845,
+    margin: "48px auto 0",
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "0 25px",
+    },
+  },
+  rejectedAlertAndBtnContainer: {
+    padding: "0 30px 25px",
+    textAlign: "center",
+    "& button": { marginTop: 25 },
+  },
+  approvalCommentSection: {
+    marginTop: 25,
+    "& h6": {
+      textAlign: "left",
+    },
+    "& p": {
+      padding: "10px 15px",
+      borderRadius: 4,
+      marginTop: 10,
+      backgroundColor: MUITheme.palette.background.mainContent,
+      fontSize: 16,
+      textAlign: "left",
+    },
+  },
+  changesReqAlertContainer: { padding: "0 25px" },
+  changeReqTextarea: {
+    margin: 25,
+    "& h6": {
+      "&:last-of-type": { margin: "20px 0" },
+    },
+    "& p": {
+      padding: "10px 15px",
+      borderRadius: 4,
+      marginTop: 10,
+      backgroundColor: MUITheme.palette.background.mainContent,
+      fontSize: 16,
+    },
+    "& > div": {
+      "& > div": { width: "100%" },
+    },
+  },
+  changeReqBtnContainer: {
+    paddingBottom: 30,
+    textAlign: "center",
+    "& button": {
+      "&:first-of-type": { marginRight: 25 },
+    },
+  },
 });

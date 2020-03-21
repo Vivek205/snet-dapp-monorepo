@@ -21,9 +21,9 @@ const LoggedInActions = ({ classes }) => {
 
   if (location.pathname.includes(location.pathname.match(GlobalRoutes.AI_SERVICE_CREATION.match))) {
     return (
-      <div className={classes.loggedInActionsContainer}>
+      <div className={classes.loggedInActionsContainer} onClick={handleProfileIconClick}>
         {/* <NotificationsIcon fontSize="large" className={classes.NotificationsIcon} /> */}
-        <AccountCircleIcon fontSize="large" onClick={handleProfileIconClick} className={classes.AccountCircleIcon} />
+        <AccountCircleIcon fontSize="large" className={classes.AccountCircleIcon} />
         <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
         <div className={classes.orgNameContainer}>
           <Typography className={classes.orgName}>{orgName}</Typography>

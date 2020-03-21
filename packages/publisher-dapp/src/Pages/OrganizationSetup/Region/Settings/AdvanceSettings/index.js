@@ -54,7 +54,18 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBloc
         value={paymentExpirationThreshold}
         label="Expiration Threashold"
         onChange={handleThresholdChange}
-        description="Time in block numbers for the channel to expire"
+        description={
+          <p>
+            Time in block numbers for the payment channel to expire. Details{" "}
+            <a
+              href="https://dev.singularitynet.io/docs/ai-developers/daemon-channel-storage/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+          </p>
+        }
         disabled={foundInBlockchain}
       />
       <SNETTextfield
@@ -63,7 +74,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBloc
         value={connectionTimeout}
         label="Client Connection Timeout"
         onChange={handleTimeoutChange}
-        description="Time period within which a connection between a client and the storage server must be established"
+        description="Time period within which a connection between the daemon and the etcd storage server must be established"
       />
       <SNETTextfield
         icon
@@ -71,7 +82,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBloc
         value={requestTimeout}
         label="Client Request Timeout"
         onChange={handleTimeoutChange}
-        description="Time period within which a request needs to be completed."
+        description="Time period within which a request needs to be completed by etcd"
       />
     </Fragment>
   );
