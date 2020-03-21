@@ -66,24 +66,34 @@ var VerticalTabs = function VerticalTabs(_ref) {
     return _react.default.createElement(_ListItem.default, {
       button: true,
       key: item.title,
-      className: classes.listItem
+      className: classes.listItem,
+      onClick: item.onRowClick
+    }, _react.default.createElement("a", {
+      href: item.href,
+      target: item.openInNewTab ? "_blank" : "",
+      rel: "noreferrer noopener"
     }, _react.default.createElement(_ListItemIcon.default, {
       className: classes.listItemIcon
     }, item.icon), _react.default.createElement(_ListItemText.default, {
       primary: item.title
-    }));
+    })));
   })), _react.default.createElement(_Divider.default, null), _react.default.createElement(_List.default, {
     className: classes.list
   }, lowerTabs.map(function (item) {
     return _react.default.createElement(_ListItem.default, {
       button: true,
       key: item.title,
-      className: classes.listItem
+      className: classes.listItem,
+      onClick: item.onRowClick
+    }, _react.default.createElement("a", {
+      href: item.href,
+      target: item.openInNewTab ? "_blank" : "",
+      rel: "noreferrer noopener"
     }, _react.default.createElement(_ListItemIcon.default, {
       className: classes.listItemIcon
     }, item.icon), _react.default.createElement(_ListItemText.default, {
       primary: item.title
-    }));
+    })));
   }))));
 };
 
