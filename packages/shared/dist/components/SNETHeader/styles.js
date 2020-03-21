@@ -24,6 +24,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     logoContainer: _defineProperty({
+      cursor: "pointer",
       display: "flex",
       alignItems: "center",
       "& img": {

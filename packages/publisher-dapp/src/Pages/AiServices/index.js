@@ -54,8 +54,7 @@ class AiServices extends Component {
                   My AI Apps
                 </Typography>
                 <Typography variant="h5" className={classes.description}>
-                  With this pubilsher portal, you can publish and manage yourAI services. You will be able to edit your
-                  services, demos, and tutorial content.
+                  With this pubilsher portal, you can publish and manage your AI services.
                 </Typography>
               </div>
               <div className={classes.btnContainer}>

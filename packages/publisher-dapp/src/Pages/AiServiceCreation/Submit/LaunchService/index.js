@@ -119,14 +119,16 @@ class LaunchService extends React.Component {
               here.
             </Typography>
             <ContinueLaunchTable />
-            <AlertBox type={alert.type} message={alert.message} />
+            <div className={classes.launchServiceAlertContainer}>
+              <AlertBox type={alert.type} message={alert.message} />
+            </div>
           </Grid>
         </div>
       );
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.CHANGE_REQUESTED) {
-      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmitComment={this.handleSubmitComment} />;
+      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmit={this.handleSubmitComment} />;
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
@@ -138,13 +140,15 @@ class LaunchService extends React.Component {
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
           <Typography variant="h6">Review Process</Typography>
           <Typography className={classes.reviewProcessDescription}>
-            After you submitted your service, SNET admins will review your service protocals. This process could take a
-            few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
-            needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
+            Once you have submitted your service, SingularityNET will review your service. You will be notified once the
+            review has been completed, please be patient as this process could take a few days.
           </Typography>
           <LaunchTable handlePublishToBlockchain={this.handlePublishToBlockchain} />
           <AlertBox type={alert.type} message={alert.message} />
-          <DaemonConfig config={daemonConfig} footerNote="Lorem ipsum doler amet" />
+          <DaemonConfig
+            config={daemonConfig}
+            footerNote="Please use the above configuration values in your daemon configuration. This is to ensure that your daemon is not in the curation mode anymore. Once the Service has been successfully published on the SingularityNet Platform, restart the daemon."
+          />
         </Grid>
       </div>
     );
@@ -154,8 +158,6 @@ class LaunchService extends React.Component {
 const mapStateToProps = state => ({
   organization: state.organization,
   serviceDetails: state.aiServiceDetails,
-  orgUuid: state.organization.uuid,
-  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -164,7 +166,5 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, tags, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, tags, history)),
-  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
-    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(LaunchService)));

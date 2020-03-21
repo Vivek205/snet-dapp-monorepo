@@ -16,6 +16,7 @@ import ValidationError from "shared/dist/utils/validationError";
 import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { organizationTypes } from "../../../Utils/organizationSetup";
 import { checkIfKnownError } from "shared/dist/utils/error";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
   const { organization, email, ownerEmail } = useSelector(state => ({
@@ -32,7 +33,8 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
     try {
       const isNotValid = validator(organization, submitOrganizationCostraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
       }
       if (email !== ownerEmail) {
         throw new ValidationError("Only owner can publish the organization");
@@ -75,7 +77,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
           />
           <SNETTextfield
             label="Company Organization Name"
-            description="The company name is displayed as the provider to users on the AI service page name. "
+            description="The company name is displayed as the provider to users on the AI Marketplace page. "
             name="name"
             disabled
             value={name}

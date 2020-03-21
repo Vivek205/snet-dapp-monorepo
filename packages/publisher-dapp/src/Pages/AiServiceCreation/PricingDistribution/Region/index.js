@@ -125,7 +125,7 @@ const Region = () => {
                 icon
                 name="price"
                 value={selectedServicePricing && selectedServicePricing.priceInCogs}
-                label="Ai Service Price"
+                label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
             </Grid>
@@ -133,7 +133,7 @@ const Region = () => {
               <StyledDropdown
                 inputLabel="Entity Type"
                 value={selectedServicePricing && selectedServicePricing.priceModel}
-                list={[{ value: "fixed_price", label: "fixed_price" }]}
+                list={[{ value: "fixed_price", label: "Fixed price per call" }]}
               />
             </Grid>
           </Grid>
@@ -186,8 +186,8 @@ const Region = () => {
               // inputRef={testEndpointRef}
               value={selectedServiceGroup.testEndpoints}
               onChange={handleNewTestEndpointsChange}
-              label="Ropsten - Daemon Endpoints"
-              description="Enter all the public Daemon end points that will be used to call the service in the ropsten network for testing the service."
+              label="Test - Daemon Endpoints"
+              description="Enter the public end point of the daemon to be used for curation. This is an optional field and only needed if you want to modify a service that has already been published to the Marketplace"
             />
           </Grid>
         </Grid>
