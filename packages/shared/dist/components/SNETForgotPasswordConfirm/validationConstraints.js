@@ -5,6 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.forgotPassworSubmitConstraints = void 0;
 var forgotPassworSubmitConstraints = {
+  localEmail: {
+    presence: {
+      allowEmpty: false,
+      message: "^Email cannot be empty"
+    },
+    email: {
+      message: "^Please provide a valid email"
+    }
+  },
   password: {
     presence: {
       allowEmpty: false

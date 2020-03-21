@@ -44,7 +44,7 @@ var useStyles = function useStyles(MUITheme) {
     error: {
       borderColor: MUITheme.palette.border.alertBox,
       backgroundColor: MUITheme.palette.background.alertBox,
-      '& svg': {
+      "& svg": {
         color: MUITheme.palette.border.alertBox
       }
     },
