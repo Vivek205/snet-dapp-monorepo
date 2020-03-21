@@ -3,10 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
 
 import HomeIcon from "@material-ui/icons/Home";
-import ShowChartIcon from "@material-ui/icons/ShowChart";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import GroupIcon from "@material-ui/icons/Group";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import DescriptionIcon from "@material-ui/icons/Description";
 import SettingIcon from "@material-ui/icons/Settings";
@@ -31,6 +28,12 @@ const withDashboardMenu = Component => {
         openInNewTab: true,
       },
       {
+        icon: <GroupIcon />,
+        title: "Teams & Access",
+        href: GlobalRoutes.INVITE_MEMBERS.path.replace(":orgUuid", orgUuid),
+        openInNewTab: false,
+      },
+      /*{
         icon: <ShowChartIcon />,
         title: "App Analytics",
       },
@@ -39,27 +42,29 @@ const withDashboardMenu = Component => {
         title: "Sales & Trends",
       },
       {
-        icon: <GroupIcon />,
-        title: "Teams & Access",
-      },
-      {
         icon: <DashboardIcon />,
         title: "Financial Reports",
-      },
+      },*/
     ];
 
     const lowerTabs = [
       {
         icon: <AccountBalanceIcon />,
         title: "Wallet Account",
+        href: GlobalRoutes.WALLET_ACCOUNT.path,
+        openInNewTab: false,
       },
       {
         icon: <DescriptionIcon />,
         title: "Dev Docs",
+        href: "https://dev.singularitynet.io",
+        openInNewTab: true,
       },
       {
         icon: <SettingIcon />,
         title: "Settings",
+        href: GlobalRoutes.WALLET_ACCOUNT.path,
+        openInNewTab: false,
       },
     ];
 

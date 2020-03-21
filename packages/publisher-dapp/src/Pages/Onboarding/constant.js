@@ -32,3 +32,7 @@ export const individualVerificationStatusList = {
   FAILED: "FAILED",
   ERROR: "ERROR",
 };
+export const organizationIdAvailability = {
+  AVAILABLE: "AVAILABLE",
+  UNAVAILABLE: "UNAVAILABLE",
+};

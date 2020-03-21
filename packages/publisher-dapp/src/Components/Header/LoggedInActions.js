@@ -35,7 +35,7 @@ const LoggedInActions = ({ classes }) => {
         <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
         <div className={classes.orgNameContainer}>
           <Typography className={classes.orgName}>{orgName}</Typography>
-          <Typography className={classes.role}>Owner</Typography>
+          {/*<Typography className={classes.role}>Owner</Typography>*/}
         </div>
       </div>
     );
