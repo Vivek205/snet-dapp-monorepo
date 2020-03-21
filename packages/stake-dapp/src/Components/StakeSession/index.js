@@ -101,9 +101,11 @@ const StakeSession = ({
   };
 
   const handleAutoRenewalChange = async event => {
+    setAlert({ type: alertTypes.INFO, message: undefined });
+
     // TODO - Check in case of Open Stake or Incubating - condition might change
     if (
-      stakeDetails.myStake === 0 &&
+      stakeDetails.myStake === "0" &&
       currentTimestamp > stakeDetails.startPeriod &&
       currentTimestamp < stakeDetails.submissionEndPeriod
     ) {

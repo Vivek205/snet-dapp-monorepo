@@ -32,7 +32,7 @@ class MetaMaskAccountBalance extends Component {
   };
 
   render() {
-    const { classes, metamaskDetails, tokenBalance, stakeBalance } = this.props;
+    const { classes, metamaskDetails, tokenBalance, tokenAllowance, stakeBalance } = this.props;
 
     const networkNames = NetworkNames.filter(nw => nw.networkId.toString() === metamaskDetails.networkId.toString());
 
@@ -92,11 +92,22 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Total AGI tokens that pending to your account balance that you have access to you.</p>
+                <p>Total AGI tokens that are staked so far.</p>
               </div>
-              <span>Escrow Balance</span>
+              <span>Staking Balance</span>
             </div>
             <span>{fromWei(stakeBalance)} AGI</span>
+          </div>
+
+          <div className={classes.bgBox}>
+            <div className={classes.label}>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Total AGI tokens authorized to use for staking.</p>
+              </div>
+              <span>Authorized Tokens</span>
+            </div>
+            <span>{fromWei(tokenAllowance)} AGI</span>
           </div>
         </div>
       </div>

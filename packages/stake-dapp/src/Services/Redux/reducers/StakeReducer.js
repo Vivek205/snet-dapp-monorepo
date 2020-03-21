@@ -56,7 +56,12 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     case stakeActions.UPDATE_ACTIVE_STAKE_WINDOW_BLOCKCHAIN: {
       return {
         ...state,
-        activeStake: { ...state.activeStake, myStake: action.payload.myStake, autoRenewal: action.payload.autoRenewal },
+        activeStake: {
+          ...state.activeStake,
+          myStake: action.payload.myStake,
+          autoRenewal: action.payload.autoRenewal,
+          userExist: action.payload.userExist,
+        },
       };
     }
     case stakeActions.UPDATE_ACTIVE_STAKES: {

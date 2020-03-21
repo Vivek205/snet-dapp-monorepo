@@ -53,8 +53,15 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
   };
 
   const calculateReward = () => {
+    const currentTimestamp = moment().unix();
+
     const windowRewardAmount = new BigNumber(stakeWindow.rewardAmount);
-    const windowTotalStake = new BigNumber(stakeWindow.windowTotalStake !== 0 ? stakeWindow.windowTotalStake : 1);
+
+    let windowTotalStake = new BigNumber(stakeWindow.windowTotalStake);
+    if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+      windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
+    }
+
     const windowMaxCap = new BigNumber(stakeWindow.windowMaxCap);
 
     let rewardAmount = new BigNumber(0);
@@ -104,8 +111,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
-      const currentTime = moment().unix();
-      if (currentTime < stakeWindow.approvalEndPeriod) {
+      if (currentTimestamp < stakeWindow.approvalEndPeriod) {
         stakeAmount = new BigNumber(
           submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
         );
@@ -116,7 +122,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         // TODO - Need to get Total Pending Amount from API
         rewardAmount = stakeAmount
           .times(windowRewardAmount)
-          .div(windowTotalStake.lt(windowMaxCap) ? stakeAmount : windowMaxCap);
+          .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
       }
     }
     return rewardAmount.plus(rewardAmountFromAutoRenewal);

@@ -30,7 +30,8 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [withdrawAmount, setWithdrawAmount] = useState(stakeDetails.myStake);
+  const [withdrawAmount, setWithdrawAmount] = useState(Math.floor(fromWei(stakeDetails.myStake)));
+  const [disableAction, setDisableAction] = useState(false);
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
   const metamaskDetails = useSelector(state => state.metamaskReducer.metamaskDetails);
@@ -38,6 +39,9 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
   const stakeStartDate = moment.unix(stakeDetails.startPeriod).format("MMM YYYY");
 
   const handleCancel = () => {
+    // Reset the error state
+    setDisableAction(false);
+    setAlert({ type: alertTypes.ERROR, message: undefined });
     handleClose();
   };
 
@@ -52,12 +56,21 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
   };
 
   const handleWithdraw = async () => {
+    setAlert({ type: alertTypes.ERROR, message: undefined });
+
     const zeroBN = new BN(0);
     const withdrawAmountBN = new BN(toWei(withdrawAmount));
-    //const myStakeBN = new BN(stakeDetails.myStake);
 
-    // TODO - Add the condition to validate the MinStake & myStake amounts
-    if (withdrawAmountBN.gt(zeroBN)) {
+    const myStakeBN = new BN(stakeDetails.myStake);
+    const minStakeBN = new BN(stakeDetails.minStake);
+
+    const balStakeBN = myStakeBN.sub(withdrawAmountBN);
+
+    if (
+      withdrawAmountBN.gt(zeroBN) &&
+      withdrawAmountBN.lte(myStakeBN) &&
+      (balStakeBN.eq(zeroBN) || balStakeBN.gte(minStakeBN))
+    ) {
       let txHash;
 
       try {
@@ -75,12 +88,20 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         dispatch(loaderActions.stopAppLoader());
 
+        // Disable the submit operation
+        setDisableAction(true);
+
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
       } catch (err) {
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
       }
+    } else if (withdrawAmountBN.gt(myStakeBN)) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message: `Oops! You cannot withdraw more than staked amount.`,
+      });
     } else {
       // Display the alert message
       setAlert({
@@ -149,7 +170,13 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           </CardContent>
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
-            <SNETButton children="submit withdraw" color="primary" variant="contained" onClick={handleWithdraw} />
+            <SNETButton
+              children="submit withdraw"
+              color="primary"
+              variant="contained"
+              onClick={handleWithdraw}
+              disabled={!metamaskDetails.isTxnsAllowed || disableAction}
+            />
           </CardActions>
         </Card>
       </Modal>
