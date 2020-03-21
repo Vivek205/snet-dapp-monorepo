@@ -9,8 +9,8 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import { useSelector } from "react-redux";
 
-const Rejected = ({ classes, onContinueToEdit }) => {
-  const comments = useSelector(state => state.aiServiceDetails.comments.approver);
+const Rejected = ({ classes }) => {
+  const comments = useSelector(state => state.aiServiceDetails.comments.SERVICE_APPROVER);
 
   return (
     <div className={classes.launchServiceContainer}>
@@ -30,9 +30,16 @@ const Rejected = ({ classes, onContinueToEdit }) => {
           />
           <div className={classes.approvalCommentSection}>
             <Typography variant="h6">Reviewers Comment</Typography>
-            <Typography>{comments}</Typography>
+            <Typography>{comments || "No comments Provided"}</Typography>
           </div>
-          <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
+          <SNETButton
+            color="primary"
+            variant="contained"
+            children="Contact Support"
+            href={`mailto:${process.env.REACT_APP_SNET_SUPPORT_MAIL}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          />
         </div>
       </Grid>
     </div>

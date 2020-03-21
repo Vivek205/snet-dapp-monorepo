@@ -11,7 +11,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
-const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
+const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment, alert }) => {
   const comments = useSelector(state => state.aiServiceDetails.comments);
   const dispatch = useDispatch();
 
@@ -39,15 +39,19 @@ const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment }) => {
 
         <div className={classes.changeReqTextarea}>
           <Typography variant="h6">Reviews Comment</Typography>
-          <Typography>reviewers comments will go here...</Typography>
+          <Typography>{comments.SERVICE_APPROVER || "No comments Provided"}</Typography>
 
           <Typography variant="h6">Message to Reviewers</Typography>
           <SNETTextarea
             label="Text Input"
             rowCount={8}
-            value={comments.serviceProvider}
+            value={comments.SERVICE_PROVIDER}
             onChange={handleCommentChange}
           />
+        </div>
+
+        <div className={classes.changesReqAlertContainer}>
+          <AlertBox type={alert.type} children={alert.children} message={alert.message} />
         </div>
 
         <div className={classes.changeReqBtnContainer}>
