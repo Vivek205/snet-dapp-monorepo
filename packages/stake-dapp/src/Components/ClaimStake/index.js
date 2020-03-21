@@ -61,7 +61,11 @@ const ClaimStake = () => {
       await waitForTransaction(txHash);
 
       setAlert({
-        [stakeMapIndex]: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" },
+        [stakeMapIndex]: {
+          type: alertTypes.SUCCESS,
+          message:
+            "Congratulations! You have successfully claimed your stake and reward. You can safely close this window.",
+        },
       });
 
       dispatch(loaderActions.stopAppLoader());
@@ -169,7 +173,7 @@ const ClaimStake = () => {
             </div>
             <div className={classes.cards}>
               {cardDetails(stake).map(card => (
-                <Card key={card.title} title={card.title} value={card.value} unit={card.unit} />
+                <Card key={card.title} title={card.title} value={card.value} unit={card.unit} toolTip={card.toolTip} />
               ))}
             </div>
             <div className={classes.infoBox}>

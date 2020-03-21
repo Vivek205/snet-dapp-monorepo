@@ -13,14 +13,17 @@ var useStyles = function useStyles(MUITheme) {
       borderStyle: "solid",
       borderRadius: 4,
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
+      "& svg": {
+        paddingRight: 16
+      }
     },
     content: {
+      fontFamily: MUITheme.typography.fontFamily,
       textAlign: "left",
       "& p": {
         margin: "0 !important",
         color: MUITheme.palette.text.primary,
-        fontFamily: MUITheme.typography.fontFamily,
         fontSize: 14,
         lineHeight: "18px"
       }
@@ -40,11 +43,17 @@ var useStyles = function useStyles(MUITheme) {
     },
     error: {
       borderColor: MUITheme.palette.border.alertBox,
-      backgroundColor: MUITheme.palette.background.alertBox
+      backgroundColor: MUITheme.palette.background.alertBox,
+      '& svg': {
+        color: MUITheme.palette.border.alertBox
+      }
     },
     success: {
       borderColor: MUITheme.palette.success.main,
-      backgroundColor: MUITheme.palette.background.succesBox
+      backgroundColor: MUITheme.palette.background.succesBox,
+      "& svg": {
+        color: MUITheme.palette.success.main
+      }
     },
     warning: {
       borderColor: MUITheme.palette.border.warningBox,
@@ -54,8 +63,7 @@ var useStyles = function useStyles(MUITheme) {
         fontWeight: 600
       },
       "& svg": {
-        paddingRight: 16,
-        color: "#FFC200 "
+        color: "#FFC200"
       }
     },
     info: {

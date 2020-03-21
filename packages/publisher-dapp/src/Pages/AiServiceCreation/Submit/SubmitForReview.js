@@ -104,7 +104,10 @@ class SubmitForReview extends React.Component {
               Once you have submitted your service, SingularityNET will review your service protocols. You will be
               notified once the review has been completed, please be patient as this process could take a few days.
             </Typography>
-            <DaemonConfig config={daemonConfig} footerNote="lore ipsum doler amet" />
+            <DaemonConfig
+              config={daemonConfig}
+              footerNote="Please use the above configuration values in your daemon configuration and restart your daemon. This will allow your AI service to be tested by the curation team of the SingularityNet foundation. This is essential for approving your service."
+            />
             <div className={classes.commentField}>
               <SNETTextarea
                 label="Comments for Reviewers (optional)"

@@ -32,7 +32,7 @@ class MetaMaskAccountBalance extends Component {
   };
 
   render() {
-    const { classes, metamaskDetails, tokenBalance, tokenAllowance, stakeBalance } = this.props;
+    const { classes, metamaskDetails, tokenBalance, stakeBalance } = this.props;
 
     const networkNames = NetworkNames.filter(nw => nw.networkId.toString() === metamaskDetails.networkId.toString());
 
@@ -41,7 +41,10 @@ class MetaMaskAccountBalance extends Component {
         <div className={classes.accountDetails}>
           <div>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Your account is linked to a third-party crypto wallet such as Metamask</p>
+              </div>
               <span>Wallet</span>
             </div>
             <span>Metamask</span>
@@ -49,7 +52,13 @@ class MetaMaskAccountBalance extends Component {
 
           <div>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>
+                  Metamask allows you to select your Ethereum network. Please be sure you are using the correct network
+                  for proper access to your wallet.
+                </p>
+              </div>
               <span>Current Network</span>
             </div>
             <span>
@@ -59,7 +68,10 @@ class MetaMaskAccountBalance extends Component {
 
           <div className={classes.walletIdContainer}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p />
+              </div>
               <span>Wallet ID</span>
             </div>
             <span className={classes.walletId}>{metamaskDetails.account}</span>
@@ -67,26 +79,24 @@ class MetaMaskAccountBalance extends Component {
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Token Balance</span>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Total AGI tokens in your account balance that you have access to you.</p>
+              </div>
+              <span>Total Tokens</span>
             </div>
             <span>{fromWei(tokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Staking Balance</span>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Total AGI tokens that pending to your account balance that you have access to you.</p>
+              </div>
+              <span>Escrow Balance</span>
             </div>
             <span>{fromWei(stakeBalance)} AGI</span>
-          </div>
-
-          <div className={classes.bgBox}>
-            <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Authorized Tokens</span>
-            </div>
-            <span>{fromWei(tokenAllowance)} AGI</span>
           </div>
         </div>
       </div>

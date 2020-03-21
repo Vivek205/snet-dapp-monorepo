@@ -48,7 +48,7 @@ const Form = props => {
           variant="outlined"
           onChange={e => setNickname(e.target.value)}
         />
-        <span className={classes.charLength}>16/20 char</span>
+        <span className={classes.charLength}>{nickname.length}/20 char</span>
       </div>
       <div className={classes.emailContainer}>
         <TextField

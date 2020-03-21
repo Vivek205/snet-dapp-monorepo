@@ -19,7 +19,17 @@ export const useStyles = MUITheme => ({
     color: MUITheme.palette.text.primary,
     "& svg": {
       marginRight: 17,
-      color: MUITheme.palette.text.primary,
+      color: MUITheme.palette.border.warningBox,
+    },
+    "& span": {
+      "& button": {
+        border: "none",
+        background: "none",
+        color: MUITheme.palette.primary.main,
+        fontSize: 14.2,
+        letterSpacing: 0.25,
+        lineHeight: "20px",
+      },
     },
   },
   INFORMATION: {

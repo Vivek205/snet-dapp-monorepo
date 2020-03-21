@@ -7,7 +7,6 @@ import { withStyles } from "@material-ui/core";
 import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
-import SNETTextarea from "shared/dist/components/SNETTextarea";
 import { useSelector } from "react-redux";
 
 const Rejected = ({ classes, onContinueToEdit }) => {
@@ -22,15 +21,19 @@ const Rejected = ({ classes, onContinueToEdit }) => {
           few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
           needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
         </Typography>
-        <AlertBox
-          type={alertTypes.ERROR}
-          header="Your AI Service is Rejected by SNET"
-          icon={BlockIcon}
-          message="Please make the appropriate changes and submit again for approval."
-        />
-        <Typography variant="h6">Approvers Comment</Typography>
-        <SNETTextarea label="Text Input" rowCount={8} value={comments} />
-        <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
+        <div className={classes.rejectedAlertAndBtnContainer}>
+          <AlertBox
+            type={alertTypes.ERROR}
+            header="Your AI Service is Rejected by SNET"
+            icon={BlockIcon}
+            message="Please make the appropriate changes and submit again for approval."
+          />
+          <div className={classes.approvalCommentSection}>
+            <Typography variant="h6">Reviewers Comment</Typography>
+            <Typography>{comments}</Typography>
+          </div>
+          <SNETButton color="primary" variant="contained" children="Contact Support" onClick={onContinueToEdit} />
+        </div>
       </Grid>
     </div>
   );

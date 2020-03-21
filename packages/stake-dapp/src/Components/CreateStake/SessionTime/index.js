@@ -56,7 +56,7 @@ const SessionTime = ({ stakeDetails }) => {
       sessionTitle = "Next Session in:";
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
-      sessionTitle = "Open Staking for:";
+      sessionTitle = "Staking window open for:";
     }
 
     return sessionTitle;
@@ -148,7 +148,12 @@ const SessionTime = ({ stakeDetails }) => {
         </CircularProgressbarWithChildren>
 
         <div className={classes.checkbox}>
-          <InfoIcon />
+          <div className={classes.toolTipContainer}>
+            <InfoIcon />
+            <Typography>
+              Email notifications of when opne staking is available and the statuses of your stakes
+            </Typography>
+          </div>
           <FormControlLabel
             control={
               <Checkbox color="primary" checked={stakeNotification.status} onClick={handleStakeNotificationChange} />

@@ -8,10 +8,7 @@ import { Link } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
-import Revenue from "./Revenue";
-import Usage from "./Usage";
 import Pricing from "./Pricing";
-import Changelog from "./Changelog";
 import { useStyles } from "./styles";
 import { ConfigurationServiceRequest } from "../../../../../Utils/Daemon/ConfigurationService";
 
@@ -19,13 +16,15 @@ const ServiceStatusDetails = props => {
   const { classes, status, groups, editServiceLink } = props;
   const [activeTab] = useState(2);
 
+  /*
   const tabs = [
     { name: "Revenue", activeIndex: 0, component: <Revenue /> },
     { name: "Usage", activeIndex: 1, component: <Usage /> },
     { name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> },
     { name: "Changelog", activeIndex: 3, component: <Changelog /> },
   ];
-
+*/
+  const tabs = [{ name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> }];
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
 
   // TODO use the appropriate endpoint of the service's daemon

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import web3 from "web3";
 
 import Modal from "@material-ui/core/Modal";
 import Card from "@material-ui/core/Card";
@@ -10,9 +12,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-
-import moment from "moment";
-import web3 from "web3";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
@@ -68,7 +68,10 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         await waitForTransaction(txHash);
 
-        setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
+        setAlert({
+          type: alertTypes.SUCCESS,
+          message: "You have successfully withdrawn tokens to your account. You can safely close this window.",
+        });
 
         dispatch(loaderActions.stopAppLoader());
 
@@ -114,6 +117,9 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                 label="Withdraw Stake Amount"
                 onChange={handleAmountChange}
                 value={withdrawAmount}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
             </div>
             <div className={classes.stakeAmtDetailsContainer}>
@@ -134,8 +140,8 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  You can withdraw amount of that keeps the minimum of {fromWei(stakeDetails.minStake)} AGI stake amount
-                  or you can withdraw all stake amount for a balance of 0 AGI.
+                  If you want to cancel your stake then please withdraw the entire amount. Partial withdrawals are only
+                  allowed if the minimum stake amount of {fromWei(stakeDetails.minStake)} AGI is maintained.
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />

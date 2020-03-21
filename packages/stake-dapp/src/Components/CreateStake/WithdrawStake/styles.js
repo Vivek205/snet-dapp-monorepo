@@ -4,7 +4,7 @@ export const useStyles = makeStyles(MUITheme => ({
   Modal: { overflow: "auto" },
   card: {
     width: 720,
-    paddingBottom: 29,
+    paddingBottom: 40,
     margin: "0px auto 80px	",
     transform: "translateY(25%)",
     "@media(max-width:800px)": {
@@ -12,7 +12,15 @@ export const useStyles = makeStyles(MUITheme => ({
       margin: "0 25px",
     },
   },
-  CardHeader: { padding: "5px 22px" },
+  CardHeader: {
+    padding: "5px 22px",
+    "& span": {
+      color: MUITheme.palette.text.darkGrey,
+      fontSize: 20,
+      fontWeight: 400,
+      lineHeight: "50px",
+    },
+  },
   CardContent: { padding: 0 },
   sessionDetails: {
     padding: "16px 22px",
@@ -21,13 +29,26 @@ export const useStyles = makeStyles(MUITheme => ({
     "& > p": {
       fontSize: 16,
       lineHeight: "20px",
-      "&:first-of-type": { color: MUITheme.palette.text.darkGrey },
-      "&:last-of-type": { color: MUITheme.palette.text.primary },
+      "&:first-of-type": { color: MUITheme.palette.text.primary },
+      "&:last-of-type": { color: MUITheme.palette.text.darkGrey },
     },
   },
-  withdrawStakeTextfield: { padding: "13px 27px" },
+  withdrawStakeTextfield: {
+    borderBottom: "1px solid #e2e2e2",
+    padding: "0 0 15px",
+    margin: "20px 23px 24px 21px",
+    "& .MuiInputAdornment-root": {
+      "& p": {
+        color: MUITheme.palette.text.primary,
+        fontSize: 16,
+        lineHeight: "20px",
+        textTransform: "uppercase",
+      },
+    },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": { transform: "translate(14px, -6px) scale(0.90)" },
+  },
   stakeAmtDetailsContainer: {
-    padding: "0 27px",
+    padding: "0 23px 0 20px",
     display: "flex",
     flexWrap: "wrap",
     "& > div": {
@@ -47,14 +68,16 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   iconTitleContainer: {
     display: "flex",
+    alignItems: "center",
     "& svg": {
-      marginRight: 8,
-      color: MUITheme.palette.text.lightGrey,
-      fontSize: 20,
+      marginRight: 10,
+      color: MUITheme.palette.text.disabled,
+      fontSize: 18,
     },
   },
   title: {
-    color: MUITheme.palette.text.primary,
+    width: 121,
+    color: MUITheme.palette.text.lightGrey,
     fontSize: 16,
     lineHeight: "20px",
   },
@@ -64,9 +87,10 @@ export const useStyles = makeStyles(MUITheme => ({
     width: "100%",
     border: "1px solid #E2E2E2",
     borderRadius: 4,
+    padding: "14px 0",
     marginLeft: 16,
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: "#F8F8F8",
     "& p": {
@@ -83,8 +107,9 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   alertBoxContainer: {
-    padding: "31px 31px 11px",
+    padding: "16px 20px 0",
     "& > p": {
+      padding: "13px 11px",
       "&:first-of-type": {
         margin: 0,
         display: "flex",
@@ -93,6 +118,7 @@ export const useStyles = makeStyles(MUITheme => ({
           fontSize: 20,
         },
       },
+      "& > p": { wordBreak: "break-word" },
     },
   },
   infoAlertMessage: {
@@ -101,5 +127,8 @@ export const useStyles = makeStyles(MUITheme => ({
     fontSize: 14,
     lineHeight: "18px",
   },
-  CardActions: { justifyContent: "center" },
+  CardActions: {
+    padding: "24px 0 0",
+    justifyContent: "center",
+  },
 }));

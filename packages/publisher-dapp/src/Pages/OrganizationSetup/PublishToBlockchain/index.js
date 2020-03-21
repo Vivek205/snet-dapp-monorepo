@@ -77,7 +77,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
           />
           <SNETTextfield
             label="Company Organization Name"
-            description="The company name is displayed as the provider to users on the AI service page name. "
+            description="The company name is displayed as the provider to users on the AI Marketplace page. "
             name="name"
             disabled
             value={name}
