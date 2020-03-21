@@ -16,6 +16,7 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 const selectState = state => ({
   orgUuid: state.organization.uuid,
   serviceList: state.aiServiceList.data,
+  isLoggedIn: state.user.isLoggedIn,
 });
 
 const NavigationBar = props => {
@@ -23,7 +24,7 @@ const NavigationBar = props => {
   const classes = useStyles(props);
   const history = useHistory();
   const location = useLocation();
-  const { orgUuid, serviceList } = useSelector(selectState);
+  const { orgUuid, serviceList, isLoggedIn } = useSelector(selectState);
   const { serviceUuid } = useParams();
   const dispatch = useDispatch();
 
@@ -57,18 +58,20 @@ const NavigationBar = props => {
   }
 
   return (
-    <nav className={classes.navigationLinks}>
-      <SNETList display="inline" className={classes.navlist}>
-        {navbarItems.map(navbarItem => {
-          if (navbarItem.type === "link") {
-            return (
-              <ListItem key={navbarItem.label} children={<NavbarLink {...navbarItem} headerColor={headerColor} />} />
-            );
-          }
-          return null;
-        })}
-      </SNETList>
-    </nav>
+    !isLoggedIn && (
+      <nav className={classes.navigationLinks}>
+        <SNETList display="inline" className={classes.navlist}>
+          {navbarItems.map(navbarItem => {
+            if (navbarItem.type === "link") {
+              return (
+                <ListItem key={navbarItem.label} children={<NavbarLink {...navbarItem} headerColor={headerColor} />} />
+              );
+            }
+            return null;
+          })}
+        </SNETList>
+      </nav>
+    )
   );
 };
 
