@@ -55,9 +55,7 @@ export const useStyles = MUITheme => ({
       alignItems: "flex-start",
     },
   },
-  profileImgContainer: {
-    padding: "30px 0 0 30px",
-  },
+  profileImgContainer: { padding: "30px 0 0 30px" },
   uploaderContentConatiner: {
     marginTop: 12,
     display: "flex",
@@ -128,8 +126,7 @@ export const useStyles = MUITheme => ({
   addedTagsContainer: {
     paddingTop: 20,
     position: "relative",
-    "& div": {
-      width: "100%",
+    "& > div": {
       display: "flex",
     },
     "& svg": {
@@ -165,8 +162,10 @@ export const useStyles = MUITheme => ({
     padding: 15,
     border: "1px solid rgba(25,25,25,.32)",
     borderRadius: 4,
+    flexWrap: "wrap",
+    "& > div:first-of-type": { marginLeft: 0 },
   },
-  chip: { marginLeft: 10 },
+  chip: { margin: "0 0 10px 10px" },
   projUrlContainer: {
     padding: "0 29px",
     [MUITheme.breakpoints.down("sm")]: { paddingRight: 0 },

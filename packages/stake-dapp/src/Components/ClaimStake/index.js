@@ -61,7 +61,11 @@ const ClaimStake = () => {
       await waitForTransaction(txHash);
 
       setAlert({
-        [stakeMapIndex]: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" },
+        [stakeMapIndex]: {
+          type: alertTypes.SUCCESS,
+          message:
+            "Congratulations! You have successfully claimed your stake and reward. You can safely close this window.",
+        },
       });
 
       dispatch(loaderActions.stopAppLoader());

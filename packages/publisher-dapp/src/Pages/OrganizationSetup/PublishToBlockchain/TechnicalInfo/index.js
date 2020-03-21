@@ -20,7 +20,7 @@ const TechnicalInfo = ({ classes }) => {
           <SNETTextfield
             disabled
             label="Payment Address"
-            description="The Metamask address to which all the payments will be transferred "
+            description="The ethereum address to which all the payments will be transferred "
             name="paymentaddress"
             value={group.paymentAddress}
           />

@@ -29,10 +29,10 @@ var useStyles = function useStyles(MUITheme) {
         marginRight: 17,
         color: MUITheme.palette.border.warningBox
       },
-      '& span': {
-        '& button': {
-          border: 'none',
-          background: 'none',
+      "& span": {
+        "& button": {
+          border: "none",
+          background: "none",
           color: MUITheme.palette.primary.main,
           fontSize: 14.2,
           letterSpacing: 0.25,
