@@ -23,6 +23,7 @@ const InitialRequestDetails = {
     totalStakers: 0,
     totalStakedAmount: 0,
     myStake: 0,
+    autoRenewal: true,
   },
   incubationStakes: [],
   claimStakes: [],

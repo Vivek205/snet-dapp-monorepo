@@ -45,7 +45,7 @@ export const APIPaths = {
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
   UPLOAD_FILE: "/upload",
   USER_VERIFICATION_INITIATE: "/initiate",
-  USER_VERIFICATION_STATUS: "/status/?type=JUMIO",
+  USER_VERIFICATION_STATUS: "/status",
   SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
   SAMPLE_DAEMON_CONFIG_TEST: (orgUuid, serviceuuid) =>
     `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config/test`,

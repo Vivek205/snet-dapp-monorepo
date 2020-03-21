@@ -3,15 +3,17 @@ import BigNumber from "bignumber.js";
 
 // Do the Calculation in AGI rather than wei
 const computeReward = activeStake => {
-  if (activeStake.myStake === 0) return 0;
-
   const myStake = new BigNumber(activeStake.myStake);
+
+  if (myStake.lte(0)) return 0;
+
   const windowRewardAmount = new BigNumber(activeStake.rewardAmount);
   const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
-  const totalStakedAmount = new BigNumber(
-    activeStake.totalStakedAmount === 0 ? myStake : activeStake.totalStakedAmount
-  );
+  let totalStakedAmount = new BigNumber(activeStake.totalStakedAmount);
 
+  if (totalStakedAmount.eq(0)) {
+    totalStakedAmount = new BigNumber(activeStake.myStake);
+  }
   let rewardAmount = new BigNumber(0);
 
   if (totalStakedAmount.lt(windowMaxCap)) {
