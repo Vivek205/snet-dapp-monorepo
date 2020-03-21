@@ -193,6 +193,7 @@ const generateSaveServicePayload = serviceDetails => {
     priceModel: serviceDetails.priceModel,
     comment: {
       SERVICE_PROVIDER: serviceDetails.comments.SERVICE_PROVIDER,
+      SERVICE_APPROVER: serviceDetails.comments.SERVICE_APPROVER,
     },
     mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
@@ -320,7 +321,10 @@ const parseServiceDetails = (data, serviceUuid) => {
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
     freeCallSignerAddress: isEmpty(data.groups) ? "" : data.groups[0].free_call_signer_address,
-    comments: { SERVICE_APPROVER: data.comments ? data.comments.SERVICE_APPROVER : "" },
+    comments: {
+      SERVICE_APPROVER: data.comments.SERVICE_APPROVER ? data.comments.SERVICE_APPROVER : "",
+      SERVICE_PROVIDER: data.comments.SERVICE_PROVIDER ? data.comments.SERVICE_PROVIDER : "",
+    },
   };
 
   return service;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -12,6 +12,12 @@ const VerificationRejected = () => {
   const status = useSelector(state => state.organization.state.state);
   const history = useHistory();
   const { orgUuid } = useParams();
+
+  useEffect(() => {
+    if (status === organizationSetupStatuses.ONBOARDING_REJECTED) {
+      // TODO get the comment from verification API.
+    }
+  }, [status]);
 
   const handleEditOrgDetails = () => {
     if (status === organizationSetupStatuses.ONBOARDING_REJECTED) {

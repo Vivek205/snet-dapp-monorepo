@@ -72,7 +72,7 @@ class LaunchService extends React.Component {
   handleSubmitComment = async () => {
     try {
       this.setState({ alert: {} });
-      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+      const { submitServiceDetailsForReview, organization, orgStatus, serviceDetails } = this.props;
       if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
         if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
           return this.setState({
@@ -95,7 +95,7 @@ class LaunchService extends React.Component {
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
       }
-      await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
+      await submitServiceDetailsForReview(organization.uuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
       if (checkIfKnownError(e)) {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
