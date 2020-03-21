@@ -33,7 +33,8 @@ const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment, alert }) 
             type={alertTypes.WARNING}
             header="SNET requested changes"
             icon={BlockIcon}
-            message="Please make the appropriate changes and submit again for approval."
+            message="We need additional details to process and approve your service.
+             Please review the comments below and update your service. Once done, you can resubmit for approval."
           />
         </div>
 

@@ -164,6 +164,7 @@ class LaunchService extends React.Component {
 const mapStateToProps = state => ({
   organization: state.organization,
   serviceDetails: state.aiServiceDetails,
+  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({

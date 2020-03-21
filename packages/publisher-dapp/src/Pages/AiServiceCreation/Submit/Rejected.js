@@ -24,9 +24,10 @@ const Rejected = ({ classes }) => {
         <div className={classes.rejectedAlertAndBtnContainer}>
           <AlertBox
             type={alertTypes.ERROR}
-            header="Your AI Service is Rejected by SNET"
+            header="Your AI Service is not accepted by SNET"
             icon={BlockIcon}
-            message="Please make the appropriate changes and submit again for approval."
+            message="Unfortunately your service does not qualify to list on the SingularityNet Marketplace.
+             Please see the comments below for more details."
           />
           <div className={classes.approvalCommentSection}>
             <Typography variant="h6">Reviewers Comment</Typography>
