@@ -38,7 +38,7 @@ const InvitePopup = ({
         <CardContent className={classes.popupContent}>
           <SNETTextarea
             label="Email Address(es)"
-            extraInfo="For multiple emails, separated by comma"
+            extraInfo="For multiple emails, separate by comma"
             rowCount="6"
             value={textareaValue}
             onChange={onTextareaChange}

@@ -45,12 +45,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
       <Typography variant="subtitle1" className={classes.stepsHeading}>
         Step 3: Upload the Demo Files
       </Typography>
-      <Typography variant="subtitle2">
-        Zip / Rar / compress all the project files and drop it here. Lorem ipsum dolor sit amet, eu nec aliquam volutpat
-        partiendo, id idque mentitum assentior vis, nam no tamquam principes gloriatur. Omnes intellegam suscipiantur eu
-        usu, vel tota senserit prodesset in. Nostrum probatus singulis id nec, virtute docendi mnesarchum pri ea, eirmod
-        maiorum scripserit quo ei.{" "}
-      </Typography>
+      <Typography variant="subtitle2">Zip / Rar / compress all the project files and drop it here. </Typography>
       <SNETFileUpload
         onDrop={handleFileDrop}
         accept={acceptedFileTypes}

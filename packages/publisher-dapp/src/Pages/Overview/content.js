@@ -37,9 +37,10 @@ export const overViewArticles = [
     ],
     media: WhatDoWithPublisher,
     btnDetails: {
-      text: "see how it works",
+      linkTo: "",
+      /*text: "see how it works",
       type: "transparentBlueBorder",
-      linkTo: `${GlobalRoutes.HOW_IT_WORKS.path}`,
+      linkTo: `${GlobalRoutes.HOW_IT_WORKS.path}`,*/
     },
   },
 ];

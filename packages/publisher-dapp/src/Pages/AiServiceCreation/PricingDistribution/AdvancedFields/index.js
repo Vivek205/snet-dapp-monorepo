@@ -13,15 +13,21 @@ const AdvancedFields = () => {
     <div className={classes.advFilesContainer}>
       <Typography variant="subtitle1">Advanced Fields</Typography>
       <Typography className={classes.description}>
-        Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter videbatur
-        hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+        These fields are for refrence only and do not need to be changed
       </Typography>
       <SNETTextfield
         icon
         name="mpeAddress"
         value={MPENetworks[process.env.REACT_APP_ETH_NETWORK].address}
         label="MPE Address"
-        description=" Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. "
+        description={
+          <p>
+            The ethereum address of the MultiParty Escrow contract on the Ethereum mainnet. Details{" "}
+            <a href="https://dev.singularitynet.io/docs/ai-developers/mpe/" rel="noopener noreferrer" target="_blank">
+              here
+            </a>
+          </p>
+        }
         disabled
       />
       <SNETTextfield
@@ -29,7 +35,7 @@ const AdvancedFields = () => {
         name="signer address"
         value={freeCallSignerAddress}
         label="Free call signer address"
-        description=" Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. "
+        description="This address is used to sign all calls made as part of the free trial"
         disabled
       />
     </div>

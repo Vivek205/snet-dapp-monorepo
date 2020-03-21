@@ -32,7 +32,7 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
   return (
     <Grid Item>
       <Typography variant="subtitle1" className={classes.configTitle}>
-        Sample Daemon config
+        Daemon config for Curation
       </Typography>
       <div className={classes.grayBoxContainer}>
         <Grid container className={classes.grayBox}>

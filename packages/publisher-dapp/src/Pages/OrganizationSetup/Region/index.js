@@ -33,8 +33,15 @@ const Region = ({ history, classes, handleFinishLater }) => {
       <div className={classes.box}>
         <Typography variant="h6">Regional Groups Configuration</Typography>
         <Typography variant="subtitle2">
-          Every AI service your company publishes can be optimized for users based in various regions and groups. You
-          will be able to configure this during the AI service level.
+          Every AI service your company publishes can be optimized for users based in various regions and groups. Groups
+          provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details{" "}
+          <a
+            href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            here
+          </a>
         </Typography>
         {groups.map((group, index) => (
           <Settings
