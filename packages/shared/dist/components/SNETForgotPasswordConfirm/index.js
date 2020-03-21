@@ -43,14 +43,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
   var title = _ref.title,
+      email = _ref.email,
       forgotPasswordConfirmError = _ref.forgotPasswordConfirmError,
       onSubmit = _ref.onSubmit;
   var classes = (0, _styles.useStyles)();
 
-  var _useState = (0, _react.useState)(true),
+  var _useState = (0, _react.useState)(email),
       _useState2 = _slicedToArray(_useState, 2),
-      showEmailSentAlert = _useState2[0],
-      setShowEmailSentAlert = _useState2[1];
+      localEmail = _useState2[0],
+      setLocalEmail = _useState2[1];
 
   var _useState3 = (0, _react.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -72,10 +73,9 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
       validationErr = _useState10[0],
       setValidationErr = _useState10[1];
 
-  var handleEnterOtp = function handleEnterOtp(event) {
-    event.preventDefault();
-    setShowEmailSentAlert(false);
-  };
+  (0, _react.useEffect)(function () {
+    setLocalEmail(email);
+  }, [email]);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
@@ -83,25 +83,18 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     var isNotValid = (0, _validator.default)({
       password: password,
       confirmPassword: confirmPassword,
-      code: code
+      code: code,
+      localEmail: localEmail
     }, _validationConstraints.forgotPassworSubmitConstraints);
 
     if (isNotValid) {
       setValidationErr(isNotValid[0]);
       return;
-    } // Assuming the user state has the email, no need to explicitly pass it to this comp
+    } // Assuming the user state has the email, no need to explicitly pass it to this component
 
 
-    onSubmit(code, password);
+    onSubmit(localEmail, code, password);
   };
-
-  if (showEmailSentAlert) {
-    return _react.default.createElement("section", {
-      className: classes.resetPasswordContainer
-    }, _react.default.createElement("span", null, "Reset Password Email Sent."), _react.default.createElement("p", null, "Click ", _react.default.createElement("a", {
-      onClick: handleEnterOtp
-    }, "here"), " to enter the verification code."));
-  }
 
   return _react.default.createElement(_Grid.default, {
     container: true,
@@ -116,14 +109,28 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
   }, _react.default.createElement(_Typography.default, {
     variant: "h2"
   }, title), _react.default.createElement("p", null, "Enter the verification code and new password."), _react.default.createElement("form", {
-    autoComplete: "off",
-    className: classes.forgotPwdForm
+    className: classes.forgotPwdForm,
+    noValidate: ""
   }, _react.default.createElement(_TextField.default, {
+    id: "outlined-email-input",
+    label: "Email",
+    className: classes.textField,
+    autoComplete: "off",
+    type: "email",
+    name: "email",
+    margin: "normal",
+    variant: "outlined",
+    value: localEmail,
+    required: true,
+    onChange: function onChange(e) {
+      return setLocalEmail(e.target.value);
+    }
+  }), _react.default.createElement(_TextField.default, {
     id: "outlined-code-input",
     label: "Code",
     className: classes.textField,
     autoComplete: "off",
-    type: "text",
+    type: "code",
     name: "code",
     margin: "normal",
     variant: "outlined",
