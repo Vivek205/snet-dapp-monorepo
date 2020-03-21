@@ -13,7 +13,7 @@ import Card from "./Card";
 import Button from "./Button";
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../Utils/Loader";
-import { loaderActions } from "../../Services/Redux/actionCreators";
+import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, updateAutoRenewal } from "../../Utils/BlockchainHelper";
 
 const StakeSession = ({
@@ -27,10 +27,7 @@ const StakeSession = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // The default options is to be checked
-  const [autoRenewal, setAutoRenewal] = useState(
-    stakeDetails.autoRenewal === undefined ? true : stakeDetails.autoRenewal
-  );
+  const autoRenewal = stakeDetails.autoRenewal;
 
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
@@ -101,6 +98,23 @@ const StakeSession = ({
     }
 
     return false;
+  };
+
+  const setAutoRenewal = autoRenewalSelectedOption => {
+    // Call appropriate redux state storage events
+    if (currentTimestamp > stakeDetails.startPeriod && currentTimestamp <= stakeDetails.submissionEndPeriod) {
+      dispatch(stakeActions.updateActiveStakeAutoRenewal({ autoRenewal: autoRenewalSelectedOption }));
+    } else if (
+      currentTimestamp >= stakeDetails.requestWithdrawStartPeriod &&
+      currentTimestamp <= stakeDetails.endPeriod
+    ) {
+      dispatch(
+        stakeActions.updateIncubatingStakeAutoRenewal({
+          stakeMapIndex: stakeDetails.stakeMapIndex,
+          autoRenewal: autoRenewalSelectedOption,
+        })
+      );
+    }
   };
 
   const handleAutoRenewalChange = async event => {
