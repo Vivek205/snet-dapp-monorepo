@@ -119,14 +119,16 @@ class LaunchService extends React.Component {
               here.
             </Typography>
             <ContinueLaunchTable />
-            <AlertBox type={alert.type} message={alert.message} />
+            <div className={classes.launchServiceAlertContainer}>
+              <AlertBox type={alert.type} message={alert.message} />
+            </div>
           </Grid>
         </div>
       );
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.CHANGE_REQUESTED) {
-      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmitComment={this.handleSubmitComment} />;
+      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmit={this.handleSubmitComment} />;
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
@@ -156,8 +158,6 @@ class LaunchService extends React.Component {
 const mapStateToProps = state => ({
   organization: state.organization,
   serviceDetails: state.aiServiceDetails,
-  orgUuid: state.organization.uuid,
-  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -166,7 +166,5 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, tags, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, tags, history)),
-  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
-    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(LaunchService)));
