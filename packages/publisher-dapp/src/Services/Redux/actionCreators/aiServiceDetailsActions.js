@@ -191,7 +191,7 @@ const generateSaveServicePayload = serviceDetails => {
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
-    comment: {
+    comments: {
       SERVICE_PROVIDER: serviceDetails.comments.SERVICE_PROVIDER,
       SERVICE_APPROVER: serviceDetails.comments.SERVICE_APPROVER,
     },

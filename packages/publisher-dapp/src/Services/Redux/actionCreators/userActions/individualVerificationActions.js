@@ -7,6 +7,7 @@ import { loaderActions } from "../index";
 import { LoaderContent } from "../../../../Utils/Loader";
 import { startAppLoader, stopAppLoader } from "../loaderActions";
 import { verificationProviderType } from "../../../../Pages/Onboarding/Authenticate/Individual/content";
+import { verificationTypes } from "../../../../Utils/verification";
 
 export const SET_INDIVIDUAL_VERIFICATION_STATUS = "SET_INDIVIDUAL_VERIFICATION_STATUS";
 export const SET_INDIVIDUAL_VERIFICATION_REJECT_REASON = "SET_INDIVIDUAL_VERIFICATION_REJECT_REASON";
@@ -51,7 +52,8 @@ const getVerificationStatusAPI = () => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.VERIFICATION.name;
   const apiPath = APIPaths.USER_VERIFICATION_STATUS;
-  const apiOptions = initializeAPIOptions(token);
+  const queryParams = { type: verificationTypes.JUMIO };
+  const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
 

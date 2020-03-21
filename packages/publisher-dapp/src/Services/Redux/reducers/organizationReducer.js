@@ -2,6 +2,7 @@ import { ContactsTypes } from "../../../Utils/Contacts";
 import { organizationActions, inviteMembersActions } from "../actionCreators";
 import { organizationSetupStatuses, organizationTypes } from "../../../Utils/organizationSetup";
 import { memberStatus } from "../../../Utils/TeamMembers.js";
+import { orgVerificationActions } from "../actionCreators/userActions";
 
 const initialState = {
   state: {
@@ -64,6 +65,7 @@ const initialState = {
     [memberStatus.EXPIRED]: [],
   },
   owner: "",
+  rejectReason: "",
 };
 
 const OrganizationReducer = (state = initialState, action) => {
@@ -112,6 +114,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, assets: { ...state.assets, heroImage: { ...state.assets.heroImage, url: action.payload } } };
     case organizationActions.SET_ORG_FOUND_IN_BLOCKCHAIN:
       return { ...state, foundInBlockchain: action.payload };
+    case orgVerificationActions.SET_ORG_REJECT_REASON:
+      return { ...state, rejectReason: action.payload };
     default:
       return state;
   }
