@@ -1,10 +1,10 @@
 import { API } from "aws-amplify";
 import isEmpty from "lodash/isEmpty";
-
+import * as Sentry from "@sentry/browser";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { loaderActions } from "./";
+import { errorActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { responseStatus, APIError } from "shared/dist/utils/API";
 import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
@@ -512,6 +512,8 @@ export const initializeOrg = async dispatch => {
       await dispatch(getOwner(data[0].org_uuid));
     }
   } catch (error) {
+    Sentry.captureException(error);
+    dispatch(errorActions.setAppError(error));
     // ! do not remove this catch. It stops the error bubbling and allows
     // ! the login to work seamlessly even if the initializeOrg fails
     return undefined;

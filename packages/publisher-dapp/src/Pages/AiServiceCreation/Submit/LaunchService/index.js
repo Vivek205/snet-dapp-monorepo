@@ -11,16 +11,15 @@ import ContinueLaunchTable from "./ContinueLaunchTable";
 import LaunchTable from "./LaunchTable";
 import { useStyles } from "./styles";
 import DaemonConfig from "../DaemonConfig";
-import { alertTypes } from "shared/dist/components/AlertBox";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
 import ChangeRequested from "../ChangeRequested";
 import Rejected from "../Rejected";
 import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "../validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
+import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
 class LaunchService extends React.Component {
   state = { daemonConfig: {}, alert: {} };
@@ -93,7 +92,8 @@ class LaunchService extends React.Component {
       }
       const isNotValid = validator(serviceDetails, submitServiceConstraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
@@ -128,11 +128,17 @@ class LaunchService extends React.Component {
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.CHANGE_REQUESTED) {
-      return <ChangeRequested onContinueToEdit={this.handleContinueEdit} onSubmit={this.handleSubmitComment} />;
+      return (
+        <ChangeRequested
+          onContinueToEdit={this.handleContinueEdit}
+          onSubmitComment={this.handleSubmitComment}
+          alert={alert}
+        />
+      );
     }
 
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
-      return <Rejected onContinueToEdit={this.handleContinueEdit} />;
+      return <Rejected />;
     }
 
     return (
@@ -158,6 +164,7 @@ class LaunchService extends React.Component {
 const mapStateToProps = state => ({
   organization: state.organization,
   serviceDetails: state.aiServiceDetails,
+  orgStatus: state.organization.state.state,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -166,5 +173,7 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, tags, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, tags, history)),
+  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(LaunchService)));
