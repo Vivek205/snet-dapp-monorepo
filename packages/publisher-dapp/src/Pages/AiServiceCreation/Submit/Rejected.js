@@ -17,9 +17,9 @@ const Rejected = ({ classes }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">Review Process</Typography>
         <Typography className={classes.reviewProcessDescription}>
-          After you submitted your service, SNET admins will review your service protocals. This process could take a
-          few days. After the review you will be notified if your service as has been ACCEPTED or if some your inputs
-          needs to be refined. You will be able to review and respond to the feedback from the SNET Admins here.
+          After you submitted your service, SingularityNet curation team will review your service. This process could
+          take a few days. After the review you will be notified if your service as has been accepted or if additional
+          information is required. You will be able to review and respond to the feedback from the team here.
         </Typography>
         <div className={classes.rejectedAlertAndBtnContainer}>
           <AlertBox
