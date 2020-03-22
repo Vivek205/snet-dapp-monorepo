@@ -77,9 +77,9 @@ const parseAiServiceData = service => ({
     : service.contributors.map(contributor => ({ name: contributor.name, email: contributor.email_id })),
   groups: isEmpty(service.groups) ? [] : parseGroups(service.groups),
   tags: service.tags,
-  comments: isEmpty(service.comments)
-    ? { serviceProvider: [] }
-    : { serviceProvider: service.comments.service_provider },
+  comments: {
+    SERVICE_APPROVER: isEmpty(service.comments) ? "" : service.comments.SERVICE_APPROVER,
+  },
 });
 
 const parseAiServiceListResponse = response => response.map(parseAiServiceData);
