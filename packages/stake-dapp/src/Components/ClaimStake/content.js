@@ -7,7 +7,9 @@ const computeReward = stakeDetails => {
 
   const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
   const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
-  const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake === 0 ? 1 : stakeDetails.windowTotalStake);
+  const windowTotalStake = new BigNumber(
+    stakeDetails.windowTotalStake === 0 ? stakeDetails.approvedAmount : stakeDetails.windowTotalStake
+  );
   const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
   let rewardAmount = new BigNumber(0);
@@ -66,7 +68,7 @@ export const btnDetails = [
   //   text: "re-stake",
   // },
   {
-    action: "reclaimStake",
+    action: "withdrawStake",
     color: "primary",
     variant: "contained",
     text: "reclaim stake",

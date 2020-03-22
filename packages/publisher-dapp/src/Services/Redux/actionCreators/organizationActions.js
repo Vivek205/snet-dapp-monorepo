@@ -1,10 +1,10 @@
 import { API } from "aws-amplify";
 import isEmpty from "lodash/isEmpty";
-
+import * as Sentry from "@sentry/browser";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { loaderActions } from "./";
+import { errorActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { responseStatus, APIError } from "shared/dist/utils/API";
 import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
@@ -32,6 +32,8 @@ export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
 export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
+export const SET_ORGANIZATION_TOUCHED_FLAG = "SET_ORGANIZATION_TOUCHED_FLAG";
+export const SET_ORGANIZATION_AVAILABILITY = "SET_ORGANIZATION_AVAILABILITY";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -66,6 +68,38 @@ export const setOrgHeroImageUrl = url => ({ type: SET_ORG_HERO_IMAGE_URL, payloa
 
 export const setOrgFoundInBlockchain = found => ({ type: SET_ORG_FOUND_IN_BLOCKCHAIN, payload: found });
 
+export const setOrganizationTouchedFlag = touchFlag => ({
+  type: SET_ORGANIZATION_TOUCHED_FLAG,
+  payload: touchFlag,
+});
+
+export const setOrgAvailability = orgAvailability => ({
+  type: SET_ORGANIZATION_AVAILABILITY,
+  payload: orgAvailability,
+});
+
+const validateOrgIdAPI = orgUuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.ORGANIZATION_ID_VALIDATE(orgUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const validateOrgId = orgId => async dispatch => {
+  try {
+    dispatch(loaderActions.startValidateOrgIdLoader());
+    const { data, error } = await dispatch(validateOrgIdAPI(orgId));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopValidateOrgIdLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopValidateOrgIdLoader());
+    throw error;
+  }
+};
 const uploadFileAPI = (assetType, fileBlob, orgUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   let url = `${APIEndpoints.UTILITY.endpoint}${APIPaths.UPLOAD_FILE}?type=${assetType}&org_uuid=${orgUuid}`;
@@ -478,6 +512,8 @@ export const initializeOrg = async dispatch => {
       await dispatch(getOwner(data[0].org_uuid));
     }
   } catch (error) {
+    Sentry.captureException(error);
+    dispatch(errorActions.setAppError(error));
     // ! do not remove this catch. It stops the error bubbling and allows
     // ! the login to work seamlessly even if the initializeOrg fails
     return undefined;

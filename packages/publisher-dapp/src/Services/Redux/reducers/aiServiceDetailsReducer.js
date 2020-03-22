@@ -62,8 +62,8 @@ const initialState = {
   groups: defaultGroups,
   tags: [],
   comments: {
-    serviceProvider: "",
-    approver: "",
+    SERVICE_PROVIDER: "",
+    SERVICE_APPROVER: "",
   },
   foundInBlockchain: false,
 };
@@ -95,7 +95,7 @@ const serviceDetailsReducer = (state = initialState, action) => {
         ...state,
         comments: {
           ...state.comments,
-          serviceProvider: action.payload,
+          SERVICE_PROVIDER: action.payload,
         },
       };
     case aiServiceDetailsActions.SET_AI_SERVICE_STATE_STATE:

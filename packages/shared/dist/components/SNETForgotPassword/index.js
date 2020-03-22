@@ -58,6 +58,10 @@ var SNETForgotPassword = function SNETForgotPassword(_ref) {
       validationErr = _useState4[0],
       setValidationErr = _useState4[1];
 
+  (0, _react.useEffect)(function () {
+    setEmail(email);
+  }, [email]);
+
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     event.stopPropagation();

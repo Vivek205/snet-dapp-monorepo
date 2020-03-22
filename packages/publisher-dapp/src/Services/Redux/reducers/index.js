@@ -5,6 +5,7 @@ import OrganizationReducer from "./organizationReducer";
 import loaderReducer from "./loaderReducer";
 import aiServiceDetailsReducer from "./aiServiceDetailsReducer";
 import aiServiceListReducer from "./aiServiceListReducer";
+import errorReducer from "./errorReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   aiServiceDetails: aiServiceDetailsReducer,
   aiServiceList: aiServiceListReducer,
+  error: errorReducer,
 });
 
 export default rootReducer;
