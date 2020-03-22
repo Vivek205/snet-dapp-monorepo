@@ -1,5 +1,6 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
 import BigNumber from "bignumber.js";
+import momemt from "moment";
 
 export const incubationProgressDetails = stakeDetails => ({
   startPeriod: stakeDetails.startPeriod,
@@ -8,19 +9,32 @@ export const incubationProgressDetails = stakeDetails => ({
 });
 
 const computeReward = stakeDetails => {
-  if (stakeDetails.approvedAmount === 0) return 0;
+  const currentTimestamp = momemt().unix();
 
-  const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
+  if (
+    (currentTimestamp > stakeDetails.approvalEndPeriod && stakeDetails.approvedAmount === 0) ||
+    (currentTimestamp < stakeDetails.approvalEndPeriod && stakeDetails.pendingForApprovalAmount === 0)
+  )
+    return 0;
+
+  const stakeAmount = new BigNumber(
+    stakeDetails.approvedAmount === 0 ? stakeDetails.pendingForApprovalAmount : stakeDetails.approvedAmount
+  );
   const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
-  const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake === 0 ? 1 : stakeDetails.windowTotalStake);
+
+  let windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
+  if (currentTimestamp < stakeDetails.approvalEndPeriod) {
+    windowTotalStake = windowTotalStake.plus(new BigNumber(stakeDetails.totalStakedAmount));
+  }
+
   const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
   let rewardAmount = new BigNumber(0);
 
   if (windowTotalStake.lt(windowMaxCap)) {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowTotalStake);
+    rewardAmount = stakeAmount.times(windowRewardAmount).div(windowTotalStake);
   } else {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowMaxCap);
+    rewardAmount = stakeAmount.times(windowRewardAmount).div(windowMaxCap);
   }
 
   return rewardAmount;
@@ -29,7 +43,9 @@ const computeReward = stakeDetails => {
 export const cardDetails = stakeDetails => [
   {
     title: "Accepted Stake Amount",
-    value: fromWei(stakeDetails.approvedAmount),
+    value: fromWei(
+      new BigNumber(stakeDetails.approvedAmount).plus(new BigNumber(stakeDetails.pendingForApprovalAmount))
+    ),
     unit: "AGI",
     toolTip: "The amount of AGI tokens that the SingularityNet foundation accepted from your stake.",
   },

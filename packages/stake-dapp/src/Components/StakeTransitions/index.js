@@ -30,11 +30,9 @@ const StakeTransitions = () => {
 
   useEffect(() => {
     try {
-      // TODO: Convert the same to async Constant based on the need...
       dispatch(stakeActions.fetchStakeTransactions(metamaskDetails));
     } catch (_error) {
       //console.log("error - ", error);
-      // TODO - Need to handle the error based on overall Web App
     }
   }, [dispatch, metamaskDetails]);
 

@@ -32,3 +32,7 @@ export const basicDetailsFormData = {
     description: `Please include your country code. For example +1-800-555-1234.`,
   },
 };
+export const orgIdAvailability = {
+  AVAILABLE: "AVAILABLE",
+  UNAVAILABLE: "UNAVAILABLE",
+};

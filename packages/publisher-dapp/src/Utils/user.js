@@ -14,3 +14,8 @@ export const userPreferenceTypes = {
 export const userPreferenceCommunicationTypes = {
   EMAIL: "EMAIL",
 };
+
+export const userRoles = {
+  OWNER: "owner",
+  MEMBER: "member",
+};

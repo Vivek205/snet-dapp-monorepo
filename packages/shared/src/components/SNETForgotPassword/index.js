@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
@@ -14,6 +14,10 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
 
   const [localEmail, setEmail] = useState(email);
   const [validationErr, setValidationErr] = useState("");
+
+  useEffect(() => {
+    setEmail(email);
+  }, [email]);
 
   const handleSubmit = event => {
     event.preventDefault();

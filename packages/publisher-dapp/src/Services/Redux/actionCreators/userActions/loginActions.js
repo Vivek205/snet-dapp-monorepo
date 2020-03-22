@@ -96,3 +96,26 @@ export const signout = async dispatch => {
   await dispatch(resetUserOnSignout());
   dispatch(loaderActions.stopAppLoader());
 };
+
+export const forgotPassword = email => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FORGOT_PASSWORD));
+    await Auth.forgotPassword(email);
+    dispatch(setUserLoggedIn(false));
+    dispatch(loaderActions.stopAppLoader());
+  } catch (e) {
+    dispatch(loaderActions.stopAppLoader());
+    throw e;
+  }
+};
+
+export const forgotPasswordSubmit = (email, code, password) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FORGOT_PASSWORD_SUBMIT));
+    await Auth.forgotPasswordSubmit(email, code, password);
+    dispatch(loaderActions.stopAppLoader());
+  } catch (e) {
+    dispatch(loaderActions.stopAppLoader());
+    throw e;
+  }
+};

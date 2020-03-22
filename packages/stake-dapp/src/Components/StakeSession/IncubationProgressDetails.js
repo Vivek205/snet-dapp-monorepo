@@ -11,8 +11,8 @@ import { useStyles } from "./styles";
 const IncubationProgressDetails = ({ details }) => {
   const classes = useStyles();
   if (details) {
-    const daysPassed = Math.floor((moment().unix() - details.submissionEndPeriod) / (60 * 60 * 24));
-    const stakeDays = Math.floor((details.endPeriod - details.submissionEndPeriod) / (60 * 60 * 24));
+    const daysPassed = Math.ceil((moment().unix() - details.submissionEndPeriod) / (60 * 60 * 24));
+    const stakeDays = Math.ceil((details.endPeriod - details.submissionEndPeriod) / (60 * 60 * 24));
     const started = moment.unix(details.submissionEndPeriod).format("DD MMM YYYY");
     const finished = moment.unix(details.endPeriod).format("DD MMM YYYY");
 
