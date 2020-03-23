@@ -107,7 +107,7 @@ const ServiceStatusDetails = props => {
         <Link to={editServiceLink}>
           <SNETButton children="edit" color="primary" variant="contained" />
         </Link>
-        {props.status === "DRAFT" ? (
+        {props.status === "PUBLISHED" ? (
           <div className={classes.configValidButton}>
             <SNETButton children="pause service" color="primary" variant="contained" />
             <SNETButton children="validate daemon" color="primary" variant="contained" onClick={validateDaemonConfig} />
