@@ -63,7 +63,7 @@ export class ConfigurationServiceRequest {
     return new Promise((resolve, reject) => {
       const props = {
         request,
-        host: this._getServiceHost(),
+        host: "https://example-service-a.singularitynet.io:8083" /* this._getServiceHost() */,
         onEnd: result => {
           const { message, status, statusMessage } = result;
           if (status !== 0) {
