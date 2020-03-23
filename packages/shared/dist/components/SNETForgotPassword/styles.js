@@ -45,13 +45,13 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginBottom: 10
       },
       "& label": {
-        padding: '0 5px',
+        padding: "0 5px",
         background: MUITheme.palette.background.mainContent,
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
         letterSpacing: 0.4,
         lineHeight: "16px",
-        transform: 'translate(14px, -6px) scale(0.90)'
+        transform: "translate(14px, -6px) scale(0.90)"
       },
       "& .MuiFormLabel-root.Mui-focused": {
         color: MUITheme.palette.text.darkGrey
