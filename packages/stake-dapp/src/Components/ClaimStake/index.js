@@ -15,7 +15,7 @@ import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
 import InfoBox from "../StakeSession/InfoBox";
 import { LoaderContent } from "../../Utils/Loader";
-import { loaderActions } from "../../Services/Redux/actionCreators";
+import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, claimStake, withdrawStake } from "../../Utils/BlockchainHelper";
 import { toBigNumber } from "../../Utils/GenHelperFunctions";
 
@@ -25,14 +25,14 @@ const stateSelector = state => ({
   claimStakes: state.stakeReducer.claimStakes,
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   isLoading: state.loader.claimStakeList.isLoading,
+  disableAction: state.stakeReducer.claimStakesActions,
 });
 
 const ClaimStake = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { claimStakes, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
-
+  const { claimStakes, metamaskDetails, isLoading, disableAction } = useSelector(state => stateSelector(state));
   const [alert, setAlert] = useState({ 0: { type: "Error", message: "Test Error Message" } });
 
   if (isLoading) {
@@ -68,6 +68,15 @@ const ClaimStake = () => {
         },
       });
 
+      dispatch(
+        stakeActions.updateClaimStakesActions({
+          [stakeMapIndex]: {
+            ...disableAction[stakeMapIndex],
+            disableClaim: true,
+          },
+        })
+      );
+
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {
       setAlert({ [stakeMapIndex]: { type: alertTypes.ERROR, message: "Transaction has failed." } });
@@ -90,6 +99,15 @@ const ClaimStake = () => {
       setAlert({
         [stakeMapIndex]: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" },
       });
+
+      dispatch(
+        stakeActions.updateClaimStakesActions({
+          [stakeMapIndex]: {
+            ...disableAction[stakeMapIndex],
+            disableWithdraw: true,
+          },
+        })
+      );
 
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {
@@ -127,6 +145,10 @@ const ClaimStake = () => {
 
     // Check Withdraw Stake in case if there is no action from the operator
     if (btnAction === "withdrawStake") {
+      if (disableAction[stakeDetails.stakeMapIndex] && disableAction[stakeDetails.stakeMapIndex].disableWithdraw) {
+        return true;
+      }
+
       if (currentTimestamp > stakeDetails.approvalEndPeriod && stakeDetails.pendingForApprovalAmount !== 0)
         return false;
       else return true;
@@ -134,6 +156,10 @@ const ClaimStake = () => {
 
     // Check if the Stake is in Submission Phase and Not Open For external
     if (btnAction === "claimStake") {
+      if (disableAction[stakeDetails.stakeMapIndex] && disableAction[stakeDetails.stakeMapIndex].disableClaim) {
+        return true;
+      }
+
       // Check for the Claim Actions
       const gracePeriod =
         parseInt(stakeDetails.endPeriod) + parseInt(stakeDetails.endPeriod - stakeDetails.requestWithdrawStartPeriod);
