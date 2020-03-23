@@ -146,10 +146,10 @@ const generateSaveServicePayload = serviceDetails => {
       price_in_cogs: Number(price.priceInCogs),
     }));
 
-  function getServigeGroupObject(arr) {
-    var rv = {};
-    for (var i = 0; i < arr.length; ++i) rv[i] = arr[i];
-    return rv;
+  function getServiceGroupObject(endpoints) {
+    let endpointsObj = {};
+    for (let i = 0; i < endpoints.length; ++i) endpointsObj[i] = endpoints[i];
+    return endpointsObj;
   }
 
   const generateGroupsPayload = () =>
@@ -164,7 +164,7 @@ const generateSaveServicePayload = serviceDetails => {
           free_calls: Number(group.freeCallsAllowed),
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
-          endpoints: getServigeGroupObject(group.endpoints),
+          endpoints: getServiceGroupObject(group.endpoints),
           test_endpoints: group.testEndpoints,
         };
       })

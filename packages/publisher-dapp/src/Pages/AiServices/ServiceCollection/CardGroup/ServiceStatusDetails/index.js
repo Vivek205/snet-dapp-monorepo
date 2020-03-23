@@ -27,7 +27,6 @@ const ServiceStatusDetails = props => {
   const [activeTab] = useState(2);
   const { serviceDetails, groupDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
-  //Todo check for valid url    ["daemon_end_point", "0.0.0.0:8083"],    ["passthrough_endpoint", "http://localhost:7003"],
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
