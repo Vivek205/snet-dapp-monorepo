@@ -39,9 +39,12 @@ const parseGroups = groups => {
   const parsePricing = pricing =>
     pricing.map(price => ({ default: price.default, priceModel: price.price_model, priceInCogs: price.price_in_cogs }));
 
-  const parseEndpoints = endpoints =>
-    endpoints.map(endpointValue => ({ endpoint: endpointValue.endpoint, isAvailable: endpointValue.is_available }));
-
+  const parseEndpoints = endpoints => {
+    Object.values(endpoints).map(endpointValue => ({
+      endpoint: endpointValue,
+      isAvailable: endpointValue.is_available,
+    }));
+  };
   return groups.map(group => ({
     id: group.group_id,
     pricing: parsePricing(group.pricing),
@@ -59,15 +62,17 @@ const parseAiServiceData = service => ({
   shortDescription: service.short_description,
   description: service.description,
   projectUrl: service.project_url,
-  heroImage: isEmpty(service.assets.hero_image)
-    ? {}
-    : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
-  protoFiles: isEmpty(service.assets.proto)
-    ? {}
-    : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
-  demoFiles: isEmpty(service.assets.demo_files)
-    ? {}
-    : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },
+  assets: {
+    heroImage: isEmpty(service.assets.hero_image)
+      ? {}
+      : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
+    protoFiles: isEmpty(service.assets.proto)
+      ? {}
+      : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
+    demoFiles: isEmpty(service.assets.demo_files)
+      ? {}
+      : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },
+  },
   rating: isEmpty(service.rating)
     ? {}
     : { rating: service.rating.rating, totalUsersRated: service.rating.total_users_rated },

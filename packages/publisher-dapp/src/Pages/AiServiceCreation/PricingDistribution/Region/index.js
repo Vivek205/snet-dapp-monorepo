@@ -44,7 +44,7 @@ const Region = () => {
     }
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
-    const updatedEndpoints = [...selectedServiceGroup.endpoints];
+    const updatedEndpoints = [Object.values(selectedServiceGroup.endpoints)]; /* [...selectedServiceGroup.endpoints] */
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
@@ -165,13 +165,13 @@ const Region = () => {
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
                 {selectedServiceGroup.endpoints &&
-                  selectedServiceGroup.endpoints.map(endpoint => (
+                  Object.entries(selectedServiceGroup.endpoints).forEach(([key, val]) => (
                     <Chip
                       className={classes.chip}
-                      key={endpoint}
-                      label={endpoint}
+                      key={key}
+                      label={val}
                       color="primary"
-                      onDelete={() => handleEndpointDelete(endpoint)}
+                      onDelete={() => handleEndpointDelete(val)}
                     />
                   ))}
               </Card>

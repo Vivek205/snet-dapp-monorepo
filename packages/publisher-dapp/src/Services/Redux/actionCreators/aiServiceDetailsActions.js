@@ -146,6 +146,12 @@ const generateSaveServicePayload = serviceDetails => {
       price_in_cogs: Number(price.priceInCogs),
     }));
 
+  function getServigeGroupObject(arr) {
+    var rv = {};
+    for (var i = 0; i < arr.length; ++i) rv[i] = arr[i];
+    return rv;
+  }
+
   const generateGroupsPayload = () =>
     serviceDetails.groups
       .map(group => {
@@ -158,7 +164,7 @@ const generateSaveServicePayload = serviceDetails => {
           free_calls: Number(group.freeCallsAllowed),
           free_call_signer_address: serviceDetails.freeCallSignerAddress,
           pricing: generatePricingpayload(group.pricing),
-          endpoints: group.endpoints,
+          endpoints: getServigeGroupObject(group.endpoints),
           test_endpoints: group.testEndpoints,
         };
       })
