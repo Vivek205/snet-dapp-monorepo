@@ -118,6 +118,29 @@ export const signout = async dispatch => {
   dispatch(loaderActions.stopAppLoader());
 };
 
+export const forgotPassword = email => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FORGOT_PASSWORD));
+    await Auth.forgotPassword(email);
+    dispatch(setUserLoggedIn(false));
+    dispatch(loaderActions.stopAppLoader());
+  } catch (e) {
+    dispatch(loaderActions.stopAppLoader());
+    throw e;
+  }
+};
+
+export const forgotPasswordSubmit = (email, code, password) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.FORGOT_PASSWORD_SUBMIT));
+    await Auth.forgotPasswordSubmit(email, code, password);
+    dispatch(loaderActions.stopAppLoader());
+  } catch (e) {
+    dispatch(loaderActions.stopAppLoader());
+    throw e;
+  }
+};
+
 export const setUserAttributes = userAttributes => dispatch => {
   dispatch({ type: SET_USER_ATTRIBUTES, payload: userAttributes });
 };
