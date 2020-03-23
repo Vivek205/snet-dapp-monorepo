@@ -343,7 +343,7 @@ export const submitForApproval = organization => async dispatch => {
 
 const createOrganizationAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.REGISTRY.name;
+  const apiName = APIEndpoints.ORCHESTRATOR.name;
   const apiPath = APIPaths.CREATE_ORG;
   const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
