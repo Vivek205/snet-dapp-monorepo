@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -44,7 +43,7 @@ class UserProfileSettings extends Component {
   };
 
   handleChangePassword = () => {
-    useHistory.push(`${GlobalRoutes.FORGOT_PASSWORD.path}`);
+    this.props.history.push(`${GlobalRoutes.FORGOT_PASSWORD.path}`);
   };
 
   handleSubmit = async () => {
@@ -128,7 +127,7 @@ class UserProfileSettings extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
-                    className={classes.checkkBox}
+                    className={classes.checkBox}
                     value=""
                     color="primary"
                     checked={emailAlerts}

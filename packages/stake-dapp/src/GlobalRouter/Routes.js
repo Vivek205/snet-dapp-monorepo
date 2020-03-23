@@ -5,6 +5,8 @@ import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
+const ForgotPassword = lazy(() => import("../Pages/ForgotPassword"));
+const ForgotPasswordConfirm = lazy(() => import("../Pages/ForgotPasswordConfirm"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const AcceptAgreement = lazy(() => import("../Pages/AcceptServiceAgreement"));
@@ -14,10 +16,24 @@ const Landing = lazy(() => import("../Pages/Landing"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
+const FORGOT_PASSWORD_PATH = "/forgotpassword";
+const FORGOT_PASSWORD_CONFIRM_PATH = "/forgotpasswordconfirm";
 
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
 const SignupComponent = withRegistrationHeader(Signup, "Already have an account?", "Login", LOGIN_PATH);
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
+const ForgotPasswordComponent = withRegistrationHeader(
+  ForgotPassword,
+  "Switch to another account?",
+  "Login",
+  LOGIN_PATH
+);
+const ForgotPasswordConfirmComponent = withRegistrationHeader(
+  ForgotPasswordConfirm,
+  "Switch to another account?",
+  "Login",
+  LOGIN_PATH
+);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
 
 const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
@@ -40,6 +56,16 @@ export const GlobalRoutes = {
     name: "signup confirm",
     path: "/signupconfirmation",
     component: SingupConfirmComponent,
+  },
+  FORGOT_PASSWORD: {
+    name: "forgot password",
+    path: FORGOT_PASSWORD_PATH,
+    component: ForgotPasswordComponent,
+  },
+  FORGOT_PASSWORD_CONFIRM: {
+    name: "forgot password",
+    path: FORGOT_PASSWORD_CONFIRM_PATH,
+    component: ForgotPasswordConfirmComponent,
   },
   HOW_IT_WORKS: {
     name: "how it works",
