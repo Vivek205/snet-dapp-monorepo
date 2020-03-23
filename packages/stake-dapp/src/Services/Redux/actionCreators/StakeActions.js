@@ -22,6 +22,13 @@ export const UPDATE_STAKE_BALANCE = "UPDATE_STAKE_BALANCE";
 export const UPDATE_ACTIVE_STAKE_AUTO_RENEWAL = "UPDATE_ACTIVE_STAKE_AUTO_RENEWAL";
 export const UPDATE_INCUBATING_STAKE_AUTO_RENEWAL = "UPDATE_INCUBATING_STAKE_AUTO_RENEWAL";
 
+export const UPDATE_CLAIM_STAKES_ACTIONS = "UPDATE_CLAIM_STAKES_ACTIONS";
+
+export const updateClaimStakesActions = claimAction => ({
+  type: UPDATE_CLAIM_STAKES_ACTIONS,
+  payload: claimAction,
+});
+
 export const updateActiveStakeAutoRenewal = activeAutoRenewal => ({
   type: UPDATE_ACTIVE_STAKE_AUTO_RENEWAL,
   payload: activeAutoRenewal,
