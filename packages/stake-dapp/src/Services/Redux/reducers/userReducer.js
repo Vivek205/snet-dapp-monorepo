@@ -49,6 +49,9 @@ const userReducer = (state = initialState, action) => {
     case userActions.preferenceActions.SET_USER_PREFERENCE: {
       return { ...state, userPreferences: action.payload };
     }
+    case userActions.loginActions.SET_USER_ATTRIBUTES: {
+      return { ...state, ...action.payload };
+    }
     default:
       return state;
   }
