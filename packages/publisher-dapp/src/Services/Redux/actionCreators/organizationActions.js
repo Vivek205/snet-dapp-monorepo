@@ -6,8 +6,13 @@ import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { errorActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
-import { responseStatus, APIError } from "shared/dist/utils/API";
-import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
+import { APIError, responseStatus } from "shared/dist/utils/API";
+import {
+  addressTypes,
+  organizationSetupStatuses,
+  organizationTypes,
+  orgSubmitActions,
+} from "../../../Utils/organizationSetup";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
@@ -343,8 +348,10 @@ export const submitForApproval = organization => async dispatch => {
 
 const createOrganizationAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.CREATE_ORG;
+  const apiName =
+    payload.org_type === organizationTypes.ORGANIZATION ? APIEndpoints.ORCHESTRATOR.name : APIEndpoints.REGISTRY.name;
+  const apiPath =
+    payload.org_type === organizationTypes.ORGANIZATION ? APIPaths.CREATE_ORG_ORG : APIPaths.CREATE_ORG_INDIVIDUAL;
   const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
 };

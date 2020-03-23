@@ -105,4 +105,7 @@ export const useStyles = theme => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  checkBox: {
+    color: theme.palette.primary.main,
+  },
 });
