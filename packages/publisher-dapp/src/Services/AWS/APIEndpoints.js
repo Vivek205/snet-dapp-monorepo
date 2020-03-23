@@ -19,12 +19,16 @@ export const APIEndpoints = {
     name: "verification",
     endpoint: process.env.REACT_APP_VERIFICATION_ENDPOINT,
   },
+  ORCHESTRATOR: {
+    name: "orchestratot",
+    endpoint: process.env.REACT_APP_ORCHESTRATOR_ENDPOINT,
+  },
 };
 
 export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
-  CREATE_ORG: "/org/create",
+  CREATE_ORG: "/create",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
   GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
