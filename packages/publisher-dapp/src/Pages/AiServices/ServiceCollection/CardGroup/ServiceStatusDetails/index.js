@@ -50,10 +50,13 @@ const ServiceStatusDetails = props => {
     try {
       let DaemonConfigvalidateAlert = [];
       groupDetails.groups.forEach(group => {
-        const endpoints = Object.values(group.endpoints);
-        endpoints.forEach(async endpoint => {
+        Object.entries(group.endpoints).forEach(async ([endpoint, value]) => {
+          if (value.valid) {
+            return;
+          }
           const configurationServiceRequest = new ConfigurationServiceRequest(endpoint);
           const res = await configurationServiceRequest.getConfiguration();
+
           res.currentConfigurationMap.forEach(element => {
             configValidation.forEach(element1 => {
               if (element[0] === element1[0]) {
@@ -104,7 +107,7 @@ const ServiceStatusDetails = props => {
         <Link to={editServiceLink}>
           <SNETButton children="edit" color="primary" variant="contained" />
         </Link>
-        {props.status === "PUBLISHED" ? (
+        {props.status === "DRAFT" ? (
           <div className={classes.configValidButton}>
             <SNETButton children="pause service" color="primary" variant="contained" />
             <SNETButton children="validate daemon" color="primary" variant="contained" onClick={validateDaemonConfig} />
@@ -113,7 +116,7 @@ const ServiceStatusDetails = props => {
       </div>
       <br />
       <div>
-        <AlertBox type={alert.type} children={alert.children} />
+        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
       </div>
     </div>
   );

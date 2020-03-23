@@ -40,7 +40,7 @@ const parseGroups = groups => {
     pricing.map(price => ({ default: price.default, priceModel: price.price_model, priceInCogs: price.price_in_cogs }));
 
   const parseEndpoints = endpoints => {
-    Object.values(endpoints).map(endpointValue => ({
+    Object.entries(endpoints).map(endpointValue => ({
       endpoint: endpointValue,
       isAvailable: endpointValue.is_available,
     }));

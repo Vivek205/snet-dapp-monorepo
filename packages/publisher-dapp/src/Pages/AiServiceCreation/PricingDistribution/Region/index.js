@@ -44,15 +44,15 @@ const Region = () => {
     }
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
-    const updatedEndpoints = [Object.values(selectedServiceGroup.endpoints)]; /* [...selectedServiceGroup.endpoints] */
+    let updatedEndpoints;
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
       if (endpoint) {
-        const index = updatedEndpoints.findIndex(el => el === endpoint);
-        if (index === -1) {
-          updatedEndpoints.push(endpoint);
-        }
+        updatedEndpoints = {
+          ...selectedServiceGroup.endpoints,
+          [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
+        };
       }
     });
     const updatedServiceGroups = [...serviceGroups];
@@ -64,9 +64,8 @@ const Region = () => {
 
   const handleEndpointDelete = endpoint => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-    const index = selectedServiceGroup.endpoints.findIndex(el => el === endpoint);
-    const updatedEndpoints = [...selectedServiceGroup.endpoints];
-    updatedEndpoints.splice(index, 1);
+    const updatedEndpoints = { ...selectedServiceGroup.endpoints };
+    delete updatedEndpoints[endpoint];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
@@ -165,13 +164,13 @@ const Region = () => {
               <span className={classes.label}>Added Endpoints</span>
               <Card className={classes.card}>
                 {selectedServiceGroup.endpoints &&
-                  Object.entries(selectedServiceGroup.endpoints).forEach(([key, val]) => (
+                  Object.entries(selectedServiceGroup.endpoints).map(([key]) => (
                     <Chip
                       className={classes.chip}
                       key={key}
-                      label={val}
+                      label={key}
                       color="primary"
-                      onDelete={() => handleEndpointDelete(val)}
+                      onDelete={() => handleEndpointDelete(key)}
                     />
                   ))}
               </Card>
