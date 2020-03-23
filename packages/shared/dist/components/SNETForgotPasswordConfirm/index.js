@@ -27,6 +27,8 @@ var _validator = _interopRequireDefault(require("../../utils/validator"));
 
 var _validationConstraints = require("./validationConstraints");
 
+var _PasswordInlineValidation = _interopRequireDefault(require("../PasswordInlineValidation"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -107,8 +109,8 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     lg: 12,
     className: classes.forgotPwdContent
   }, _react.default.createElement(_Typography.default, {
-    variant: "h2"
-  }, title), _react.default.createElement("p", null, "Enter the verification code and new password."), _react.default.createElement("form", {
+    variant: "h3"
+  }, "Reset your password"), _react.default.createElement(_Typography.default, null, "Thanks for confirming your email.", _react.default.createElement("span", null, "Input your new password")), _react.default.createElement("form", {
     className: classes.forgotPwdForm,
     noValidate: ""
   }, _react.default.createElement(_TextField.default, {

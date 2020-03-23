@@ -94,7 +94,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     listItem: {
       "& a": {
-        display: 'flex',
+        display: "flex",
         textDecoration: "none"
       },
       "& span": {
