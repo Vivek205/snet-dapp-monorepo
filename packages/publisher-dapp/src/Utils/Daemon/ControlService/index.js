@@ -16,6 +16,10 @@ export class ControlServiceRequest {
     this._web3 = new Web3(process.env.REACT_APP_WEB3_PROVIDER, null, {});
   }
 
+  set serviceHost(value) {
+    this._serviceHost = value;
+  }
+
   _getServiceHost = () => this._serviceHost;
 
   _getMethodDescriptor = method => ProviderControlService[method];
