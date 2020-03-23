@@ -20,6 +20,17 @@ export const UPDATE_STAKE_SUMMARY = "UPDATE_STAKE_SUMMARY";
 export const UPDATE_STAKE_BALANCE = "UPDATE_STAKE_BALANCE";
 
 export const UPDATE_ACTIVE_STAKE_AUTO_RENEWAL = "UPDATE_ACTIVE_STAKE_AUTO_RENEWAL";
+export const UPDATE_INCUBATING_STAKE_AUTO_RENEWAL = "UPDATE_INCUBATING_STAKE_AUTO_RENEWAL";
+
+export const updateActiveStakeAutoRenewal = activeAutoRenewal => ({
+  type: UPDATE_ACTIVE_STAKE_AUTO_RENEWAL,
+  payload: activeAutoRenewal,
+});
+
+export const updateIncubatingStakeAutoRenewal = incubatingAutoRenewal => ({
+  type: UPDATE_INCUBATING_STAKE_AUTO_RENEWAL,
+  payload: incubatingAutoRenewal,
+});
 
 export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,

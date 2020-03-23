@@ -77,6 +77,20 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     case stakeActions.UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN: {
       return { ...state, recentStakeWindow: action.payload };
     }
+    case stakeActions.UPDATE_ACTIVE_STAKE_AUTO_RENEWAL: {
+      return { ...state, activeStake: { ...state.activeStake, autoRenewal: action.payload.autoRenewal } };
+    }
+    case stakeActions.UPDATE_INCUBATING_STAKE_AUTO_RENEWAL: {
+      const _stakeMapIndex = action.payload.stakeMapIndex;
+      const _autoRenewal = action.payload.autoRenewal;
+      const _currentIncubatingStakes = state.incubationStakes;
+      const updatedStakes = _currentIncubatingStakes.map(s =>
+        s.stakeMapIndex === _stakeMapIndex ? { ...s, autoRenewal: _autoRenewal } : s
+      );
+
+      return { ...state, incubationStakes: updatedStakes };
+    }
+
     default: {
       return state;
     }
