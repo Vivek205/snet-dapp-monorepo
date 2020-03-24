@@ -32,7 +32,7 @@ const Header = () => {
     <SNETHeader
       isLoggedIn={isLoggedIn}
       onLogoClick={handleLogoClick}
-      portalName="Publisher"
+      portalName="AI Publisher"
       color="white"
       NavigationBar={NavigationBar}
       LoggedInActions={LoggedInActions}
