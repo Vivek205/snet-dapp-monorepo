@@ -24,7 +24,7 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (checkUserTnCAcceptance()) history.push("");
+      if (checkUserTnCAcceptance()) history.push(GlobalRoutes.OVERVIEW.path);
       else history.push(GlobalRoutes.ONBOARDING.path);
     }
   }, [isLoggedIn, history, checkUserTnCAcceptance]);

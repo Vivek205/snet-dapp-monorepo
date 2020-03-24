@@ -39,9 +39,9 @@ const AcceptServiceAgreement = ({ history }) => {
     }
     try {
       dispatch(loginActions.updateUserTnCAttribute(tncAgreementVesrion));
-      history.push("");
-    } catch (_error) {
-      history.push("");
+      history.push(GlobalRoutes.OVERVIEW.path);
+    } catch (error) {
+      history.push(GlobalRoutes.OVERVIEW.path);
     }
   };
 

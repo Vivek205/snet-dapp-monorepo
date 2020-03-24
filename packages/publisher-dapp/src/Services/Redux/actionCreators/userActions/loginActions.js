@@ -4,6 +4,7 @@ import { LoaderContent } from "../../../../Utils/Loader";
 import { getCurrentUTCEpoch } from "shared/dist/utils/Date";
 
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
+export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
@@ -22,32 +23,9 @@ const resetUserOnSignout = () => ({ type: RESET_USER_ON_SIGNOUT });
 
 const setJWTExp = exp => ({ type: SET_JWT_EXP, payload: exp });
 
+const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
+
 export const SET_USER_ATTRIBUTES = "SET_USER_ATTRIBUTES";
-
-export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
-  let bypassCache = false;
-
-  const { exp } = getState().user.jwt;
-  const currentEpochInUTC = getCurrentUTCEpoch();
-  if (!exp || currentEpochInUTC >= Number(exp)) {
-    bypassCache = true;
-  }
-
-  const currentUser = await Auth.currentAuthenticatedUser({ bypassCache });
-  const newExp = currentUser.signInUserSession.idToken.payload.exp;
-  dispatch(setJWTExp(newExp));
-
-  const _publisherTnC = currentUser.attributes["custom:publisher_tnc"]
-    ? JSON.parse(currentUser.attributes["custom:publisher_tnc"])
-    : undefined;
-  return {
-    nickname: currentUser.attributes.nickname,
-    email: currentUser.attributes.email,
-    email_verified: currentUser.attributes.email_verified,
-    token: currentUser.signInUserSession.idToken.jwtToken,
-    _publisherTnC: { ..._publisherTnC },
-  };
-};
 
 const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
   let bypassCache = false;
@@ -61,14 +39,27 @@ const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
   const currentUser = await Auth.currentAuthenticatedUser({ bypassCache });
   const newExp = currentUser.signInUserSession.idToken.payload.exp;
   dispatch(setJWTExp(newExp));
-  return currentUser;
+
+  const publisherTnC = currentUser.attributes["custom:publisher_tnc"]
+    ? JSON.parse(currentUser.attributes["custom:publisher_tnc"])
+    : undefined;
+  return {
+    nickname: currentUser.attributes.nickname,
+    email: currentUser.attributes.email,
+    email_verified: currentUser.attributes.email_verified,
+    token: currentUser.signInUserSession.idToken.jwtToken,
+    publisherTnC: { ...publisherTnC },
+  };
 };
 
 export const initializeApplication = async dispatch => {
   try {
-    const userAttributes = await dispatch(fetchAuthenticatedUser());
+    const { nickname, email, email_verified } = await dispatch(getCurrentAuthenticatedUser());
     await dispatch(organizationActions.initializeOrg);
-    dispatch(setUserAttributes({ ...userAttributes, isLoggedIn: true }));
+    dispatch(setUserLoggedIn(true));
+    dispatch(setUserEmail(email));
+    dispatch(setUserNickname(nickname));
+    dispatch(setUserEmailVerified(email_verified));
     dispatch(setAppInitialized(true));
   } catch (error) {
     dispatch(setAppInitialized(true));
@@ -76,7 +67,7 @@ export const initializeApplication = async dispatch => {
 };
 
 const loginSucess = loginResponse => async dispatch => {
-  const _publisherTnC = loginResponse.attributes["custom:publisher_tnc"]
+  const publisherTnC = loginResponse.attributes["custom:publisher_tnc"]
     ? JSON.parse(loginResponse.attributes["custom:publisher_tnc"])
     : undefined;
   const userAttributes = {
@@ -84,7 +75,7 @@ const loginSucess = loginResponse => async dispatch => {
     email: loginResponse.attributes.email,
     nickname: loginResponse.attributes.nickname,
     isEmailVerified: loginResponse.attributes.email_verified,
-    _publisherTnC: { ..._publisherTnC },
+    publisherTnC: { ...publisherTnC },
   };
 
   return await Promise.all([dispatch(setUserAttributes(userAttributes)), dispatch(loaderActions.stopAppLoader())]);
@@ -101,17 +92,8 @@ export const setUserAttributes = userAttributes => dispatch => {
 export const updateUserTnCAttribute = tncAgreementVesrion => async dispatch => {
   const user = await dispatch(getCurrentAuthenticatedUser());
   const tncValue = { ver: tncAgreementVesrion, accepted: true };
-  await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) })
-    .then(_res => {
-      dispatch(
-        setUserAttributes({
-          publisherTnC: tncValue,
-        })
-      );
-    })
-    .catch(err => {
-      throw err;
-    });
+  await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });
+  await dispatch(setUserAttributes({ publisherTnC: tncValue }));
 };
 
 export const login = (email, password) => async dispatch => {
