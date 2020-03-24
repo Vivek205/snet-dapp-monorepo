@@ -6,7 +6,7 @@ import moment from "moment";
 // import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import ArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import InfoIcon from "@material-ui/icons/Info";
+// import InfoIcon from "@material-ui/icons/Info";
 
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -113,7 +113,7 @@ const SessionTime = ({ stakeDetails }) => {
       <div className={classes.content}>
         <CircularProgressbarWithChildren
           circleRatio={0.75}
-          strokeWidth={5}
+          strokeWidth={4}
           minValue={progressStartTime}
           maxValue={endTime}
           value={currentTime}
@@ -147,20 +147,20 @@ const SessionTime = ({ stakeDetails }) => {
           <Typography className={classes.closingTime}>{getClosingTime()}</Typography>
         </CircularProgressbarWithChildren>
 
-        <div className={classes.checkbox}>
+        {/*<div className={classes.checkbox}>
           <div className={classes.toolTipContainer}>
             <InfoIcon />
             <Typography>
               Email notifications of when opne staking is available and the statuses of your stakes
             </Typography>
           </div>
-          {/*<FormControlLabel
+          <FormControlLabel
             control={
               <Checkbox color="primary" checked={stakeNotification.status} onClick={handleStakeNotificationChange} />
             }
             label="Staking notifications"
-          />*/}
-        </div>
+          />
+        </div>*/}
       </div>
     </div>
   );

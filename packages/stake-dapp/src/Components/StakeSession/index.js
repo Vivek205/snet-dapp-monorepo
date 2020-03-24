@@ -177,10 +177,10 @@ const StakeSession = ({
           handleChange={handleAutoRenewalChange}
           disableAutoRenewal={disableAutoRenewal()}
         />
-        <div className={classes.infoBox}>
+        <div className={classes.alertBoxConatiner}>
           <InfoBox stakeDetails={stakeDetails} />
+          <AlertBox type={alert.type} message={alert.message} />
         </div>
-        <AlertBox type={alert.type} message={alert.message} />
         <Button
           details={btnDetails}
           handleClick={handleClick}
