@@ -13,7 +13,7 @@ var AlertIcon = function AlertIcon(_ref) {
   var Icon = _ref.icon;
 
   if (Icon) {
-    return _react.default.createElement(Icon, null);
+    return /*#__PURE__*/_react.default.createElement(Icon, null);
   }
 
   return null;
