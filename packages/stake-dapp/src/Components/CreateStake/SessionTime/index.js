@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import ArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import InfoIcon from "@material-ui/icons/Info";
@@ -12,8 +12,8 @@ import { CircularProgressbarWithChildren, buildStyles } from "react-circular-pro
 import "react-circular-progressbar/dist/styles.css";
 
 import { useStyles } from "./styles";
-import { userPreferenceTypes } from "../../../Utils/user";
-import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
+// import { userPreferenceTypes } from "../../../Utils/user";
+// import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import { stakeActions } from "../../../Services/Redux/actionCreators";
 
 import Timer from "./Timer";
@@ -25,7 +25,7 @@ import Timer from "./Timer";
 
 const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
-  stakeNotification: state.user.userPreferences,
+  // stakeNotificationotification: state.user.userPreferences,
 });
 
 const SessionTime = ({ stakeDetails }) => {
@@ -34,7 +34,7 @@ const SessionTime = ({ stakeDetails }) => {
 
   const currentTime = moment().unix();
 
-  const { metamaskDetails, stakeNotification } = useSelector(state => stateSelector(state));
+  const { metamaskDetails } = useSelector(state => stateSelector(state));
 
   const [showTimer, setShowTimer] = useState(currentTime < stakeDetails.startPeriod ? 0 : 1);
 
@@ -94,15 +94,15 @@ const SessionTime = ({ stakeDetails }) => {
     }
   };
 
-  const handleStakeNotificationChange = event => {
-    //setStakeNotification(event.target.checked);
+  // const handleStakeNotificationChange = event => {
+  //   //setStakeNotification(event.target.checked);
 
-    const emailPreferences = {
-      [userPreferenceTypes.TOKEN_STAKE_NOTIFICATION]: event.target.checked,
-    };
+  //   const emailPreferences = {
+  //     [userPreferenceTypes.TOKEN_STAKE_NOTIFICATION]: event.target.checked,
+  //   };
 
-    dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-  };
+  //   dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
+  // };
 
   return (
     <div className={classes.sessionTimeContainer}>
@@ -154,12 +154,12 @@ const SessionTime = ({ stakeDetails }) => {
               Email notifications of when opne staking is available and the statuses of your stakes
             </Typography>
           </div>
-          <FormControlLabel
+          {/*<FormControlLabel
             control={
               <Checkbox color="primary" checked={stakeNotification.status} onClick={handleStakeNotificationChange} />
             }
             label="Staking notifications"
-          />
+          />*/}
         </div>
       </div>
     </div>
