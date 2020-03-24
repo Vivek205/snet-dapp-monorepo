@@ -4,9 +4,9 @@ import { LoaderContent } from "../../../../Utils/Loader";
 import { getCurrentUTCEpoch } from "shared/dist/utils/Date";
 
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
-export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
+export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
 export const RESET_USER_ON_SIGNOUT = "RESET_USER_ON_SIGNOUT";
 export const SET_JWT_EXP = "SET_JWT_EXP";
@@ -17,17 +17,17 @@ export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
 
 export const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: nickname });
 
+const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
+
 const setAppInitialized = isInitialized => ({ type: SET_APP_INITIALIZED, payload: isInitialized });
 
 const resetUserOnSignout = () => ({ type: RESET_USER_ON_SIGNOUT });
 
 const setJWTExp = exp => ({ type: SET_JWT_EXP, payload: exp });
 
-const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
-
 export const SET_USER_ATTRIBUTES = "SET_USER_ATTRIBUTES";
 
-const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
+export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
   let bypassCache = false;
 
   const { exp } = getState().user.jwt;
@@ -52,9 +52,24 @@ const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
   };
 };
 
+const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
+  let bypassCache = false;
+
+  const { exp } = getState().user.jwt;
+  const currentEpochInUTC = getCurrentUTCEpoch();
+  if (!exp || currentEpochInUTC >= Number(exp)) {
+    bypassCache = true;
+  }
+
+  const currentUser = await Auth.currentAuthenticatedUser({ bypassCache });
+  const newExp = currentUser.signInUserSession.idToken.payload.exp;
+  dispatch(setJWTExp(newExp));
+  return currentUser;
+};
+
 export const initializeApplication = async dispatch => {
   try {
-    const { nickname, email, email_verified } = await dispatch(getCurrentAuthenticatedUser());
+    const { nickname, email, email_verified } = await dispatch(fetchAuthenticatedUser());
     await dispatch(organizationActions.initializeOrg);
     dispatch(setUserLoggedIn(true));
     dispatch(setUserEmail(email));
@@ -92,8 +107,12 @@ export const setUserAttributes = userAttributes => dispatch => {
 export const updateUserTnCAttribute = tncAgreementVesrion => async dispatch => {
   const user = await dispatch(getCurrentAuthenticatedUser());
   const tncValue = { ver: tncAgreementVesrion, accepted: true };
-  await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });
-  await dispatch(setUserAttributes({ publisherTnC: tncValue }));
+  try {
+    await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });
+    await dispatch(setUserAttributes({ publisherTnC: tncValue }));
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const login = (email, password) => async dispatch => {
