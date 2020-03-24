@@ -35,10 +35,24 @@ var SNETButton = (0, _styles.withStyles)(function (MUITheme) {
         };
       }
 
-      if (props.color === "white" && props.variant === "text") {
-        rootStyles.color = MUITheme.palette.primary.main;
+      if (props.color === "white") {
         rootStyles.backgroundColor = MUITheme.palette.background.white;
         rootStyles.boxShadow = "0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24)";
+      }
+
+      if (props.color === "white" && props.variant === "outlined") {
+        rootStyles.color = MUITheme.palette.text.white;
+        rootStyles.backgroundColor = 'transparent';
+        rootStyles.border = "2px solid #fff";
+      }
+
+      if (props.color === "white" && props.variant === "contained") {
+        rootStyles.color = '#211D24';
+        rootStyles.backgroundColor = MUITheme.palette.text.white;
+        rootStyles["&:disabled"] = {
+          backgroundColor: MUITheme.palette.text.disabled,
+          color: MUITheme.palette.text.lightGrey
+        };
       }
 
       if (props.color === "red") {

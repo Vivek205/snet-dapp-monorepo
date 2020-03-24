@@ -1,9 +1,7 @@
 import React from "react";
-import Toolbar from "@material-ui/core/Toolbar";
 import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
 import SNETButton from "shared/src/components/SNETButton";
-import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
@@ -14,16 +12,16 @@ const EditHeader = ({ classes, show, onBack, allowSubmit, onSubmit }) => {
   }
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar>
+    <div className={classes.editHeaderContainer}>
+      <div className={classes.editHeaderTitleContainer}>
         <InfoIcon />
-        <Typography className={classes.appBarTitle} variant="h6" noWrap>
-          Material-UI
-        </Typography>
-        <SNETButton children="back to dashboard" onClick={onBack} />
-        <SNETButton children="submit" disabled={!allowSubmit} onClick={onSubmit} />
-      </Toolbar>
-    </AppBar>
+        <Typography className={classes.editHeaderTitle}>Edit Service</Typography>
+      </div>
+      <div className={classes.editHeaderBtns}>
+        <SNETButton color="white" variant="outlined" children="back to dashboard" onClick={onBack} />
+        <SNETButton color="white" variant="contained" children="submit" onClick={onSubmit} disabled={!allowSubmit} />
+      </div>
+    </div>
   );
 };
 
