@@ -6,7 +6,6 @@ import { getCurrentUTCEpoch } from "shared/dist/utils/Date";
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
-//export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
 export const RESET_USER_ON_SIGNOUT = "RESET_USER_ON_SIGNOUT";
 export const SET_JWT_EXP = "SET_JWT_EXP";
@@ -16,8 +15,6 @@ const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLo
 export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
 
 export const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: nickname });
-
-//const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
 
 const setAppInitialized = isInitialized => ({ type: SET_APP_INITIALIZED, payload: isInitialized });
 
