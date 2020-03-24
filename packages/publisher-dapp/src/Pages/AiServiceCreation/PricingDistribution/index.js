@@ -53,11 +53,9 @@ class PricingDistribution extends Component {
             <Region />
             <UploadProto />
             <AdvancedFields />
-            {alert.message ? (
-              <div className={classes.alertContainer}>
-                <AlertBox type={alert.ERROR} message={alert.message} />
-              </div>
-            ) : null}
+            <div className={classes.alertContainer}>
+              <AlertBox type={alert.ERROR} message={alert.message} />
+            </div>
           </div>
         </Grid>
         <Actions />
