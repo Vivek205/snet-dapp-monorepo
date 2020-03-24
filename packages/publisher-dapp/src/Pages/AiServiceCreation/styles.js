@@ -1,6 +1,5 @@
 export const useStyles = MUITheme => ({
   serviceCreationContainer: {
-    paddingTop: 60,
     "& h3": { lineHeight: "48px" },
     "& > div": {
       "&:nth-child(2)": {
@@ -26,7 +25,7 @@ export const useStyles = MUITheme => ({
   },
   topSection: {
     width: 600,
-    padding: "0 10px",
+    padding: "60px 10px 0",
     margin: "0 auto",
     textAlign: "center",
     "& span": {

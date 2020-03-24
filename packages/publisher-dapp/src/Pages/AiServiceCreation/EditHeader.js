@@ -6,11 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
 
-const EditHeader = ({ classes, show, onBack, allowSubmit, onSubmit }) => {
-  if (!show) {
-    return null;
-  }
-
+const EditHeader = ({ classes, onBack, allowSubmit, onSubmit }) => {
   return (
     <div className={classes.editHeaderContainer}>
       <div className={classes.editHeaderTitleContainer}>
