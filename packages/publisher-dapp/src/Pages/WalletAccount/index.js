@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import isEmpty from "lodash/isEmpty";
+import BigNumber from "bignumber.js";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
@@ -19,12 +20,18 @@ import { initSDK } from "shared/src/utils/snetSdk";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 const controlServiceRequest = new ControlServiceRequest();
+const defaultPaymentAggregate = {
+  count: 0,
+  amount: new BigNumber(0),
+  expiry: { d7: { count: 0, amount: new BigNumber(0) } },
+};
 
 class WalletAccount extends React.Component {
   state = {
     unclaimedPayments: [],
     pendingPayments: [],
     escrowBalance: "",
+    aggregatePaymentDetails: defaultPaymentAggregate,
   };
 
   async componentDidMount() {
@@ -64,15 +71,15 @@ class WalletAccount extends React.Component {
   };
 
   getUnclaimedPaymentsFromDaemon = async () => {
-    // const { serviceHost } = this.state;
-    // controlServiceRequest.serviceHost = serviceHost;
     const unclaimedPayments = await controlServiceRequest.getListUnclaimed();
     this.setState({ unclaimedPayments });
+    return unclaimedPayments;
   };
 
   getPendingPaymentsFromDaemon = async () => {
     const pendingPayments = await controlServiceRequest.getListInProgress();
     this.setState({ pendingPayments });
+    return pendingPayments;
   };
 
   claimMpeChannel = async (channelId, signedAmount, signatureHex) => {
@@ -94,37 +101,42 @@ class WalletAccount extends React.Component {
     });
   };
 
-  claimChannelInBlockchain = async (channelId, channelNonce, signedAmount) => {
+  claimChannelInBlockchain = async (channelId, channelNonce, signedAmount, signature) => {
     try {
-      const payment = await controlServiceRequest.startClaim(channelId, channelNonce);
-      this.claimMpeChannel(channelId, signedAmount, payment.signature);
+      const getClaimSignatureFromDaemon = async () => {
+        const payment = await controlServiceRequest.startClaim(channelId, channelNonce);
+        return payment.signature;
+      };
+
+      const signatureForBlockchain = signature ? signature : await getClaimSignatureFromDaemon();
+      this.claimMpeChannel(channelId, signedAmount, signatureForBlockchain);
     } catch (e) {
       // TODO handle error
     }
   };
 
-  reclaimChannelInBlockchain = (channelId, channelNonce, signedAmount, signature) => {
-    try {
-      this.claimMpeChannel(channelId, channelNonce, signedAmount, signature);
-    } catch (e) {
-      // TODO handle error
-    }
+  calculatePaymentAggregate = payments => {
+    return payments.reduce((acc, cur) => {
+      // TODO if condition => if expiry within 7 days
+      return {
+        count: acc.count + 1,
+        amount: BigNumber.sum(acc.amount, cur.signedAmount).toFixed(),
+        expiry: {
+          d7: { count: acc.expiry.d7.count + 1, amount: BigNumber.sum(acc.expiry.d7.amount, cur.signedAmount) },
+        },
+      };
+    }, defaultPaymentAggregate);
   };
 
   handleClickUnclaimed = async () => {
     try {
-      await this.getUnclaimedPaymentsFromDaemon();
-    } catch (e) {
-      if (checkIfKnownError(e)) {
-        // TODO set alert error
-      }
-      return undefined;
-    }
-  };
-
-  handleClickPending = async () => {
-    try {
-      await this.getPendingPaymentsFromDaemon();
+      const payments = await Promise.all([this.getUnclaimedPaymentsFromDaemon(), this.getPendingPaymentsFromDaemon()]);
+      const aggregatePaymentDetails = this.calculatePaymentAggregate([...payments[0], ...payments[1]]);
+      this.setState({
+        unclaimedPayments: payments[0],
+        pendingPayments: payments[1],
+        aggregatePaymentDetails,
+      });
     } catch (e) {
       if (checkIfKnownError(e)) {
         // TODO set alert error
@@ -143,8 +155,8 @@ class WalletAccount extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { unclaimedPayments, pendingPayments, escrowBalance } = this.state;
-
+    const { unclaimedPayments, pendingPayments, escrowBalance, aggregatePaymentDetails } = this.state;
+    const paymentsList = [...unclaimedPayments, ...pendingPayments];
     return (
       <Grid container className={classes.walletAccContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.topSection}>
@@ -161,7 +173,7 @@ class WalletAccount extends React.Component {
                 <Typography>Pending tokens</Typography>
               </div>
               <Typography className={classes.pendingValue}>
-                --- <span>agi</span>
+                {`${aggregatePaymentDetails.amount}`} <span>agi</span>
               </Typography>
             </div>
             <SNETButton children="claims token" color="primary" variant="contained" />
@@ -173,12 +185,12 @@ class WalletAccount extends React.Component {
           <div className={classes.expiringDetailsSection}>
             <div>
               <Typography>Claims expiring in 7 days</Typography>
-              <Typography>---</Typography>
+              <Typography>{aggregatePaymentDetails.expiry.d7.count}</Typography>
             </div>
             <div>
               <Typography>Value of claims expiring in 7 days</Typography>
               <Typography>
-                --- <span>agi</span>
+                {`${aggregatePaymentDetails.expiry.d7.amount}`} <span>agi</span>
               </Typography>
             </div>
             <div>
@@ -208,19 +220,7 @@ class WalletAccount extends React.Component {
             <Typography>Selected (0)</Typography>
           </div>
           <div>
-            <UnclaimedPayments payments={unclaimedPayments} handleClaimChannel={this.claimChannelInBlockchain} />
-          </div>
-          <div className={classes.claimSelectedSection}>
-            <SNETButton
-              children="click here for pending list"
-              color="primary"
-              variant="outlined"
-              onClick={this.handleClickPending}
-            />
-            <Typography>Selected (0)</Typography>
-          </div>
-          <div>
-            <UnclaimedPayments payments={pendingPayments} handleClaimChannel={this.reclaimChannelInBlockchain} />
+            <UnclaimedPayments payments={paymentsList} handleClaimChannel={this.claimChannelInBlockchain} />
           </div>
         </Grid>
       </Grid>
