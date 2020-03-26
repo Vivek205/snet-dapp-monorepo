@@ -53,6 +53,7 @@ export const useStyles = MUITheme => ({
   info: {
     borderColor: MUITheme.palette.primary.main,
     backgroundColor: MUITheme.palette.background.infoBox,
+    "& svg": { color: MUITheme.palette.primary.main },
     "& a": {
       color: MUITheme.palette.infoBoxLink,
       fontWeight: 600,

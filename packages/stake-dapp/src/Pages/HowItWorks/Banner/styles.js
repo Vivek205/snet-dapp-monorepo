@@ -105,7 +105,7 @@ export const useStyles = MUITheme => ({
     },
   },
   stakingDetails: {
-    padding: "0 22px",
+    padding: "17px 22px 0",
     display: "flex",
     "& > div": {
       width: "34.42%",
@@ -138,7 +138,10 @@ export const useStyles = MUITheme => ({
       width: "100%",
       alignItems: "center",
       "& > div": { width: "100%" },
-      "& input": { textAlign: "center" },
+      "& input": {
+        fontSize: 16,
+        textAlign: "center",
+      },
     },
     "& .MuiInput-underline": {
       "&::before": { display: "none" },

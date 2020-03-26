@@ -29,7 +29,7 @@ var StyledTextField = function StyledTextField(_ref) {
       value = _ref.value,
       restProps = _objectWithoutProperties(_ref, ["classes", "className", "label", "handleChange", "value"]);
 
-  return _react.default.createElement(_TextField.default, _extends({
+  return /*#__PURE__*/_react.default.createElement(_TextField.default, _extends({
     id: "outlined-name",
     label: label,
     className: "".concat(classes.styledTextField, " ").concat(classes.className),
