@@ -47,21 +47,21 @@ var SNETTextfield = function SNETTextfield(_ref) {
       error = _ref.error,
       rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef", "error"]);
 
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     className: error ? classes.errorField : ""
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.basicTextFieldGrid
-  }, icon ? _react.default.createElement("div", {
+  }, icon ? /*#__PURE__*/_react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textFieldWithExtraText
-  }, _react.default.createElement(_StyledTextField.default, _extends({
+  }, /*#__PURE__*/_react.default.createElement(_StyledTextField.default, _extends({
     name: name,
     label: label,
     helperText: helperText,
@@ -72,18 +72,18 @@ var SNETTextfield = function SNETTextfield(_ref) {
     onKeyUp: onKeyUp,
     disabled: disabled,
     inputRef: inputRef
-  }, rest)), maxCount ? _react.default.createElement("span", {
+  }, rest)), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
-  }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {
+  }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.extraInfo
-  }, extraInfo) : null)), description ? _react.default.createElement(_Grid.default, {
+  }, extraInfo) : null)), description ? /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, description)) : null);
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, null, description)) : null);
 };
 
 SNETTextfield.propTypes = {

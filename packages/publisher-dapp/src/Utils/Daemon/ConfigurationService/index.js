@@ -4,7 +4,7 @@ import { grpc } from "@improbable-eng/grpc-web";
 import Web3 from "web3";
 
 import { GrpcError } from "shared/dist/utils/error";
-import { hexToB64 } from "../../Grpc";
+import { hexToB64, solidityTypes } from "../../Grpc";
 
 const methods = {
   GetConfiguration: "GetConfiguration",
@@ -34,6 +34,7 @@ export class ConfigurationServiceRequest {
   _getCurrentBlockNumber = async () => await this._web3.eth.getBlockNumber();
 
   _getAddress = async () => {
+    await this._initWeb3();
     const address = await this._web3.eth.getAccounts();
     return address[0];
   };
@@ -44,8 +45,8 @@ export class ConfigurationServiceRequest {
       const address = await this._getAddress();
       const currentBlockNumber = await this._getCurrentBlockNumber();
       const sha3Message = this._web3.utils.soliditySha3(
-        { t: "string", v: "_GetConfiguration" },
-        { t: "uint256", v: currentBlockNumber }
+        { t: solidityTypes.STRING, v: "_GetConfiguration" },
+        { t: solidityTypes.UINT256, v: currentBlockNumber }
       );
       const sha3Hash = this._web3.eth.accounts.hashMessage(sha3Message);
       const signature = await this._web3.eth.sign(sha3Hash, address);

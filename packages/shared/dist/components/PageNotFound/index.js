@@ -28,48 +28,48 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var PageNotFound = function PageNotFound(_ref) {
   var classes = _ref.classes,
       handleGoToHome = _ref.handleGoToHome;
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     className: classes.pageNotFoundContainer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.mediaContentContainer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.mediaContiner
-  }, _react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
     src: _pageNotFound.default,
     title: "Page Not Found",
     alt: "Page not found"
-  })), _react.default.createElement(_Grid.default, {
+  })), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.contentContainer
-  }, _react.default.createElement(_Typography.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     variant: "h3"
-  }, "Page not found!"), _react.default.createElement(_Typography.default, null, "The page that you are trying to access is moved, currently down or never existed. Please check the URL."), _react.default.createElement(_StyledButton.default, {
+  }, "Page not found!"), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "The page that you are trying to access is moved, currently down or never existed. Please check the URL."), /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
     type: "transparentBlueBorder",
     btnText: "go to home",
     onClick: handleGoToHome
-  }))), _react.default.createElement(_Grid.default, {
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", _react.default.createElement(_AnchorLink.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, null, "If you are seeing this message repeatedly, let us know at", /*#__PURE__*/_react.default.createElement(_AnchorLink.default, {
     label: "support@singularitynet.io",
     href: "/"
   }), "and we will look into it.")));
