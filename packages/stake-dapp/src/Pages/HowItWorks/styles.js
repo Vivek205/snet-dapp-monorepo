@@ -73,7 +73,7 @@ export const useStyles = MUITheme => ({
       boxSizing: "border-box",
       width: 365,
       padding: "0 15px",
-      border: "none",
+      border: "1px solid #979797",
       borderRadius: 2,
       marginRight: 8,
       "@media(max-width: 480px)": { width: "100%" },

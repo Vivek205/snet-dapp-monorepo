@@ -8,7 +8,7 @@ export const useStyles = MUITheme => ({
   },
   bannerDesFormContainer: {
     maxWidth: "1400px",
-    padding: "32px 60px",
+    padding: "35px 60px",
     margin: "0 auto",
     display: "flex",
     "& > div": {
@@ -31,12 +31,12 @@ export const useStyles = MUITheme => ({
     lineHeight: "48px",
   },
   bannerDescPara1: {
-    paddingTop: 32,
+    padding: "32px 35px 0 0",
     color: MUITheme.palette.text.white,
     fontSize: 22,
     fontWeight: 600,
     lineHeight: "32px",
-    [MUITheme.breakpoints.down("md")]: { paddingTop: 15 },
+    [MUITheme.breakpoints.down("md")]: { padding: "15px 0 0" },
   },
   bannerDescPara2: {
     padding: "32px 60px 0 0",
@@ -66,7 +66,7 @@ export const useStyles = MUITheme => ({
     "@media(max-width: 1365px)": { width: "97%" },
     [MUITheme.breakpoints.down("lg")]: {
       width: "auto",
-      margin: "25px auto",
+      margin: "0 auto",
     },
     "@media(max-width: 675px)": { width: "100%" },
   },
