@@ -18,6 +18,7 @@ import { blockChainEvents } from "../../Utils/Blockchain";
 import { signatureHexToVRS } from "../../Utils/Grpc";
 import { initSDK } from "shared/src/utils/snetSdk";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
+import { itemsPerPageOptions } from "./content";
 
 const controlServiceRequest = new ControlServiceRequest();
 const defaultPaymentAggregate = {
@@ -26,12 +27,20 @@ const defaultPaymentAggregate = {
   expiry: { d7: { count: 0, amount: new BigNumber(0) } },
 };
 
+const defaultPagination = {
+  limit: 0,
+  offset: 0,
+  totalCount: 0,
+  itemsPerPage: itemsPerPageOptions[0].value,
+};
+
 class WalletAccount extends React.Component {
   state = {
     unclaimedPayments: [],
     pendingPayments: [],
     escrowBalance: "",
     aggregatePaymentDetails: defaultPaymentAggregate,
+    pagination: defaultPagination,
   };
 
   async componentDidMount() {
@@ -67,7 +76,6 @@ class WalletAccount extends React.Component {
     // TODO select endpoint that is valid
     const serviceHost = endpoints[0];
     controlServiceRequest.serviceHost = serviceHost;
-    // this.setState({ serviceHost });
   };
 
   getUnclaimedPaymentsFromDaemon = async () => {
@@ -132,10 +140,12 @@ class WalletAccount extends React.Component {
     try {
       const payments = await Promise.all([this.getUnclaimedPaymentsFromDaemon(), this.getPendingPaymentsFromDaemon()]);
       const aggregatePaymentDetails = this.calculatePaymentAggregate([...payments[0], ...payments[1]]);
+      const totalCount = payments[0].length + payments[1].length;
       this.setState({
         unclaimedPayments: payments[0],
         pendingPayments: payments[1],
         aggregatePaymentDetails,
+        pagination: { ...defaultPagination, totalCount, limit: totalCount < 10 ? totalCount : 10 },
       });
     } catch (e) {
       if (checkIfKnownError(e)) {
@@ -145,17 +155,21 @@ class WalletAccount extends React.Component {
     }
   };
 
-  onItemsPerPageChange = () => {
-    return null;
+  onItemsPerPageChange = itemsPerPage => {
+    this.setState(prevState => ({
+      pagination: { ...prevState.pagination, itemsPerPage },
+    }));
   };
 
-  handlePageChange = () => {
-    return null;
+  handlePageChange = offset => {
+    this.setState(prevState => ({
+      pagination: { ...prevState.pagination, offset },
+    }));
   };
 
   render() {
     const { classes } = this.props;
-    const { unclaimedPayments, pendingPayments, escrowBalance, aggregatePaymentDetails } = this.state;
+    const { unclaimedPayments, pendingPayments, escrowBalance, aggregatePaymentDetails, pagination } = this.state;
     const paymentsList = [...unclaimedPayments, ...pendingPayments];
     return (
       <Grid container className={classes.walletAccContainer}>
@@ -220,7 +234,13 @@ class WalletAccount extends React.Component {
             <Typography>Selected (0)</Typography>
           </div>
           <div>
-            <UnclaimedPayments payments={paymentsList} handleClaimChannel={this.claimChannelInBlockchain} />
+            <UnclaimedPayments
+              payments={paymentsList}
+              handleClaimChannel={this.claimChannelInBlockchain}
+              pagination={pagination}
+              onItemsPerPageChange={this.onItemsPerPageChange}
+              handlePageChange={this.handlePageChange}
+            />
           </div>
         </Grid>
       </Grid>
