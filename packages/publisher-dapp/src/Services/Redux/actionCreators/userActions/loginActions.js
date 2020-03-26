@@ -48,25 +48,9 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
     email: currentUser.attributes.email,
     email_verified: currentUser.attributes.email_verified,
     token: currentUser.signInUserSession.idToken.jwtToken,
-    publisherTnC: { ...publisherTnC },
+    publisherTnC: { ...(publisherTnC || {}) },
   };
 };
-
-const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
-  let bypassCache = false;
-
-  const { exp } = getState().user.jwt;
-  const currentEpochInUTC = getCurrentUTCEpoch();
-  if (!exp || currentEpochInUTC >= Number(exp)) {
-    bypassCache = true;
-  }
-
-  const currentUser = await Auth.currentAuthenticatedUser({ bypassCache });
-  const newExp = currentUser.signInUserSession.idToken.payload.exp;
-  dispatch(setJWTExp(newExp));
-  return currentUser;
-};
-
 export const initializeApplication = async dispatch => {
   try {
     const { nickname, email, email_verified } = await dispatch(fetchAuthenticatedUser());
@@ -90,7 +74,7 @@ const loginSucess = loginResponse => async dispatch => {
     email: loginResponse.attributes.email,
     nickname: loginResponse.attributes.nickname,
     isEmailVerified: loginResponse.attributes.email_verified,
-    publisherTnC: { ...publisherTnC },
+    publisherTnC: publisherTnC ? { ...publisherTnC } : {},
   };
 
   return await Promise.all([dispatch(setUserAttributes(userAttributes)), dispatch(loaderActions.stopAppLoader())]);
@@ -105,7 +89,7 @@ export const setUserAttributes = userAttributes => dispatch => {
 };
 
 export const updateUserTnCAttribute = tncAgreementVesrion => async dispatch => {
-  const user = await dispatch(getCurrentAuthenticatedUser());
+  const user = await dispatch(fetchAuthenticatedUser());
   const tncValue = { ver: tncAgreementVesrion, accepted: true };
   try {
     await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });

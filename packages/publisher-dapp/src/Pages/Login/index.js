@@ -5,7 +5,6 @@ import SNETLogin from "shared/dist/components/SNETLogin";
 import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
-import { tncAgreementVesrion } from "../Onboarding/AcceptServiceAgreement/content";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
@@ -14,11 +13,8 @@ const Login = ({ history }) => {
 
   const checkUserTnCAcceptance = useCallback(() => {
     if (publisherTnC) {
-      if (publisherTnC.ver === tncAgreementVesrion && publisherTnC.accepted === true) {
-        return true;
-      }
+      return publisherTnC.ver && publisherTnC.accepted === true;
     }
-
     return false;
   }, [publisherTnC]);
 
