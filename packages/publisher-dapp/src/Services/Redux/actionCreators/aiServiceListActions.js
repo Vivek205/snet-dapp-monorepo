@@ -96,6 +96,7 @@ export const getAiServiceList = (orgUuid, pagination = defaultPagination) => asy
     const aiServiceList = parseAiServiceListResponse(result);
     dispatch(setAiServiceList(aiServiceList));
     dispatch(loaderActions.stopAiServiceListLoader());
+    return aiServiceList;
   } catch (error) {
     dispatch(loaderActions.stopAiServiceListLoader());
     throw error;
