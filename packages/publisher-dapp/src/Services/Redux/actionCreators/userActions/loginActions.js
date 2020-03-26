@@ -42,13 +42,13 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
 
   const publisherTnC = currentUser.attributes["custom:publisher_tnc"]
     ? JSON.parse(currentUser.attributes["custom:publisher_tnc"])
-    : undefined;
+    : {};
   return {
     nickname: currentUser.attributes.nickname,
     email: currentUser.attributes.email,
     email_verified: currentUser.attributes.email_verified,
     token: currentUser.signInUserSession.idToken.jwtToken,
-    publisherTnC: { ...(publisherTnC || {}) },
+    publisherTnC: { ...publisherTnC },
   };
 };
 export const initializeApplication = async dispatch => {
@@ -68,13 +68,13 @@ export const initializeApplication = async dispatch => {
 const loginSucess = loginResponse => async dispatch => {
   const publisherTnC = loginResponse.attributes["custom:publisher_tnc"]
     ? JSON.parse(loginResponse.attributes["custom:publisher_tnc"])
-    : undefined;
+    : {};
   const userAttributes = {
     isLoggedIn: true,
     email: loginResponse.attributes.email,
     nickname: loginResponse.attributes.nickname,
     isEmailVerified: loginResponse.attributes.email_verified,
-    publisherTnC: publisherTnC ? { ...publisherTnC } : {},
+    publisherTnC: { ...publisherTnC },
   };
 
   return await Promise.all([dispatch(setUserAttributes(userAttributes)), dispatch(loaderActions.stopAppLoader())]);
