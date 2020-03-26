@@ -205,10 +205,12 @@ const ClaimStake = () => {
             <div className={classes.infoBox}>
               <InfoBox stakeDetails={stake} />
             </div>
-            <AlertBox
-              type={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].type : undefined}
-              message={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].message : undefined}
-            />
+            <div className={classes.alertBoxContainer}>
+              <AlertBox
+                type={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].type : undefined}
+                message={alert[stake.stakeMapIndex] ? alert[stake.stakeMapIndex].message : undefined}
+              />
+            </div>
             <div className={classes.btnContainer}>
               {btnDetails.map(button => (
                 <SNETButton

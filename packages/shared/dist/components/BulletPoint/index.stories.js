@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     propTables: [_.default]
   }
 }).add("_default", function () {
-  return _react.default.createElement(_.default, {
+  return /*#__PURE__*/_react.default.createElement(_.default, {
     type: _AlertBox.alertTypes.WARNING,
     message: "Sample Message"
   });

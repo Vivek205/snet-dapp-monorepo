@@ -18,30 +18,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SecondaryFooter = function SecondaryFooter(_ref) {
   var data = _ref.data;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.secondaryFooter
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6
-  }, _react.default.createElement("p", {
+  }, /*#__PURE__*/_react.default.createElement("p", {
     className: classes.copyrightText
-  }, "Copyright \xA9 2020 SingularityNET All rights reserved."), _react.default.createElement("p", {
+  }, "Copyright \xA9 2020 SingularityNET All rights reserved."), /*#__PURE__*/_react.default.createElement("p", {
     className: classes.copyrightText
-  }, "Stichting SingularityNET Barbara Strozzilaan 362 1083 HN Amsterdam The Netherlands")), _react.default.createElement(_Grid.default, {
+  }, "Stichting SingularityNET Barbara Strozzilaan 362 1083 HN Amsterdam The Netherlands")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6
-  }, _react.default.createElement("ul", {
+  }, /*#__PURE__*/_react.default.createElement("ul", {
     className: classes.socialIconsList
   }, data.map(function (item) {
-    return _react.default.createElement(_SocialIcon.default, {
+    return /*#__PURE__*/_react.default.createElement(_SocialIcon.default, {
       key: item.title,
       item: item
     });

@@ -16,15 +16,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SocialIcon = function SocialIcon(_ref) {
   var item = _ref.item;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("li", {
+  return /*#__PURE__*/_react.default.createElement("li", {
     className: classes.socialIconsLink
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: item.link,
     title: item.title,
     className: classes.socialIcon,
     target: "_blank",
     rel: "noopener noreferrer"
-  }, _react.default.createElement(_core.Icon, {
+  }, /*#__PURE__*/_react.default.createElement(_core.Icon, {
     className: item.className,
     fontSize: "large"
   })));
