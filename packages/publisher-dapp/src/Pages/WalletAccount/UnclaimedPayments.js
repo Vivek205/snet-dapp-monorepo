@@ -4,14 +4,22 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import WarningIcon from "@material-ui/icons/Warning";
-// import SNETPagination from "shared/dist/components/SNETPagination";
-// import { itemsPerPageOptions } from "./content";
+import SNETPagination from "shared/dist/components/SNETPagination";
+import { itemsPerPageOptions } from "./content";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import SNETButton from "shared/src/components/SNETButton";
 
-//handleClaimChannel
-const UnclaimedPayments = ({ classes, payments, handleClaimChannel }) => {
+const UnclaimedPayments = ({
+  classes,
+  payments,
+  handleClaimChannel,
+  pagination,
+  handlePageChange,
+  onItemsPerPageChange,
+}) => {
+  const { limit, offset, totalCount, itemsPerPage } = pagination;
+
   return (
     <div className={classes.table}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableCol}>
@@ -58,17 +66,17 @@ const UnclaimedPayments = ({ classes, payments, handleClaimChannel }) => {
         </Grid>
       ))}
 
-      {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.styledPagination}>
+      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.styledPagination}>
         <SNETPagination
           itemsPerPageOptions={itemsPerPageOptions}
-          itemsPerPage={limit}
-          onItemsPerPageChange={this.onItemsPerPageChange}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
           limit={limit}
           offset={offset}
           totalCount={totalCount}
-          onPageChange={this.handlePageChange}
+          onPageChange={handlePageChange}
         />
-      </Grid>*/}
+      </Grid>
     </div>
   );
 };
