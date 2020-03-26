@@ -5,15 +5,14 @@ import SNETLogin from "shared/dist/components/SNETLogin";
 import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
+import { tncAgreementVesrion } from "../Onboarding/AcceptServiceAgreement/content";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
   const { isLoggedIn, publisherTnC } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const checkUserTnCAcceptance = useCallback(() => {
-    return publisherTnC.ver && publisherTnC.accepted;
-  }, [publisherTnC]);
+  const checkUserTnCAcceptance = useCallback(() => {return publisherTnC.ver && publisherTnC.accepted;  }, [publisherTnC]);
 
   useEffect(() => {
     if (isLoggedIn) {
