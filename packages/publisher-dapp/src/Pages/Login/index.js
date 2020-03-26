@@ -12,15 +12,7 @@ const Login = ({ history }) => {
   const { isLoggedIn, publisherTnC } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const checkUserTnCAcceptance = useCallback(() => {
-    if (publisherTnC) {
-      if (publisherTnC.ver === tncAgreementVesrion && publisherTnC.accepted === true) {
-        return true;
-      }
-    }
-
-    return false;
-  }, [publisherTnC]);
+  const checkUserTnCAcceptance = useCallback(() => {return publisherTnC.ver && publisherTnC.accepted;  }, [publisherTnC]);
 
   useEffect(() => {
     if (isLoggedIn) {
