@@ -12,7 +12,7 @@ const Login = ({ history }) => {
   const dispatch = useDispatch();
 
   const checkUserTnCAcceptance = useCallback(() => {
-    return (publisherTnC.ver && publisherTnC.accepted) || false;
+    return publisherTnC.ver && publisherTnC.accepted;
   }, [publisherTnC]);
 
   useEffect(() => {
