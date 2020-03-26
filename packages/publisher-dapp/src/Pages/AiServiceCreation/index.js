@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
@@ -99,24 +99,20 @@ class AiServiceCreation extends Component {
   render() {
     const { classes, serviceFoundInBlockchain, serviceTouched } = this.props;
     return (
-      <Fragment>
-        <EditHeader
-          show={serviceFoundInBlockchain}
-          onBack={this.handleBackToDashboard}
-          allowSubmit={serviceTouched}
-          onSubmit={this.handleSubmit}
-        />
-        <div className={classes.serviceCreationContainer}>
+      <div className={classes.serviceCreationContainer}>
+        {serviceFoundInBlockchain ? (
+          <EditHeader onBack={this.handleBackToDashboard} allowSubmit={serviceTouched} onSubmit={this.handleSubmit} />
+        ) : (
           <Heading {...this.activeSection().heading} />
-          <ProgressBar
-            activeSection={this.activeSection().key}
-            progressText={progressText}
-            onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
-          />
-          <ServiceCreationRouter />
-          <Loader />
-        </div>
-      </Fragment>
+        )}
+        <ProgressBar
+          activeSection={this.activeSection().key}
+          progressText={progressText}
+          onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
+        />
+        <ServiceCreationRouter />
+        <Loader />
+      </div>
     );
   }
 }
