@@ -24,9 +24,9 @@ var GetStartedDescription = function GetStartedDescription(_ref) {
       btnType = _ref.btnType,
       history = _ref.history,
       handleClick = _ref.handleClick;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.GetStartedDescription
-  }, _react.default.createElement("h2", null, title), _react.default.createElement("p", null, description), button ? _react.default.createElement(_StyledButton.default, {
+  }, /*#__PURE__*/_react.default.createElement("h2", null, title), /*#__PURE__*/_react.default.createElement("p", null, description), button ? /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
     btnText: btnText,
     type: btnType,
     onClick: handleClick

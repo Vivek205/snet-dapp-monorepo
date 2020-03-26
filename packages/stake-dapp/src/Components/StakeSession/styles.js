@@ -100,13 +100,17 @@ export const useStyles = makeStyles(MUITheme => ({
       "& p": { paddingLeft: 0 },
     },
   },
-  infoBox: {
+  alertBoxConatiner: {
     padding: "32px 33px 0",
     display: "flex",
     justifyContent: "center",
-    "& > p": {
-      margin: 0,
-      display: "flex",
+    flexDirection: "column",
+    "& > div": {
+      "&:first-of-type": {
+        marginTop: 0,
+        display: "flex",
+      },
+      "&:last-of-type": { marginTop: 20 },
     },
     "& svg": {
       marginRight: 17,

@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var StyledLinearProgress = function StyledLinearProgress(_ref) {
   var classes = _ref.classes,
       value = _ref.value;
-  return _react.default.createElement(_LinearProgress.default, {
+  return /*#__PURE__*/_react.default.createElement(_LinearProgress.default, {
     className: classes.styledProgressBar,
     variant: "determinate",
     value: value

@@ -18,16 +18,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FooterLinks = function FooterLinks(_ref) {
   var data = _ref.data;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.footerRightSideLinks
   }, data.map(function (item) {
-    return _react.default.createElement("ul", {
+    return /*#__PURE__*/_react.default.createElement("ul", {
       key: item.title,
       className: classes.footerLinksList
-    }, _react.default.createElement(_FooterLinkTitle.default, {
+    }, /*#__PURE__*/_react.default.createElement(_FooterLinkTitle.default, {
       title: item.title
     }), item.children.map(function (child) {
-      return _react.default.createElement(_FooterLink.default, {
+      return /*#__PURE__*/_react.default.createElement(_FooterLink.default, {
         key: child.label,
         image: child.image,
         link: child.link,

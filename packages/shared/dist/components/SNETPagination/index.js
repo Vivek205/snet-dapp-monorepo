@@ -47,18 +47,18 @@ var SNETPagination = function SNETPagination(_ref) {
 
   var from = offset;
   var to = parseFloat(offset) + parseFloat(limit);
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.paginationContainer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 6,
     sm: 6,
     md: 6,
     lg: 6,
     className: classes.pagination
-  }, _react.default.createElement(_materialUiFlatPagination.default, {
+  }, /*#__PURE__*/_react.default.createElement(_materialUiFlatPagination.default, {
     limit: limit,
     offset: offset,
     total: totalCount,
@@ -67,21 +67,21 @@ var SNETPagination = function SNETPagination(_ref) {
       return handlePageChange(offset);
     },
     className: classes.styledPagination
-  })), _react.default.createElement(_Grid.default, {
+  })), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 6,
     sm: 6,
     md: 6,
     lg: 6,
     className: classes.pageCountSection
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: classes.itemPerPageTxt
-  }, "Items per page"), _react.default.createElement(_FormControl.default, {
+  }, "Items per page"), /*#__PURE__*/_react.default.createElement(_FormControl.default, {
     variant: "outlined",
     className: classes.pageListformControl
-  }, _react.default.createElement(_Select.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Select.default, {
     value: itemsPerPage,
-    input: _react.default.createElement(_OutlinedInput.default, {
+    input: /*#__PURE__*/_react.default.createElement(_OutlinedInput.default, {
       labelWidth: 75,
       name: "age",
       id: "outlined-age-simple",
@@ -89,11 +89,11 @@ var SNETPagination = function SNETPagination(_ref) {
     }),
     className: classes.selectBox
   }, itemsPerPageOptions.map(function (item) {
-    return _react.default.createElement(_MenuItem.default, {
+    return /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
       key: item.value,
       value: item.value
     }, item.label);
-  }))), _react.default.createElement("span", null, from, "-", to, " of ", totalCount)));
+  }))), /*#__PURE__*/_react.default.createElement("span", null, from, "-", to, " of ", totalCount)));
 };
 
 var _default = SNETPagination;

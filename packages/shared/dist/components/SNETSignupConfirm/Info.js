@@ -17,9 +17,9 @@ var Info = function Info(props) {
   var title = props.title,
       description = props.description;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("p", {
+  return /*#__PURE__*/_react.default.createElement("p", {
     className: classes.signupconfirmDetail
-  }, _react.default.createElement("span", null, title), description);
+  }, /*#__PURE__*/_react.default.createElement("span", null, title), description);
 };
 
 Info.propTypes = {
