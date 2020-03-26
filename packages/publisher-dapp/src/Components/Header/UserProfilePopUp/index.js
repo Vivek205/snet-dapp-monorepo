@@ -28,7 +28,7 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg }) => {
 
   const handleSignout = () => {
     dispatch(userActions.loginActions.signout);
-    history.push(GlobalRoutes.LOGIN.path);
+    history.push(GlobalRoutes.OVERVIEW.path);
   };
 
   const handleEdit = () => {
