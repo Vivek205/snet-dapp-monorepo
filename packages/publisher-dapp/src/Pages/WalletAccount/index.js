@@ -73,8 +73,20 @@ class WalletAccount extends React.Component {
         return el.groups[0].endpoints;
       })
       .filter(el => Boolean(el));
+
+    const validEndpoints = endpoints.map(endpoint => {
+      return Object.entries(endpoint)
+        .map(([key, value]) => {
+          if (value.valid) {
+            return key;
+          }
+          return undefined;
+        })
+        .filter(el => Boolean(el));
+    });
+
     // TODO select endpoint that is valid
-    const serviceHost = endpoints[0];
+    const serviceHost = validEndpoints[0];
     controlServiceRequest.serviceHost = serviceHost;
   };
 
