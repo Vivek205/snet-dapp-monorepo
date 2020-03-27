@@ -42,7 +42,7 @@ var PasswordInlineValidation = function PasswordInlineValidation(props) {
     message: _constants.passwordValidationMsgs.NUMBER
   }];
   return validationInputs.map(function (alert) {
-    return _react.default.createElement(_AlertText.default, {
+    return /*#__PURE__*/_react.default.createElement(_AlertText.default, {
       key: alert.message,
       type: alert.condition ? _AlertBox.alertTypes.SUCCESS : _AlertBox.alertTypes.ERROR,
       message: alert.message
