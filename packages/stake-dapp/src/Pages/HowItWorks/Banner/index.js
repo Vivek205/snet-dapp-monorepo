@@ -48,7 +48,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
           recentStakeWindow.windowTotalStake > 0
-            ? recentStakeWindow.windowTotalStake
+            ? Math.floor(fromWei(recentStakeWindow.windowTotalStake))
             : stakeCalculatorFields.poolStakeAmount,
         incubationPeriodInDays: Math.floor(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
