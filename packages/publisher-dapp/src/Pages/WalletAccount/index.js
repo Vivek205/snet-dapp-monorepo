@@ -15,7 +15,7 @@ import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 import UnclaimedPayments from "./UnclaimedPayments";
 import MPEContract from "../../Utils/PlatformContracts/MPEContract";
 import { blockChainEvents } from "../../Utils/Blockchain";
-import { signatureHexToVRS } from "../../Utils/Grpc";
+import { blocksToDays, signatureHexToVRS } from "../../Utils/Grpc";
 import { initSDK } from "shared/src/utils/snetSdk";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
 import { itemsPerPageOptions } from "./content";
@@ -80,13 +80,11 @@ class WalletAccount extends React.Component {
 
   getUnclaimedPaymentsFromDaemon = async () => {
     const unclaimedPayments = await controlServiceRequest.getListUnclaimed();
-    this.setState({ unclaimedPayments });
     return unclaimedPayments;
   };
 
   getPendingPaymentsFromDaemon = async () => {
     const pendingPayments = await controlServiceRequest.getListInProgress();
-    this.setState({ pendingPayments });
     return pendingPayments;
   };
 
@@ -125,25 +123,36 @@ class WalletAccount extends React.Component {
 
   calculatePaymentAggregate = payments => {
     return payments.reduce((acc, cur) => {
-      // TODO if condition => if expiry within 7 days
-      return {
+      const updatedValue = {
+        ...acc,
         count: acc.count + 1,
         amount: BigNumber.sum(acc.amount, cur.signedAmount).toFixed(),
-        expiry: {
-          d7: { count: acc.expiry.d7.count + 1, amount: BigNumber.sum(acc.expiry.d7.amount, cur.signedAmount) },
-        },
       };
+      const blocksRemaining = cur.channelExpiry - cur.currentBlock;
+      if (blocksRemaining > 0 && blocksToDays(blocksRemaining) <= 7) {
+        updatedValue.expiry = {
+          ...acc.expiry,
+          d7: {
+            count: acc.expiry.d7.count + 1,
+            amount: BigNumber.sum(acc.expiry.d7.amount, cur.signedAmount),
+          },
+        };
+      }
+      return updatedValue;
     }, defaultPaymentAggregate);
   };
 
   handleClickUnclaimed = async () => {
     try {
-      const payments = await Promise.all([this.getUnclaimedPaymentsFromDaemon(), this.getPendingPaymentsFromDaemon()]);
-      const aggregatePaymentDetails = this.calculatePaymentAggregate([...payments[0], ...payments[1]]);
-      const totalCount = payments[0].length + payments[1].length;
+      const [unclaimedPayments, pendingPayments] = await Promise.all([
+        this.getUnclaimedPaymentsFromDaemon(),
+        this.getPendingPaymentsFromDaemon(),
+      ]);
+      const aggregatePaymentDetails = this.calculatePaymentAggregate([...unclaimedPayments, ...pendingPayments]);
+      const totalCount = unclaimedPayments.length + pendingPayments.length;
       this.setState({
-        unclaimedPayments: payments[0],
-        pendingPayments: payments[1],
+        unclaimedPayments,
+        pendingPayments,
         aggregatePaymentDetails,
         pagination: { ...defaultPagination, totalCount, limit: totalCount < 10 ? totalCount : 10 },
       });
