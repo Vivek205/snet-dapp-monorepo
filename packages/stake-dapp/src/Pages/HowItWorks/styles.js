@@ -25,7 +25,7 @@ export const useStyles = MUITheme => ({
         display: "flex",
         listStyle: "none",
         "& svg": {
-          paddingTop: 5,
+          paddingTop: 2,
           color: MUITheme.palette.success.main,
           fontSize: 20,
         },

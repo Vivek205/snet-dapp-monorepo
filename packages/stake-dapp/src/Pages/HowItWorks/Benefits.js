@@ -23,7 +23,7 @@ const Benefits = ({ classes }) => {
             <li>
               <CheckIcon />
               <div>
-                <Typography>Support the Platform: </Typography>
+                <Typography>Support the Platform - </Typography>
                 <Typography>
                   Take an active part in the platform operations by helping fulfill AI Marketplace transactions.
                 </Typography>
@@ -32,7 +32,7 @@ const Benefits = ({ classes }) => {
             <li>
               <CheckIcon />
               <div>
-                <Typography>Support Adoption: </Typography>
+                <Typography>Support Adoption - </Typography>
                 <Typography>
                   Staked tokens will allow ordinary everyday businesses to use the marketplace through a fiat gateway,
                   greatly improving platform adoption.
@@ -42,7 +42,7 @@ const Benefits = ({ classes }) => {
             <li>
               <CheckIcon />
               <div>
-                <Typography>Earn Rewards: </Typography>
+                <Typography>Earn Rewards - </Typography>
                 <Typography>Earn more AGI tokens in reward for putting your token to use.</Typography>
               </div>
             </li>
