@@ -219,7 +219,10 @@ const Region = () => {
               inputRef={addressRef}
               onKeyUp={handleNewDaemonAddressChange}
               label="Daemon Addresses"
-              description="Enter all the public Daemon addresses that will be used to call the service."
+              description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
+               wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
+               if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
+                in its configuration and will sign using this pvt key when making any requests to other systems."
             />
           </Grid>
 
