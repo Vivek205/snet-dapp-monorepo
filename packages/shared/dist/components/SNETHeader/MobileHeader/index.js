@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -41,45 +41,45 @@ var MobileHeader = function MobileHeader(_ref) {
   };
 
   if (!hamburgerMenu) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: classes.hamburger,
       onClick: toggleMobileMenu
-    }, _react.default.createElement("span", null), _react.default.createElement("span", null), _react.default.createElement("span", null));
+    }, /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null));
   }
 
-  return _react.default.createElement(_react.Fragment, null, _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.mobileNavContainer
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.closeMenuIcon
-  }, _react.default.createElement(_Close.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Close.default, {
     onClick: toggleMobileMenu
-  })), _react.default.createElement("nav", {
+  })), /*#__PURE__*/_react.default.createElement("nav", {
     className: classes.mobileNavigation
-  }, _react.default.createElement("ul", null, data.tabs.map(function (tab) {
-    return _react.default.createElement(_NavItem.default, {
+  }, /*#__PURE__*/_react.default.createElement("ul", null, data.tabs.map(function (tab) {
+    return /*#__PURE__*/_react.default.createElement(_NavItem.default, {
       key: tab.title,
       title: tab.title,
       link: tab.link,
       active: tab.active
     });
   }), data.dropdowns.map(function (dropdown) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       key: dropdown.label,
       className: classes.subMenues
-    }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_NavItem.default, {
+    }, /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_NavItem.default, {
       title: dropdown.label,
       subHeader: true
     }), dropdown.list.map(function (item) {
-      return _react.default.createElement(_NavItem.default, {
+      return /*#__PURE__*/_react.default.createElement(_NavItem.default, {
         key: item.label,
         title: item.label,
         link: item.link,
         subListItem: true
       });
     })));
-  })), _react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "".concat(classes.mobileActionBtns, " ").concat(isLoggedIn ? classes.loggedInState : "")
-  }, _react.default.createElement(_HeaderActions.default, {
+  }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn
   })))));
 };

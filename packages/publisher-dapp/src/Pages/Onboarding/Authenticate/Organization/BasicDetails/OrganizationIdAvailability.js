@@ -19,7 +19,7 @@ const OrganizationIdAvailability = ({ classes, orgDetails, id, availability, loa
 
   const type = availability === orgIdAvailability.AVAILABLE ? alertTypes.SUCCESS : alertTypes.ERROR;
 
-  const message = !isEmpty(id) && Boolean(availability) ? `Service Id is ${availability}` : "";
+  const message = !isEmpty(id) && Boolean(availability) ? `Organization Id is ${availability}` : "";
 
   return (
     <div className={classes.alertTextContainer}>

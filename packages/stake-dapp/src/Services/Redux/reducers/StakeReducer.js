@@ -27,6 +27,7 @@ const InitialRequestDetails = {
   },
   incubationStakes: [],
   claimStakes: [],
+  claimStakesActions: { 0: { disableClaim: false, disableWithdraw: false, disableRestake: false } },
   myTransactions: [],
   recentStakeWindow: {
     startPeriod: 0,
@@ -90,7 +91,9 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
 
       return { ...state, incubationStakes: updatedStakes };
     }
-
+    case stakeActions.UPDATE_CLAIM_STAKES_ACTIONS: {
+      return { ...state, claimStakesActions: { ...state.claimStakesActions, ...action.payload } };
+    }
     default: {
       return state;
     }
