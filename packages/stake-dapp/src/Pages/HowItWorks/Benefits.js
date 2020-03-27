@@ -7,7 +7,7 @@ import CheckIcon from "@material-ui/icons/CheckCircle";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
-import benefitsImage from "shared/dist/assets/images/benefits.png";
+import benefitsImage from "shared/dist/assets/images/manwithPiggybank.png";
 import { useStyles } from "./styles";
 
 const Benefits = ({ classes }) => {

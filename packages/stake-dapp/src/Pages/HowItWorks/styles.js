@@ -9,9 +9,7 @@ export const useStyles = MUITheme => ({
   },
   benefitsMedia: {
     textAlign: "center",
-    "& img": {
-      [MUITheme.breakpoints.down("xs")]: { width: "100%" },
-    },
+    "& img": { width: "100%" },
   },
   benefitsContent: {
     "& h2": {
