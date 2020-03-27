@@ -79,10 +79,12 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
               label="AI Service Name"
               icon
               maxCount="50"
-              minCount="15"
+              minCount={serviceName.length}
               onChange={e => setServiceName(e.target.value)}
             />
-            <AlertBox type={alert.type} message={alert.message} />
+            <div className={classes.alertBoxContainer}>
+              <AlertBox type={alert.type} message={alert.message} />
+            </div>
           </CardContent>
           <CardActions className={classes.btnContainer}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />

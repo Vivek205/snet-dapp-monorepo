@@ -46,15 +46,17 @@ const CardGroup = () => {
               cardDescription={service.shortDescription}
               isAvailable={isAvailable}
               orgImg={orgImg}
-              serviceImg={service.heroImage.url}
+              serviceImg={service.assets.heroImage.url}
             />
           </Link>
         </Grid>
         <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
           <ServiceStatusDetails
-            status={service.state.state}
+            status={service.serviceState.state}
             groups={service.groups}
             editServiceLink={editServiceLink}
+            serviceUuid={service.uuid}
+            orgUuid={orgUuid}
           />
         </Grid>
       </Grid>

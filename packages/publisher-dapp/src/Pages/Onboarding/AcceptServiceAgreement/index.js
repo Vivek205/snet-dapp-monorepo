@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { organizationActions } from "../../../Services/Redux/actionCreators";
-import { TermsAndConditionsDetails } from "./content";
+import { TermsAndConditionsDetails, tncAgreementVesrion } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -10,6 +10,7 @@ import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { userEntities } from "../../../Utils/user";
 import { organizationTypes } from "../../../Utils/organizationSetup";
+import { loginActions } from "../../../Services/Redux/actionCreators/userActions";
 
 const selectState = state => ({
   isInitialized: state.user.isInitialized,
@@ -36,7 +37,12 @@ const AcceptServiceAgreement = ({ history }) => {
       await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
       dispatch(organizationActions.setOrgOwner(email));
     }
-    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
+    try {
+      dispatch(loginActions.updateUserTnCAttribute(tncAgreementVesrion));
+      history.push(GlobalRoutes.OVERVIEW.path);
+    } catch (error) {
+      history.push(GlobalRoutes.OVERVIEW.path);
+    }
   };
 
   const handleNavigateBack = () => {

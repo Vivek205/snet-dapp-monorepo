@@ -33,21 +33,25 @@ export const useStyles = makeStyles(MUITheme => ({
     "& button": { width: "100%" },
     "& p": { marginBottom: 10 },
     "& label": {
+      padding: "0 5px",
+      background: MUITheme.palette.background.mainContent,
       color: MUITheme.palette.text.darkGrey,
       fontSize: 12,
       letterSpacing: 0.4,
       lineHeight: "16px",
+      transform: "translate(14px, -6px) scale(0.90)",
     },
-    "& .MuiFormLabel-root.Mui-focused": {
-      color: "red",
-    },
-    "@media (max-width:527px)": {
-      width: "100%",
-    },
+    "& .MuiFormLabel-root.Mui-focused": { color: MUITheme.palette.text.darkGrey },
+    "@media (max-width:527px)": { width: "100%" },
   },
   textField: {
     width: "100%",
     margin: "0 0 19px 0",
+    "& input": {
+      color: MUITheme.palette.text.darkGrey,
+      fontSize: 16,
+      letterSpacing: 0.15,
+    },
   },
   alertBoxContainer: { marginBottom: 19 },
 }));

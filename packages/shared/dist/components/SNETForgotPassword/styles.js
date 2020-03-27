@@ -45,13 +45,16 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginBottom: 10
       },
       "& label": {
+        padding: "0 5px",
+        background: MUITheme.palette.background.mainContent,
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
         letterSpacing: 0.4,
-        lineHeight: "16px"
+        lineHeight: "16px",
+        transform: "translate(14px, -6px) scale(0.90)"
       },
       "& .MuiFormLabel-root.Mui-focused": {
-        color: "red"
+        color: MUITheme.palette.text.darkGrey
       },
       "@media (max-width:527px)": {
         width: "100%"
@@ -59,7 +62,12 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     },
     textField: {
       width: "100%",
-      margin: "0 0 19px 0"
+      margin: "0 0 19px 0",
+      "& input": {
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 16,
+        letterSpacing: 0.15
+      }
     },
     alertBoxContainer: {
       marginBottom: 19

@@ -21,7 +21,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   content: {
-    padding: "10px 10px 10px",
+    padding: "17px 44px 0",
     textAlign: "center",
     "& h6": {
       fontWeight: 600,
