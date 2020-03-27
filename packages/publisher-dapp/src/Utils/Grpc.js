@@ -42,3 +42,14 @@ export const toBytes = value => {
   const buffer = Buffer.alloc(4);
   return buffer.writeUInt32BE(value, 0);
 };
+
+const secInADay = 86400;
+export const secToDays = sec => Math.ceil(sec / secInADay);
+
+const secInABlock = 15;
+export const blocksToSec = blocks => blocks * secInABlock;
+
+export const blocksToDays = blocks => {
+  const seconds = blocksToSec(blocks);
+  return secToDays(seconds);
+};

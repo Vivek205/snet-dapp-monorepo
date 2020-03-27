@@ -69,12 +69,15 @@ export class ControlServiceRequest {
     request.setCurrentBlock(await this._getCurrentBlockNumber());
     request.setSignature(signature ? signature : await generateSignature());
 
-    const parseResponseMessage = message => {
+    const parseResponseMessage = async message => {
+      const currentBlock = await this._getCurrentBlockNumber();
       const paymentsList = message.getPaymentsList().map(payment => ({
         channelId: uint8ArrayToBN(payment.getChannelId()).toString(),
         channelNonce: uint8ArrayToBN(payment.getChannelNonce()).toString(),
+        channelExpiry: uint8ArrayToBN(payment.getChannelExpiry()).toString(),
         signedAmount: uint8ArrayToBN(payment.getSignedAmount()).toString(),
         signature: payment.getSignature(),
+        currentBlock,
       }));
       return paymentsList;
     };
@@ -117,12 +120,15 @@ export class ControlServiceRequest {
     request.setCurrentBlock(await this._getCurrentBlockNumber());
     request.setSignature(signature ? signature : await generateSignature());
 
-    const parseResponseMessage = message => {
+    const parseResponseMessage = async message => {
+      const currentBlock = await this._getCurrentBlockNumber();
       const paymentsList = message.getPaymentsList().map(payment => ({
         channelId: uint8ArrayToBN(payment.getChannelId()).toString(),
         channelNonce: uint8ArrayToBN(payment.getChannelNonce()).toString(),
+        channelExpiry: uint8ArrayToBN(payment.getChannelExpiry()).toString(),
         signedAmount: uint8ArrayToBN(payment.getSignedAmount()).toString(),
         signature: uint8ArrayToHex(payment.getSignature()),
+        currentBlock,
       }));
       return paymentsList;
     };

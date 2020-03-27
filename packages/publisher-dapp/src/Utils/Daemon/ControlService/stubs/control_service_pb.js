@@ -7,6 +7,7 @@
  */
 // GENERATED CODE -- DO NOT EDIT!
 /* eslint-disable */
+
 var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
@@ -529,7 +530,8 @@ proto.escrow.PaymentReply.toObject = function(includeInstance, msg) {
     channelId: msg.getChannelId_asB64(),
     channelNonce: msg.getChannelNonce_asB64(),
     signedAmount: msg.getSignedAmount_asB64(),
-    signature: msg.getSignature_asB64()
+    signature: msg.getSignature_asB64(),
+    channelExpiry: msg.getChannelExpiry_asB64()
   };
 
   if (includeInstance) {
@@ -581,6 +583,10 @@ proto.escrow.PaymentReply.deserializeBinaryFromReader = function(msg, reader) {
     case 4:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setSignature(value);
+      break;
+    case 5:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setChannelExpiry(value);
       break;
     default:
       reader.skipField();
@@ -636,6 +642,13 @@ proto.escrow.PaymentReply.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeBytes(
       4,
+      f
+    );
+  }
+  f = message.getChannelExpiry_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      5,
       f
     );
   }
@@ -795,6 +808,45 @@ proto.escrow.PaymentReply.prototype.getSignature_asU8 = function() {
 /** @param {!(string|Uint8Array)} value */
 proto.escrow.PaymentReply.prototype.setSignature = function(value) {
   jspb.Message.setProto3BytesField(this, 4, value);
+};
+
+
+/**
+ * optional bytes channel_expiry = 5;
+ * @return {!(string|Uint8Array)}
+ */
+proto.escrow.PaymentReply.prototype.getChannelExpiry = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * optional bytes channel_expiry = 5;
+ * This is a type-conversion wrapper around `getChannelExpiry()`
+ * @return {string}
+ */
+proto.escrow.PaymentReply.prototype.getChannelExpiry_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getChannelExpiry()));
+};
+
+
+/**
+ * optional bytes channel_expiry = 5;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getChannelExpiry()`
+ * @return {!Uint8Array}
+ */
+proto.escrow.PaymentReply.prototype.getChannelExpiry_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getChannelExpiry()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.escrow.PaymentReply.prototype.setChannelExpiry = function(value) {
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
