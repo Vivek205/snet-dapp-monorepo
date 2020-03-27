@@ -48,9 +48,8 @@ const Region = () => {
     if (isNotValid) {
       setAlert({ type: alertTypes.ERROR, message: "Invalid endpoint : " + value });
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
   const handleNewEndpointsChange = event => {
