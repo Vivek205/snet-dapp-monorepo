@@ -51,7 +51,7 @@ const parseAiServiceData = service => ({
   orgUuid: service.org_uuid,
   uuid: service.service_uuid,
   id: service.service_id,
-  state: service.service_state,
+  serviceState: service.service_state,
   displayName: service.display_name,
   shortDescription: service.short_description,
   description: service.description,
@@ -71,9 +71,7 @@ const parseAiServiceData = service => ({
     ? {}
     : { rating: service.rating.rating, totalUsersRated: service.rating.total_users_rated },
   ranking: service.ranking,
-  contributors: isEmpty(service.contributors)
-    ? []
-    : service.contributors.map(contributor => ({ name: contributor.name, email: contributor.email_id })),
+  contributors: isEmpty(service.contributors) ? [] : service.contributors.map(c => c.name).join(","),
   groups: isEmpty(service.groups) ? [] : parseGroups(service.groups),
   tags: service.tags,
   comments: {
