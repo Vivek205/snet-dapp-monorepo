@@ -160,6 +160,7 @@ const generateSaveServicePayload = serviceDetails => {
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
           test_endpoints: group.testEndpoints,
+          daemon_addresses: group.daemonAddresses,
         };
       })
       .filter(el => el !== undefined);
@@ -273,6 +274,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
+      daemonAddresses: group.daemon_addresses || [],
       testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,

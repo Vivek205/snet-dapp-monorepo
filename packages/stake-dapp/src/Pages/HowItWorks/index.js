@@ -39,9 +39,15 @@ const HowItWorks = ({ classes, history }) => {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Typography variant="h2">Subscribe for Staking Updates</Typography>
           <Typography>Get notified by email when the next staking window is open - Don’t miss out!</Typography>
-          <form>
-            <input type="text" />
-            <SNETButton children="subscribe" color="primary" variant="contained" />
+          <form
+            action="https://singularitynet.us16.list-manage.com/subscribe/post?u=d74195510c25bf501caf3011d&id=a804df2efd"
+            method="post"
+            target="_blank"
+            name="mc-embedded-subscribe-form"
+            noValidate=""
+          >
+            <input type="email" name="EMAIL" label="email" />
+            <SNETButton type="submit" children="subscribe" color="primary" variant="contained" />
           </form>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
