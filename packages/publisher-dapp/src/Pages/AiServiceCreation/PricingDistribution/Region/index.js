@@ -23,6 +23,7 @@ const Region = () => {
   const [showRegion] = useState(true);
   const { serviceGroups, orgGroups } = useSelector(selectState);
   const endpointRef = useRef(null);
+  const addressRef = useRef(null);
   const dispatch = useDispatch();
 
   const selectedServiceGroup = serviceGroups[0];
@@ -44,13 +45,13 @@ const Region = () => {
     }
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
-    let updatedEndpoints;
+    let updatedEndpoints = { ...selectedServiceGroup.endpoints };
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
       if (endpoint) {
         updatedEndpoints = {
-          ...selectedServiceGroup.endpoints,
+          ...updatedEndpoints,
           [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
         };
       }
@@ -68,6 +69,39 @@ const Region = () => {
     delete updatedEndpoints[endpoint];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+  };
+
+  const handleNewDaemonAddressChange = event => {
+    if (event.keyCode !== keyCodes.enter) {
+      return;
+    }
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    const newAddresses = addressRef.current.value;
+    let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
+    newAddresses.split(",").forEach(address => {
+      address = address.replace(/\s/g, "");
+      if (address) {
+        const index = selectedServiceGroup.daemonAddresses.findIndex(el => el === address);
+        if (index === -1) {
+          updatedAddresses.push(address);
+        }
+      }
+    });
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
+    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    addressRef.current.value = "";
+    updateGroupId();
+  };
+
+  const handleDaemonAddressDelete = address => {
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    const updatedAddresses = [...selectedServiceGroup.daemonAddresses];
+    const index = updatedAddresses.findIndex(el => el === address);
+    updatedAddresses.splice(index, 1);
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
   };
 
@@ -181,8 +215,40 @@ const Region = () => {
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
               icon
+              name="daemonAdresses"
+              inputRef={addressRef}
+              onKeyUp={handleNewDaemonAddressChange}
+              label="Daemon Addresses"
+              description="Enter all the public Daemon addresses that will be used to call the service."
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
+            <div className={classes.infoIconContainer}>
+              <InfoIcon />
+            </div>
+            <div className={classes.cardContainer}>
+              <span className={classes.label}>Added Addresses</span>
+              <Card className={classes.card}>
+                {selectedServiceGroup.daemonAddresses &&
+                  selectedServiceGroup.daemonAddresses.map(address => (
+                    <Chip
+                      className={classes.chip}
+                      key={address}
+                      label={address}
+                      color="primary"
+                      onDelete={() => handleDaemonAddressDelete(address)}
+                    />
+                  ))}
+              </Card>
+              <span className={classes.extraInfo}>You can add up to 20 addresses</span>
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <SNETTextfield
+              icon
               name="testEndpoints"
-              // inputRef={testEndpointRef}
               value={selectedServiceGroup.testEndpoints}
               onChange={handleNewTestEndpointsChange}
               label="Test - Daemon Endpoints"
