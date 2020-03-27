@@ -52,7 +52,7 @@ const CardGroup = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
           <ServiceStatusDetails
-            status={service.state.state}
+            status={service.serviceState.state}
             groups={service.groups}
             editServiceLink={editServiceLink}
             serviceUuid={service.uuid}
