@@ -12,6 +12,9 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 import { keyCodes } from "shared/dist/utils/keyCodes";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+import { servicePricingValidationConstraints } from "../validationConstraints";
 
 const selectState = state => ({
   serviceGroups: state.aiServiceDetails.groups,
@@ -25,6 +28,7 @@ const Region = () => {
   const endpointRef = useRef(null);
   const addressRef = useRef(null);
   const dispatch = useDispatch();
+  const [alert, setAlert] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
@@ -39,6 +43,15 @@ const Region = () => {
     }
   };
 
+  const handleEndPointValidation = value => {
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
+    if (isNotValid) {
+      setAlert({ type: alertTypes.ERROR, message: "Invalid endpoint : " + value });
+      return false;
+    }
+    return true;
+  };
+
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
@@ -49,11 +62,13 @@ const Region = () => {
     const userInputEndpoints = newEndpoints.split(",");
     userInputEndpoints.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
-      if (endpoint) {
+      if (endpoint && handleEndPointValidation(endpoint)) {
         updatedEndpoints = {
           ...updatedEndpoints,
           [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
         };
+      } else {
+        updatedEndpoints = { ...selectedServiceGroup.endpoints };
       }
     });
     const updatedServiceGroups = [...serviceGroups];
@@ -190,6 +205,8 @@ const Region = () => {
               description="Enter all the public Daemon end points that will be used to call the service."
             />
           </Grid>
+          <AlertBox type={alert.type} message={alert.message} />
+
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
               <InfoIcon />
