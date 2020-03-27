@@ -77,6 +77,6 @@ export const btnDetails = [
     action: "claimStake",
     color: "primary",
     variant: "contained",
-    text: "widthdraw claim",
+    text: "withdraw claim",
   },
 ];

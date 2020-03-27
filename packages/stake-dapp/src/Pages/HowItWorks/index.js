@@ -61,7 +61,7 @@ const HowItWorks = ({ classes, history }) => {
           network. Essentially, it consists of locking cryptocurrencies to receive rewards. The process relies on users
           participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet.
         </Typography>
-        <img src="http://placehold.it/738x416" alt="Youtube Video" />
+        {/*<img src="http://placehold.it/738x416" alt="How it Works" />*/}
         <SNETButton children="start staking tokens" color="primary" variant="contained" onClick={navigateToLanding} />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>

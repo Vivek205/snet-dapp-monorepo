@@ -83,7 +83,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         setAlert({
           type: alertTypes.SUCCESS,
-          message: "You have successfully withdrawn tokens to your account. You can safely close this window.",
+          message: "You have successfully withdrawn tokens to your account.",
         });
 
         dispatch(loaderActions.stopAppLoader());
