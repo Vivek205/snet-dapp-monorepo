@@ -32,39 +32,39 @@ var GetStarted = function GetStarted(_ref) {
       pageBtnRoute = _ref.pageBtnRoute,
       GetStartedDetails = _ref.GetStartedDetails,
       GetStartedCategories = _ref.GetStartedCategories;
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.GetStartedMainContaienr
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.TopSection
-  }, /*#__PURE__*/_react.default.createElement(_GetStartedDescription.default, {
+  }, _react.default.createElement(_GetStartedDescription.default, {
     title: GetStartedDetails.title,
     description: GetStartedDetails.description
   })), GetStartedCategories.map(function (item, index) {
-    return /*#__PURE__*/_react.default.createElement(_Category.default, {
+    return _react.default.createElement(_Category.default, {
       key: item.categoryTitle,
       title: item.title,
       content: item.content,
       media: item.media,
       rightAlign: (index + 1) % 2 === 0
     });
-  }), CTAType ? /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }), CTAType ? _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.btnContainer
-  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+  }, _react.default.createElement(_reactRouterDom.Link, {
     to: pageBtnRoute,
     className: classes.createRequestLink
-  }, /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
+  }, _react.default.createElement(_StyledButton.default, {
     type: "blue",
     btnText: "Create new Request"
   }))) : null);

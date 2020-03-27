@@ -16,9 +16,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var CodeSnippet = function CodeSnippet(_ref) {
   var classes = _ref.classes,
       children = _ref.children;
-  return /*#__PURE__*/_react.default.createElement("section", {
+  return _react.default.createElement("section", {
     className: classes.codeSnippetContainer
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: classes.codeSnippet
   }, children));
 };

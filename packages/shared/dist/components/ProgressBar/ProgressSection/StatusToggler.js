@@ -21,16 +21,16 @@ var StatusToggler = function StatusToggler(_ref) {
   var classes = (0, _styles.useStyles)();
 
   if (progressStatus === _.ProgressStatusList.COMPLETED) {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return _react.default.createElement("div", {
       className: classes.numberContaienr
-    }, /*#__PURE__*/_react.default.createElement("span", {
+    }, _react.default.createElement("span", {
       className: classes.completedIcon
-    }, /*#__PURE__*/_react.default.createElement(_CheckCircle.default, null)));
+    }, _react.default.createElement(_CheckCircle.default, null)));
   }
 
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.numberContaienr
-  }, /*#__PURE__*/_react.default.createElement("span", {
+  }, _react.default.createElement("span", {
     className: classes.number
   }, progressNumber));
 };

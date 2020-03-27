@@ -47,21 +47,21 @@ var AlertBox = function AlertBox(_ref) {
       header = _ref.header;
 
   if (children) {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return _react.default.createElement("div", {
       className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
     }, children);
   }
 
   if (message) {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return _react.default.createElement("div", {
       className: (0, _clsx.default)(classes.alertBoxContainer, classes[backgroundColor[type]])
-    }, /*#__PURE__*/_react.default.createElement(_AlertIcon.default, {
+    }, _react.default.createElement(_AlertIcon.default, {
       icon: icon
-    }), /*#__PURE__*/_react.default.createElement("div", {
+    }), _react.default.createElement("div", {
       className: classes.content
-    }, /*#__PURE__*/_react.default.createElement(_AlertHeader.default, {
+    }, _react.default.createElement(_AlertHeader.default, {
       header: header
-    }), /*#__PURE__*/_react.default.createElement("p", null, message, " ", /*#__PURE__*/_react.default.createElement(_AlertLink.default, {
+    }), _react.default.createElement("p", null, message, " ", _react.default.createElement(_AlertLink.default, {
       link: link
     }))));
   }

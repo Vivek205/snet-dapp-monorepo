@@ -22,10 +22,10 @@ var SignOut = function SignOut(props) {
     props.signOut();
   };
 
-  return /*#__PURE__*/_react.default.createElement("li", {
+  return _react.default.createElement("li", {
     className: "".concat(classes.signupBtn, " ").concat(classes.loginBtnsLi),
     onClick: handleSignOut
-  }, /*#__PURE__*/_react.default.createElement("span", {
+  }, _react.default.createElement("span", {
     className: "".concat(classes.loginBtnsAnchor, " ").concat(classes.UppercaseText, " ").concat(classes.signupBtnText)
   }, " Sign Out"));
 };

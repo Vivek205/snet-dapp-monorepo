@@ -32,25 +32,25 @@ var TermsAndConditions = function TermsAndConditions(props) {
       onAccept = props.onAccept,
       agreed = props.agreed,
       onChangeAgreed = props.onChangeAgreed;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.onboardingContainer
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: classes.termsAndConditionsContainer
-  }, /*#__PURE__*/_react.default.createElement("h3", null, title), /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("h3", null, title), _react.default.createElement("div", {
     className: classes.termsAndConditions
-  }, /*#__PURE__*/_react.default.createElement(_PrivacyTerms.default, null)), /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement(_PrivacyTerms.default, null)), _react.default.createElement("div", {
     className: classes.checkboxAndButton
-  }, /*#__PURE__*/_react.default.createElement(_FormControlLabel.default, {
-    control: /*#__PURE__*/_react.default.createElement(_Checkbox.default, {
+  }, _react.default.createElement(_FormControlLabel.default, {
+    control: _react.default.createElement(_Checkbox.default, {
       onChange: onChangeAgreed,
       color: "primary"
     }),
     label: formLabel
-  }), onAccept ? /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
+  }), onAccept ? _react.default.createElement(_StyledButton.default, {
     btnText: "accept",
     disabled: !agreed,
     onClick: onAccept
-  }) : ""), /*#__PURE__*/_react.default.createElement(_AlertBox.default, {
+  }) : ""), _react.default.createElement(_AlertBox.default, {
     type: alert.type,
     message: alert.message
   })));

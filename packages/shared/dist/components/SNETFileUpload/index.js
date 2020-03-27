@@ -55,22 +55,22 @@ var SNETFileUpload = function SNETFileUpload(props) {
       getInputProps = _useDropzone.getInputProps,
       isDragActive = _useDropzone.isDragActive;
 
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     container: true
-  }, /*#__PURE__*/_react.default.createElement("input", getInputProps()), /*#__PURE__*/_react.default.createElement(_Grid.default, _extends({
+  }, _react.default.createElement("input", getInputProps()), _react.default.createElement(_Grid.default, _extends({
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.grayBox
-  }, getRootProps()), /*#__PURE__*/_react.default.createElement(_Backup.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", null, " click")), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "(Package must be under ", maxSize, "mb. Make sure the extension is .zip or .tar)")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, getRootProps()), _react.default.createElement(_Backup.default, null), _react.default.createElement(_Typography.default, null, "Drag and drop image here or", _react.default.createElement("span", null, " click")), _react.default.createElement(_Typography.default, null, "(Package must be under ", maxSize, "mb. Make sure the extension is .zip or .tar)")), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6
-  }, /*#__PURE__*/_react.default.createElement(_FileStats.default, {
+  }, _react.default.createElement(_FileStats.default, {
     show: showFileDetails,
     fileName: fileName,
     fileSize: fileSize,

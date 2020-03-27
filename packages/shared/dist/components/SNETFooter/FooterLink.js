@@ -19,15 +19,15 @@ var FooterLink = function FooterLink(_ref) {
       image = _ref.image,
       internalLink = _ref.internalLink;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement("li", {
+  return _react.default.createElement("li", {
     className: classes.footerLinks
-  }, /*#__PURE__*/_react.default.createElement("a", {
+  }, _react.default.createElement("a", {
     href: link,
     className: classes.footerLinkText,
     title: label,
     target: internalLink ? "_self" : "_blank",
     rel: "noopener noreferrer"
-  }, image ? /*#__PURE__*/_react.default.createElement(_SnetSvgLogo.default, null) : label));
+  }, image ? _react.default.createElement(_SnetSvgLogo.default, null) : label));
 };
 
 var _default = FooterLink;

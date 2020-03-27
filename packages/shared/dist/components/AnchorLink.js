@@ -26,7 +26,7 @@ var AnchorLink = function AnchorLink(_ref) {
       rest = _objectWithoutProperties(_ref, ["label", "href", "newTab"]);
 
   if (newTab) {
-    return /*#__PURE__*/_react.default.createElement(_Link.default, _extends({
+    return _react.default.createElement(_Link.default, _extends({
       href: href,
       title: label,
       target: "_blank",
@@ -34,7 +34,7 @@ var AnchorLink = function AnchorLink(_ref) {
     }, rest), label);
   }
 
-  return /*#__PURE__*/_react.default.createElement(_Link.default, _extends({
+  return _react.default.createElement(_Link.default, _extends({
     href: href,
     title: label
   }, rest), label);

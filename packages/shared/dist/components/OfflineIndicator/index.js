@@ -24,11 +24,11 @@ var OfflineIndicator = function OfflineIndicator(_ref) {
       show = _ref.show;
 
   if (show) {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return _react.default.createElement("div", {
       className: classes.offlineIndicator
-    }, /*#__PURE__*/_react.default.createElement(_Icon.default, {
+    }, _react.default.createElement(_Icon.default, {
       className: (0, _clsx.default)(classes.icon, "fas fa-exclamation")
-    }), /*#__PURE__*/_react.default.createElement("span", null, "Currently Offline"));
+    }), _react.default.createElement("span", null, "Currently Offline"));
   }
 
   return null;

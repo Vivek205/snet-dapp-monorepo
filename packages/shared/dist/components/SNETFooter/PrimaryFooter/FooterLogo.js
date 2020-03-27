@@ -17,12 +17,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var FooterLogo = function FooterLogo(_ref) {
   var classes = _ref.classes;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.FooterLogo
-  }, /*#__PURE__*/_react.default.createElement("h1", null, /*#__PURE__*/_react.default.createElement("a", {
+  }, _react.default.createElement("h1", null, _react.default.createElement("a", {
     href: "/",
     title: "SingularityNET"
-  }, /*#__PURE__*/_react.default.createElement("img", {
+  }, _react.default.createElement("img", {
     src: _WhiteLogo.default,
     alt: "SingularityNET"
   }))));

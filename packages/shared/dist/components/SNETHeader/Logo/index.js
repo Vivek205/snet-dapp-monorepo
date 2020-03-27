@@ -24,7 +24,7 @@ var SnetSvgLogo = {
 
 var Logo = function Logo(_ref) {
   var headerColor = _ref.headerColor;
-  return /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
+  return _react.default.createElement(_CardMedia.default, {
     component: "img",
     image: SnetSvgLogo[headerColor],
     alt: "SingularityNET"

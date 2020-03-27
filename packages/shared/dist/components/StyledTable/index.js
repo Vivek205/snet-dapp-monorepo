@@ -22,30 +22,30 @@ var StyledTable = function StyledTable(_ref) {
       title = _ref.title,
       columns = _ref.columns,
       rows = _ref.rows;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.styledTable
-  }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, _react.default.createElement(_Typography.default, {
     variant: "h5",
     className: classes.styledTableHeader
-  }, title), /*#__PURE__*/_react.default.createElement("div", {
+  }, title), _react.default.createElement("div", {
     className: classes.styledTableContent
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: classes.styledTableColumn
   }, columns.map(function (column) {
-    return /*#__PURE__*/_react.default.createElement(_Typography.default, {
+    return _react.default.createElement(_Typography.default, {
       key: column.key,
       variant: "body2"
     }, column.label);
   })), rows.map(function (row) {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return _react.default.createElement("div", {
       key: row.key,
       className: row.highlight ? classes.styledTableDataHighlighted : classes.styledTableData
     }, row.values.map(function (value) {
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return _react.default.createElement("div", {
         key: value.label
-      }, value.icon && /*#__PURE__*/_react.default.createElement(value.icon, {
+      }, value.icon && _react.default.createElement(value.icon, {
         className: classes.infoIconContainer
-      }), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }), _react.default.createElement(_Typography.default, {
         variant: "body2"
       }, value.label));
     }));

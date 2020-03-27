@@ -32,18 +32,18 @@ var SNETLoader = function SNETLoader(_ref) {
       title = _ref.title,
       content = _ref.content;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement(_Modal.default, {
+  return _react.default.createElement(_Modal.default, {
     disableBackdropClick: true,
     open: isLoading
-  }, /*#__PURE__*/_react.default.createElement(_Card.default, {
+  }, _react.default.createElement(_Card.default, {
     className: classes.card
-  }, /*#__PURE__*/_react.default.createElement(_CardHeader.default, {
-    title: /*#__PURE__*/_react.default.createElement("h2", null, title)
-  }), /*#__PURE__*/_react.default.createElement(_Divider.default, null), /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement(_CardHeader.default, {
+    title: _react.default.createElement("h2", null, title)
+  }), _react.default.createElement(_Divider.default, null), _react.default.createElement("div", {
     className: classes.circularProgressContainer
-  }, /*#__PURE__*/_react.default.createElement(_CircularProgress.default, {
+  }, _react.default.createElement(_CircularProgress.default, {
     className: classes.circularProgress
-  })), /*#__PURE__*/_react.default.createElement(_CardContent.default, null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  })), _react.default.createElement(_CardContent.default, null, _react.default.createElement(_Typography.default, {
     variant: "body2",
     component: "p"
   }, content))));

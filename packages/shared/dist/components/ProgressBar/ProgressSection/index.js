@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -34,15 +34,15 @@ var ProgressSection = function ProgressSection(_ref) {
       progressStatus = _ref.progressStatus,
       onSectionClick = _ref.onSectionClick;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement("li", {
+  return _react.default.createElement("li", {
     className: "".concat(classes[progressStatus], " ").concat(onSectionClick ? classes.clickableSection : ""),
     onClick: function onClick() {
       return onSectionClick(progressNumber, progressText, progressStatus);
     }
-  }, /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_StatusToggler.default, {
+  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_StatusToggler.default, {
     progressStatus: progressStatus,
     progressNumber: progressNumber
-  }), /*#__PURE__*/_react.default.createElement("span", {
+  }), _react.default.createElement("span", {
     className: classes.TabTitle
   }, progressText)));
 };

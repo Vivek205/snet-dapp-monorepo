@@ -26,27 +26,27 @@ var UserCard = function UserCard(_ref) {
       userImg = _ref.userImg,
       userName = _ref.userName,
       userEmail = _ref.userEmail;
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.userCardContainer
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.userDetails
-  }, /*#__PURE__*/_react.default.createElement(_Avatar.default, {
+  }, _react.default.createElement(_Avatar.default, {
     alt: "Singularity",
     src: userImg || _avatar.default,
     className: classes.avatar
-  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.userName
-  }, userName), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, userName), _react.default.createElement(_Typography.default, {
     className: classes.userEmail
   }, userEmail))));
 };

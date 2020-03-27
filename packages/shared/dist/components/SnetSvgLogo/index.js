@@ -14,7 +14,7 @@ require("./styles.css");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SnetSvgLogo = function SnetSvgLogo() {
-  return /*#__PURE__*/_react.default.createElement("img", {
+  return _react.default.createElement("img", {
     src: _BlackLogo.default,
     alt: "SingularityNET"
   });

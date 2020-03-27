@@ -9,7 +9,7 @@ var _ = require(".");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _react2.storiesOf)("AppLoader", module).add("_default", function () {
-  return /*#__PURE__*/_react.default.createElement(_.SNETLoader, {
+  return _react.default.createElement(_.SNETLoader, {
     isLoading: true,
     title: "Sample Header",
     content: "Please wait. this is a sample loader text"

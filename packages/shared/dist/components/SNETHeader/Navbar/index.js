@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var NavBar = function NavBar(_ref) {
   var NavigationBar = _ref.NavigationBar;
-  return /*#__PURE__*/_react.default.createElement(NavigationBar, null);
+  return _react.default.createElement(NavigationBar, null);
 };
 
 NavBar.propTypes = {

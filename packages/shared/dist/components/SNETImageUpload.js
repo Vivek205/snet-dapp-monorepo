@@ -69,23 +69,19 @@ var _ClickAwayListener = _interopRequireDefault(require("@material-ui/core/Click
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -102,10 +98,10 @@ var spacingUnit = 8;
 var snetFont = "Muli";
 var minimumTabHeight = 160;
 
-var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
+var SNETImageUpload =
+/*#__PURE__*/
+function (_React$Component) {
   _inherits(SNETImageUpload, _React$Component);
-
-  var _super = _createSuper(SNETImageUpload);
 
   _createClass(SNETImageUpload, null, [{
     key: "getBase64ImageType",
@@ -145,7 +141,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, SNETImageUpload);
 
-    _this = _super.call(this, props); // It is the same thing, only difference is Component where we do the binding.
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SNETImageUpload).call(this, props)); // It is the same thing, only difference is Component where we do the binding.
     // Component is lower in the tree, and now button has the logic how to open the screen.
     // Setting minimum tab height
 
@@ -514,14 +510,14 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderUploadTab() {
       var _this5 = this;
 
-      return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      return _react.default.createElement(_Grid.default, {
         item: true,
         xs: 12
-      }, /*#__PURE__*/_react.default.createElement(_reactFileDrop.default, {
+      }, _react.default.createElement(_reactFileDrop.default, {
         onDrop: function onDrop(files, event) {
           return _this5.handleImageUpload(files, event);
         }
-      }, /*#__PURE__*/_react.default.createElement("input", {
+      }, _react.default.createElement("input", {
         id: "myInput",
         type: "file",
         style: {
@@ -534,7 +530,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         ref: function ref(input) {
           return _this5.inputElement = input;
         }
-      }), /*#__PURE__*/_react.default.createElement("div", {
+      }), _react.default.createElement("div", {
         onClick: function onClick() {
           return _this5.inputElement.click();
         },
@@ -549,7 +545,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           display: "flex",
           flexDirection: "column"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         container: true,
         direction: "column",
         justify: "center",
@@ -559,22 +555,22 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           height: this.tabHeight + "px"
         },
         spacing: spacingUnit
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         item: true,
         style: {
           padding: "0 40px"
         }
-      }, /*#__PURE__*/_react.default.createElement(_icons.CloudUpload, {
+      }, _react.default.createElement(_icons.CloudUpload, {
         style: {
           fontSize: 48,
           color: this.mainColor
         }
-      })), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      })), _react.default.createElement(_Grid.default, {
         item: true,
         style: {
           padding: "0 40px"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_Typography.default, {
         style: {
           fontFamily: snetFont,
           fontVariantCaps: "normal",
@@ -582,16 +578,16 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           fontSize: 16,
           color: snetGrey
         }
-      }, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", {
+      }, "Drag and drop image here or", _react.default.createElement("span", {
         style: {
           color: this.mainColor
         }
-      }, " click"))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, " click"))), _react.default.createElement(_Grid.default, {
         item: true,
         style: {
           padding: "20px 40px"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_Typography.default, {
         style: {
           width: "58%",
           margin: "0 auto",
@@ -695,7 +691,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderUrlTab() {
       var _this6 = this;
 
-      return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      return _react.default.createElement(_Grid.default, {
         container: true,
         direction: "row",
         justify: "center",
@@ -709,7 +705,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           cursor: "pointer",
           overflow: "hidden"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         style: {
@@ -718,9 +714,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           justifyContent: "center",
           alignItems: "center"
         }
-      }, /*#__PURE__*/_react.default.createElement(_styles.MuiThemeProvider, {
+      }, _react.default.createElement(_styles.MuiThemeProvider, {
         theme: this.theme
-      }, /*#__PURE__*/_react.default.createElement(_TextField.default, {
+      }, _react.default.createElement(_TextField.default, {
         style: {
           width: "80%",
           primary: this.mainColor,
@@ -728,7 +724,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         },
         variant: "outlined",
         type: "text",
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: {
             fontWeight: "normal",
             fontSize: 12
@@ -736,9 +732,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         }, "Image URL"),
         onChange: this.searchTextUpdate,
         InputProps: {
-          endAdornment: /*#__PURE__*/_react.default.createElement(_InputAdornment.default, {
+          endAdornment: _react.default.createElement(_InputAdornment.default, {
             position: "end"
-          }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
+          }, _react.default.createElement(_IconButton.default, {
             style: {
               marginRight: 0,
               padding: 0,
@@ -747,7 +743,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             onClick: this.state.searchText !== null ? function () {
               return _this6.handleSearchSubmit(null);
             } : undefined
-          }, /*#__PURE__*/_react.default.createElement(_Search.default, null)))
+          }, _react.default.createElement(_Search.default, null)))
         }
       }))));
     }
@@ -760,14 +756,14 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderGalleryTab() {
       var _this7 = this;
 
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return _react.default.createElement("div", {
         style: {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-around",
           overflow: "hidden"
         }
-      }, /*#__PURE__*/_react.default.createElement(_GridList.default, {
+      }, _react.default.createElement(_GridList.default, {
         cols: this.props.galleryCols,
         spacing: spacingUnit,
         style: {
@@ -775,16 +771,16 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           height: this.tabHeight + "px"
         }
       }, this.props.imageGallery.map(function (url, i) {
-        return /*#__PURE__*/_react.default.createElement(_Grow.default, {
+        return _react.default.createElement(_Grow.default, {
           in: _this7.state.value === 2,
           style: {
             transformOrigin: "0 0 0"
           },
           timeout: i * 500,
           key: i
-        }, /*#__PURE__*/_react.default.createElement(_GridListTile.default, {
+        }, _react.default.createElement(_GridListTile.default, {
           key: i
-        }, /*#__PURE__*/_react.default.createElement("img", {
+        }, _react.default.createElement("img", {
           src: url,
           alt: "Gallery Image " + i,
           onClick: function onClick() {
@@ -802,9 +798,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderLoadingState",
     value: function renderLoadingState() {
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return _react.default.createElement("div", {
         style: this.tabStyle
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         container: true,
         direction: "row",
         justify: "center",
@@ -813,7 +809,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           flexGrow: 1,
           height: this.tabHeight + "px"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         style: {
@@ -822,10 +818,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           justifyContent: "center",
           alignItems: "center"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      }, _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "loading",
         unmountOnExit: true
-      }, /*#__PURE__*/_react.default.createElement(_CircularProgress.default, {
+      }, _react.default.createElement(_CircularProgress.default, {
         style: {
           color: this.mainColor,
           margin: 10
@@ -861,9 +857,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderUploadedState() {
       var _this9 = this;
 
-      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      return _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "uploaded"
-      }, /*#__PURE__*/_react.default.createElement("div", {
+      }, _react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -883,7 +879,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             displayImageName: false
           });
         }
-      }, /*#__PURE__*/_react.default.createElement("img", {
+      }, _react.default.createElement("img", {
         alt: "Service input",
         src: this.state.inputImageData,
         onError: function onError() {
@@ -898,10 +894,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      }), _react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_GridListTileBar.default, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -930,18 +926,18 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderTabs() {
       var _this10 = this;
 
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return _react.default.createElement("div", {
         style: this.tabStyle
-      }, /*#__PURE__*/_react.default.createElement(_reactSwipeableViews.default, {
+      }, _react.default.createElement(_reactSwipeableViews.default, {
         axis: "x",
         index: this.state.value
-      }, /*#__PURE__*/_react.default.createElement("div", null, this.renderUploadTab()), /*#__PURE__*/_react.default.createElement("div", null, this.renderUrlTab()), /*#__PURE__*/_react.default.createElement("div", null, this.renderGalleryTab()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableInputTab && this.renderInputImage()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableOutputTab && this.renderOutputImage()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableComparisonTab && this.renderComparison())), /*#__PURE__*/_react.default.createElement(_ClickAwayListener.default, {
+      }, _react.default.createElement("div", null, this.renderUploadTab()), _react.default.createElement("div", null, this.renderUrlTab()), _react.default.createElement("div", null, this.renderGalleryTab()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableInputTab && this.renderInputImage()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableOutputTab && this.renderOutputImage()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableComparisonTab && this.renderComparison())), _react.default.createElement(_ClickAwayListener.default, {
         onClickAway: function onClickAway() {
           return _this10.setState({
             displayError: false
           });
         }
-      }, /*#__PURE__*/_react.default.createElement(_Snackbar.default, {
+      }, _react.default.createElement(_Snackbar.default, {
         style: {
           position: "absolute",
           width: "100%"
@@ -955,7 +951,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             displayError: false
           });
         }
-      }, /*#__PURE__*/_react.default.createElement(_SnackbarContent.default, {
+      }, _react.default.createElement(_SnackbarContent.default, {
         style: {
           backgroundColor: snetBackgroundRed,
           margin: "2px",
@@ -969,7 +965,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           width: "100%"
         },
         "aria-describedby": "client-snackbar",
-        message: /*#__PURE__*/_react.default.createElement("span", {
+        message: _react.default.createElement("span", {
           style: {
             color: snetGreyError,
             display: "flex",
@@ -977,13 +973,13 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             align: "center",
             justifyContent: "space-between"
           }
-        }, /*#__PURE__*/_react.default.createElement(_Error.default, {
+        }, _react.default.createElement(_Error.default, {
           style: {
             fontSize: 16,
             opacity: 0.9,
             marginRight: spacingUnit
           }
-        }), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+        }), _react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontVariantCaps: "normal",
@@ -1003,9 +999,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderInputImage() {
       var _this11 = this;
 
-      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      return _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, /*#__PURE__*/_react.default.createElement("div", {
+      }, _react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -1025,7 +1021,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             displayImageName: false
           });
         }
-      }, /*#__PURE__*/_react.default.createElement("img", {
+      }, _react.default.createElement("img", {
         alt: "Service input",
         src: this.state.inputImageData,
         onError: function onError() {
@@ -1040,11 +1036,11 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      }), _react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
+      }, _react.default.createElement(_GridListTileBar.default, {
         style: {},
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -1063,9 +1059,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
     value: function renderOutputImage() {
       var _this12 = this;
 
-      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      return _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, /*#__PURE__*/_react.default.createElement("div", {
+      }, _react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -1085,7 +1081,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             displayImageName: false
           });
         }
-      }, /*#__PURE__*/_react.default.createElement("img", {
+      }, _react.default.createElement("img", {
         alt: "Service output",
         src: this.state.outputImage,
         onError: function onError() {
@@ -1100,11 +1096,11 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), this.state.outputImageName !== null ? /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      }), this.state.outputImageName !== null ? _react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
+      }, _react.default.createElement(_GridListTileBar.default, {
         style: {},
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -1116,7 +1112,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             fontSize: 14
           }
         }, " ", this.state.outputImageName, " ")
-      })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null)));
+      })) : _react.default.createElement(_react.default.Fragment, null)));
     }
   }, {
     key: "handleMouseMove",
@@ -1146,9 +1142,9 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderComparison",
     value: function renderComparison() {
-      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      return _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, /*#__PURE__*/_react.default.createElement("div", {
+      }, _react.default.createElement("div", {
         ref: this.imageDiv,
         id: "imageDiv",
         style: {
@@ -1163,7 +1159,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           cursor: "ew-resize"
         },
         onMouseMove: this.handleMouseMove
-      }, /*#__PURE__*/_react.default.createElement("img", {
+      }, _react.default.createElement("img", {
         ref: this.inputImage,
         style: this.props.displayProportionalImage ? {
           maxHeight: this.tabHeight + "px",
@@ -1179,7 +1175,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         alt: "Service response...",
         src: this.state.inputImageData,
         onLoad: this.setInputImageDimensions
-      }), /*#__PURE__*/_react.default.createElement("img", {
+      }), _react.default.createElement("img", {
         ref: this.outputImage,
         style: this.props.displayProportionalImage ? {
           maxHeight: this.tabHeight + "px",
@@ -1199,14 +1195,14 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         width: this.props.overlayInputImage && this.state.inputImageWidth,
         alt: "Service response...",
         src: this.state.outputImage
-      }), /*#__PURE__*/_react.default.createElement("div", {
+      }), _react.default.createElement("div", {
         style: {
           position: "absolute",
           left: this.state.dividerXPosition - 1.5 + "px",
           borderLeft: "3px solid white",
           height: this.tabHeight
         }
-      }), /*#__PURE__*/_react.default.createElement("div", {
+      }), _react.default.createElement("div", {
         style: {
           position: "absolute",
           left: this.state.dividerXPosition - 15 + "px",
@@ -1216,7 +1212,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           borderRadius: "15px",
           backgroundColor: "white"
         }
-      }), /*#__PURE__*/_react.default.createElement(_UnfoldMore.default, {
+      }), _react.default.createElement(_UnfoldMore.default, {
         style: {
           color: this.mainColor,
           width: "30px",
@@ -1231,12 +1227,12 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react.default.createElement("div", {
+      return _react.default.createElement("div", {
         style: {
           minHeight: "264px",
           position: "relative"
         }
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         container: true,
         direction: "row",
         justify: "flex-start",
@@ -1246,10 +1242,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           backgroundColor: "white"
         },
         spacing: 0
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         item: true,
         xs: 12
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         container: true,
         direction: "row",
         alignItems: "flex-end",
@@ -1257,10 +1253,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         style: {
           paddingBottom: 5
         }
-      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, _react.default.createElement(_Grid.default, {
         item: true,
         xs: 4
-      }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_Typography.default, {
         color: "inherit",
         noWrap: true,
         variant: "h6",
@@ -1269,12 +1265,12 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           fontFamily: snetFont,
           padding: spacingUnit / 2
         }
-      }, this.state.mainState === "display" ? this.props.displayModeTitle : this.props.imageName)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }, this.state.mainState === "display" ? this.props.displayModeTitle : this.props.imageName)), _react.default.createElement(_Grid.default, {
         item: true,
         xs: 6
-      }, /*#__PURE__*/_react.default.createElement(_styles.MuiThemeProvider, {
+      }, _react.default.createElement(_styles.MuiThemeProvider, {
         theme: this.theme
-      }, /*#__PURE__*/_react.default.createElement(_Tabs.default, {
+      }, _react.default.createElement(_Tabs.default, {
         value: this.state.value,
         onChange: this.handleTabChange,
         indicatorColor: "primary",
@@ -1289,7 +1285,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
             backgroundColor: "#4086ff"
           }
         }
-      }, this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUploadTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }, this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUploadTab && _react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1299,10 +1295,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           paddingLeft: 10
         },
         value: 0,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, "Upload")
-      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUrlTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUrlTab && _react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1312,10 +1308,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           paddingLeft: 10
         },
         value: 1,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, "URL")
-      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && this.props.imageGallery.length > 0 && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && this.props.imageGallery.length > 0 && _react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1325,10 +1321,10 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           paddingLeft: 10
         },
         value: 2,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, "Gallery")
-      }), this.state.mainState === "display" && !this.props.disableInputTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableInputTab && _react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1337,26 +1333,26 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           flexBasis: 0
         },
         value: 3,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, this.props.inputTabTitle)
-      }), this.state.mainState === "display" && !this.props.disableOutputTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableOutputTab && _react.default.createElement(_Tab.default, {
         style: {
           minWidth: "5%"
         },
         value: 4,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, this.props.outputTabTitle)
-      }), this.state.mainState === "display" && !this.props.disableComparisonTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableComparisonTab && _react.default.createElement(_Tab.default, {
         style: {
           minWidth: "5%"
         },
         value: 5,
-        label: /*#__PURE__*/_react.default.createElement("span", {
+        label: _react.default.createElement("span", {
           style: this.tabLabelStyle
         }, this.props.comparisonTabTitle)
-      })))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      })))), _react.default.createElement(_Grid.default, {
         item: true,
         xs: 1,
         style: {
@@ -1365,20 +1361,20 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           justifyContent: "center",
           alignItems: "center"
         }
-      }, this.props.infoTip.length > 0 && /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, this.props.infoTip.length > 0 && _react.default.createElement(_core.Tooltip, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, this.props.infoTip)
-      }, /*#__PURE__*/_react.default.createElement(_Info.default, {
+      }, _react.default.createElement(_Info.default, {
         style: {
           fontSize: 20,
           color: snetGrey
         }
-      }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      }))), _react.default.createElement(_Grid.default, {
         item: true,
         xs: 1,
         style: {
@@ -1387,42 +1383,42 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
           justifyContent: "center",
           alignItems: "center"
         }
-      }, this.state.mainState === "uploaded" && !this.props.disableResetButton && /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      }, this.state.mainState === "uploaded" && !this.props.disableResetButton && _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "uploaded"
-      }, /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_core.Tooltip, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, "Click to reset!")
-      }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
+      }, _react.default.createElement(_IconButton.default, {
         onClick: this.handleImageReset.bind(this)
-      }, /*#__PURE__*/_react.default.createElement(_Refresh.default, {
+      }, _react.default.createElement(_Refresh.default, {
         style: {
           fontSize: 20,
           color: this.mainColor
         }
-      })))), this.state.mainState === "display" && !this.props.disableDownloadButton && /*#__PURE__*/_react.default.createElement(_Fade.default, {
+      })))), this.state.mainState === "display" && !this.props.disableDownloadButton && _react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
-        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      }, _react.default.createElement(_core.Tooltip, {
+        title: _react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, "Download output image")
-      }, /*#__PURE__*/_react.default.createElement("a", {
+      }, _react.default.createElement("a", {
         href: this.state.outputImage,
         download: this.state.outputImageName
-      }, /*#__PURE__*/_react.default.createElement(_IconButton.default, null, /*#__PURE__*/_react.default.createElement(_CloudDownload.default, {
+      }, _react.default.createElement(_IconButton.default, null, _react.default.createElement(_CloudDownload.default, {
         style: {
           fontSize: 20,
           color: this.mainColor
         }
-      })))))))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+      })))))))), _react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         style: {

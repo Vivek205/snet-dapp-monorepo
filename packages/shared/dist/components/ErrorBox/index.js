@@ -21,12 +21,12 @@ var ErrorBox = function ErrorBox(_ref) {
   var classes = _ref.classes,
       errImg = _ref.errImg,
       errText = _ref.errText;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.errorMsgContainer
-  }, /*#__PURE__*/_react.default.createElement("img", {
+  }, _react.default.createElement("img", {
     src: errImg || _error.default,
     alt: "No connection"
-  }), /*#__PURE__*/_react.default.createElement("span", null, errText || "Unable to reach our servers. We have been notified of this.\n        Please try again Later."));
+  }), _react.default.createElement("span", null, errText || "Unable to reach our servers. We have been notified of this.\n        Please try again Later."));
 };
 
 ErrorBox.propTypes = {

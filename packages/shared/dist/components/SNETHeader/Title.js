@@ -20,12 +20,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Title = function Title(_ref) {
   var title = _ref.title;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement("h1", {
+  return _react.default.createElement("h1", {
     className: classes.h1
-  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+  }, _react.default.createElement(_reactRouterDom.Link, {
     to: "/".concat(_Routes.default.AI_MARKETPLACE),
     className: classes.logoAnchor
-  }, /*#__PURE__*/_react.default.createElement("img", {
+  }, _react.default.createElement("img", {
     src: _WhiteLogo.default,
     alt: "SingularityNET"
   })));

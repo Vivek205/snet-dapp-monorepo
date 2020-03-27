@@ -31,48 +31,48 @@ var FileStats = function FileStats(props) {
     return null;
   }
 
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.imgUploaderContainer
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: classes.uploadDetails
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: uploadSuccess ? classes.successfullUpload : classes.uploadStatusContainer
-  }, /*#__PURE__*/_react.default.createElement(_Folder.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, _react.default.createElement(_Folder.default, null), _react.default.createElement(_Typography.default, {
     className: uploadSuccess ? classes.uploaded : classes.uploadStatus
-  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded")), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "File Name:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, "File Name:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  }, fileName)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, fileName)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Items:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, "Items:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Uploaded:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, "Uploaded:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Size:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, "Size:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  }, fileSize)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, fileSize)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "User:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, "User:"), _react.default.createElement(_Typography.default, {
     className: classes.value
-  })), /*#__PURE__*/_react.default.createElement("div", {
+  })), _react.default.createElement("div", {
     className: classes.uploadBtns
-  }, /*#__PURE__*/_react.default.createElement("a", {
+  }, _react.default.createElement("a", {
     href: fileDownloadURL,
     download: true,
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
-  }, /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
+  }, _react.default.createElement(_SNETButton.default, {
     children: "download files",
     color: "primary",
     variant: "text",
     disabled: !uploadSuccess
-  })), /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
+  })), _react.default.createElement(_SNETButton.default, {
     children: "delete files",
     color: "red",
     variant: "text",

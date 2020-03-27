@@ -11,7 +11,7 @@ var _Providers = _interopRequireDefault(require("./Providers"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withProviders = function withProviders(story) {
-  return /*#__PURE__*/_react.default.createElement(_Providers.default, {
+  return _react.default.createElement(_Providers.default, {
     theme: _Theme.default
   }, story());
 };

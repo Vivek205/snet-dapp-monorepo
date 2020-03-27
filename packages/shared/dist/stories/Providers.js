@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var ProviderWrapper = function ProviderWrapper(_ref) {
   var children = _ref.children,
       theme = _ref.theme;
-  return /*#__PURE__*/_react.default.createElement(_styles.ThemeProvider, {
+  return _react.default.createElement(_styles.ThemeProvider, {
     theme: theme
   }, children);
 };

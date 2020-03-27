@@ -42,9 +42,9 @@ var NavItem = function NavItem(_ref) {
     }
   };
 
-  return /*#__PURE__*/_react.default.createElement("li", {
+  return _react.default.createElement("li", {
     className: classes.navLinks
-  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.NavLink, {
+  }, _react.default.createElement(_reactRouterDom.NavLink, {
     to: link,
     className: classes.navLinksAnchor,
     activeClassName: classes.activeTab,

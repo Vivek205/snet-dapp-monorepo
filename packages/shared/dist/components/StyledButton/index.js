@@ -48,7 +48,7 @@ var StyledButton = function StyledButton(_ref) {
       rest = _objectWithoutProperties(_ref, ["disabled", "onClick", "type", "btnType", "iconClass", "href", "newTab", "btnText"]);
 
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement(_Button.default, _extends({
+  return _react.default.createElement(_Button.default, _extends({
     className: (0, _clsx.default)(classes.styledButton, classes[buttonColor[type]]),
     disabled: disabled,
     onClick: onClick,
@@ -56,7 +56,7 @@ var StyledButton = function StyledButton(_ref) {
     href: href,
     target: href && newTab ? "_blank" : "",
     rel: href && newTab ? "noopener" : ""
-  }, rest), iconClass ? /*#__PURE__*/_react.default.createElement(_Icon.default, {
+  }, rest), iconClass ? _react.default.createElement(_Icon.default, {
     className: iconClass
   }) : null, btnText);
 };

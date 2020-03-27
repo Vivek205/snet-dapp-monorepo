@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FunctionText = function FunctionText(_ref) {
   var classes = _ref.classes,
       text = _ref.text;
-  return /*#__PURE__*/_react.default.createElement("span", {
+  return _react.default.createElement("span", {
     className: classes.functionTextContainer
   }, text);
 };

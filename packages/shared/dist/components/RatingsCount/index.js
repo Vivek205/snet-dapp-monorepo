@@ -26,7 +26,7 @@ var RatingsCount = function RatingsCount(_ref) {
     return ratingGiven;
   };
 
-  return /*#__PURE__*/_react.default.createElement("span", {
+  return _react.default.createElement("span", {
     className: classes.ratedCount
   }, parseRatingGiven(), " (", totalRating ? "".concat(totalRating) : 0, ")");
 };

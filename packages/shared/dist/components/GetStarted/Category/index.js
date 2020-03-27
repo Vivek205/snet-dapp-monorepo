@@ -25,30 +25,30 @@ var Category = function Category(_ref) {
       content = _ref.content,
       rightAlign = _ref.rightAlign,
       media = _ref.media;
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: "".concat(classes.CategoryWrapper, " ").concat(rightAlign ? classes.reverseDirection : null)
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 6,
     md: 6,
     lg: 6,
     className: classes.CategoryMedia
-  }, /*#__PURE__*/_react.default.createElement("img", {
+  }, _react.default.createElement("img", {
     src: media || _dummyCard.default,
     alt: "DummyImage",
     className: classes.FullWidth
-  })), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  })), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 6,
     md: 6,
     lg: 6,
     className: classes.CategoryContent
-  }, /*#__PURE__*/_react.default.createElement("h3", null, title), content.map(function (item, index) {
-    return /*#__PURE__*/_react.default.createElement(_CategoryDetails.default, {
+  }, _react.default.createElement("h3", null, title), content.map(function (item, index) {
+    return _react.default.createElement(_CategoryDetails.default, {
       type: item.type,
       value: item.value,
       key: item.type

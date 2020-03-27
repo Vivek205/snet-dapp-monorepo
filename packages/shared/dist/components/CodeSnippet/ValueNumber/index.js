@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var ValueNumber = function ValueNumber(_ref) {
   var classes = _ref.classes,
       number = _ref.number;
-  return /*#__PURE__*/_react.default.createElement("span", {
+  return _react.default.createElement("span", {
     className: classes.valueNumbergContainer
   }, number);
 };

@@ -34,17 +34,17 @@ var NotificationBar = function NotificationBar(_ref) {
       message = _ref.message,
       type = _ref.type;
   if (!showNotification) return null;
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     container: true,
     className: classes.NotificationBar
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: (0, _clsx.default)(classes.notificationText, classes[notificationBarTypes[type]])
-  }, !(0, _isEmpty.default)(Icon) && /*#__PURE__*/_react.default.createElement(Icon, null), /*#__PURE__*/_react.default.createElement("span", null, message)));
+  }, !(0, _isEmpty.default)(Icon) && _react.default.createElement(Icon, null), _react.default.createElement("span", null, message)));
 };
 
 NotificationBar.propTypes = {

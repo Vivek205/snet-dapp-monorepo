@@ -39,36 +39,36 @@ var SNETStatusBanner = function SNETStatusBanner(_ref) {
       actions = _ref.actions,
       type = _ref.type,
       anchorDetails = _ref.anchorDetails;
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.statusBannerContainer
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 4,
     md: 4,
     lg: 4,
     className: classes.statusBannerMedia
-  }, /*#__PURE__*/_react.default.createElement("img", {
+  }, _react.default.createElement("img", {
     src: img,
     alt: "Status-Media"
-  })), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  })), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 8,
     md: 8,
     lg: 8,
     className: classes.statusBannerContent
-  }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, _react.default.createElement(_Typography.default, {
     variant: "h6",
     className: classes[statusTitleType[type]]
-  }, title), /*#__PURE__*/_react.default.createElement(_Typography.default, null, description), actions.map(function (action) {
-    return /*#__PURE__*/_react.default.createElement(_SNETButton.default, _extends({
+  }, title), _react.default.createElement(_Typography.default, null, description), actions.map(function (action) {
+    return _react.default.createElement(_SNETButton.default, _extends({
       key: action.children
     }, action));
   }), anchorDetails ? anchorDetails.map(function (detail) {
-    return /*#__PURE__*/_react.default.createElement(_AnchorLink.default, {
+    return _react.default.createElement(_AnchorLink.default, {
       label: detail.label,
       href: detail.linkTo,
       key: detail.label,

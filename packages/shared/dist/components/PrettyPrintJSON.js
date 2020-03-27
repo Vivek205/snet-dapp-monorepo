@@ -11,7 +11,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var PrettyPrintJson = function PrettyPrintJson(_ref) {
   var data = _ref.data;
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("pre", null, JSON.stringify(data, null, 2)));
+  return _react.default.createElement("div", null, _react.default.createElement("pre", null, JSON.stringify(data, null, 2)));
 };
 
 var _default = PrettyPrintJson;

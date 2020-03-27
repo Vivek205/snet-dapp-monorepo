@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -22,13 +22,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Icon = {
-  warning: /*#__PURE__*/_react.default.createElement(_Warning.default, null)
+  warning: _react.default.createElement(_Warning.default, null)
 };
 
 var BulletPoint = function BulletPoint(_ref) {
   var message = _ref.message,
       type = _ref.type;
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, Icon[type]), /*#__PURE__*/_react.default.createElement(_AlertBox.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, Icon[type]), _react.default.createElement(_AlertBox.default, {
     type: type,
     message: message
   }));

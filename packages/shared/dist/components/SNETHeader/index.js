@@ -36,24 +36,24 @@ var SNETHeader = function SNETHeader(_ref) {
       portalName = _ref.portalName,
       onLogoClick = _ref.onLogoClick;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement(_SNETAppBar.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_SNETAppBar.default, {
     position: "fixed",
     color: color,
     className: "".concat(classes.appBar, " ").concat(color === "purple" ? classes.purple : null)
-  }, /*#__PURE__*/_react.default.createElement("div", {
+  }, _react.default.createElement("div", {
     className: classes.logoContainer,
     onClick: onLogoClick
-  }, /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
+  }, _react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
-  }), /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }), _react.default.createElement(_Typography.default, {
     variant: "h5"
-  }, portalName)), /*#__PURE__*/_react.default.createElement("div", {
+  }, portalName)), _react.default.createElement("div", {
     className: classes.navContainer
-  }, /*#__PURE__*/_react.default.createElement(_Navbar.default, {
+  }, _react.default.createElement(_Navbar.default, {
     NavigationBar: NavigationBar
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions

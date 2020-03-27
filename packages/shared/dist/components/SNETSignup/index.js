@@ -24,25 +24,25 @@ var SNETSignup = function SNETSignup(props) {
   var info = props.info,
       onSubmit = props.onSubmit,
       signupError = props.signupError;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return _react.default.createElement("div", {
     className: classes.signupContainer
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     container: true,
     className: classes.signupWrapper
-  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.signupInfo
-  }, /*#__PURE__*/_react.default.createElement(_Info.default, info)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, _react.default.createElement(_Info.default, info)), _react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 6,
     lg: 6
-  }, /*#__PURE__*/_react.default.createElement(_Form.default, {
+  }, _react.default.createElement(_Form.default, {
     onSubmit: onSubmit,
     signupError: signupError
   }))));
