@@ -145,6 +145,7 @@ const parseAndTransformStakeWindow = data => {
     totalStakers: stakeWindow.no_of_stakers,
     totalStakedAmount: stakeWindow.total_stake_deposited,
     myStake: stakeWindow.stake_amount_for_given_staker_address,
+    myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
   };
 
   return stakeWindowDetails;
