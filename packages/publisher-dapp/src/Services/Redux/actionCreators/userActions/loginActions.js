@@ -41,7 +41,8 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
   dispatch(setJWTExp(newExp));
 
   const publisherTnC = currentUser.attributes["custom:publisher_tnc"]
-    ? JSON.parse(currentUser.attributes["custom:publisher_tnc"]): {};
+    ? JSON.parse(currentUser.attributes["custom:publisher_tnc"])
+    : {};
   return {
     nickname: currentUser.attributes.nickname,
     email: currentUser.attributes.email,
@@ -66,7 +67,8 @@ export const initializeApplication = async dispatch => {
 
 const loginSucess = loginResponse => async dispatch => {
   const publisherTnC = loginResponse.attributes["custom:publisher_tnc"]
-    ? JSON.parse(loginResponse.attributes["custom:publisher_tnc"]): {};
+    ? JSON.parse(loginResponse.attributes["custom:publisher_tnc"])
+    : {};
   const userAttributes = {
     isLoggedIn: true,
     email: loginResponse.attributes.email,
@@ -87,11 +89,9 @@ export const setUserAttributes = userAttributes => dispatch => {
 };
 
 export const updateUserTnCAttribute = tncAgreementVesrion => async dispatch => {
-
-  const user = await dispatch(fetchAuthenticatedUser());
   const tncValue = { ver: tncAgreementVesrion, accepted: true };
   try {
-    await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });
+    await Auth.currentCredentials();
     await dispatch(setUserAttributes({ publisherTnC: tncValue }));
   } catch (error) {
     throw error;
