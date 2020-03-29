@@ -20,7 +20,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../../Utils/Loader";
-import { tokenActions, loaderActions } from "../../../Services/Redux/actionCreators";
+import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
 import { waitForTransaction, withdrawStake } from "../../../Utils/BlockchainHelper";
 
@@ -93,6 +93,9 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+
+        // To get the latest state from Blockchain
+        dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));
       } catch (err) {
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
@@ -152,7 +155,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                   </div>
                   <div className={classes.value}>
                     <Typography>{item.amount}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>{item.unit}</Typography>
                   </div>
                 </div>
               ))}

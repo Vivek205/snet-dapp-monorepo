@@ -47,9 +47,10 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       stakeAmount = new BigNumber(
         submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
       );
+      stakeAmount = stakeAmount.minus(withdrawStakeAmount);
     }
 
-    return stakeAmount.plus(autoRenewApprovedAmount).minus(withdrawStakeAmount);
+    return stakeAmount.plus(autoRenewApprovedAmount);
   };
 
   const calculateReward = () => {
