@@ -316,7 +316,7 @@ const parseServiceDetails = (data, serviceUuid) => {
           }
         : {},
     },
-    contributors: data.contributors.map(c => c).join(","),
+    contributors: data.contributors.map(c => c.name).join(","),
     ipfsHash: data.metadata_ipfs_hash,
     groups: parseGroups(data.groups),
     tags: data.tags,
