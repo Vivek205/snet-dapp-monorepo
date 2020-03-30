@@ -165,15 +165,18 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate"
+                extraInfo="~Approximate based on the current pool size"
                 value={getRewardAmount()}
               />
             </div>
             <div className={classes.stakingDetails}>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Current Pool Size</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Current total amount of AGI tokens that have contributed by all stakers</p>
+                  </div>
+                  <span>Current Pool Size</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -189,9 +192,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Reward Pool</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>The total reward amount of AGI tokens that will be divided and distributed to stakers</p>
+                  </div>
+                  <span>Reward Pool</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -207,9 +213,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Amount of the time that AGI tokens in the stake will be vested and locked in</p>
+                  </div>
+                  <span>Incubation Period</span>
                 </div>
                 <div className={classes.incubationValuesConatiner}>
                   <Typography className={classes.incubationValue}>

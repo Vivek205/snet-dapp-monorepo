@@ -62,7 +62,13 @@ export const useStyles = MUITheme => ({
     "@media(max-width: 1122px)": { marginRight: 5 },
     "@media(max-width: 960px)": { marginRight: 11 },
   },
-  walletIdContainer: { paddingBottom: 18 },
+  walletIdContainer: {
+    paddingBottom: 18,
+    "& > div": {
+      boxSizing: "border-box",
+      paddingLeft: 33,
+    },
+  },
   walletId: {
     fontSize: "14px !important",
     wordBreak: "break-all",

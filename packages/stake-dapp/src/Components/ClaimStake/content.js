@@ -47,16 +47,19 @@ export const cardDetails = stakeDetails => [
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
   {
     title: "Stake Pool Size",
     value: fromWei(stakeDetails.windowTotalStake),
     unit: "AGI",
+    toolTip: "The total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Reward Pool",
     value: fromWei(stakeDetails.rewardAmount),
     unit: "AGI",
+    toolTip: "The total reward amount of AGI tokens that will be divided and distributed to stakers",
   },
 ];
 
