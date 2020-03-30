@@ -9,7 +9,11 @@ export const useStyles = MUITheme => ({
   },
   benefitsMedia: {
     textAlign: "center",
-    "& img": { width: "100%" },
+    "& img": {
+      width: 519,
+      [MUITheme.breakpoints.down("md")]: { width: "100%" },
+      [MUITheme.breakpoints.down("sm")]: { width: 519 },
+    },
   },
   benefitsContent: {
     "& h2": {
@@ -49,7 +53,7 @@ export const useStyles = MUITheme => ({
 
   // SignUp container
   signUpContainer: {
-    padding: "71px 64px",
+    padding: "51px 64px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -65,16 +69,25 @@ export const useStyles = MUITheme => ({
     },
     "& form": {
       display: "flex",
+      alignItems: "center",
+      "& > div": {
+        width: 370,
+        marginRight: 24,
+        "& > div": {
+          maxWidth: "100%",
+          flexBasis: "100%",
+          "& .MuiFormControl-marginNormal": { margin: 0 },
+        },
+        "& label": {
+          color: MUITheme.palette.text.lightGrey,
+          fontSize: 16,
+          letterSpacinng: 0,
+          lineHeight: "20px",
+        },
+        "& .MuiInputLabel-formControl": { top: -5 },
+        "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(25,25,25,0.32)" },
+      },
       [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
-    },
-    "& input": {
-      boxSizing: "border-box",
-      width: 365,
-      padding: "0 15px",
-      border: "1px solid #979797",
-      borderRadius: 2,
-      marginRight: 8,
-      "@media(max-width: 480px)": { width: "100%" },
     },
     "& button": { padding: "19px 33px 17px" },
     "& img": {
