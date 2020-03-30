@@ -38,8 +38,7 @@ const defaultPagination = {
 
 class WalletAccount extends React.Component {
   state = {
-    // TODO revert to false
-    mmAuthorized: true,
+    mmAuthorized: false,
     unclaimedPayments: [],
     pendingPayments: [],
     mmAccDetails: { escrowBalance: "", tokenBalance: "" },
