@@ -57,7 +57,7 @@ export const cardDetails = activeStake => [
     title: "Stakers",
     value: activeStake.totalStakers,
     unit: "people",
-    toolTip: "Current number of participants who have contributed AGI tokens to the stake",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
   {
     title: "Current Pool Size",
@@ -69,7 +69,7 @@ export const cardDetails = activeStake => [
     title: "Reward Pool",
     value: fromWei(activeStake.rewardAmount),
     unit: "AGI",
-    toolTip: "",
+    toolTip: "The total reward amount of AGI tokens that will be divided and distributed to stakers",
   },
 ];
 
@@ -108,11 +108,13 @@ export const withdrawStakeAmountDetails = activeStake => [
   {
     title: "Current Pool Size",
     amount: fromWei(activeStake.totalStakedAmount),
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Stakers",
     amount: activeStake.totalStakers,
     unit: "people",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
 ];
 
@@ -131,10 +133,12 @@ export const addStakeAmountDetails = activeStake => [
     title: "Current Pool Size",
     amount: fromWei(activeStake.totalStakedAmount),
     unit: "AGI",
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Stakers",
     amount: activeStake.totalStakers,
     unit: "people",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
 ];
