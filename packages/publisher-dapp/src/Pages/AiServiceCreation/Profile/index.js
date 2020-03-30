@@ -14,6 +14,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
 import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
@@ -71,12 +72,23 @@ const Profile = ({ classes }) => {
     validateTimeout = setTimeout(validateServiceId(newServiceId), timeout);
   };
 
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setAlert({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+    }
+    return setAlert({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
+
   const handleControlChange = event => {
     const { name, value } = event.target;
     setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+    }
+    if (name === "projectURL") {
+      handleWebsiteValidation(value);
     }
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
@@ -275,8 +287,8 @@ const Profile = ({ classes }) => {
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
             />
+            <AlertText type={alert.type} message={alert.message} />
           </div>
-
           <div className={classes.contributorsContainer}>
             <SNETTextfield
               icon
