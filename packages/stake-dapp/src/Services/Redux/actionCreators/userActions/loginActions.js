@@ -71,7 +71,7 @@ const getCurrentAuthenticatedUser = () => async (dispatch, getState) => {
 export const initializeApplication = async dispatch => {
   try {
     const userAttributes = await dispatch(fetchAuthenticatedUser());
-    dispatch(setUserAttributes({ ...userAttributes, isLoggedIn: true }));
+    dispatch(setUserAttributes({ ...userAttributes, isLoggedIn: userAttributes.email_verified }));
     dispatch(setAppInitialized(true));
   } catch (error) {
     dispatch(setAppInitialized(true));
@@ -83,7 +83,7 @@ const loginSucess = loginResponse => async dispatch => {
     ? JSON.parse(loginResponse.attributes["custom:staking_tnc"])
     : undefined;
   const userAttributes = {
-    isLoggedIn: true,
+    isLoggedIn: loginResponse.attributes.email_verified,
     email: loginResponse.attributes.email,
     nickname: loginResponse.attributes.nickname,
     isEmailVerified: loginResponse.attributes.email_verified,
@@ -94,7 +94,7 @@ const loginSucess = loginResponse => async dispatch => {
 };
 
 const handleUserNotConfirmed = email => async dispatch => {
-  return await Promise.all([dispatch(setUserLoggedIn(true)), dispatch(setUserEmail(email))]);
+  return await Promise.all([dispatch(setUserLoggedIn(false)), dispatch(setUserEmail(email))]);
 };
 
 export const login = (email, password) => async dispatch => {
