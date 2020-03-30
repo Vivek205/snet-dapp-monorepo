@@ -20,7 +20,7 @@ export const APIEndpoints = {
     endpoint: process.env.REACT_APP_VERIFICATION_ENDPOINT,
   },
   ORCHESTRATOR: {
-    name: "orchestratot",
+    name: "orchestrator",
     endpoint: process.env.REACT_APP_ORCHESTRATOR_ENDPOINT,
   },
 };
