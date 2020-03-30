@@ -46,6 +46,8 @@ const Profile = ({ classes }) => {
 
   const [alert, setAlert] = useState({});
 
+  const [websiteValidation, setWebsiteValidation] = useState({});
+
   const setServiceTouchedFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
@@ -75,9 +77,9 @@ const Profile = ({ classes }) => {
   const handleWebsiteValidation = value => {
     const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
     if (isNotValid) {
-      return setAlert({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
     }
-    return setAlert({ type: alertTypes.SUCCESS, message: "website is valid" });
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
   };
 
   const handleControlChange = event => {
@@ -287,7 +289,7 @@ const Profile = ({ classes }) => {
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
             />
-            <AlertText type={alert.type} message={alert.message} />
+            <AlertText type={websiteValidation.type} message={websiteValidation.message} />
           </div>
           <div className={classes.contributorsContainer}>
             <SNETTextfield
