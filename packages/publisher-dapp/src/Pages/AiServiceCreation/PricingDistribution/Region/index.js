@@ -16,6 +16,8 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
 
+import AlertText from "shared/dist/components/AlertText";
+
 const selectState = state => ({
   serviceGroups: state.aiServiceDetails.groups,
   orgGroups: state.organization.groups,
@@ -29,6 +31,7 @@ const Region = () => {
   const addressRef = useRef(null);
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
+  const [freeCallsValidation, setfreeCallsValidation] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
@@ -129,9 +132,18 @@ const Region = () => {
     updateGroupId();
   };
 
+  const handleFreeCallsValidation = value => {
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
+    if (isNotValid) {
+      return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
+    }
+    return setfreeCallsValidation({ type: alertTypes.SUCCESS, message: "" });
+  };
+
   const handleFreeCallsChange = event => {
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
@@ -194,6 +206,7 @@ const Region = () => {
               label="Demo Free Calls"
               onChange={handleFreeCallsChange}
             />
+            <AlertText type={freeCallsValidation.type} message={freeCallsValidation.message} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
