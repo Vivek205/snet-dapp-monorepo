@@ -146,11 +146,25 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
     if (stakeAmount.lte(0)) return 0;
 
+    const myStake = new BigNumber(stakeDetails.myStake);
+    const myStakeProcessed = new BigNumber(stakeDetails.myStakeProcessed);
+
     const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
-    let totalStakedAmount = new BigNumber(
-      stakeDetails.totalStakedAmount === 0 ? stakeDetails.myStake : stakeDetails.totalStakedAmount
-    );
+
+    let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
+
+    if (myStake.gt(myStakeProcessed)) {
+      totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
+    }
+
+    if (myStake.lt(myStakeProcessed)) {
+      totalStakedAmount = totalStakedAmount.minus(myStakeProcessed.minus(myStake));
+    }
+
+    if (totalStakedAmount.lte(0)) {
+      totalStakedAmount = new BigNumber(stakeDetails.myStake);
+    }
 
     // Assuming that the new Stake will be part of total stake amount
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
@@ -217,7 +231,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                   </div>
                   <div className={classes.value}>
                     <Typography>{item.amount}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>{item.unit}</Typography>
                   </div>
                 </div>
               ))}

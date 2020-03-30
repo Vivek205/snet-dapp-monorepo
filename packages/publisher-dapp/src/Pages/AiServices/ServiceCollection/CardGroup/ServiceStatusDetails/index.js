@@ -19,21 +19,20 @@ import { generateDetailedErrorMessageFromValidation } from "../../../../../Utils
 
 const selectState = state => ({
   serviceDetails: state.aiServiceList,
-  groupDetails: state.aiServiceDetails,
 });
 const ServiceStatusDetails = props => {
   const dispatch = useDispatch();
   const { classes, status, groups, editServiceLink, serviceUuid, orgUuid } = props;
   const [activeTab] = useState(2);
-  const { serviceDetails, groupDetails } = useSelector(selectState);
+  const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
     ["blockchain_network_selected", "main"],
     ["passthrough_enabled", "true"],
-    ["organization_id", { orgUuid }],
-    ["service_id", { serviceUuid }],
+    ["organization_id", orgUuid],
+    ["service_id", serviceUuid],
   ];
   /*
   const tabs = [
@@ -46,35 +45,51 @@ const ServiceStatusDetails = props => {
   const tabs = [{ name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> }];
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
   const validateDaemonConfig = () => {
+    const result = serviceDetails.data.filter(({ uuid }) => serviceUuid === uuid);
+    let DaemonConfigvalidateAlert = [];
+    let invalidConfigList = false;
+    let errorMessage = [];
     try {
-      let DaemonConfigvalidateAlert = [];
-      groupDetails.groups.forEach(group => {
-        Object.entries(group.endpoints).forEach(async ([endpoint, value]) => {
+      let signature = "";
+      let currentBlock;
+      result[0].groups.forEach(async group => {
+        const entries = Object.entries(group.endpoints);
+        for (let index = 0; index < entries.length; index++) {
+          const entry = entries[index];
+          const [endpoint, value] = entry;
           if (value.valid) {
             return;
           }
           const configurationServiceRequest = new ConfigurationServiceRequest(endpoint);
-          const res = await configurationServiceRequest.getConfiguration();
-
-          res.currentConfigurationMap.forEach(element => {
-            configValidation.forEach(element1 => {
-              if (element[0] === element1[0]) {
-                if (element[1] !== element1[1]) {
-                  if (!DaemonConfigvalidateAlert.includes(element1[0] + " should be " + element1[1]))
+          if (!signature) {
+            currentBlock = await configurationServiceRequest.getCurrentBlockNumber();
+            signature = await configurationServiceRequest.generateSignatureForGetConfiguration(currentBlock);
+          }
+          try {
+            const res = await configurationServiceRequest.getConfiguration(signature, currentBlock);
+            res.currentConfigurationMap.forEach(element => {
+              configValidation.forEach(element1 => {
+                if (element[0] === element1[0]) {
+                  if (element[1] !== element1[1]) {
+                    if (!DaemonConfigvalidateAlert.includes(element1[0] + " should be " + element1[1]))
+                      invalidConfigList = true;
                     DaemonConfigvalidateAlert.push(element1[0] + " should be " + element1[1]);
+                  }
                 }
-              }
+              });
             });
-          });
-
-          if (!DaemonConfigvalidateAlert) {
-            const result = serviceDetails.data.filter(({ uuid }) => serviceUuid === uuid);
-            await dispatch(aiServiceDetailsActions.saveServiceDetails(result[0].orgUuid, serviceUuid, result[0], true));
-          } else {
-            const errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
+          } catch (error) {
+            DaemonConfigvalidateAlert.push(endpoint + " is not a valid endpoint ");
+            errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
             setAlert({ type: alertTypes.ERROR, children: errorMessage });
           }
-        });
+          if (!invalidConfigList) {
+            await dispatch(aiServiceDetailsActions.saveServiceDetails(result[0].orgUuid, serviceUuid, result[0], true));
+          } else {
+            errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
+            setAlert({ type: alertTypes.ERROR, children: errorMessage });
+          }
+        }
       });
     } catch (error) {
       if (checkIfKnownError) {
@@ -108,7 +123,6 @@ const ServiceStatusDetails = props => {
         </Link>
         {props.status === "PUBLISHED" ? (
           <div className={classes.configValidButton}>
-            <SNETButton children="pause service" color="primary" variant="contained" />
             <SNETButton children="validate daemon" color="primary" variant="contained" onClick={validateDaemonConfig} />
           </div>
         ) : null}

@@ -9,9 +9,7 @@ export const useStyles = MUITheme => ({
   },
   benefitsMedia: {
     textAlign: "center",
-    "& img": {
-      [MUITheme.breakpoints.down("xs")]: { width: "100%" },
-    },
+    "& img": { width: "100%" },
   },
   benefitsContent: {
     "& h2": {
@@ -25,7 +23,7 @@ export const useStyles = MUITheme => ({
         display: "flex",
         listStyle: "none",
         "& svg": {
-          paddingTop: 5,
+          paddingTop: 2,
           color: MUITheme.palette.success.main,
           fontSize: 20,
         },
@@ -73,7 +71,7 @@ export const useStyles = MUITheme => ({
       boxSizing: "border-box",
       width: 365,
       padding: "0 15px",
-      border: "none",
+      border: "1px solid #979797",
       borderRadius: 2,
       marginRight: 8,
       "@media(max-width: 480px)": { width: "100%" },

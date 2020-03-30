@@ -4,6 +4,7 @@ import BigNumber from "bignumber.js";
 // Do the Calculation in AGI rather than wei
 const computeReward = activeStake => {
   const myStake = new BigNumber(activeStake.myStake);
+  const myStakeProcessed = new BigNumber(activeStake.myStakeProcessed);
 
   if (myStake.lte(0)) return 0;
 
@@ -11,9 +12,17 @@ const computeReward = activeStake => {
   const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
   let totalStakedAmount = new BigNumber(activeStake.totalStakedAmount);
 
-  if (totalStakedAmount.eq(0)) {
+  if (myStake.gt(myStakeProcessed)) {
+    totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
+  }
+  if (myStake.lt(myStakeProcessed)) {
+    totalStakedAmount = totalStakedAmount.minus(myStakeProcessed.minus(myStake));
+  }
+
+  if (totalStakedAmount.lte(0)) {
     totalStakedAmount = new BigNumber(activeStake.myStake);
   }
+
   let rewardAmount = new BigNumber(0);
 
   if (totalStakedAmount.lt(windowMaxCap)) {
@@ -89,10 +98,12 @@ export const withdrawStakeAmountDetails = activeStake => [
   {
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
+    unit: "AGI",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
+    unit: "AGI",
   },
   {
     title: "Current Pool Size",
@@ -100,7 +111,8 @@ export const withdrawStakeAmountDetails = activeStake => [
   },
   {
     title: "Stakers",
-    amount: fromWei(activeStake.totalStakers),
+    amount: activeStake.totalStakers,
+    unit: "people",
   },
 ];
 
@@ -108,17 +120,21 @@ export const addStakeAmountDetails = activeStake => [
   {
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
+    unit: "AGI",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
+    unit: "AGI",
   },
   {
     title: "Current Pool Size",
     amount: fromWei(activeStake.totalStakedAmount),
+    unit: "AGI",
   },
   {
     title: "Stakers",
-    amount: fromWei(activeStake.totalStakers),
+    amount: activeStake.totalStakers,
+    unit: "people",
   },
 ];

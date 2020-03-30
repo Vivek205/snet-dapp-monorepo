@@ -160,6 +160,7 @@ const generateSaveServicePayload = serviceDetails => {
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
           test_endpoints: group.testEndpoints,
+          daemon_addresses: group.daemonAddresses,
         };
       })
       .filter(el => el !== undefined);
@@ -185,8 +186,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    ipfs_hash: serviceDetails.ipfsHash,
+    contributors: isEmpty(serviceDetails.contributors) ? [] : serviceDetails.contributors.split(",").map(c => c),
     groups: generateGroupsPayload(),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
@@ -274,6 +274,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
+      daemonAddresses: group.daemon_addresses || [],
       testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
