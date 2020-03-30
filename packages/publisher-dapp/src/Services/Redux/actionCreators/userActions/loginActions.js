@@ -89,9 +89,10 @@ export const setUserAttributes = userAttributes => dispatch => {
 };
 
 export const updateUserTnCAttribute = tncAgreementVesrion => async dispatch => {
+  const user = await Auth.currentAuthenticatedUser();
   const tncValue = { ver: tncAgreementVesrion, accepted: true };
   try {
-    await Auth.currentCredentials();
+    await Auth.updateUserAttributes(user, { "custom:publisher_tnc": JSON.stringify(tncValue) });
     await dispatch(setUserAttributes({ publisherTnC: tncValue }));
   } catch (error) {
     throw error;
