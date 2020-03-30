@@ -107,10 +107,23 @@ class WalletAccount extends React.Component {
     return pendingPayments;
   };
 
-  claimMpeChannel = async (channelId, signedAmount, signatureHex) => {
-    const { v, r, s } = signatureHexToVRS(signatureHex);
+  claimMPEChannels = async payments => {
+    // payload order:- channelId,actualAmount, plannedAmount, v,r,s,isSendback
+    const defaultPayloadAccumulator = [[], [], [], [], [], [], []];
+    const payloadForMultiChannelClaim = payments.reduce((acc, cur) => {
+      const { channelId, signedAmount, signature } = cur;
+      const { v, r, s } = signatureHexToVRS(signature);
+      acc[0].push(channelId);
+      acc[1].push(signedAmount);
+      acc[2].push(signedAmount);
+      acc[3].push(v);
+      acc[4].push(r);
+      acc[5].push(s);
+      acc[6].push(false);
+      return acc;
+    }, defaultPayloadAccumulator);
     const mpe = new MPEContract();
-    const method = await mpe.channelClaim(channelId, signedAmount, signedAmount, v, r, s, false);
+    const method = await mpe.multiChannelClaim(...payloadForMultiChannelClaim);
 
     method.on(blockChainEvents.TRANSACTION_HASH, () => {
       // TODO call daemon start claims
@@ -128,7 +141,6 @@ class WalletAccount extends React.Component {
 
   claimChannelInBlockchain = async () => {
     const { pendingPayments, unclaimedPayments } = this.state;
-
     const paymentsToBeClaimedInBlockchain = [...pendingPayments];
     if (!isEmpty(unclaimedPayments)) {
       const channelIdList = unclaimedPayments.map(el => el.channelId);
@@ -136,12 +148,7 @@ class WalletAccount extends React.Component {
       paymentsToBeClaimedInBlockchain.push(...startedPayments);
     }
     try {
-      // const getClaimSignatureFromDaemon = async () => {
-      //   const payment = await controlServiceRequest.startClaim(channelId, channelNonce);
-      //   return payment.signature;
-      // };
-      // const signatureForBlockchain = signature ? signature : await getClaimSignatureFromDaemon();
-      // this.claimMpeChannel(channelId, signedAmount, signatureForBlockchain);
+      await this.claimMPEChannels(paymentsToBeClaimedInBlockchain);
     } catch (e) {
       // TODO handle error
     }
