@@ -13,6 +13,7 @@ export const useStyles = MUITheme => ({
       width: 519,
       [MUITheme.breakpoints.down("md")]: { width: "100%" },
       [MUITheme.breakpoints.down("sm")]: { width: 519 },
+      "@media(max-width:580)": { width: "100%" },
     },
   },
   benefitsContent: {

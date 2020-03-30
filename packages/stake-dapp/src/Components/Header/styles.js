@@ -45,6 +45,7 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     marginLeft: 30,
     color: MUITheme.palette.text.white,
+    cursor: "pointer",
     fontSize: 16,
     fontWeight: 600,
     letterSpacinng: 1.43,

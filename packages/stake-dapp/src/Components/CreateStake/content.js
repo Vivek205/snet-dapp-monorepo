@@ -78,7 +78,7 @@ export const btnDetails = [
     action: "withdraw",
     color: "primary",
     variant: "text",
-    text: "widthdraw",
+    text: "withdraw",
   },
   {
     action: "addStake",

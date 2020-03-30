@@ -68,10 +68,6 @@ class MetaMaskAccountBalance extends Component {
 
           <div className={classes.walletIdContainer}>
             <div className={classes.label}>
-              <div className={classes.iconTooltipContainer}>
-                <InfoIcon />
-                <p />
-              </div>
               <span>Wallet ID</span>
             </div>
             <span className={classes.walletId}>{metamaskDetails.account}</span>
