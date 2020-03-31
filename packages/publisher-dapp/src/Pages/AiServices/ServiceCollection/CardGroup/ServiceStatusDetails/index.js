@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -47,7 +48,6 @@ const ServiceStatusDetails = props => {
   const validateDaemonConfig = () => {
     const result = serviceDetails.data.filter(({ uuid }) => serviceUuid === uuid);
     let DaemonConfigvalidateAlert = [];
-    let invalidConfigList = false;
     let errorMessage = [];
     try {
       let signature = "";
@@ -72,8 +72,7 @@ const ServiceStatusDetails = props => {
                 if (element[0] === element1[0]) {
                   if (element[1] !== element1[1]) {
                     if (!DaemonConfigvalidateAlert.includes(element1[0] + " should be " + element1[1]))
-                      invalidConfigList = true;
-                    DaemonConfigvalidateAlert.push(element1[0] + " should be " + element1[1]);
+                      DaemonConfigvalidateAlert.push(element1[0] + " should be " + element1[1]);
                   }
                 }
               });
@@ -83,7 +82,7 @@ const ServiceStatusDetails = props => {
             errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
             setAlert({ type: alertTypes.ERROR, children: errorMessage });
           }
-          if (!invalidConfigList) {
+          if (isEmpty(DaemonConfigvalidateAlert)) {
             await dispatch(aiServiceDetailsActions.saveServiceDetails(result[0].orgUuid, serviceUuid, result[0], true));
           } else {
             errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
