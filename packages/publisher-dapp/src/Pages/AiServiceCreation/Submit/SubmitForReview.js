@@ -107,7 +107,7 @@ class SubmitForReview extends React.Component {
       });
     } catch (error) {
       if (checkIfKnownError(error)) {
-        if (GrpcError) {
+        if (error instanceof GrpcError) {
           return this.setState({
             alert: {
               type: alertTypes.ERROR,
