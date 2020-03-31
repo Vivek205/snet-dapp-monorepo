@@ -32,7 +32,7 @@ export class ConfigurationServiceRequest {
 
   _getMethodDescriptor = method => ConfigurationService[method];
 
-  getCurrentBlockNumber = async () => {
+  _getCurrentBlockNumber = async () => {
     await this._initWeb3();
     return await this._web3.eth.getBlockNumber();
   };
@@ -62,8 +62,8 @@ export class ConfigurationServiceRequest {
     const request = new methodDescriptor.requestType();
     // request.setSignature(signature ? signature : await generateSignature());
     const callerAuthentication = new configuration_service_pb.CallerAuthentication();
-    callerAuthentication.setSignature(signature);
     callerAuthentication.setCurrentBlock(currentBlock ? currentBlock : await this._getCurrentBlockNumber());
+    callerAuthentication.setSignature(signature ? signature : await this.generateSignatureForGetConfiguration());
     request.setAuth(callerAuthentication);
 
     return new Promise((resolve, reject) => {
