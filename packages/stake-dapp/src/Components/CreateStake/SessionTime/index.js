@@ -66,10 +66,20 @@ const SessionTime = ({ stakeDetails }) => {
     let closeTime = "-";
 
     if (currentTime < stakeDetails.startPeriod) {
-      closeTime = "Opens: " + moment.unix(stakeDetails.startPeriod).format("DD MMM YYYY");
+      closeTime =
+        "Opens: " +
+        moment
+          .unix(stakeDetails.startPeriod)
+          .local()
+          .format("DD MMM YYYY");
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
-      closeTime = "Closes: " + moment.unix(stakeDetails.submissionEndPeriod).format("DD MMM YYYY");
+      closeTime =
+        "Closes: " +
+        moment
+          .unix(stakeDetails.submissionEndPeriod)
+          .local()
+          .format("DD MMM YYYY");
     }
 
     return closeTime;
