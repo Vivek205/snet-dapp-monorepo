@@ -29,14 +29,24 @@ const InfoBox = ({ stakeDetails }) => {
       <AlertBox type={alertTypes.INFO}>
         <InfoIcon />
         <div>
-          <Typography>
-            - Stake amount must be minimum {fromWei(stakeDetails.minStake)} AGI and maximum{" "}
-            {fromWei(stakeDetails.maxStake)} AGI
-          </Typography>
-          <Typography>- SNET foundation will accept all or a partial amount of your stake.</Typography>
+          <Typography>- Stake amount must be a minimum of {fromWei(stakeDetails.minStake)} AGI</Typography>
+          {/*<Typography>- SNET foundation will accept all or a partial amount of your stake.</Typography>
           <Typography>
             - Rejected stake portions not accepted will be returned to your wallet account automatically (no gas cost).
-          </Typography>
+          </Typography>*/}
+        </div>
+      </AlertBox>
+    );
+  }
+
+  // An Edge case handling for amounts not Approved by token operator
+  if (currentTime >= stakeDetails.approvalEndPeriod && stakeDetails.pendingForApprovalAmount !== 0) {
+    return (
+      <AlertBox type={alertTypes.ERROR}>
+        <InfoIcon />
+        <div>
+          <Typography>Stake Not Approved</Typography>
+          <Typography>Unfortunately your stake was not approved before incubation.</Typography>
         </div>
       </AlertBox>
     );
@@ -51,9 +61,9 @@ const InfoBox = ({ stakeDetails }) => {
           <Typography>
             - Auto Renewal options will be editable one week prior before the incubation period ends
           </Typography>
-          <Typography>
+          {/*<Typography>
             - Any partial amounts not accepted by SNET Foundation will be automatically refunded to your wallet account
-          </Typography>
+          </Typography>*/}
           <Typography>- You can review the Transaction History for full details of this stake session</Typography>
         </div>
       </AlertBox>
@@ -93,7 +103,7 @@ const InfoBox = ({ stakeDetails }) => {
         <InfoIcon />
         <div>
           <Typography>Auto Renewal Disabled</Typography>
-          <Typography>We appologize for the inconvenience. You can review the detailed explaination here.</Typography>
+          <Typography>We appologize for the inconvenience.</Typography>
         </div>
       </AlertBox>
     );

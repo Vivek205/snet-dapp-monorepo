@@ -1,4 +1,6 @@
+import React from "react";
 import Web3 from "web3";
+import { Fragment } from "react";
 
 const web3 = new Web3(process.env.REACT_APP_WEB3_PROVIDER, null, {});
 
@@ -17,3 +19,14 @@ export const getEmailDomain = email => {
   let domain = email.replace(/.*@/, "");
   return domain.toLowerCase();
 };
+
+export const generateDetailedErrorMessageFromValidation = validation => (
+  <Fragment>
+    Please fix the following errors:-
+    <ul>
+      {validation.map(msg => (
+        <li key={msg}>{msg}</li>
+      ))}
+    </ul>
+  </Fragment>
+);

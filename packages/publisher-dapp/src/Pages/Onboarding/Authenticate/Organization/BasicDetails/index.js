@@ -16,17 +16,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 import { ContactsTypes } from "../../../../../Utils/Contacts";
 import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/OrganizationProfile/validationConstraints";
+import OrganizationIdAvailability from "./OrganizationIdAvailability";
 
-const BasicDetails = () => {
+let validateTimeout = "";
+const selectState = state => ({
+  orgDetails: state.organization,
+  isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+});
+const BasicDetails = ({ allowDuns, setAllowDuns }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const { id, name, website, duns, contacts } = useSelector(state => state.organization);
-  const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
+  const [websiteValidation, setWebsiteValidation] = useState({});
+  const { orgDetails, isValidateOrgIdLoading } = useSelector(selectState);
+  const contact = orgDetails.contacts.find(el => el.type === ContactsTypes.GENERAL);
+
   let phone = "";
   if (contact) {
     phone = contact.phone;
   }
-  const [websiteValidation, setWebsiteValidation] = useState({});
-
   const handleWebsiteValidation = value => {
     const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
     if (isNotValid) {
@@ -35,38 +42,76 @@ const BasicDetails = () => {
     return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
   };
 
-  const dispatch = useDispatch();
+  const validateOrgId = orgId => async () => {
+    // Call the API to Validate the Org Id
+    try {
+      const orgAvailability = await dispatch(organizationActions.validateOrgId(orgId));
+      dispatch(organizationActions.setOrgAvailability(orgAvailability));
+    } catch (error) {
+      dispatch(organizationActions.setOrgAvailability(""));
+    }
+  };
+  const debouncedValidate = (newOrgId, timeout = 200) => {
+    if (validateTimeout) {
+      clearTimeout(validateTimeout);
+    }
+    validateTimeout = setTimeout(validateOrgId(newOrgId), timeout);
+  };
 
   const handleChange = event => {
     const { name, value } = event.target;
     if (name === basicDetailsFormData.WEBSITE.name) {
       handleWebsiteValidation(value);
     }
+    if (name === basicDetailsFormData.ORG_ID.name) {
+      debouncedValidate(value);
+    }
     dispatch(organizationActions.setOneBasicDetail(name, value));
   };
 
   const handleContactsChange = event => {
     const { name, value } = event.target;
-    const updatedContacts = [...contacts];
-    const index = contacts.findIndex(el => el.type === ContactsTypes.GENERAL);
+    const updatedContacts = [...orgDetails.contacts];
+    const index = orgDetails.contacts.findIndex(el => el.type === ContactsTypes.GENERAL);
     if (index !== -1) {
-      updatedContacts[index] = { ...contacts[index], [name]: value };
+      updatedContacts[index] = { ...orgDetails.contacts[index], [name]: value };
     } else {
-      updatedContacts[contacts.length] = { type: ContactsTypes.GENERAL, [name]: value };
+      updatedContacts[orgDetails.contacts.length] = { type: ContactsTypes.GENERAL, [name]: value };
     }
     dispatch(organizationActions.setContacts(updatedContacts));
   };
-
   return (
     <Grid container>
-      <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
+      <SNETTextField {...basicDetailsFormData.ORG_ID} value={orgDetails.id} onChange={handleChange} />
+      <OrganizationIdAvailability
+        orgDetails={orgDetails}
+        id={orgDetails.id}
+        availability={orgDetails.availability}
+        classes={classes}
+        loading={isValidateOrgIdLoading}
+      />
+
+      <SNETTextField
+        {...basicDetailsFormData.ORGANIZATION_NAME}
+        value={orgDetails.name}
+        minCount={orgDetails.name.length}
+        maxCount={50}
+        onChange={handleChange}
+      />
       <div className={classes.dunsContainer}>
-        <FormControlLabel control={<Checkbox color="primary" />} label="I have my DUNS number" />
-        <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
+        <FormControlLabel
+          control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
+          label="I have my DUNS number"
+        />
+        <SNETTextField
+          {...basicDetailsFormData.DUNS}
+          value={orgDetails.duns}
+          onChange={handleChange}
+          disabled={!allowDuns}
+        />
       </div>
       <div className={classes.websiteUrlContainer}>
-        <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
+        <SNETTextField {...basicDetailsFormData.WEBSITE} value={orgDetails.website} onChange={handleChange} />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />

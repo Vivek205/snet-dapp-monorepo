@@ -12,6 +12,7 @@ export const useStyles = makeStyles(MUITheme => ({
     "& h5": { color: `${MUITheme.palette.text.white} !important` },
   },
   logoContainer: {
+    cursor: "pointer",
     display: "flex",
     alignItems: "center",
     "& img": { width: 172 },

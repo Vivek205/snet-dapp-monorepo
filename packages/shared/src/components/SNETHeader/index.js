@@ -10,7 +10,15 @@ import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 
-const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedOutActions, portalName }) => {
+const SNETHeader = ({
+  isLoggedIn,
+  color,
+  NavigationBar,
+  LoggedInActions,
+  LoggedOutActions,
+  portalName,
+  onLogoClick,
+}) => {
   const classes = useStyles();
   return (
     <div>
@@ -20,7 +28,7 @@ const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedO
           color={color}
           className={`${classes.appBar} ${color === "purple" ? classes.purple : null}`}
         >
-          <div className={classes.logoContainer}>
+          <div className={classes.logoContainer} onClick={onLogoClick}>
             <CardMedia component="img" image={color === "purple" ? WhiteSnetLogo : SnetSvgLogo} alt="SingularityNET" />
             <Typography variant="h5">{portalName}</Typography>
           </div>
@@ -57,6 +65,7 @@ SNETHeader.propTypes = {
 
   LoggedInActions: PropTypes.elementType,
   LoggedOutActions: PropTypes.elementType,
+  onLogoClick: PropTypes.func,
 };
 
 export default SNETHeader;

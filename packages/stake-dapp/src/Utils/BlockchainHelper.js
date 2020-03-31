@@ -2,8 +2,8 @@ import Web3 from "web3";
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
 
-import stakingNetworks from "./TokenStake/networks/TokenStake";
-import stakingABI from "./TokenStake/abi/TokenStake";
+import stakingNetworks from "singularitynet-stake-contracts/networks/TokenStake";
+import stakingABI from "singularitynet-stake-contracts/abi/TokenStake";
 
 import { toBigNumber } from "./GenHelperFunctions";
 

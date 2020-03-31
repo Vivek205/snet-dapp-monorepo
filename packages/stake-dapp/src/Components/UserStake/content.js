@@ -1,5 +1,6 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
 import BigNumber from "bignumber.js";
+import momemt from "moment";
 
 export const incubationProgressDetails = stakeDetails => ({
   startPeriod: stakeDetails.startPeriod,
@@ -8,19 +9,34 @@ export const incubationProgressDetails = stakeDetails => ({
 });
 
 const computeReward = stakeDetails => {
-  if (stakeDetails.approvedAmount === 0) return 0;
+  const currentTimestamp = momemt().unix();
 
-  const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
+  if (
+    (currentTimestamp > stakeDetails.approvalEndPeriod && stakeDetails.approvedAmount === 0) ||
+    (currentTimestamp < stakeDetails.approvalEndPeriod &&
+      stakeDetails.pendingForApprovalAmount === 0 &&
+      stakeDetails.approvedAmount === 0)
+  )
+    return 0;
+
+  const stakeAmount = new BigNumber(
+    stakeDetails.approvedAmount === 0 ? stakeDetails.pendingForApprovalAmount : stakeDetails.approvedAmount
+  );
   const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
-  const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake === 0 ? 1 : stakeDetails.windowTotalStake);
+
+  let windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
+  if (currentTimestamp < stakeDetails.approvalEndPeriod) {
+    windowTotalStake = windowTotalStake.plus(new BigNumber(stakeDetails.totalStakedAmount));
+  }
+
   const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
   let rewardAmount = new BigNumber(0);
 
   if (windowTotalStake.lt(windowMaxCap)) {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowTotalStake);
+    rewardAmount = stakeAmount.times(windowRewardAmount).div(windowTotalStake);
   } else {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowMaxCap);
+    rewardAmount = stakeAmount.times(windowRewardAmount).div(windowMaxCap);
   }
 
   return rewardAmount;
@@ -29,38 +45,47 @@ const computeReward = stakeDetails => {
 export const cardDetails = stakeDetails => [
   {
     title: "Accepted Stake Amount",
-    value: fromWei(stakeDetails.approvedAmount),
+    value: fromWei(
+      new BigNumber(stakeDetails.approvedAmount).plus(new BigNumber(stakeDetails.pendingForApprovalAmount))
+    ),
     unit: "AGI",
+    toolTip: "The amount of AGI tokens that the SingularityNet foundation accepted from your stake.",
   },
   {
     title: "Reward Amount",
     value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
+    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
   },
   {
     title: "Refunded Amount",
     value: fromWei(stakeDetails.refundAmount),
     unit: "AGI",
+    toolTip:
+      "The amount of AGI tokens refunded automatically to your wallet account from the unused portion of your original stake not accepted by the SingularityNet foundation.",
   },
   {
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
   {
     title: "Current Pool Size",
     value: fromWei(stakeDetails.windowTotalStake),
     unit: "AGI",
+    toolTip: "Current total amount of AGI tokens that have contributed by all stakers",
   },
   {
     title: "Reward Pool",
     value: fromWei(stakeDetails.rewardAmount),
     unit: "AGI",
+    toolTip: "The total reward amount of AGI tokens that will be divided and distributed to stakers",
   },
 ];
 
 export const agreementDetails = {
   label: "Auto Renew to next stake session",
   description:
-    "Renewing stakes (and profit margins) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
+    "Renewing stakes (and rewards) to the next avaliable stake session gives you priority over new stakers. Renewing stakes avoids the minimum and maximum AGI requirements. Renewing saves you in ETH gas cost.",
 };

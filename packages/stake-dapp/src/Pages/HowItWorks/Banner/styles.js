@@ -8,7 +8,7 @@ export const useStyles = MUITheme => ({
   },
   bannerDesFormContainer: {
     maxWidth: "1400px",
-    padding: "32px 60px",
+    padding: "35px 60px",
     margin: "0 auto",
     display: "flex",
     "& > div": {
@@ -26,24 +26,22 @@ export const useStyles = MUITheme => ({
   bannerTitle: {
     color: MUITheme.palette.text.white,
     fontSize: 36,
-    fontWeight: 600,
     letterSpacing: -0.56,
     lineHeight: "48px",
   },
   bannerDescPara1: {
-    paddingTop: 32,
+    padding: "32px 35px 0 0",
     color: MUITheme.palette.text.white,
     fontSize: 22,
-    fontWeight: 600,
     lineHeight: "32px",
-    [MUITheme.breakpoints.down("md")]: { paddingTop: 15 },
+    [MUITheme.breakpoints.down("md")]: { padding: "15px 0 0" },
   },
   bannerDescPara2: {
     padding: "32px 60px 0 0",
     color: MUITheme.palette.text.white,
     fontSize: 22,
     fontWeight: 200,
-    lineHeight: "32px",
+    lineHeight: "28px",
     textShadow: "0 2px 2px rgba(0,0,0,0.3)",
     [MUITheme.breakpoints.down("md")]: { paddingTop: 15 },
   },
@@ -66,7 +64,7 @@ export const useStyles = MUITheme => ({
     "@media(max-width: 1365px)": { width: "97%" },
     [MUITheme.breakpoints.down("lg")]: {
       width: "auto",
-      margin: "25px auto",
+      margin: "0 auto",
     },
     "@media(max-width: 675px)": { width: "100%" },
   },
@@ -105,7 +103,7 @@ export const useStyles = MUITheme => ({
     },
   },
   stakingDetails: {
-    padding: "0 22px",
+    padding: "17px 22px 0",
     display: "flex",
     "& > div": {
       width: "34.42%",
@@ -138,7 +136,10 @@ export const useStyles = MUITheme => ({
       width: "100%",
       alignItems: "center",
       "& > div": { width: "100%" },
-      "& input": { textAlign: "center" },
+      "& input": {
+        fontSize: 16,
+        textAlign: "center",
+      },
     },
     "& .MuiInput-underline": {
       "&::before": { display: "none" },
@@ -216,6 +217,47 @@ export const useStyles = MUITheme => ({
     "@media(max-width:480px)": {
       paddingRight: 0,
       marginBottom: 15,
+    },
+  },
+  label: {
+    paddingBottom: 8,
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    "& span": {
+      color: MUITheme.palette.text.darkGrey,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 16,
+      lineHeight: "20px",
+    },
+  },
+  iconTooltipContainer: {
+    width: "auto !important",
+    "& > svg": {
+      paddingRight: 8,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 377,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 25,
+      left: "50%",
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+      transform: "translateX(-70%)",
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
     },
   },
 });

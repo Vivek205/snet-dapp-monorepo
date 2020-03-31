@@ -11,12 +11,24 @@ import { useStyles } from "./styles";
 const IncubationProgressDetails = ({ details }) => {
   const classes = useStyles();
   if (details) {
-    const daysPassed = Math.floor((moment().unix() - details.submissionEndPeriod) / (60 * 60 * 24));
-    const stakeDays = Math.floor((details.endPeriod - details.submissionEndPeriod) / (60 * 60 * 24));
-    const started = moment.unix(details.submissionEndPeriod).format("DD MMM YYYY");
-    const finished = moment.unix(details.endPeriod).format("DD MMM YYYY");
+    const daysPassed = Math.ceil((moment().unix() - details.submissionEndPeriod) / (60 * 60 * 24));
+    const stakeDays = Math.ceil((details.endPeriod - details.submissionEndPeriod) / (60 * 60 * 24));
+    const started = moment
+      .unix(details.submissionEndPeriod)
+      .local()
+      .format("DD MMM YYYY HH:mm:ss");
+    const finished = moment
+      .unix(details.endPeriod)
+      .local()
+      .format("DD MMM YYYY HH:mm:ss");
 
-    const progressVal = daysPassed > 0 ? Math.floor((daysPassed * 100) / stakeDays) : 0;
+    // Old Formula
+    //const progressVal = daysPassed > 0 ? Math.floor((daysPassed * 100) / stakeDays) : 0;
+
+    // Calculation of Progress Value
+    const progressVal = Math.floor(
+      ((moment().unix() - details.submissionEndPeriod) * 100) / (details.endPeriod - details.submissionEndPeriod)
+    );
 
     return (
       <div className={classes.incubationContainer}>

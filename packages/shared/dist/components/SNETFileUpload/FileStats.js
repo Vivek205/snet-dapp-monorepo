@@ -31,50 +31,52 @@ var FileStats = function FileStats(props) {
     return null;
   }
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.imgUploaderContainer
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.uploadDetails
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: uploadSuccess ? classes.successfullUpload : classes.uploadStatusContainer
-  }, _react.default.createElement(_Folder.default, null), _react.default.createElement(_Typography.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Folder.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: uploadSuccess ? classes.uploaded : classes.uploadStatus
-  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded")), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "File Name:"), _react.default.createElement(_Typography.default, {
+  }, "File Name:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value
-  }, fileName)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileName)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Items:"), _react.default.createElement(_Typography.default, {
+  }, "Items:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Uploaded:"), _react.default.createElement(_Typography.default, {
+  }, "Uploaded:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "Size:"), _react.default.createElement(_Typography.default, {
+  }, "Size:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value
-  }, fileSize)), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }, fileSize)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
-  }, "User:"), _react.default.createElement(_Typography.default, {
+  }, "User:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value
-  })), _react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.uploadBtns
-  }, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("a", {
     href: fileDownloadURL,
     download: true,
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
-  }, _react.default.createElement(_SNETButton.default, {
+  }, /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
     children: "download files",
     color: "primary",
-    variant: "text"
-  })), _react.default.createElement(_SNETButton.default, {
+    variant: "text",
+    disabled: !uploadSuccess
+  })), /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
     children: "delete files",
     color: "red",
-    variant: "text"
+    variant: "text",
+    disabled: !uploadSuccess
   }))));
 };
 

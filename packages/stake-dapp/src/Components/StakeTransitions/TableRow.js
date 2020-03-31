@@ -16,6 +16,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
 
   const getStakeAmount = () => {
     let stakeAmount = new BigNumber(0);
+    let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
     // Check if the approved Amount exists
@@ -24,6 +25,14 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+    const withdrawStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "WithdrawStake");
+
+    // Check for withdraw Amount
+    if (withdrawStakeEvent.length > 0) {
+      withdrawStakeAmount = new BigNumber(
+        withdrawStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+      );
+    }
 
     // Check for Auto Renewal Event
     if (autoRenewStakeEvent.length > 0) {
@@ -38,19 +47,28 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       stakeAmount = new BigNumber(
         submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
       );
+      stakeAmount = stakeAmount.minus(withdrawStakeAmount);
     }
 
     return stakeAmount.plus(autoRenewApprovedAmount);
   };
 
   const calculateReward = () => {
+    const currentTimestamp = moment().unix();
+
     const windowRewardAmount = new BigNumber(stakeWindow.rewardAmount);
-    const windowTotalStake = new BigNumber(stakeWindow.windowTotalStake !== 0 ? stakeWindow.windowTotalStake : 1);
+
+    let windowTotalStake = new BigNumber(stakeWindow.windowTotalStake);
+    if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+      windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
+    }
+
     const windowMaxCap = new BigNumber(stakeWindow.windowMaxCap);
 
     let rewardAmount = new BigNumber(0);
     let rewardAmountFromAutoRenewal = new BigNumber(0);
     let stakeAmount = new BigNumber(0);
+    let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
     // Check if Claim Event exists to get the Reward Amount
@@ -65,6 +83,14 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     );
     const approvedStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ApproveStake");
     const submitStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "SubmitStake");
+    const withdrawStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "WithdrawStake");
+
+    // Check for withdraw Amount
+    if (withdrawStakeEvent.length > 0) {
+      withdrawStakeAmount = new BigNumber(
+        withdrawStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+      );
+    }
 
     // Check for Auto Renewal Event
     if (autoRenewStakeEvent.length > 0) {
@@ -86,15 +112,20 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
-      const currentTime = moment().unix();
-      if (currentTime < stakeWindow.approvalEndPeriod) {
-        stakeAmount = submitStakeEvent.map(s => new BigNumber(s.eventData.stakeAmount)).reduce((a, b) => a.plus(b), 0);
+      if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+        stakeAmount = new BigNumber(
+          submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
+        );
+
+        // Reduce the withdraw amount in case if it exists
+        stakeAmount = stakeAmount.minus(withdrawStakeAmount);
+
+        // TODO - Need to get Total Pending Amount from API
         rewardAmount = stakeAmount
           .times(windowRewardAmount)
           .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
       }
     }
-
     return rewardAmount.plus(rewardAmountFromAutoRenewal);
   };
 

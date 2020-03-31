@@ -1,16 +1,32 @@
-import React from "react";
-import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
-import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
-import { useSelector } from "react-redux";
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
+import { orgVerificationActions } from "../../Services/Redux/actionCreators/userActions";
+
+const selectState = state => ({
+  status: state.organization.state.state,
+  rejectReason: state.organization.rejectReason,
+  uuid: state.organization.uuid,
+});
 
 const VerificationRejected = () => {
-  const status = useSelector(state => state.organization.state.state);
+  const { status, uuid, rejectReason } = useSelector(selectState);
   const history = useHistory();
   const { orgUuid } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === organizationSetupStatuses.ONBOARDING_REJECTED) {
+      // TODO get the comment from verification API.
+      dispatch(orgVerificationActions.getVerificationStatus(uuid));
+    }
+  }, [dispatch, status, uuid]);
 
   const handleEditOrgDetails = () => {
     if (status === organizationSetupStatuses.ONBOARDING_REJECTED) {
@@ -21,9 +37,12 @@ const VerificationRejected = () => {
 
   return (
     <SNETStatusBanner
-      title="Your Jumio ID verification was unsuccesful."
+      title="Your organization was rejected."
       img={VerificationFailed}
-      description="Please check and re-prepare the required documents, then retry the Jumio ID verification process. If you believe there was an error by Jumio or by SingularityNET, please contact our support staff who will assist you."
+      description={`Unfortunatetly your organization is rejected during the internal verification.
+      Reason: ${rejectReason}.
+       Please check your inbox for mail from singularitynet team with detailed explanation for your rejection.
+       You can reinitiate the organization creation once all criteria is met.`}
       actions={[
         {
           children: "access jumio verification",

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { organizationActions } from "../../../Services/Redux/actionCreators";
-import { TermsAndConditionsDetails } from "./content";
+import { TermsAndConditionsDetails, tncAgreementVesrion } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -10,16 +10,18 @@ import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { userEntities } from "../../../Utils/user";
 import { organizationTypes } from "../../../Utils/organizationSetup";
+import { loginActions } from "../../../Services/Redux/actionCreators/userActions";
 
 const selectState = state => ({
   isInitialized: state.user.isInitialized,
   isLoggedIn: state.user.isLoggedIn,
   entity: state.user.entity,
   organization: state.organization,
+  email: state.user.email,
 });
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
-  const { isInitialized, isLoggedIn, entity, organization } = useSelector(selectState);
+  const { isInitialized, isLoggedIn, entity, organization, email } = useSelector(selectState);
 
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
@@ -33,8 +35,14 @@ const AcceptServiceAgreement = ({ history }) => {
   const handleAccept = async () => {
     if (entity === userEntities.INDIVIDUAL) {
       await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
+      dispatch(organizationActions.setOrgOwner(email));
     }
-    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
+    try {
+      dispatch(loginActions.updateUserTnCAttribute(tncAgreementVesrion));
+      history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
+    } catch (error) {
+      history.push(GlobalRoutes.OVERVIEW.path);
+    }
   };
 
   const handleNavigateBack = () => {

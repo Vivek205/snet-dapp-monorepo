@@ -13,13 +13,14 @@ import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import ValidationError from "shared/dist/utils/validationError";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
-export const SET_AI_SERVICE_TOUCH_FLAG = "SET_AI_SERVICE_TOUCH_FLAG";
+export const SET_AI_SERVICE_TOUCHED_FLAG = "SET_AI_SERVICE_TOUCHED_FLAG";
 export const SET_AI_SERVICE_GROUPS = "SET_AI_SERVICE_ENDPOINTS";
 export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
 export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
@@ -33,8 +34,8 @@ export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUN
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
-export const setServiceTouchFlag = touchFlag => ({
-  type: SET_AI_SERVICE_TOUCH_FLAG,
+export const setServiceTouchedFlag = touchFlag => ({
+  type: SET_AI_SERVICE_TOUCHED_FLAG,
   payload: touchFlag,
 });
 
@@ -72,7 +73,7 @@ const setAiServiceFreeCallSignerAddress = address => ({
   payload: address,
 });
 
-export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
+export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: comment });
 
 const setAiServiceStateState = state => ({ type: SET_AI_SERVICE_STATE_STATE, payload: state });
 
@@ -137,7 +138,7 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
 };
 
 // TODO remove orgId. MPS has to figure out orgId from orgUuid
-const generateSaveServicePayload = (serviceDetails, orgId) => {
+const generateSaveServicePayload = serviceDetails => {
   const generatePricingpayload = pricing =>
     pricing.map(price => ({
       default: price.default,
@@ -159,6 +160,7 @@ const generateSaveServicePayload = (serviceDetails, orgId) => {
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
           test_endpoints: group.testEndpoints,
+          daemon_addresses: group.daemonAddresses,
         };
       })
       .filter(el => el !== undefined);
@@ -185,21 +187,17 @@ const generateSaveServicePayload = (serviceDetails, orgId) => {
       },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    ipfs_hash: serviceDetails.ipfsHash,
     groups: generateGroupsPayload(),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
-    comment: {
-      service_provider: serviceDetails.comments.serviceProvider,
+    comments: {
+      SERVICE_PROVIDER: serviceDetails.comments.SERVICE_PROVIDER,
+      SERVICE_APPROVER: serviceDetails.comments.SERVICE_APPROVER,
     },
     mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
 
-  // TODO remove orgId. MPS has to figure out orgId from orgUuid
-  if (orgId) {
-    payloadForSubmit.org_id = "curation";
-  }
   return payloadForSubmit;
 };
 
@@ -214,6 +212,11 @@ const saveServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => a
 
 export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
     dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
@@ -221,6 +224,7 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
+    dispatch(setAiServiceStateState(serviceCreationStatus.DRAFT));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -248,6 +252,7 @@ export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch
     }
     const service = parseServiceDetails(data, serviceUuid);
     dispatch(setAllAttributes(service));
+    return service;
   } catch (error) {
     throw error;
   }
@@ -269,6 +274,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
+      daemonAddresses: group.daemon_addresses || [],
       testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
@@ -316,6 +322,10 @@ const parseServiceDetails = (data, serviceUuid) => {
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
     freeCallSignerAddress: isEmpty(data.groups) ? "" : data.groups[0].free_call_signer_address,
+    comments: {
+      SERVICE_APPROVER: data.comments.SERVICE_APPROVER ? data.comments.SERVICE_APPROVER : "",
+      SERVICE_PROVIDER: data.comments.SERVICE_PROVIDER ? data.comments.SERVICE_PROVIDER : "",
+    },
   };
 
   return service;
@@ -354,11 +364,16 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
   return await API.put(apiName, apiPath, apiOptions);
 };
 
-export const submitServiceDetailsForReview = (orgId, orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
+    dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_SERVICE_FOR_REVIEW));
     // TODO remove orgId. MPS has to figure out orgId from orgUuid
-    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails, orgId);
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);

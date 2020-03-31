@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -31,14 +31,18 @@ exports.ProgressStatusList = ProgressStatusList;
 var ProgressSection = function ProgressSection(_ref) {
   var progressNumber = _ref.progressNumber,
       progressText = _ref.progressText,
-      progressStatus = _ref.progressStatus;
+      progressStatus = _ref.progressStatus,
+      onSectionClick = _ref.onSectionClick;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("li", {
-    className: classes[progressStatus]
-  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_StatusToggler.default, {
+  return /*#__PURE__*/_react.default.createElement("li", {
+    className: "".concat(classes[progressStatus], " ").concat(onSectionClick ? classes.clickableSection : ""),
+    onClick: function onClick() {
+      return onSectionClick(progressNumber, progressText, progressStatus);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_StatusToggler.default, {
     progressStatus: progressStatus,
     progressNumber: progressNumber
-  }), _react.default.createElement("span", {
+  }), /*#__PURE__*/_react.default.createElement("span", {
     className: classes.TabTitle
   }, progressText)));
 };
@@ -46,7 +50,8 @@ var ProgressSection = function ProgressSection(_ref) {
 ProgressSection.propTypes = {
   progressNumber: _propTypes.default.number.isRequired,
   progressText: _propTypes.default.string.isRequired,
-  progressStatus: _propTypes.default.oneOf(["idle", "active", "completed"])
+  progressStatus: _propTypes.default.oneOf(["idle", "active", "completed"]),
+  onSectionClick: _propTypes.default.func
 };
 var _default = ProgressSection;
 exports.default = _default;

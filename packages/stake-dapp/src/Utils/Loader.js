@@ -3,9 +3,21 @@ export const LoaderContent = {
     title: "Logging in",
     content: "Just a moment. We are logging you in",
   },
+  SIGNUP_CONFIRM: {
+    title: "Confirming Account",
+    content: "Just a moment. We are confirming your account",
+  },
   SIGN_OUT: {
     title: "Signing out",
     content: "Just a moment. We are signing you out",
+  },
+  FORGOT_PASSWORD: {
+    title: "Forgot Password",
+    content: "Sending you an email with the verification code",
+  },
+  FORGOT_PASSWORD_SUBMIT: {
+    title: "Forgot Password Submit",
+    content: "Resetting your password",
   },
   METAMASK_TRANSACTION: {
     title: "Waiting for Metamask Interaction",
@@ -36,7 +48,7 @@ export const LoaderContent = {
     loaderText: "Just a moment. Data is getting loaded",
   },
   UPDATE_STAKE_AUTO_RENEWAL: {
-    title: "Updating auto renewal Option",
+    title: "Updating Auto Renewal Option",
     loaderText: "Updating auto renewal option, please wait for transaction to confirm",
   },
 };

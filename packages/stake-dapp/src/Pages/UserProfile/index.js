@@ -21,7 +21,10 @@ const UserProfile = ({ history, location }) => {
   const userProfileRoutes = {
     USER_PROFILE: { path: `${GlobalRoutes.USER_PROFILE.path}`, component: () => <AccountBalance /> },
     ACCOUNT: { path: `${GlobalRoutes.USER_PROFILE.path}/account`, component: () => <AccountBalance /> },
-    SETTINGS: { path: `${GlobalRoutes.USER_PROFILE.path}/setting`, component: () => <UserProfileSettings /> },
+    SETTINGS: {
+      path: `${GlobalRoutes.USER_PROFILE.path}/setting`,
+      component: () => <UserProfileSettings history={history} />,
+    },
   };
 
   const activeIndexEnum = {

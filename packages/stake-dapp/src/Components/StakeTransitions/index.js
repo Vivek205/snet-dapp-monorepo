@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
@@ -28,15 +28,17 @@ const StakeTransitions = () => {
 
   const { myTransactions, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
-  useEffect(() => {
+  const fetchStakeTransactions = useCallback(() => {
     try {
-      // TODO: Convert the same to async Constant based on the need...
       dispatch(stakeActions.fetchStakeTransactions(metamaskDetails));
     } catch (_error) {
-      //console.log("error - ", error);
-      // TODO - Need to handle the error based on overall Web App
+      // Ignore as we show appropriate error
     }
   }, [dispatch, metamaskDetails]);
+
+  useEffect(() => {
+    fetchStakeTransactions();
+  }, [fetchStakeTransactions]);
 
   const handleExpandeTable = siteMapIndex => {
     const currentValue = expandTable[siteMapIndex] ? expandTable[siteMapIndex] : false;

@@ -1,22 +1,47 @@
 export const useStyles = MUITheme => ({
   serviceCreationContainer: {
-    paddingTop: 40,
     "& h3": { lineHeight: "48px" },
     "& > div": {
-      "&:nth-child(2)": { width: 700 },
+      "&:nth-child(2)": {
+        width: 700,
+        "& span": {
+          "&:after": {
+            "@media(max-width:720px)": { width: 80 },
+            "@media(max-width:580px)": { width: 50 },
+          },
+        },
+        "@media(max-width:720px)": { width: "90%" },
+      },
     },
     "& ul": {
       "& li": {
-        "&::before": {
-          [MUITheme.breakpoints.down("xs")]: { width: 50 },
-          "@media (max-width:470px)": { display: "none" },
+        "& div": {
+          "& span": {
+            "&::after": { width: 125 },
+          },
         },
       },
     },
   },
   topSection: {
-    padding: "0 10px",
+    width: 600,
+    padding: "60px 10px 0",
+    margin: "0 auto",
     textAlign: "center",
+    "& span": {
+      marginTop: 16,
+      display: "inline-block",
+      color: MUITheme.palette.text.primary,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 20,
+      lineHeight: "28px",
+    },
+    "& + div": { paddingTop: 33 },
+    [MUITheme.breakpoints.down("xs")]: {
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "0 20px",
+    },
   },
   description: {
     paddingTop: 15,
@@ -24,5 +49,32 @@ export const useStyles = MUITheme => ({
     fontSize: 20,
     fontWeight: 300,
     lineHeight: "28px",
+  },
+  editHeaderContainer: {
+    padding: "17px 60px",
+    marginTop: 83,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    background: "#211D24",
+    "& svg": {
+      marginRight: 8,
+      color: MUITheme.palette.text.disabled,
+    },
+    [MUITheme.breakpoints.down("sm")]: { padding: "17px 15px" },
+    "@media(max-width:720px)": {
+      flexDirection: "column",
+      alignItems: "flex-start",
+    },
+  },
+  editHeaderTitleContainer: { display: "flex" },
+  editHeaderTitle: {
+    color: "rgba(255,255,255,0.87)",
+    fontSize: 24,
+    lineHeight: "24px",
+  },
+  editHeaderBtns: {
+    "& button:last-of-type": { marginLeft: 40 },
+    "@media(max-width:720px)": { marginTop: 25 },
   },
 });

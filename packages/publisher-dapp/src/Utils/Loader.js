@@ -3,9 +3,21 @@ export const LoaderContent = {
     title: "Logging in",
     content: "Just a moment. We are logging you in",
   },
+  SIGNUP_CONFIRM: {
+    loaderHeader: "Confirming Account",
+    loaderText: "Just a moment. We are confirming your account",
+  },
   SIGN_OUT: {
-    title: "Signing out",
-    content: "Just a moment. We are signing you out",
+    loaderHeader: "Signing out",
+    loaderText: "Just a moment. We are signing you out",
+  },
+  FORGOT_PASSWORD: {
+    loaderHeader: "Forgot Password",
+    loaderText: "Sending you an email with the verification code",
+  },
+  FORGOT_PASSWORD_SUBMIT: {
+    loaderHeader: "Forgot Password Submit",
+    loaderText: "Resetting your password",
   },
   METAMASK_TRANSACTION: {
     title: "Waiting for Metamask Interaction",

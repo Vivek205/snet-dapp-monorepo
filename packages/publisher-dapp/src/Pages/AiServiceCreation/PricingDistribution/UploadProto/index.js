@@ -43,6 +43,7 @@ const UploadProto = () => {
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
           dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
+          dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
           setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
@@ -52,14 +53,21 @@ const UploadProto = () => {
     [dispatch, orgUuid, serviceUuid]
   );
 
-  const acceptedFileTypes = "application/zip";
+  const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
 
   return (
     <Fragment>
       <Typography variant="subtitle1">Upload the Proto files</Typography>
       <Typography className={classes.description}>
-        Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter videbatur
-        hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+        Services define their API using protocol buffers. This allows SingularityNET clients to determine the
+        request/response schema programmatically. Read more{" "}
+        <a
+          href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          here
+        </a>
       </Typography>
       <SNETFileUpload
         onDrop={handleDrop}

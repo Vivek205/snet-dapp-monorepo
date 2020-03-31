@@ -39,13 +39,10 @@ const parseGroups = groups => {
   const parsePricing = pricing =>
     pricing.map(price => ({ default: price.default, priceModel: price.price_model, priceInCogs: price.price_in_cogs }));
 
-  const parseEndpoints = endpoints =>
-    endpoints.map(endpointValue => ({ endpoint: endpointValue.endpoint, isAvailable: endpointValue.is_available }));
-
   return groups.map(group => ({
     id: group.group_id,
     pricing: parsePricing(group.pricing),
-    endpoints: parseEndpoints(group.endpoints),
+    endpoints: group.endpoints,
     freeCallsAllowed: group.freecalls_allowed,
   }));
 };
@@ -54,32 +51,32 @@ const parseAiServiceData = service => ({
   orgUuid: service.org_uuid,
   uuid: service.service_uuid,
   id: service.service_id,
-  state: service.service_state,
+  serviceState: service.service_state,
   displayName: service.display_name,
   shortDescription: service.short_description,
   description: service.description,
   projectUrl: service.project_url,
-  heroImage: isEmpty(service.assets.hero_image)
-    ? {}
-    : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
-  protoFiles: isEmpty(service.assets.proto)
-    ? {}
-    : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
-  demoFiles: isEmpty(service.assets.demo_files)
-    ? {}
-    : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },
+  assets: {
+    heroImage: isEmpty(service.assets.hero_image)
+      ? {}
+      : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
+    protoFiles: isEmpty(service.assets.proto)
+      ? {}
+      : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
+    demoFiles: isEmpty(service.assets.demo_files)
+      ? {}
+      : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },
+  },
   rating: isEmpty(service.rating)
     ? {}
     : { rating: service.rating.rating, totalUsersRated: service.rating.total_users_rated },
   ranking: service.ranking,
-  contributors: isEmpty(service.contributors)
-    ? []
-    : service.contributors.map(contributor => ({ name: contributor.name, email: contributor.email_id })),
+  contributors: isEmpty(service.contributors) ? [] : service.contributors.map(c => c.name).join(","),
   groups: isEmpty(service.groups) ? [] : parseGroups(service.groups),
   tags: service.tags,
-  comments: isEmpty(service.comments)
-    ? { serviceProvider: [] }
-    : { serviceProvider: service.comments.service_provider },
+  comments: {
+    SERVICE_APPROVER: isEmpty(service.comments) ? "" : service.comments.SERVICE_APPROVER,
+  },
 });
 
 const parseAiServiceListResponse = response => response.map(parseAiServiceData);
@@ -96,6 +93,7 @@ export const getAiServiceList = (orgUuid, pagination = defaultPagination) => asy
     const aiServiceList = parseAiServiceListResponse(result);
     dispatch(setAiServiceList(aiServiceList));
     dispatch(loaderActions.stopAiServiceListLoader());
+    return aiServiceList;
   } catch (error) {
     dispatch(loaderActions.stopAiServiceListLoader());
     throw error;

@@ -19,12 +19,17 @@ export const APIEndpoints = {
     name: "verification",
     endpoint: process.env.REACT_APP_VERIFICATION_ENDPOINT,
   },
+  ORCHESTRATOR: {
+    name: "orchestrator",
+    endpoint: process.env.REACT_APP_ORCHESTRATOR_ENDPOINT,
+  },
 };
 
 export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
-  CREATE_ORG: "/org/create",
+  CREATE_ORG_INDIVIDUAL: "/create",
+  CREATE_ORG_ORG: "/org",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
   GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,
@@ -40,11 +45,12 @@ export const APIPaths = {
   PUBLISH_TO_BLOCKCHAIN: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/ipfs_publish`,
   FETCH_AI_SERVICE: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}`,
   AI_SERVICE_ID_VALIDATE: (orgUuid, serviceId) => `/org/${orgUuid}/verify?service_id=${serviceId}`,
+  ORGANIZATION_ID_VALIDATE: orgUuid => `/org/verify?org_id=${orgUuid}`,
   SAVE_SERVICE_TRANSACTION: (orgUuid, serviceUuid) => `/org/${orgUuid}/service/${serviceUuid}/transaction`,
   FREE_CALL_SIGNER_ADDRESS: "/freecall/signer_address",
   UPLOAD_FILE: "/upload",
   USER_VERIFICATION_INITIATE: "/initiate",
-  USER_VERIFICATION_STATUS: "/status/?type=JUMIO",
+  USER_VERIFICATION_STATUS: "/status",
   SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
   SAMPLE_DAEMON_CONFIG_TEST: (orgUuid, serviceuuid) =>
     `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config/test`,

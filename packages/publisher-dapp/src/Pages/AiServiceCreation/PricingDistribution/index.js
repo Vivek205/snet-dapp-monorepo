@@ -14,7 +14,7 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 class PricingDistribution extends Component {
   state = {
-    alert: { type: alertTypes.ERROR, message: "Lorem ipsum" },
+    alert: { type: alertTypes.ERROR, message: "An error occurred while saving groups" },
   };
 
   componentDidMount = async () => {
@@ -46,13 +46,16 @@ class PricingDistribution extends Component {
           <Typography variant="h6">Pricing distribution</Typography>
           <div className={classes.wrapper}>
             <Typography className={classes.description}>
-              Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter
-              videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+              Groups provide a mechanism of having multiple instances of a service in a geographically distributed
+              manner. All service metadata can be managed at a group level. At this point we only support a single group
+              per service. Support for multiple groups per Service is coming soon.
             </Typography>
             <Region />
             <UploadProto />
             <AdvancedFields />
-            <AlertBox type={alert.type} message={alert.message} />
+            <div className={classes.alertContainer}>
+              <AlertBox type={alert.ERROR} message={alert.message} />
+            </div>
           </div>
         </Grid>
         <Actions />

@@ -50,7 +50,7 @@ const LaunchTable = ({ classes, handlePublishToBlockchain }) => {
       <div className={classes.alertBoxBtnContainer}>
         <AlertBox
           type={alertTypes.SUCCESS}
-          header="Your AI Service is Approved by SNET"
+          header="Your AI Service is Approved"
           icon={CheckCircleIcon}
           message="Please proceed to Launch to complete the final step."
         />

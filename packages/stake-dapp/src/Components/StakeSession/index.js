@@ -13,7 +13,7 @@ import Card from "./Card";
 import Button from "./Button";
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../Utils/Loader";
-import { loaderActions } from "../../Services/Redux/actionCreators";
+import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, updateAutoRenewal } from "../../Utils/BlockchainHelper";
 
 const StakeSession = ({
@@ -27,8 +27,8 @@ const StakeSession = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // The default options is to be checked
-  const [autoRenewal, setAutoRenewal] = useState(stakeDetails.userExist ? stakeDetails.autoRenewal : true);
+  const autoRenewal = stakeDetails.autoRenewal;
+
   const [alert, setAlert] = useState({ type: alertTypes.ERROR, message: undefined });
 
   const metamaskDetails = useSelector(state => state.metamaskReducer.metamaskDetails);
@@ -100,10 +100,29 @@ const StakeSession = ({
     return false;
   };
 
+  const setAutoRenewal = autoRenewalSelectedOption => {
+    // Call appropriate redux state storage events
+    if (currentTimestamp > stakeDetails.startPeriod && currentTimestamp <= stakeDetails.submissionEndPeriod) {
+      dispatch(stakeActions.updateActiveStakeAutoRenewal({ autoRenewal: autoRenewalSelectedOption }));
+    } else if (
+      currentTimestamp >= stakeDetails.requestWithdrawStartPeriod &&
+      currentTimestamp <= stakeDetails.endPeriod
+    ) {
+      dispatch(
+        stakeActions.updateIncubatingStakeAutoRenewal({
+          stakeMapIndex: stakeDetails.stakeMapIndex,
+          autoRenewal: autoRenewalSelectedOption,
+        })
+      );
+    }
+  };
+
   const handleAutoRenewalChange = async event => {
-    // TODO - Check in case of Open Stake or Incubating - condition might change
+    setAlert({ type: alertTypes.INFO, message: undefined });
+
+    //Check in case of Open Stake or Incubating
     if (
-      stakeDetails.myStake === 0 &&
+      stakeDetails.myStake === "0" &&
       currentTimestamp > stakeDetails.startPeriod &&
       currentTimestamp < stakeDetails.submissionEndPeriod
     ) {
@@ -149,7 +168,7 @@ const StakeSession = ({
         <IncubationProgressDetails details={incubationProgressDetails} />
         <div className={classes.cards}>
           {cardDetails.map(item => (
-            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} />
+            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} toolTip={item.toolTip} />
           ))}
         </div>
         <Agreement
@@ -158,10 +177,10 @@ const StakeSession = ({
           handleChange={handleAutoRenewalChange}
           disableAutoRenewal={disableAutoRenewal()}
         />
-        <div className={classes.infoBox}>
+        <div className={classes.alertBoxConatiner}>
           <InfoBox stakeDetails={stakeDetails} />
+          <AlertBox type={alert.type} message={alert.message} />
         </div>
-        <AlertBox type={alert.type} message={alert.message} />
         <Button
           details={btnDetails}
           handleClick={handleClick}

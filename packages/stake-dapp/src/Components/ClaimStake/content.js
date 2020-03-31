@@ -7,7 +7,9 @@ const computeReward = stakeDetails => {
 
   const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
   const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
-  const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake === 0 ? 1 : stakeDetails.windowTotalStake);
+  const windowTotalStake = new BigNumber(
+    stakeDetails.windowTotalStake === 0 ? stakeDetails.approvedAmount : stakeDetails.windowTotalStake
+  );
   const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
   let rewardAmount = new BigNumber(0);
@@ -23,34 +25,44 @@ const computeReward = stakeDetails => {
 
 export const cardDetails = stakeDetails => [
   {
-    title: "Claim Account",
-    value: fromWei(stakeDetails.approvedAmount),
+    title: "Total Claim Account",
+    value: parseInt(fromWei(stakeDetails.approvedAmount)) + parseInt(fromWei(stakeDetails.pendingForApprovalAmount)),
     unit: "AGI",
+    toolTip:
+      "Total AGI tokens you can claim for this stake session.  This includes the original accepted stake amount plus the reward earnings amount.",
   },
   {
     title: "Reward Earnings",
     value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
+    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
   },
   {
     title: "Incubating Completed",
-    value: moment.unix(stakeDetails.endPeriod).format("DD MMM YYYY"),
+    value: moment
+      .unix(stakeDetails.endPeriod)
+      .local()
+      .format("DD MMM YYYY"),
     unit: " ",
+    toolTip: "The date when the incubation period was completed",
   },
   {
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
+    toolTip: "The number of people who have contributed AGI tokens to this stake session",
   },
   {
     title: "Stake Pool Size",
     value: fromWei(stakeDetails.windowTotalStake),
     unit: "AGI",
+    toolTip: "The total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Reward Pool",
     value: fromWei(stakeDetails.rewardAmount),
     unit: "AGI",
+    toolTip: "The total reward amount of AGI tokens that will be divided and distributed to stakers",
   },
 ];
 
@@ -62,9 +74,15 @@ export const btnDetails = [
   //   text: "re-stake",
   // },
   {
+    action: "withdrawStake",
+    color: "primary",
+    variant: "contained",
+    text: "reclaim stake",
+  },
+  {
     action: "claimStake",
     color: "primary",
     variant: "contained",
-    text: "widthdraw claim",
+    text: "withdraw claim",
   },
 ];

@@ -21,7 +21,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   content: {
-    padding: "10px 10px 10px",
+    padding: "17px 44px 0",
     textAlign: "center",
     "& h6": {
       fontWeight: 600,
@@ -54,12 +54,10 @@ export const useStyles = makeStyles(MUITheme => ({
     lineHeight: "20px",
   },
   checkbox: {
-    "& > svg": {
-      paddingRight: 14,
-      color: MUITheme.palette.text.disabled,
-      fontSize: 18,
-      verticalAlign: "middle",
-    },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
     "& label": {
       "& svg": { width: 22 },
       "& > span": {
@@ -68,6 +66,34 @@ export const useStyles = makeStyles(MUITheme => ({
         letterSpacing: 0.25,
         lineHeight: "20px",
       },
+    },
+  },
+  toolTipContainer: {
+    "& > svg": {
+      paddingRight: 14,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 377,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 45,
+      left: "50%",
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+      transform: "translateX(-50%)",
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
     },
   },
 }));

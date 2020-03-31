@@ -39,9 +39,11 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
             ))}
           </List>
         ) : null}
-        <Link to={btnDetails.linkTo}>
-          <StyledButton btnText={btnDetails.text} type={btnDetails.type} />
-        </Link>
+        {btnDetails.linkTo ? (
+          <Link to={btnDetails.linkTo}>
+            <StyledButton btnText={btnDetails.text} type={btnDetails.type} />
+          </Link>
+        ) : null}
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={6} className={classes.mediaContainer}>
         <img src={media} alt="media" />

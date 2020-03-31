@@ -48,7 +48,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
           recentStakeWindow.windowTotalStake > 0
-            ? recentStakeWindow.windowTotalStake
+            ? Math.floor(fromWei(recentStakeWindow.windowTotalStake))
             : stakeCalculatorFields.poolStakeAmount,
         incubationPeriodInDays: Math.floor(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
@@ -131,13 +131,14 @@ const Banner = ({ classes, recentStakeWindow }) => {
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerDescriptionContainer}>
           <Typography className={classes.bannerTitle}>Earn more while holding AGI tokens</Typography>
           <Typography className={classes.bannerDescPara1}>
-            By staking AGI coins, you support the operations of a blockchain network as well as rewarded with more AGI
-            tokens for your contributions.
+            By staking AGI coins, you support the operations of our blockchain network and in doing so you will be
+            rewarded with more AGI tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
-            Every month there will be open staking sessions for you to add your AGI tokens to be vested for 30 days. The
-            SingularityNET foundation will use all or partial amount of your staked amounted. You can always auto renew
-            for continual compounded rewards and benefits.
+            Vest your AGI tokens in 30 day staking sessions. Tokens staked in this way will be used to fulfill
+            blockchain transactions on the SingularityNET platform. At the end of the 30 day period you can either
+            continue to allow your tokens to vest or withdraw them along with any reward earned during the staking
+            period.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerForm}>
@@ -164,15 +165,18 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate"
+                extraInfo="~Approximate based on the current pool size"
                 value={getRewardAmount()}
               />
             </div>
             <div className={classes.stakingDetails}>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Current Pool Size</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Current total amount of AGI tokens that have contributed by all stakers</p>
+                  </div>
+                  <span>Current Pool Size</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -188,9 +192,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Reward Pool</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>The total reward amount of AGI tokens that will be divided and distributed to stakers</p>
+                  </div>
+                  <span>Reward Pool</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -206,9 +213,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Amount of the time that AGI tokens in the stake will be vested and locked in</p>
+                  </div>
+                  <span>Incubation Period</span>
                 </div>
                 <div className={classes.incubationValuesConatiner}>
                   <Typography className={classes.incubationValue}>

@@ -13,7 +13,7 @@ var AlertLink = function AlertLink(_ref) {
   var link = _ref.link;
 
   if (link) {
-    return _react.default.createElement("a", {
+    return /*#__PURE__*/_react.default.createElement("a", {
       href: "#",
       title: "demo"
     }, link);
