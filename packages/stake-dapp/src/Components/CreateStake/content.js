@@ -45,13 +45,14 @@ export const cardDetails = activeStake => [
     title: "Max Reward",
     value: fromWei(computeReward(activeStake)),
     unit: "AGI",
-    toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount. Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Incubating Period",
     value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
     unit: "days",
-    toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
+    toolTip: "Amount of time that AGI tokens staked will be vested and locked in.",
   },
   {
     title: "Stakers",

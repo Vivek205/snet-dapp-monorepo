@@ -56,14 +56,14 @@ export const cardDetails = stakeDetails => [
     title: "Reward Amount",
     value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
-    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
+    toolTip: "The final amout of AGI tokens you gain a reward at the end of the stake incubation period",
   },
   {
     title: "Refunded Amount",
     value: fromWei(stakeDetails.refundAmount),
     unit: "AGI",
     toolTip:
-      "Total amount of AGI tokens you can claim for this stake session. This includes the original accepted stake amount plus the reward earnings amount.",
+      "When incubation period begins, SNET foundation will accept all or a partial amount of your stake amount. Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Stakers",
