@@ -29,13 +29,13 @@ export const cardDetails = stakeDetails => [
     value: parseInt(fromWei(stakeDetails.approvedAmount)) + parseInt(fromWei(stakeDetails.pendingForApprovalAmount)),
     unit: "AGI",
     toolTip:
-      "Total AGI tokens you can claim for this stake session.  This includes the original accepted stake amount plus the reward earnings amount.",
+      "Total AGI tokens you can claim for this stake session. This includes the original accepted stake amount plus the reward earnings amount.",
   },
   {
     title: "Reward Earnings",
     value: fromWei(computeReward(stakeDetails)),
     unit: "AGI",
-    toolTip: "The final amout of AGI tokens you gain as reward at the end of stake incubation period",
+    toolTip: "Final amount of AGI tokens you gain a reward at the end of the stake incubation period",
   },
   {
     title: "Incubating Completed",
@@ -44,7 +44,7 @@ export const cardDetails = stakeDetails => [
       .local()
       .format("DD MMM YYYY"),
     unit: " ",
-    toolTip: "The date when the incubation period was completed",
+    toolTip: "The incubation period completion date.",
   },
   {
     title: "Stakers",

@@ -39,7 +39,7 @@ export const useStyles = MUITheme => ({
   success: {
     borderColor: MUITheme.palette.success.main,
     backgroundColor: MUITheme.palette.background.succesBox,
-    "& svg": { color: MUITheme.palette.success.main },
+    "& svg": { color: `${MUITheme.palette.success.main} !important` },
   },
   warning: {
     borderColor: MUITheme.palette.border.warningBox,

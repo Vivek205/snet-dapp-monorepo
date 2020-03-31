@@ -174,7 +174,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 <div className={classes.label}>
                   <div className={classes.iconTooltipContainer}>
                     <InfoIcon />
-                    <p>Current total amount of AGI tokens that have contributed by all stakers</p>
+                    <p>Current total amount of AGI tokens contributed by all stakers</p>
                   </div>
                   <span>Current Pool Size</span>
                 </div>
@@ -230,7 +230,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
             </div>
             <div className={classes.formBtnContainer}>
               <SNETButton
-                children="stake & earntokens"
+                children="stake & earn tokens"
                 color="primary"
                 variant="contained"
                 onClick={navigateToLanding}

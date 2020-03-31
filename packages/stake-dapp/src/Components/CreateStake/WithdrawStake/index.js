@@ -129,7 +129,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           />
           <CardContent className={classes.CardContent}>
             <div className={classes.sessionDetails}>
-              <Typography>Session : </Typography>
+              <Typography>Session: </Typography>
               <Typography>
                 {" "}
                 {stakeStartDate} #{stakeDetails.stakeMapIndex}
@@ -149,8 +149,11 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
             <div className={classes.stakeAmtDetailsContainer}>
               {withdrawStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>
@@ -174,7 +177,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
             <SNETButton
-              children="submit withdraw"
+              children="submit withdrawal"
               color="primary"
               variant="contained"
               onClick={handleWithdraw}

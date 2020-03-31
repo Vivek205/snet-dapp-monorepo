@@ -11,13 +11,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
-    appBar: {
+    appBar: _defineProperty({
       padding: "14px 60px",
       flexDirection: "row",
       alignItems: "center",
       boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
       zIndex: 1110
-    },
+    }, MUITheme.breakpoints.down("md"), {
+      padding: "14px 10px"
+    }),
     purple: {
       "& h5": {
         color: "".concat(MUITheme.palette.text.white, " !important")

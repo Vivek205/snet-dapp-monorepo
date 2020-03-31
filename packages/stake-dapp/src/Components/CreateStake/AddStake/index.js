@@ -215,7 +215,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <SNETTextfield
                 label="Reward Amount"
                 readOnly={true}
-                extraInfo="Approximate Estimate"
+                extraInfo="Approximate based on the current pool size"
                 value={fromWei(rewardAmount)}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">agi</InputAdornment>,
@@ -225,8 +225,11 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
             <div className={classes.stakeAmtDetailsContainer}>
               {addStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>

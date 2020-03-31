@@ -45,13 +45,14 @@ export const cardDetails = activeStake => [
     title: "Max Reward",
     value: fromWei(computeReward(activeStake)),
     unit: "AGI",
-    toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount. Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Incubating Period",
     value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
     unit: "days",
-    toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
+    toolTip: "Amount of time that AGI tokens staked will be vested and locked in.",
   },
   {
     title: "Stakers",
@@ -63,7 +64,7 @@ export const cardDetails = activeStake => [
     title: "Current Pool Size",
     value: fromWei(activeStake.totalStakedAmount),
     unit: "AGI",
-    toolTip: "Current total amount of AGI tokens that have contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens contributed by all stakers",
   },
   {
     title: "Reward Pool",
@@ -108,7 +109,7 @@ export const withdrawStakeAmountDetails = activeStake => [
   {
     title: "Current Pool Size",
     amount: fromWei(activeStake.totalStakedAmount),
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens contributed by all stakers",
   },
   {
     title: "Stakers",
@@ -133,7 +134,7 @@ export const addStakeAmountDetails = activeStake => [
     title: "Current Pool Size",
     amount: fromWei(activeStake.totalStakedAmount),
     unit: "AGI",
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens contributed by all stakers",
   },
   {
     title: "Stakers",
