@@ -58,54 +58,68 @@ class SubmitForReview extends React.Component {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(async element => {
-        if (element[0] === "blockchain_enabled" && element[1] === "false") {
-          try {
-            this.setState({ alert: {} });
-            const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
-            if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
-              if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+        if (element[0] === "blockchain_enabled") {
+          if (element[1] === "true") {
+            try {
+              this.setState({ alert: {} });
+              const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+              if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+                if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+                  return this.setState({
+                    alert: {
+                      type: alertTypes.ERROR,
+                      message:
+                        "Organization is being published in blockchain. Service can be submitted only when organization is published",
+                    },
+                  });
+                }
                 return this.setState({
                   alert: {
                     type: alertTypes.ERROR,
                     message:
-                      "Organization is being published in blockchain. Service can be submitted only when organization is published",
+                      "Organization is not published. Please publish the organization before publishing the service",
                   },
                 });
               }
-              return this.setState({
-                alert: {
-                  type: alertTypes.ERROR,
-                  message:
-                    "Organization is not published. Please publish the organization before publishing the service",
-                },
-              });
-            }
-            if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
-              return this.setState({
-                alert: {
-                  type: alertTypes.ERROR,
-                  message: "No changes in draft. Please edit a field before submitting",
-                },
-              });
-            }
+              if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
+                return this.setState({
+                  alert: {
+                    type: alertTypes.ERROR,
+                    message: "No changes in draft. Please edit a field before submitting",
+                  },
+                });
+              }
 
-            const isNotValid = validator(serviceDetails, submitServiceConstraints);
-            if (isNotValid) {
-              const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-              return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
+              const isNotValid = validator(serviceDetails, submitServiceConstraints);
+              if (isNotValid) {
+                const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+                return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
+              }
+              await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
+            } catch (e) {
+              if (checkIfKnownError(e)) {
+                return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+              }
+              this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
             }
-            await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
-          } catch (e) {
-            if (checkIfKnownError(e)) {
-              return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
-            }
-            this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+          } else {
+            this.setState({
+              alert: {
+                type: alertTypes.ERROR,
+                message: `The Ropsten endpoint ${testEndPoint} does not have the configuration displayed above`,
+              },
+            });
           }
         }
       });
     } catch (error) {
       if (checkIfKnownError) {
-        return this.setState({ alert: { type: alertTypes.ERROR, message: error.message } });
+        return this.setState({
+          alert: {
+            type: alertTypes.ERROR,
+            message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
+          },
+        });
       }
 
       this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
