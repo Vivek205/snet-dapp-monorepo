@@ -84,7 +84,7 @@ class AiServiceCreation extends Component {
     }
   };
 
-  handleSectionClick = async progressNumber => {
+  handleSectionClick = progressNumber => {
     const { history, match, serviceDetails } = this.props;
     const { orgUuid, serviceUuid } = match.params;
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
