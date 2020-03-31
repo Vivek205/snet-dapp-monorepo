@@ -7,7 +7,7 @@ import * as Sentry from "@sentry/browser";
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
-    release: "publisher-dapp@" + process.env.npm_package_version,
+    release: "staking-dapp@" + process.env.npm_package_version,
   });
 }
 
