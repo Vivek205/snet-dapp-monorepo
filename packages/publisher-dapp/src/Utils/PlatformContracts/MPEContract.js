@@ -63,10 +63,10 @@ export default class MPEContract {
     channelIdList,
     actualAmountList,
     plannedAmountList,
+    isSendbackList,
     vList,
     rList,
-    sList,
-    isSendbackList
+    sList
   ) => {
     await this._initBlockChain();
 
@@ -75,7 +75,15 @@ export default class MPEContract {
     const address = await this._getAddress();
 
     return this._contract.methods
-      .channelClaim(channelIdList, actualAmountList, plannedAmountList, vList, bytesRList, bytesSList, isSendbackList)
+      .multiChannelClaim(
+        channelIdList,
+        actualAmountList,
+        plannedAmountList,
+        isSendbackList,
+        vList,
+        bytesRList,
+        bytesSList
+      )
       .send({ from: address });
   };
 }
