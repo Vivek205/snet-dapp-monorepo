@@ -11,7 +11,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { ControlServiceRequest } from "../../Utils/Daemon/ControlService";
 import { checkIfKnownError } from "shared/dist/utils/error";
-import { aiServiceListActions } from "../../Services/Redux/actionCreators";
+import { aiServiceListActions, loaderActions } from "../../Services/Redux/actionCreators";
 import UnclaimedPayments from "./UnclaimedPayments";
 import MPEContract from "../../Utils/PlatformContracts/MPEContract";
 import { blockChainEvents } from "../../Utils/Blockchain";
@@ -21,6 +21,10 @@ import { itemsPerPageOptions } from "./content";
 import MmAuthorization from "./MMAuthorization";
 import AccountDetails from "./AccountDetails";
 import ClaimsAggregate from "./ClaimsAggregate";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import { LoaderContent } from "../../Utils/Loader";
+import AlertBox from "shared/dist/components/AlertBox";
+import { MetamaskError } from "shared/dist/utils/error";
 
 const controlServiceRequest = new ControlServiceRequest();
 const defaultPaymentAggregate = {
@@ -45,6 +49,8 @@ class WalletAccount extends React.Component {
     aggregatePaymentDetails: defaultPaymentAggregate,
     pagination: defaultPagination,
     selectedChannels: {},
+    getPaymentsListAlert: {},
+    claimChannelsAlert: {},
   };
 
   async componentDidMount() {
@@ -94,7 +100,7 @@ class WalletAccount extends React.Component {
 
     // TODO select endpoint that is valid
     const serviceHost = validEndpoints[0];
-    controlServiceRequest.serviceHost = serviceHost;
+    controlServiceRequest.serviceHost = serviceHost[0];
   };
 
   getUnclaimedPaymentsFromDaemon = async () => {
@@ -108,7 +114,7 @@ class WalletAccount extends React.Component {
   };
 
   claimMPEChannels = async payments => {
-    // payload order:- channelId,actualAmount, plannedAmount, v,r,s,isSendback
+    // payload order:- channelId, actualAmount, plannedAmount, isSendback, v, r, s
     const defaultPayloadAccumulator = [[], [], [], [], [], [], []];
     const payloadForMultiChannelClaim = payments.reduce((acc, cur) => {
       const { channelId, signedAmount, signature } = cur;
@@ -116,31 +122,56 @@ class WalletAccount extends React.Component {
       acc[0].push(channelId);
       acc[1].push(signedAmount);
       acc[2].push(signedAmount);
+      acc[6].push(false);
       acc[3].push(v);
       acc[4].push(r);
       acc[5].push(s);
-      acc[6].push(false);
       return acc;
     }, defaultPayloadAccumulator);
     const mpe = new MPEContract();
+    this.props.startAppLoader(LoaderContent.SIGN_CLAIMS_IN_MM);
     const method = await mpe.multiChannelClaim(...payloadForMultiChannelClaim);
-
     method.on(blockChainEvents.TRANSACTION_HASH, () => {
       // TODO call daemon start claims
+      this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
     });
     method.once(blockChainEvents.CONFIRMATION, async () => {
       // TODO stop loader
       // TODO refetch claims list
-      await this.getUnclaimedPaymentsFromDaemon();
+      this.setState({
+        claimChannelsAlert: {
+          type: alertTypes.SUCCESS,
+          message: `Selected channels have been claimed from the blockchain successfully. 
+          Please refresh the list, to fetch the latest payments`,
+        },
+      });
+      this.props.stopAppLoader();
       await method.off();
     });
-    method.on(blockChainEvents.ERROR, () => {
-      //  TODO handle error
+    method.on(blockChainEvents.ERROR, e => {
+      this.props.stopAppLoader();
+      throw new MetamaskError(e);
     });
   };
 
   claimChannelInBlockchain = async () => {
-    const { pendingPayments, unclaimedPayments } = this.state;
+    this.props.startAppLoader(LoaderContent.START_CHANNEL_CLAIMS);
+    this.setState({ claimChannelsAlert: {} });
+    const { selectedChannels } = this.state;
+    let pendingPayments = [],
+      unclaimedPayments = [];
+
+    Object.entries(selectedChannels).forEach(([channelId, checked]) => {
+      if (checked) {
+        const pendingPaymentSelected = this.state.pendingPayments.find(el => el.channelId === channelId);
+        const unclaimedPaymentSelected = this.state.unclaimedPayments.find(el => el.channelId === channelId);
+        if (pendingPaymentSelected) {
+          pendingPayments.push(pendingPaymentSelected);
+        } else if (unclaimedPaymentSelected) {
+          unclaimedPayments.push(unclaimedPaymentSelected);
+        }
+      }
+    });
     const paymentsToBeClaimedInBlockchain = [...pendingPayments];
     if (!isEmpty(unclaimedPayments)) {
       const channelIdList = unclaimedPayments.map(el => el.channelId);
@@ -150,6 +181,8 @@ class WalletAccount extends React.Component {
     try {
       await this.claimMPEChannels(paymentsToBeClaimedInBlockchain);
     } catch (e) {
+      this.props.stopAppLoader();
+      this.setState({ claimChannelsAlert: { type: alertTypes.ERROR, message: e.message } });
       // TODO handle error
     }
   };
@@ -177,6 +210,8 @@ class WalletAccount extends React.Component {
 
   handleAuthorizeMM = async () => {
     try {
+      this.setState({ getPaymentsListAlert: {} });
+      this.props.startAppLoader(LoaderContent.GET_CLAIMS_LIST);
       const [unclaimedPayments, pendingPayments] = await Promise.all([
         this.getUnclaimedPaymentsFromDaemon(),
         this.getPendingPaymentsFromDaemon(),
@@ -190,8 +225,12 @@ class WalletAccount extends React.Component {
         aggregatePaymentDetails,
         pagination: { ...defaultPagination, totalCount, limit: totalCount < 10 ? totalCount : 10 },
       });
+      this.props.stopAppLoader();
     } catch (e) {
+      this.props.stopAppLoader();
       if (checkIfKnownError(e)) {
+        this.setState({ getPaymentsListAlert: { type: alertTypes.ERROR, message: e.message } });
+
         // TODO set alert error
       }
       return undefined;
@@ -215,6 +254,8 @@ class WalletAccount extends React.Component {
     this.setState(prevState => ({ selectedChannels: { ...prevState.selectedChannels, [channelId]: checked } }));
   };
 
+  shouldClaimBeEnabled = () => Object.values(this.state.selectedChannels).some(Boolean);
+
   render() {
     const { classes } = this.props;
     const {
@@ -225,11 +266,13 @@ class WalletAccount extends React.Component {
       pagination,
       selectedChannels,
       mmAuthorized,
+      getPaymentsListAlert,
+      claimChannelsAlert,
     } = this.state;
     const paymentsList = [...unclaimedPayments, ...pendingPayments];
 
     if (!mmAuthorized) {
-      return <MmAuthorization handleAuthorizeMM={this.handleAuthorizeMM} />;
+      return <MmAuthorization handleAuthorizeMM={this.handleAuthorizeMM} alert={getPaymentsListAlert} />;
     }
 
     return (
@@ -258,9 +301,11 @@ class WalletAccount extends React.Component {
               color="primary"
               variant="outlined"
               onClick={this.claimChannelInBlockchain}
+              disabled={!this.shouldClaimBeEnabled()}
             />
             <Typography>Selected (0)</Typography>
           </div>
+          <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
           <div>
             <UnclaimedPayments
               payments={paymentsList}
@@ -286,6 +331,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  startAppLoader: content => dispatch(loaderActions.startAppLoader(content)),
+  stopAppLoader: () => dispatch(loaderActions.stopAppLoader()),
   getServices: orgUuid => dispatch(aiServiceListActions.getAiServiceList(orgUuid)),
 });
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(WalletAccount));
