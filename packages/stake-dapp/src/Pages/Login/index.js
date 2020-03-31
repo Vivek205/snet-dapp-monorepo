@@ -37,6 +37,9 @@ const Login = ({ history }) => {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
       }
+      if (error.code === "UserNotConfirmedException") {
+        history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
+      }
       setError(loginErrorMsg);
     }
   };
