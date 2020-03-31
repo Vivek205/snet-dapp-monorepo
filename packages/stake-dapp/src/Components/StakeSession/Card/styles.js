@@ -65,7 +65,7 @@ export const useStyles = makeStyles(MUITheme => ({
       color: MUITheme.palette.text.white,
       fontSize: 16,
       lineHeight: "20px",
-      transform: "translateX(-50%)",
+      transform: "translateX(-70%)",
     },
     "&:hover": {
       "& svg": { color: MUITheme.palette.primary.main },

@@ -18,7 +18,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
       zIndex: 1110
     }, MUITheme.breakpoints.down("md"), {
-      padding: '14px 10px'
+      padding: "14px 10px"
     }),
     purple: {
       "& h5": {

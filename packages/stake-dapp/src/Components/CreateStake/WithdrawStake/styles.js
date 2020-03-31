@@ -107,6 +107,9 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   alertBoxContainer: {
+    "& > div": {
+      display: "flex",
+    },
     padding: "16px 20px 0",
     "& > p": {
       padding: "13px 11px",
@@ -130,5 +133,40 @@ export const useStyles = makeStyles(MUITheme => ({
   CardActions: {
     padding: "24px 0 0",
     justifyContent: "center",
+  },
+  label: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  iconTooltipContainer: {
+    width: "auto !important",
+    "& > svg": {
+      paddingRight: 14,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 377,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 25,
+      left: "50%",
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+      transform: "translateX(-70%)",
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
+    },
   },
 }));

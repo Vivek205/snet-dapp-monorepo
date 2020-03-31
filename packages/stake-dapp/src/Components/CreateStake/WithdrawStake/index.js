@@ -149,8 +149,11 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
             <div className={classes.stakeAmtDetailsContainer}>
               {withdrawStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>
