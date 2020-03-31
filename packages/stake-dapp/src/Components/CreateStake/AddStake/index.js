@@ -153,6 +153,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
     let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
+    const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
 
     if (myStake.gt(myStakeProcessed)) {
       totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -170,6 +171,9 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
 
     let _rewardAmount = new BigNumber(0);
+
+    // Considering Auto Renewed Stake For calculation
+    totalStakedAmount = totalStakedAmount.plus(windowTotalStake);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
