@@ -36,10 +36,10 @@ const computeReward = activeStake => {
 
 export const cardDetails = activeStake => [
   {
-    title: "Stake Session",
+    title: "Stake Amount",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
-    toolTip: "",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Max Reward",
@@ -100,11 +100,14 @@ export const withdrawStakeAmountDetails = activeStake => [
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
     unit: "AGI",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
     unit: "AGI",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount.  Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Current Pool Size",
@@ -124,11 +127,14 @@ export const addStakeAmountDetails = activeStake => [
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
     unit: "AGI",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
     unit: "AGI",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount.  Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Current Pool Size",
