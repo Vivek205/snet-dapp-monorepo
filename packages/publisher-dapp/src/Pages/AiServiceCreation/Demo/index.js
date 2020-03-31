@@ -36,6 +36,7 @@ const Demo = ({ classes }) => {
               <a
                 href="http://custom-ui.singularitynet.io.s3-website-us-east-1.amazonaws.com/?path=/story/alerts-alertbox--live-source"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 SingularityNet storybook
               </a>
