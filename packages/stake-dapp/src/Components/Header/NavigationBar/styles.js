@@ -20,6 +20,7 @@ export const useStyles = makeStyles(MUITheme => ({
     textDecoration: "none",
     color: MUITheme.palette.text.lightGrey,
     fontFamily: MUITheme.typography.fontFamily,
+    "&:hover": { color: MUITheme.palette.text.white },
   },
   navLinkActive: {
     borderBottom: `1.5px solid ${MUITheme.palette.text.white}`,
@@ -36,6 +37,12 @@ export const useStyles = makeStyles(MUITheme => ({
     "& > div": {
       display: "flex",
       alignItems: "flex-start",
+      "&:hover": {
+        "& button": {
+          "& span": { color: MUITheme.palette.text.white },
+        },
+        "& svg": { color: MUITheme.palette.text.white },
+      },
     },
     "& button": {
       padding: 0,
@@ -43,13 +50,11 @@ export const useStyles = makeStyles(MUITheme => ({
         paddingBottom: 8,
         color: MUITheme.palette.text.lightGrey,
         fontSize: 16,
-        "&:hover": { color: MUITheme.palette.primary.main },
       },
     },
     "& svg": {
       paddingTop: 2,
       color: MUITheme.palette.text.lightGrey,
-      "&:hover": { color: MUITheme.palette.primary.main },
     },
   },
 }));
