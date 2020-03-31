@@ -59,7 +59,7 @@ class SubmitForReview extends React.Component {
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(async element => {
         if (element[0] === "blockchain_enabled") {
-          if (element[1] === "true") {
+          if (element[1] === "false") {
             try {
               this.setState({ alert: {} });
               const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
