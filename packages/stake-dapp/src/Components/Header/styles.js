@@ -9,6 +9,7 @@ export const useStyles = MUITheme => ({
     color: MUITheme.palette.text.lightGrey,
     fontSize: 42,
     cursor: "pointer",
+    [MUITheme.breakpoints.down("md")]: { marginRight: 0 },
   },
   NotificationsIcon: {
     margin: "0px 22px 0 0",

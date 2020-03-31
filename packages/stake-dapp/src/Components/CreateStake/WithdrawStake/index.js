@@ -129,7 +129,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           />
           <CardContent className={classes.CardContent}>
             <div className={classes.sessionDetails}>
-              <Typography>Session : </Typography>
+              <Typography>Session: </Typography>
               <Typography>
                 {" "}
                 {stakeStartDate} #{stakeDetails.stakeMapIndex}
@@ -174,7 +174,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
             <SNETButton
-              children="submit withdraw"
+              children="submit withdrawal"
               color="primary"
               variant="contained"
               onClick={handleWithdraw}

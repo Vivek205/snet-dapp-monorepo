@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 export const useStyles = makeStyles(MUITheme => ({
   navigationLinks: {
     paddingTop: 10,
-    marginLeft: 170,
+    marginLeft: 130,
   },
   navlist: {
     padding: 0,
