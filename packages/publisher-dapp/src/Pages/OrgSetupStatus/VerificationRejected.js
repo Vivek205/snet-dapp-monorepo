@@ -45,7 +45,7 @@ const VerificationRejected = () => {
        You can reinitiate the organization creation once all criteria is met.`}
       actions={[
         {
-          children: "access jumio verification",
+          children: "EDIT DETAILS",
           variant: "contained",
           color: "primary",
           onClick: handleEditOrgDetails,

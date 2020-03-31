@@ -135,6 +135,7 @@ export const useStyles = MUITheme => ({
         marginRight: 24,
         backgroundColor: MUITheme.palette.background.white,
         boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
+        cursor: "pointer",
         listStyle: "none",
         "& img": { width: 96 },
         "& h4": {
@@ -149,6 +150,9 @@ export const useStyles = MUITheme => ({
         "&:last-of-type": {
           marginRight: 0,
           [MUITheme.breakpoints.down("sm")]: { marginBottom: 0 },
+        },
+        "&:hover": {
+          "& h4": { color: MUITheme.palette.primary.main },
         },
         [MUITheme.breakpoints.down("xs")]: { margin: "0 0 25px 0" },
         "@media(max-width: 420px)": { width: "100%" },

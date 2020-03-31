@@ -33,9 +33,12 @@ const IncubationProgressDetails = ({ details }) => {
     return (
       <div className={classes.incubationContainer}>
         <div className={classes.dayCountContainer}>
-          <div>
-            <InfoIcon />
-            <Typography className={classes.incubationText}>Incubation Progress</Typography>
+          <div className={classes.label}>
+            <div className={classes.iconTooltipContainer}>
+              <InfoIcon />
+              <p>Total AGI tokens that are staked so far.</p>
+            </div>
+            <span className={classes.incubationText}>Incubation Progress</span>
           </div>
           <div className={classes.daysCount}>
             <Typography className={classes.value}>
