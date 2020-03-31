@@ -16,6 +16,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
+import { ConfigurationServiceRequest } from "../../../Utils/Daemon/ConfigurationService";
 
 class SubmitForReview extends React.Component {
   state = {
@@ -51,42 +52,62 @@ class SubmitForReview extends React.Component {
   };
 
   handleSubmitForReview = async () => {
+    const { serviceDetails } = this.props;
+    const testEndPoint = serviceDetails.groups[0].testEndpoints;
     try {
-      this.setState({ alert: {} });
-      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
-      if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
-        if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
-          return this.setState({
-            alert: {
-              type: alertTypes.ERROR,
-              message:
-                "Organization is being published in blockchain. Service can be submitted only when organization is published",
-            },
-          });
+      const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
+      const res = await configurationServiceRequest.getConfiguration();
+      res.currentConfigurationMap.forEach(async element => {
+        if (element[0] === "blockchain_enabled" && element[1] === "false") {
+          try {
+            this.setState({ alert: {} });
+            const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+            if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+              if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+                return this.setState({
+                  alert: {
+                    type: alertTypes.ERROR,
+                    message:
+                      "Organization is being published in blockchain. Service can be submitted only when organization is published",
+                  },
+                });
+              }
+              return this.setState({
+                alert: {
+                  type: alertTypes.ERROR,
+                  message:
+                    "Organization is not published. Please publish the organization before publishing the service",
+                },
+              });
+            }
+            if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
+              return this.setState({
+                alert: {
+                  type: alertTypes.ERROR,
+                  message: "No changes in draft. Please edit a field before submitting",
+                },
+              });
+            }
+
+            const isNotValid = validator(serviceDetails, submitServiceConstraints);
+            if (isNotValid) {
+              const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+              return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
+            }
+            await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
+          } catch (e) {
+            if (checkIfKnownError(e)) {
+              return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+            }
+            this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+          }
         }
-        return this.setState({
-          alert: {
-            type: alertTypes.ERROR,
-            message: "Organization is not published. Please publish the organization before publishing the service",
-          },
-        });
-      }
-      if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
-        return this.setState({
-          alert: { type: alertTypes.ERROR, message: "No changes in draft. Please edit a field before submitting" },
-        });
+      });
+    } catch (error) {
+      if (checkIfKnownError) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: error.message } });
       }
 
-      const isNotValid = validator(serviceDetails, submitServiceConstraints);
-      if (isNotValid) {
-        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-        return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
-      }
-      await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
-    } catch (e) {
-      if (checkIfKnownError(e)) {
-        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
-      }
       this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
     }
   };
