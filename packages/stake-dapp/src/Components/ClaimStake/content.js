@@ -39,7 +39,10 @@ export const cardDetails = stakeDetails => [
   },
   {
     title: "Incubating Completed",
-    value: moment.unix(stakeDetails.endPeriod).format("DD MMM YYYY"),
+    value: moment
+      .unix(stakeDetails.endPeriod)
+      .local()
+      .format("DD MMM YYYY"),
     unit: " ",
     toolTip: "The date when the incubation period was completed",
   },
