@@ -12,7 +12,7 @@ const MmAuthorization = ({ classes, handleAuthorizeMM, alert }) => {
     <Grid container className={classes.walletAccContainer}>
       <Grid item xs={12} sm={12} md={2} lg={2}>
         <Typography>
-          <SNETButton color="primary" variant="contained" children="Claim channel" onClick={handleAuthorizeMM} />
+          <SNETButton color="primary" variant="contained" children="Authorize Metamask" onClick={handleAuthorizeMM} />
         </Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={2}>
