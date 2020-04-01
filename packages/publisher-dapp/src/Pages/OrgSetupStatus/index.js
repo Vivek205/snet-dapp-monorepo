@@ -11,6 +11,7 @@ import VerificationApproved from "./VerificationApproved";
 import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import VerificationRejected from "./VerificationRejected";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import VerificationChangeRequested from "./VerificationChangeRequested";
 
 const Banners = {
   [organizationSetupStatuses.APPROVAL_PENDING]: VerificationPending,
@@ -19,6 +20,7 @@ const Banners = {
   [organizationSetupStatuses.APPROVED]: VerificationApproved,
   [organizationSetupStatuses.ONBOARDING_REJECTED]: VerificationRejected,
   [organizationSetupStatuses.REJECTED]: VerificationRejected,
+  [organizationSetupStatuses.CHANGE_REQUESTED]: VerificationChangeRequested,
 };
 
 const selectState = state => ({
