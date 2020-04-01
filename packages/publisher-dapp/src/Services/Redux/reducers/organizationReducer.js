@@ -4,6 +4,11 @@ import { organizationSetupStatuses, organizationTypes } from "../../../Utils/org
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 import { orgVerificationActions } from "../actionCreators/userActions";
 
+export const defaultContacts = [
+  { type: ContactsTypes.GENERAL, email: "", phone: "" },
+  { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+];
+
 const initialState = {
   state: {
     state: organizationSetupStatuses.NOT_STARTED,
@@ -24,10 +29,7 @@ const initialState = {
   availability: "",
   longDescription: "",
   metadataIpfsUri: "",
-  contacts: [
-    { type: ContactsTypes.GENERAL, email: "", phone: "" },
-    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
-  ],
+  contacts: defaultContacts,
   groups: [
     {
       name: "default_group",
