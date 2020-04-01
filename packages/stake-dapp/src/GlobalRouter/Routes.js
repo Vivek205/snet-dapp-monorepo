@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
+import withTncHeader from "../HOC/withTncHeader";
 import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
@@ -35,8 +36,7 @@ const ForgotPasswordConfirmComponent = withRegistrationHeader(
   LOGIN_PATH
 );
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
-
-const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
+const AcceptAgreementComponent = withTncHeader(AcceptAgreement, null, "Logout", LOGIN_PATH);
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
