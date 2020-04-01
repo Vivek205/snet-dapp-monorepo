@@ -36,7 +36,8 @@ var useStyles = function useStyles(MUITheme) {
           color: MUITheme.palette.primary.main,
           fontSize: 14.2,
           letterSpacing: 0.25,
-          lineHeight: "20px"
+          lineHeight: "20px",
+          cursor: 'pointer'
         }
       }
     },
