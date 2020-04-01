@@ -8,7 +8,7 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
 export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
-export const RESET_USER_ON_SIGNOUT = "RESET_USER_ON_SIGNOUT";
+export const SIGNOUT = "SIGNOUT";
 export const SET_JWT_EXP = "SET_JWT_EXP";
 
 const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLoggedin });
@@ -21,7 +21,7 @@ const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED
 
 const setAppInitialized = isInitialized => ({ type: SET_APP_INITIALIZED, payload: isInitialized });
 
-const resetUserOnSignout = () => ({ type: RESET_USER_ON_SIGNOUT });
+const resetReduxOnSignout = () => ({ type: SIGNOUT });
 
 const setJWTExp = exp => ({ type: SET_JWT_EXP, payload: exp });
 
@@ -116,9 +116,9 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const signout = async dispatch => {
-  dispatch(loaderActions.startAppLoader(LoaderContent.SIGN_OUT));
+  await dispatch(loaderActions.startAppLoader(LoaderContent.SIGN_OUT));
   await Auth.signOut();
-  await dispatch(resetUserOnSignout());
+  await dispatch(resetReduxOnSignout());
   dispatch(loaderActions.stopAppLoader());
 };
 
