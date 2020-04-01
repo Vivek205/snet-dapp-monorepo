@@ -22,6 +22,7 @@ const UserProfilePopUp = ({ classes, show, handleClose }) => {
 
   const handleSignout = () => {
     dispatch(userActions.loginActions.signout);
+    history.push(GlobalRoutes.HOW_IT_WORKS.path);
   };
 
   const handleAccountclick = () => {
