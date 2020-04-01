@@ -182,4 +182,9 @@ export const useStyles = MUITheme => ({
     color: "#F29132",
     fontSize: 19,
   },
+  card: { marginTop: 110 },
+  cardHeader: {
+    padding: 0,
+    "& button": { padding: 22 },
+  },
 });
