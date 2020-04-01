@@ -288,6 +288,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
+    newId: data.service_id,
     shortDescription: data.short_description,
     longDescription: data.description,
     projectURL: data.project_url,
