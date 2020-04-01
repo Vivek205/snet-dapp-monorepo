@@ -12,7 +12,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import DaemonConfig from "./DaemonConfig";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
-import { checkIfKnownError } from "shared/dist/utils/error";
+import { checkIfKnownError, GrpcError } from "shared/dist/utils/error";
 import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
@@ -58,8 +58,8 @@ class SubmitForReview extends React.Component {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(async element => {
-        if (element[0] === "blockchain_enabled" && element[1] === "false") {
-          try {
+        if (element[0] === "blockchain_enabled") {
+          if (element[1] === "false") {
             this.setState({ alert: {} });
             const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
             if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
@@ -95,20 +95,29 @@ class SubmitForReview extends React.Component {
               return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
             }
             await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
-          } catch (e) {
-            if (checkIfKnownError(e)) {
-              return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
-            }
-            this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+          } else {
+            this.setState({
+              alert: {
+                type: alertTypes.ERROR,
+                message: `The Ropsten endpoint ${testEndPoint} does not have the configuration displayed above`,
+              },
+            });
           }
         }
       });
     } catch (error) {
-      if (checkIfKnownError) {
+      if (checkIfKnownError(error)) {
+        if (error instanceof GrpcError) {
+          return this.setState({
+            alert: {
+              type: alertTypes.ERROR,
+              message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
+            },
+          });
+        }
         return this.setState({ alert: { type: alertTypes.ERROR, message: error.message } });
       }
-
-      this.setState({ alert: { type: alertTypes.ERROR, message: "Something Went wrong. Please try later." } });
+      return this.setState({ alert: { type: alertTypes.ERROR, message: `Something went wrong. Please try again` } });
     }
   };
 

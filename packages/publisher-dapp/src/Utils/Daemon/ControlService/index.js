@@ -233,8 +233,7 @@ export class ControlServiceRequest {
     let channelIdBytesList = [];
 
     channelIdListSorted.forEach((channelId, index) => {
-      channelIdBytesList[index] = Buffer.alloc(4);
-      channelIdBytesList[index].writeUInt32BE(channelId, 0);
+      channelIdBytesList[index] = toBNString(channelId);
     });
     request.setMpeAddress(this._getMpeAddress());
     request.setChannelIdsList(channelIdBytesList);
@@ -258,12 +257,12 @@ export class ControlServiceRequest {
       const props = {
         request,
         host: this._getServiceHost(),
-        onEnd: result => {
+        onEnd: async result => {
           const { message, status, statusMessage } = result;
           if (status !== 0) {
             return reject(new GrpcError(statusMessage));
           }
-          const payment = parseResponseMessage(message);
+          const payment = await parseResponseMessage(message);
           resolve(payment);
         },
       };

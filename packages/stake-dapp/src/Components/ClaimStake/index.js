@@ -15,7 +15,7 @@ import AccountBalance from "../AccountBalance";
 import Card from "../StakeSession/Card";
 import InfoBox from "../StakeSession/InfoBox";
 import { LoaderContent } from "../../Utils/Loader";
-import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
+import { loaderActions, stakeActions, tokenActions } from "../../Services/Redux/actionCreators";
 import { waitForTransaction, claimStake, withdrawStake } from "../../Utils/BlockchainHelper";
 import { toBigNumber } from "../../Utils/GenHelperFunctions";
 
@@ -63,8 +63,7 @@ const ClaimStake = () => {
       setAlert({
         [stakeMapIndex]: {
           type: alertTypes.SUCCESS,
-          message:
-            "Congratulations! You have successfully claimed your stake and reward. You can safely close this window.",
+          message: "Congratulations! You have successfully claimed your stake and reward.",
         },
       });
 
@@ -76,6 +75,10 @@ const ClaimStake = () => {
           },
         })
       );
+
+      // Update the AGI Token Balances
+      dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+      dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
 
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {
@@ -108,6 +111,10 @@ const ClaimStake = () => {
           },
         })
       );
+
+      // Update the AGI Token Balances
+      dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+      dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
 
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {
