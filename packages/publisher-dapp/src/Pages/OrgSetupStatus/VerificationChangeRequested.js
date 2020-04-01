@@ -25,10 +25,9 @@ const VerificationChangeRequested = () => {
     <SNETStatusBanner
       title="Your organization needs changes."
       img={VerificationFailed}
-      description={`Unfortunatetly your organization is rejected during the internal verification.
-      Reason: ${rejectReason}.
-       Please check your inbox for mail from singularitynet team with detailed explanation for the changes ot be made for your organization.
-       You can reinitiate the organization creation once all criteria is met.`}
+      description={`There have been some comments/changes on your organization .Please review the changes requested in the comments below.
+      Comments: ${rejectReason}.
+      Please check your inbox for mail from singularitynet team with detailed explanation for the changes to be made for your organization.`}
       actions={[
         {
           children: "EDIT DETAILS",
