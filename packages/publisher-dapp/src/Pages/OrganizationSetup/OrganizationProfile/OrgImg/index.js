@@ -31,6 +31,9 @@ const OrgImg = ({ classes }) => {
     dispatch(organizationActions.setOrgHeroImageUrl(url));
   };
 
+  const handleResetImage = () => {
+    dispatch(organizationActions.setOrgHeroImageUrl(""));
+  };
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.orgImgContainer}>
       <Typography className={classes.title}>Organisation Profile Image</Typography>
@@ -47,7 +50,7 @@ const OrgImg = ({ classes }) => {
             disableInputTab={Boolean(url)}
             outputImageType="url"
           />
-          <Reset onReset={() => handleImageChange(null, null)} disabled={foundInBlockchain} />
+          {url ? <Reset onReset={() => handleResetImage()} disabled={foundInBlockchain} /> : null}
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} className={classes.previewContainer}>
           <Typography className={classes.previewText}>

@@ -163,7 +163,9 @@ const Profile = ({ classes }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
     setServiceTouchedFlag();
   };
-
+  const handleResetImage = () => {
+    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+  };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
@@ -323,12 +325,7 @@ const Profile = ({ classes }) => {
                 />
               </div>
               {serviceDetails.assets.heroImage.url ? (
-                <SNETButton
-                  children="reset"
-                  onClick={() => handleImageChange(null, null)}
-                  color="secondary"
-                  variant="text"
-                />
+                <SNETButton children="reset" onClick={() => handleResetImage()} color="secondary" variant="text" />
               ) : null}
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
