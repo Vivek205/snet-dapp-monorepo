@@ -213,10 +213,10 @@ const Profile = ({ classes }) => {
               icon
               name="id"
               label="AI Service Id"
-              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
+              minCount={serviceDetails.newId.length}
               maxCount={50}
               description="The ID of your service has to be unique withing your organization"
-              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              value={serviceDetails.newId}
               onChange={handleControlChange}
             />
           </div>
