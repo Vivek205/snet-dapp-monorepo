@@ -322,6 +322,14 @@ const Profile = ({ classes }) => {
                   // returnByteArray
                 />
               </div>
+              {serviceDetails.assets.heroImage.url ? (
+                <SNETButton
+                  children="reset"
+                  onClick={() => handleImageChange(null, null)}
+                  color="secondary"
+                  variant="text"
+                />
+              ) : null}
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
                   Every AI service will have a profile image. We recommend an image that is 906 x 504 in size. You can
