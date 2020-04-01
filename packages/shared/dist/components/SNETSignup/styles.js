@@ -59,7 +59,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
           color: MUITheme.palette.text.primary,
           fontSize: 16,
           letterSpacing: "0.29px",
-          lineHeight: '24px',
+          lineHeight: "24px",
           verticalAlign: "top"
         }
       }
