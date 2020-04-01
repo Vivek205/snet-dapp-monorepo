@@ -47,10 +47,9 @@ export const useStyles = makeStyles(MUITheme => ({
         "& .MuiTextField-root": { margin: 0 },
       },
     },
-    "& svg": {
+    "& img": {
+      width: 35,
       padding: "15px 25px 0",
-      color: MUITheme.palette.text.disabled,
-      fontSize: 30,
       [MUITheme.breakpoints.down("xs")]: { padding: "15px 10px 0" },
       "@media(max-width: 480px)": { display: "none" },
     },
