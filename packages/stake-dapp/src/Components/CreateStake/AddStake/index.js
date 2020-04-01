@@ -119,13 +119,13 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! Needs to stake atleast minimum amount.`,
+        message: `Oops! Needs to stake at least minimum amount.`,
       });
     } else {
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! No sufficient AGI Balance in your wallet.`,
+        message: `Oops! Insufficient AGI Balance in your wallet.`,
       });
     }
   };

@@ -6,7 +6,7 @@ export const useStyles = makeStyles(MUITheme => ({
     display: "inline-block",
     "& > div": {
       display: "flex",
-      alignItems: "flex-end",
+      alignItems: "baseline",
     },
     "& svg": {
       color: MUITheme.palette.text.disabled,
