@@ -138,7 +138,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerDescriptionContainer}>
           <Typography className={classes.bannerTitle}>Earn more while holding AGI tokens</Typography>
           <Typography className={classes.bannerDescPara1}>
-            By staking AGI coins, you support the operations of our blockchain network and in doing so you will be
+            By staking AGI tokens, you support the operations of our blockchain network and in doing so you will be
             rewarded with more AGI tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
@@ -181,7 +181,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 <div className={classes.label}>
                   <div className={classes.iconTooltipContainer}>
                     <InfoIcon />
-                    <p>Current total amount of AGI tokens contributed by all stakers</p>
+                    <p>Current total amount of AGI tokens that have been contributed by all stakers</p>
                   </div>
                   <span>Current Pool Size</span>
                 </div>

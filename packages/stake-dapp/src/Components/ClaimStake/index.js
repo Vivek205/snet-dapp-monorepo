@@ -43,7 +43,7 @@ const ClaimStake = () => {
     return (
       <div className={classes.noDataFoundSection}>
         <img src={NoDataFoundImg} alt="No Data Found" />
-        <Typography>You have no stakes to claim</Typography>
+        <Typography>You have no stakes to claim.</Typography>
       </div>
     );
   }
