@@ -15,6 +15,8 @@ var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _StyledButton = _interopRequireDefault(require("shared/dist/components/StyledButton"));
 
 var _pageNotFound = _interopRequireDefault(require("../../assets/images/pageNotFound.png"));
@@ -27,7 +29,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var PageNotFound = function PageNotFound(_ref) {
   var classes = _ref.classes,
-      handleGoToHome = _ref.handleGoToHome;
+      homePath = _ref.homePath;
+  var history = (0, _reactRouterDom.useHistory)();
+
+  var handleGoToHome = function handleGoToHome() {
+    if (homePath) {
+      history.push(homePath);
+    }
+  };
+
   return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     className: classes.pageNotFoundContainer

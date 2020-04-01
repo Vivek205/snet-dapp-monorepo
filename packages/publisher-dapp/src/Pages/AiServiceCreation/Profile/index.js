@@ -163,7 +163,9 @@ const Profile = ({ classes }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
     setServiceTouchedFlag();
   };
-
+  const handleResetImage = () => {
+    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+  };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
@@ -211,10 +213,10 @@ const Profile = ({ classes }) => {
               icon
               name="id"
               label="AI Service Id"
-              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
+              minCount={serviceDetails.newId.length}
               maxCount={50}
               description="The ID of your service has to be unique withing your organization"
-              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              value={serviceDetails.newId}
               onChange={handleControlChange}
             />
           </div>
@@ -322,6 +324,9 @@ const Profile = ({ classes }) => {
                   // returnByteArray
                 />
               </div>
+              {serviceDetails.assets.heroImage.url ? (
+                <SNETButton children="reset" onClick={() => handleResetImage()} color="secondary" variant="text" />
+              ) : null}
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
                   Every AI service will have a profile image. We recommend an image that is 906 x 504 in size. You can

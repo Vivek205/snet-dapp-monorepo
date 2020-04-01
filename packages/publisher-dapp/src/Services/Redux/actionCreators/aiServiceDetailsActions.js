@@ -288,6 +288,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
+    newId: data.service_id,
     shortDescription: data.short_description,
     longDescription: data.description,
     projectURL: data.project_url,
@@ -522,7 +523,7 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
 };
 
 const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
-  const daemonConfigNetwork = { TEST: "test", MAIN: "main" };
+  const daemonConfigNetwork = { TEST: "TEST", MAIN: "MAIN" };
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);

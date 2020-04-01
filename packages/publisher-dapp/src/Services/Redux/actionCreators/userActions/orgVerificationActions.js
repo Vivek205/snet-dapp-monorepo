@@ -30,7 +30,7 @@ export const getVerificationStatus = orgUuid => async dispatch => {
     if (error.code) {
       throw new APIError(error.message);
     }
-    if (data.status === orgVerificationStatus.REJECTED) {
+    if (data.status === orgVerificationStatus.REJECTED || orgVerificationStatus.CHANGE_REQUESTED) {
       dispatch(setOrgRejectReason(data.comments[0].comment));
     }
     dispatch(loaderActions.stopAppLoader());

@@ -17,6 +17,7 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { defaultContacts } from "../reducers/organizationReducer";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -144,7 +145,7 @@ const payloadForSubmit = organization => {
     description: longDescription,
     short_description: shortDescription,
     url: website,
-    contacts,
+    contacts: contacts.map(contact => ({ contact_type: contact.type, email: contact.email, phone: contact.phone })),
     org_address: {
       mail_address_same_hq_address: sameMailingAddress,
       addresses: [
@@ -249,7 +250,13 @@ const parseOrgData = selectedOrg => {
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
     duns: selectedOrg.duns_no,
-    contacts: selectedOrg.contacts,
+    contacts: isEmpty(selectedOrg.contacts)
+      ? defaultContacts
+      : selectedOrg.contacts.map(contact => ({
+          type: contact.contact_type,
+          email: contact.email,
+          phone: contact.phone,
+        })),
     orgAddress: parseOrgAddress(),
     assets: {
       heroImage: {

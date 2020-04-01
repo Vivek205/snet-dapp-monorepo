@@ -64,7 +64,7 @@ const initialState = {
   tags: [],
   comments: {
     SERVICE_PROVIDER: "",
-    SERVICE_APPROVER: "",
+    SERVICE_APPROVER: "<div></div>",
   },
   foundInBlockchain: false,
 };
