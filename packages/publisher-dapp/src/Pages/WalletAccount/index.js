@@ -25,6 +25,8 @@ import { alertTypes } from "shared/dist/components/AlertBox";
 import { LoaderContent } from "../../Utils/Loader";
 import AlertBox from "shared/dist/components/AlertBox";
 import { MetamaskError } from "shared/dist/utils/error";
+import ClaimsSuccessPopup from "./ClaimsSuccessPopup";
+import { cogsToAgi } from "shared/src/utils/Pricing";
 
 const controlServiceRequest = new ControlServiceRequest();
 const defaultPaymentAggregate = {
@@ -51,6 +53,11 @@ class WalletAccount extends React.Component {
     selectedChannels: {},
     getPaymentsListAlert: {},
     claimChannelsAlert: {},
+    showClaimsSuccessPopup: false,
+    transactionDetails: {
+      latest: { channelsClaimed: [], amountClaimed: "" },
+      session: { channelsClaimed: [], amountClaimed: "" },
+    },
   };
 
   async componentDidMount() {
@@ -138,13 +145,37 @@ class WalletAccount extends React.Component {
     method.once(blockChainEvents.CONFIRMATION, async () => {
       // TODO stop loader
       // TODO refetch claims list
-      this.setState({
+      const currentTransaction = payments.reduce(
+        (acc, cur) => ({
+          channelsClaimed: acc.channelsClaimed.push(cur.channelId),
+          amountClaimed: BigNumber.sum(acc.amountClaimed, cur.signedAmount),
+        }),
+        { channelsClaimed: [], amountClaimed: "" }
+      );
+      this.setState(prevState => ({
         claimChannelsAlert: {
           type: alertTypes.SUCCESS,
           message: `Selected channels have been claimed from the blockchain successfully. 
           Please refresh the list, to fetch the latest payments`,
         },
-      });
+        showClaimsSuccessPopup: true,
+        transactionDetails: {
+          latest: {
+            channelsClaimed: currentTransaction.channelsClaimed,
+            amountClaimed: currentTransaction.amountClaimed,
+          },
+          session: {
+            channelsClaimed: [
+              ...prevState.transactionDetails.session.channelsClaimed,
+              ...currentTransaction.channelsClaimed,
+            ],
+            amountClaimed: BigNumber.sum(
+              prevState.transactionDetails.session.amountClaimed,
+              currentTransaction.channelsClaimed
+            ),
+          },
+        },
+      }));
       this.props.stopAppLoader();
       await method.off();
     });
@@ -256,6 +287,8 @@ class WalletAccount extends React.Component {
 
   shouldClaimBeEnabled = () => Object.values(this.state.selectedChannels).some(Boolean);
 
+  selectedChannelCount = () => Object.values(this.state.selectedChannels).filter(Boolean).length;
+
   render() {
     const { classes } = this.props;
     const {
@@ -268,6 +301,8 @@ class WalletAccount extends React.Component {
       mmAuthorized,
       getPaymentsListAlert,
       claimChannelsAlert,
+      showClaimsSuccessPopup,
+      transactionDetails,
     } = this.state;
     const paymentsList = [...unclaimedPayments, ...pendingPayments];
 
@@ -295,6 +330,12 @@ class WalletAccount extends React.Component {
             five claims at a time.
           </Typography>
           <ClaimsAggregate aggregatePaymentDetails={aggregatePaymentDetails} />
+          <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
+          <ClaimsSuccessPopup
+            show={showClaimsSuccessPopup}
+            agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
+            channelIdList={transactionDetails.latest.channelsClaimed}
+          />
           <div className={classes.claimSelectedSection}>
             <SNETButton
               children="Collect Claims"
@@ -303,9 +344,8 @@ class WalletAccount extends React.Component {
               onClick={this.claimChannelInBlockchain}
               disabled={!this.shouldClaimBeEnabled()}
             />
-            <Typography>Selected (0)</Typography>
+            <Typography>Selected ({this.selectedChannelCount()})</Typography>
           </div>
-          <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
           <div>
             <UnclaimedPayments
               payments={paymentsList}
