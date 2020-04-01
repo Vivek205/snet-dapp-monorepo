@@ -104,7 +104,7 @@ const Profile = ({ classes }) => {
     if (isNotValid) {
       throw new ValidationError(isNotValid[0]);
     }
-    if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+    if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
