@@ -186,7 +186,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: isEmpty(serviceDetails.contributors) ? [] : serviceDetails.contributors.split(",").map(c => c),
+    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
     groups: generateGroupsPayload(),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
@@ -288,6 +288,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
+    newId: data.service_id,
     shortDescription: data.short_description,
     longDescription: data.description,
     projectURL: data.project_url,
@@ -522,12 +523,13 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
 };
 
 const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  const daemonConfigNetwork = { TEST: "TEST", MAIN: "MAIN" };
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = testDaemon
-    ? APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid)
-    : APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
-  const queryParams = testDaemon ? undefined : { network_id: process.env.REACT_APP_ETH_NETWORK };
+  const apiPath = APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
+  const queryParams = testDaemon
+    ? { network: daemonConfigNetwork.TEST }
+    : { network_id: process.env.REACT_APP_ETH_NETWORK, network: daemonConfigNetwork.MAIN };
   const apiOptions = initializeAPIOptions(token, undefined, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };

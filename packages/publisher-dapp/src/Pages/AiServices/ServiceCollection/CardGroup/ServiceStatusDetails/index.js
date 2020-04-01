@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
@@ -17,12 +17,14 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../../Services/Redux/actionCreators";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { generateDetailedErrorMessageFromValidation } from "../../../../../Utils/validation";
+import { serviceCreationStatus } from "../../../../AiServiceCreation/constant";
 
 const selectState = state => ({
   serviceDetails: state.aiServiceList,
 });
 const ServiceStatusDetails = props => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { classes, status, groups, editServiceLink, serviceUuid, orgUuid } = props;
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
@@ -98,6 +100,11 @@ const ServiceStatusDetails = props => {
       return setAlert({ type: alertTypes.ERROR, message: "something went wrong" });
     }
   };
+
+  const handleEdit = () => {
+    history.push(editServiceLink);
+  };
+
   return (
     <div className={classes.serviceStatusDetailsMainContainer}>
       <div>
@@ -117,9 +124,14 @@ const ServiceStatusDetails = props => {
         </div>
       </div>
       <div className={classes.serviceStatusActions}>
-        <Link to={editServiceLink}>
-          <SNETButton children="edit" color="primary" variant="contained" />
-        </Link>
+        <SNETButton
+          children="edit"
+          color="primary"
+          variant="contained"
+          onClick={handleEdit}
+          disabled={status === serviceCreationStatus.REJECTED}
+        />
+
         {props.status === "PUBLISHED" ? (
           <div className={classes.configValidButton}>
             <SNETButton children="validate daemon" color="primary" variant="contained" onClick={validateDaemonConfig} />

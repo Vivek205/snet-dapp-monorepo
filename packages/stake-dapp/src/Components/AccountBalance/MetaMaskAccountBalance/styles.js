@@ -62,7 +62,13 @@ export const useStyles = MUITheme => ({
     "@media(max-width: 1122px)": { marginRight: 5 },
     "@media(max-width: 960px)": { marginRight: 11 },
   },
-  walletIdContainer: { paddingBottom: 18 },
+  walletIdContainer: {
+    paddingBottom: 18,
+    "& > div": {
+      boxSizing: "border-box",
+      paddingLeft: 33,
+    },
+  },
   walletId: {
     fontSize: "14px !important",
     wordBreak: "break-all",
@@ -140,13 +146,11 @@ export const useStyles = MUITheme => ({
       display: "none",
       position: "absolute",
       bottom: 25,
-      left: "50%",
       background: MUITheme.palette.text.lightGrey,
       boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
       color: MUITheme.palette.text.white,
       fontSize: 16,
       lineHeight: "20px",
-      transform: "translateX(-30%)",
     },
     "&:hover": {
       "& svg": { color: MUITheme.palette.primary.main },

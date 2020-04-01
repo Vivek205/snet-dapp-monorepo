@@ -153,6 +153,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
     let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
+    const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
 
     if (myStake.gt(myStakeProcessed)) {
       totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -170,6 +171,9 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
 
     let _rewardAmount = new BigNumber(0);
+
+    // Considering Auto Renewed Stake For calculation
+    totalStakedAmount = totalStakedAmount.plus(windowTotalStake);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
@@ -204,7 +208,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <SNETTextfield
                 name="stakeAmount"
                 label="Input Stake Amount"
-                extraInfo="Avaialble Balance:"
+                extraInfo={"Avaialble Balance: " + fromWei(tokenBalance)}
                 value={stakeAmount}
                 onChange={handleAmountChange}
                 InputProps={{
@@ -215,7 +219,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <SNETTextfield
                 label="Reward Amount"
                 readOnly={true}
-                extraInfo="Approximate Estimate"
+                extraInfo="Approximate based on the current pool size"
                 value={fromWei(rewardAmount)}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">agi</InputAdornment>,
@@ -225,8 +229,11 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
             <div className={classes.stakeAmtDetailsContainer}>
               {addStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>

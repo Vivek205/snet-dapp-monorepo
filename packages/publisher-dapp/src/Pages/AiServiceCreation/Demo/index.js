@@ -81,6 +81,7 @@ const Demo = ({ classes }) => {
                 href="mailto:support@singularitynet.io"
                 color="primary"
                 variant="text"
+                target="_blank"
               />
             </div>
             <hr />
