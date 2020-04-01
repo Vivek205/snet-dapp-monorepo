@@ -522,12 +522,13 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
 };
 
 const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  const daemonConfigNetwork = { TEST: "TEST", MAIN: "MAIN" };
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = testDaemon
-    ? APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid)
-    : APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
-  const queryParams = testDaemon ? undefined : { network_id: process.env.REACT_APP_ETH_NETWORK };
+  const apiPath = APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
+  const queryParams = testDaemon
+    ? { network: daemonConfigNetwork.TEST }
+    : { network_id: process.env.REACT_APP_ETH_NETWORK, network: daemonConfigNetwork.MAIN };
   const apiOptions = initializeAPIOptions(token, undefined, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };

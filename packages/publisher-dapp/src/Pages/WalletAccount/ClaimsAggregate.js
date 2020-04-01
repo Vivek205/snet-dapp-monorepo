@@ -12,7 +12,7 @@ const ClaimsAggregate = ({ aggregatePaymentDetails }) => {
         <Typography>{`${aggregatePaymentDetails.amount}`}</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4}>
-        <Typography>Expiring cunt</Typography>
+        <Typography>Expiring count</Typography>
         <Typography>{aggregatePaymentDetails.expiry.d7.count}</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4}>
