@@ -56,7 +56,7 @@ const SessionTime = ({ stakeDetails }) => {
       sessionTitle = "Next Session in:";
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
-      sessionTitle = "Staking window open for:";
+      sessionTitle = "Open Staking for:";
     }
 
     return sessionTitle;

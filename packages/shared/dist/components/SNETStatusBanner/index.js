@@ -27,8 +27,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 var statusTitleType = {
   PENDING: "PENDING",
-  REJECTED: "REJECTED",
-  CHANGE_REQUESTED:"CHANGE_REQUESTED"
+  REJECTED: "REJECTED"
 };
 exports.statusTitleType = statusTitleType;
 

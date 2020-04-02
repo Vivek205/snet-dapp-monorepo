@@ -6,7 +6,7 @@ export const useStyles = makeStyles(MUITheme => ({
     display: "inline-block",
     "& > div": {
       display: "flex",
-      alignItems: "flex-end",
+      alignItems: "baseline",
     },
     "& svg": {
       color: MUITheme.palette.text.disabled,
@@ -46,10 +46,10 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   toolTipContainer: {
     "& > svg": {
-      paddingRight: 12,
+      padding: "0 12px 3px 0",
       color: MUITheme.palette.text.disabled,
       cursor: "pointer",
-      fontSize: 18,
+      fontSize: 22,
       verticalAlign: "middle",
     },
     "& p": {
@@ -66,6 +66,7 @@ export const useStyles = makeStyles(MUITheme => ({
       fontSize: 16,
       lineHeight: "20px",
       transform: "translateX(-70%)",
+      zIndex: 9999,
     },
     "&:hover": {
       "& svg": { color: MUITheme.palette.primary.main },

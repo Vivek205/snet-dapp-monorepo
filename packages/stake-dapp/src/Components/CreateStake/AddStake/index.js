@@ -13,12 +13,12 @@ import InfoIcon from "@material-ui/icons/Info";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import ApproxSymbolImg from "shared/dist/assets/images/ApproxSymbol.png";
 
 import { useStyles } from "./styles";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
@@ -119,13 +119,13 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! Needs to stake atleast minimum amount.`,
+        message: `Oops! Needs to stake at least minimum amount.`,
       });
     } else {
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! No sufficient AGI Balance in your wallet.`,
+        message: `Oops! Insufficient AGI Balance in your wallet.`,
       });
     }
   };
@@ -215,7 +215,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                   endAdornment: <InputAdornment position="start">agi</InputAdornment>,
                 }}
               />
-              <SwapHorizontalCircleIcon />
+              <img src={ApproxSymbolImg} alt="Approximate Symbol" />
               <SNETTextfield
                 label="Reward Amount"
                 readOnly={true}
