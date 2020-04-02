@@ -57,6 +57,35 @@ export const approveToken = (metamaskDetails, amountBN) => {
   });
 };
 
+export const approveTokenV2 = (metamaskDetails, amountBN) => {
+  const tokenContractAddress = getTokenContractAddress();
+  const stakingContractAddress = getStakingContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  try {
+    const ethereum = window.ethereum;
+    window.web3 = new window.Web3(ethereum);
+
+    const web3 = new Web3(window.web3.currentProvider);
+    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+
+    return new Promise((resolve, reject) => {
+      const method = tokenInstance.methods
+        .approve(stakingContractAddress, amountBN.toString())
+        .send({ from: accountAddress })
+        .once("confirmation", async () => {
+          resolve();
+          await method.off();
+        })
+        .on("error", error => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createStakePeriod = (
   metamaskDetails,
   startPeriod,
@@ -118,6 +147,34 @@ export const submitStake = (metamaskDetails, stakeAmount, autoRenewal) => {
       resolve(hash);
     });
   });
+};
+
+export const submitStakeV2 = (metamaskDetails, stakeAmount, autoRenewal) => {
+  const stakingContractAddress = getStakingContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  try {
+    const ethereum = window.ethereum;
+    window.web3 = new window.Web3(ethereum);
+
+    const web3 = new Web3(window.web3.currentProvider);
+    const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+
+    return new Promise((resolve, reject) => {
+      const method = stakingInstance.methods
+        .submitStake(stakeAmount.toString(), autoRenewal)
+        .send({ from: accountAddress })
+        .once("confirmation", async () => {
+          resolve();
+          await method.off();
+        })
+        .on("error", error => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const approveStake = (metamaskDetails, staker, approvedAmount) => {
@@ -309,6 +366,34 @@ export const withdrawStake = (metamaskDetails, existingStakeMapIndex, stakeAmoun
       }
     );
   });
+};
+
+export const withdrawStakeV2 = (metamaskDetails, existingStakeMapIndex, stakeAmountBN) => {
+  const stakingContractAddress = getStakingContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  try {
+    const ethereum = window.ethereum;
+    window.web3 = new window.Web3(ethereum);
+
+    const web3 = new Web3(window.web3.currentProvider);
+    const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+
+    return new Promise((resolve, reject) => {
+      const method = stakingInstance.methods
+        .withdrawStake(existingStakeMapIndex, stakeAmountBN.toString())
+        .send({ from: accountAddress })
+        .once("confirmation", async () => {
+          resolve();
+          await method.off();
+        })
+        .on("error", error => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Can be done only by owner

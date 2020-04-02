@@ -22,7 +22,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
-import { waitForTransaction, approveToken, submitStake } from "../../../Utils/BlockchainHelper";
+import { approveTokenV2, submitStakeV2 } from "../../../Utils/BlockchainHelper";
 import { LoaderContent } from "../../../Utils/Loader";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 
@@ -72,31 +72,27 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const minStakeBN = new BN(stakeDetails.minStake);
 
     if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && finalStakeBN.gte(minStakeBN)) {
-      let txHash;
       let bAllowanceCalled = false;
 
       try {
         // Need to have an Token Approval before Deposit
         if (tokenAllowanceBN.lt(stakeAmountBN)) {
-          txHash = await approveToken(metamaskDetails, stakeAmountBN);
-
           setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
 
-          bAllowanceCalled = true;
-          await waitForTransaction(txHash);
-        }
+          await approveTokenV2(metamaskDetails, stakeAmountBN);
 
-        // Initiate the SubmitStake Operation
-        txHash = await submitStake(metamaskDetails, stakeAmountBN, autoRenewal);
+          bAllowanceCalled = true;
+        }
 
         if (!bAllowanceCalled) {
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
           setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
         }
 
-        await waitForTransaction(txHash);
+        // Initiate the SubmitStake Operation
+        await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
 
         setAlert({
           type: alertTypes.SUCCESS,
