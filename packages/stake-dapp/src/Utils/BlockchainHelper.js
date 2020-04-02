@@ -7,6 +7,13 @@ import stakingABI from "singularitynet-stake-contracts/abi/TokenStake";
 
 import { toBigNumber } from "./GenHelperFunctions";
 
+export const blockChainEvents = {
+  TRANSACTION_HASH: "transactionHash",
+  RECEIPT: "receipt",
+  CONFIRMATION: "confirmation",
+  ERROR: "error",
+};
+
 // TODO - Come up with a different approach here....
 export const waitForTransaction = async hash => {
   let receipt;
@@ -73,11 +80,11 @@ export const approveTokenV2 = (metamaskDetails, amountBN) => {
       const method = tokenInstance.methods
         .approve(stakingContractAddress, amountBN.toString())
         .send({ from: accountAddress })
-        .once("confirmation", async () => {
+        .once(blockChainEvents.CONFIRMATION, async () => {
           resolve();
           await method.off();
         })
-        .on("error", error => {
+        .on(blockChainEvents.ERROR, error => {
           reject(error);
         });
     });
@@ -159,11 +166,11 @@ export const submitStakeV2 = (metamaskDetails, stakeAmount, autoRenewal) => {
       const method = stakingInstance.methods
         .submitStake(stakeAmount.toString(), autoRenewal)
         .send({ from: accountAddress })
-        .once("confirmation", async () => {
+        .once(blockChainEvents.CONFIRMATION, async () => {
           resolve();
           await method.off();
         })
-        .on("error", error => {
+        .on(blockChainEvents.ERROR, error => {
           reject(error);
         });
     });
@@ -229,6 +236,29 @@ export const updateAutoRenewal = (metamaskDetails, stakeMapIndex, autoRenew) => 
   });
 };
 
+export const updateAutoRenewalV2 = (metamaskDetails, stakeMapIndex, autoRenew) => {
+  const accountAddress = metamaskDetails.account;
+
+  try {
+    const stakingInstance = getStakingInstance();
+
+    return new Promise((resolve, reject) => {
+      const method = stakingInstance.methods
+        .updateAutoRenewal(stakeMapIndex, autoRenew)
+        .send({ from: accountAddress })
+        .once(blockChainEvents.CONFIRMATION, async () => {
+          resolve();
+          await method.off();
+        })
+        .on(blockChainEvents.ERROR, error => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const claimStake = (metamaskDetails, stakeMapIndex) => {
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
@@ -246,6 +276,29 @@ export const claimStake = (metamaskDetails, stakeMapIndex) => {
       resolve(hash);
     });
   });
+};
+
+export const claimStakeV2 = (metamaskDetails, stakeMapIndex) => {
+  const accountAddress = metamaskDetails.account;
+
+  try {
+    const stakingInstance = getStakingInstance();
+
+    return new Promise((resolve, reject) => {
+      const method = stakingInstance.methods
+        .claimStake(stakeMapIndex)
+        .send({ from: accountAddress })
+        .once(blockChainEvents.CONFIRMATION, async () => {
+          resolve();
+          await method.off();
+        })
+        .on(blockChainEvents.ERROR, error => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Only for Token Operator to withdraw Tokens from liquid pool
@@ -373,11 +426,11 @@ export const withdrawStakeV2 = (metamaskDetails, existingStakeMapIndex, stakeAmo
       const method = stakingInstance.methods
         .withdrawStake(existingStakeMapIndex, stakeAmountBN.toString())
         .send({ from: accountAddress })
-        .once("confirmation", async () => {
+        .once(blockChainEvents.CONFIRMATION, async () => {
           resolve();
           await method.off();
         })
-        .on("error", error => {
+        .on(blockChainEvents.ERROR, error => {
           reject(error);
         });
     });
