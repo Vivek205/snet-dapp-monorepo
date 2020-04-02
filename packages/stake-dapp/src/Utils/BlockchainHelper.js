@@ -150,15 +150,10 @@ export const submitStake = (metamaskDetails, stakeAmount, autoRenewal) => {
 };
 
 export const submitStakeV2 = (metamaskDetails, stakeAmount, autoRenewal) => {
-  const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
   try {
-    const ethereum = window.ethereum;
-    window.web3 = new window.Web3(ethereum);
-
-    const web3 = new Web3(window.web3.currentProvider);
-    const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+    const stakingInstance = getStakingInstance();
 
     return new Promise((resolve, reject) => {
       const method = stakingInstance.methods
@@ -369,15 +364,10 @@ export const withdrawStake = (metamaskDetails, existingStakeMapIndex, stakeAmoun
 };
 
 export const withdrawStakeV2 = (metamaskDetails, existingStakeMapIndex, stakeAmountBN) => {
-  const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
   try {
-    const ethereum = window.ethereum;
-    window.web3 = new window.Web3(ethereum);
-
-    const web3 = new Web3(window.web3.currentProvider);
-    const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+    const stakingInstance = getStakingInstance();
 
     return new Promise((resolve, reject) => {
       const method = stakingInstance.methods
@@ -518,4 +508,20 @@ const getStakingContractAddress = () => {
 
 const getTokenContractAddress = () => {
   return tokenNetworks[process.env.REACT_APP_ETH_NETWORK].address;
+};
+
+const getStakingInstance = () => {
+  const stakingContractAddress = getStakingContractAddress();
+
+  try {
+    const ethereum = window.ethereum;
+    window.web3 = new window.Web3(ethereum);
+
+    const web3 = new Web3(window.web3.currentProvider);
+    const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
+
+    return stakingInstance;
+  } catch (error) {
+    throw error;
+  }
 };
