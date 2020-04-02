@@ -208,7 +208,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <SNETTextfield
                 name="stakeAmount"
                 label="Input Stake Amount"
-                extraInfo={"Avaialble Balance: " + fromWei(tokenBalance)}
+                extraInfo={"Avaialble Balance: " + fromWei(tokenBalance) + "-" + tokenBalance}
                 value={stakeAmount}
                 onChange={handleAmountChange}
                 InputProps={{
