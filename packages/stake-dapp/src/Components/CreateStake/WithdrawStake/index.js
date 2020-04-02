@@ -93,6 +93,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
         // To get the latest state from Blockchain
         dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));

@@ -35,9 +35,8 @@ const PageNotFound = ({ classes, homePath }) => {
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
         <Typography>
-          If you are seeing this message repeatedly, let us know at
-          <AnchorLink label="support@singularitynet.io" href="/" />
-          and we will look into it.
+          If you are seeing this message repeatedly, let us know at{" "}
+          <AnchorLink label="support@singularitynet.io" href="/" /> and we will look into it.
         </Typography>
       </Grid>
     </Grid>
