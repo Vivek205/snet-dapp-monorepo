@@ -15,6 +15,7 @@ import ValidationError from "shared/dist/utils/validationError";
 import validator from "shared/dist/utils/validator";
 import { orgProfileValidationConstraints, errorMsg, contactConstraints } from "./validationConstraints";
 import { ContactsTypes } from "../../../Utils/Contacts";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const organization = useSelector(state => state.organization);
@@ -41,7 +42,8 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const handleContinue = () => {
     const isNotValid = validateForm();
     if (isNotValid) {
-      return setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+      return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
     if (!organization.assets.heroImage.raw && !organization.assets.heroImage.url) {
       return setAlert({ type: alertTypes.ERROR, message: errorMsg.IMAGE_NOT_FOUND });
@@ -71,9 +73,9 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
         <OrgImg />
         <hr />
         <SupportDetails />
-        {alert.message ? (
+        {alert.message || alert.children ? (
           <div className={classes.errorContainer}>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
           </div>
         ) : null}
       </Grid>

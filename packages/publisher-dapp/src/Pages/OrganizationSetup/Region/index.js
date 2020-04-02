@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import validator from "shared/dist/utils/validator";
 import { orgSetupRegionValidationConstraints } from "./validationConstraints";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 const Region = ({ history, classes, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
@@ -19,7 +20,8 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const handleContinue = () => {
     const isNotValid = validator(organization, orgSetupRegionValidationConstraints);
     if (isNotValid) {
-      return setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+      return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
@@ -52,9 +54,9 @@ const Region = ({ history, classes, handleFinishLater }) => {
             foundInBlockchain={organization.foundInBlockchain}
           />
         ))}
-        {alert.message ? (
+        {alert.message || alert.children ? (
           <div className={classes.alertContainer}>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
           </div>
         ) : null}
       </div>
