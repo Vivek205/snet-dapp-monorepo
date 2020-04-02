@@ -66,9 +66,12 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const tokenBalanceBN = new BN(tokenBalance);
     const tokenAllowanceBN = new BN(tokenAllowance);
 
+    const myStakeBN = new BN(stakeDetails.myStake);
+    const finalStakeBN = myStakeBN.add(stakeAmountBN);
+
     const minStakeBN = new BN(stakeDetails.minStake);
 
-    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && stakeAmountBN.gte(minStakeBN)) {
+    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && finalStakeBN.gte(minStakeBN)) {
       let txHash;
       let bAllowanceCalled = false;
 
@@ -108,6 +111,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
         // To get the latest state from Blockchain
         dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));
@@ -115,7 +119,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
       }
-    } else if (stakeAmountBN.lt(minStakeBN)) {
+    } else if (finalStakeBN.lt(minStakeBN)) {
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
