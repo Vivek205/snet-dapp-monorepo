@@ -88,17 +88,6 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Total AGI tokens that are staked so far.</p>
-              </div>
-              <span>Staking Balance</span>
-            </div>
-            <span>{fromWei(stakeBalance)} AGI</span>
-          </div>
-
-          <div className={classes.bgBox}>
-            <div className={classes.label}>
-              <div className={classes.iconTooltipContainer}>
-                <InfoIcon />
                 <p>
                   Are the tokens user authorizes escrow to transfer from user wallet to escrow based on user
                   deposit/transfer action. User cannot transfer more than the authorized amount.
@@ -107,6 +96,17 @@ class MetaMaskAccountBalance extends Component {
               <span>Authorized Tokens</span>
             </div>
             <span>{fromWei(tokenAllowance)} AGI</span>
+          </div>
+
+          <div className={classes.bgBox}>
+            <div className={classes.label}>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Total AGI tokens that are staked so far.</p>
+              </div>
+              <span>Total Staked</span>
+            </div>
+            <span>{fromWei(stakeBalance)} AGI</span>
           </div>
         </div>
       </div>

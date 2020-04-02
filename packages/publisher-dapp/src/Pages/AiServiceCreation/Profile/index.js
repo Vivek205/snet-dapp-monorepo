@@ -77,7 +77,10 @@ const Profile = ({ classes }) => {
   const handleWebsiteValidation = value => {
     const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
     if (isNotValid) {
-      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+      return setWebsiteValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid URL. URL should start with https:`,
+      });
     }
     return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
   };
@@ -104,7 +107,7 @@ const Profile = ({ classes }) => {
     if (isNotValid) {
       throw new ValidationError(isNotValid[0]);
     }
-    if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+    if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {

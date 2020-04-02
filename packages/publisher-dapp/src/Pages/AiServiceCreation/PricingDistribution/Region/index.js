@@ -38,14 +38,6 @@ const Region = () => {
 
   const selectedOrgGroup = orgGroups[0];
 
-  const updateGroupId = () => {
-    if (!Boolean(selectedServiceGroup.id)) {
-      const updatedServiceGroups = [...serviceGroups];
-      updatedServiceGroups[0] = { ...selectedServiceGroup, id: selectedOrgGroup.id };
-      dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    }
-  };
-
   const handleEndPointValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
     if (isNotValid) {
@@ -56,6 +48,7 @@ const Region = () => {
   };
 
   const handleNewEndpointsChange = event => {
+    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -75,10 +68,9 @@ const Region = () => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
     endpointRef.current.value = "";
-    updateGroupId();
   };
 
   const handleEndpointDelete = endpoint => {
@@ -91,6 +83,7 @@ const Region = () => {
   };
 
   const handleNewDaemonAddressChange = event => {
+    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -107,10 +100,9 @@ const Region = () => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
     addressRef.current.value = "";
-    updateGroupId();
   };
 
   const handleDaemonAddressDelete = address => {
@@ -124,12 +116,12 @@ const Region = () => {
   };
 
   const handleNewTestEndpointsChange = event => {
+    // updateGroupId();
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = [event.target.value];
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
   };
 
   const handleFreeCallsValidation = value => {
@@ -141,24 +133,24 @@ const Region = () => {
   };
 
   const handleFreeCallsChange = event => {
+    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
   };
 
   const handlePriceChange = event => {
+    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
   };
 
   if (showRegion) {

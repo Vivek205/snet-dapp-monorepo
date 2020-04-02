@@ -22,7 +22,7 @@ import { useStyles } from "./styles";
 import { LoaderContent } from "../../../Utils/Loader";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
-import { waitForTransaction, withdrawStake } from "../../../Utils/BlockchainHelper";
+import { withdrawStakeV2 } from "../../../Utils/BlockchainHelper";
 
 const BN = web3.utils.BN;
 
@@ -71,15 +71,12 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
       withdrawAmountBN.lte(myStakeBN) &&
       (balStakeBN.eq(zeroBN) || balStakeBN.gte(minStakeBN))
     ) {
-      let txHash;
-
       try {
-        // Initiate the Withdraw Stake Operation
-        txHash = await withdrawStake(metamaskDetails, stakeDetails.stakeMapIndex, withdrawAmountBN);
-
+        setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
         dispatch(loaderActions.startAppLoader(LoaderContent.WITHDRAW_STAKE));
 
-        await waitForTransaction(txHash);
+        // Initiate the Withdraw Stake Operation
+        await withdrawStakeV2(metamaskDetails, stakeDetails.stakeMapIndex, withdrawAmountBN);
 
         setAlert({
           type: alertTypes.SUCCESS,
@@ -93,6 +90,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
         // To get the latest state from Blockchain
         dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));

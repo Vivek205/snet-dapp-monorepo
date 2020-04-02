@@ -47,7 +47,7 @@ const Login = ({ history }) => {
   return (
     <Fragment>
       <SNETLogin
-        title="Welcome Back"
+        title="Welcome Back to AGI Staking"
         forgotPasswordLink={GlobalRoutes.FORGOT_PASSWORD.path}
         loginError={error}
         onSubmit={handleSubmit}

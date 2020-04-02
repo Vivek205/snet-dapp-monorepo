@@ -39,10 +39,10 @@ const computeReward = activeStake => {
 
 export const cardDetails = activeStake => [
   {
-    title: "Stake Session",
+    title: "Stake Amount",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
-    toolTip: "",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Max Reward",
@@ -67,7 +67,7 @@ export const cardDetails = activeStake => [
     title: "Current Pool Size",
     value: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
     unit: "AGI",
-    toolTip: "Current total amount of AGI tokens contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Reward Pool",
@@ -103,16 +103,19 @@ export const withdrawStakeAmountDetails = activeStake => [
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
     unit: "AGI",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
     unit: "AGI",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount.  Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Current Pool Size",
     amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
-    toolTip: "Current total amount of AGI tokens contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Stakers",
@@ -127,17 +130,20 @@ export const addStakeAmountDetails = activeStake => [
     title: "Total Stake Amount",
     amount: fromWei(activeStake.myStake),
     unit: "AGI",
+    toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
   {
     title: "Total Max Reward",
     amount: fromWei(computeReward(activeStake)),
     unit: "AGI",
+    toolTip:
+      "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.  When incubation period begins, SNET foundation will accept all or a partial amount of your stake which could affect your reward amount.  Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
   {
     title: "Current Pool Size",
     amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
     unit: "AGI",
-    toolTip: "Current total amount of AGI tokens contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Stakers",

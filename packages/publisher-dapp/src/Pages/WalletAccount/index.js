@@ -285,6 +285,16 @@ class WalletAccount extends React.Component {
     this.setState(prevState => ({ selectedChannels: { ...prevState.selectedChannels, [channelId]: checked } }));
   };
 
+  handleSuccessPopupClose = () => {
+    this.setState(prevState => ({
+      showClaimsSuccessPopup: false,
+      transactionDetails: {
+        ...prevState.transactionDetails,
+        latest: { channelsClaimed: [], amountClaimed: "" },
+      },
+    }));
+  };
+
   shouldClaimBeEnabled = () => Object.values(this.state.selectedChannels).some(Boolean);
 
   selectedChannelCount = () => Object.values(this.state.selectedChannels).filter(Boolean).length;
@@ -335,6 +345,7 @@ class WalletAccount extends React.Component {
             show={showClaimsSuccessPopup}
             agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
             channelIdList={transactionDetails.latest.channelsClaimed}
+            handleClose={this.handleSuccessPopupClose}
           />
           <div className={classes.claimSelectedSection}>
             <SNETButton
