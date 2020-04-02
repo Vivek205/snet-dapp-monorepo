@@ -18,6 +18,7 @@ import { aiServiceDetailsActions } from "../../../../../Services/Redux/actionCre
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { generateDetailedErrorMessageFromValidation } from "../../../../../Utils/validation";
 import { serviceCreationStatus } from "../../../../AiServiceCreation/constant";
+import { ServiceCreationRoutes } from "../../../../AiServiceCreation/ServiceCreationRouter/Routes";
 
 const selectState = state => ({
   serviceDetails: state.aiServiceList,
@@ -25,7 +26,7 @@ const selectState = state => ({
 const ServiceStatusDetails = props => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { classes, status, groups, editServiceLink, serviceUuid, orgUuid } = props;
+  const { classes, status, groups, serviceUuid, orgUuid } = props;
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
@@ -102,7 +103,12 @@ const ServiceStatusDetails = props => {
   };
 
   const handleEdit = () => {
-    history.push(editServiceLink);
+    const path =
+      status === serviceCreationStatus.APPROVED
+        ? ServiceCreationRoutes.SUBMIT.path
+        : ServiceCreationRoutes.PROFILE.path;
+    const redirectTo = path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid);
+    history.push(redirectTo);
   };
 
   return (
@@ -125,7 +131,7 @@ const ServiceStatusDetails = props => {
       </div>
       <div className={classes.serviceStatusActions}>
         <SNETButton
-          children="edit"
+          children={status === serviceCreationStatus.APPROVED ? "publish" : "edit"}
           color="primary"
           variant="contained"
           onClick={handleEdit}

@@ -14,7 +14,7 @@ import Button from "./Button";
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../Utils/Loader";
 import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
-import { waitForTransaction, updateAutoRenewal } from "../../Utils/BlockchainHelper";
+import { updateAutoRenewalV2 } from "../../Utils/BlockchainHelper";
 
 const StakeSession = ({
   cardDetails,
@@ -133,15 +133,12 @@ const StakeSession = ({
     try {
       const selectedAutoRenewal = event.target.checked;
 
-      let txHash;
-      // Initiate the Auto Renewal Flag Update
-      txHash = await updateAutoRenewal(metamaskDetails, stakeDetails.stakeMapIndex, selectedAutoRenewal);
-
       dispatch(loaderActions.startAppLoader(LoaderContent.UPDATE_STAKE_AUTO_RENEWAL));
 
       setAlert({ type: alertTypes.INFO, message: "Transaction is in progress" });
 
-      await waitForTransaction(txHash);
+      // Initiate the Auto Renewal Flag Update
+      await updateAutoRenewalV2(metamaskDetails, stakeDetails.stakeMapIndex, selectedAutoRenewal);
 
       setAlert({ type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" });
 
