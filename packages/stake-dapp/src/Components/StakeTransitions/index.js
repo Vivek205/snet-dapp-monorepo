@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
@@ -28,13 +28,17 @@ const StakeTransitions = () => {
 
   const { myTransactions, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
-  useEffect(() => {
+  const fetchStakeTransactions = useCallback(() => {
     try {
       dispatch(stakeActions.fetchStakeTransactions(metamaskDetails));
     } catch (_error) {
-      //console.log("error - ", error);
+      // Ignore as we show appropriate error
     }
   }, [dispatch, metamaskDetails]);
+
+  useEffect(() => {
+    fetchStakeTransactions();
+  }, [fetchStakeTransactions]);
 
   const handleExpandeTable = siteMapIndex => {
     const currentValue = expandTable[siteMapIndex] ? expandTable[siteMapIndex] : false;

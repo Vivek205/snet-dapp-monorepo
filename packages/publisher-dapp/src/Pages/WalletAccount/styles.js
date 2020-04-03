@@ -104,6 +104,14 @@ export const useStyles = MUITheme => ({
     borderBottomColor: MUITheme.palette.border.primary,
     "& h6": { lineHeight: "50px !important" },
   },
+  headerAccountDetails: {
+    padding: "0 23px",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    borderBottomColor: MUITheme.palette.border.primary,
+    "& h6": { lineHeight: "50px !important" },
+    cursor: "pointer",
+  },
   claimsDesc: {
     padding: "21px 50px 24px 22px",
     color: MUITheme.palette.text.darkGrey,
@@ -173,5 +181,10 @@ export const useStyles = MUITheme => ({
     paddingRight: 8,
     color: "#F29132",
     fontSize: 19,
+  },
+  card: { marginTop: 110 },
+  cardHeader: {
+    padding: 0,
+    "& button": { padding: 22 },
   },
 });

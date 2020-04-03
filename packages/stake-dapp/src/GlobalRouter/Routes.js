@@ -91,23 +91,37 @@ export const GlobalRoutes = {
 
 export const setupRouteAuthentications = () => {
   const state = store.getState();
-  const { isLoggedIn } = state.user;
+  const { isLoggedIn, isEmailVerified } = state.user;
+
+  const redirectPath = getRedirectPath(isLoggedIn, isEmailVerified);
+  const isAllowed = isLoggedIn && isEmailVerified;
+
   return {
     ...GlobalRoutes,
     LANDING: {
       ...GlobalRoutes.LANDING,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     ACCEPT_AGREEMENT: {
       ...GlobalRoutes.ACCEPT_AGREEMENT,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     USER_PROFILE: {
       ...GlobalRoutes.USER_PROFILE,
-      isAllowed: state.user.isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
   };
+};
+
+const getRedirectPath = (isLoggedIn, isEmailVerified) => {
+  if (!isLoggedIn) {
+    return GlobalRoutes.LOGIN.path;
+  } else if (!isEmailVerified) {
+    return GlobalRoutes.SIGNUP_CONFIRM.path;
+  } else {
+    return GlobalRoutes.LOGIN.path;
+  }
 };

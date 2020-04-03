@@ -28,7 +28,7 @@ export const APIEndpoints = {
 export const APIPaths = {
   USER_PREFERENCES: "/user/preference",
   ORG_SETUP: "/org",
-  CREATE_ORG_INDIVIDUAL: "/create",
+  CREATE_ORG_INDIVIDUAL: "/org/create",
   CREATE_ORG_ORG: "/org",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
   GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
@@ -52,6 +52,4 @@ export const APIPaths = {
   USER_VERIFICATION_INITIATE: "/initiate",
   USER_VERIFICATION_STATUS: "/status",
   SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
-  SAMPLE_DAEMON_CONFIG_TEST: (orgUuid, serviceuuid) =>
-    `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config/test`,
 };

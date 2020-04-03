@@ -29,6 +29,7 @@ export const useStyles = MUITheme => ({
         fontSize: 14.2,
         letterSpacing: 0.25,
         lineHeight: "20px",
+        cursor: "pointer",
       },
     },
   },

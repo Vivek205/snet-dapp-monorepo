@@ -39,7 +39,7 @@ const userReducer = (state = initialState, action) => {
     case userActions.onboardingActions.SET_USER_ENTITY: {
       return { ...state, entity: action.payload };
     }
-    case userActions.loginActions.RESET_USER_ON_SIGNOUT: {
+    case userActions.loginActions.SIGNOUT: {
       return { ...initialState, isInitialized: true };
     }
     case userActions.loginActions.SET_JWT_EXP: {
