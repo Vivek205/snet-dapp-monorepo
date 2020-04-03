@@ -109,9 +109,62 @@ export const useStyles = MUITheme => ({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.primary,
-    "& h6": { lineHeight: "50px !important" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
     cursor: "pointer",
+    "& h6": {
+      fontWeight: 400,
+      lineHeight: "50px !important",
+    },
+    "& svg": { color: MUITheme.palette.text.lightGrey },
   },
+  infoIcon: {
+    marginRight: 8,
+    color: MUITheme.palette.text.disabled,
+    fontSize: 24,
+  },
+  iconContainer: {
+    display: "flex",
+    alignItems: "center",
+    "& p": {
+      color: MUITheme.palette.text.primary,
+      fontSize: 16,
+      lineHeight: "20px",
+    },
+  },
+  wrapper: {
+    padding: "27px 24px 0 32px",
+    "& > div": {
+      "&:first-of-type": { paddingBottom: 10 },
+    },
+  },
+  boxValue: {
+    padding: "14px 0",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#e2e2e2",
+    borderRadius: 4,
+    color: MUITheme.palette.text.darkGrey,
+    backgroundColor: "#f8f8f8",
+    fontSize: 16,
+    lineHeight: "20px",
+    textAlign: "center",
+    "& span": {
+      fontSize: 12,
+      lineHeight: "15px",
+    },
+  },
+  valueContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  value: {
+    color: MUITheme.palette.text.darkGrey,
+    fontSize: 16,
+    lineHeight: "20px",
+  },
+  collapseContainer: { paddingBottom: 32 },
   claimsDesc: {
     padding: "21px 50px 24px 22px",
     color: MUITheme.palette.text.darkGrey,
