@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
@@ -37,24 +37,24 @@ const CardGroup = () => {
     return (
       <Grid container className={classes.gridViewCardCollection} key={service.uuid}>
         <Grid item xs={12} sm={12} md={3} lg={3} className={classes.serviceDetailCard}>
-          <Link to={editServiceLink} className={classes.routerLink}>
-            <GridViewItem
-              cardTitle={service.displayName}
-              cardSubheader="sub header"
-              ratingGiven={service.rating.rating}
-              totalRating={service.rating.totalUsersRated}
-              cardDescription={service.shortDescription}
-              isAvailable={isAvailable}
-              orgImg={orgImg}
-              serviceImg={service.heroImage.url}
-            />
-          </Link>
+          <GridViewItem
+            cardTitle={service.displayName}
+            cardSubheader="sub header"
+            ratingGiven={service.rating.rating}
+            totalRating={service.rating.totalUsersRated}
+            cardDescription={service.shortDescription}
+            isAvailable={isAvailable}
+            orgImg={orgImg}
+            serviceImg={service.assets.heroImage.url}
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={9} lg={9} className={classes.serviceStatusDetails}>
           <ServiceStatusDetails
-            status={service.state.state}
+            status={service.serviceState.state}
             groups={service.groups}
             editServiceLink={editServiceLink}
+            serviceUuid={service.uuid}
+            orgUuid={orgUuid}
           />
         </Grid>
       </Grid>

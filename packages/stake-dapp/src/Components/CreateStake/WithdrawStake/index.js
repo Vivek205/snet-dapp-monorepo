@@ -20,7 +20,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../../Utils/Loader";
-import { tokenActions, loaderActions } from "../../../Services/Redux/actionCreators";
+import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
 import { waitForTransaction, withdrawStake } from "../../../Utils/BlockchainHelper";
 
@@ -83,7 +83,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         setAlert({
           type: alertTypes.SUCCESS,
-          message: "You have successfully withdrawn tokens to your account. You can safely close this window.",
+          message: "You have successfully withdrawn tokens to your account.",
         });
 
         dispatch(loaderActions.stopAppLoader());
@@ -93,6 +93,10 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
+
+        // To get the latest state from Blockchain
+        dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));
       } catch (err) {
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
@@ -126,7 +130,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           />
           <CardContent className={classes.CardContent}>
             <div className={classes.sessionDetails}>
-              <Typography>Session : </Typography>
+              <Typography>Session: </Typography>
               <Typography>
                 {" "}
                 {stakeStartDate} #{stakeDetails.stakeMapIndex}
@@ -146,13 +150,16 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
             <div className={classes.stakeAmtDetailsContainer}>
               {withdrawStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>
                     <Typography>{item.amount}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>{item.unit}</Typography>
                   </div>
                 </div>
               ))}
@@ -171,7 +178,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
             <SNETButton
-              children="submit withdraw"
+              children="submit withdrawal"
               color="primary"
               variant="contained"
               onClick={handleWithdraw}

@@ -37,7 +37,7 @@ const userReducer = (state = initialState, action) => {
     case userActions.onboardingActions.SET_USER_ENTITY: {
       return { ...state, entity: action.payload };
     }
-    case userActions.loginActions.RESET_USER_ON_SIGNOUT: {
+    case userActions.loginActions.SIGNOUT: {
       return { ...initialState, isInitialized: true };
     }
     case userActions.loginActions.SET_JWT_EXP: {
@@ -52,6 +52,9 @@ const userReducer = (state = initialState, action) => {
       return { ...state, individualVerificationStatus: action.payload };
     case userActions.individualVerificationActions.SET_INDIVIDUAL_VERIFICATION_REJECT_REASON:
       return { ...state, individualVerificationRejectReason: action.payload };
+    case userActions.loginActions.SET_USER_ATTRIBUTES: {
+      return { ...state, ...action.payload };
+    }
     default:
       return state;
   }

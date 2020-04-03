@@ -24,7 +24,12 @@ class GlobalRouter extends React.Component {
       <ReactRouter>
         <Suspense fallback={<LinearProgress />}>
           <Switch>
-            <Route path="/" exact component={routes.HOW_IT_WORKS.component} />
+            <Route
+              path="/"
+              exact
+              component={this.props.isLoggedIn ? routes.LANDING.component : routes.HOW_IT_WORKS.component}
+            />
+
             {Object.values(routes).map(route => {
               if (route.redirectTo) {
                 return (
@@ -39,7 +44,7 @@ class GlobalRouter extends React.Component {
               }
               return <Route key={route.name} path={route.path} component={route.component} />;
             })}
-            <Route component={PageNotFound} />
+            <Route component={() => <PageNotFound homePath="/" />} />
           </Switch>
         </Suspense>
       </ReactRouter>

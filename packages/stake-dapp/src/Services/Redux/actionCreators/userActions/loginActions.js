@@ -47,7 +47,7 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
   return {
     nickname: currentUser.attributes.nickname,
     email: currentUser.attributes.email,
-    email_verified: currentUser.attributes.email_verified,
+    isEmailVerified: currentUser.attributes.email_verified,
     token: currentUser.signInUserSession.idToken.jwtToken,
     stakingTnC: { ..._stakingTnC },
   };

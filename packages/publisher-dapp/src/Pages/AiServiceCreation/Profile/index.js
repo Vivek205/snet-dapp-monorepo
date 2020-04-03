@@ -14,6 +14,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
 import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
@@ -45,6 +46,8 @@ const Profile = ({ classes }) => {
 
   const [alert, setAlert] = useState({});
 
+  const [websiteValidation, setWebsiteValidation] = useState({});
+
   const setServiceTouchedFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
@@ -71,12 +74,23 @@ const Profile = ({ classes }) => {
     validateTimeout = setTimeout(validateServiceId(newServiceId), timeout);
   };
 
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+    }
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
+
   const handleControlChange = event => {
     const { name, value } = event.target;
     setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+    }
+    if (name === "projectURL") {
+      handleWebsiteValidation(value);
     }
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
   };
@@ -90,7 +104,7 @@ const Profile = ({ classes }) => {
     if (isNotValid) {
       throw new ValidationError(isNotValid[0]);
     }
-    if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+    if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
@@ -149,7 +163,9 @@ const Profile = ({ classes }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
     setServiceTouchedFlag();
   };
-
+  const handleResetImage = () => {
+    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+  };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
@@ -197,10 +213,10 @@ const Profile = ({ classes }) => {
               icon
               name="id"
               label="AI Service Id"
-              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
+              minCount={serviceDetails.newId.length}
               maxCount={50}
               description="The ID of your service has to be unique withing your organization"
-              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              value={serviceDetails.newId}
               onChange={handleControlChange}
             />
           </div>
@@ -275,8 +291,8 @@ const Profile = ({ classes }) => {
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
             />
+            <AlertText type={websiteValidation.type} message={websiteValidation.message} />
           </div>
-
           <div className={classes.contributorsContainer}>
             <SNETTextfield
               icon
@@ -308,6 +324,9 @@ const Profile = ({ classes }) => {
                   // returnByteArray
                 />
               </div>
+              {serviceDetails.assets.heroImage.url ? (
+                <SNETButton children="reset" onClick={() => handleResetImage()} color="secondary" variant="text" />
+              ) : null}
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
                   Every AI service will have a profile image. We recommend an image that is 906 x 504 in size. You can

@@ -17,10 +17,7 @@ const ServiceIdAvailability = ({ classes, serviceDetails, id, availability, load
     );
   }
 
-  const type =
-    !Boolean(serviceDetails.newId) || availability === serviceIdAvailability.AVAILABLE
-      ? alertTypes.SUCCESS
-      : alertTypes.ERROR;
+  const type = availability === serviceIdAvailability.AVAILABLE ? alertTypes.SUCCESS : alertTypes.ERROR;
 
   const message =
     !isEmpty(id) && Boolean(availability) && serviceDetails.newId !== serviceDetails.id

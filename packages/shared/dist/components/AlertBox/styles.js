@@ -52,7 +52,7 @@ var useStyles = function useStyles(MUITheme) {
       borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox,
       "& svg": {
-        color: MUITheme.palette.success.main
+        color: "".concat(MUITheme.palette.success.main, " !important")
       }
     },
     warning: {
@@ -69,6 +69,9 @@ var useStyles = function useStyles(MUITheme) {
     info: {
       borderColor: MUITheme.palette.primary.main,
       backgroundColor: MUITheme.palette.background.infoBox,
+      "& svg": {
+        color: MUITheme.palette.primary.main
+      },
       "& a": {
         color: MUITheme.palette.infoBoxLink,
         fontWeight: 600

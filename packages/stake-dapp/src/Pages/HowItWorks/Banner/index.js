@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+import BigNumber from "bignumber.js";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -48,7 +49,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
           recentStakeWindow.windowTotalStake > 0
-            ? recentStakeWindow.windowTotalStake
+            ? Math.floor(fromWei(recentStakeWindow.windowTotalStake))
             : stakeCalculatorFields.poolStakeAmount,
         incubationPeriodInDays: Math.floor(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
@@ -63,19 +64,25 @@ const Banner = ({ classes, recentStakeWindow }) => {
   };
 
   const getRewardAmount = () => {
-    const _finalPoolStakeAmount =
-      parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
-
-    if (_finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)) return 0;
-
-    let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
-
-    const rewardAmount = Math.floor(
-      (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
-        Math.min(_finalPoolStakeAmount, parseInt(stakeCalculatorFields.maxStakeAmount))
+    const maxStakeAmount = new BigNumber(stakeCalculatorFields.maxStakeAmount);
+    const stakeRewardAmount = new BigNumber(stakeCalculatorFields.stakeRewardAmount);
+    const _finalPoolStakeAmount = BigNumber.sum(
+      stakeCalculatorFields.stakeAmount,
+      stakeCalculatorFields.poolStakeAmount
     );
+    const _stakeAmount = new BigNumber(stakeCalculatorFields.stakeAmount);
 
-    return isNaN(rewardAmount) ? 0 : rewardAmount;
+    if (_finalPoolStakeAmount.gt(maxStakeAmount)) return 0;
+
+    let rewardAmount = new BigNumber(0);
+
+    if (_finalPoolStakeAmount.lt(maxStakeAmount)) {
+      rewardAmount = _stakeAmount.times(stakeRewardAmount).div(_finalPoolStakeAmount);
+    } else {
+      rewardAmount = _stakeAmount.times(stakeRewardAmount).div(maxStakeAmount);
+    }
+
+    return rewardAmount.isNaN() ? 0 : rewardAmount.integerValue(BigNumber.ROUND_FLOOR);
   };
 
   const handleDataChange = event => {
@@ -165,15 +172,18 @@ const Banner = ({ classes, recentStakeWindow }) => {
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate"
+                extraInfo="~Approximate based on the current pool size"
                 value={getRewardAmount()}
               />
             </div>
             <div className={classes.stakingDetails}>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Current Pool Size</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Current total amount of AGI tokens contributed by all stakers</p>
+                  </div>
+                  <span>Current Pool Size</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -189,9 +199,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Reward Pool</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>The total reward amount of AGI tokens that will be divided and distributed to stakers</p>
+                  </div>
+                  <span>Reward Pool</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -207,9 +220,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Amount of the time that AGI tokens in the stake will be vested and locked in</p>
+                  </div>
+                  <span>Incubation Period</span>
                 </div>
                 <div className={classes.incubationValuesConatiner}>
                   <Typography className={classes.incubationValue}>
@@ -221,7 +237,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
             </div>
             <div className={classes.formBtnContainer}>
               <SNETButton
-                children="stake & earntokens"
+                children="stake & earn tokens"
                 color="primary"
                 variant="contained"
                 onClick={navigateToLanding}

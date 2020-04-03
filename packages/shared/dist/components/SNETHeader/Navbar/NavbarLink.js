@@ -27,7 +27,7 @@ var NavbarLink = function NavbarLink(props) {
     return activeLinks.includes(pathname);
   };
 
-  return _react.default.createElement(_reactRouterDom.NavLink, {
+  return /*#__PURE__*/_react.default.createElement(_reactRouterDom.NavLink, {
     children: label,
     to: to,
     isActive: isActive,

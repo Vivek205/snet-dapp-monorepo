@@ -10,7 +10,10 @@ export const useStyles = MUITheme => ({
   benefitsMedia: {
     textAlign: "center",
     "& img": {
-      [MUITheme.breakpoints.down("xs")]: { width: "100%" },
+      width: 519,
+      [MUITheme.breakpoints.down("md")]: { width: "100%" },
+      [MUITheme.breakpoints.down("sm")]: { width: 519 },
+      "@media(max-width:580)": { width: "100%" },
     },
   },
   benefitsContent: {
@@ -25,7 +28,7 @@ export const useStyles = MUITheme => ({
         display: "flex",
         listStyle: "none",
         "& svg": {
-          paddingTop: 5,
+          paddingTop: 2,
           color: MUITheme.palette.success.main,
           fontSize: 20,
         },
@@ -51,7 +54,7 @@ export const useStyles = MUITheme => ({
 
   // SignUp container
   signUpContainer: {
-    padding: "71px 64px",
+    padding: "51px 64px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -67,16 +70,25 @@ export const useStyles = MUITheme => ({
     },
     "& form": {
       display: "flex",
+      alignItems: "center",
+      "& > div": {
+        width: 370,
+        marginRight: 24,
+        "& > div": {
+          maxWidth: "100%",
+          flexBasis: "100%",
+          "& .MuiFormControl-marginNormal": { margin: 0 },
+        },
+        "& label": {
+          color: MUITheme.palette.text.lightGrey,
+          fontSize: 16,
+          letterSpacinng: 0,
+          lineHeight: "20px",
+        },
+        "& .MuiInputLabel-formControl": { top: -5 },
+        "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(25,25,25,0.32)" },
+      },
       [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
-    },
-    "& input": {
-      boxSizing: "border-box",
-      width: 365,
-      padding: "0 15px",
-      border: "none",
-      borderRadius: 2,
-      marginRight: 8,
-      "@media(max-width: 480px)": { width: "100%" },
     },
     "& button": { padding: "19px 33px 17px" },
     "& img": {
@@ -123,6 +135,7 @@ export const useStyles = MUITheme => ({
         marginRight: 24,
         backgroundColor: MUITheme.palette.background.white,
         boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
+        cursor: "pointer",
         listStyle: "none",
         "& img": { width: 96 },
         "& h4": {
@@ -137,6 +150,9 @@ export const useStyles = MUITheme => ({
         "&:last-of-type": {
           marginRight: 0,
           [MUITheme.breakpoints.down("sm")]: { marginBottom: 0 },
+        },
+        "&:hover": {
+          "& h4": { color: MUITheme.palette.primary.main },
         },
         [MUITheme.breakpoints.down("xs")]: { margin: "0 0 25px 0" },
         "@media(max-width: 420px)": { width: "100%" },
