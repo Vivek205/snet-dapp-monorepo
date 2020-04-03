@@ -19,7 +19,6 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import { generateDetailedErrorMessageFromValidation } from "../../../../../Utils/validation";
 import { serviceCreationStatus } from "../../../../AiServiceCreation/constant";
 import { ServiceCreationRoutes } from "../../../../AiServiceCreation/ServiceCreationRouter/Routes";
-import { Networks } from "shared/dist/constants/networks";
 
 const selectState = state => ({
   serviceDetails: state.aiServiceList,
@@ -31,7 +30,10 @@ const ServiceStatusDetails = props => {
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
-
+  const Networks = {
+    1: "main",
+    3: "ropsten",
+  };
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
