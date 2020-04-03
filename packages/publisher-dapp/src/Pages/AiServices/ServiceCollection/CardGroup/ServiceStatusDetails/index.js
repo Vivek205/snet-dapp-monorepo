@@ -26,17 +26,21 @@ const selectState = state => ({
 const ServiceStatusDetails = props => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { classes, status, groups, serviceUuid, orgUuid } = props;
+  const { classes, status, groups, serviceUuid, orgUuid, orgId, serviceId } = props;
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
+  const Networks = {
+    1: "main",
+    3: "ropsten",
+  };
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
-    ["blockchain_network_selected", "main"],
+    ["blockchain_network_selected", Networks[process.env.REACT_APP_ETH_NETWORK]],
     ["passthrough_enabled", "true"],
-    ["organization_id", orgUuid],
-    ["service_id", serviceUuid],
+    ["organization_id", orgId],
+    ["service_id", serviceId],
   ];
   /*
   const tabs = [

@@ -18,7 +18,10 @@ const Signup = props => {
     const checkIfMMisConnected = async () => {
       try {
         dispatch(loaderActions.startAppLoader(LoaderContent.CONNECT_METAMASK));
-        await initSDK();
+        const sdk = await initSDK();
+        if (!sdk) {
+          history.push(GlobalRoutes.CONNECT_METAMASK.path);
+        }
         dispatch(loaderActions.stopAppLoader());
       } catch (e) {
         history.push(GlobalRoutes.CONNECT_METAMASK.path);
