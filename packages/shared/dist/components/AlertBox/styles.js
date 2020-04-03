@@ -52,7 +52,7 @@ var useStyles = function useStyles(MUITheme) {
       borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox,
       "& svg": {
-        color: MUITheme.palette.success.main
+        color: "".concat(MUITheme.palette.success.main, " !important")
       }
     },
     warning: {

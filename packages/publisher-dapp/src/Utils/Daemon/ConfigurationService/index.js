@@ -46,7 +46,7 @@ export class ConfigurationServiceRequest {
   generateSignatureForGetConfiguration = async currentBlock => {
     await this._initWeb3();
     const address = await this._getAddress();
-    const currentBlockNumber = currentBlock ? currentBlock : await this._getCurrentBlockNumber();
+    const currentBlockNumber = currentBlock ? currentBlock : await this.getCurrentBlockNumber();
     const sha3Message = this._web3.utils.soliditySha3(
       { t: solidityTypes.STRING, v: "_GetConfiguration" },
       { t: solidityTypes.UINT256, v: currentBlockNumber }
@@ -62,8 +62,8 @@ export class ConfigurationServiceRequest {
     const request = new methodDescriptor.requestType();
     // request.setSignature(signature ? signature : await generateSignature());
     const callerAuthentication = new configuration_service_pb.CallerAuthentication();
-    callerAuthentication.setSignature(signature);
-    callerAuthentication.setCurrentBlock(currentBlock ? currentBlock : await this._getCurrentBlockNumber());
+    callerAuthentication.setCurrentBlock(currentBlock ? currentBlock : await this.getCurrentBlockNumber());
+    callerAuthentication.setSignature(signature ? signature : await this.generateSignatureForGetConfiguration());
     request.setAuth(callerAuthentication);
 
     return new Promise((resolve, reject) => {

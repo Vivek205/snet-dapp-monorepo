@@ -22,7 +22,7 @@ import { useStyles } from "./styles";
 import { LoaderContent } from "../../../Utils/Loader";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
-import { waitForTransaction, withdrawStake } from "../../../Utils/BlockchainHelper";
+import { withdrawStakeV2 } from "../../../Utils/BlockchainHelper";
 
 const BN = web3.utils.BN;
 
@@ -71,15 +71,12 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
       withdrawAmountBN.lte(myStakeBN) &&
       (balStakeBN.eq(zeroBN) || balStakeBN.gte(minStakeBN))
     ) {
-      let txHash;
-
       try {
-        // Initiate the Withdraw Stake Operation
-        txHash = await withdrawStake(metamaskDetails, stakeDetails.stakeMapIndex, withdrawAmountBN);
-
+        setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
         dispatch(loaderActions.startAppLoader(LoaderContent.WITHDRAW_STAKE));
 
-        await waitForTransaction(txHash);
+        // Initiate the Withdraw Stake Operation
+        await withdrawStakeV2(metamaskDetails, stakeDetails.stakeMapIndex, withdrawAmountBN);
 
         setAlert({
           type: alertTypes.SUCCESS,
@@ -93,6 +90,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
 
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
         // To get the latest state from Blockchain
         dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));
@@ -129,7 +127,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           />
           <CardContent className={classes.CardContent}>
             <div className={classes.sessionDetails}>
-              <Typography>Session : </Typography>
+              <Typography>Session: </Typography>
               <Typography>
                 {" "}
                 {stakeStartDate} #{stakeDetails.stakeMapIndex}
@@ -149,8 +147,11 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
             <div className={classes.stakeAmtDetailsContainer}>
               {withdrawStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>
@@ -174,7 +175,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
           <CardActions className={classes.CardActions}>
             <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
             <SNETButton
-              children="submit withdraw"
+              children="submit withdrawal"
               color="primary"
               variant="contained"
               onClick={handleWithdraw}

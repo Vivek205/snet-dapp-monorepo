@@ -8,15 +8,16 @@ import SNETPagination from "shared/dist/components/SNETPagination";
 import { itemsPerPageOptions } from "./content";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
-import SNETButton from "shared/src/components/SNETButton";
 
 const UnclaimedPayments = ({
   classes,
   payments,
-  handleClaimChannel,
+  // handleClaimChannel,
   pagination,
   handlePageChange,
   onItemsPerPageChange,
+  selectedChannels,
+  onSelectChannel,
 }) => {
   const { limit, offset, totalCount, itemsPerPage } = pagination;
 
@@ -32,17 +33,24 @@ const UnclaimedPayments = ({
         <Grid item xs={12} sm={12} md={2} lg={2}>
           <Typography>Signed Amount</Typography>
         </Grid>{" "}
-        <Grid item xs={12} sm={12} md={2} lg={2}>
+        {/*      <Grid item xs={12} sm={12} md={2} lg={2}>
           <Typography>Action</Typography>
-        </Grid>
+        </Grid>*/}
       </Grid>
       {payments.map(payment => (
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.tableRow} key={payment.channelId}>
-          {/* <Grid item xs={12} sm={12} md={4} lg={4}>
-            <FormControlLabel control={<Checkbox color="primary" />} label="User Identifier 1" />
-          </Grid>*/}
           <Grid item xs={12} sm={12} md={2} lg={2}>
-            <FormControlLabel control={<Checkbox color="primary" />} label={payment.channelId} />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  value={payment.channelId}
+                  checked={selectedChannels[payment.channelId]}
+                  onChange={onSelectChannel}
+                />
+              }
+              label={payment.channelId}
+            />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <WarningIcon className={classes.warningIcon} />
@@ -50,18 +58,6 @@ const UnclaimedPayments = ({
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Typography>{payment.signedAmount}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={2} lg={2}>
-            <Typography>
-              <SNETButton
-                color="primary"
-                variant="contained"
-                children="Claim channel"
-                onClick={() =>
-                  handleClaimChannel(payment.channelId, payment.channelNonce, payment.signedAmount, payment.signature)
-                }
-              />
-            </Typography>
           </Grid>
         </Grid>
       ))}

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GrpcError = exports.checkIfKnownError = void 0;
+exports.MetamaskError = exports.GrpcError = exports.checkIfKnownError = void 0;
 
 var _API = require("./API");
 
@@ -62,3 +62,23 @@ var GrpcError = /*#__PURE__*/function (_Error) {
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
 exports.GrpcError = GrpcError;
+
+var MetamaskError = /*#__PURE__*/function (_Error2) {
+  _inherits(MetamaskError, _Error2);
+
+  var _super2 = _createSuper(MetamaskError);
+
+  function MetamaskError(message) {
+    var _this2;
+
+    _classCallCheck(this, MetamaskError);
+
+    _this2 = _super2.call(this, message);
+    _this2.name = "MetamaskError";
+    return _this2;
+  }
+
+  return MetamaskError;
+}( /*#__PURE__*/_wrapNativeSuper(Error));
+
+exports.MetamaskError = MetamaskError;

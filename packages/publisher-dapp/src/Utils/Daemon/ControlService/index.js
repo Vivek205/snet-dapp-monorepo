@@ -10,6 +10,7 @@ const methods = {
   GetListUnclaimed: "GetListUnclaimed",
   StartClaim: "StartClaim",
   GetListInProgress: "GetListInProgress",
+  StartClaimForMultipleChannels: "StartClaimForMultipleChannels",
 };
 
 export class ControlServiceRequest {
@@ -197,6 +198,71 @@ export class ControlServiceRequest {
             return reject(new GrpcError(statusMessage));
           }
           const payment = parseResponseMessage(message);
+          resolve(payment);
+        },
+      };
+      grpc.unary(methodDescriptor, props);
+    });
+  };
+
+  startClaimForMultipleChannels = async channelIdList => {
+    await this._initWeb3();
+    const channelIdListSorted = channelIdList.sort((a, b) => a < b);
+
+    const generateSignature = async () => {
+      const address = await this._getAddress();
+      const mpeAddress = this._getMpeAddress();
+      const channelIdMessageList = channelIdListSorted.map(channelId => ({
+        t: solidityTypes.UINT256,
+        v: toBNString(channelId),
+      }));
+      const currentBlock = await this._getCurrentBlockNumber();
+      const sha3Message = this._web3.utils.soliditySha3(
+        { t: solidityTypes.STRING, v: "__StartClaimForMultipleChannels_" },
+        { t: solidityTypes.ADDRESS, v: mpeAddress },
+        ...channelIdMessageList,
+        { t: solidityTypes.UINT256, v: currentBlock }
+      );
+      const sha3Hash = this._web3.eth.accounts.hashMessage(sha3Message);
+      const signature = await this._web3.eth.sign(sha3Hash, address);
+      return hexToB64(signature);
+    };
+
+    const methodDescriptor = this._getMethodDescriptor(methods.StartClaimForMultipleChannels);
+    const request = new methodDescriptor.requestType();
+    let channelIdBytesList = [];
+
+    channelIdListSorted.forEach((channelId, index) => {
+      channelIdBytesList[index] = toBNString(channelId);
+    });
+    request.setMpeAddress(this._getMpeAddress());
+    request.setChannelIdsList(channelIdBytesList);
+    request.setCurrentBlock(await this._getCurrentBlockNumber());
+    request.setSignature(await generateSignature());
+
+    const parseResponseMessage = async message => {
+      const currentBlock = await this._getCurrentBlockNumber();
+      const paymentsList = message.getPaymentsList().map(payment => ({
+        channelId: uint8ArrayToBN(payment.getChannelId()).toString(),
+        channelNonce: uint8ArrayToBN(payment.getChannelNonce()).toString(),
+        channelExpiry: uint8ArrayToBN(payment.getChannelExpiry()).toString(),
+        signedAmount: uint8ArrayToBN(payment.getSignedAmount()).toString(),
+        signature: uint8ArrayToHex(payment.getSignature()),
+        currentBlock,
+      }));
+      return paymentsList;
+    };
+
+    return new Promise((resolve, reject) => {
+      const props = {
+        request,
+        host: this._getServiceHost(),
+        onEnd: async result => {
+          const { message, status, statusMessage } = result;
+          if (status !== 0) {
+            return reject(new GrpcError(statusMessage));
+          }
+          const payment = await parseResponseMessage(message);
           resolve(payment);
         },
       };

@@ -29,6 +29,7 @@ const GridViewItem = ({
 }) => {
   const GridViewHeaderLength = 35;
   const StartCount = 5;
+
   return (
     <Card className={classes.card}>
       <CardHeader

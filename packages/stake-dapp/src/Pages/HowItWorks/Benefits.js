@@ -43,7 +43,7 @@ const Benefits = ({ classes }) => {
               <CheckIcon />
               <div>
                 <Typography>Earn Rewards - </Typography>
-                <Typography>Earn more AGI tokens in reward for putting your token to use.</Typography>
+                <Typography>Earn more AGI tokens in reward for putting your tokens to use.</Typography>
               </div>
             </li>
           </ul>

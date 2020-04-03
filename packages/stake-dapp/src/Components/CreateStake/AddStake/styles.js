@@ -47,10 +47,9 @@ export const useStyles = makeStyles(MUITheme => ({
         "& .MuiTextField-root": { margin: 0 },
       },
     },
-    "& svg": {
+    "& img": {
+      width: 35,
       padding: "15px 25px 0",
-      color: MUITheme.palette.text.disabled,
-      fontSize: 30,
       [MUITheme.breakpoints.down("xs")]: { padding: "15px 10px 0" },
       "@media(max-width: 480px)": { display: "none" },
     },
@@ -155,5 +154,39 @@ export const useStyles = makeStyles(MUITheme => ({
   CardActions: {
     padding: "24px 0 0",
     justifyContent: "center",
+  },
+  label: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  iconTooltipContainer: {
+    width: "auto !important",
+    "& > svg": {
+      paddingRight: 14,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 300,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 25,
+      left: 0,
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
+    },
   },
 }));

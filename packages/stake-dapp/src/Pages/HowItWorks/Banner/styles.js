@@ -95,10 +95,9 @@ export const useStyles = MUITheme => ({
         },
       },
     },
-    "& svg": {
+    "& img": {
+      width: 35,
       padding: "13px 33px 0",
-      color: "#d6d6d6",
-      fontSize: 33,
       "@media(max-width: 640px)": { padding: "13px 5px 0" },
     },
   },
@@ -217,6 +216,47 @@ export const useStyles = MUITheme => ({
     "@media(max-width:480px)": {
       paddingRight: 0,
       marginBottom: 15,
+    },
+  },
+  label: {
+    paddingBottom: 8,
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    "& span": {
+      color: MUITheme.palette.text.darkGrey,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 16,
+      lineHeight: "20px",
+    },
+  },
+  iconTooltipContainer: {
+    width: "auto !important",
+    "& > svg": {
+      paddingRight: 8,
+      color: MUITheme.palette.text.disabled,
+      cursor: "pointer",
+      fontSize: 18,
+      verticalAlign: "middle",
+    },
+    "& p": {
+      width: 377,
+      padding: 16,
+      borderRadius: 4,
+      display: "none",
+      position: "absolute",
+      bottom: 25,
+      left: "50%",
+      background: MUITheme.palette.text.lightGrey,
+      boxShadow: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2)",
+      color: MUITheme.palette.text.white,
+      fontSize: 16,
+      lineHeight: "20px",
+      transform: "translateX(-70%)",
+    },
+    "&:hover": {
+      "& svg": { color: MUITheme.palette.primary.main },
+      "& p": { display: "block" },
     },
   },
 });

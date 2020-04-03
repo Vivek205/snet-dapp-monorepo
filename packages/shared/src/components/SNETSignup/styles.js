@@ -34,7 +34,6 @@ export const useStyles = makeStyles(MUITheme => ({
     "& li": {
       marginBottom: 15,
       display: "flex",
-      alignItems: "center",
       listStyle: "none",
       "& svg": {
         marginRight: 15,
@@ -42,11 +41,12 @@ export const useStyles = makeStyles(MUITheme => ({
         fontSize: 20,
       },
       "& p": {
+        margin: 0,
+        display: "inline-block",
         color: MUITheme.palette.text.primary,
         fontSize: 16,
         letterSpacing: "0.29px",
-        display: "inline-block",
-        margin: 0,
+        lineHeight: "24px",
         verticalAlign: "top",
       },
     },

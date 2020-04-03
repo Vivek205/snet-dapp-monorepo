@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 
+import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import ComputeMailsImage from "shared/dist/assets/images/ComputeMails.png";
@@ -46,7 +47,7 @@ const HowItWorks = ({ classes, history }) => {
             name="mc-embedded-subscribe-form"
             noValidate=""
           >
-            <input type="email" name="EMAIL" label="email" />
+            <SNETTextfield name="EMAIL" label="email" />
             <SNETButton type="submit" children="subscribe" color="primary" variant="contained" />
           </form>
         </Grid>

@@ -122,7 +122,7 @@ class Notification extends Component {
     var message = "";
 
     if (!isLoggedIn) {
-      message = "User need to login to the RFAI DApp.";
+      message = "User need to login to the Staking DApp.";
       return message;
     }
 

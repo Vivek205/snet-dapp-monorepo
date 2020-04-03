@@ -16,6 +16,8 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
 
+import AlertText from "shared/dist/components/AlertText";
+
 const selectState = state => ({
   serviceGroups: state.aiServiceDetails.groups,
   orgGroups: state.organization.groups,
@@ -29,19 +31,12 @@ const Region = () => {
   const addressRef = useRef(null);
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
+  const [freeCallsValidation, setfreeCallsValidation] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
 
   const selectedOrgGroup = orgGroups[0];
-
-  const updateGroupId = () => {
-    if (!Boolean(selectedServiceGroup.id)) {
-      const updatedServiceGroups = [...serviceGroups];
-      updatedServiceGroups[0] = { ...selectedServiceGroup, id: selectedOrgGroup.id };
-      dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    }
-  };
 
   const handleEndPointValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
@@ -53,6 +48,7 @@ const Region = () => {
   };
 
   const handleNewEndpointsChange = event => {
+    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -72,10 +68,9 @@ const Region = () => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
     endpointRef.current.value = "";
-    updateGroupId();
   };
 
   const handleEndpointDelete = endpoint => {
@@ -88,6 +83,7 @@ const Region = () => {
   };
 
   const handleNewDaemonAddressChange = event => {
+    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -104,10 +100,9 @@ const Region = () => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
     addressRef.current.value = "";
-    updateGroupId();
   };
 
   const handleDaemonAddressDelete = address => {
@@ -121,32 +116,41 @@ const Region = () => {
   };
 
   const handleNewTestEndpointsChange = event => {
+    // updateGroupId();
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = [event.target.value];
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
+  };
+
+  const handleFreeCallsValidation = value => {
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
+    if (isNotValid) {
+      return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
+    }
+    return setfreeCallsValidation({ type: alertTypes.SUCCESS, message: "" });
   };
 
   const handleFreeCallsChange = event => {
+    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
   };
 
   const handlePriceChange = event => {
+    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing };
+    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
     dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
-    updateGroupId();
   };
 
   if (showRegion) {
@@ -194,6 +198,7 @@ const Region = () => {
               label="Demo Free Calls"
               onChange={handleFreeCallsChange}
             />
+            <AlertText type={freeCallsValidation.type} message={freeCallsValidation.message} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <SNETTextfield
@@ -236,7 +241,10 @@ const Region = () => {
               inputRef={addressRef}
               onKeyUp={handleNewDaemonAddressChange}
               label="Daemon Addresses"
-              description="Enter all the public Daemon addresses that will be used to call the service."
+              description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
+               wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
+               if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
+                in its configuration and will sign using this pvt key when making any requests to other systems."
             />
           </Grid>
 
