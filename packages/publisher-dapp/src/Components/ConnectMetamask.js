@@ -20,7 +20,14 @@ const ConnectMetamask = () => {
 
   const handleConnectMM = async () => {
     try {
-      await initSDK();
+      const sdk = await initSDK();
+      if (!sdk) {
+        return setAlert({
+          type: alertTypes.ERROR,
+          message:
+            "Unable to connect Metamask. Please make sure you have added metamask extension and logged in with it",
+        });
+      }
       dispatch(loginActions.setIsMMConnected(true));
       history.push(GlobalRoutes.LOGIN.path);
     } catch (e) {
