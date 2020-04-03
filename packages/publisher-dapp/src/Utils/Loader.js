@@ -124,4 +124,8 @@ export const LoaderContent = {
     title: "Retrieving Sample Daemon config",
     content: "Just a moment. We are retrieving the sample daemon configuration",
   },
+  CONNECT_METAMASK: {
+    title: "Please connect Metamask",
+    content: "Please connect your Metamask Wallet",
+  },
 };

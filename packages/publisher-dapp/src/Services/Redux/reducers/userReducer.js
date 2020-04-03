@@ -5,6 +5,8 @@ const initialState = {
   entity: "",
   isInitialized: false,
   isLoggedIn: false,
+  isMMConnected: false,
+  publisherTnC: { ver: "", accepted: "" },
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
@@ -54,6 +56,9 @@ const userReducer = (state = initialState, action) => {
       return { ...state, individualVerificationRejectReason: action.payload };
     case userActions.loginActions.SET_USER_ATTRIBUTES: {
       return { ...state, ...action.payload };
+    }
+    case userActions.loginActions.SET_IS_MM_CONNECTED: {
+      return { ...state, isMMConnected: action.payload };
     }
     default:
       return state;

@@ -10,6 +10,8 @@ export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
 export const RESET_USER_ON_SIGNOUT = "RESET_USER_ON_SIGNOUT";
 export const SET_JWT_EXP = "SET_JWT_EXP";
+export const SET_USER_ATTRIBUTES = "SET_USER_ATTRIBUTES";
+export const SET_IS_MM_CONNECTED = "SET_IS_MM_CONNECTED";
 
 const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLoggedin });
 
@@ -25,7 +27,7 @@ const resetUserOnSignout = () => ({ type: RESET_USER_ON_SIGNOUT });
 
 const setJWTExp = exp => ({ type: SET_JWT_EXP, payload: exp });
 
-export const SET_USER_ATTRIBUTES = "SET_USER_ATTRIBUTES";
+export const setIsMMConnected = isConnected => ({ type: SET_IS_MM_CONNECTED, payload: isConnected });
 
 export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
   let bypassCache = false;
