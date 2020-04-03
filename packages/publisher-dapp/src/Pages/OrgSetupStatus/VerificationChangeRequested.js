@@ -1,20 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-
-import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { useHistory } from "react-router-dom";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
+import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
 
 const selectState = state => ({ rejectReason: state.organization.rejectReason });
 
 const VerificationChangeRequested = () => {
   const { rejectReason } = useSelector(selectState);
   const history = useHistory();
-  const { orgUuid } = useParams();
 
   const handleEditOrgDetails = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
+    history.push(AuthenticateRoutes.ORGANIZATION.path);
   };
 
   return (
