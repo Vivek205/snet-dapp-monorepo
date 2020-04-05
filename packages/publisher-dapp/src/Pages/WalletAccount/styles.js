@@ -102,8 +102,38 @@ export const useStyles = MUITheme => ({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     borderBottomColor: MUITheme.palette.border.primary,
-    "& h6": { lineHeight: "50px !important" },
+    display: "flex",
+    justifyContent: "space-between",
+    "& h6": {
+      fontWeight: 400,
+      lineHeight: "50px !important",
+    },
+    "& button": { padding: 0 },
   },
+  claimsAggregateContainer: {
+    padding: "24px 17px",
+    border: "1px solid #f1f1f1",
+    borderRadius: 6,
+    backgroundColor: MUITheme.palette.background.mainContent,
+    "& > div": {
+      "& > div": {
+        "& p": { color: MUITheme.palette.text.lightGrey },
+      },
+      "& > p": {
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 28,
+        lineHeight: "35px",
+        "& span": {
+          paddingLeft: 8,
+          color: MUITheme.palette.text.lightGrey,
+          fontSize: 16,
+          lineHeight: "20px",
+        },
+      },
+    },
+  },
+  walletAccWrapper: { padding: "24px 23px 40px" },
+  alertBoxContainer: { marginTop: 24 },
   headerAccountDetails: {
     padding: "0 23px",
     borderBottomWidth: 1,
@@ -166,22 +196,27 @@ export const useStyles = MUITheme => ({
   },
   collapseContainer: { paddingBottom: 32 },
   claimsDesc: {
-    padding: "21px 50px 24px 22px",
+    paddingBottom: 24,
     color: MUITheme.palette.text.darkGrey,
     fontSize: 14,
     lineHeight: "18px",
   },
   claimSelectedSection: {
-    padding: "0 22px",
     display: "flex",
     alignItems: "flex-end",
+    justifyContent: "space-between",
     "& p": {
       marginLeft: 32,
       color: MUITheme.palette.text.lightGrey,
       fontSize: 16,
       lineHeight: "20px",
     },
-    "& button": { padding: "10px 28px 9px" },
+    "& button": {
+      padding: "10px 28px 9px",
+      marginTop: 24,
+      boxShadow:
+        "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2) !important",
+    },
   },
   table: { padding: "24px 26px 31px 23px" },
   tableCol: {
@@ -235,9 +270,49 @@ export const useStyles = MUITheme => ({
     color: "#F29132",
     fontSize: 19,
   },
-  card: { marginTop: 110 },
+  card: {
+    width: 720,
+    margin: "110px auto 0",
+  },
   cardHeader: {
     padding: 0,
-    "& button": { padding: 22 },
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    borderBottomColor: MUITheme.palette.border.primary,
+    "& h6": {
+      paddingLeft: 22,
+      lineHeight: "50px !important",
+    },
+    "& .MuiCardHeader-action": { margin: 0 },
+  },
+  styledPagination: {
+    "& .MuiSelect-selectMenu": {
+      padding: "3px 13px",
+      fontSize: 16,
+    },
+  },
+  greyBox: {
+    padding: "20px 24px 24px 20px",
+    "& > div": {
+      padding: "3px 22px",
+      borderRadius: 4,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      backgroundColor: "#f8f8f8",
+      "&:first-of-type": { borderBottom: "1px solid #e2e2e2" },
+      "& > p": {
+        margin: 0,
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 28,
+        lineHeight: "35px",
+        "& span": {
+          paddingLeft: 8,
+          color: MUITheme.palette.text.lightGrey,
+          fontSize: 16,
+          lineHeight: "20px",
+        },
+      },
+    },
   },
 });

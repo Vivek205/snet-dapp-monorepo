@@ -331,38 +331,43 @@ class WalletAccount extends React.Component {
             <Typography variant="h6">Claims</Typography>
             <SNETButton children="refresh" color="primary" endIcon={<RefreshIcon />} onClick={this.handleAuthorizeMM} />
           </div>
-          <Typography className={classes.claimsDesc}>
-            To collect pending tokens from individual channels, select the channels and use the claim button. Claims
-            that are going to be expired soon are marked with “!” icon. Please note that you cannot select more than
-            five claims at a time.
-          </Typography>
-          <ClaimsAggregate aggregatePaymentDetails={aggregatePaymentDetails} />
-          <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
-          <ClaimsSuccessPopup
-            show={showClaimsSuccessPopup}
-            agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
-            channelIdList={transactionDetails.latest.channelsClaimed}
-            handleClose={this.handleSuccessPopupClose}
-          />
-          <div className={classes.claimSelectedSection}>
-            <SNETButton
-              children="Collect Claims"
-              color="primary"
-              variant="outlined"
-              onClick={this.claimChannelInBlockchain}
-              disabled={!this.shouldClaimBeEnabled()}
+          <div className={classes.walletAccWrapper}>
+            <Typography className={classes.claimsDesc}>
+              Below are the current revenue claims you collected from your AI services. Claims that are going to be
+              expired soon are marked with “!” icon. Please note that you cannot select more than five claims at a time.
+            </Typography>
+            <ClaimsAggregate aggregatePaymentDetails={aggregatePaymentDetails} />
+            {claimChannelsAlert.message ? (
+              <div className={classes.alertBoxContainer}>
+                <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
+              </div>
+            ) : null}
+            <ClaimsSuccessPopup
+              show={showClaimsSuccessPopup}
+              agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
+              channelIdList={transactionDetails.latest.channelsClaimed}
+              handleClose={this.handleSuccessPopupClose}
             />
-            <Typography>Selected ({this.selectedChannelCount()})</Typography>
-          </div>
-          <div>
-            <UnclaimedPayments
-              payments={paymentsList}
-              pagination={pagination}
-              onItemsPerPageChange={this.onItemsPerPageChange}
-              handlePageChange={this.handlePageChange}
-              selectedChannels={selectedChannels}
-              onSelectChannel={this.handleSelectChannel}
-            />
+            <div className={classes.claimSelectedSection}>
+              <SNETButton
+                children="Collect Claims"
+                color="primary"
+                variant="contained"
+                onClick={this.claimChannelInBlockchain}
+                disabled={!this.shouldClaimBeEnabled()}
+              />
+              <Typography>Selected ({this.selectedChannelCount()})</Typography>
+            </div>
+            <div>
+              <UnclaimedPayments
+                payments={paymentsList}
+                pagination={pagination}
+                onItemsPerPageChange={this.onItemsPerPageChange}
+                handlePageChange={this.handlePageChange}
+                selectedChannels={selectedChannels}
+                onSelectChannel={this.handleSelectChannel}
+              />
+            </div>
           </div>
         </Grid>
       </Grid>
