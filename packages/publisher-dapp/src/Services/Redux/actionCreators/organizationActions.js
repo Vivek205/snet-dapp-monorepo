@@ -223,7 +223,7 @@ const parseOrgData = selectedOrg => {
       hqAddress: !hqAddressData
         ? {}
         : {
-            street_address: hqAddressData.street_address,
+            street: hqAddressData.street_address,
             apartment: hqAddressData.apartment,
             city: hqAddressData.city,
             zip: hqAddressData.pincode,
@@ -232,6 +232,7 @@ const parseOrgData = selectedOrg => {
       mailingAddress: !mailingAddressData
         ? {}
         : {
+            street: mailingAddressData.street_address,
             apartment: mailingAddressData.apartment,
             city: mailingAddressData.city,
             zip: mailingAddressData.pincode,
