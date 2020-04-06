@@ -38,7 +38,7 @@ TermsAndConditions.protoTypes = {
   Content: PropTypes.element,
 };
 
-TermsAndConditions.defaulProps = {
+TermsAndConditions.defaultProps = {
   Content: PrivacyTerms,
 };
 
