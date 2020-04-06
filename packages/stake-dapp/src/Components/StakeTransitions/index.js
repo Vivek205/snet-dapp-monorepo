@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
-//import SNETPagination from "shared/dist/components/SNETPagination";
 import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { useStyles } from "./styles";
@@ -11,8 +10,7 @@ import TableRow from "./TableRow";
 import ExpandedTable from "./ExpandedTable";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 import InlineLoader from "../InlineLoader";
-
-//import { itemsPerPageOptions } from "./content";
+import NoMetaMask from "../NoMetamask";
 
 const stateSelector = state => ({
   myTransactions: state.stakeReducer.myTransactions,
@@ -48,6 +46,10 @@ const StakeTransitions = () => {
 
   if (isLoading) {
     return <InlineLoader />;
+  }
+
+  if (!metamaskDetails.isTxnsAllowed) {
+    return <NoMetaMask />;
   }
 
   if (myTransactions.length === 0) {
