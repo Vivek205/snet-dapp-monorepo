@@ -335,6 +335,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
     }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
+    return payload;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
