@@ -3,4 +3,4 @@ export const TermsAndConditionsDetails = {
   formLabel: "I agree to the Service Agreement",
 };
 
-export const tncAgreementVesrion = "2";
+export const tncAgreementVesrion = "1";
