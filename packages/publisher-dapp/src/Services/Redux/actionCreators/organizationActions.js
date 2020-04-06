@@ -17,6 +17,7 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { loginActions } from "./userActions";
 import { defaultContacts } from "../reducers/organizationReducer";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
@@ -222,7 +223,7 @@ const parseOrgData = selectedOrg => {
       hqAddress: !hqAddressData
         ? {}
         : {
-            street_address: hqAddressData.street_address,
+            street: hqAddressData.street_address,
             apartment: hqAddressData.apartment,
             city: hqAddressData.city,
             zip: hqAddressData.pincode,
@@ -231,6 +232,7 @@ const parseOrgData = selectedOrg => {
       mailingAddress: !mailingAddressData
         ? {}
         : {
+            street: mailingAddressData.street_address,
             apartment: mailingAddressData.apartment,
             city: mailingAddressData.city,
             zip: mailingAddressData.pincode,
@@ -292,6 +294,17 @@ const parseOrgData = selectedOrg => {
   return organization;
 };
 
+export const getOrgDetailsFromBlockchain = orgId => async dispatch => {
+  try {
+    const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(orgId);
+    dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
+    dispatch(loginActions.setIsMMConnected(true));
+  } catch (e) {
+    dispatch(loginActions.setIsMMConnected(false));
+    return undefined;
+  }
+};
+
 export const getStatus = async dispatch => {
   const { data } = await dispatch(getStatusAPI());
   if (isEmpty(data)) {
@@ -299,9 +312,8 @@ export const getStatus = async dispatch => {
   }
   const selectedOrg = selectOrg(data);
   const organization = parseOrgData(selectedOrg);
-  const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(organization.id);
+  await dispatch(getOrgDetailsFromBlockchain(organization.id));
   dispatch(setAllAttributes(organization));
-  dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
   return data;
 };
 
@@ -323,6 +335,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
     }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
+    return payload;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;

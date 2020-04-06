@@ -42,4 +42,5 @@ export const orgVerificationStatus = {
   PENDING: "PENDING",
   APPROVED: "APPROVED",
   REJECTED: "REJECTED",
+  CHANGE_REQUESTED: "CHANGE_REQUESTED",
 };

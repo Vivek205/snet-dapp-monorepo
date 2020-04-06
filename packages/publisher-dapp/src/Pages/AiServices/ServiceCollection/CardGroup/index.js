@@ -12,10 +12,11 @@ import LoadingAiServices from "./LoadingAiServices";
 
 const CardGroup = () => {
   const classes = useStyles();
-  const { isLoading, serviceList, orgImg } = useSelector(state => ({
+  const { isLoading, serviceList, orgImg, orgId } = useSelector(state => ({
     isLoading: state.loader.aiServiceList.isLoading,
     serviceList: state.aiServiceList.data,
     orgImg: state.organization.assets.heroImage.url,
+    orgId: state.organization.id,
   }));
   const { orgUuid } = useParams();
   const [isAvailable] = useState(true);
@@ -49,6 +50,8 @@ const CardGroup = () => {
             groups={service.groups}
             serviceUuid={service.uuid}
             orgUuid={orgUuid}
+            orgId={orgId}
+            serviceId={service.id}
           />
         </Grid>
       </Grid>

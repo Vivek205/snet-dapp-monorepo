@@ -121,6 +121,7 @@ export const useStyles = MUITheme => ({
 
   // Titles
   titlesContainer: {
+    textDecoration: "none",
     "& ul": {
       padding: "0 25px 64px",
       margin: 0,

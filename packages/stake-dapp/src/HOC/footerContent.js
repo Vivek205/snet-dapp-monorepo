@@ -17,10 +17,10 @@ const PrimaryFooterMain = [
   {
     title: "Dev Docs",
     children: [
-      { label: "What is Staking", link: "https://dev.singularitynet.io/products/staking" },
-      { label: "Stages of Staking", link: "https://dev.singularitynet.io/products/staking" },
-      { label: "Renewing Stake", link: "https://dev.singularitynet.io/products/staking" },
-      { label: "Claiming Stake", link: "https://dev.singularitynet.io/products/staking" },
+      { label: "What is Staking", link: "https://dev.singularitynet.io/products/staking/" },
+      { label: "Stages of Staking", link: "https://dev.singularitynet.io/products/stake-timeline/" },
+      { label: "Auto Renewing", link: "https://dev.singularitynet.io/products/stake-opt-out/" },
+      { label: "Rewards", link: "https://dev.singularitynet.io/products/stake-reward/" },
     ],
   },
   {
