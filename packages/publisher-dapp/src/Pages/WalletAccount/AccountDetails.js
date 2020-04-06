@@ -16,43 +16,49 @@ const AccountDetails = ({ classes, mmAccDetails }) => {
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.box}>
       <div className={classes.headerAccountDetails} onClick={() => setShowExtraInfo(!showExtraInfo)}>
-        <Typography variant="h6">Claims</Typography>
+        <Typography variant="h6">Account Balance</Typography>
         <div>{showExtraInfo ? <ExpandLessIcon /> : <ExpandMoreIcon />}</div>
       </div>
-      <Grid container xs={12} sm={12} md={12} lg={12}>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
-          <InfoIcon />
-          <Typography>Wallet</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
-          <Typography>Metamask</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
-          <InfoIcon />
-          <Typography>Total tokens</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
-          <Typography>{cogsToAgi(mmAccDetails.escrowBalance)} AGI</Typography>
-        </Grid>
-      </Grid>
-      <Collapse in={showExtraInfo} timeout="auto" unmountOnExit>
+      <div className={classes.wrapper}>
         <Grid container xs={12} sm={12} md={12} lg={12}>
-          <Grid item xs={12} sm={12} md={3} lg={3}>
-            <InfoIcon />
-            <Typography>Current Network</Typography>
+          <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
+            <InfoIcon className={classes.infoIcon} />
+            <Typography>Wallet</Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3} lg={3} className={classes.valueContainer}>
+            <Typography className={classes.value}>Metamask</Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
+            <InfoIcon className={classes.infoIcon} />
+            <Typography>Total tokens</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3}>
-            <Typography>{Networks[process.env.REACT_APP_ETH_NETWORK]}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3}>
-            <InfoIcon />
-            <Typography>Account Balance</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3}>
-            <Typography>{cogsToAgi(mmAccDetails.tokenBalance)} AGI</Typography>
+            <Typography className={classes.boxValue}>
+              {cogsToAgi(mmAccDetails.escrowBalance)} <span>AGI</span>
+            </Typography>
           </Grid>
         </Grid>
-      </Collapse>
+        <Collapse in={showExtraInfo} timeout="auto" unmountOnExit className={classes.collapseContainer}>
+          <Grid container xs={12} sm={12} md={12} lg={12}>
+            <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
+              <InfoIcon className={classes.infoIcon} />
+              <Typography>Current Network</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3} className={classes.valueContainer}>
+              <Typography className={classes.value}>{Networks[process.env.REACT_APP_ETH_NETWORK]}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3} className={classes.iconContainer}>
+              <InfoIcon className={classes.infoIcon} />
+              <Typography>Account Balance</Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
+              <Typography className={classes.boxValue}>
+                {cogsToAgi(mmAccDetails.tokenBalance)} <span>AGI</span>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Collapse>
+      </div>
     </Grid>
   );
 };

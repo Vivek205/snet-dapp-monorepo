@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
+
 import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
 
 const selectState = state => ({ rejectReason: state.organization.rejectReason });

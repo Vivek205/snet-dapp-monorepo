@@ -14,6 +14,10 @@ const Login = ({ history }) => {
   const { isLoggedIn, publisherTnC } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  const checkUserTnCAcceptance = useCallback(() => {
+    return publisherTnC.ver && publisherTnC.accepted;
+  }, [publisherTnC]);
+
   useEffect(() => {
     const checkIfMMisConnected = async () => {
       try {
@@ -29,10 +33,6 @@ const Login = ({ history }) => {
     };
     checkIfMMisConnected();
   }, [dispatch, history]);
-
-  const checkUserTnCAcceptance = useCallback(() => {
-    return publisherTnC.ver && publisherTnC.accepted;
-  }, [publisherTnC]);
 
   useEffect(() => {
     if (isLoggedIn) {
