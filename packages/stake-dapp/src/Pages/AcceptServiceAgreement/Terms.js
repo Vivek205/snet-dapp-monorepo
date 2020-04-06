@@ -241,7 +241,7 @@ const Terms = () => {
         any time without notice or liability to you.
       </p>
       <p>
-        <strong>5.6</strong>
+        <strong>5.6</strong>{" "}
         <strong>
           You expressly acknowledge and agree that use of the Licensed TApp is at your sole risk. To the maximum extent
           permitted by applicable law, the Licensed TApp and any services performed or provided by the Licensed TApp are
@@ -257,7 +257,7 @@ const Terms = () => {
         </strong>
       </p>
       <p>
-        <strong>5.7</strong>
+        <strong>5.7</strong>{" "}
         <strong>
           To the extent not prohibited by law, in no event shall licensor be liable for personal injury or any
           incidental, special, indirect, or consequential damages whatsoever, including, without limitation, damages for
@@ -281,8 +281,7 @@ const Terms = () => {
         <strong>6. Miscellaneous </strong>
       </p>
       <p>
-        <strong>6.1</strong>
-        <strong>Disclaimer of warranties and liability limitation. Waiver and indemnity</strong>.
+        <strong>6.1</strong> <strong>Disclaimer of warranties and liability limitation. Waiver and indemnity</strong>.
       </p>
       <p>
         (<strong>i</strong>){" "}
@@ -353,27 +352,24 @@ const Terms = () => {
         .
       </p>
       <p>
-        <strong>6.2</strong>
-        <strong>IP and copyright</strong>. You agree that the Services, including but not limited to Content, graphics,
-        user interface, audio clips, video clips, editorial content, and the scripts and software used to implement the
-        Services, contain proprietary information and material that is owned by SingularityNET and/or its licensors, and
-        is protected by applicable intellectual property and other laws, including but not limited to copyright. You
-        agree that you will not use such proprietary information or materials in any way whatsoever except for use of
-        the Services in compliance with this Agreement. No portion of the Services may be reproduced in any form or by
-        any means, except as expressly permitted by this Agreement. You agree not to exploit the Services in any manner
-        not expressly authorized. Please contact SingularityNET, if you believe that any Content available through the
-        Services infringe a copyright claimed by you.
+        <strong>6.2</strong> <strong>IP and copyright</strong>. You agree that the Services, including but not limited
+        to Content, graphics, user interface, audio clips, video clips, editorial content, and the scripts and software
+        used to implement the Services, contain proprietary information and material that is owned by SingularityNET
+        and/or its licensors, and is protected by applicable intellectual property and other laws, including but not
+        limited to copyright. You agree that you will not use such proprietary information or materials in any way
+        whatsoever except for use of the Services in compliance with this Agreement. No portion of the Services may be
+        reproduced in any form or by any means, except as expressly permitted by this Agreement. You agree not to
+        exploit the Services in any manner not expressly authorized. Please contact SingularityNET, if you believe that
+        any Content available through the Services infringe a copyright claimed by you.
       </p>
       <p>
-        <strong>6.2.1</strong>
-        <strong>SingularityNET&rsquo;s trademarks</strong>. The SingularityNET name, the SingularityNET logo and other
-        SingularityNET trademarks, service marks, graphics, and logos used in connection with the Services are
-        trademarks or registered trademarks of SingularityNET. You are granted no right or license with respect to any
-        of the aforesaid trademarks.
+        <strong>6.2.1</strong> <strong>SingularityNET&rsquo;s trademarks</strong>. The SingularityNET name, the
+        SingularityNET logo and other SingularityNET trademarks, service marks, graphics, and logos used in connection
+        with the Services are trademarks or registered trademarks of SingularityNET. You are granted no right or license
+        with respect to any of the aforesaid trademarks.
       </p>
       <p>
-        <strong>6.3</strong>
-        <strong>Services&rsquo; modification and suspension</strong>.{" "}
+        <strong>6.3</strong> <strong>Services&rsquo; modification and suspension</strong>.{" "}
         <strong>
           SingularityNET further reserves the right to modify, suspend, or discontinue the Services (or any part or
           Content thereof) at any time with or without notice to you, and SingularityNET will not be liable to you or to
@@ -390,39 +386,37 @@ const Terms = () => {
         </strong>
       </p>
       <p>
-        <strong>6.5</strong>
-        <strong>Entire agreement, severability</strong>. This Agreement constitutes the entire agreement between you and
-        SingularityNET and governs your use of the Services, superseding any prior agreements with respect to the same
-        subject matter between you and SingularityNET. SingularityNET reserves the right at any time to modify this
-        Agreement and to add new or additional terms or conditions on your use of the Services. Such modifications and
-        additional terms and conditions will be effective immediately and incorporated into this Agreement. Your
-        continued use of the Services will be deemed acceptance thereof. You also may be subject to additional terms and
-        conditions that may apply when you use affiliate services, third-party content, third-party software, or
-        additional services. If any part of this Agreement is held invalid or unenforceable, that portion shall be
-        construed in a manner consistent with applicable law to reflect, as nearly as possible, the original intentions
-        of the parties, and the remaining portions shall remain in full force and effect. SingularityNET&rsquo;s failure
-        to enforce any right or provisions in this Agreement will not constitute a waiver of such or any other
-        provision. SingularityNET will not be responsible for failures to fulfill any obligations due to causes beyond
-        its control.
+        <strong>6.5</strong> <strong>Entire agreement, severability</strong>. This Agreement constitutes the entire
+        agreement between you and SingularityNET and governs your use of the Services, superseding any prior agreements
+        with respect to the same subject matter between you and SingularityNET. SingularityNET reserves the right at any
+        time to modify this Agreement and to add new or additional terms or conditions on your use of the Services. Such
+        modifications and additional terms and conditions will be effective immediately and incorporated into this
+        Agreement. Your continued use of the Services will be deemed acceptance thereof. You also may be subject to
+        additional terms and conditions that may apply when you use affiliate services, third-party content, third-party
+        software, or additional services. If any part of this Agreement is held invalid or unenforceable, that portion
+        shall be construed in a manner consistent with applicable law to reflect, as nearly as possible, the original
+        intentions of the parties, and the remaining portions shall remain in full force and effect.
+        SingularityNET&rsquo;s failure to enforce any right or provisions in this Agreement will not constitute a waiver
+        of such or any other provision. SingularityNET will not be responsible for failures to fulfill any obligations
+        due to causes beyond its control.
       </p>
       <p>
         <strong>6.5.1</strong> No SingularityNET employee or agent has the authority to vary this Agreement.
       </p>
       <p>
-        <strong>6.6</strong>
-        <strong>Breaches of this Agreement</strong>. Without prejudice to our other rights under this Agreement, if you
-        breach this Agreement in any way, we may take such action as we deem appropriate to deal with the breach,
-        including suspending your access to the Services, charging you fees to compensate for our lost revenue, blocking
-        devices using your IP address from accessing the Services, contacting your internet service provider to request
-        that they block your access to the Services and/or bringing Court proceedings against you. You hereby grant
-        SingularityNET the right to take steps SingularityNET believes are reasonably necessary or appropriate to
-        enforce and/or verify compliance with any part of this Agreement. You agree that SingularityNET has the right,
-        without liability to you, to disclose any data and/or information to law enforcement authorities, government
-        officials, and/or a third party, as SingularityNET believes is reasonably necessary or appropriate to enforce
-        and/or verify compliance with any part of this Agreement (including but not limited to SingularityNET&rsquo;s
-        right to cooperate with any legal process relating to your use of the Services and/or Content, and/or a
-        third-party claim that your use of the Services and/or Content is unlawful and/or infringes such third
-        party&rsquo;s rights).
+        <strong>6.6</strong> <strong>Breaches of this Agreement</strong>. Without prejudice to our other rights under
+        this Agreement, if you breach this Agreement in any way, we may take such action as we deem appropriate to deal
+        with the breach, including suspending your access to the Services, charging you fees to compensate for our lost
+        revenue, blocking devices using your IP address from accessing the Services, contacting your internet service
+        provider to request that they block your access to the Services and/or bringing Court proceedings against you.
+        You hereby grant SingularityNET the right to take steps SingularityNET believes are reasonably necessary or
+        appropriate to enforce and/or verify compliance with any part of this Agreement. You agree that SingularityNET
+        has the right, without liability to you, to disclose any data and/or information to law enforcement authorities,
+        government officials, and/or a third party, as SingularityNET believes is reasonably necessary or appropriate to
+        enforce and/or verify compliance with any part of this Agreement (including but not limited to
+        SingularityNET&rsquo;s right to cooperate with any legal process relating to your use of the Services and/or
+        Content, and/or a third-party claim that your use of the Services and/or Content is unlawful and/or infringes
+        such third party&rsquo;s rights).
       </p>
       <p>
         <strong>6.7 Compliance with laws, statutes, ordinance and regulations</strong>.You agree to comply with all
@@ -553,8 +547,7 @@ const Terms = () => {
         should not apply for any reason.
       </p>
       <p>
-        <strong>6.9.6</strong>
-        <strong>Unilateral hybrid jurisdiction</strong>.{" "}
+        <strong>6.9.6</strong> <strong>Unilateral hybrid jurisdiction</strong>.{" "}
         <strong>
           In the event that SingularityNET does not rely on arbitration, it reserves the right to bring an action before
           the Dutch Courts, the Courts of your domicile or any other court, in which case the competent jurisdiction law
@@ -563,8 +556,7 @@ const Terms = () => {
         .
       </p>
       <p>
-        <strong>6.9.7</strong>
-        <strong>Time limitation</strong>.{" "}
+        <strong>6.9.7</strong> <strong>Time limitation</strong>.{" "}
         <strong>
           You agree that any claim you may have arising out of or related to your business relationship with us must be
           filed within one year after such claim arose; otherwise, your claim is permanently barred
@@ -572,10 +564,9 @@ const Terms = () => {
         .
       </p>
       <p>
-        <strong>6.10</strong>
-        <strong>Contact</strong>. All notices provided by a party in connection with this Agreement will be deemed given
-        as of the day they are received either by email, messenger, delivery service, postage prepaid, certified or
-        registered, return receipt requested, and addressed as follows:
+        <strong>6.10</strong> <strong>Contact</strong>. All notices provided by a party in connection with this
+        Agreement will be deemed given as of the day they are received either by email, messenger, delivery service,
+        postage prepaid, certified or registered, return receipt requested, and addressed as follows:
       </p>
       <p>Email: legal@singularitynet.io</p>
       <p>Address:</p>
