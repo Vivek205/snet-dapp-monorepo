@@ -16,7 +16,7 @@ import Card from "../StakeSession/Card";
 import InfoBox from "../StakeSession/InfoBox";
 import { LoaderContent } from "../../Utils/Loader";
 import { loaderActions, stakeActions, tokenActions } from "../../Services/Redux/actionCreators";
-import { waitForTransaction, claimStake, withdrawStake } from "../../Utils/BlockchainHelper";
+import { claimStakeV2, withdrawStakeV2 } from "../../Utils/BlockchainHelper";
 import { toBigNumber } from "../../Utils/GenHelperFunctions";
 
 import InlineLoader from "../InlineLoader";
@@ -43,22 +43,19 @@ const ClaimStake = () => {
     return (
       <div className={classes.noDataFoundSection}>
         <img src={NoDataFoundImg} alt="No Data Found" />
-        <Typography>You have no stakes to claim</Typography>
+        <Typography>You have no stakes to claim.</Typography>
       </div>
     );
   }
 
   const initiateClaimState = async stakeMapIndex => {
-    let txHash;
     try {
-      // Initiate the Withdraw Stake Operation
-      txHash = await claimStake(metamaskDetails, stakeMapIndex);
-
       setAlert({ [stakeMapIndex]: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
 
       dispatch(loaderActions.startAppLoader(LoaderContent.CLAIM_STAKE));
 
-      await waitForTransaction(txHash);
+      // Initiate the Withdraw Stake Operation
+      await claimStakeV2(metamaskDetails, stakeMapIndex);
 
       setAlert({
         [stakeMapIndex]: {
@@ -88,16 +85,13 @@ const ClaimStake = () => {
   };
 
   const initiateWithdrawStake = async (stakeMapIndex, pendingForApprovalAmountBN) => {
-    let txHash;
     try {
-      // Initiate the Withdraw Stake Operation
-      txHash = await withdrawStake(metamaskDetails, stakeMapIndex, pendingForApprovalAmountBN);
-
       setAlert({ [stakeMapIndex]: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
 
       dispatch(loaderActions.startAppLoader(LoaderContent.WITHDRAW_STAKE));
 
-      await waitForTransaction(txHash);
+      // Initiate the Withdraw Stake Operation
+      await withdrawStakeV2(metamaskDetails, stakeMapIndex, pendingForApprovalAmountBN);
 
       setAlert({
         [stakeMapIndex]: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" },

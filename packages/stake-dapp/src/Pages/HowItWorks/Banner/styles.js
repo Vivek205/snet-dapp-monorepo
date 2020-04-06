@@ -95,10 +95,9 @@ export const useStyles = MUITheme => ({
         },
       },
     },
-    "& svg": {
+    "& img": {
+      width: 35,
       padding: "13px 33px 0",
-      color: "#d6d6d6",
-      fontSize: 33,
       "@media(max-width: 640px)": { padding: "13px 5px 0" },
     },
   },

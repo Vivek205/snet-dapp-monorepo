@@ -324,6 +324,9 @@ class WalletAccount extends React.Component {
       <Grid container className={classes.walletAccContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.topSection}>
           <Typography variant="h3">Wallet Account</Typography>
+          <Typography variant="h5">
+            Manage your token claims. Tokens can be claimed together or individually from each channel.
+          </Typography>
         </Grid>
         <AccountDetails aggregatePaymentDetails={aggregatePaymentDetails} mmAccDetails={mmAccDetails} />
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.box}>

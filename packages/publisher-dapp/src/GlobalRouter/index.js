@@ -55,7 +55,7 @@ class GlobalRouter extends React.Component {
               }
               return <Route key={route.name} path={route.path} component={route.component} />;
             })}
-            <Route component={PageNotFound} />
+            <Route component={() => <PageNotFound homePath="/" />} />
           </Switch>
         </Suspense>
       </ReactRouter>
@@ -65,6 +65,7 @@ class GlobalRouter extends React.Component {
 const mapStateToProps = state => ({
   isInitialized: state.user.isInitialized,
   isLoggedIn: state.user.isLoggedIn,
+  isMMConnected: state.user.isMMConnected,
   error: state.error.app,
 });
 const mapDispatchToProps = dispatch => ({

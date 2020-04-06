@@ -3,6 +3,7 @@ import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
 import withDashboardMenu from "../HOC/withDashboardMenu";
 import store from "../Services/Redux/Store";
+import ConnectMetamask from "../Components/ConnectMetamask";
 
 const Enroll = lazy(() => import("../Pages/Enroll"));
 const Login = lazy(() => import("../Pages/Login"));
@@ -128,32 +129,55 @@ export const GlobalRoutes = {
     path: "/walletaccount",
     component: WalletAccountComponent,
   },
+  CONNECT_METAMASK: {
+    name: "connect Metamask",
+    path: "/connectMetamask",
+    component: ConnectMetamask,
+  },
 };
 
 export const setupRouteAuthentications = () => {
   const state = store.getState();
-  const { isLoggedIn } = state.user;
+  const { isLoggedIn, isMMConnected } = state.user;
+  const loggedInMMconnectionRedirection = () => {
+    if (!isLoggedIn) {
+      return GlobalRoutes.LOGIN.path;
+    }
+    if (!isMMConnected) {
+      return GlobalRoutes.CONNECT_METAMASK.path;
+    }
+  };
   return {
     ...GlobalRoutes,
     ORGANIZATION_SETUP: {
       ...GlobalRoutes.ORGANIZATION_SETUP,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
     },
     ORG_SETUP_STATUS: {
       ...GlobalRoutes.ORG_SETUP_STATUS,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
     },
     INVITE_MEMBERS: {
       ...GlobalRoutes.INVITE_MEMBERS,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
     },
     AI_SERVICE_CREATION: {
       ...GlobalRoutes.AI_SERVICE_CREATION,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
+    },
+    WALLET_ACCOUNT: {
+      ...GlobalRoutes.WALLET_ACCOUNT,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
+    },
+    SERVICES: {
+      ...GlobalRoutes.SERVICES,
+      isAllowed: isLoggedIn && isMMConnected,
+      redirectTo: loggedInMMconnectionRedirection(),
     },
   };
 };

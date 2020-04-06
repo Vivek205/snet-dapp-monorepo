@@ -14,7 +14,7 @@ export const defaultGroups = [
         priceInCogs: 1,
       },
     ],
-    endpoints: [],
+    endpoints: {},
     testEndpoints: [],
     daemonAddresses: [],
     freeCallsAllowed: "",

@@ -75,7 +75,7 @@ export const cardDetails = stakeDetails => [
     title: "Current Pool Size",
     value: fromWei(stakeDetails.windowTotalStake),
     unit: "AGI",
-    toolTip: "Current total amount of AGI tokens contributed by all stakers",
+    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
   {
     title: "Reward Pool",

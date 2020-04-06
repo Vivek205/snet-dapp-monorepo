@@ -7,7 +7,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
-
 import { useStyles } from "./styles";
 
 const ClaimsSuccessPopup = ({ classes, show, channelIdList, agiClaimed, escrowBalance, handleClose }) => {
