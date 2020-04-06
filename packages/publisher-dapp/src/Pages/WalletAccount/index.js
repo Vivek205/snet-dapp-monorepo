@@ -27,8 +27,9 @@ import AlertBox from "shared/dist/components/AlertBox";
 import { MetamaskError } from "shared/dist/utils/error";
 import ClaimsSuccessPopup from "./ClaimsSuccessPopup";
 import { cogsToAgi } from "shared/src/utils/Pricing";
+import ConnectMetamask from "./ConnectMetamask";
 
-const controlServiceRequest = new ControlServiceRequest();
+let controlServiceRequest;
 const defaultPaymentAggregate = {
   count: 0,
   amount: new BigNumber(0),
@@ -58,10 +59,12 @@ class WalletAccount extends React.Component {
       latest: { channelsClaimed: [], amountClaimed: "" },
       session: { channelsClaimed: [], amountClaimed: "" },
     },
+    mmConnected: false,
   };
 
   async componentDidMount() {
     const { orgUuid, getServices } = this.props;
+    await this.initControlServiceRequest();
     this.initEscrow();
     const serviceList = await getServices(orgUuid);
     this.findServiceHost(serviceList);
@@ -75,12 +78,27 @@ class WalletAccount extends React.Component {
     }
   }
 
+  initControlServiceRequest = async () => {
+    try {
+      controlServiceRequest = new ControlServiceRequest();
+      await controlServiceRequest._initWeb3();
+    } catch (e) {
+      if (e.message === "Metamask not available") {
+        return this.setState({ mmConnected: false });
+      }
+    }
+  };
+
   initEscrow = async () => {
     const sdk = await initSDK();
+    if (!sdk) {
+      return;
+    }
     const escrowBalance = await sdk.account.escrowBalance();
     const tokenBalance = await sdk.account.balance();
     this.setState({
       mmAccDetails: { tokenBalance: toBNString(tokenBalance), escrowBalance: escrowBalance.toString() },
+      mmConnected: true,
     });
   };
 
@@ -107,6 +125,14 @@ class WalletAccount extends React.Component {
 
     // TODO select endpoint that is valid
     const serviceHost = validEndpoints[0];
+    if (!serviceHost[0]) {
+      return this.setState({
+        getPaymentsListAlert: {
+          type: alertTypes.ERROR,
+          message: "No valid daemon endpoint is found. Please validate a daemon to proceed",
+        },
+      });
+    }
     controlServiceRequest.serviceHost = serviceHost[0];
   };
 
@@ -313,8 +339,19 @@ class WalletAccount extends React.Component {
       claimChannelsAlert,
       showClaimsSuccessPopup,
       transactionDetails,
+      mmConnected,
     } = this.state;
     const paymentsList = [...unclaimedPayments, ...pendingPayments];
+
+    if (!mmConnected) {
+      return (
+        <ConnectMetamask
+          initControlServiceRequest={this.initControlServiceRequest}
+          initEscrow={this.initEscrow}
+          setMMConnected={() => this.setState({ mmConnected: true })}
+        />
+      );
+    }
 
     if (!mmAuthorized) {
       return <MmAuthorization handleAuthorizeMM={this.handleAuthorizeMM} alert={getPaymentsListAlert} />;

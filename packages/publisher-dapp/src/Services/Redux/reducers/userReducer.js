@@ -5,7 +5,6 @@ const initialState = {
   entity: "",
   isInitialized: false,
   isLoggedIn: false,
-  isMMConnected: false,
   publisherTnC: { ver: "", accepted: "" },
   email: undefined,
   nickname: undefined,
