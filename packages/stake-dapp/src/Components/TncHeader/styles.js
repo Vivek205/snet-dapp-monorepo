@@ -42,6 +42,16 @@ export const useStyles = MUITheme => ({
         textDecoration: "underline",
       },
     },
+    "& span": {
+      color: MUITheme.palette.primary.main,
+      fontSize: 16,
+      fontWeight: 600,
+      textDecoration: "none",
+      "&:hover": {
+        cursor: "pointer",
+        textDecoration: "underline",
+      },
+    },
     [MUITheme.breakpoints.down("xs")]: { textAlign: "left" },
   },
 });
