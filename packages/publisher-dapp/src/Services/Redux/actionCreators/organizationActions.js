@@ -17,8 +17,8 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import { loginActions } from "./userActions";
 import { defaultContacts } from "../reducers/organizationReducer";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -294,17 +294,6 @@ const parseOrgData = selectedOrg => {
   return organization;
 };
 
-export const getOrgDetailsFromBlockchain = orgId => async dispatch => {
-  try {
-    const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(orgId);
-    dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
-    dispatch(loginActions.setIsMMConnected(true));
-  } catch (e) {
-    dispatch(loginActions.setIsMMConnected(false));
-    return undefined;
-  }
-};
-
 export const getStatus = async dispatch => {
   const { data } = await dispatch(getStatusAPI());
   if (isEmpty(data)) {
@@ -312,7 +301,8 @@ export const getStatus = async dispatch => {
   }
   const selectedOrg = selectOrg(data);
   const organization = parseOrgData(selectedOrg);
-  await dispatch(getOrgDetailsFromBlockchain(organization.id));
+  const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
+  dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
   dispatch(setAllAttributes(organization));
   return data;
 };
@@ -497,8 +487,8 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
 };
 
 const findOrganizationInBlockchain = async orgId => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getOrganizationById(orgId).call();
+  const registry = new RegistryContract();
+  return await registry.getOrganizationById(orgId).call();
 };
 
 export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {

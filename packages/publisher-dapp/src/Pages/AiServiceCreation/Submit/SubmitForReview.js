@@ -38,13 +38,16 @@ class SubmitForReview extends React.Component {
 
   componentDidUpdate = async prevProps => {
     const { serviceDetails } = this.props;
-    if (serviceDetails.uuid !== prevProps.serviceDetails.uuid) {
+    if (serviceDetails.uuid && serviceDetails.uuid !== prevProps.serviceDetails.uuid) {
       await this.fetchSampleDaemonConfig();
     }
   };
 
   componentDidMount = async () => {
-    await this.fetchSampleDaemonConfig();
+    const { serviceDetails } = this.props;
+    if (serviceDetails.uuid) {
+      await this.fetchSampleDaemonConfig();
+    }
   };
 
   handleCommentChange = event => {
