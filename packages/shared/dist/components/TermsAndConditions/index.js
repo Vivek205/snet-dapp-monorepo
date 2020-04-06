@@ -65,7 +65,7 @@ TermsAndConditions.protoTypes = {
   onChangeAgreed: _propTypes.default.func,
   Content: _propTypes.default.element
 };
-TermsAndConditions.defaulProps = {
+TermsAndConditions.defaultProps = {
   Content: _PrivacyTerms.default
 };
 
