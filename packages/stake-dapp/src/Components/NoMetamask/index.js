@@ -82,9 +82,6 @@ const NoMetamask = () => {
   };
 
   const storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
-    //const { updateMetamaskDetails, walletList, registerWallet } = this.props;
-    //await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
-
     await dispatch(metamaskActions.updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed));
 
     if (isTxnsAllowed) {
@@ -92,12 +89,10 @@ const NoMetamask = () => {
         const wallets = walletList.filter(w => w.address.toLowerCase() === account.toLowerCase());
         if (wallets.length === 0) {
           // Call the Register API to associate the Wallet to User
-          //registerWallet(account);
           dispatch(userWalletActions.registerWallet(account));
         }
       } else if (account !== "0x0") {
         // Call the Register API to associate the Wallet to User
-        //registerWallet(account);
         dispatch(userWalletActions.registerWallet(account));
       }
     }
