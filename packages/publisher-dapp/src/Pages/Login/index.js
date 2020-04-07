@@ -1,13 +1,10 @@
-import React, { useState, useEffect, Fragment, useCallback } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
 import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
-import { initSDK } from "shared/dist/utils/snetSdk";
-import { loaderActions } from "../../Services/Redux/actionCreators";
-import { LoaderContent } from "../../Utils/Loader";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
@@ -17,22 +14,6 @@ const Login = ({ history }) => {
   const checkUserTnCAcceptance = useCallback(() => {
     return publisherTnC.ver && publisherTnC.accepted;
   }, [publisherTnC]);
-
-  useEffect(() => {
-    const checkIfMMisConnected = async () => {
-      try {
-        dispatch(loaderActions.startAppLoader(LoaderContent.CONNECT_METAMASK));
-        const sdk = await initSDK();
-        if (!sdk) {
-          history.push(GlobalRoutes.CONNECT_METAMASK.path);
-        }
-        dispatch(loaderActions.stopAppLoader());
-      } catch (e) {
-        history.push(GlobalRoutes.CONNECT_METAMASK.path);
-      }
-    };
-    checkIfMMisConnected();
-  }, [dispatch, history]);
 
   useEffect(() => {
     if (isLoggedIn) {
