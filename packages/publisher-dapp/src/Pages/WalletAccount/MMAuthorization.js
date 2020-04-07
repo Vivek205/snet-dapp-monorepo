@@ -15,18 +15,22 @@ const MmAuthorization = ({ classes, handleAuthorizeMM, alert }) => {
         <Typography variant="h3" className={classes.walletAccHeading}>
           Wallet Account
         </Typography>
-        <img src={AuthorizeMetamaskImg} alt="No Metamask Connected" />
-        <Typography className={classes.metamaskTitle}>Authorize Connection to Blockchain</Typography>
-        <Typography className={classes.metamaskDesc}>
-          Metamsk signature is needed to fetch the claims list from blockchain.
-          <span>
-            <a href="#" title="Click Here">
-              Click here{" "}
-            </a>
-            to learn more about claim revenue and how to collect it.
-          </span>
-        </Typography>
-        <SNETButton color="primary" variant="contained" children="Authorize Metamask" onClick={handleAuthorizeMM} />
+        <div className={classes.metamaskContent}>
+          <img src={AuthorizeMetamaskImg} alt="No Metamask Connected" />
+          <div>
+            <Typography className={classes.metamaskTitle}>Authorize Connection to Blockchain</Typography>
+            <Typography className={classes.metamaskDesc}>
+              Metamask signature is needed to fetch the claims list from blockchain.
+              <span>
+                <a href="#" title="Click Here">
+                  Click here{" "}
+                </a>
+                to learn more about claim revenue and how to collect it.
+              </span>
+            </Typography>
+            <SNETButton color="primary" variant="contained" children="Authorize Metamask" onClick={handleAuthorizeMM} />
+          </div>
+        </div>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.alertBoxContainer}>
         <AlertBox type={alert.type} message={alert.message} />

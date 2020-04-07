@@ -336,11 +336,22 @@ export const useStyles = MUITheme => ({
     margin: "10px 0 25px",
     color: MUITheme.palette.text.lightGrey,
     fontSize: 16,
+    fontWeight: 300,
     lineHeight: "20px",
     "& span": { display: "block" },
     "& a": {
       color: MUITheme.palette.primary.main,
       textDecoration: "none",
+    },
+  },
+  metamaskContent: {
+    position: "relative",
+    "& div": {
+      width: "100%",
+      position: "absolute",
+      bottom: -95,
+      left: "50%",
+      transform: "translateX(-50%)",
     },
   },
 });

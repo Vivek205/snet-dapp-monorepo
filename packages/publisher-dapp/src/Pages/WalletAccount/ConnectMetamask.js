@@ -27,18 +27,22 @@ const ConnectMetamask = ({ classes, initControlServiceRequest, initEscrow, setMM
         <Typography variant="h3" className={classes.walletAccHeading}>
           Wallet Account
         </Typography>
-        <img src={NoMetamaskImg} alt="No Metamask Connected" />
-        <Typography className={classes.metamaskTitle}>Metamask Connection Needed</Typography>
-        <Typography className={classes.metamaskDesc}>
-          Please install or enable Metamask to view the contents of this page.{" "}
-          <span>
-            <a href="#" title="Click Here">
-              Click here{" "}
-            </a>
-            to learn more about Metamask and how to use it.
-          </span>
-        </Typography>
-        <SNETButton color="primary" variant="contained" children="Connect Metamask" onClick={handleConnectMM} />
+        <div className={classes.metamaskContent}>
+          <img src={NoMetamaskImg} alt="No Metamask Connected" />
+          <div>
+            <Typography className={classes.metamaskTitle}>Metamask Connection Needed</Typography>
+            <Typography className={classes.metamaskDesc}>
+              Please install or enable Metamask to view the contents of this page.{" "}
+              <span>
+                <a href="#" title="Click Here">
+                  Click here{" "}
+                </a>
+                to learn more about Metamask and how to use it.
+              </span>
+            </Typography>
+            <SNETButton color="primary" variant="contained" children="Connect Metamask" onClick={handleConnectMM} />
+          </div>
+        </div>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.alertBoxContainer}>
         <AlertBox type={alert.type} message={alert.message} />
