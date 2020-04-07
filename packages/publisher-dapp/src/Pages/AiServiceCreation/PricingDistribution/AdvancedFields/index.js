@@ -22,7 +22,7 @@ const AdvancedFields = () => {
         label="MPE Address"
         description={
           <p>
-            The ethereum address of the MultiParty Escrow contract on the Ethereum mainnet. Details{" "}
+            The ethereum address of the MultiParty Escrow contract on the Ethereum mainnet. Details
             <a href="https://dev.singularitynet.io/docs/ai-developers/mpe/" rel="noopener noreferrer" target="_blank">
               here
             </a>

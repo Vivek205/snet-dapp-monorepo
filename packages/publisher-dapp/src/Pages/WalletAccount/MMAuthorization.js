@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox from "shared/dist/components/AlertBox";
+import AnchorLink from "shared/dist/components/AnchorLink";
 import AuthorizeMetamaskImg from "shared/dist/assets/images/AuthorizeMetamask.png";
 
 const MmAuthorization = ({ classes, handleAuthorizeMM, alert }) => {
@@ -22,9 +23,7 @@ const MmAuthorization = ({ classes, handleAuthorizeMM, alert }) => {
             <Typography className={classes.metamaskDesc}>
               Metamask signature is needed to fetch the claims list from blockchain.
               <span>
-                <a href="#" title="Click Here">
-                  Click here{" "}
-                </a>
+                <AnchorLink label="Click here " href="#" newTab={true} />
                 to learn more about claim revenue and how to collect it.
               </span>
             </Typography>

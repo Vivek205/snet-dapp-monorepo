@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import NoMetamaskImg from "shared/dist/assets/images/NoMetamask.png";
+import AnchorLink from "shared/dist/components/AnchorLink";
 
 import { useStyles } from "./styles";
 
@@ -32,11 +33,9 @@ const ConnectMetamask = ({ classes, initControlServiceRequest, initEscrow, setMM
           <div>
             <Typography className={classes.metamaskTitle}>Metamask Connection Needed</Typography>
             <Typography className={classes.metamaskDesc}>
-              Please install or enable Metamask to view the contents of this page.{" "}
+              Please install or enable Metamask to view the contents of this page.
               <span>
-                <a href="#" title="Click Here">
-                  Click here{" "}
-                </a>
+                <AnchorLink label="Click here " href="https://metamask.io/" newTab={true} />
                 to learn more about Metamask and how to use it.
               </span>
             </Typography>
