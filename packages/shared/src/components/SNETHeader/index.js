@@ -7,7 +7,7 @@ import SNETAppBar from "../SNETAppBar";
 import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
 import WhiteSnetLogo from "../../assets/images/WhiteLogo.svg";
 import { useStyles } from "./styles";
-import MobileHeader from "../MobileHeader";
+import MobileHeader from "./MobileHeader";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 

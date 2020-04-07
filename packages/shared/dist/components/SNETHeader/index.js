@@ -21,7 +21,7 @@ var _WhiteLogo = _interopRequireDefault(require("../../assets/images/WhiteLogo.s
 
 var _styles = require("./styles");
 
-var _MobileHeader = _interopRequireDefault(require("../MobileHeader"));
+var _MobileHeader = _interopRequireDefault(require("./MobileHeader"));
 
 var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 

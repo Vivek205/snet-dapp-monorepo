@@ -22,7 +22,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }, _defineProperty(_appBar, MUITheme.breakpoints.down("md"), {
       padding: "14px 10px"
     }), _defineProperty(_appBar, MUITheme.breakpoints.down("sm"), {
-      justifyContent: 'space-between'
+      justifyContent: "space-between"
     }), _appBar),
     purple: {
       "& h5": {
@@ -49,7 +49,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }, _defineProperty(_navContainer, MUITheme.breakpoints.down("md"), {
       padding: 0
     }), _defineProperty(_navContainer, MUITheme.breakpoints.down("sm"), {
-      display: 'none'
+      display: "none"
     }), _navContainer)
   };
 });
