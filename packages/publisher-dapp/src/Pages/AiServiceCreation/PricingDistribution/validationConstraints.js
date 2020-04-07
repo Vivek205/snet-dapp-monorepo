@@ -10,7 +10,7 @@ export const servicePricingValidationConstraints = {
     array: {
       pricing: {
         array: {
-          priceInCogs: { presence: { allowEmpty: false, message: "^Service Price cannot be " } },
+          priceInCogs: { presence: { allowEmpty: false, message: "^Service Price cannot be blank" } },
         },
       },
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
