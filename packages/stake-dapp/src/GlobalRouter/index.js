@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as ReactRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as ReactRouter, Route, Switch, Redirect } from "react-router-dom";
 import PageNotFound from "shared/dist/components/PageNotFound";
 import { connect } from "react-redux";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -27,7 +27,7 @@ class GlobalRouter extends React.Component {
             <Route
               path="/"
               exact
-              component={this.props.isLoggedIn ? routes.LANDING.component : routes.HOW_IT_WORKS.component}
+              render={() => <Redirect to={this.props.isLoggedIn ? routes.LANDING.path : routes.HOW_IT_WORKS.path} />}
             />
 
             {Object.values(routes).map(route => {
