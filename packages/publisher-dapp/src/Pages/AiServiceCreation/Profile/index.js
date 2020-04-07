@@ -113,6 +113,7 @@ const Profile = ({ classes }) => {
 
   const handleContinue = async () => {
     try {
+      serviceDetails.id = serviceDetails.id || serviceDetails.newId;
       const isNotValid = validator(serviceDetails, serviceProfileValidationConstraints);
 
       if (isNotValid) {

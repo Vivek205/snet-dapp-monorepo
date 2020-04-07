@@ -54,11 +54,10 @@ const Region = ({ history, classes, handleFinishLater }) => {
             foundInBlockchain={organization.foundInBlockchain}
           />
         ))}
-        {alert.message || alert.children ? (
-          <div className={classes.alertContainer}>
-            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-          </div>
-        ) : null}
+
+        <div className={classes.alertContainer}>
+          <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+        </div>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />

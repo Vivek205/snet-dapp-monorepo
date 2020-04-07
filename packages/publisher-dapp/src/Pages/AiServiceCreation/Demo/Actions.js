@@ -32,6 +32,7 @@ const Actions = ({ classes }) => {
           .replace(":orgUuid", orgUuid)
           .replace(":serviceUuid", serviceUuid)
       );
+      setAlert({ type: alertTypes.ERROR, message: "" });
     } else {
       return setAlert({ type: alertTypes.ERROR, message: "Please upload Demo Files" });
     }
@@ -44,15 +45,13 @@ const Actions = ({ classes }) => {
 
   return (
     <div>
+      <AlertBox type={alert.type} message={alert.message} />
+
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="previous step" onClick={handleBack} />
         <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
       </div>
-      <span>
-        {" "}
-        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-      </span>
     </div>
   );
 };

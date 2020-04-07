@@ -45,14 +45,13 @@ const Actions = () => {
   };
 
   return (
-    <div className={classes.buttonsContainer}>
-      <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
-      <SNETButton color="primary" children="previous step" onClick={handleBack} />
-      <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
-      <span>
-        {" "}
-        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-      </span>
+    <div>
+      <div className={classes.buttonsContainer}>
+        <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
+        <SNETButton color="primary" children="previous step" onClick={handleBack} />
+        <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
+      </div>
+      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
     </div>
   );
 };
