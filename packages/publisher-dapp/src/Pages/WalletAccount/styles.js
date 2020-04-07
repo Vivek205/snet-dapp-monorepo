@@ -315,4 +315,32 @@ export const useStyles = MUITheme => ({
       },
     },
   },
+  metaMaskContainer: {
+    margin: "110px 0 145px",
+    textAlign: "center",
+    transform: "translateX(-6%)",
+    "& img": { width: 300 },
+    [MUITheme.breakpoints.down("md")]: { transform: "translateX(-4%)" },
+  },
+  walletAccHeading: {
+    marginBottom: 45,
+    textAlign: "left",
+  },
+  metamaskTitle: {
+    color: MUITheme.palette.text.primary,
+    fontSize: 24,
+    fontWeight: 200,
+    lineHeight: "30px",
+  },
+  metamaskDesc: {
+    margin: "10px 0 25px",
+    color: MUITheme.palette.text.lightGrey,
+    fontSize: 16,
+    lineHeight: "20px",
+    "& span": { display: "block" },
+    "& a": {
+      color: MUITheme.palette.primary.main,
+      textDecoration: "none",
+    },
+  },
 });
