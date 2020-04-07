@@ -10,19 +10,25 @@ import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
 import { cardDetails, incubationProgressDetails, agreementDetails } from "./content";
 import InlineLoader from "../InlineLoader";
+import NoMetaMask from "../NoMetamask";
 
 const stateSelector = state => ({
   incubationStakes: state.stakeReducer.incubationStakes,
   isLoading: state.loader.incubationStakeList.isLoading,
+  metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
 const UserStake = () => {
   const classes = useStyles();
 
-  const { incubationStakes, isLoading } = useSelector(state => stateSelector(state));
+  const { incubationStakes, isLoading, metamaskDetails } = useSelector(state => stateSelector(state));
 
   if (isLoading) {
     return <InlineLoader />;
+  }
+
+  if (!metamaskDetails.isTxnsAllowed) {
+    return <NoMetaMask />;
   }
 
   if (incubationStakes.length === 0) {

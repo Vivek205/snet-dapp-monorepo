@@ -2,26 +2,45 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
-const ClaimsAggregate = ({ aggregatePaymentDetails }) => {
+import { useStyles } from "./styles";
+
+const ClaimsAggregate = ({ classes, aggregatePaymentDetails }) => {
   return (
-    <Grid container xs={12} sm={12} md={12} lg={12}>
+    <Grid container xs={12} sm={12} md={12} lg={12} className={classes.claimsAggregateContainer}>
       <Grid item xs={12} sm={12} md={4} lg={4}>
-        <InfoIcon />
-        <Typography>Pending</Typography>
-        <Typography>{`${aggregatePaymentDetails.amount}`}</Typography>
+        <div className={classes.iconContainer}>
+          <InfoIcon className={classes.infoIcon} />
+          <Typography>Pending</Typography>
+        </div>
+        <Typography>
+          {`${aggregatePaymentDetails.amount}`}
+          <span>AGI</span>
+        </Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4}>
-        <Typography>Expiring count</Typography>
-        <Typography>{aggregatePaymentDetails.expiry.d7.count}</Typography>
+        <div className={classes.iconContainer}>
+          <InfoIcon className={classes.infoIcon} />
+          <Typography>Expiring count</Typography>
+        </div>
+        <Typography>
+          {aggregatePaymentDetails.expiry.d7.count}
+          <span>Claims</span>
+        </Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4}>
-        <InfoIcon />
-        <Typography>Expiring Amount</Typography>
-        <Typography>{`${aggregatePaymentDetails.expiry.d7.amount}`}</Typography>
+        <div className={classes.iconContainer}>
+          <InfoIcon className={classes.infoIcon} />
+          <Typography>Expiring Amount</Typography>
+        </div>
+        <Typography>
+          {`${aggregatePaymentDetails.expiry.d7.amount}`}
+          <span>AGI</span>
+        </Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default ClaimsAggregate;
+export default withStyles(useStyles)(ClaimsAggregate);

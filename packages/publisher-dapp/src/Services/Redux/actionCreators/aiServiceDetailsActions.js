@@ -14,6 +14,7 @@ import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -505,8 +506,8 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
 };
 
 const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getServiceRegistrationById(orgId, serviceId).call();
+  const registry = new RegistryContract();
+  return await registry.getServiceRegistrationById(orgId, serviceId).call();
 };
 
 export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {

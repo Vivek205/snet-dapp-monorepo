@@ -5,6 +5,7 @@ import Web3 from "web3";
 import { ProviderControlService } from "./stubs/control_service_pb_service";
 import { GrpcError } from "shared/dist/utils/error";
 import { hexToB64, solidityTypes, toBNString, uint8ArrayToBN, uint8ArrayToHex } from "../../Grpc";
+import { MetamaskError } from "shared/dist/utils/error";
 
 const methods = {
   GetListUnclaimed: "GetListUnclaimed",
@@ -17,7 +18,6 @@ export class ControlServiceRequest {
   constructor(serviceHost) {
     this._serviceHost = serviceHost;
     this._web3 = undefined;
-    this._initWeb3();
   }
 
   set serviceHost(value) {
@@ -29,6 +29,9 @@ export class ControlServiceRequest {
       return;
     }
     const web3Provider = window.ethereum;
+    if (!web3Provider) {
+      throw new MetamaskError("Metamask not available");
+    }
     const accounts = await web3Provider.enable();
     // eslint-disable-next-line require-atomic-updates
     window.web3.eth.defaultAccount = accounts[0];
