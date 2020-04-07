@@ -3,6 +3,10 @@ export const useStyles = MUITheme => ({
     width: 846,
     paddingTop: 40,
     margin: "70px 0 64px 70px",
+    "@media(max-width:1150px)": {
+      width: "90%",
+      margin: "70px auto",
+    },
   },
   topSection: {
     "& h5": {
