@@ -24,21 +24,15 @@ class StakeTab extends Component {
   }
 
   componentDidMount = () => {
-    const {
-      metamaskDetails,
-      fetchCurrentActiveStakeWindow,
-      fetchActiveStakes,
-      fetchClaimStakes,
-      getUserPreferences,
-    } = this.props;
+    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
 
     // Initiate the Fetch Calls
     fetchCurrentActiveStakeWindow(metamaskDetails);
     fetchActiveStakes(metamaskDetails);
     fetchClaimStakes(metamaskDetails);
 
-    // Get the User Preferences
-    getUserPreferences();
+    // Get the User Preferences - Will be enhancing in the next release
+    //getUserPreferences();
   };
 
   componentDidUpdate = async (prevProps, _prevState) => {
