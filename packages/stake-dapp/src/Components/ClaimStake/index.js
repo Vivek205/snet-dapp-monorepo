@@ -20,6 +20,7 @@ import { claimStakeV2, withdrawStakeV2 } from "../../Utils/BlockchainHelper";
 import { toBigNumber } from "../../Utils/GenHelperFunctions";
 
 import InlineLoader from "../InlineLoader";
+import NoMetaMask from "../NoMetamask";
 
 const stateSelector = state => ({
   claimStakes: state.stakeReducer.claimStakes,
@@ -37,6 +38,10 @@ const ClaimStake = () => {
 
   if (isLoading) {
     return <InlineLoader />;
+  }
+
+  if (!metamaskDetails.isTxnsAllowed) {
+    return <NoMetaMask />;
   }
 
   if (claimStakes.length === 0) {

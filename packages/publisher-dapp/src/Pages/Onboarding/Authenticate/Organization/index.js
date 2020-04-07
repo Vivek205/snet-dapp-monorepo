@@ -33,8 +33,12 @@ const Organization = props => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
       setAlert({
         type: alertTypes.ERROR,
-        message:
-          "Your organization has been rejected. Please validate the details provided and submit again for approval",
+        message: "Your organization has been rejected.",
+      });
+    } else if (organization.state.state === organizationSetupStatuses.CHANGE_REQUESTED && !Boolean(alert.type)) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message: "Please validate the details provided and submit again for approval",
       });
     }
   }, [organization.state.state, setAlert, alert]);
@@ -52,7 +56,7 @@ const Organization = props => {
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
-      if (orgData.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+      if (orgData.state.state === organizationSetupStatuses.CHANGE_REQUESTED) {
         const data = await dispatch(organizationActions.finishLater(orgData, "ONBOARDING"));
         orgUuid = data.org_uuid;
       } else {
@@ -96,7 +100,13 @@ const Organization = props => {
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
-        <SNETButton color="primary" variant="contained" children="finish" onClick={handleFinish} />
+        <SNETButton
+          color="primary"
+          variant="contained"
+          children="finish"
+          onClick={handleFinish}
+          disabled={organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED}
+        />
       </div>
     </Fragment>
   );

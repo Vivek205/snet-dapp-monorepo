@@ -47,8 +47,14 @@ class AiServiceCreation extends Component {
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgUuid, serviceUuid } = this.props;
-    if (orgUuid !== prevProps.orgUuid || serviceUuid !== prevProps.serviceUuid) {
+    const { orgId, orgUuid, serviceUuid } = this.props;
+    if (
+      orgId &&
+      orgUuid &&
+      serviceUuid &&
+      prevProps.serviceUuid &&
+      (orgUuid !== prevProps.orgUuid || serviceUuid !== prevProps.serviceUuid)
+    ) {
       await this.initData();
     }
   };

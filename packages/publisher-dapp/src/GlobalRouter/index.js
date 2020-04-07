@@ -4,12 +4,10 @@ import PageNotFound from "shared/dist/components/PageNotFound";
 import { connect } from "react-redux";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import PageNotFoundImage from "shared/dist/assets/images/pageNotFound.png";
-
 import { setupRouteAuthentications } from "./Routes";
 import { loginActions } from "../Services/Redux/actionCreators/userActions";
 import PrivateRoute from "../Components/PrivateRoute";
 import SNETStatusBanner from "shared/dist/components/SNETStatusBanner";
-
 class GlobalRouter extends React.Component {
   componentDidMount() {
     this.props.initApp();
@@ -34,13 +32,10 @@ class GlobalRouter extends React.Component {
         />
       );
     }
-
     if (!this.props.isInitialized) {
       return <LinearProgress />;
     }
-
     const routes = setupRouteAuthentications();
-
     return (
       <ReactRouter>
         <Suspense fallback={<LinearProgress />}>
@@ -67,16 +62,12 @@ class GlobalRouter extends React.Component {
     );
   }
 }
-
 const mapStateToProps = state => ({
   isInitialized: state.user.isInitialized,
   isLoggedIn: state.user.isLoggedIn,
-  isMMConnected: state.user.isMMConnected,
   error: state.error.app,
 });
-
 const mapDispatchToProps = dispatch => ({
   initApp: () => dispatch(loginActions.initializeApplication),
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalRouter);

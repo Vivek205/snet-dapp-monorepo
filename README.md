@@ -48,3 +48,14 @@ Awesome. You can start using your components in any other project. Just import i
 
 ## Cleaning the node_modules
 Developers try new things and may end up in mess. Don't worry! we got you covered! Just run `yarn nuke` from the `root`. Node modules from all the packages will be cleaned and you can start fresh.
+
+
+## Troubleshooting Monorepo.
+<details>
+<summary>If the import of the shared packages is not working</summary>
+Try running <code>lerna exec -- yarn link</code>.
+This will recreate the symlinks of all the packages in the monorepo.
+
+If lerna is not installed globally, then try <code>yarn run link:all</code>. 
+This will use the locally installed version of lerna
+</details>

@@ -68,28 +68,49 @@ const HowItWorks = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>
         <ul className={classes.titlesContainer}>
           <li>
-            <img src={BankImage} alt="Bank" />
-            <Typography variant="h4">What is Staking</Typography>
-            <Typography>
-              Learn more about how staking works in our ecosystem of products and why staking your AGI tokens is
-              important for the AI community.
-            </Typography>
+            <a
+              href="https://dev.singularitynet.io/products/staking/"
+              rel="noopener noreferrer"
+              target="_blank"
+              className={classes.titlesContainer}
+            >
+              <img src={BankImage} alt="Bank" />
+              <Typography variant="h4">What is Staking</Typography>
+              <Typography>
+                Learn more about how staking works in our ecosystem of products and why staking your AGI tokens is
+                important for the AI community.
+              </Typography>
+            </a>
           </li>
           <li>
-            <img src={PiggyBankImage} alt="Piggy Bank" />
-            <Typography variant="h4">Stages of Staking</Typography>
-            <Typography>
-              Learn more about the stages of the staking process and what happens to your AGI tokens whilst they are
-              staked.
-            </Typography>
+            <a
+              href="https://dev.singularitynet.io/products/stake-timeline/"
+              rel="noopener noreferrer"
+              target="_blank"
+              className={classes.titlesContainer}
+            >
+              <img src={PiggyBankImage} alt="Piggy Bank" />
+              <Typography variant="h4">Stages of Staking</Typography>
+              <Typography>
+                Learn more about the stages of the staking process and what happens to your AGI tokens whilst they are
+                staked.
+              </Typography>
+            </a>
           </li>
           <li>
-            <img src={CalculatorImage} alt="Calculator" />
-            <Typography variant="h4">Auto Renewing Stakes</Typography>
-            <Typography>
-              Learn how to become a priority staker by auto renewing your stakes, as well as how you can save on
-              transaction fees (ETH gas).
-            </Typography>
+            <a
+              href="https://dev.singularitynet.io/products/stake-opt-out/"
+              rel="noopener noreferrer"
+              target="_blank"
+              className={classes.titlesContainer}
+            >
+              <img src={CalculatorImage} alt="Calculator" />
+              <Typography variant="h4">Auto Renewing Stakes</Typography>
+              <Typography>
+                Learn how to become a priority staker by auto renewing your stakes, as well as how you can save on
+                transaction fees (ETH gas).
+              </Typography>
+            </a>
           </li>
         </ul>
       </Grid>

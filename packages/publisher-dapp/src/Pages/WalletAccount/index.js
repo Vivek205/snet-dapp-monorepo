@@ -27,8 +27,9 @@ import AlertBox from "shared/dist/components/AlertBox";
 import { MetamaskError } from "shared/dist/utils/error";
 import ClaimsSuccessPopup from "./ClaimsSuccessPopup";
 import { cogsToAgi } from "shared/src/utils/Pricing";
+import ConnectMetamask from "./ConnectMetamask";
 
-const controlServiceRequest = new ControlServiceRequest();
+let controlServiceRequest;
 const defaultPaymentAggregate = {
   count: 0,
   amount: new BigNumber(0),
@@ -58,10 +59,12 @@ class WalletAccount extends React.Component {
       latest: { channelsClaimed: [], amountClaimed: "" },
       session: { channelsClaimed: [], amountClaimed: "" },
     },
+    mmConnected: false,
   };
 
   async componentDidMount() {
     const { orgUuid, getServices } = this.props;
+    await this.initControlServiceRequest();
     this.initEscrow();
     const serviceList = await getServices(orgUuid);
     this.findServiceHost(serviceList);
@@ -75,12 +78,27 @@ class WalletAccount extends React.Component {
     }
   }
 
+  initControlServiceRequest = async () => {
+    try {
+      controlServiceRequest = new ControlServiceRequest();
+      await controlServiceRequest._initWeb3();
+    } catch (e) {
+      if (e.message === "Metamask not available") {
+        return this.setState({ mmConnected: false });
+      }
+    }
+  };
+
   initEscrow = async () => {
     const sdk = await initSDK();
+    if (!sdk) {
+      return;
+    }
     const escrowBalance = await sdk.account.escrowBalance();
     const tokenBalance = await sdk.account.balance();
     this.setState({
       mmAccDetails: { tokenBalance: toBNString(tokenBalance), escrowBalance: escrowBalance.toString() },
+      mmConnected: true,
     });
   };
 
@@ -107,6 +125,14 @@ class WalletAccount extends React.Component {
 
     // TODO select endpoint that is valid
     const serviceHost = validEndpoints[0];
+    if (!serviceHost[0]) {
+      return this.setState({
+        getPaymentsListAlert: {
+          type: alertTypes.ERROR,
+          message: "No valid daemon endpoint is found. Please validate a daemon to proceed",
+        },
+      });
+    }
     controlServiceRequest.serviceHost = serviceHost[0];
   };
 
@@ -313,8 +339,19 @@ class WalletAccount extends React.Component {
       claimChannelsAlert,
       showClaimsSuccessPopup,
       transactionDetails,
+      mmConnected,
     } = this.state;
     const paymentsList = [...unclaimedPayments, ...pendingPayments];
+
+    if (!mmConnected) {
+      return (
+        <ConnectMetamask
+          initControlServiceRequest={this.initControlServiceRequest}
+          initEscrow={this.initEscrow}
+          setMMConnected={() => this.setState({ mmConnected: true })}
+        />
+      );
+    }
 
     if (!mmAuthorized) {
       return <MmAuthorization handleAuthorizeMM={this.handleAuthorizeMM} alert={getPaymentsListAlert} />;
@@ -334,38 +371,43 @@ class WalletAccount extends React.Component {
             <Typography variant="h6">Claims</Typography>
             <SNETButton children="refresh" color="primary" endIcon={<RefreshIcon />} onClick={this.handleAuthorizeMM} />
           </div>
-          <Typography className={classes.claimsDesc}>
-            To collect pending tokens from individual channels, select the channels and use the claim button. Claims
-            that are going to be expired soon are marked with “!” icon. Please note that you cannot select more than
-            five claims at a time.
-          </Typography>
-          <ClaimsAggregate aggregatePaymentDetails={aggregatePaymentDetails} />
-          <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
-          <ClaimsSuccessPopup
-            show={showClaimsSuccessPopup}
-            agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
-            channelIdList={transactionDetails.latest.channelsClaimed}
-            handleClose={this.handleSuccessPopupClose}
-          />
-          <div className={classes.claimSelectedSection}>
-            <SNETButton
-              children="Collect Claims"
-              color="primary"
-              variant="outlined"
-              onClick={this.claimChannelInBlockchain}
-              disabled={!this.shouldClaimBeEnabled()}
+          <div className={classes.walletAccWrapper}>
+            <Typography className={classes.claimsDesc}>
+              Below are the current revenue claims you collected from your AI services. Claims that are going to be
+              expired soon are marked with “!” icon. Please note that you cannot select more than five claims at a time.
+            </Typography>
+            <ClaimsAggregate aggregatePaymentDetails={aggregatePaymentDetails} />
+            {claimChannelsAlert.message ? (
+              <div className={classes.alertBoxContainer}>
+                <AlertBox type={claimChannelsAlert.type} message={claimChannelsAlert.message} />
+              </div>
+            ) : null}
+            <ClaimsSuccessPopup
+              show={showClaimsSuccessPopup}
+              agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
+              channelIdList={transactionDetails.latest.channelsClaimed}
+              handleClose={this.handleSuccessPopupClose}
             />
-            <Typography>Selected ({this.selectedChannelCount()})</Typography>
-          </div>
-          <div>
-            <UnclaimedPayments
-              payments={paymentsList}
-              pagination={pagination}
-              onItemsPerPageChange={this.onItemsPerPageChange}
-              handlePageChange={this.handlePageChange}
-              selectedChannels={selectedChannels}
-              onSelectChannel={this.handleSelectChannel}
-            />
+            <div className={classes.claimSelectedSection}>
+              <SNETButton
+                children="Collect Claims"
+                color="primary"
+                variant="contained"
+                onClick={this.claimChannelInBlockchain}
+                disabled={!this.shouldClaimBeEnabled()}
+              />
+              <Typography>Selected ({this.selectedChannelCount()})</Typography>
+            </div>
+            <div>
+              <UnclaimedPayments
+                payments={paymentsList}
+                pagination={pagination}
+                onItemsPerPageChange={this.onItemsPerPageChange}
+                handlePageChange={this.handlePageChange}
+                selectedChannels={selectedChannels}
+                onSelectChannel={this.handleSelectChannel}
+              />
+            </div>
           </div>
         </Grid>
       </Grid>
