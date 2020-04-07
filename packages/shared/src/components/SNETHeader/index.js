@@ -7,6 +7,7 @@ import SNETAppBar from "../SNETAppBar";
 import SnetSvgLogo from "../../assets/images/BlackLogo.svg";
 import WhiteSnetLogo from "../../assets/images/WhiteLogo.svg";
 import { useStyles } from "./styles";
+import MobileHeader from "../MobileHeader";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 
@@ -29,6 +30,7 @@ const SNETHeader = ({
           className={`${classes.appBar} ${color === "purple" ? classes.purple : null}`}
         >
           <div className={classes.logoContainer} onClick={onLogoClick}>
+            <MobileHeader data={NavigationBar} isLoggedIn={isLoggedIn} />
             <CardMedia component="img" image={color === "purple" ? WhiteSnetLogo : SnetSvgLogo} alt="SingularityNET" />
             <Typography variant="h5">{portalName}</Typography>
           </div>

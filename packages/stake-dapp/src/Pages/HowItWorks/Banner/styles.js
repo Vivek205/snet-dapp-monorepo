@@ -106,7 +106,11 @@ export const useStyles = MUITheme => ({
     display: "flex",
     "& > div": {
       width: "34.42%",
-      "&:last-of-type": { width: "31%" },
+      "@media(max-width:640px)": { width: "100%" },
+      "&:last-of-type": {
+        width: "31%",
+        "@media(max-width:640px)": { width: "100%" },
+      },
     },
     "& svg": {
       color: "#d6d6d6",
@@ -152,6 +156,7 @@ export const useStyles = MUITheme => ({
         textTransform: "uppercase",
       },
     },
+    "@media(max-width:640px)": { marginRight: 0 },
   },
   incubationValuesConatiner: {
     padding: "15px 0",
@@ -163,7 +168,7 @@ export const useStyles = MUITheme => ({
     background: "#f8f8f8",
     color: "#212121",
     "@media(max-width: 640px)": {
-      width: 180,
+      width: "100%",
       padding: "15px 0",
     },
   },

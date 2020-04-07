@@ -10,16 +10,20 @@ var _styles = require("@material-ui/styles");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
+  var _appBar, _navContainer;
+
   return {
-    appBar: _defineProperty({
+    appBar: (_appBar = {
       padding: "14px 60px",
       flexDirection: "row",
       alignItems: "center",
       boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
       zIndex: 1110
-    }, MUITheme.breakpoints.down("md"), {
+    }, _defineProperty(_appBar, MUITheme.breakpoints.down("md"), {
       padding: "14px 10px"
-    }),
+    }), _defineProperty(_appBar, MUITheme.breakpoints.down("sm"), {
+      justifyContent: 'space-between'
+    }), _appBar),
     purple: {
       "& h5": {
         color: "".concat(MUITheme.palette.text.white, " !important")
@@ -40,11 +44,13 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
-    navContainer: _defineProperty({
+    navContainer: (_navContainer = {
       flexGrow: 1
-    }, MUITheme.breakpoints.down("md"), {
+    }, _defineProperty(_navContainer, MUITheme.breakpoints.down("md"), {
       padding: 0
-    })
+    }), _defineProperty(_navContainer, MUITheme.breakpoints.down("sm"), {
+      display: 'none'
+    }), _navContainer)
   };
 });
 exports.useStyles = useStyles;
