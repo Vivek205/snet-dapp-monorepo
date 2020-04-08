@@ -33,15 +33,14 @@ import { generateDetailedErrorMessageFromValidation } from "../../../Utils/valid
 let validateTimeout = "";
 
 const selectState = state => ({
-  serviceDetails: state.aiServiceDetails,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes }) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
+  const { isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
@@ -91,12 +90,12 @@ const Profile = ({ classes }) => {
     setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
-      return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+      return changeServiceDetailsLeaf("newId", value);
     }
     if (name === "projectURL") {
       handleWebsiteValidation(value);
     }
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    changeServiceDetailsLeaf(name, value);
   };
 
   const handleSave = async () => {
@@ -167,7 +166,7 @@ const Profile = ({ classes }) => {
     setServiceTouchedFlag();
   };
   const handleResetImage = () => {
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+    changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
@@ -176,7 +175,7 @@ const Profile = ({ classes }) => {
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+    changeHeroImage(url);
   };
 
   const handleFinishLater = async () => {
