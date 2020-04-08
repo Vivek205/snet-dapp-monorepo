@@ -23,10 +23,6 @@ export const APIEndpoints = {
     name: "orchestrator",
     endpoint: process.env.REACT_APP_ORCHESTRATOR_ENDPOINT,
   },
-  SLACK_HOOK: {
-    name: "slack hook",
-    endpoint: process.env.REACT_APP_SLACK_HOOK,
-  },
 };
 
 export const APIPaths = {
@@ -56,5 +52,5 @@ export const APIPaths = {
   USER_VERIFICATION_INITIATE: "/initiate",
   USER_VERIFICATION_STATUS: "/status",
   SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
-  SLACK_POST_FEEDBACK: "/T996H7VS8/B011SJEU524/rw1wczLFHTvE54vuYvV65Ru3",
+  SEND_SLACK_FEEDBACK: "/feedback/slack",
 };
