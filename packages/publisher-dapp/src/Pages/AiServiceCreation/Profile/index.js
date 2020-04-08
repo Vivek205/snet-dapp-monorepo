@@ -352,11 +352,9 @@ const Profile = ({ classes }) => {
               </div>
             </div>
           </div>
-          {alert.message || alert.children ? (
-            <div className={classes.alertContainer}>
-              <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-            </div>
-          ) : null}
+          <div className={classes.alertContainer}>
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+          </div>
         </div>
       </Grid>
 

@@ -73,11 +73,10 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
         <OrgImg />
         <hr />
         <SupportDetails />
-        {alert.message || alert.children ? (
-          <div className={classes.errorContainer}>
-            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-          </div>
-        ) : null}
+
+        <div className={classes.errorContainer}>
+          <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+        </div>
       </Grid>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={onFinishLater} />

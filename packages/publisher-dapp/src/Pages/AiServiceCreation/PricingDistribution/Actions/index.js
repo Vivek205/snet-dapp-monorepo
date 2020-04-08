@@ -32,6 +32,15 @@ const Actions = () => {
     const isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
 
     if (isNotValid) {
+      for (let i = 0; i < isNotValid.length; i++) {
+        if (isNotValid[i].includes(",")) {
+          let res = isNotValid[i].split(",");
+          delete isNotValid[i];
+          for (let j = 0; j < res.length; j++) {
+            isNotValid.push(res[j]);
+          }
+        }
+      }
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
       return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
