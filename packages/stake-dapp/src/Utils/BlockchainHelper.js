@@ -503,9 +503,11 @@ export const getRecentStakeWindow = async () => {
 
   const currentStakeMapIndex = await stakingInstance.methods.currentStakeMapIndex().call();
 
+  const totalPendingApprovalStake = await stakingInstance.methods.totalPendingApprovalStake().call();
+
   const result = await stakingInstance.methods.stakeMap(currentStakeMapIndex).call();
 
-  return result;
+  return { ...result, totalPendingApprovalStake };
 };
 
 export const getUserStakeBalance = metamaskDetails => {

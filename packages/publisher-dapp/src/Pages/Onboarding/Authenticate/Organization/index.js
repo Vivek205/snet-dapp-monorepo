@@ -10,10 +10,10 @@ import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import validator from "shared/dist/utils/validator";
 import { orgOnboardingConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
+import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
 const Organization = props => {
   const classes = useStyles();
@@ -52,7 +52,8 @@ const Organization = props => {
     try {
       const isNotValid = validator(organization, orgOnboardingConstraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
@@ -67,9 +68,6 @@ const Organization = props => {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
       dispatch(organizationActions.initializeOrg);
     } catch (error) {
-      if (error instanceof ValidationError) {
-        return setAlert({ type: alertTypes.ERROR, message: error.message });
-      }
       return setAlert({
         type: alertTypes.ERROR,
         message: "Unable to finish organization authentication. Please try later",
@@ -93,7 +91,7 @@ const Organization = props => {
           <BasicDetails allowDuns={allowDuns} setAllowDuns={setAllowDuns} />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -7,11 +7,14 @@ import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+
 const Actions = ({ classes }) => {
   const history = useHistory();
   const serviceDetails = useSelector(state => state.aiServiceDetails);
   const { orgUuid, serviceUuid } = useParams();
   const dispatch = useDispatch();
+  const [alert, setAlert] = useState({});
 
   const handleBack = () => {
     history.push(ServiceCreationRoutes.PROFILE.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
@@ -22,12 +25,17 @@ const Actions = ({ classes }) => {
   };
 
   const handleContinue = async () => {
-    await handleSave();
-    history.push(
-      ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path
-        .replace(":orgUuid", orgUuid)
-        .replace(":serviceUuid", serviceUuid)
-    );
+    if (serviceDetails.assets.demoFiles.url) {
+      await handleSave();
+      history.push(
+        ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path
+          .replace(":orgUuid", orgUuid)
+          .replace(":serviceUuid", serviceUuid)
+      );
+      setAlert({ type: alertTypes.ERROR, message: "" });
+    } else {
+      return setAlert({ type: alertTypes.ERROR, message: "Please upload Demo Files" });
+    }
   };
 
   const handleFinishLater = async () => {
@@ -36,10 +44,14 @@ const Actions = ({ classes }) => {
   };
 
   return (
-    <div className={classes.buttonsContainer}>
-      <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
-      <SNETButton color="primary" children="previous step" onClick={handleBack} />
-      <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
+    <div>
+      <AlertBox type={alert.type} message={alert.message} />
+
+      <div className={classes.buttonsContainer}>
+        <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
+        <SNETButton color="primary" children="previous step" onClick={handleBack} />
+        <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
+      </div>
     </div>
   );
 };
