@@ -36,9 +36,7 @@ const Actions = () => {
         if (isNotValid[i].includes(",")) {
           let res = isNotValid[i].split(",");
           delete isNotValid[i];
-          for (let j = 0; j < res.length; j++) {
-            isNotValid.push(...res);
-          }
+          isNotValid.push(...res);
         }
       }
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
