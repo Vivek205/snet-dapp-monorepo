@@ -32,7 +32,7 @@ const UnclaimedPayments = ({
         </Grid>
         <Grid item xs={12} sm={12} md={2} lg={2}>
           <Typography>Signed Amount</Typography>
-        </Grid>{" "}
+        </Grid>
         {/*      <Grid item xs={12} sm={12} md={2} lg={2}>
           <Typography>Action</Typography>
         </Grid>*/}
