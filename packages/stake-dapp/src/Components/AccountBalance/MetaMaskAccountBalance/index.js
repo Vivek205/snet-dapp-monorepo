@@ -102,7 +102,10 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Total AGI tokens that are staked so far.</p>
+                <p>
+                  The total amount of AGI tokens that you have involved across all stake sessions. This includes pending
+                  and active staking amounts.
+                </p>
               </div>
               <span>Total Staked</span>
             </div>
