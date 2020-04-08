@@ -4,6 +4,7 @@ export const orgProfileValidationConstraints = {
   website: { url: true },
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },
+  "assets.heroImage.url": { presence: { allowEmpty: false, message: "^Image cannot be empty" } },
 };
 
 export const contactConstraints = {
