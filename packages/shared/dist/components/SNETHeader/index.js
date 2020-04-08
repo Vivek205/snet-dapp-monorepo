@@ -52,7 +52,8 @@ var SNETHeader = function SNETHeader(_ref) {
     mobileDropDown: mobileDropDown,
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
-    LoggedOutActions: LoggedOutActions
+    LoggedOutActions: LoggedOutActions,
+    color: color
   }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,

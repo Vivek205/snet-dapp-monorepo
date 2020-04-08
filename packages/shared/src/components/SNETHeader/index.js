@@ -38,6 +38,7 @@ const SNETHeader = ({
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}
               LoggedOutActions={LoggedOutActions}
+              color={color}
             />
             <CardMedia component="img" image={color === "purple" ? WhiteSnetLogo : SnetSvgLogo} alt="SingularityNET" />
             <Typography variant="h5">{portalName}</Typography>

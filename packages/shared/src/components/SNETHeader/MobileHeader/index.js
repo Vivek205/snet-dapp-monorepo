@@ -44,18 +44,20 @@ const MobileHeader = ({
             {mobileNavLinks.map(tab => (
               <NavItem key={tab.label} title={tab.label} link={tab.to} active={tab.active} />
             ))}
-            {mobileDropDown.map(dropdown => (
-              <div key={dropdown.label} className={classes.subMenues}>
-                <Fragment>
-                  <NavItem title={dropdown.label} subHeader />
-                  {dropdown.list.map(item => (
-                    <NavItem key={item.label} title={item.label} link={item.link} subListItem />
-                  ))}
-                </Fragment>
-              </div>
-            ))}
+            {mobileDropDown
+              ? mobileDropDown.map(dropdown => (
+                  <div key={dropdown.label} className={classes.subMenues}>
+                    <Fragment>
+                      <NavItem title={dropdown.label} subHeader />
+                      {dropdown.list.map(item => (
+                        <NavItem key={item.label} title={item.label} link={item.link} subListItem />
+                      ))}
+                    </Fragment>
+                  </div>
+                ))
+              : null}
           </ul>
-          <div className={`${classes.mobileActionBtns} ${isLoggedIn ? classes.loggedInState : ""}`}>
+          <div className={`${classes.mobileActionBtns} ${color === "white" ? classes.whiteHeader : null}`}>
             <HeaderActions
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}

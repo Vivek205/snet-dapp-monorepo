@@ -55,6 +55,12 @@ export const useStyles = MUITheme => ({
         margin: "0 0 23px 0",
         listStyle: "none",
       },
+      "& > li": {
+        "&:last-of-type": {
+          borderBottom: "none",
+          marginBottom: 0,
+        },
+      },
       "& a": {
         paddingBottom: 25,
         borderBottom: "none",
@@ -107,12 +113,16 @@ export const useStyles = MUITheme => ({
     },
   },
   subMenues: {
+    borderTopWidth: 2,
+    borderTopStyle: "solid",
+    borderTopColor: "rgba(151, 151, 151, 0.1)",
     "& li": {
       paddingLeft: "0 !important",
       margin: "0 0 0 29% !important",
       "&:first-of-type": { border: "none" },
       "&:last-of-type": {
         paddingBottom: 9,
+        borderBottom: "none",
       },
       "& a": {
         padding: "13px 0 13px 33px",
@@ -124,5 +134,8 @@ export const useStyles = MUITheme => ({
       },
       "&:nth-child(2) a": { paddingTop: 0 },
     },
+  },
+  whiteHeader: {
+    "& svg, & p": { color: MUITheme.palette.text.white },
   },
 });

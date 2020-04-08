@@ -77,7 +77,7 @@ var MobileHeader = function MobileHeader(_ref) {
       link: tab.to,
       active: tab.active
     });
-  }), mobileDropDown.map(function (dropdown) {
+  }), mobileDropDown ? mobileDropDown.map(function (dropdown) {
     return /*#__PURE__*/_react.default.createElement("div", {
       key: dropdown.label,
       className: classes.subMenues
@@ -92,8 +92,8 @@ var MobileHeader = function MobileHeader(_ref) {
         subListItem: true
       });
     })));
-  })), /*#__PURE__*/_react.default.createElement("div", {
-    className: "".concat(classes.mobileActionBtns, " ").concat(isLoggedIn ? classes.loggedInState : "")
+  }) : null), /*#__PURE__*/_react.default.createElement("div", {
+    className: "".concat(classes.mobileActionBtns, " ").concat(color === "white" ? classes.whiteHeader : null)
   }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
