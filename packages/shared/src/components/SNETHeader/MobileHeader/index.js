@@ -1,11 +1,9 @@
 import React, { Fragment } from "react";
 import { withStyles } from "@material-ui/styles";
-import { connect } from "react-redux";
-import { stylesActions } from "../../../../Redux/actionCreators";
 import CloseIcon from "@material-ui/icons/Close";
 
 import HeaderActions from "../HeaderActions";
-import NavItem from "../NavItem";
+import NavItem from "../Navbar/NavItem";
 import { useStyles } from "./styles";
 
 const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburgerState }) => {
@@ -54,12 +52,4 @@ const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburge
   );
 };
 
-const mapStateToProps = state => ({
-  hamburgerMenu: state.stylesReducer.hamburgerMenu,
-});
-
-const mapDispatchToProps = dispatch => ({
-  updateHamburgerState: hamburgerState => dispatch(stylesActions.updateHamburgerState(hamburgerState)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(MobileHeader));
+export default withStyles(useStyles)(MobileHeader);
