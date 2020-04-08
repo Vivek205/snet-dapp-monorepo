@@ -13,7 +13,7 @@ export const useStyles = MUITheme => ({
       width: 519,
       [MUITheme.breakpoints.down("md")]: { width: "100%" },
       [MUITheme.breakpoints.down("sm")]: { width: 519 },
-      "@media(max-width:580)": { width: "100%" },
+      [MUITheme.breakpoints.down("xs")]: { width: "100%" },
     },
   },
   benefitsContent: {
@@ -87,15 +87,28 @@ export const useStyles = MUITheme => ({
         },
         "& .MuiInputLabel-formControl": { top: -5 },
         "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(25,25,25,0.32)" },
+        "@media(max-width: 420px)": { marginRight: 0 },
       },
+      "@media(max-width: 420px)": { flexDirection: "column" },
       [MUITheme.breakpoints.down("sm")]: { marginTop: 25 },
     },
-    "& button": { padding: "19px 33px 17px" },
+    "& button": {
+      padding: "19px 33px 17px",
+      "@media(max-width: 420px)": { marginTop: 15 },
+    },
     "& img": {
       width: 478,
       "@media(max-width: 1098px)": { width: "100%" },
+      "@media(max-width: 960px)": {
+        width: 487,
+        marginTop: 25,
+      },
+      "@media(max-width: 600px)": { width: "100%" },
     },
-    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
+    [MUITheme.breakpoints.down("sm")]: {
+      padding: "51px 15px",
+      flexDirection: "column",
+    },
   },
 
   // How It Works
