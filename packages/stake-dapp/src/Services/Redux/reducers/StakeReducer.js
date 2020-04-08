@@ -42,6 +42,7 @@ const InitialRequestDetails = {
     openForExternal: false,
     windowTotalStake: 0,
     windowRewardAmount: 0,
+    totalPendingApprovalStake: 0,
   },
 };
 
