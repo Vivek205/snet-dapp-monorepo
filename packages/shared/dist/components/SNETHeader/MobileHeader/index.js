@@ -11,15 +11,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styles = require("@material-ui/styles");
 
-var _reactRedux = require("react-redux");
-
-var _actionCreators = require("../../../../Redux/actionCreators");
-
 var _Close = _interopRequireDefault(require("@material-ui/icons/Close"));
 
 var _HeaderActions = _interopRequireDefault(require("../HeaderActions"));
 
-var _NavItem = _interopRequireDefault(require("../NavItem"));
+var _NavItem = _interopRequireDefault(require("../Navbar/NavItem"));
 
 var _styles2 = require("./styles");
 
@@ -84,20 +80,6 @@ var MobileHeader = function MobileHeader(_ref) {
   })))));
 };
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    hamburgerMenu: state.stylesReducer.hamburgerMenu
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    updateHamburgerState: function updateHamburgerState(hamburgerState) {
-      return dispatch(_actionCreators.stylesActions.updateHamburgerState(hamburgerState));
-    }
-  };
-};
-
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)((0, _styles.withStyles)(_styles2.useStyles)(MobileHeader));
+var _default = (0, _styles.withStyles)(_styles2.useStyles)(MobileHeader);
 
 exports.default = _default;
