@@ -36,7 +36,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
         <Typography variant="h6">Regional Groups Configuration</Typography>
         <Typography variant="subtitle2">
           Every AI service your company publishes can be optimized for users based in various regions and groups. Groups
-          provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details{" "}
+          provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details
           <a
             href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
             rel="noopener noreferrer"
@@ -54,11 +54,10 @@ const Region = ({ history, classes, handleFinishLater }) => {
             foundInBlockchain={organization.foundInBlockchain}
           />
         ))}
-        {alert.message || alert.children ? (
-          <div className={classes.alertContainer}>
-            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-          </div>
-        ) : null}
+
+        <div className={classes.alertContainer}>
+          <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+        </div>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
