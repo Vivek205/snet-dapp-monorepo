@@ -53,7 +53,7 @@ class AiServiceCreation extends Component {
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgId, orgUuid, serviceUuid } = this.props;
+    const { orgId, orgUuid, serviceUuid, serviceTouched } = this.props;
     if (
       orgId &&
       orgUuid &&
@@ -62,6 +62,10 @@ class AiServiceCreation extends Component {
       (orgUuid !== prevProps.orgUuid || serviceUuid !== prevProps.serviceUuid)
     ) {
       await this.initData();
+
+      if (this.state.serviceDetails.touched !== serviceTouched) {
+        this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
+      }
     }
   };
 
@@ -119,8 +123,11 @@ class AiServiceCreation extends Component {
   handleHeroImageChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
-        ...prevState,
-        assets: { ...prevState.assets, heroImage: { ...prevState.assets.heroImage, url } },
+        ...prevState.serviceDetails,
+        assets: {
+          ...prevState.serviceDetails.assets,
+          heroImage: { ...prevState.serviceDetails.assets.heroImage, url },
+        },
       },
     }));
   };
@@ -128,14 +135,21 @@ class AiServiceCreation extends Component {
   handleDemoFilesChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
-        ...prevState,
-        assets: { ...prevState.assets, demoFiles: { ...prevState.assets.demoFiles, url } },
+        ...prevState.serviceDetails,
+        assets: {
+          ...prevState.serviceDetails.assets,
+          demoFiles: { ...prevState.serviceDetails.assets.demoFiles, url },
+        },
       },
     }));
   };
 
+  handleGroupsChange = groups => {
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
+  };
+
   render() {
-    const { classes, serviceFoundInBlockchain, serviceTouched } = this.props;
+    const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
       <div className={classes.serviceCreationContainer}>
         {serviceFoundInBlockchain ? (
@@ -153,6 +167,8 @@ class AiServiceCreation extends Component {
           changeServiceDetailsLeaf={this.handleServiceDetailsLeafChange}
           changeHeroImage={this.handleHeroImageChange}
           changeDemoFiles={this.handleDemoFilesChange}
+          changeGroups={this.handleGroupsChange}
+          setServiceDetailsInRedux={setServiceDetailsInRedux}
         />
         <Loader />
       </div>

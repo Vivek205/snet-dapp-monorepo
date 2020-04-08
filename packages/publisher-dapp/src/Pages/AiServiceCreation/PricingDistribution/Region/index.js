@@ -19,14 +19,13 @@ import { servicePricingValidationConstraints } from "../validationConstraints";
 import AlertText from "shared/dist/components/AlertText";
 
 const selectState = state => ({
-  serviceGroups: state.aiServiceDetails.groups,
   orgGroups: state.organization.groups,
 });
 
-const Region = () => {
+const Region = ({ changeGroups, serviceGroups }) => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { serviceGroups, orgGroups } = useSelector(selectState);
+  const { orgGroups } = useSelector(selectState);
   const endpointRef = useRef(null);
   const addressRef = useRef(null);
   const dispatch = useDispatch();
@@ -48,7 +47,6 @@ const Region = () => {
   };
 
   const handleNewEndpointsChange = event => {
-    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -69,7 +67,7 @@ const Region = () => {
     });
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
     endpointRef.current.value = "";
   };
 
@@ -79,11 +77,10 @@ const Region = () => {
     delete updatedEndpoints[endpoint];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleNewDaemonAddressChange = event => {
-    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -101,7 +98,7 @@ const Region = () => {
     });
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
     addressRef.current.value = "";
   };
 
@@ -112,16 +109,15 @@ const Region = () => {
     updatedAddresses.splice(index, 1);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleNewTestEndpointsChange = event => {
-    // updateGroupId();
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = [event.target.value];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleFreeCallsValidation = value => {
@@ -133,24 +129,22 @@ const Region = () => {
   };
 
   const handleFreeCallsChange = event => {
-    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handlePriceChange = event => {
-    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   if (showRegion) {

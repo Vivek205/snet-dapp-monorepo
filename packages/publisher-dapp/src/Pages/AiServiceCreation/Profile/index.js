@@ -36,7 +36,7 @@ const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage }) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
@@ -103,7 +103,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
-      // Call API to save
+      setServiceDetailsInRedux(serviceDetails);
       await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
     }
 

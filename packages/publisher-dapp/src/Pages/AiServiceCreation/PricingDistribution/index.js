@@ -39,7 +39,7 @@ class PricingDistribution extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, changeGroups, serviceDetails, setServiceDetailsInRedux } = this.props;
     return (
       <Grid container className={classes.pricingContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -50,7 +50,7 @@ class PricingDistribution extends Component {
               manner. All service metadata can be managed at a group level. At this point we only support a single group
               per service. Support for multiple groups per Service is coming soon.
             </Typography>
-            <Region />
+            <Region changeGroups={changeGroups} serviceGroups={serviceDetails.groups} />
             <UploadProto />
             <AdvancedFields />
             <div className={classes.alertContainer}>
@@ -58,7 +58,7 @@ class PricingDistribution extends Component {
             </div>
           </div>
         </Grid>
-        <Actions />
+        <Actions serviceDetails={serviceDetails} setServiceDetailsInRedux={setServiceDetailsInRedux} />
       </Grid>
     );
   }
