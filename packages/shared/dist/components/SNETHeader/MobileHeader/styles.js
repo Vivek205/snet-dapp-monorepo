@@ -14,7 +14,7 @@ var useStyles = function useStyles(MUITheme) {
       cursor: "pointer",
       "& span": {
         width: 18,
-        height: 2,
+        height: 3,
         display: "block",
         backgroundColor: MUITheme.palette.background.white,
         marginBottom: 3
@@ -25,7 +25,7 @@ var useStyles = function useStyles(MUITheme) {
     },
     whiteHamburger: {
       "& span": {
-        backgroundColor: '#000'
+        backgroundColor: "#000"
       }
     },
     mobileNavContainer: {
@@ -65,7 +65,7 @@ var useStyles = function useStyles(MUITheme) {
           borderBottomStyle: "solid",
           borderBottomColor: "rgba(151, 151, 151, 0.1)",
           margin: "0 0 23px 0",
-          listStyle: 'none'
+          listStyle: "none"
         },
         "& a": {
           paddingBottom: 25,
@@ -74,7 +74,7 @@ var useStyles = function useStyles(MUITheme) {
           color: MUITheme.palette.text.white,
           fontSize: 24,
           lineHeight: "33px",
-          textDecoration: 'none'
+          textDecoration: "none"
         }
       },
       "@media(min-width: 1024px)": {
@@ -82,8 +82,8 @@ var useStyles = function useStyles(MUITheme) {
       }
     },
     mobileActionBtns: {
-      display: 'flex',
-      justifyContent: 'center',
+      display: "flex",
+      justifyContent: "center",
       borderTopWidth: 1,
       borderTopStyle: "solid",
       borderTopColor: MUITheme.palette.text.white,

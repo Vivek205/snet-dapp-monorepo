@@ -39,23 +39,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var MobileHeader = function MobileHeader(_ref) {
   var classes = _ref.classes,
-      data = _ref.data,
       isLoggedIn = _ref.isLoggedIn,
-<<<<<<< Updated upstream
       mobileNavLinks = _ref.mobileNavLinks,
       mobileDropDown = _ref.mobileDropDown,
       LoggedInActions = _ref.LoggedInActions,
-      LoggedOutActions = _ref.LoggedOutActions;
+      LoggedOutActions = _ref.LoggedOutActions,
+      color = _ref.color;
 
   var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       openMobileMenu = _useState2[0],
       setOpenMobileMenu = _useState2[1];
-=======
-      hamburgerMenu = _ref.hamburgerMenu,
-      updateHamburgerState = _ref.updateHamburgerState,
-      color = _ref.color;
->>>>>>> Stashed changes
 
   var toggleMobileMenu = function toggleMobileMenu() {
     setOpenMobileMenu(!openMobileMenu);

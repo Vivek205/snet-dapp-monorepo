@@ -48,17 +48,11 @@ var SNETHeader = function SNETHeader(_ref) {
     className: classes.logoContainer,
     onClick: onLogoClick
   }, /*#__PURE__*/_react.default.createElement(_MobileHeader.default, {
-<<<<<<< Updated upstream
     mobileNavLinks: mobileNavLinks,
     mobileDropDown: mobileDropDown,
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions
-=======
-    data: NavigationBar,
-    isLoggedIn: isLoggedIn,
-    color: color
->>>>>>> Stashed changes
   }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,

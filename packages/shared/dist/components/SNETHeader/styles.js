@@ -21,7 +21,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       zIndex: 1110
     }, _defineProperty(_appBar, MUITheme.breakpoints.down("md"), {
       padding: "14px 10px"
-    }), _defineProperty(_appBar, '@media(max-width:1028px)', {
+    }), _defineProperty(_appBar, "@media(max-width:1028px)", {
       justifyContent: "space-between"
     }), _appBar),
     purple: {
@@ -46,8 +46,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
     }),
     navContainer: _defineProperty({
       flexGrow: 1,
-      '@media(max-width:1028px)': {
-        display: 'none'
+      "@media(max-width:1028px)": {
+        display: "none"
       }
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
