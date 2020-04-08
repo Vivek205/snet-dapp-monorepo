@@ -31,6 +31,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
   const [freeCallsValidation, setfreeCallsValidation] = useState({});
+  const [priceValidation, setPriceValidation] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
@@ -121,7 +122,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   };
 
   const handleFreeCallsValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.groups.array.freeCallsAllowed);
     if (isNotValid) {
       return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
     }
@@ -137,9 +138,17 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
+  const handlePriceValidation = value => {
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
+    if (isNotValid) {
+      return setPriceValidation({ type: alertTypes.ERROR, message: "Price of the service cannot be a decimal value." });
+    }
+    return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
+  };
   const handlePriceChange = event => {
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    handlePriceValidation(value);
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
@@ -174,6 +183,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
+              <AlertText type={priceValidation.type} message={priceValidation.message} />
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} className={classes.entityTypeDropDown}>
               <StyledDropdown
