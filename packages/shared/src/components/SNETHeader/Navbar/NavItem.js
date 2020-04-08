@@ -3,24 +3,9 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { useStyles } from "../styles";
-import Routes from "../../../utility/constants/Routes";
 
-const NavItem = ({ title, link }) => {
+const NavItem = ({ title, link, isActive }) => {
   const classes = useStyles();
-  const isActive = (unused, { pathname }) => {
-    switch (link) {
-      case `/${Routes.AI_MARKETPLACE}`: {
-        if (pathname === "/" || pathname.includes(Routes.AI_MARKETPLACE)) {
-          return true;
-        }
-        return false;
-      }
-
-      default: {
-        return pathname === link;
-      }
-    }
-  };
 
   return (
     <li className={classes.navLinks}>
@@ -37,6 +22,7 @@ NavItem.defaultProps = {
 
 NavItem.propTypes = {
   link: PropTypes.string,
+  isActive: PropTypes.func,
 };
 
 export default NavItem;
