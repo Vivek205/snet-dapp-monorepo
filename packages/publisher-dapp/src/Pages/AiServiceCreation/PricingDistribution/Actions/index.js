@@ -37,7 +37,7 @@ const Actions = () => {
           let res = isNotValid[i].split(",");
           delete isNotValid[i];
           for (let j = 0; j < res.length; j++) {
-            isNotValid.push(res[j]);
+            isNotValid.push(...res);
           }
         }
       }
@@ -55,12 +55,13 @@ const Actions = () => {
 
   return (
     <div>
+      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
         <SNETButton color="primary" children="previous step" onClick={handleBack} />
         <SNETButton color="primary" variant="contained" children="continue" onClick={handleContinue} />
       </div>
-      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
     </div>
   );
 };
