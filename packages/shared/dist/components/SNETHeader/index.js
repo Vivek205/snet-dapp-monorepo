@@ -21,6 +21,8 @@ var _WhiteLogo = _interopRequireDefault(require("../../assets/images/WhiteLogo.s
 
 var _styles = require("./styles");
 
+var _MobileHeader = _interopRequireDefault(require("./MobileHeader"));
+
 var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 
 var _Navbar = _interopRequireDefault(require("./Navbar"));
@@ -43,7 +45,10 @@ var SNETHeader = function SNETHeader(_ref) {
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.logoContainer,
     onClick: onLogoClick
-  }, /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
+  }, /*#__PURE__*/_react.default.createElement(_MobileHeader.default, {
+    data: NavigationBar,
+    isLoggedIn: isLoggedIn
+  }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
