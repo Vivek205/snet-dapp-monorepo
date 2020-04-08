@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -6,12 +6,14 @@ import HeaderActions from "../HeaderActions";
 import NavItem from "../Navbar/NavItem";
 import { useStyles } from "./styles";
 
-const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburgerState }) => {
+const MobileHeader = ({ classes, isLoggedIn, mobileNavLinks, mobileDropDown, LoggedInActions, LoggedOutActions }) => {
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+
   const toggleMobileMenu = () => {
-    updateHamburgerState(!hamburgerMenu);
+    setOpenMobileMenu(!openMobileMenu);
   };
 
-  if (!hamburgerMenu) {
+  if (!openMobileMenu) {
     return (
       <div className={classes.hamburger} onClick={toggleMobileMenu}>
         <span />
@@ -29,10 +31,10 @@ const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburge
         </div>
         <nav className={classes.mobileNavigation}>
           <ul>
-            {data.tabs.map(tab => (
-              <NavItem key={tab.title} title={tab.title} link={tab.link} active={tab.active} />
+            {mobileNavLinks.map(tab => (
+              <NavItem key={tab.label} title={tab.label} link={tab.to} active={tab.active} />
             ))}
-            {data.dropdowns.map(dropdown => (
+            {mobileDropDown.map(dropdown => (
               <div key={dropdown.label} className={classes.subMenues}>
                 <Fragment>
                   <NavItem title={dropdown.label} subHeader />
@@ -44,7 +46,11 @@ const MobileHeader = ({ classes, data, isLoggedIn, hamburgerMenu, updateHamburge
             ))}
           </ul>
           <div className={`${classes.mobileActionBtns} ${isLoggedIn ? classes.loggedInState : ""}`}>
-            <HeaderActions isLoggedIn={isLoggedIn} />
+            <HeaderActions
+              isLoggedIn={isLoggedIn}
+              LoggedInActions={LoggedInActions}
+              LoggedOutActions={LoggedOutActions}
+            />
           </div>
         </nav>
       </div>
