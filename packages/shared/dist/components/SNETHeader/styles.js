@@ -50,7 +50,12 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: 0
     }), _defineProperty(_navContainer, MUITheme.breakpoints.down("sm"), {
       display: "none"
-    }), _navContainer)
+    }), _navContainer),
+    headerActionsContainer: {
+      '@media(max-width:642px)': {
+        display: "none"
+      }
+    }
   };
 });
 exports.useStyles = useStyles;

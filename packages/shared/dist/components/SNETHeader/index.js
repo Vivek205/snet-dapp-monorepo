@@ -58,7 +58,9 @@ var SNETHeader = function SNETHeader(_ref) {
     className: classes.navContainer
   }, /*#__PURE__*/_react.default.createElement(_Navbar.default, {
     NavigationBar: NavigationBar
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.headerActionsContainer
+  }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions

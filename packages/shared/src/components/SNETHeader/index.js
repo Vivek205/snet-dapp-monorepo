@@ -37,7 +37,7 @@ const SNETHeader = ({
           <div className={classes.navContainer}>
             <Navbar NavigationBar={NavigationBar} />
           </div>
-          <div>
+          <div className={classes.headerActionsContainer}>
             <HeaderActions
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}

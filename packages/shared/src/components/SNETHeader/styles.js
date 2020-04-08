@@ -30,4 +30,7 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
     [MUITheme.breakpoints.down("sm")]: { display: "none" },
   },
+  headerActionsContainer: {
+    "@media(max-width:642px)": { display: "none" },
+  },
 }));
