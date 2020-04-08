@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
@@ -10,9 +9,8 @@ import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
 
-const Demo = ({ classes }) => {
+const Demo = ({ classes, serviceDetails, changeDemoFiles }) => {
   const { orgUuid } = useParams();
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
 
   return (
     <Grid container className={classes.demoContainer}>
@@ -92,6 +90,7 @@ const Demo = ({ classes }) => {
             orgUuid={orgUuid}
             serviceUuid={serviceDetails.uuid}
             demoFilesUrl={serviceDetails.assets.demoFiles.url}
+            changeDemoFiles={changeDemoFiles}
           />
         </div>
       </Grid>
