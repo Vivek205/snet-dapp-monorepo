@@ -10,9 +10,11 @@
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.1.2",
+    "react-slack-feedback": "^2.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "shared": "*"
+    "shared": "*",
+    "styled-components": "^5.1.0"
   },
   "peerDependencies": {
     "react-helmet": "^5.2.1",
