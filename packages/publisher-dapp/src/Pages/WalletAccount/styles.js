@@ -3,6 +3,10 @@ export const useStyles = MUITheme => ({
     width: 846,
     paddingTop: 40,
     margin: "70px 0 64px 70px",
+    "@media(max-width:1150px)": {
+      width: "90%",
+      margin: "70px auto",
+    },
   },
   topSection: {
     "& h5": {
@@ -313,6 +317,45 @@ export const useStyles = MUITheme => ({
           lineHeight: "20px",
         },
       },
+    },
+  },
+  metaMaskContainer: {
+    margin: "110px 0 145px",
+    textAlign: "center",
+    transform: "translateX(-6%)",
+    "& img": { width: 300 },
+    [MUITheme.breakpoints.down("md")]: { transform: "translateX(-4%)" },
+  },
+  walletAccHeading: {
+    marginBottom: 45,
+    textAlign: "left",
+  },
+  metamaskTitle: {
+    color: MUITheme.palette.text.primary,
+    fontSize: 24,
+    fontWeight: 200,
+    lineHeight: "30px",
+  },
+  metamaskDesc: {
+    margin: "10px 0 25px",
+    color: MUITheme.palette.text.lightGrey,
+    fontSize: 16,
+    fontWeight: 300,
+    lineHeight: "20px",
+    "& span": { display: "block" },
+    "& a": {
+      color: MUITheme.palette.primary.main,
+      textDecoration: "none",
+    },
+  },
+  metamaskContent: {
+    position: "relative",
+    "& div": {
+      width: "100%",
+      position: "absolute",
+      bottom: -95,
+      left: "50%",
+      transform: "translateX(-50%)",
     },
   },
 });
