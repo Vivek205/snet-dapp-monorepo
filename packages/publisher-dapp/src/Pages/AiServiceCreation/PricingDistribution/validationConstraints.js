@@ -9,7 +9,6 @@ export const servicePricingValidationConstraints = {
   groups: {
     array: {
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
-      daemonAddresses: { presence: { allowEmpty: false, message: "^Daemon addresses cannot be blank" } },
       freeCallsAllowed: {
         presence: { allowEmpty: false, numericality: { greaterThan: 0 }, message: "^freeCallsAllowed cannot be blank" },
       },
