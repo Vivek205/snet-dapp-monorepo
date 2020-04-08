@@ -41,6 +41,7 @@ var MobileHeader = function MobileHeader(_ref) {
   var classes = _ref.classes,
       data = _ref.data,
       isLoggedIn = _ref.isLoggedIn,
+<<<<<<< Updated upstream
       mobileNavLinks = _ref.mobileNavLinks,
       mobileDropDown = _ref.mobileDropDown,
       LoggedInActions = _ref.LoggedInActions,
@@ -50,6 +51,11 @@ var MobileHeader = function MobileHeader(_ref) {
       _useState2 = _slicedToArray(_useState, 2),
       openMobileMenu = _useState2[0],
       setOpenMobileMenu = _useState2[1];
+=======
+      hamburgerMenu = _ref.hamburgerMenu,
+      updateHamburgerState = _ref.updateHamburgerState,
+      color = _ref.color;
+>>>>>>> Stashed changes
 
   var toggleMobileMenu = function toggleMobileMenu() {
     setOpenMobileMenu(!openMobileMenu);
@@ -57,7 +63,7 @@ var MobileHeader = function MobileHeader(_ref) {
 
   if (!openMobileMenu) {
     return /*#__PURE__*/_react.default.createElement("div", {
-      className: classes.hamburger,
+      className: "".concat(classes.hamburger, " ").concat(color === "white" ? classes.whiteHamburger : null),
       onClick: toggleMobileMenu
     }, /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null));
   }

@@ -6,12 +6,17 @@ export const useStyles = MUITheme => ({
     cursor: "pointer",
     "& span": {
       width: 18,
-      height: 2,
+      height: 3,
       display: "block",
       backgroundColor: MUITheme.palette.background.white,
       marginBottom: 3,
     },
     "@media (max-width:1028px)": { display: "block" },
+  },
+  whiteHamburger: {
+    "& span": {
+      backgroundColor: "#000",
+    },
   },
   mobileNavContainer: {
     display: "flex",

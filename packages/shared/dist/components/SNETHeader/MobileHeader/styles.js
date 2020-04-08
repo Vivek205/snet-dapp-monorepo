@@ -23,6 +23,11 @@ var useStyles = function useStyles(MUITheme) {
         display: "block"
       }
     },
+    whiteHamburger: {
+      "& span": {
+        backgroundColor: '#000'
+      }
+    },
     mobileNavContainer: {
       display: "flex",
       alignItems: "center",

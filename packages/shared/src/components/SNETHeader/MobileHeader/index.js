@@ -6,16 +6,26 @@ import HeaderActions from "../HeaderActions";
 import NavItem from "../Navbar/NavItem";
 import { useStyles } from "./styles";
 
-const MobileHeader = ({ classes, isLoggedIn, mobileNavLinks, mobileDropDown, LoggedInActions, LoggedOutActions }) => {
+const MobileHeader = ({
+  classes,
+  isLoggedIn,
+  mobileNavLinks,
+  mobileDropDown,
+  LoggedInActions,
+  LoggedOutActions,
+  color,
+}) => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-
   const toggleMobileMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
 
   if (!openMobileMenu) {
     return (
-      <div className={classes.hamburger} onClick={toggleMobileMenu}>
+      <div
+        className={`${classes.hamburger} ${color === "white" ? classes.whiteHamburger : null}`}
+        onClick={toggleMobileMenu}
+      >
         <span />
         <span />
         <span />
