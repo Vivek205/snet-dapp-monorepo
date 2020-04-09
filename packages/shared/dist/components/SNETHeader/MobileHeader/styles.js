@@ -5,25 +5,27 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     hamburger: {
       padding: 10,
-      margin: "0 39px 0 23px",
+      marginRight: 25,
       display: "none",
       cursor: "pointer",
       "& span": {
         width: 18,
-        height: 2,
+        height: 3,
         display: "block",
-        backgroundColor: theme.palette.text.white,
+        backgroundColor: MUITheme.palette.background.white,
         marginBottom: 3
       },
-      "@media (max-width:1024px)": {
+      "@media (max-width:1028px)": {
         display: "block"
-      },
-      "@media (max-width:768px)": {
-        margin: "0 25px 0 0"
+      }
+    },
+    whiteHamburger: {
+      "& span": {
+        backgroundColor: "#000"
       }
     },
     mobileNavContainer: {
@@ -35,13 +37,13 @@ var useStyles = function useStyles(theme) {
       bottom: 0,
       left: 0,
       zIndex: 1,
-      backgroundColor: theme.palette.text.purple,
+      backgroundColor: MUITheme.palette.purple.main,
       "@media (min-width:1024px)": {
         display: "none"
       }
     },
     closeMenuIcon: {
-      color: theme.palette.text.white,
+      color: MUITheme.palette.text.white,
       position: "absolute",
       top: 30,
       left: 40,
@@ -62,15 +64,23 @@ var useStyles = function useStyles(theme) {
           borderBottom: 2,
           borderBottomStyle: "solid",
           borderBottomColor: "rgba(151, 151, 151, 0.1)",
-          margin: "0 0 23px 0"
+          margin: "0 0 23px 0",
+          listStyle: "none"
+        },
+        '& > li': {
+          '&:last-of-type': {
+            borderBottom: 'none',
+            marginBottom: 0
+          }
         },
         "& a": {
           paddingBottom: 25,
           borderBottom: "none",
           display: "inline-block",
-          color: theme.palette.text.white,
+          color: MUITheme.palette.text.white,
           fontSize: 24,
-          lineHeight: "33px"
+          lineHeight: "33px",
+          textDecoration: "none"
         }
       },
       "@media(min-width: 1024px)": {
@@ -78,9 +88,11 @@ var useStyles = function useStyles(theme) {
       }
     },
     mobileActionBtns: {
+      display: "flex",
+      justifyContent: "center",
       borderTopWidth: 1,
       borderTopStyle: "solid",
-      borderTopColor: theme.palette.text.white,
+      borderTopColor: MUITheme.palette.text.white,
       paddingTop: 30,
       "& ul": {
         marginLeft: "29%",
@@ -104,7 +116,7 @@ var useStyles = function useStyles(theme) {
             padding: "10px 28px",
             borderWidth: 1,
             borderStyle: "solid",
-            borderColor: theme.palette.text.white,
+            borderColor: MUITheme.palette.text.white,
             borderRadius: 4
           },
           "@media (max-width:550px)": {
@@ -125,6 +137,9 @@ var useStyles = function useStyles(theme) {
       }
     },
     subMenues: {
+      borderTopWidth: 2,
+      borderTopStyle: 'solid',
+      borderTopColor: "rgba(151, 151, 151, 0.1)",
       "& li": {
         paddingLeft: "0 !important",
         margin: "0 0 0 29% !important",
@@ -132,7 +147,8 @@ var useStyles = function useStyles(theme) {
           border: "none"
         },
         "&:last-of-type": {
-          paddingBottom: 9
+          paddingBottom: 9,
+          borderBottom: 'none'
         },
         "& a": {
           padding: "13px 0 13px 33px",
@@ -140,11 +156,16 @@ var useStyles = function useStyles(theme) {
         },
         "&:first-of-type a": {
           paddingLeft: 0,
-          color: theme.palette.text.lightShadedGray
+          color: MUITheme.palette.text.lightGray
         },
         "&:nth-child(2) a": {
           paddingTop: 0
         }
+      }
+    },
+    whiteHeader: {
+      '& svg, & p': {
+        color: MUITheme.palette.text.white
       }
     }
   };

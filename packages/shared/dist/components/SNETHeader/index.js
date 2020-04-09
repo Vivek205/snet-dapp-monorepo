@@ -21,6 +21,8 @@ var _WhiteLogo = _interopRequireDefault(require("../../assets/images/WhiteLogo.s
 
 var _styles = require("./styles");
 
+var _MobileHeader = _interopRequireDefault(require("./MobileHeader"));
+
 var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 
 var _Navbar = _interopRequireDefault(require("./Navbar"));
@@ -34,6 +36,8 @@ var SNETHeader = function SNETHeader(_ref) {
       LoggedInActions = _ref.LoggedInActions,
       LoggedOutActions = _ref.LoggedOutActions,
       portalName = _ref.portalName,
+      mobileNavLinks = _ref.mobileNavLinks,
+      mobileDropDown = _ref.mobileDropDown,
       onLogoClick = _ref.onLogoClick;
   var classes = (0, _styles.useStyles)();
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement(_SNETAppBar.default, {
@@ -43,7 +47,14 @@ var SNETHeader = function SNETHeader(_ref) {
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.logoContainer,
     onClick: onLogoClick
-  }, /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
+  }, /*#__PURE__*/_react.default.createElement(_MobileHeader.default, {
+    mobileNavLinks: mobileNavLinks,
+    mobileDropDown: mobileDropDown,
+    isLoggedIn: isLoggedIn,
+    LoggedInActions: LoggedInActions,
+    LoggedOutActions: LoggedOutActions,
+    color: color
+  }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
@@ -53,7 +64,9 @@ var SNETHeader = function SNETHeader(_ref) {
     className: classes.navContainer
   }, /*#__PURE__*/_react.default.createElement(_Navbar.default, {
     NavigationBar: NavigationBar
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.headerActionsContainer
+  }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions

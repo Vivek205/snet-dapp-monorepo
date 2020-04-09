@@ -7,6 +7,7 @@ import NavigationBar from "./NavigationBar";
 import LoggedInActions from "./LoggedInActions";
 import LoggedOutActions from "./LoggedOutActions";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { navbarItems } from "./NavigationBar/constant.js";
 
 const selectState = state => ({
   orgUuid: state.organization.uuid,
@@ -37,6 +38,7 @@ const Header = () => {
       NavigationBar={NavigationBar}
       LoggedInActions={LoggedInActions}
       LoggedOutActions={LoggedOutActions}
+      mobileNavLinks={navbarItems}
     />
   );
 };

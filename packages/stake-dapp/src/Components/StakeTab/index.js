@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
@@ -14,6 +15,7 @@ import ClaimStake from "../ClaimStake";
 import StakeTransitions from "../StakeTransitions";
 import { useStyles } from "./styles";
 import { stakeActions, userActions } from "../../Services/Redux/actionCreators";
+import { userWalletActions } from "../../Services/Redux/actionCreators/userActions";
 
 class StakeTab extends Component {
   constructor(props) {
@@ -36,11 +38,31 @@ class StakeTab extends Component {
   };
 
   componentDidUpdate = async (prevProps, _prevState) => {
-    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
+    const {
+      metamaskDetails,
+      fetchCurrentActiveStakeWindow,
+      fetchActiveStakes,
+      fetchClaimStakes,
+      walletList,
+      registerWallet,
+    } = this.props;
     if (prevProps.metamaskDetails.account !== metamaskDetails.account) {
       await fetchCurrentActiveStakeWindow(metamaskDetails);
       await fetchActiveStakes(metamaskDetails);
       await fetchClaimStakes(metamaskDetails);
+
+      if (metamaskDetails.isTxnsAllowed) {
+        if (!isEmpty(walletList) && metamaskDetails.account !== "0x0") {
+          const wallets = walletList.filter(w => w.address.toLowerCase() === metamaskDetails.account.toLowerCase());
+          if (wallets.length === 0) {
+            // Call the Register API to associate the Wallet to User
+            await registerWallet(metamaskDetails.account);
+          }
+        } else if (metamaskDetails.account !== "0x0") {
+          // Call the Register API to associate the Wallet to User
+          await registerWallet(metamaskDetails.account);
+        }
+      }
     }
   };
 
@@ -119,6 +141,7 @@ class StakeTab extends Component {
 const mapStateToProps = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
   stakeSummary: state.stakeReducer.stakeSummary,
+  walletList: state.user.walletList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -127,6 +150,7 @@ const mapDispatchToProps = dispatch => ({
   fetchActiveStakes: metamaskDetails => dispatch(stakeActions.fetchActiveStakes(metamaskDetails)),
   fetchClaimStakes: metamaskDetails => dispatch(stakeActions.fetchClaimStakes(metamaskDetails)),
   getUserPreferences: () => dispatch(userActions.preferenceActions.getUserPreferences()),
+  registerWallet: address => dispatch(userWalletActions.registerWallet(address)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(StakeTab));

@@ -28,19 +28,19 @@ import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 let validateTimeout = "";
 
 const selectState = state => ({
-  serviceDetails: state.aiServiceDetails,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes }) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
+  const { isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
@@ -90,28 +90,20 @@ const Profile = ({ classes }) => {
     setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
-      return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+      return changeServiceDetailsLeaf("newId", value);
     }
     if (name === "projectURL") {
       handleWebsiteValidation(value);
     }
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    changeServiceDetailsLeaf(name, value);
   };
 
   const handleSave = async () => {
-    const serviceName = serviceDetails.name;
-    const serviceId = serviceDetails.newId ? serviceDetails.newId : serviceDetails.id;
-
-    const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
-
-    if (isNotValid) {
-      throw new ValidationError(isNotValid[0]);
-    }
     if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
-      // Call API to save
+      setServiceDetailsInRedux(serviceDetails);
       await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
     }
 
@@ -120,6 +112,13 @@ const Profile = ({ classes }) => {
 
   const handleContinue = async () => {
     try {
+      serviceDetails.id = serviceDetails.id || serviceDetails.newId;
+      const isNotValid = validator(serviceDetails, serviceProfileValidationConstraints);
+
+      if (isNotValid) {
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      }
       await handleSave();
       history.push(
         ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
@@ -167,7 +166,7 @@ const Profile = ({ classes }) => {
     setServiceTouchedFlag();
   };
   const handleResetImage = () => {
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+    changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
@@ -176,7 +175,7 @@ const Profile = ({ classes }) => {
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+    changeHeroImage(url);
   };
 
   const handleFinishLater = async () => {
@@ -352,11 +351,9 @@ const Profile = ({ classes }) => {
               </div>
             </div>
           </div>
-          {alert.message ? (
-            <div className={classes.alertContainer}>
-              <AlertBox type={alert.type} message={alert.message} />
-            </div>
-          ) : null}
+          <div className={classes.alertContainer}>
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+          </div>
         </div>
       </Grid>
 

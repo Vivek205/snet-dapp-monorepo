@@ -1,5 +1,15 @@
 export const serviceProfileValidationConstraints = {
-  serviceName: { presence: { allowEmpty: false } },
-  serviceId: { presence: { allowEmpty: false } },
-  website: { url: true },
+  name: { presence: { allowEmpty: false } },
+  id: { presence: { allowEmpty: false } },
+  shortDescription: { presence: { allowEmpty: false } },
+  longDescription: { presence: { allowEmpty: false } },
+  tags: { presence: { allowEmpty: false, message: "^Please provide the tags for the service" } },
+  website: { url: { schemes: ["https"] } },
+  contributors: { presence: { allowEmpty: false, message: "^Please provide the contributors details of the service" } },
+  "assets.heroImage.url": {
+    presence: {
+      allowEmpty: false,
+      message: "^Please upload an image for the service",
+    },
+  },
 };
