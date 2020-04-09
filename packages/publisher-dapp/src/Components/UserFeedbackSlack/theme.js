@@ -3,8 +3,8 @@ const slackFeedbackTheme = {
     '-apple-system, BlinkMacSystemFont, Arial, Arial Unicode, "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif',
   colors: {
     border: "#d0d8e1",
-    primary: "#0088ff",
-    secondary: "#4086FF",
+    primary: "#4086FF",
+    secondary: "#220d3a",
     background: "#f4f4f7",
     success: "#3dc86f",
     error: "#ec3c3c",
@@ -21,7 +21,7 @@ const slackFeedbackTheme = {
   header: {
     color: "white",
     fontWeight: 400,
-    backgroundColor: "#222c4f",
+    backgroundColor: "#220d3a",
   },
   loader: {
     color: "#ffffff",
@@ -43,7 +43,7 @@ const slackFeedbackTheme = {
     fontWeight: "400",
     boxShadow: "0 3px 12px 1px rgba(34, 44, 79, 0.1)",
     hoverBoxShadow: "0 6px 16px 2px rgba(0, 0, 0, 0.2)",
-    hoverBackgroundColor: "inherit",
+    hoverBackgroundColor: "#005ACB",
   },
   input: {
     backgroundColor: "white",

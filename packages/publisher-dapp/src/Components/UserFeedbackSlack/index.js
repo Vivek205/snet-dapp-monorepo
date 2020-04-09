@@ -6,7 +6,7 @@ import ModeCommentIcon from "@material-ui/icons/ModeComment";
 import { feedbackActions } from "../../Services/Redux/actionCreators/userActions";
 
 const UserFeedbackSlack = () => {
-  const email = useSelector(state => state.user.email);
+  const { email, isLoggedIn } = useSelector(state => ({ email: state.user.email, isLoggedIn: state.user.isLoggedIn }));
   const dispatch = useDispatch();
 
   const handleSubmit = async (payload, success, error) => {
@@ -24,6 +24,10 @@ const UserFeedbackSlack = () => {
     );
   };
 
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
     <div>
       <SlackFeedback
@@ -31,8 +35,9 @@ const UserFeedbackSlack = () => {
         theme={slackFeedbackTheme} // (optional) See src/themes/default for default theme
         user={email || "anonymous"} // The logged in user (default = "Unknown User")
         onImageUpload={handleImageUpload}
-        icon={ModeCommentIcon}
+        icon={() => <ModeCommentIcon style={{ marginRight: 8 }} />}
         onSubmit={handleSubmit}
+        showChannel={false}
       />
     </div>
   );
