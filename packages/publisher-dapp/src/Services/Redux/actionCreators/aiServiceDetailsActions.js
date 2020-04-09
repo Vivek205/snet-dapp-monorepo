@@ -351,6 +351,7 @@ export const getFreeCallSignerAddress = (orgId, serviceId, groupId, username) =>
     }
     dispatch(setAiServiceFreeCallSignerAddress(data.free_call_signer_address));
     dispatch(loaderActions.stopAppLoader());
+    return data.free_call_signer_address;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
