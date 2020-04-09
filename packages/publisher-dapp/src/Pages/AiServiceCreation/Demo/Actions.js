@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
@@ -9,9 +9,9 @@ import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
-const Actions = ({ classes }) => {
+const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux }) => {
   const history = useHistory();
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
+
   const { orgUuid, serviceUuid } = useParams();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
@@ -21,6 +21,7 @@ const Actions = ({ classes }) => {
   };
 
   const handleSave = async () => {
+    setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
   };
 

@@ -39,7 +39,7 @@ class PricingDistribution extends Component {
   };
 
   render() {
-    const { classes, changeGroups, serviceDetails, setServiceDetailsInRedux } = this.props;
+    const { classes, changeGroups, serviceDetails, changeProtoFiles, setServiceDetailsInRedux } = this.props;
     return (
       <Grid container className={classes.pricingContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -51,7 +51,7 @@ class PricingDistribution extends Component {
               per service. Support for multiple groups per Service is coming soon.
             </Typography>
             <Region changeGroups={changeGroups} serviceGroups={serviceDetails.groups} />
-            <UploadProto />
+            <UploadProto changeProtoFiles={changeProtoFiles} />
             <AdvancedFields />
             <div className={classes.alertContainer}>
               <AlertBox type={alert.ERROR} message={alert.message} />
