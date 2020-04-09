@@ -1,5 +1,6 @@
 export const servicePricingValidationConstraints = {
   website: { url: { schemes: ["https"] } },
+  price: { numericality: { onlyInteger: true, greaterThan: 0 } },
   "assets.protoFiles.url": {
     presence: {
       allowEmpty: false,
@@ -9,9 +10,9 @@ export const servicePricingValidationConstraints = {
   groups: {
     array: {
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
-      daemonAddresses: { presence: { allowEmpty: false, message: "^Daemon addresses cannot be blank" } },
       freeCallsAllowed: {
-        presence: { allowEmpty: false, numericality: { greaterThan: 0 }, message: "^freeCallsAllowed cannot be blank" },
+        presence: { allowEmpty: false, message: "^freeCallsAllowed cannot be blank" },
+        numericality: { onlyInteger: true, greaterThan: 0 },
       },
       testEndpoints: { presence: { allowEmpty: false, message: "^Test Endpoints cannot be blank" } },
       pricing: {

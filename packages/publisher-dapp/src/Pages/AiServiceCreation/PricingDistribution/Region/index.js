@@ -19,19 +19,19 @@ import { servicePricingValidationConstraints } from "../validationConstraints";
 import AlertText from "shared/dist/components/AlertText";
 
 const selectState = state => ({
-  serviceGroups: state.aiServiceDetails.groups,
   orgGroups: state.organization.groups,
 });
 
-const Region = () => {
+const Region = ({ changeGroups, serviceGroups }) => {
   const classes = useStyles();
   const [showRegion] = useState(true);
-  const { serviceGroups, orgGroups } = useSelector(selectState);
+  const { orgGroups } = useSelector(selectState);
   const endpointRef = useRef(null);
   const addressRef = useRef(null);
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
   const [freeCallsValidation, setfreeCallsValidation] = useState({});
+  const [priceValidation, setPriceValidation] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
@@ -48,7 +48,6 @@ const Region = () => {
   };
 
   const handleNewEndpointsChange = event => {
-    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -69,7 +68,7 @@ const Region = () => {
     });
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
     endpointRef.current.value = "";
   };
 
@@ -79,11 +78,10 @@ const Region = () => {
     delete updatedEndpoints[endpoint];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleNewDaemonAddressChange = event => {
-    // updateGroupId();
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
@@ -101,7 +99,7 @@ const Region = () => {
     });
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
     addressRef.current.value = "";
   };
 
@@ -112,20 +110,19 @@ const Region = () => {
     updatedAddresses.splice(index, 1);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleNewTestEndpointsChange = event => {
-    // updateGroupId();
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = [event.target.value];
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   const handleFreeCallsValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.groups.array.freeCallsAllowed);
     if (isNotValid) {
       return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
     }
@@ -133,24 +130,30 @@ const Region = () => {
   };
 
   const handleFreeCallsChange = event => {
-    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
+  const handlePriceValidation = value => {
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
+    if (isNotValid) {
+      return setPriceValidation({ type: alertTypes.ERROR, message: "Price of the service cannot be a decimal value." });
+    }
+    return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
+  };
   const handlePriceChange = event => {
-    // updateGroupId();
     const { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    handlePriceValidation(value);
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
-    dispatch(aiServiceDetailsActions.setAiServiceGroups(updatedServiceGroups));
+    changeGroups(updatedServiceGroups);
   };
 
   if (showRegion) {
@@ -180,6 +183,7 @@ const Region = () => {
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
+              <AlertText type={priceValidation.type} message={priceValidation.message} />
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} className={classes.entityTypeDropDown}>
               <StyledDropdown

@@ -10,7 +10,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
 
-const UploadProto = () => {
+const UploadProto = ({ changeProtoFiles }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
   const serviceDetails = useSelector(state => state.aiServiceDetails);
@@ -42,7 +42,7 @@ const UploadProto = () => {
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
-          dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
+          changeProtoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
@@ -50,7 +50,7 @@ const UploadProto = () => {
         }
       }
     },
-    [dispatch, orgUuid, serviceUuid]
+    [changeProtoFiles, dispatch, orgUuid, serviceUuid]
   );
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];

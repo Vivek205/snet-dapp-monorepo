@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import isEmpty from "lodash/isEmpty";
 
 import Typography from "@material-ui/core/Typography";
 import NoMetamaskImg from "shared/dist/assets/images/NoMetamask.png";
@@ -8,19 +7,17 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 import { metamaskActions } from "../../Services/Redux/actionCreators";
-import { userWalletActions } from "../../Services/Redux/actionCreators/userActions";
 import { toChecksumAddress } from "../../Utils/GenHelperFunctions";
 
 const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
-  walletList: state.user.walletList,
 });
 
 const NoMetamask = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { metamaskDetails, walletList } = useSelector(state => stateSelector(state));
+  const { metamaskDetails } = useSelector(state => stateSelector(state));
 
   const handleConnect = () => {
     connectMetamask();
@@ -83,19 +80,6 @@ const NoMetamask = () => {
 
   const storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
     await dispatch(metamaskActions.updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed));
-
-    if (isTxnsAllowed) {
-      if (!isEmpty(walletList) && account !== "0x0") {
-        const wallets = walletList.filter(w => w.address.toLowerCase() === account.toLowerCase());
-        if (wallets.length === 0) {
-          // Call the Register API to associate the Wallet to User
-          dispatch(userWalletActions.registerWallet(account));
-        }
-      } else if (account !== "0x0") {
-        // Call the Register API to associate the Wallet to User
-        dispatch(userWalletActions.registerWallet(account));
-      }
-    }
   };
 
   if (metamaskDetails.isTxnsAllowed) {

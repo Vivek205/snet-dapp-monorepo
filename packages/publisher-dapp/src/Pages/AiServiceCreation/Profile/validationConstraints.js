@@ -4,7 +4,7 @@ export const serviceProfileValidationConstraints = {
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },
   tags: { presence: { allowEmpty: false, message: "^Please provide the tags for the service" } },
-  website: { url: true },
+  website: { url: { schemes: ["https"] } },
   contributors: { presence: { allowEmpty: false, message: "^Please provide the contributors details of the service" } },
   "assets.heroImage.url": {
     presence: {

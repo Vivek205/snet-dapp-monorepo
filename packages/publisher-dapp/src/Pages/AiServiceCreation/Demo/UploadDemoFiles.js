@@ -7,7 +7,7 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
 
-const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
+const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles }) => {
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PAGE_COMPONENTS, fileBlob, orgUuid, serviceUuid)
           );
-          dispatch(aiServiceDetailsActions.setServiceDemoFilesUrl(url));
+          changeDemoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
@@ -35,7 +35,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
         }
       }
     },
-    [dispatch, orgUuid, serviceUuid]
+    [changeDemoFiles, dispatch, orgUuid, serviceUuid]
   );
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
