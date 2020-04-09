@@ -18,12 +18,13 @@ class PricingDistribution extends Component {
   };
 
   componentDidMount = async () => {
-    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
-    await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress, changeServiceDetailsLeaf } = this.props;
+    const freeCallSignerAddress = await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+    changeServiceDetailsLeaf("freeCallSignerAddress", freeCallSignerAddress);
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress, changeServiceDetailsLeaf } = this.props;
     if (
       Boolean(orgId) &&
       Boolean(groupId) &&
@@ -34,7 +35,8 @@ class PricingDistribution extends Component {
         serviceId !== prevProps.serviceId ||
         username !== prevProps.username)
     ) {
-      await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+      const freeCallSignerAddress = await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+      changeServiceDetailsLeaf("freeCallSignerAddress", freeCallSignerAddress);
     }
   };
 
@@ -52,7 +54,7 @@ class PricingDistribution extends Component {
             </Typography>
             <Region changeGroups={changeGroups} serviceGroups={serviceDetails.groups} />
             <UploadProto changeProtoFiles={changeProtoFiles} />
-            <AdvancedFields />
+            <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
             <div className={classes.alertContainer}>
               <AlertBox type={alert.ERROR} message={alert.message} />
             </div>

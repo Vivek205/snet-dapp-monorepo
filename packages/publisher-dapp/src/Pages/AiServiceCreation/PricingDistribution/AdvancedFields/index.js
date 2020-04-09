@@ -4,11 +4,9 @@ import MPENetworks from "singularitynet-platform-contracts/networks/MultiPartyEs
 
 import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import { useSelector } from "react-redux";
 
-const AdvancedFields = () => {
+const AdvancedFields = ({ freeCallSignerAddress }) => {
   const classes = useStyles();
-  const freeCallSignerAddress = useSelector(state => state.aiServiceDetails.freeCallSignerAddress);
   return (
     <div className={classes.advFilesContainer}>
       <Typography variant="subtitle1">Advanced Fields</Typography>
