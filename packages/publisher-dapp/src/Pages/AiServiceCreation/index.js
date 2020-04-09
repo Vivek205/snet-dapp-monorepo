@@ -144,6 +144,18 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  handleProtoFilesChange = url => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        assets: {
+          ...prevState.serviceDetails.assets,
+          protoFiles: { ...prevState.serviceDetails.assets.protoFiles, url },
+        },
+      },
+    }));
+  };
+
   handleGroupsChange = groups => {
     this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
   };
@@ -167,6 +179,7 @@ class AiServiceCreation extends Component {
           changeServiceDetailsLeaf={this.handleServiceDetailsLeafChange}
           changeHeroImage={this.handleHeroImageChange}
           changeDemoFiles={this.handleDemoFilesChange}
+          changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
         />

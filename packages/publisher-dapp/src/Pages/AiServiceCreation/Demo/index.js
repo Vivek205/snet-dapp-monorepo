@@ -9,7 +9,7 @@ import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
 
-const Demo = ({ classes, serviceDetails, changeDemoFiles }) => {
+const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
   const { orgUuid } = useParams();
 
   return (
@@ -94,7 +94,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles }) => {
           />
         </div>
       </Grid>
-      <Actions classes={classes} />
+      <Actions classes={classes} serviceDetails={serviceDetails} setServiceDetailsInRedux={setServiceDetailsInRedux} />
     </Grid>
   );
 };
