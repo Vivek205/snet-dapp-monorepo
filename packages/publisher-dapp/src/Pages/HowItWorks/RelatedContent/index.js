@@ -17,15 +17,10 @@ const RelatedContent = ({ classes, cardTitle, cardMedia, cardDescription, cardAc
   const cardHeaderLength = 35;
   return (
     <Card className={classes.card}>
-      <CardHeader
-        className={classes.cardHeader}
-        classes={{
-          title: classes.cardTitle,
-        }}
-        title={truncate(cardTitle, { length: cardHeaderLength })}
-      />
+      <CardHeader className={classes.cardHeader} />
       <CardMedia className={classes.CardMedia} image={cardMedia || CardImg} />
       <CardContent className={classes.cardContent}>
+        <Typography className={classes.cardTitle}>{truncate(cardTitle, { length: cardHeaderLength })}</Typography>
         <Typography className={classes.cardDescription}>{cardDescription}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>

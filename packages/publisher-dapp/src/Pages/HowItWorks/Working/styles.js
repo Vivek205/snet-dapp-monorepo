@@ -20,6 +20,13 @@ export const useStyles = MUITheme => ({
         },
       },
     },
+    "&:last-of-type": {
+      "& > div": {
+        "&:first-of-type": {
+          "&::after": { display: "none" },
+        },
+      },
+    },
     "@media(max-width:540px)": {
       marginBottom: 25,
       flexDirection: "column",

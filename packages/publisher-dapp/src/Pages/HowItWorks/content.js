@@ -1,3 +1,7 @@
+import WhitePaperImage from "shared/dist/assets/images/WhitePaper.png";
+import PlatformRoadmapImage from "shared/dist/assets/images/PlatformRoadmap.png";
+import ResearchInitiativesImage from "shared/dist/assets/images/ResearchInitiatives.png";
+
 import SetYourOrgIcon from "shared/dist/assets/images/SetYourOrg.png";
 import DreamTeamIcon from "shared/dist/assets/images/DreamTeam.png";
 import CreateAIServicesIcon from "shared/dist/assets/images/CreateAIServices.png";
@@ -10,21 +14,21 @@ import EarnRewardsIcon from "shared/dist/assets/images/EarnRewards.png";
 
 export const relatedContentData = [
   {
-    cardMedia: "",
+    cardMedia: WhitePaperImage,
     cardTitle: "SingularityNET White Paper",
     cardDescription:
       "A Decentralized, Open Market and Network for AIs.  Read our white paper to get a better understanding our mission and technology development",
     cardAction: "Download WhitePaper",
   },
   {
-    cardMedia: "",
+    cardMedia: PlatformRoadmapImage,
     cardTitle: "Platform Roadmap",
     cardDescription:
       "SingularityNET lets anyone create, share, and monetize AI services at scale. It's a full-stack AI solution powered by a decentralized protocol…",
     cardAction: "view",
   },
   {
-    cardMedia: "",
+    cardMedia: ResearchInitiativesImage,
     cardTitle: "Research Initiatives",
     cardDescription:
       "SingularityNThe initiatives outlined below consist of core research areas that will strengthen the long-term AI capabilities of the network…",
