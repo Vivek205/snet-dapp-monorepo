@@ -36,12 +36,13 @@ const UploadProto = ({ changeProtoFiles }) => {
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        Object.values(entry.files).forEach(file => {
+        const someFileIsNotAProto = Object.values(entry.files).some(file => {
           const fileExtn = last(file.name.split("."));
-          if (fileExtn !== protoFilesExtn) {
-            reject(new ValidationError("The zip file should contain only proto files"));
-          }
+          return fileExtn !== protoFilesExtn;
         });
+        if (someFileIsNotAProto) {
+          reject(new ValidationError("The zip file should contain only proto files"));
+        }
         resolve();
       });
     });
