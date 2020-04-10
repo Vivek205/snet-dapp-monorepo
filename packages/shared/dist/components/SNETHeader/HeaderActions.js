@@ -17,10 +17,10 @@ var HeaderActions = function HeaderActions(_ref) {
       LoggedOutActions = _ref.LoggedOutActions;
 
   if (isLoggedIn) {
-    return _react.default.createElement(LoggedInActions, null);
+    return /*#__PURE__*/_react.default.createElement(LoggedInActions, null);
   }
 
-  return _react.default.createElement(LoggedOutActions, null);
+  return /*#__PURE__*/_react.default.createElement(LoggedOutActions, null);
 };
 
 HeaderActions.propTypes = {
