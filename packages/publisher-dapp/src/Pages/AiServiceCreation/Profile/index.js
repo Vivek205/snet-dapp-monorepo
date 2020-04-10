@@ -102,8 +102,11 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
     if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
-    setServiceDetailsInRedux(serviceDetails);
-    await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
+    if (serviceDetails.touched) {
+      setServiceDetailsInRedux(serviceDetails);
+      await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
+    }
+
     return;
   };
 
