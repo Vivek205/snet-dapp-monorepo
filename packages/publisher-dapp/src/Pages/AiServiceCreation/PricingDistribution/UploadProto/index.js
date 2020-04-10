@@ -39,7 +39,7 @@ const UploadProto = ({ changeProtoFiles }) => {
         Object.values(entry.files).forEach(file => {
           const fileExtn = last(file.name.split("."));
           if (fileExtn !== protoFilesExtn) {
-            reject(new ValidationError("The zip file should contain only the proto files"));
+            reject(new ValidationError("The zip file should contain only proto files"));
           }
         });
         resolve();
