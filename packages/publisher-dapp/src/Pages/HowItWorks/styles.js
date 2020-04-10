@@ -2,7 +2,7 @@ export const useStyles = MUITheme => ({
   howItWorksContainer: {
     padding: "0 60px 88px",
     "@media(max-width:1280px)": { paddingTop: 70 },
-    [MUITheme.breakpoints.down("sm")]: { padding: "63px 25px 88px" },
+    [MUITheme.breakpoints.down("sm")]: { padding: "63px 15px 88px" },
   },
   topSection: {
     display: "flex",
