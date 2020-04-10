@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import BlockIcon from "@material-ui/icons/Block";
 import { useDispatch, useSelector } from "react-redux";
 import { withStyles } from "@material-ui/core";
+import ParseHTML from "html-react-parser";
 
 import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
@@ -40,7 +41,7 @@ const ChangeRequested = ({ classes, onContinueToEdit, onSubmitComment, alert }) 
 
         <div className={classes.changeReqTextarea}>
           <Typography variant="h6">Reviews Comment</Typography>
-          <Typography>{comments.SERVICE_APPROVER || "No comments Provided"}</Typography>
+          <Typography>{ParseHTML(comments.SERVICE_APPROVER) || "No comments Provided"}</Typography>
 
           <Typography variant="h6">Message to Reviewers</Typography>
           <SNETTextarea

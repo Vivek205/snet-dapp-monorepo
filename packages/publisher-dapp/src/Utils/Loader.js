@@ -124,4 +124,24 @@ export const LoaderContent = {
     title: "Retrieving Sample Daemon config",
     content: "Just a moment. We are retrieving the sample daemon configuration",
   },
+  CONNECT_METAMASK: {
+    title: "Please connect Metamask",
+    content: "Please connect your Metamask Wallet",
+  },
+  GET_CLAIMS_LIST: {
+    title: "Waiting for MM interaction",
+    content: "Please approve the two requests in your Metamask wallet to fetch the latest claims list",
+  },
+  START_CHANNEL_CLAIMS: {
+    title: "Starting the Claims of the selected payment channels",
+    content: "Just a moment. We are initializing the claims of the selected payment channels",
+  },
+  SIGN_CLAIMS_IN_MM: {
+    title: "Waiting for MM interaction",
+    content: "Please sign the request for claiming channels in Metamask wallet",
+  },
+  CLAIMING_CHANNELS_IN_BLOCKCHAIN: {
+    title: "Claiming channels in blockchain",
+    content: "Please don't reload or go back, the channel is being claimed in blockchain",
+  },
 };

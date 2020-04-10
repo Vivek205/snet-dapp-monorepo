@@ -1,9 +1,10 @@
 export const orgProfileValidationConstraints = {
   id: { presence: { allowEmpty: false } },
   name: { presence: { allowEmpty: false } },
-  website: { url: true },
+  website: { url: { schemes: ["https"] } },
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },
+  "assets.heroImage.url": { presence: { allowEmpty: false, message: "^Image cannot be empty" } },
 };
 
 export const contactConstraints = {

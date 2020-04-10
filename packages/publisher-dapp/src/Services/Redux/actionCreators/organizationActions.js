@@ -17,6 +17,8 @@ import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { defaultContacts } from "../reducers/organizationReducer";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -144,7 +146,7 @@ const payloadForSubmit = organization => {
     description: longDescription,
     short_description: shortDescription,
     url: website,
-    contacts,
+    contacts: contacts.map(contact => ({ contact_type: contact.type, email: contact.email, phone: contact.phone })),
     org_address: {
       mail_address_same_hq_address: sameMailingAddress,
       addresses: [
@@ -221,7 +223,7 @@ const parseOrgData = selectedOrg => {
       hqAddress: !hqAddressData
         ? {}
         : {
-            street_address: hqAddressData.street_address,
+            street: hqAddressData.street_address,
             apartment: hqAddressData.apartment,
             city: hqAddressData.city,
             zip: hqAddressData.pincode,
@@ -230,6 +232,7 @@ const parseOrgData = selectedOrg => {
       mailingAddress: !mailingAddressData
         ? {}
         : {
+            street: mailingAddressData.street_address,
             apartment: mailingAddressData.apartment,
             city: mailingAddressData.city,
             zip: mailingAddressData.pincode,
@@ -249,7 +252,13 @@ const parseOrgData = selectedOrg => {
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
     duns: selectedOrg.duns_no,
-    contacts: selectedOrg.contacts,
+    contacts: isEmpty(selectedOrg.contacts)
+      ? defaultContacts
+      : selectedOrg.contacts.map(contact => ({
+          type: contact.contact_type,
+          email: contact.email,
+          phone: contact.phone,
+        })),
     orgAddress: parseOrgAddress(),
     assets: {
       heroImage: {
@@ -292,9 +301,9 @@ export const getStatus = async dispatch => {
   }
   const selectedOrg = selectOrg(data);
   const organization = parseOrgData(selectedOrg);
-  const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(organization.id);
+  const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
+  dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
   dispatch(setAllAttributes(organization));
-  dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
   return data;
 };
 
@@ -316,6 +325,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
     }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
+    return payload;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -477,8 +487,8 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
 };
 
 const findOrganizationInBlockchain = async orgId => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getOrganizationById(orgId).call();
+  const registry = new RegistryContract();
+  return await registry.getOrganizationById(orgId).call();
 };
 
 export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {

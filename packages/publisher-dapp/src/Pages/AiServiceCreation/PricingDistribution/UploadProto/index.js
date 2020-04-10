@@ -10,7 +10,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
 
-const UploadProto = () => {
+const UploadProto = ({ changeProtoFiles }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
   const serviceDetails = useSelector(state => state.aiServiceDetails);
@@ -42,7 +42,7 @@ const UploadProto = () => {
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
-          dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
+          changeProtoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
@@ -50,23 +50,24 @@ const UploadProto = () => {
         }
       }
     },
-    [dispatch, orgUuid, serviceUuid]
+    [changeProtoFiles, dispatch, orgUuid, serviceUuid]
   );
 
-  const acceptedFileTypes = "application/zip";
+  const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
 
   return (
     <Fragment>
       <Typography variant="subtitle1">Upload the Proto files</Typography>
       <Typography className={classes.description}>
         Services define their API using protocol buffers. This allows SingularityNET clients to determine the
-        request/response schema programmatically. Read more{" "}
+        request/response schema programmatically. Read more
         <a
           href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
           rel="noopener noreferrer"
           target="_blank"
         >
-          here
+          {" "}
+          here{" "}
         </a>
       </Typography>
       <SNETFileUpload

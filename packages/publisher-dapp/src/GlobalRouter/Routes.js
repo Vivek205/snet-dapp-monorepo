@@ -133,6 +133,7 @@ export const GlobalRoutes = {
 export const setupRouteAuthentications = () => {
   const state = store.getState();
   const { isLoggedIn } = state.user;
+
   return {
     ...GlobalRoutes,
     ORGANIZATION_SETUP: {
@@ -152,6 +153,16 @@ export const setupRouteAuthentications = () => {
     },
     AI_SERVICE_CREATION: {
       ...GlobalRoutes.AI_SERVICE_CREATION,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    WALLET_ACCOUNT: {
+      ...GlobalRoutes.WALLET_ACCOUNT,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    SERVICES: {
+      ...GlobalRoutes.SERVICES,
       isAllowed: isLoggedIn,
       redirectTo: GlobalRoutes.LOGIN.path,
     },

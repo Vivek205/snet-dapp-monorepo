@@ -1,6 +1,6 @@
 import tokenABI from "singularitynet-token-contracts/abi/SingularityNetToken.json";
 import tokenNetworks from "singularitynet-token-contracts/networks/SingularityNetToken.json";
-import stakingNetworks from "../../../Utils/TokenStake/networks/TokenStake";
+import stakingNetworks from "singularitynet-stake-contracts/networks/TokenStake";
 
 export const UPDATE_TOKEN_BALANCE = "UPDATE_TOKEN_BALANCE";
 export const UPDATE_TOKEN_ALLOWANCE = "UPDATE_TOKEN_ALLOWANCE";

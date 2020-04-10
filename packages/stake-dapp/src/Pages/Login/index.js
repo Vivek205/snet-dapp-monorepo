@@ -37,6 +37,9 @@ const Login = ({ history }) => {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
       }
+      if (error.code === "UserNotConfirmedException") {
+        history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
+      }
       setError(loginErrorMsg);
     }
   };
@@ -44,7 +47,7 @@ const Login = ({ history }) => {
   return (
     <Fragment>
       <SNETLogin
-        title="Welcome Back"
+        title="Welcome Back to AGI Staking"
         forgotPasswordLink={GlobalRoutes.FORGOT_PASSWORD.path}
         loginError={error}
         onSubmit={handleSubmit}

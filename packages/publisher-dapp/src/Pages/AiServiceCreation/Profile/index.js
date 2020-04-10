@@ -14,6 +14,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import SNETButton from "shared/dist/components/SNETButton";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import AlertText from "shared/dist/components/AlertText";
 import validator from "shared/dist/utils/validator";
 import { serviceProfileValidationConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
@@ -27,23 +28,25 @@ import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 let validateTimeout = "";
 
 const selectState = state => ({
-  serviceDetails: state.aiServiceDetails,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes }) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
+  const { isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
   const [alert, setAlert] = useState({});
+
+  const [websiteValidation, setWebsiteValidation] = useState({});
 
   const setServiceTouchedFlag = () => {
     // TODO - See if we can manage from local state (useState()) instead of redux state
@@ -71,30 +74,36 @@ const Profile = ({ classes }) => {
     validateTimeout = setTimeout(validateServiceId(newServiceId), timeout);
   };
 
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setWebsiteValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid URL. URL should start with https:`,
+      });
+    }
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
+
   const handleControlChange = event => {
     const { name, value } = event.target;
     setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
-      return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+      return changeServiceDetailsLeaf("newId", value);
     }
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    if (name === "projectURL") {
+      handleWebsiteValidation(value);
+    }
+    changeServiceDetailsLeaf(name, value);
   };
 
   const handleSave = async () => {
-    const serviceName = serviceDetails.name;
-    const serviceId = serviceDetails.newId ? serviceDetails.newId : serviceDetails.id;
-
-    const isNotValid = validator({ serviceName, serviceId }, serviceProfileValidationConstraints);
-
-    if (isNotValid) {
-      throw new ValidationError(isNotValid[0]);
-    }
-    if (Boolean(serviceDetails.newId) && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
+    if (serviceDetails.newId !== serviceDetails.id && serviceDetails.availability !== serviceIdAvailability.AVAILABLE) {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
-      // Call API to save
+      setServiceDetailsInRedux(serviceDetails);
       await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
     }
 
@@ -103,6 +112,13 @@ const Profile = ({ classes }) => {
 
   const handleContinue = async () => {
     try {
+      serviceDetails.id = serviceDetails.id || serviceDetails.newId;
+      const isNotValid = validator(serviceDetails, serviceProfileValidationConstraints);
+
+      if (isNotValid) {
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      }
       await handleSave();
       history.push(
         ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
@@ -149,7 +165,9 @@ const Profile = ({ classes }) => {
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
     setServiceTouchedFlag();
   };
-
+  const handleResetImage = () => {
+    changeHeroImage("");
+  };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
@@ -157,7 +175,7 @@ const Profile = ({ classes }) => {
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+    changeHeroImage(url);
   };
 
   const handleFinishLater = async () => {
@@ -197,10 +215,10 @@ const Profile = ({ classes }) => {
               icon
               name="id"
               label="AI Service Id"
-              minCount={serviceDetails.newId ? serviceDetails.newId.length : serviceDetails.id.length}
+              minCount={serviceDetails.newId.length}
               maxCount={50}
               description="The ID of your service has to be unique withing your organization"
-              value={serviceDetails.newId ? serviceDetails.newId : serviceDetails.id}
+              value={serviceDetails.newId}
               onChange={handleControlChange}
             />
           </div>
@@ -275,8 +293,8 @@ const Profile = ({ classes }) => {
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
             />
+            <AlertText type={websiteValidation.type} message={websiteValidation.message} />
           </div>
-
           <div className={classes.contributorsContainer}>
             <SNETTextfield
               icon
@@ -308,6 +326,9 @@ const Profile = ({ classes }) => {
                   // returnByteArray
                 />
               </div>
+              {serviceDetails.assets.heroImage.url ? (
+                <SNETButton children="reset" onClick={() => handleResetImage()} color="secondary" variant="text" />
+              ) : null}
               <div className={classes.profileImgContent}>
                 <Typography variant="subtitle2">
                   Every AI service will have a profile image. We recommend an image that is 906 x 504 in size. You can
@@ -330,11 +351,9 @@ const Profile = ({ classes }) => {
               </div>
             </div>
           </div>
-          {alert.message ? (
-            <div className={classes.alertContainer}>
-              <AlertBox type={alert.type} message={alert.message} />
-            </div>
-          ) : null}
+          <div className={classes.alertContainer}>
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+          </div>
         </div>
       </Grid>
 

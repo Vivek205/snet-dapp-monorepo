@@ -27,6 +27,7 @@ export const useStyles = MUITheme => ({
         verticalAlign: "middle",
       },
       "& span": {
+        width: "100%",
         color: MUITheme.palette.text.darkGrey,
         fontFamily: MUITheme.typography.fontFamily,
         fontSize: 16,

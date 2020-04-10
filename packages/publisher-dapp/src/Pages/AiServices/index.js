@@ -12,7 +12,7 @@ import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 
-const devPortalUrl = "https://dev.singularitynet.io/";
+const devPortalUrl = "https://dev.singularitynet.io/docs/ai-developers/";
 
 class AiServices extends Component {
   state = {

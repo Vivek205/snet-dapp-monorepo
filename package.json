@@ -45,7 +45,8 @@
     "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
     "lint:fix-shared": "eslint packages/shared/. --fix",
     "lint:fix": "eslint . --fix",
-    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done",
+    "link:all": "lerna exec -- yarn link"
   },
   "lint-staged": {
     "*.{js,jsx}": [

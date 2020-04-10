@@ -14,13 +14,14 @@ export const defaultGroups = [
         priceInCogs: 1,
       },
     ],
-    endpoints: [],
+    endpoints: {},
     testEndpoints: [],
+    daemonAddresses: [],
     freeCallsAllowed: "",
   },
 ];
 
-const initialState = {
+export const initialAiServiceDetailsState = {
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
   },
@@ -63,12 +64,12 @@ const initialState = {
   tags: [],
   comments: {
     SERVICE_PROVIDER: "",
-    SERVICE_APPROVER: "",
+    SERVICE_APPROVER: "<div></div>",
   },
   foundInBlockchain: false,
 };
 
-const serviceDetailsReducer = (state = initialState, action) => {
+const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
   switch (action.type) {
     case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };

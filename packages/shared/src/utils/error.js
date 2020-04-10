@@ -14,3 +14,10 @@ export class GrpcError extends Error {
     this.name = "GrpcError";
   }
 }
+
+export class MetamaskError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "MetamaskError";
+  }
+}

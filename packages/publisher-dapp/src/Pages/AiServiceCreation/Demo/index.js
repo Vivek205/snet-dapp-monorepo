@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import SNETButton from "shared/dist/components/SNETButton";
@@ -10,9 +9,8 @@ import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
 
-const Demo = ({ classes }) => {
+const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
   const { orgUuid } = useParams();
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
 
   return (
     <Grid container className={classes.demoContainer}>
@@ -32,10 +30,11 @@ const Demo = ({ classes }) => {
             </Typography>
             <Typography variant="subtitle2">
               The DApp source code enables you to build and test the interface for your service. You can also peruse
-              available UI components at{" "}
+              available UI components at
               <a
                 href="http://custom-ui.singularitynet.io.s3-website-us-east-1.amazonaws.com/?path=/story/alerts-alertbox--live-source"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 SingularityNet storybook
               </a>
@@ -55,7 +54,7 @@ const Demo = ({ classes }) => {
               Step 2: Set Up Local Test Environment
             </Typography>
             <Typography variant="subtitle2">
-              Once you download the package extract the source code and follow the instructions detailed{" "}
+              Once you download the package extract the source code and follow the instructions detailed
               <a
                 href="https://dev.singularitynet.io/docs/ai-developers/dapp-ui-component/"
                 rel="noopener noreferrer"
@@ -80,6 +79,7 @@ const Demo = ({ classes }) => {
                 href="mailto:support@singularitynet.io"
                 color="primary"
                 variant="text"
+                target="_blank"
               />
             </div>
             <hr />
@@ -90,10 +90,11 @@ const Demo = ({ classes }) => {
             orgUuid={orgUuid}
             serviceUuid={serviceDetails.uuid}
             demoFilesUrl={serviceDetails.assets.demoFiles.url}
+            changeDemoFiles={changeDemoFiles}
           />
         </div>
       </Grid>
-      <Actions classes={classes} />
+      <Actions classes={classes} serviceDetails={serviceDetails} setServiceDetailsInRedux={setServiceDetailsInRedux} />
     </Grid>
   );
 };
