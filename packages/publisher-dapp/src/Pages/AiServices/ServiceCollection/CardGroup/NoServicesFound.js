@@ -13,7 +13,7 @@ const NoServicesFound = () => {
   const classes = useStyles();
   return (
     <div className={classes.noServicesFoundContainer}>
-      <Typography variant="subtitle1">No AI Serivce avaliable. Please create a new AI service to begin</Typography>
+      <Typography variant="subtitle1">No AI Serivce available. Please create a new AI service to begin</Typography>
       <Card className={classes.noServicesFoundCard}>
         <CardHeader
           title={<Typography variant="subtitle1"> Some articles to help you with service creation</Typography>}
