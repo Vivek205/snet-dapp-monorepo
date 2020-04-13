@@ -3,8 +3,9 @@ import { Fragment } from "react";
 
 export const generateDetailedErrorMessageFromValidation = (endpoint, validation) => (
   <Fragment>
+    <br />
+    <strong>{endpoint ? `Please fix the errors for ${endpoint}` : null}</strong>
     <ul>
-      <strong>{endpoint ? `Please fix the errors for ${endpoint}` : null}</strong>
       {validation.map(msg => (
         <li key={msg}>{msg}</li>
       ))}
