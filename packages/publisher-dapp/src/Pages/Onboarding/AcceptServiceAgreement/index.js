@@ -33,12 +33,12 @@ const AcceptServiceAgreement = ({ history }) => {
   }, [history, isInitialized, isLoggedIn]);
 
   const handleAccept = async () => {
-    if (entity === userEntities.INDIVIDUAL) {
-      await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
-      dispatch(organizationActions.setOrgOwner(email));
-    }
     try {
       dispatch(loginActions.updateUserTnCAttribute(tncAgreementVesrion));
+      if (entity === userEntities.INDIVIDUAL) {
+        await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
+        dispatch(organizationActions.setOrgOwner(email));
+      }
       history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
     } catch (error) {
       history.push(GlobalRoutes.OVERVIEW.path);
