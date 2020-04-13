@@ -167,15 +167,21 @@ const Banner = ({ classes, recentStakeWindow }) => {
                     : ""
                 }
                 value={stakeCalculatorFields.stakeAmount}
-                InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount } }}
+                InputProps={{
+                  inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount },
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
                 onChange={handleDataChange}
               />
               <img src={ApproxSymbolImg} alt="Approximate Symbol" />
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate based on the current pool size"
+                extraInfo="~Approximate based on pool size"
                 value={getRewardAmount()}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
             </div>
             <div className={classes.stakingDetails}>
