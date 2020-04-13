@@ -9,11 +9,11 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 
 import CardImg from "shared/dist/assets/images/SnetDefaultServiceImage.png";
-import SNETButton from "shared/dist/components/SNETButton";
+import AnchorLink from "shared/dist/components/AnchorLink";
 
 import { useStyles } from "./styles";
 
-const RelatedContent = ({ classes, cardTitle, cardMedia, cardDescription, cardAction }) => {
+const RelatedContent = ({ classes, cardTitle, cardMedia, cardDescription, cardAction, cardLinkTo }) => {
   const cardHeaderLength = 35;
   return (
     <Card className={classes.card}>
@@ -24,7 +24,7 @@ const RelatedContent = ({ classes, cardTitle, cardMedia, cardDescription, cardAc
         <Typography className={classes.cardDescription}>{cardDescription}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <SNETButton children={cardAction} variant="text" color="primary" />
+        <AnchorLink label={cardAction} href={cardLinkTo} newTab={true} />
       </CardActions>
     </Card>
   );

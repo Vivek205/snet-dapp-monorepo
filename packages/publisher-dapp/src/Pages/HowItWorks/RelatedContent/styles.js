@@ -29,6 +29,14 @@ export const useStyles = MUITheme => ({
   },
   cardActions: {
     padding: "0 0 18px",
-    "& button": { padding: "11px 23px 9px" },
+    "& a": {
+      paddingLeft: 11,
+      color: MUITheme.palette.primary.main,
+      fontSize: 14,
+      fontWeight: 600,
+      lineHeight: "21px",
+      letterSpacing: 1.25,
+      textTransform: "uppercase",
+    },
   },
 });

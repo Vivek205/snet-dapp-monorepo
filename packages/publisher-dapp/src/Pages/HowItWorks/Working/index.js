@@ -3,11 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import SNETButton from "shared/dist/components/SNETButton";
+import AnchorLink from "shared/dist/components/AnchorLink";
 
 import { useStyles } from "./styles";
 
-const HowItWorks = ({ classes, rightAlign, icon, title, description, btnTitle }) => {
+const HowItWorks = ({ classes, rightAlign, icon, title, description, btnTitle, linkTo }) => {
   return (
     <Grid
       item
@@ -23,7 +23,7 @@ const HowItWorks = ({ classes, rightAlign, icon, title, description, btnTitle })
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.textContent}>
         <Typography className={classes.workingTitle}>{title}</Typography>
         <Typography className={classes.workingDesc}>{description}</Typography>
-        <SNETButton color="primary" variant="text" children={btnTitle} />
+        <AnchorLink label={btnTitle} hre={linkTo} newTab={true} />
       </Grid>
     </Grid>
   );

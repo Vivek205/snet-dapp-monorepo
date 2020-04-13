@@ -45,6 +45,7 @@ const HowItWorks = ({ classes, history }) => {
             title={item.title}
             description={item.description}
             btnTitle={item.btnTitle}
+            linkTo={item.linkTo}
             rightAlign={(index + 1) % 2 === 0}
             key={item.title}
           />
@@ -61,6 +62,7 @@ const HowItWorks = ({ classes, history }) => {
               cardMedia={item.cardMedia}
               cardDescription={item.cardDescription}
               cardAction={item.cardAction}
+              cardLinkTo={item.cardLinkTo}
             />
           ))}
         </div>

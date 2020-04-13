@@ -58,7 +58,16 @@ export const useStyles = MUITheme => ({
     width: "100%",
     textAlign: "left",
     "@media(max-width:540px)": { marginTop: 20 },
-    "& button": { padding: 0 },
+    "& a": {
+      paddingTop: 5,
+      display: "inline-block",
+      color: MUITheme.palette.primary.main,
+      fontSize: 14,
+      fontWeight: 600,
+      lineHeight: "21px",
+      letterSpacing: 1.25,
+      textTransform: "uppercase",
+    },
   },
   workingTitle: {
     color: MUITheme.palette.text.primary,
