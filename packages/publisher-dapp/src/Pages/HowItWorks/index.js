@@ -7,11 +7,16 @@ import ArtboardImg from "shared/dist/assets/images/Artboard.png";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { relatedContentData, howItWorksContent } from "./content";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import Working from "./Working";
 import RelatedContent from "./RelatedContent";
 import { useStyles } from "./styles";
 
-const HowItWorks = ({ classes }) => {
+const HowItWorks = ({ classes, history }) => {
+  const handleGetStarted = () => {
+    history.push(GlobalRoutes.ENROLL.path);
+  };
+
   return (
     <Grid container className={classes.howItWorksContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.topSection}>
@@ -44,7 +49,7 @@ const HowItWorks = ({ classes }) => {
             key={item.title}
           />
         ))}
-        <SNETButton children="get started" color="primary" variant="contained" />
+        <SNETButton children="get started" color="primary" variant="contained" onClick={handleGetStarted} />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.relatedContentContainer}>
         <Typography variant="h2">Related content you might like</Typography>
