@@ -5,6 +5,8 @@ import InfoIcon from "@material-ui/icons/Info";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
@@ -47,6 +49,27 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return true;
   };
 
+  const handleOnClickAddEndpoint = () => {
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    const newEndpoints = endpointRef.current.value;
+    let updatedEndpoints = { ...selectedServiceGroup.endpoints };
+    const userInputEndpoints = newEndpoints.split(",");
+    userInputEndpoints.forEach(endpoint => {
+      endpoint = endpoint.replace(/\s/g, "");
+      if (endpoint && handleEndPointValidation(endpoint)) {
+        updatedEndpoints = {
+          ...updatedEndpoints,
+          [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
+        };
+      } else {
+        updatedEndpoints = { ...selectedServiceGroup.endpoints };
+      }
+    });
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
+    changeGroups(updatedServiceGroups);
+    endpointRef.current.value = "";
+  };
   const handleNewEndpointsChange = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
@@ -81,6 +104,24 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
+  const HandleOnClickAddressChange = () => {
+    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
+    const newAddresses = addressRef.current.value;
+    let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
+    newAddresses.split(",").forEach(address => {
+      address = address.replace(/\s/g, "");
+      if (address) {
+        const index = selectedServiceGroup.daemonAddresses.findIndex(el => el === address);
+        if (index === -1) {
+          updatedAddresses.push(address);
+        }
+      }
+    });
+    const updatedServiceGroups = [...serviceGroups];
+    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
+    changeGroups(updatedServiceGroups);
+    addressRef.current.value = "";
+  };
   const handleNewDaemonAddressChange = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
@@ -205,14 +246,23 @@ const Region = ({ changeGroups, serviceGroups }) => {
             <AlertText type={freeCallsValidation.type} message={freeCallsValidation.message} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <SNETTextfield
-              icon
-              name="endpoints"
-              inputRef={endpointRef}
-              onKeyUp={handleNewEndpointsChange}
-              label="Daemon Endpoints"
-              description="Enter all the public Daemon end points that will be used to call the service."
-            />
+            {
+              <SNETTextfield
+                icon
+                name="endpoints"
+                inputRef={endpointRef}
+                onKeyUp={handleNewEndpointsChange}
+                label="Daemon Endpoints"
+                description="Enter all the public Daemon end points that will be used to call the service."
+                inputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleOnClickAddEndpoint}>+</IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            }
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
 
@@ -249,6 +299,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
                if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
                 in its configuration and will sign using this pvt key when making any requests to other systems."
+              inputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={HandleOnClickAddressChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
 

@@ -21,6 +21,8 @@ var _styles2 = require("./styles");
 
 var _StyledTextField = _interopRequireDefault(require("shared/dist/components/StyledTextField"));
 
+var _InputAdornment = _interopRequireDefault(require("@material-ui/core/InputAdornment"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -44,8 +46,9 @@ var SNETTextfield = function SNETTextfield(_ref) {
       onKeyUp = _ref.onKeyUp,
       extraInfo = _ref.extraInfo,
       inputRef = _ref.inputRef,
+      inputProps = _ref.inputProps,
       error = _ref.error,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef", "error"]);
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef", "inputProps", "error"]);
 
   return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
@@ -71,7 +74,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
     fullWidth: true,
     onKeyUp: onKeyUp,
     disabled: disabled,
-    inputRef: inputRef
+    inputRef: inputRef,
+    InputProps: inputProps
   }, rest)), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {

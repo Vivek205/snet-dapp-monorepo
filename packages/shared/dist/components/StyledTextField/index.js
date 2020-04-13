@@ -27,7 +27,8 @@ var StyledTextField = function StyledTextField(_ref) {
       label = _ref.label,
       handleChange = _ref.handleChange,
       value = _ref.value,
-      restProps = _objectWithoutProperties(_ref, ["classes", "className", "label", "handleChange", "value"]);
+      inputProps = _ref.inputProps,
+      restProps = _objectWithoutProperties(_ref, ["classes", "className", "label", "handleChange", "value", "inputProps"]);
 
   return /*#__PURE__*/_react.default.createElement(_TextField.default, _extends({
     id: "outlined-name",
@@ -36,7 +37,8 @@ var StyledTextField = function StyledTextField(_ref) {
     value: value,
     onChange: handleChange,
     margin: "normal",
-    variant: "outlined"
+    variant: "outlined",
+    inputProps: inputProps
   }, restProps));
 };
 
