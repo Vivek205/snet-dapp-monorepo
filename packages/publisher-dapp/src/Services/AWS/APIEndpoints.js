@@ -52,4 +52,5 @@ export const APIPaths = {
   USER_VERIFICATION_INITIATE: "/initiate",
   USER_VERIFICATION_STATUS: "/status",
   SAMPLE_DAEMON_CONFIG: (orgUuid, serviceuuid) => `/org/${orgUuid}/service/${serviceuuid}/group/groupId/daemon/config`,
+  SEND_SLACK_FEEDBACK: "/feedback/slack",
 };
