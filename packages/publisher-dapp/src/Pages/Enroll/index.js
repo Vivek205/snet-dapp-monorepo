@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,8 +9,20 @@ import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { OnboardingRoutes } from "../Onboarding/OnboardingRouter/Routes";
 
+const selectState = state => ({
+  isLoggedIn: state.user.isLoggedIn,
+  orgUuid: state.organization.uuid,
+  publisherTnC: state.user.publisherTnC,
+});
+
 const Enroll = ({ classes, history }) => {
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const { isLoggedIn, orgUuid, publisherTnC } = useSelector(selectState);
+
+  useEffect(() => {
+    if (isLoggedIn && (orgUuid || publisherTnC.accepted)) {
+      history.push(GlobalRoutes.ONBOARDING.path);
+    }
+  }, [history, isLoggedIn, orgUuid, publisherTnC]);
 
   const handleContinue = () => {
     if (isLoggedIn) {
