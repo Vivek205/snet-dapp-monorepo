@@ -156,6 +156,18 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  handleServiceProviderCommentsChange = comments => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        comments: {
+          ...prevState.serviceDetails.comments,
+          SERVICE_PROVIDER: comments,
+        },
+      },
+    }));
+  };
+
   handleGroupsChange = groups => {
     this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
   };
@@ -181,6 +193,7 @@ class AiServiceCreation extends Component {
           changeDemoFiles={this.handleDemoFilesChange}
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
+          changeServiceProviderComments={this.handleServiceProviderCommentsChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
         />
         <Loader />

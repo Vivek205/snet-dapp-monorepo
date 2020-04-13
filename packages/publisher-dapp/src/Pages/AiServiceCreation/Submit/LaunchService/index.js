@@ -72,6 +72,7 @@ class LaunchService extends React.Component {
   handleSubmitComment = async () => {
     try {
       this.setState({ alert: {} });
+
       const { submitServiceDetailsForReview, organization, orgStatus, serviceDetails } = this.props;
       if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
         if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
