@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import slackFeedbackTheme from "./theme";
 import ModeCommentIcon from "@material-ui/icons/ModeComment";
 import { feedbackActions } from "../../Services/Redux/actionCreators/userActions";
+import { assetTypes } from "../../Utils/FileUpload";
 
 const UserFeedbackSlack = () => {
   const { email, isLoggedIn } = useSelector(state => ({ email: state.user.email, isLoggedIn: state.user.isLoggedIn }));
@@ -18,10 +19,13 @@ const UserFeedbackSlack = () => {
     }
   };
 
-  const handleImageUpload = (_image, success, _error) => {
-    success(
-      "https://cdn.vox-cdn.com/thumbor/KnDazOvqFmoy-hx8C3YDD0wLQEw=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/13572496/SpiderVerse_cropped.jpg"
-    );
+  const handleImageUpload = async (image, success, error) => {
+    try {
+      const url = await dispatch(feedbackActions.uploadSlackAttachment(assetTypes.FEEDBACK, image));
+      success(url);
+    } catch (e) {
+      error("Unable to upload image. Please try later");
+    }
   };
 
   if (!isLoggedIn) {
