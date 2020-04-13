@@ -1,14 +1,18 @@
-import React, { Fragment, useCallback, useState, useEffect } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import JSZip from "jszip";
+import last from "lodash/last";
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
 const UploadProto = ({ changeProtoFiles }) => {
   const classes = useStyles();
@@ -27,6 +31,23 @@ const UploadProto = ({ changeProtoFiles }) => {
     }
   }, [serviceDetails.assets.protoFiles.url, alert.message]);
 
+  const validateProtoFile = uploadedFile => {
+    const protoFilesExtn = "proto";
+    return new Promise((resolve, reject) => {
+      const zip = new JSZip();
+      zip.loadAsync(uploadedFile).then(entry => {
+        const someFileIsNotAProto = Object.values(entry.files).some(file => {
+          const fileExtn = last(file.name.split("."));
+          return fileExtn !== protoFilesExtn;
+        });
+        if (someFileIsNotAProto) {
+          reject(new ValidationError("The zip file should contain only proto files"));
+        }
+        resolve();
+      });
+    });
+  };
+
   const handleDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
       setAlert({});
@@ -36,9 +57,9 @@ const UploadProto = ({ changeProtoFiles }) => {
       if (!isEmpty(acceptedFiles)) {
         try {
           const fileBlob = acceptedFiles[0];
+          await validateProtoFile(fileBlob);
           const { name, size, type } = fileBlob;
           setSelectedFile({ name, size, type });
-
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
@@ -46,6 +67,9 @@ const UploadProto = ({ changeProtoFiles }) => {
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
+          if (checkIfKnownError(error)) {
+            return setAlert({ type: alertTypes.ERROR, message: error.message });
+          }
           setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
         }
       }
@@ -66,8 +90,7 @@ const UploadProto = ({ changeProtoFiles }) => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          {" "}
-          here{" "}
+          here
         </a>
       </Typography>
       <SNETFileUpload
