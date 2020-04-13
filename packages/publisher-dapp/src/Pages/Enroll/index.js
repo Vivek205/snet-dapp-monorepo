@@ -55,7 +55,7 @@ const Enroll = ({ classes, history }) => {
             Your organization must have a D-U-N-S Number so that we can verify your organization’s identity and legal
             entity status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as
             standard business identifiers. You can check to see if your organization already has a D-U-N-S Number and
-            request one if necessary. They are free in most jurisdictions.
+            request one if necessary. They are free in most jurisdictions.{" "}
             <a target="_blank" href="https://www.dnb.com/duns-number/get-a-duns.html">
               Learn more
             </a>
@@ -77,7 +77,7 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="h4">Metamask</Typography>
         <Typography variant="body2">
           In order to publish your AI services and company or individual entity to the blockchain, you will need to use
-          Metamask app plugin. It is recommended that you
+          Metamask app plugin. It is recommended that you{" "}
           <a target="_blank" href="https://dev.singularitynet.io/docs/ai-consumers/wallet/">
             setup and install Metamask Wallet
           </a>
