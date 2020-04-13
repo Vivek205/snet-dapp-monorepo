@@ -7,10 +7,8 @@ import DreamTeamIcon from "shared/dist/assets/images/DreamTeam.png";
 import CreateAIServicesIcon from "shared/dist/assets/images/CreateAIServices.png";
 import PublishDistributeIcon from "shared/dist/assets/images/PublishDistribute.png";
 import EditUpdateIcon from "shared/dist/assets/images/EditUpdate.png";
-import TrackUsageIcon from "shared/dist/assets/images/TrackUsage.png";
 import CollectAGIIcon from "shared/dist/assets/images/CollectAGI.png";
 import StayConnectedIcon from "shared/dist/assets/images/StayConnected.png";
-import EarnRewardsIcon from "shared/dist/assets/images/EarnRewards.png";
 
 export const relatedContentData = [
   {
@@ -76,11 +74,6 @@ export const howItWorksContent = [
     linkTop: "https://dev.singularitynet.io/docs/overview/",
   },
   {
-    icon: TrackUsageIcon,
-    title: "Track Usage",
-    description: "analytics of your AI services and make improvments.",
-  },
-  {
     icon: CollectAGIIcon,
     title: "Collect AGI Tokens",
     description: "and transfer them to your preferred wallet and team memebers.",
@@ -93,10 +86,5 @@ export const howItWorksContent = [
     description: "with alerts and notifications on actions and feedback from your users.",
     btnTitle: "learn more",
     linkTop: "https://dev.singularitynet.io/docs/overview/",
-  },
-  {
-    icon: EarnRewardsIcon,
-    title: "Engage & Rewards",
-    description: "by collecting bounties on requested AI service from AI developer community.",
   },
 ];
