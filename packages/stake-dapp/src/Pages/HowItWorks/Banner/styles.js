@@ -100,6 +100,15 @@ export const useStyles = MUITheme => ({
       padding: "13px 33px 0",
       "@media(max-width: 640px)": { padding: "13px 5px 0" },
     },
+    "& .MuiInputAdornment-root": {
+      "& p": {
+        paddingLeft: 8,
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 12,
+        lineHeight: "15px",
+        textTransform: "uppercase",
+      },
+    },
   },
   stakingDetails: {
     padding: "17px 22px 0",
