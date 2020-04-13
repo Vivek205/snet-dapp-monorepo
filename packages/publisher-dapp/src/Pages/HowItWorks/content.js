@@ -79,8 +79,6 @@ export const howItWorksContent = [
     icon: TrackUsageIcon,
     title: "Track Usage",
     description: "analytics of your AI services and make improvments.",
-    btnTitle: "learn more",
-    linkTop: "https://dev.singularitynet.io/docs/overview/",
   },
   {
     icon: CollectAGIIcon,
@@ -100,7 +98,5 @@ export const howItWorksContent = [
     icon: EarnRewardsIcon,
     title: "Engage & Rewards",
     description: "by collecting bounties on requested AI service from AI developer community.",
-    btnTitle: "learn more",
-    linkTop: "https://dev.singularitynet.io/docs/overview/",
   },
 ];
