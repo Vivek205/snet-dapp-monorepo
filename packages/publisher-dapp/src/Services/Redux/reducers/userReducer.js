@@ -29,9 +29,6 @@ const userReducer = (state = initialState, action) => {
     case userActions.loginActions.SET_USER_NICKNAME: {
       return { ...state, nickname: action.payload };
     }
-    case userActions.loginActions.SET_USER_EMAIL_VERIFIED: {
-      return { ...state, isEmailVerified: action.payload };
-    }
     case userActions.loginActions.SET_APP_INITIALIZED: {
       return { ...state, isInitialized: action.payload };
     }
