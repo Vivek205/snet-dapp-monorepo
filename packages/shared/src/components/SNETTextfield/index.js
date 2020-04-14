@@ -23,7 +23,7 @@ const SNETTextfield = ({
   onKeyUp,
   extraInfo,
   inputRef,
-  inputProps,
+  InputProps,
   error,
   ...rest
 }) => {
@@ -47,7 +47,7 @@ const SNETTextfield = ({
             onKeyUp={onKeyUp}
             disabled={disabled}
             inputRef={inputRef}
-            InputProps={inputProps}
+            InputProps={InputProps}
             {...rest}
           />
 

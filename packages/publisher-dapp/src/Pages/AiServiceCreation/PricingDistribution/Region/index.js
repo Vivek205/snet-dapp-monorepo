@@ -213,23 +213,21 @@ const Region = ({ changeGroups, serviceGroups }) => {
             <AlertText type={freeCallsValidation.type} message={freeCallsValidation.message} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            {
-              <SNETTextfield
-                icon
-                name="endpoints"
-                inputRef={endpointRef}
-                onKeyUp={handleNewEndpointsChangeOnKeyPress}
-                label="Daemon Endpoints"
-                description="Enter all the public Daemon end points that will be used to call the service."
-                inputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            }
+            <SNETTextfield
+              icon
+              name="endpoints"
+              inputRef={endpointRef}
+              onKeyUp={handleNewEndpointsChangeOnKeyPress}
+              label="Daemon Endpoints"
+              description="Enter all the public Daemon end points that will be used to call the service."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
 
@@ -266,7 +264,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
                if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
                 in its configuration and will sign using this pvt key when making any requests to other systems."
-              inputProps={{
+              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={handleNewDaemonAddressChange}>+</IconButton>

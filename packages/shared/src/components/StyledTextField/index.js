@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 
 import { useStyles } from "./styles";
 
-const StyledTextField = ({ classes, label, handleChange, value, inputProps, ...restProps }) => {
+const StyledTextField = ({ classes, label, handleChange, value, InputProps, ...restProps }) => {
   return (
     <TextField
       id="outlined-name"
@@ -14,7 +14,7 @@ const StyledTextField = ({ classes, label, handleChange, value, inputProps, ...r
       onChange={handleChange}
       margin="normal"
       variant="outlined"
-      inputProps={inputProps}
+      InputProps={InputProps}
       {...restProps}
     />
   );
