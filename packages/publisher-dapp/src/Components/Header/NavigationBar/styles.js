@@ -14,6 +14,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   navLink: {
+    fontFamily: MUITheme.typography.fontFamily,
     textDecoration: "none",
     color: MUITheme.palette.text.lightGrey,
   },
