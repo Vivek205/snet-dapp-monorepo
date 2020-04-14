@@ -3,7 +3,6 @@ export const useStyles = MUITheme => ({
     padding: "40px 60px 68px",
     display: "flex",
     "& button": { padding: "13px 95px 11px" },
-    background: MUITheme.palette.background.mainContent,
     [MUITheme.breakpoints.down("sm")]: {
       padding: "40px 20px",
       flexDirection: "column",
@@ -11,22 +10,25 @@ export const useStyles = MUITheme => ({
   },
   overviewArticleContent: {
     marginRight: 24,
+    "& a": { textDecoration: "none" },
+    "& h2": { color: MUITheme.palette.text.white },
     [MUITheme.breakpoints.down("sm")]: {
       marginRight: 0,
       marginBottom: 25,
     },
-    "& a": { textDecoration: "none" },
   },
   description: {
-    color: MUITheme.palette.text.primary,
+    color: MUITheme.palette.text.white,
     fontSize: 20,
     lineHeight: "28px",
+    "&:last-of-type": { paddingTop: 30 },
   },
   reverseDirection: {
-    padding: "67px 60px 61px",
+    padding: "67px 60px 23px",
     flexDirection: "row-reverse",
     backgroundColor: MUITheme.palette.background.white,
     "& button": { padding: "13px 69px 11px" },
+    "& h2": { color: MUITheme.palette.text.darkGrey },
     "& > div:first-of-type": {
       marginRight: 0,
       marginLeft: 24,

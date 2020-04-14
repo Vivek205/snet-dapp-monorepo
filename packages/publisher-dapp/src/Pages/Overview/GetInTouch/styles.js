@@ -1,8 +1,8 @@
 export const useStyles = MUITheme => ({
-  getInTouchContainer: { background: MUITheme.palette.background.mainContent },
+  getInTouchContainer: { background: MUITheme.palette.background.white },
   getInTouch: {
     maxWidth: 870,
-    padding: "97px 30px 71px !important",
+    padding: "62px 30px 71px !important",
     margin: "0 auto",
     textAlign: "center",
     "& p": { textAlign: "initial" },
