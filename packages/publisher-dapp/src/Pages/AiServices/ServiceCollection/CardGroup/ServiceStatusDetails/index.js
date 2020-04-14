@@ -142,12 +142,14 @@ const ServiceStatusDetails = props => {
         </div>
       </div>
 
-      <AlertBox
-        type={verifyDaemonAlert.type}
-        message={verifyDaemonAlert.message}
-        header="Verify This Service"
-        icon={WarningIcon}
-      />
+      {props.status === "PUBLISHED" && (
+        <AlertBox
+          type={verifyDaemonAlert.type}
+          message={verifyDaemonAlert.message}
+          header="Verify This Service"
+          icon={WarningIcon}
+        />
+      )}
 
       <div className={classes.serviceStatusActions}>
         <SNETButton
