@@ -60,9 +60,9 @@ const parseAiServiceData = service => ({
     heroImage: isEmpty(service.assets.hero_image)
       ? {}
       : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
-    protoFiles: isEmpty(service.assets.proto)
+    protoFiles: isEmpty(service.assets.proto_files)
       ? {}
-      : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
+      : { url: service.assets.proto_files.url, ipfsHash: service.assets.proto_files.ipfs_hash },
     demoFiles: isEmpty(service.assets.demo_files)
       ? {}
       : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },

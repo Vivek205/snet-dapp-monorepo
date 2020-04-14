@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 import WarningIcon from "@material-ui/icons/Warning";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -34,6 +35,8 @@ const ServiceStatusDetails = props => {
   const [verifyDaemonAlert, setVerifyDaemonAlert] = useState({
     type: alertTypes.WARNING,
     message: "The test will ensure the protocols are working correctly. No ETH 'gas' transaction fee will incur",
+    header: "Verify This Service",
+    icon: WarningIcon,
   });
   const Networks = {
     1: "main",
@@ -58,6 +61,7 @@ const ServiceStatusDetails = props => {
   const tabs = [{ name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> }];
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
   const validateDaemonConfig = () => {
+    setVerifyDaemonAlert({ type: alertTypes.WARNING, message: "" });
     const result = serviceDetails.data.filter(({ uuid }) => serviceUuid === uuid);
     let DaemonConfigvalidateAlert = [];
     let errorMessage = [];
@@ -94,10 +98,20 @@ const ServiceStatusDetails = props => {
             multiErrors.push(errorMessage);
           } catch (error) {
             multiErrors.push(endpoint + " is not a valid endpoint ");
+            if (isEmpty(DaemonConfigvalidateAlert)) {
+              DaemonConfigvalidateAlert.push(endpoint + " is not a valid endpoint ");
+              errorMessage = generateDetailedErrorMessageFromValidation(null, DaemonConfigvalidateAlert);
+              setAlert({ type: alertTypes.ERROR, children: errorMessage });
+            }
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
-          setVerifyDaemonAlert({ type: alertTypes.WARNING, message: "" });
+          setVerifyDaemonAlert({
+            type: alertTypes.SUCCESS,
+            message: "All protocols tested positive",
+            header: "Verification Sucessful",
+            icon: CheckCircleIcon,
+          });
           await dispatch(
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
@@ -146,8 +160,8 @@ const ServiceStatusDetails = props => {
         <AlertBox
           type={verifyDaemonAlert.type}
           message={verifyDaemonAlert.message}
-          header="Verify This Service"
-          icon={WarningIcon}
+          header={verifyDaemonAlert.header}
+          icon={verifyDaemonAlert.icon}
         />
       )}
 
