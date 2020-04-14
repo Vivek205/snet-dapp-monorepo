@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
+import WarningIcon from "@material-ui/icons/Warning";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -34,6 +35,7 @@ const ServiceStatusDetails = props => {
     1: "main",
     3: "ropsten",
   };
+  let verifyDaemonCheckFlag = false;
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
@@ -92,6 +94,7 @@ const ServiceStatusDetails = props => {
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
+          verifyDaemonCheckFlag = true;
           await dispatch(
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
@@ -135,6 +138,15 @@ const ServiceStatusDetails = props => {
           {activeComponent && activeComponent.component}
         </div>
       </div>
+      {verifyDaemonCheckFlag ? (
+        <AlertBox
+          type={alertTypes.WARNING}
+          message="The test will ensure the protocols are working correctly. No ETH 'gas' transaction fee will incur"
+          header="Verify This Service"
+          icon={WarningIcon}
+        />
+      ) : null}
+
       <div className={classes.serviceStatusActions}>
         <SNETButton
           children={status === serviceCreationStatus.APPROVED ? "publish" : "edit"}
