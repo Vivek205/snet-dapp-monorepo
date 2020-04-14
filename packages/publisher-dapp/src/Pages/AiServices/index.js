@@ -12,7 +12,7 @@ import ServiceCollection from "./ServiceCollection";
 import { useStyles } from "./styles";
 import { aiServiceListActions } from "../../Services/Redux/actionCreators";
 
-const devPortalUrl = "https://dev.singularitynet.io/";
+const devPortalUrl = "https://dev.singularitynet.io/docs/ai-developers/";
 
 class AiServices extends Component {
   state = {
@@ -54,7 +54,7 @@ class AiServices extends Component {
                   My AI Apps
                 </Typography>
                 <Typography variant="h5" className={classes.description}>
-                  With this pubilsher portal, you can publish and manage your AI services.
+                  With this publisher portal, you can publish and manage your AI services.
                 </Typography>
               </div>
               <div className={classes.btnContainer}>
