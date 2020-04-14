@@ -31,11 +31,14 @@ const ServiceStatusDetails = props => {
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
+  const [verifyDaemonAlert, setVerifyDaemonAlert] = useState({
+    type: alertTypes.WARNING,
+    message: "The test will ensure the protocols are working correctly. No ETH 'gas' transaction fee will incur",
+  });
   const Networks = {
     1: "main",
     3: "ropsten",
   };
-  let verifyDaemonCheckFlag = false;
   const configValidation = [
     ["blockchain_enabled", "true"],
     ["ipfs_end_point", "http://ipfs.singularitynet.io:80"],
@@ -94,7 +97,7 @@ const ServiceStatusDetails = props => {
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
-          verifyDaemonCheckFlag = true;
+          setVerifyDaemonAlert({ type: alertTypes.warnin, message: "" });
           await dispatch(
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
@@ -138,14 +141,13 @@ const ServiceStatusDetails = props => {
           {activeComponent && activeComponent.component}
         </div>
       </div>
-      {verifyDaemonCheckFlag ? (
-        <AlertBox
-          type={alertTypes.WARNING}
-          message="The test will ensure the protocols are working correctly. No ETH 'gas' transaction fee will incur"
-          header="Verify This Service"
-          icon={WarningIcon}
-        />
-      ) : null}
+
+      <AlertBox
+        type={verifyDaemonAlert.type}
+        message={verifyDaemonAlert.message}
+        header="Verify This Service"
+        icon={WarningIcon}
+      />
 
       <div className={classes.serviceStatusActions}>
         <SNETButton
