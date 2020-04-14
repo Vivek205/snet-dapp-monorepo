@@ -49,31 +49,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return true;
   };
 
-  const handleOnClickAddEndpoint = () => {
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-    const newEndpoints = endpointRef.current.value;
-    let updatedEndpoints = { ...selectedServiceGroup.endpoints };
-    const userInputEndpoints = newEndpoints.split(",");
-    userInputEndpoints.forEach(endpoint => {
-      endpoint = endpoint.replace(/\s/g, "");
-      if (endpoint && handleEndPointValidation(endpoint)) {
-        updatedEndpoints = {
-          ...updatedEndpoints,
-          [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
-        };
-      } else {
-        updatedEndpoints = { ...selectedServiceGroup.endpoints };
-      }
-    });
-    const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
-    changeGroups(updatedServiceGroups);
-    endpointRef.current.value = "";
-  };
-  const handleNewEndpointsChange = event => {
+  const handleNewEndpointsChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewEndpointsChange();
+  };
+  const handleNewEndpointsChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
     let updatedEndpoints = { ...selectedServiceGroup.endpoints };
@@ -104,28 +86,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
-  const HandleOnClickAddressChange = () => {
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-    const newAddresses = addressRef.current.value;
-    let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
-    newAddresses.split(",").forEach(address => {
-      address = address.replace(/\s/g, "");
-      if (address) {
-        const index = selectedServiceGroup.daemonAddresses.findIndex(el => el === address);
-        if (index === -1) {
-          updatedAddresses.push(address);
-        }
-      }
-    });
-    const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
-    changeGroups(updatedServiceGroups);
-    addressRef.current.value = "";
-  };
-  const handleNewDaemonAddressChange = event => {
+  const handleNewDaemonAddressChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewDaemonAddressChange();
+  };
+  const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newAddresses = addressRef.current.value;
     let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
@@ -251,13 +218,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
                 icon
                 name="endpoints"
                 inputRef={endpointRef}
-                onKeyUp={handleNewEndpointsChange}
+                onKeyUp={handleNewEndpointsChangeOnKeyPress}
                 label="Daemon Endpoints"
                 description="Enter all the public Daemon end points that will be used to call the service."
                 inputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={handleOnClickAddEndpoint}>+</IconButton>
+                      <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
                     </InputAdornment>
                   ),
                 }}
@@ -293,7 +260,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="daemonAdresses"
               inputRef={addressRef}
-              onKeyUp={handleNewDaemonAddressChange}
+              onKeyUp={handleNewDaemonAddressChangeOnKeyPress}
               label="Daemon Addresses"
               description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
@@ -302,7 +269,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               inputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={HandleOnClickAddressChange}>+</IconButton>
+                    <IconButton onClick={handleNewDaemonAddressChange}>+</IconButton>
                   </InputAdornment>
                 ),
               }}
