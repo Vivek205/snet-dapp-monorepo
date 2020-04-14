@@ -97,7 +97,7 @@ const ServiceStatusDetails = props => {
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
-          setVerifyDaemonAlert({ type: alertTypes.warnin, message: "" });
+          setVerifyDaemonAlert({ type: alertTypes.WARNING, message: "" });
           await dispatch(
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
