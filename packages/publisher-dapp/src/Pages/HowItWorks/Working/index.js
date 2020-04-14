@@ -23,7 +23,7 @@ const Working = ({ classes, rightAlign, icon, title, description, btnTitle, link
       <Grid item xs={12} sm={12} md={6} lg={6} className={classes.textContent}>
         <Typography className={classes.workingTitle}>{title}</Typography>
         <Typography className={classes.workingDesc}>{description}</Typography>
-        <AnchorLink label={btnTitle} hre={linkTo} newTab={true} />
+        <AnchorLink label={btnTitle} href={linkTo} newTab={true} />
       </Grid>
     </Grid>
   );
