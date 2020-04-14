@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
+import WarningIcon from "@material-ui/icons/Warning";
 
 import SNETButton from "shared/dist/components/SNETButton";
 
@@ -30,6 +31,10 @@ const ServiceStatusDetails = props => {
   const [activeTab] = useState(2);
   const { serviceDetails } = useSelector(selectState);
   const [alert, setAlert] = useState({});
+  const [verifyDaemonAlert, setVerifyDaemonAlert] = useState({
+    type: alertTypes.WARNING,
+    message: "The test will ensure the protocols are working correctly. No ETH 'gas' transaction fee will incur",
+  });
   const Networks = {
     1: "main",
     3: "ropsten",
@@ -92,6 +97,7 @@ const ServiceStatusDetails = props => {
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
+          setVerifyDaemonAlert({ type: alertTypes.WARNING, message: "" });
           await dispatch(
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
@@ -135,6 +141,14 @@ const ServiceStatusDetails = props => {
           {activeComponent && activeComponent.component}
         </div>
       </div>
+
+      <AlertBox
+        type={verifyDaemonAlert.type}
+        message={verifyDaemonAlert.message}
+        header="Verify This Service"
+        icon={WarningIcon}
+      />
+
       <div className={classes.serviceStatusActions}>
         <SNETButton
           children={status === serviceCreationStatus.APPROVED ? "publish" : "edit"}
