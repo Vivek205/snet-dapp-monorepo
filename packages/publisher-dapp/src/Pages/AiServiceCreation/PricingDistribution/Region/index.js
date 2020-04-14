@@ -5,6 +5,8 @@ import InfoIcon from "@material-ui/icons/Info";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
@@ -47,10 +49,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return true;
   };
 
-  const handleNewEndpointsChange = event => {
+  const handleNewEndpointsChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewEndpointsChange();
+  };
+  const handleNewEndpointsChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
     let updatedEndpoints = { ...selectedServiceGroup.endpoints };
@@ -81,10 +86,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
-  const handleNewDaemonAddressChange = event => {
+  const handleNewDaemonAddressChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewDaemonAddressChange();
+  };
+  const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newAddresses = addressRef.current.value;
     let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
@@ -209,9 +217,16 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="endpoints"
               inputRef={endpointRef}
-              onKeyUp={handleNewEndpointsChange}
+              onKeyUp={handleNewEndpointsChangeOnKeyPress}
               label="Daemon Endpoints"
               description="Enter all the public Daemon end points that will be used to call the service."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
@@ -243,12 +258,19 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="daemonAdresses"
               inputRef={addressRef}
-              onKeyUp={handleNewDaemonAddressChange}
+              onKeyUp={handleNewDaemonAddressChangeOnKeyPress}
               label="Daemon Addresses"
               description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
                if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
                 in its configuration and will sign using this pvt key when making any requests to other systems."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewDaemonAddressChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
 
