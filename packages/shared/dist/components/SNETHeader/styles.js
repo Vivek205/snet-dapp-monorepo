@@ -33,6 +33,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& h5": {
         marginLeft: 11,
         fontWeight: 300,
+        letterSpacing: -1,
         lineHeight: "30px"
       }
     }, MUITheme.breakpoints.down("md"), {
