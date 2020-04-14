@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +13,21 @@ import Working from "./Working";
 import RelatedContent from "./RelatedContent";
 import { useStyles } from "./styles";
 
+const selectState = state => ({
+  isLoggedIn: state.user.isLoggedIn,
+  orgUuid: state.organization.uuid,
+  publisherTnC: state.user.publisherTnC,
+});
+
 const HowItWorks = ({ classes, history }) => {
+  const { isLoggedIn, orgUuid, publisherTnC } = useSelector(selectState);
+
+  useEffect(() => {
+    if (isLoggedIn && (orgUuid || publisherTnC.accepted)) {
+      history.push(GlobalRoutes.ONBOARDING.path);
+    }
+  }, [history, isLoggedIn, orgUuid, publisherTnC]);
+
   const handleGetStarted = () => {
     history.push(GlobalRoutes.ENROLL.path);
   };

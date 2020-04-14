@@ -7,7 +7,7 @@ import AnchorLink from "shared/dist/components/AnchorLink";
 
 import { useStyles } from "./styles";
 
-const HowItWorks = ({ classes, rightAlign, icon, title, description, btnTitle, linkTo }) => {
+const Working = ({ classes, rightAlign, icon, title, description, btnTitle, linkTo }) => {
   return (
     <Grid
       item
@@ -29,4 +29,4 @@ const HowItWorks = ({ classes, rightAlign, icon, title, description, btnTitle, l
   );
 };
 
-export default withStyles(useStyles)(HowItWorks);
+export default withStyles(useStyles)(Working);
