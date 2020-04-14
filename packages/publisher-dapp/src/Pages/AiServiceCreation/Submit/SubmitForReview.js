@@ -82,15 +82,17 @@ class SubmitForReview extends React.Component {
       if (checkIfKnownError(error)) {
         if (error instanceof GrpcError) {
           return this.setState({
-            alert: {
+            validateDaemonAlert: {
               type: alertTypes.ERROR,
               message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
             },
           });
         }
-        return this.setState({ alert: { type: alertTypes.ERROR, message: error.message } });
+        return this.setState({ validateDaemonAlert: { type: alertTypes.ERROR, message: error.message } });
       }
-      return this.setState({ alert: { type: alertTypes.ERROR, message: `Something went wrong. Please try again` } });
+      return this.setState({
+        validateDaemonAlert: { type: alertTypes.ERROR, message: `Something went wrong. Please try again` },
+      });
     }
   };
 

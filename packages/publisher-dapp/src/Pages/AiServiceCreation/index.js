@@ -53,7 +53,7 @@ class AiServiceCreation extends Component {
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgId, orgUuid, serviceUuid, serviceTouched } = this.props;
+    const { orgId, orgUuid, serviceUuid, serviceTouched, serviceDetails } = this.props;
     if (
       orgId &&
       orgUuid &&
@@ -66,6 +66,12 @@ class AiServiceCreation extends Component {
       if (this.state.serviceDetails.touched !== serviceTouched) {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
+    }
+    if (
+      serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
+      serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
+    ) {
+      this.handleServiceStateChange(serviceDetails.serviceState.state);
     }
   };
 
@@ -172,6 +178,15 @@ class AiServiceCreation extends Component {
     this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
   };
 
+  handleServiceStateChange = updatedState => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        serviceState: { ...prevState.serviceDetails.serviceState, state: updatedState },
+      },
+    }));
+  };
+
   render() {
     const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
@@ -194,7 +209,9 @@ class AiServiceCreation extends Component {
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
           changeServiceProviderComments={this.handleServiceProviderCommentsChange}
+          changeServiceState={this.handleServiceStateChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
+          handleBackToDashboard={this.handleBackToDashboard}
         />
         <Loader />
       </div>
