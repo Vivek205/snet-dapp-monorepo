@@ -67,7 +67,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      endpoints: updatedEndpoints,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
     endpointRef.current.value = "";
   };
@@ -98,7 +103,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      daemonAddresses: updatedAddresses,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
     addressRef.current.value = "";
   };
@@ -117,7 +127,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = [event.target.value];
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      testEndpoints: newEndpoints,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -134,7 +149,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      freeCallsAllowed: value,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -152,7 +172,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      pricing: updatedServicePricing,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
