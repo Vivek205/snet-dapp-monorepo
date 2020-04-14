@@ -94,6 +94,11 @@ const ServiceStatusDetails = props => {
             multiErrors.push(errorMessage);
           } catch (error) {
             multiErrors.push(endpoint + " is not a valid endpoint ");
+            if (isEmpty(DaemonConfigvalidateAlert)) {
+              DaemonConfigvalidateAlert.push(endpoint + " is not a valid endpoint ");
+              errorMessage = generateDetailedErrorMessageFromValidation(null, DaemonConfigvalidateAlert);
+              setAlert({ type: alertTypes.ERROR, children: errorMessage });
+            }
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
