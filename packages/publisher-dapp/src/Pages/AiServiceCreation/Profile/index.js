@@ -38,7 +38,14 @@ const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
+const Profile = ({
+  classes,
+  serviceDetails,
+  changeServiceDetailsLeaf,
+  changeHeroImage,
+  setServiceDetailsInRedux,
+  serviceTouchedFlag,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
@@ -49,11 +56,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const [alert, setAlert] = useState({});
 
   const [websiteValidation, setWebsiteValidation] = useState({});
-
-  const setServiceTouchedFlag = () => {
-    // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-  };
 
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
@@ -89,7 +91,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchedFlag();
+    serviceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return changeServiceDetailsLeaf("newId", value);
@@ -156,7 +158,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
     });
 
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    serviceTouchedFlag();
   };
 
   const handleDeleteTag = tag => {
@@ -166,7 +168,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
     // Set State
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    serviceTouchedFlag();
   };
   const handleResetImage = () => {
     changeHeroImage("");
@@ -174,7 +176,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchedFlag();
+    serviceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );

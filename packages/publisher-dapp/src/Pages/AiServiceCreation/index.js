@@ -156,6 +156,10 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  setServiceTouchedFlag = () => {
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: true } }));
+  };
+
   handleGroupsChange = groups => {
     this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
   };
@@ -182,6 +186,7 @@ class AiServiceCreation extends Component {
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
+          serviceTouchedFlag={this.setServiceTouchedFlag}
         />
         <Loader />
       </div>
