@@ -44,7 +44,7 @@ const Profile = ({
   changeServiceDetailsLeaf,
   changeHeroImage,
   setServiceDetailsInRedux,
-  serviceTouchedFlag,
+  changeInputTags,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -91,7 +91,6 @@ const Profile = ({
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    serviceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return changeServiceDetailsLeaf("newId", value);
@@ -156,27 +155,22 @@ const Profile = ({
       }
       setTags("");
     });
-
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    serviceTouchedFlag();
+    changeInputTags(localItems);
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-
-    // Set State
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    serviceTouchedFlag();
+    changeInputTags(localItems);
   };
+
   const handleResetImage = () => {
     changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    serviceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );

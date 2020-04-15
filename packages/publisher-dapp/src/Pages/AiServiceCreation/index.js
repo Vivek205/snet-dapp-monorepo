@@ -117,13 +117,14 @@ class AiServiceCreation extends Component {
   };
 
   handleServiceDetailsLeafChange = (name, value) => {
-    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, [name]: value } }));
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, [name]: value, touched: true } }));
   };
 
   handleHeroImageChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           heroImage: { ...prevState.serviceDetails.assets.heroImage, url },
@@ -132,10 +133,21 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  handleInputTags = tags => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        touched: true,
+        tags,
+      },
+    }));
+  };
+
   handleDemoFilesChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           demoFiles: { ...prevState.serviceDetails.assets.demoFiles, url },
@@ -148,6 +160,7 @@ class AiServiceCreation extends Component {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           protoFiles: { ...prevState.serviceDetails.assets.protoFiles, url },
@@ -156,12 +169,8 @@ class AiServiceCreation extends Component {
     }));
   };
 
-  setServiceTouchedFlag = () => {
-    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: true } }));
-  };
-
   handleGroupsChange = groups => {
-    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups, touched: true } }));
   };
 
   render() {
@@ -186,7 +195,7 @@ class AiServiceCreation extends Component {
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
-          serviceTouchedFlag={this.setServiceTouchedFlag}
+          changeInputTags={this.handleInputTags}
         />
         <Loader />
       </div>
