@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,8 +9,20 @@ import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { OnboardingRoutes } from "../Onboarding/OnboardingRouter/Routes";
 
+const selectState = state => ({
+  isLoggedIn: state.user.isLoggedIn,
+  orgUuid: state.organization.uuid,
+  publisherTnC: state.user.publisherTnC,
+});
+
 const Enroll = ({ classes, history }) => {
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const { isLoggedIn, orgUuid, publisherTnC } = useSelector(selectState);
+
+  useEffect(() => {
+    if (isLoggedIn && (orgUuid || publisherTnC.accepted)) {
+      history.push(GlobalRoutes.ONBOARDING.path);
+    }
+  }, [history, isLoggedIn, orgUuid, publisherTnC]);
 
   const handleContinue = () => {
     if (isLoggedIn) {
@@ -34,10 +46,10 @@ const Enroll = ({ classes, history }) => {
           address.
         </Typography>
         <Typography variant="subtitle1" display="inline">
-          Valid Documents:{" "}
+          Valid Documents:
         </Typography>
         <Typography variant="body2" display="inline">
-          Passport, Driving Licence, National Identity Card{" "}
+          Passport, Driving Licence, National Identity Card
         </Typography>
       </Grid>
 
@@ -80,7 +92,7 @@ const Enroll = ({ classes, history }) => {
           Metamask app plugin. It is recommended that you{" "}
           <a target="_blank" href="https://dev.singularitynet.io/docs/ai-consumers/wallet/">
             setup and install Metamask Wallet
-          </a>{" "}
+          </a>
           account so that you will be perform the publishing actions to the blockchain as well as collect AGI tokens
           that your AI services gains from customers purchases.
         </Typography>
@@ -90,7 +102,7 @@ const Enroll = ({ classes, history }) => {
         </Typography>
         <ul>
           <Typography variant="subtitle1" display="inline">
-            You will be required to use your Metamask Wallet to perform these actions:{" "}
+            You will be required to use your Metamask Wallet to perform these actions:
           </Typography>
           <li>
             <Typography variant="body2">- Publishing your company or individual entity to the blockchain</Typography>

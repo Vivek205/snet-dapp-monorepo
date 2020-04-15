@@ -7,6 +7,8 @@ export const useStyles = makeStyles(MUITheme => ({
     alignItems: "center",
     boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
     zIndex: 1110,
+    [MUITheme.breakpoints.down("md")]: { padding: "14px 10px" },
+    "@media(max-width:1028px)": { justifyContent: "space-between" },
   },
   purple: {
     "& h5": { color: `${MUITheme.palette.text.white} !important` },
@@ -21,11 +23,16 @@ export const useStyles = makeStyles(MUITheme => ({
       fontWeight: 300,
       letterSpacing: -1,
       lineHeight: "30px",
+      "@media(max-width:400px)": { display: "none" },
     },
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
   },
   navContainer: {
     flexGrow: 1,
+    "@media(max-width:1028px)": { display: "none" },
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
+  },
+  headerActionsContainer: {
+    "@media(max-width:642px)": { display: "none" },
   },
 }));

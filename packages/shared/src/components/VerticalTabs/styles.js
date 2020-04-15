@@ -33,6 +33,7 @@ export const useStyles = makeStyles(theme => ({
   drawerOpen: {
     width: 193,
     top: 71,
+    zIndex: 1,
     background: "#220D3A",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -45,6 +46,7 @@ export const useStyles = makeStyles(theme => ({
   drawerClose: {
     width: 60,
     top: 71,
+    zIndex: 1,
     background: "#220D3A",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,

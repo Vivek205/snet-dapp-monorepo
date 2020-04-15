@@ -40,4 +40,5 @@ export const useStyles = MUITheme => ({
     padding: "0 22px 40px",
     justifyContent: "center",
   },
+  alertBoxContainer: { margin: "0 25px 20px" },
 });

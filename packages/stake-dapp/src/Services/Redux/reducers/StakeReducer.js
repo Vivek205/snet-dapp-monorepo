@@ -23,6 +23,7 @@ const InitialRequestDetails = {
     totalStakers: 0,
     totalStakedAmount: 0,
     myStake: 0,
+    myStakeProcessed: 0,
     autoRenewal: true,
   },
   incubationStakes: [],
@@ -41,6 +42,7 @@ const InitialRequestDetails = {
     openForExternal: false,
     windowTotalStake: 0,
     windowRewardAmount: 0,
+    totalPendingApprovalStake: 0,
   },
 };
 

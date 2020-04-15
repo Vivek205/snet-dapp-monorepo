@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import AdvanceSettings from "./AdvanceSettings";
@@ -118,8 +120,8 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    here
-                  </a>{" "}
+                    here{" "}
+                  </a>
                   and creating ethereum identity{" "}
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/ethereum-identity/"
@@ -152,23 +154,34 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               }
               onKeyUp={handleAddEndpoints}
               inputRef={etcdEndpointsRef}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleKeyEnterInTags}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.cardContainer}>
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
               <InfoIcon />
             </div>
-            <Card className={classes.card}>
-              {paymentConfig.paymentChannelStorageClient.endpoints.map(endpoint => (
-                <Chip
-                  className={classes.chip}
-                  key={endpoint}
-                  label={endpoint}
-                  color="primary"
-                  onDelete={() => handleDeleteEndpoints(endpoint)}
-                />
-              ))}
-            </Card>
+            <div className={classes.cardContainer}>
+              <span className={classes.label}>Added Endpoints</span>
+
+              <Card className={classes.card}>
+                {paymentConfig.paymentChannelStorageClient.endpoints.map(endpoint => (
+                  <Chip
+                    className={classes.chip}
+                    key={endpoint}
+                    label={endpoint}
+                    color="primary"
+                    onDelete={() => handleDeleteEndpoints(endpoint)}
+                  />
+                ))}
+              </Card>
+            </div>
           </Grid>
           <AdvanceSettings
             show={showAdvancedSettings}

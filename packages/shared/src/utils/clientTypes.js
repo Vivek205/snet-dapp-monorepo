@@ -4,3 +4,10 @@ export const clientTypes = {
   RFAI_DAPP: "RFAI_DAPP",
   STAKE_DAPP: "STAKE_DAPP",
 };
+
+export const clientTypesUtility = {
+  PUBLISHER: "PUBLISHER",
+  MARKETPLACE: "MARKETPLACE",
+  RFAI: "RFAI",
+  STAKE: "STAKE",
+};

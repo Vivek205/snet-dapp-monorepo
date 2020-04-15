@@ -58,7 +58,7 @@ const IndividualStatus = ({ classes, history }) => {
       <Grid container spacing={24} className={classes.individualStatusContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
           <Typography variant="h3">Welcome to the AI Publisher</Typography>
-          <Typography>With this pubilsher portal, you can publish and manage your AI services.</Typography>
+          <Typography>With this publisher portal, you can publish and manage your AI services.</Typography>
         </Grid>
         <Component handleVerify={handleVerify} rejectReason={rejectReason} />
         <AlertBox type={alert.type} message={alert.message} />

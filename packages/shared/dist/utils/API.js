@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.APIError = exports.responseStatus = void 0;
+exports.APIError = exports.httpStatus = exports.responseStatus = void 0;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -33,6 +33,10 @@ var responseStatus = {
   SUCCESS: "success"
 };
 exports.responseStatus = responseStatus;
+var httpStatus = {
+  SUCCESS: 200
+};
+exports.httpStatus = httpStatus;
 
 var APIError = /*#__PURE__*/function (_Error) {
   _inherits(APIError, _Error);

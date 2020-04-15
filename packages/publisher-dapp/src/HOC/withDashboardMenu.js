@@ -25,7 +25,7 @@ const withDashboardMenu = Component => {
         icon: <HomeIcon />,
         title: "My AI Apps",
         href: GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid),
-        openInNewTab: true,
+        openInNewTab: false,
       },
       {
         icon: <GroupIcon />,

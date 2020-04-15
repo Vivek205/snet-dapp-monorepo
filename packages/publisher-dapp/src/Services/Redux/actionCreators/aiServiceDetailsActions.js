@@ -14,6 +14,7 @@ import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -160,6 +161,7 @@ const generateSaveServicePayload = serviceDetails => {
           pricing: generatePricingpayload(group.pricing),
           endpoints: group.endpoints,
           test_endpoints: group.testEndpoints,
+          daemon_addresses: group.daemonAddresses,
         };
       })
       .filter(el => el !== undefined);
@@ -186,7 +188,6 @@ const generateSaveServicePayload = serviceDetails => {
       },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    ipfs_hash: serviceDetails.ipfsHash,
     groups: generateGroupsPayload(),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
@@ -274,6 +275,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
+      daemonAddresses: group.daemon_addresses || [],
       testEndpoints: group.test_endpoints || [],
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
@@ -287,6 +289,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
+    newId: data.service_id,
     shortDescription: data.short_description,
     longDescription: data.description,
     projectURL: data.project_url,
@@ -348,6 +351,7 @@ export const getFreeCallSignerAddress = (orgId, serviceId, groupId, username) =>
     }
     dispatch(setAiServiceFreeCallSignerAddress(data.free_call_signer_address));
     dispatch(loaderActions.stopAppLoader());
+    return data.free_call_signer_address;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -503,8 +507,8 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
 };
 
 const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getServiceRegistrationById(orgId, serviceId).call();
+  const registry = new RegistryContract();
+  return await registry.getServiceRegistrationById(orgId, serviceId).call();
 };
 
 export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
@@ -521,12 +525,13 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
 };
 
 const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  const daemonConfigNetwork = { TEST: "TEST", MAIN: "MAIN" };
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = testDaemon
-    ? APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid)
-    : APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
-  const queryParams = testDaemon ? undefined : { network_id: process.env.REACT_APP_ETH_NETWORK };
+  const apiPath = APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
+  const queryParams = testDaemon
+    ? { network: daemonConfigNetwork.TEST }
+    : { network_id: process.env.REACT_APP_ETH_NETWORK, network: daemonConfigNetwork.MAIN };
   const apiOptions = initializeAPIOptions(token, undefined, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };

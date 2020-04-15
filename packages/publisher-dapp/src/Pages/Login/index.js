@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
@@ -8,14 +8,22 @@ import { loginActions } from "../../Services/Redux/actionCreators/userActions";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { isLoggedIn, publisherTnC } = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  const checkUserTnCAcceptance = useCallback(() => {
+    return publisherTnC.ver && publisherTnC.accepted;
+  }, [publisherTnC]);
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(GlobalRoutes.ONBOARDING.path);
+      if (checkUserTnCAcceptance()) {
+        history.push(GlobalRoutes.ONBOARDING.path);
+      } else {
+        history.push(GlobalRoutes.OVERVIEW.path);
+      }
     }
-  }, [isLoggedIn, history]);
+  }, [isLoggedIn, history, checkUserTnCAcceptance]);
 
   const handleUserNotConfirmed = () => {
     history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
@@ -24,7 +32,6 @@ const Login = ({ history }) => {
   const handleSubmit = async (email, password) => {
     try {
       await dispatch(loginActions.login(email, password));
-      history.push(GlobalRoutes.ONBOARDING.path);
     } catch (error) {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
