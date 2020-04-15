@@ -8,6 +8,11 @@ export const useStyles = MUITheme => ({
   statusDetails: {
     display: "flex",
     alignItems: "baseline",
+    '& p[data-status-type="DRAFT"], p[data-status-type="PUBLISHED"],p[data-status-type="APPROVED"] ': {
+      color: MUITheme.palette.warning.main,
+    },
+    '& p[data-status-type="OFFLINE"],  p[data-status-type="REJECTED"]': { color: MUITheme.palette.text.statusRed },
+    '& p[data-status-type="ACTIVE"]': { color: MUITheme.palette.success.main },
   },
   property: {
     color: `${MUITheme.palette.text.darkGrey} !important`,
@@ -17,7 +22,6 @@ export const useStyles = MUITheme => ({
   },
   value: {
     paddingLeft: 16,
-    color: `${MUITheme.palette.success.main} !important`,
     fontSize: "18px !important",
     lineHeight: "23px",
     textTransform: "uppercase",

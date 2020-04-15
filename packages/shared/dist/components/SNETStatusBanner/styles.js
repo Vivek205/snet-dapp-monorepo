@@ -37,7 +37,7 @@ var useStyles = function useStyles(MUITheme) {
         color: MUITheme.palette.text.primary,
         fontSize: 14,
         lineHeight: "21px",
-        '@media(max-width:600px)': {
+        "@media(max-width:600px)": {
           paddingRight: 0
         }
       },
