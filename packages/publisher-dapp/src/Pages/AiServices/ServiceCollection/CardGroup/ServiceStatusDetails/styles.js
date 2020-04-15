@@ -1,3 +1,5 @@
+import { serviceCreationStatus } from "../../../../AiServiceCreation/constant";
+
 export const useStyles = MUITheme => ({
   serviceStatusDetailsMainContainer: {
     height: "100%",
@@ -8,11 +10,13 @@ export const useStyles = MUITheme => ({
   statusDetails: {
     display: "flex",
     alignItems: "baseline",
-    '& p[data-status-type="DRAFT"], p[data-status-type="PUBLISHED"],p[data-status-type="APPROVED"] ': {
+    [`& p[data-status-type="${serviceCreationStatus.DRAFT}"], p[data-status-type="${serviceCreationStatus.PUBLISHED}"],p[data-status-type="${serviceCreationStatus.APPROVED}"]`]: {
       color: MUITheme.palette.warning.main,
     },
-    '& p[data-status-type="OFFLINE"],  p[data-status-type="REJECTED"]': { color: MUITheme.palette.text.statusRed },
-    '& p[data-status-type="ACTIVE"]': { color: MUITheme.palette.success.main },
+    [`& p[data-status-type="${serviceCreationStatus.OFFLINE}"], p[data-status-type="${serviceCreationStatus.REJECTED}"]`]: {
+      color: MUITheme.palette.text.statusRed,
+    },
+    [`& p[data-status-type="${serviceCreationStatus.ACTIVE}"]`]: { color: MUITheme.palette.success.main },
   },
   property: {
     color: `${MUITheme.palette.text.darkGrey} !important`,
