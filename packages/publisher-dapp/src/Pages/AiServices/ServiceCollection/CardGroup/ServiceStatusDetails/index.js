@@ -142,7 +142,9 @@ const ServiceStatusDetails = props => {
       <div>
         <div className={classes.statusDetails}>
           <Typography className={classes.property}>status</Typography>
-          <Typography className={classes.value}>{status}</Typography>
+          <Typography data-status-type={status} className={classes.value}>
+            {status}
+          </Typography>
         </div>
         <div className={classes.tabsContainer}>
           <AppBar position="static" className={classes.tabsHeader}>
