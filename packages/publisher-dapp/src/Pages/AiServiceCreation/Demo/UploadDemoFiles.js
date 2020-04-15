@@ -41,12 +41,12 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
     [changeDemoFiles, dispatch, orgUuid, serviceUuid]
   );
   const validateIndexFile = uploadedFile => {
-    const lookForIndex = "index.js";
+    const fileToBePresent = "index.js";
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
         const indexFileFound = Object.values(entry.files).some(file => {
-          return file.name == lookForIndex;
+          return file.name === fileToBePresent;
         });
         if (!indexFileFound) {
           reject(new ValidationError("The zip file should contain index.js file"));
