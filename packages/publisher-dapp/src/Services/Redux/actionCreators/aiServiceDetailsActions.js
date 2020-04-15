@@ -15,6 +15,7 @@ import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -514,7 +515,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };

@@ -40,8 +40,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginLeft: 11,
         fontWeight: 300,
         lineHeight: "30px",
-        '@media(max-width:400px)': {
-          display: 'none'
+        "@media(max-width:400px)": {
+          display: "none"
         }
       }
     }, MUITheme.breakpoints.down("md"), {

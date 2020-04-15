@@ -13,6 +13,8 @@ import DaemonConfig from "../DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import ReadyToLaunch from "../ReadyToLaunch";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import validationError from "shared/dist/utils/validationError";
 
 class LaunchService extends React.Component {
   state = { daemonConfig: {}, alert: {}, continueToLaunch: false };
@@ -43,25 +45,28 @@ class LaunchService extends React.Component {
   };
 
   handlePublishToBlockchain = async () => {
-    this.setState({ alert: {} });
-    const { publishToIPFS, organization, serviceDetails, history, publishService } = this.props;
-    if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISHED) {
+    try {
+      this.setState({ alert: {} });
+      const { publishToIPFS, organization, serviceDetails, history, publishService } = this.props;
+      if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISHED) {
+        throw new validationError("Service is already published. No new changes to be published.");
+      }
+      if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISH_IN_PROGRESS) {
+        throw new validationError("Service is already being published. Please wait.");
+      }
+      if (serviceDetails.serviceState.state !== serviceCreationStatus.APPROVED) {
+        throw new validationError("Service is not yet approved. Please submit for approval.");
+      }
+      const { metadata_ipfs_hash } = await publishToIPFS(organization.uuid, serviceDetails.uuid);
+      await publishService(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags, history);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+      }
       return this.setState({
-        alert: { type: alertTypes.ERROR, message: "Service is already published. No new changes to be published " },
+        alert: { type: alertTypes.ERROR, message: "Something went wrong. Please try later" },
       });
     }
-    if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISH_IN_PROGRESS) {
-      return this.setState({
-        alert: { type: alertTypes.ERROR, message: "Service is already being published. Please wait." },
-      });
-    }
-    if (serviceDetails.serviceState.state !== serviceCreationStatus.APPROVED) {
-      return this.setState({
-        alert: { type: alertTypes.ERROR, message: "Service is not yet approved. Please submit for approval " },
-      });
-    }
-    const { metadata_ipfs_hash } = await publishToIPFS(organization.uuid, serviceDetails.uuid);
-    await publishService(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags, history);
   };
 
   handleContinueToLaunch = () => {
