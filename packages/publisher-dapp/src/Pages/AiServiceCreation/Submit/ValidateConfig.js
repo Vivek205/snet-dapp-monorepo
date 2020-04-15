@@ -22,7 +22,8 @@ const ValidateConfig = props => {
       <SNETTextfield
         name="id"
         label="Public Daemon Endpoint"
-        description="The ID of your service has to be unique withing your organization"
+        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service.
+        Feel free to edit it"
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />

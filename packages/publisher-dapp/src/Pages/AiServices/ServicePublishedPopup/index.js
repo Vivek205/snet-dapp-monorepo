@@ -28,8 +28,7 @@ const ServicePublishedPopup = ({ open, handleClose, classes }) => {
         />
         <CardContent className={classes.popupContent}>
           <Typography className={classes.popupDescription}>
-            Your AI service is published in blockchain. It will take some time to reflect in our database. Once updated
-            you can verify the service.
+            Your AI service is published in blockchain. It will take some time to reflect in our database.
           </Typography>
           <div className={classes.alertBoxContainer}>
             <AlertBox type={alert.type} message={alert.message} />
