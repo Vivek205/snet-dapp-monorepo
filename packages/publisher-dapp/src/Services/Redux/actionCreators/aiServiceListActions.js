@@ -43,7 +43,7 @@ const parseGroups = groups => {
     id: group.group_id,
     pricing: parsePricing(group.pricing),
     endpoints: group.endpoints,
-    freeCallsAllowed: group.freecalls_allowed,
+    freeCallsAllowed: group.free_calls,
   }));
 };
 
