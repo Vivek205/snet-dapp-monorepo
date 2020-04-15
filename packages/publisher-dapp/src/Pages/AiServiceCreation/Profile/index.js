@@ -148,14 +148,14 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       }
       setTags("");
     });
-    changeServiceDetailsLeaf();
+    changeServiceDetailsLeaf("tags", localItems);
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-    changeServiceDetailsLeaf();
+    changeServiceDetailsLeaf("tags", localItems);
   };
 
   const handleResetImage = () => {
