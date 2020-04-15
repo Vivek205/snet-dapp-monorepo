@@ -38,14 +38,7 @@ const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({
-  classes,
-  serviceDetails,
-  changeServiceDetailsLeaf,
-  changeHeroImage,
-  setServiceDetailsInRedux,
-  changeInputTags,
-}) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
@@ -155,14 +148,14 @@ const Profile = ({
       }
       setTags("");
     });
-    changeInputTags(localItems);
+    changeServiceDetailsLeaf();
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-    changeInputTags(localItems);
+    changeServiceDetailsLeaf();
   };
 
   const handleResetImage = () => {

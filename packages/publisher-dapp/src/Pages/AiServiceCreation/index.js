@@ -133,16 +133,6 @@ class AiServiceCreation extends Component {
     }));
   };
 
-  handleInputTags = tags => {
-    this.setState(prevState => ({
-      serviceDetails: {
-        ...prevState.serviceDetails,
-        touched: true,
-        tags,
-      },
-    }));
-  };
-
   handleDemoFilesChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
@@ -195,7 +185,6 @@ class AiServiceCreation extends Component {
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
-          changeInputTags={this.handleInputTags}
         />
         <Loader />
       </div>
