@@ -75,7 +75,7 @@ const ServiceStatusDetails = props => {
           const entry = entries[index];
           const [endpoint, value] = entry;
           if (value.valid) {
-            return;
+            continue;
           }
           const configurationServiceRequest = new ConfigurationServiceRequest(endpoint);
           if (!signature) {
