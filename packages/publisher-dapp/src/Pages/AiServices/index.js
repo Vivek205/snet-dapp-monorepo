@@ -89,6 +89,7 @@ class AiServices extends Component {
 const mapStateToProps = state => ({
   orgUuid: state.organization.uuid,
   pagination: state.aiServiceList.pagination,
+  showServicePublishedPopup: state.aiServiceList.showServicePublishedPopup,
 });
 
 const mapDispatchToProps = dispatch => ({
