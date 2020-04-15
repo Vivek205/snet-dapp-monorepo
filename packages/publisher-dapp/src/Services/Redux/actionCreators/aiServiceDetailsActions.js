@@ -267,6 +267,17 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceInCogs: price.price_in_cogs,
     }));
   const parseGroups = groups => {
+    const retrieveTestEndpointFromGroup = group => {
+      if (!isEmpty(group.test_endpoints)) {
+        return group.test_endpoints;
+      }
+      if (!isEmpty(group.endpoints)) {
+        const endpoints = Object.keys(group.endpoints);
+        return [endpoints[0]];
+      }
+      return [];
+    };
+
     if (isEmpty(groups)) {
       return defaultGroups;
     }
@@ -276,7 +287,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
       daemonAddresses: group.daemon_addresses || [],
-      testEndpoints: group.test_endpoints || [],
+      testEndpoints: retrieveTestEndpointFromGroup(group),
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
     }));

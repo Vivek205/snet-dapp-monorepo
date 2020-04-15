@@ -140,7 +140,7 @@ class SubmitForReview extends React.Component {
     const { classes, serviceDetails } = this.props;
     const { daemonConfig, alert, validateDaemonAlert } = this.state;
     const charCount = serviceDetails.comments.SERVICE_PROVIDER.length;
-    const testEndPoint = serviceDetails.groups[0].testEndpoints;
+    const testEndPoint = serviceDetails.groups[0].testEndpoints[0];
 
     return (
       <Grid container className={classes.submitContainer}>
