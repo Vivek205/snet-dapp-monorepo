@@ -5,6 +5,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -78,6 +79,10 @@ const Region = ({ changeGroups, serviceGroups }) => {
       id: selectedOrgGroup.id,
       name: selectedOrgGroup.name,
     };
+    if (isEmpty(updatedServiceGroups[0].testEndpoints)) {
+      const endpoint = Object.keys(updatedServiceGroups[0].endpoints)[0];
+      updatedServiceGroups[0].testEndpoints = [endpoint];
+    }
     changeGroups(updatedServiceGroups);
     endpointRef.current.value = "";
   };
@@ -128,19 +133,6 @@ const Region = ({ changeGroups, serviceGroups }) => {
     updatedAddresses.splice(index, 1);
     const updatedServiceGroups = [...serviceGroups];
     updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses };
-    changeGroups(updatedServiceGroups);
-  };
-
-  const handleNewTestEndpointsChange = event => {
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-    const newEndpoints = [event.target.value];
-    const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = {
-      ...selectedServiceGroup,
-      testEndpoints: newEndpoints,
-      id: selectedOrgGroup.id,
-      name: selectedOrgGroup.name,
-    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -320,17 +312,6 @@ const Region = ({ changeGroups, serviceGroups }) => {
               </Card>
               <span className={classes.extraInfo}>You can add up to 20 addresses</span>
             </div>
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <SNETTextfield
-              icon
-              name="testEndpoints"
-              value={selectedServiceGroup.testEndpoints}
-              onChange={handleNewTestEndpointsChange}
-              label="Test - Daemon Endpoints"
-              description="Enter the public end point of the daemon to be used for curation. This is an optional field and only needed if you want to modify a service that has already been published to the Marketplace"
-            />
           </Grid>
         </Grid>
       </div>
