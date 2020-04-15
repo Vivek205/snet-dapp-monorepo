@@ -84,9 +84,6 @@ const ServiceStatusDetails = props => {
           }
           try {
             const res = await configurationServiceRequest.getConfiguration(signature, currentBlock);
-            if (!DaemonConfigvalidateAlert.includes("please fix the below errors for endpoint: " + endpoint)) {
-              DaemonConfigvalidateAlert.push("please fix the below errors for endpoint: " + endpoint);
-            }
             res.currentConfigurationMap.forEach(element => {
               configValidation.forEach(element1 => {
                 if (element[0] === element1[0]) {
@@ -97,8 +94,15 @@ const ServiceStatusDetails = props => {
                 }
               });
             });
+            errorMessage = generateDetailedErrorMessageFromValidation(endpoint, DaemonConfigvalidateAlert);
+            multiErrors.push(errorMessage);
           } catch (error) {
-            DaemonConfigvalidateAlert.push(endpoint + " is not a valid endpoint ");
+            multiErrors.push(endpoint + " is not a valid endpoint ");
+            if (isEmpty(DaemonConfigvalidateAlert)) {
+              DaemonConfigvalidateAlert.push(endpoint + " is not a valid endpoint ");
+              errorMessage = generateDetailedErrorMessageFromValidation(null, DaemonConfigvalidateAlert);
+              setAlert({ type: alertTypes.ERROR, children: errorMessage });
+            }
           }
         }
         if (isEmpty(DaemonConfigvalidateAlert)) {
@@ -112,8 +116,6 @@ const ServiceStatusDetails = props => {
             aiServiceDetailsActions.submitServiceDetailsForReview(result[0].orgUuid, serviceUuid, result[0], true)
           );
         } else {
-          errorMessage = generateDetailedErrorMessageFromValidation(DaemonConfigvalidateAlert);
-          multiErrors.push(errorMessage);
           setAlert({ type: alertTypes.ERROR, children: multiErrors });
         }
       });
