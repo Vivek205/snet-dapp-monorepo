@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import DummyCardImg from "shared/dist/assets/images/dummy-card.png";
@@ -48,11 +50,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
   const [websiteValidation, setWebsiteValidation] = useState({});
 
-  const setServiceTouchedFlag = () => {
-    // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-  };
-
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
     try {
@@ -87,7 +84,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return changeServiceDetailsLeaf("newId", value);
@@ -150,28 +146,24 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       if (index === -1) {
         localItems.push(tag);
       }
+      setTags("");
     });
-
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-
-    // Set State
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
+
   const handleResetImage = () => {
     changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
@@ -265,6 +257,13 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleKeyEnterInTags}>+</IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <div className={classes.addedTagsContainer}>
             <div>

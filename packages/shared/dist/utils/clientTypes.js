@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clientTypes = void 0;
+exports.clientTypesUtility = exports.clientTypes = void 0;
 var clientTypes = {
   PUBLISHER_DAPP: "PUBLISHER_DAPP",
   MARKETPLACE_DAPP: "MARKETPLACE_DAPP",
@@ -11,3 +11,10 @@ var clientTypes = {
   STAKE_DAPP: "STAKE_DAPP"
 };
 exports.clientTypes = clientTypes;
+var clientTypesUtility = {
+  PUBLISHER: "PUBLISHER",
+  MARKETPLACE: "MARKETPLACE",
+  RFAI: "RFAI",
+  STAKE: "STAKE"
+};
+exports.clientTypesUtility = clientTypesUtility;

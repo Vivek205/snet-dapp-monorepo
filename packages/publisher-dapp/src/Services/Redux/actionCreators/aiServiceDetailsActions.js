@@ -6,7 +6,7 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
-import { loaderActions } from "./";
+import { aiServiceListActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
@@ -15,6 +15,7 @@ import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -267,6 +268,17 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceInCogs: price.price_in_cogs,
     }));
   const parseGroups = groups => {
+    const retrieveTestEndpointFromGroup = group => {
+      if (!isEmpty(group.test_endpoints)) {
+        return group.test_endpoints;
+      }
+      if (!isEmpty(group.endpoints)) {
+        const endpoints = Object.keys(group.endpoints);
+        return [endpoints[0]];
+      }
+      return [];
+    };
+
     if (isEmpty(groups)) {
       return defaultGroups;
     }
@@ -276,7 +288,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
       daemonAddresses: group.daemon_addresses || [],
-      testEndpoints: group.test_endpoints || [],
+      testEndpoints: retrieveTestEndpointFromGroup(group),
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
     }));
@@ -448,6 +460,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
@@ -494,6 +507,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async hash => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
         resolve(hash);
@@ -501,7 +515,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };

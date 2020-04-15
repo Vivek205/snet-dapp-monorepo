@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,8 +9,20 @@ import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { OnboardingRoutes } from "../Onboarding/OnboardingRouter/Routes";
 
+const selectState = state => ({
+  isLoggedIn: state.user.isLoggedIn,
+  orgUuid: state.organization.uuid,
+  publisherTnC: state.user.publisherTnC,
+});
+
 const Enroll = ({ classes, history }) => {
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const { isLoggedIn, orgUuid, publisherTnC } = useSelector(selectState);
+
+  useEffect(() => {
+    if (isLoggedIn && (orgUuid || publisherTnC.accepted)) {
+      history.push(GlobalRoutes.ONBOARDING.path);
+    }
+  }, [history, isLoggedIn, orgUuid, publisherTnC]);
 
   const handleContinue = () => {
     if (isLoggedIn) {
@@ -55,7 +67,7 @@ const Enroll = ({ classes, history }) => {
             Your organization must have a D-U-N-S Number so that we can verify your organization’s identity and legal
             entity status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as
             standard business identifiers. You can check to see if your organization already has a D-U-N-S Number and
-            request one if necessary. They are free in most jurisdictions.
+            request one if necessary. They are free in most jurisdictions.{" "}
             <a target="_blank" href="https://www.dnb.com/duns-number/get-a-duns.html">
               Learn more
             </a>
@@ -77,7 +89,7 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="h4">Metamask</Typography>
         <Typography variant="body2">
           In order to publish your AI services and company or individual entity to the blockchain, you will need to use
-          Metamask app plugin. It is recommended that you
+          Metamask app plugin. It is recommended that you{" "}
           <a target="_blank" href="https://dev.singularitynet.io/docs/ai-consumers/wallet/">
             setup and install Metamask Wallet
           </a>
