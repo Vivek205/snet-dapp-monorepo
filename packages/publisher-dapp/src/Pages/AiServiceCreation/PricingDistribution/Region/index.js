@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
@@ -48,10 +50,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return true;
   };
 
-  const handleNewEndpointsChange = event => {
+  const handleNewEndpointsChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewEndpointsChange();
+  };
+  const handleNewEndpointsChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
     let updatedEndpoints = { ...selectedServiceGroup.endpoints };
@@ -68,7 +73,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      endpoints: updatedEndpoints,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     if (isEmpty(updatedServiceGroups[0].testEndpoints)) {
       const endpoint = Object.keys(updatedServiceGroups[0].endpoints)[0];
       updatedServiceGroups[0].testEndpoints = [endpoint];
@@ -86,10 +96,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
-  const handleNewDaemonAddressChange = event => {
+  const handleNewDaemonAddressChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewDaemonAddressChange();
+  };
+  const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newAddresses = addressRef.current.value;
     let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
@@ -103,7 +116,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      daemonAddresses: updatedAddresses,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
     addressRef.current.value = "";
   };
@@ -119,7 +137,8 @@ const Region = ({ changeGroups, serviceGroups }) => {
   };
 
   const handleFreeCallsValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.groups.array.freeCallsAllowed);
+    if (value === "") return;
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
     if (isNotValid) {
       return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
     }
@@ -131,7 +150,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      freeCallsAllowed: value,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -149,7 +173,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      pricing: updatedServicePricing,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -206,9 +235,16 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="endpoints"
               inputRef={endpointRef}
-              onKeyUp={handleNewEndpointsChange}
+              onKeyUp={handleNewEndpointsChangeOnKeyPress}
               label="Daemon Endpoints"
               description="Enter all the public Daemon end points that will be used to call the service."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
@@ -240,12 +276,19 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="daemonAdresses"
               inputRef={addressRef}
-              onKeyUp={handleNewDaemonAddressChange}
+              onKeyUp={handleNewDaemonAddressChangeOnKeyPress}
               label="Daemon Addresses"
               description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
                if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
                 in its configuration and will sign using this pvt key when making any requests to other systems."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewDaemonAddressChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
 

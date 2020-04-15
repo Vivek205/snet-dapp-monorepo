@@ -17,7 +17,7 @@ export const defaultGroups = [
     endpoints: {},
     testEndpoints: [],
     daemonAddresses: [],
-    freeCallsAllowed: "",
+    freeCallsAllowed: 0,
   },
 ];
 

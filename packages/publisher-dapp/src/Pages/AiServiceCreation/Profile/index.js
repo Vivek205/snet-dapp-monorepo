@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import DummyCardImg from "shared/dist/assets/images/dummy-card.png";
@@ -150,6 +152,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       if (index === -1) {
         localItems.push(tag);
       }
+      setTags("");
     });
 
     dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
@@ -265,6 +268,13 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleKeyEnterInTags}>+</IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <div className={classes.addedTagsContainer}>
             <div>
