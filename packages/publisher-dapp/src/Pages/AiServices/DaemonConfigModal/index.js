@@ -9,9 +9,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 
 import SNETButton from "shared/dist/components/SNETButton";
-import DaemonConfig from "../../../../../Components/DaemonConfig";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
+import DaemonConfig from "../../../Components/DaemonConfig";
 
 const DaemonConfigModal = ({ classes, open, handleClose, daemonConfig }) => {
   return (

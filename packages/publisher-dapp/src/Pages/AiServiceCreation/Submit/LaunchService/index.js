@@ -9,7 +9,7 @@ import isEmpty from "lodash/isEmpty";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { serviceCreationStatus } from "../../constant";
 import { useStyles } from "./styles";
-import DaemonConfig from "../DaemonConfig";
+import DaemonConfig from "../../../../Components/DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import ReadyToLaunch from "../ReadyToLaunch";
