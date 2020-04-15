@@ -6,7 +6,7 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
-import { loaderActions } from "./";
+import { aiServiceListActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
@@ -448,6 +448,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
@@ -494,6 +495,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async hash => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
         resolve(hash);

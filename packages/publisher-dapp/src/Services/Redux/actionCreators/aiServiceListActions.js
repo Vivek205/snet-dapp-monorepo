@@ -11,6 +11,7 @@ import { defaultPagination } from "../reducers/aiServiceListReducer";
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
 export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
 export const SET_AI_SERVICE_LIST_TOTAL_COUNT = "SET_AI_SERVICE_LIST_TOTAL_COUNT";
+export const SET_RECENTLY_PUBLISHED_SERVICE = "SET_RECENTLY_PUBLISHED_SERVICE";
 
 const setAiServiceList = aiServiceList => ({
   type: SET_AI_SERVICE_LIST,
@@ -25,6 +26,11 @@ export const setAiServiceListPagination = pagination => ({
 export const setAiServiceListTotalCount = totalCount => ({
   type: SET_AI_SERVICE_LIST_TOTAL_COUNT,
   payload: totalCount,
+});
+
+export const setRecentlyPublishedService = serviceName => ({
+  type: SET_RECENTLY_PUBLISHED_SERVICE,
+  payload: serviceName,
 });
 
 const getAiServiceListAPI = (orgUuid, pagination) => async dispatch => {
