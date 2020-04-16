@@ -140,7 +140,10 @@ const Region = ({ changeGroups, serviceGroups }) => {
     if (value === "") return;
     const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
     if (isNotValid) {
-      return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
+      return setfreeCallsValidation({
+        type: alertTypes.ERROR,
+        message: "Free calls value should be greater than or equal to 0",
+      });
     }
     return setfreeCallsValidation({ type: alertTypes.SUCCESS, message: "" });
   };
