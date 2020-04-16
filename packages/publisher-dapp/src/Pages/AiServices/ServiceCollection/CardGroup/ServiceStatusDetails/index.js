@@ -73,6 +73,7 @@ const ServiceStatusDetails = props => {
       setVerifyDaemonAlert({ ...verifyDaemonAlert, type: alertTypes.WARNING, message: "" });
       const selectedService = serviceDetails.data.find(({ uuid }) => serviceUuid === uuid);
       const invalidEndpoints = [];
+      const validEndpoints = [];
       let signature = "";
       let currentBlock;
 
@@ -100,11 +101,36 @@ const ServiceStatusDetails = props => {
                 }
               });
             });
+            if (!invalidEndpoints.includes(endpoint)) {
+              validEndpoints.push(endpoint);
+            }
           } catch (error) {
             invalidEndpoints.push(endpoint);
           }
-        }
-      }
+        } // End of Endpoints iteration
+      } // End of Groups Iteration
+      const validatedEndpoints = {
+        ...invalidEndpoints.reduce((acc, cur) => {
+          acc[cur] = { valid: false };
+          return acc;
+        }, {}),
+        ...validEndpoints.reduce((acc, cur) => {
+          acc[cur] = { valid: true };
+          return acc;
+        }, {}),
+      };
+      const serviceDetailsToPatch = { groups: [...selectedService.groups] };
+      serviceDetailsToPatch.groups[0] = {
+        ...selectedService.groups[0],
+        endpoints: validatedEndpoints,
+      };
+      const patchGroups = aiServiceDetailsActions.generateGroupsPayload(
+        serviceDetailsToPatch.groups,
+        serviceDetailsToPatch.groups[0].freeCallSignerAddress
+      );
+      serviceDetailsToPatch.groups = patchGroups;
+      dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
+      await dispatch(aiServiceDetailsActions.patchServiceDetails(orgUuid, serviceUuid, serviceDetailsToPatch));
       if (isEmpty(invalidEndpoints)) {
         dispatch(loaderActions.stopAppLoader());
         return setVerifyDaemonAlert({
