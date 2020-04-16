@@ -176,6 +176,7 @@ class SubmitForReview extends React.Component {
                 color="primary"
                 variant="contained"
                 onClick={this.handleSubmitForReview}
+                disabled={validateDaemonAlert.type !== alertTypes.SUCCESS}
               />
             </div>
           </div>

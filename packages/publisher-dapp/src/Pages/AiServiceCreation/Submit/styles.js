@@ -29,9 +29,9 @@ export const useStyles = MUITheme => ({
     lineHeight: "24px",
   },
   reviewProcessDescription: {
-    padding: " 20px 21px 22px",
+    padding: " 16px 21px 22px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
   },
   metamaskAddText: {
