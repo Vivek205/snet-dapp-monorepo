@@ -44,7 +44,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const handleEndPointValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: isNotValid });
+      setAlert({ type: alertTypes.ERROR, children: isNotValid });
       return false;
     }
     return true;
@@ -251,7 +251,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               }}
             />
           </Grid>
-          <AlertBox type={alert.type} message={alert.message} />
+          <AlertBox type={alert.type} children={alert.children} />
 
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
