@@ -234,6 +234,23 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
   }
 };
 
+const patchServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.SAVE_AI_SERVICE(orgUuid, serviceUuid);
+  const body = serviceDetailsPayload;
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.patch(apiName, apiPath, apiOptions);
+};
+
+export const patchServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+  const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
+  const { error } = await dispatch(patchServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+  if (error.code) {
+    throw new APIError(error.message);
+  }
+};
+
 const getServiceDetailsAPI = (orgUuid, serviceUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
