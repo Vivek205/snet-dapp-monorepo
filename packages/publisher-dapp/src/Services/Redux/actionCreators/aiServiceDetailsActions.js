@@ -139,34 +139,34 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   }
 };
 
+const generatePricingpayload = pricing =>
+  pricing.map(price => ({
+    default: price.default,
+    price_model: price.priceModel,
+    price_in_cogs: Number(price.priceInCogs),
+  }));
+
+export const generateGroupsPayload = (groups, freeCallSignerAddress) =>
+  groups
+    .map(group => {
+      if (!group.id) {
+        return undefined;
+      }
+      return {
+        group_name: group.name,
+        group_id: group.id,
+        free_calls: Number(group.freeCallsAllowed),
+        free_call_signer_address: freeCallSignerAddress,
+        pricing: generatePricingpayload(group.pricing),
+        endpoints: group.endpoints,
+        test_endpoints: group.testEndpoints,
+        daemon_addresses: group.daemonAddresses,
+      };
+    })
+    .filter(el => el !== undefined);
+
 // TODO remove orgId. MPS has to figure out orgId from orgUuid
 const generateSaveServicePayload = serviceDetails => {
-  const generatePricingpayload = pricing =>
-    pricing.map(price => ({
-      default: price.default,
-      price_model: price.priceModel,
-      price_in_cogs: Number(price.priceInCogs),
-    }));
-
-  const generateGroupsPayload = () =>
-    serviceDetails.groups
-      .map(group => {
-        if (!group.id) {
-          return undefined;
-        }
-        return {
-          group_name: group.name,
-          group_id: group.id,
-          free_calls: Number(group.freeCallsAllowed),
-          free_call_signer_address: serviceDetails.freeCallSignerAddress,
-          pricing: generatePricingpayload(group.pricing),
-          endpoints: group.endpoints,
-          test_endpoints: group.testEndpoints,
-          daemon_addresses: group.daemonAddresses,
-        };
-      })
-      .filter(el => el !== undefined);
-
   const payloadForSubmit = {
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
@@ -189,7 +189,7 @@ const generateSaveServicePayload = serviceDetails => {
       },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    groups: generateGroupsPayload(),
+    groups: generateGroupsPayload(serviceDetails.groups, serviceDetails.freeCallSignerAddress),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,

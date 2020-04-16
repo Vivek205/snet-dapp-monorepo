@@ -51,6 +51,9 @@ const parseGroups = groups => {
     pricing: parsePricing(group.pricing),
     endpoints: group.endpoints,
     freeCallsAllowed: group.free_calls,
+    freeCallSignerAddress: group.free_call_signer_address,
+    testEndpoints: group.test_endpoints,
+    daemonAddresses: group.daemon_addresses,
   }));
 };
 

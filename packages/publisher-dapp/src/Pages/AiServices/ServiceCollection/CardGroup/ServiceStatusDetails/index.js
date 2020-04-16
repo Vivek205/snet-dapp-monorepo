@@ -121,10 +121,14 @@ const ServiceStatusDetails = props => {
       };
       const serviceDetailsToPatch = { groups: [...selectedService.groups] };
       serviceDetailsToPatch.groups[0] = {
-        id: selectedService.groups[0].id,
-        name: selectedService.groups[0].name,
+        ...selectedService.groups[0],
         endpoints: validatedEndpoints,
       };
+      const patchGroups = aiServiceDetailsActions.generateGroupsPayload(
+        serviceDetailsToPatch.groups,
+        serviceDetailsToPatch.groups[0].freeCallSignerAddress
+      );
+      serviceDetailsToPatch.groups = patchGroups;
       dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
       await dispatch(aiServiceDetailsActions.patchServiceDetails(orgUuid, serviceUuid, serviceDetailsToPatch));
       if (isEmpty(invalidEndpoints)) {
