@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { organizationActions } from "../../../Services/Redux/actionCreators";
-import { TermsAndConditionsDetails, tncAgreementVesrion } from "./content";
+import { TermsAndConditionsDetails, TermsHTML, tncAgreementVesrion } from "./content";
 import TermsAndConditions from "shared/dist/components/TermsAndConditions";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -61,6 +61,7 @@ const AcceptServiceAgreement = ({ history }) => {
         formLabel={TermsAndConditionsDetails.formLabel}
         agreed={agreed}
         onChangeAgreed={() => setAgreed(!agreed)}
+        Content={TermsHTML}
       />
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" onClick={handleCancel} />
