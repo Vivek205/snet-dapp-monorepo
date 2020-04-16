@@ -19,6 +19,10 @@ export const useStyles = MUITheme => ({
       fontSize: 16,
       lineHeight: "20px",
       resize: "none",
+      "&:disabled": {
+        background: MUITheme.palette.background.white,
+        borderColor: MUITheme.palette.border.secondary,
+      },
     },
   },
   label: {
