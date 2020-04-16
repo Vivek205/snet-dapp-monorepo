@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
         fontSize: 16,
         lineHeight: "20px",
         resize: "none",
-        '&:disabled': {
+        "&:disabled": {
           background: MUITheme.palette.background.white,
           borderColor: MUITheme.palette.border.secondary
         }
