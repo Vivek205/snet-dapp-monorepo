@@ -34,7 +34,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
-          setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
+          setAlert({ type: alertTypes.ERROR, message: "Unable to upload due to missing index.js file" });
         }
       }
     },
