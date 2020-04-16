@@ -42,9 +42,9 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const selectedOrgGroup = orgGroups[0];
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: "Invalid endpoint : " + value });
+      setAlert({ type: alertTypes.ERROR, message: isNotValid });
       return false;
     }
     return true;
@@ -68,6 +68,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
           ...updatedEndpoints,
           [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
         };
+        setAlert({ type: alertTypes.ERROR, message: "" });
       } else {
         updatedEndpoints = { ...selectedServiceGroup.endpoints };
       }
