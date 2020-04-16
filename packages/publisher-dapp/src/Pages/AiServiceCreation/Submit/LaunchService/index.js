@@ -9,15 +9,16 @@ import isEmpty from "lodash/isEmpty";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { serviceCreationStatus } from "../../constant";
 import { useStyles } from "./styles";
-import DaemonConfig from "../DaemonConfig";
+import DaemonConfig from "../../../../Components/DaemonConfig";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import ReadyToLaunch from "../ReadyToLaunch";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import validationError from "shared/dist/utils/validationError";
+import DaemonConfigModal from "./DaemonConfigModal";
 
 class LaunchService extends React.Component {
-  state = { daemonConfig: {}, alert: {}, continueToLaunch: false };
+  state = { daemonConfig: {}, alert: {}, continueToLaunch: false, showDaemonConfigModal: false };
 
   fetchSampleDaemonConfig = async () => {
     try {
@@ -73,9 +74,13 @@ class LaunchService extends React.Component {
     this.setState({ continueToLaunch: true });
   };
 
+  handleDaemonConfigModalState = show => {
+    this.setState({ showDaemonConfigModal: show });
+  };
+
   render() {
     const { classes, handleBackToDashboard } = this.props;
-    const { daemonConfig, alert, continueToLaunch } = this.state;
+    const { daemonConfig, alert, continueToLaunch, showDaemonConfigModal } = this.state;
 
     if (continueToLaunch) {
       return (
@@ -83,7 +88,13 @@ class LaunchService extends React.Component {
           <ReadyToLaunch
             handlePublish={this.handlePublishToBlockchain}
             handleBackToDashboard={handleBackToDashboard}
+            openDaemonConfigModal={() => this.handleDaemonConfigModalState(true)}
             alert={alert}
+          />
+          <DaemonConfigModal
+            open={showDaemonConfigModal}
+            handleClose={() => this.handleDaemonConfigModalState(false)}
+            daemonConfig={daemonConfig}
           />
         </Fragment>
       );

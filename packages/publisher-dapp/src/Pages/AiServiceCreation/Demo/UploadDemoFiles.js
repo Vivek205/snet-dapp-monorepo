@@ -6,6 +6,8 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
+import JSZip from "jszip";
+import ValidationError from "shared/dist/utils/validationError";
 
 const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles }) => {
   const [alert, setAlert] = useState({});
@@ -21,6 +23,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
       if (!isEmpty(acceptedFiles)) {
         try {
           const fileBlob = acceptedFiles[0];
+          await validateIndexFile(fileBlob);
           const { name, size, type } = fileBlob;
           setSelectedFile({ name, size, type });
 
@@ -31,12 +34,27 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
-          setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
+          setAlert({ type: alertTypes.ERROR, message: "Unable to upload due to missing index.js file" });
         }
       }
     },
     [changeDemoFiles, dispatch, orgUuid, serviceUuid]
   );
+  const validateIndexFile = uploadedFile => {
+    const fileToBePresent = "index.js";
+    return new Promise((resolve, reject) => {
+      const zip = new JSZip();
+      zip.loadAsync(uploadedFile).then(entry => {
+        const indexFileFound = Object.values(entry.files).some(file => {
+          return file.name === fileToBePresent;
+        });
+        if (!indexFileFound) {
+          reject(new ValidationError("The zip file should contain index.js file"));
+        }
+        resolve();
+      });
+    });
+  };
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
 

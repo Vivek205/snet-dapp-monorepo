@@ -47,9 +47,13 @@ const parseGroups = groups => {
 
   return groups.map(group => ({
     id: group.group_id,
+    name: group.group_name,
     pricing: parsePricing(group.pricing),
     endpoints: group.endpoints,
     freeCallsAllowed: group.free_calls,
+    freeCallSignerAddress: group.free_call_signer_address,
+    testEndpoints: group.test_endpoints,
+    daemonAddresses: group.daemon_addresses,
   }));
 };
 

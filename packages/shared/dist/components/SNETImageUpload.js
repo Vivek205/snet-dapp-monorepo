@@ -212,7 +212,8 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
 
     _this.imageDiv = _react.default.createRef();
     _this.inputImage = _react.default.createRef();
-    _this.outputImage = _react.default.createRef(); // Function binding
+    _this.outputImage = _react.default.createRef();
+    _this.uploadedStateImg = _react.default.createRef(); // Function binding
 
     _this.handleMouseMove = _this.handleMouseMove.bind(_assertThisInitialized(_this));
     _this.handleSearchSubmit = _this.handleSearchSubmit.bind(_assertThisInitialized(_this));
@@ -889,7 +890,8 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         onError: function onError() {
           return _this9.displayErrorMessage(_this9.urlErrorMessage);
         },
-        id: "loadedImage" // crossOrigin="anonymous"
+        id: "loadedImage",
+        ref: this.uploadedStateImg // crossOrigin="anonymous"
         ,
         style: this.props.displayProportionalImage ? {
           maxHeight: this.tabHeight + "px",

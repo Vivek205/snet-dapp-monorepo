@@ -4,7 +4,11 @@ import AlertBox from "shared/dist/components/AlertBox";
 import VerificationApprovedImage from "shared/dist/assets/images/VerificationApproved.png";
 import Typography from "@material-ui/core/Typography";
 
-const ReadyToLaunch = ({ handlePublish, handleBackToDashboard, alert }) => {
+const ReadyToLaunch = ({ handlePublish, handleBackToDashboard, alert, openDaemonConfigModal }) => {
+  const handleOpenDaemonConfigModal = e => {
+    e.preventDefault();
+    openDaemonConfigModal();
+  };
   return (
     <Fragment>
       <SNETStatusBanner
@@ -26,6 +30,11 @@ const ReadyToLaunch = ({ handlePublish, handleBackToDashboard, alert }) => {
               <li>
                 <Typography>
                   Once you launch the update, it will take some for your changes to be reflected on AI Marketplace.
+                </Typography>
+              </li>
+              <li>
+                <Typography>
+                  Click <a onClick={handleOpenDaemonConfigModal}>here</a> to open daemon config modal
                 </Typography>
               </li>
             </ul>

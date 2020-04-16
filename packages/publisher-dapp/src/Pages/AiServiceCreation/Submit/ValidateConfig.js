@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
-import DaemonConfig from "./DaemonConfig";
+import DaemonConfig from "../../../Components/DaemonConfig";
 import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import { withStyles } from "@material-ui/core/styles";

@@ -5,7 +5,7 @@ import AlertBox from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
-import DaemonConfig from "./DaemonConfig";
+import DaemonConfig from "../../../Components/DaemonConfig";
 
 const Approved = ({ classes, daemonConfig }) => {
   return (
