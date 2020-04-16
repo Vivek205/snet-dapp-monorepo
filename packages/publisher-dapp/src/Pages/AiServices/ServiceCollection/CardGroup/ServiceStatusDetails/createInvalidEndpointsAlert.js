@@ -17,7 +17,7 @@ export default (invalidEndpoints, setShowDaemonConfigModal) => (
       >
         click here
       </a>
-      to see the production ready endpoint
+      to see the production ready configuration
     </p>
   </Fragment>
 );
