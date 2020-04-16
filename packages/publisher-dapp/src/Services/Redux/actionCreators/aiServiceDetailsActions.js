@@ -243,9 +243,8 @@ const patchServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => 
   return await API.patch(apiName, apiPath, apiOptions);
 };
 
-export const patchServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
-  const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
-  const { error } = await dispatch(patchServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
+export const patchServiceDetails = (orgUuid, serviceUuid, patchDetailsPayload) => async dispatch => {
+  const { error } = await dispatch(patchServiceDetailsAPI(orgUuid, serviceUuid, patchDetailsPayload));
   if (error.code) {
     throw new APIError(error.message);
   }
