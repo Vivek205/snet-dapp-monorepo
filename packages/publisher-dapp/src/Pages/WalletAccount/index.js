@@ -152,10 +152,10 @@ class WalletAccount extends React.Component {
       acc[0].push(channelId);
       acc[1].push(signedAmount);
       acc[2].push(signedAmount);
-      acc[6].push(false);
-      acc[3].push(v);
-      acc[4].push(r);
-      acc[5].push(s);
+      acc[3].push(false);
+      acc[4].push(v);
+      acc[5].push(r);
+      acc[6].push(s);
       return acc;
     }, defaultPayloadAccumulator);
     const mpe = new MPEContract();
