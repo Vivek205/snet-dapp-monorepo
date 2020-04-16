@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { connect } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
@@ -10,7 +11,7 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import { serviceCreationStatus } from "../../constant";
 import { useStyles } from "./styles";
 import DaemonConfig from "../../../../Components/DaemonConfig";
-import { alertTypes } from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import ReadyToLaunch from "../ReadyToLaunch";
 import { checkIfKnownError } from "shared/dist/utils/error";
@@ -106,9 +107,9 @@ class LaunchService extends React.Component {
           <Typography variant="h6">Your AI Service Approved</Typography>
           <Typography className={classes.reviewProcessDescription}>
             Your service was reviewed and approved. To launch the service, you need to revert or replace your testing
-            configuration file with your Production Ready Configuration File. Please copy and replace your configuration
-            file with the one given below. After replacing the configuration file, validate the endpoint to proceed to
-            launch the service.
+            configuration file with your <span>Production Ready Configuration File.</span> Please copy and replace your
+            configuration file with the one given below. After replacing the configuration file, validate the endpoint
+            to proceed to launch the service.
           </Typography>
 
           <DaemonConfig
@@ -116,12 +117,17 @@ class LaunchService extends React.Component {
             footerNote="Please use the above configuration values in your daemon configuration. This is to ensure that your daemon is not in the curation mode anymore. Once the Service has been successfully published on the SingularityNet Platform, restart the daemon."
           />
 
-          <SNETButton
-            color="primary"
-            variant="contained"
-            children="Continue to launch"
-            onClick={this.handleContinueToLaunch}
-          />
+          <div className={classes.launchServiceAlertButtonContainer}>
+            <AlertBox
+              type={alertTypes.WARNING}
+              message="Use the configuration provided and restart your deamon."
+              link="Learn More"
+              linkTo="https://github.com/singnet/snet-daemon#configuration"
+              icon={HourglassEmptyIcon}
+              header="Please Update Production Ready Configuration"
+            />
+            <SNETButton color="primary" variant="contained" children="Continue" onClick={this.handleContinueToLaunch} />
+          </div>
         </Grid>
       </div>
     );

@@ -1,12 +1,12 @@
 export const useStyles = MUITheme => ({
   alertBoxContainer: {
-    padding: 14,
+    padding: "7px 11px",
     borderWidth: 1,
     borderStyle: "solid",
     borderRadius: 4,
     display: "flex",
     alignItems: "center",
-    "& svg": { paddingRight: 16 },
+    "& svg": { paddingRight: 14 },
   },
   content: {
     fontFamily: MUITheme.typography.fontFamily,
@@ -16,6 +16,7 @@ export const useStyles = MUITheme => ({
       color: MUITheme.palette.text.primary,
       fontSize: 14,
       lineHeight: "18px",
+      "& a": { textDecoration: "none" },
     },
   },
   messageBox: {
@@ -58,5 +59,11 @@ export const useStyles = MUITheme => ({
       color: MUITheme.palette.infoBoxLink,
       fontWeight: 600,
     },
+  },
+  alertHeader: {
+    color: MUITheme.palette.text.primary,
+    fontSize: 14,
+    lineHeight: "18px",
+    fontWeight: "bold",
   },
 });
