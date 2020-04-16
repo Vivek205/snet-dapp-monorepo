@@ -212,7 +212,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               <SNETTextfield
                 icon
                 name="price"
-                defaultValue={selectedServicePricing && parseInt(cogsToAgi(selectedServicePricing.priceInCogs))}
+                defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
