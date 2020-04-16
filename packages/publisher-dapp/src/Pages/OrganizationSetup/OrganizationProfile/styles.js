@@ -27,6 +27,7 @@ export const useStyles = MUITheme => ({
   },
   errorContainer: { margin: "27px 42px 0 23px" },
   buttonsContainer: {
+    padding: "0 25px",
     marginTop: 40,
     marginBottom: 64,
     display: "flex",

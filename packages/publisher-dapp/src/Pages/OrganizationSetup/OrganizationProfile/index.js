@@ -75,7 +75,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
         <SupportDetails />
 
         <div className={classes.errorContainer}>
-          <AlertBox type="ERROR" message="alert.message" children={alert.children} />
+          <AlertBox type={alert.type} message={alert.message} children={alert.children} />
         </div>
       </Grid>
       <div className={classes.buttonsContainer}>

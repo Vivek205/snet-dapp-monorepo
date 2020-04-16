@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
 import DaemonConfig from "../../../Components/DaemonConfig";
 import AlertBox from "shared/dist/components/AlertBox";
@@ -11,26 +11,25 @@ const ValidateConfig = props => {
   const { classes, daemonConfig, handleValidateConfig, testEndPoint, handleTestEndpointsChange, alert } = props;
 
   return (
-    <Fragment>
+    <div className={classes.validateConfigContainer}>
       <Typography variant="h6">Insert Testing Configuration File</Typography>
       <Typography className={classes.submitDescription}>
         In order for SingularityNET reviewers to test your service, you will need to update your configuration file with
-        a Testing Configuration File. This allows only SingularityNET reviewers access to your service in a
+        a <span>Testing Configuration File.</span> This allows only SingularityNET reviewers access to your service in a
         non-blockchain mode. After you insert the testing configuration file, please validate the endpoint to continue
         to submission process.
       </Typography>
       <SNETTextfield
         name="id"
         label="Public Daemon Endpoint"
-        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service.
-        Feel free to edit it"
+        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service."
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
       <AlertBox type={alert.type} message={alert.message} children={alert.children} />
       <SNETButton children="validate endpoint" color="primary" variant="contained" onClick={handleValidateConfig} />
-    </Fragment>
+    </div>
   );
 };
 
