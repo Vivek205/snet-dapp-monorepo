@@ -40,7 +40,7 @@ const MobileHeader = ({
           <CloseIcon onClick={toggleMobileMenu} />
         </div>
         <nav className={classes.mobileNavigation}>
-          <ul>
+          <ul className={isLoggedIn ? classes.hideNav : null}>
             {mobileNavLinks.map(tab => (
               <NavItem key={tab.label} title={tab.label} link={tab.to} active={tab.active} />
             ))}
@@ -62,6 +62,7 @@ const MobileHeader = ({
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}
               LoggedOutActions={LoggedOutActions}
+              headerType="mobile"
             />
           </div>
         </nav>

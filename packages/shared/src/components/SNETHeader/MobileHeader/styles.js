@@ -18,6 +18,7 @@ export const useStyles = MUITheme => ({
       backgroundColor: "#000",
     },
   },
+  hideNav: { display: "none" },
   mobileNavContainer: {
     display: "flex",
     alignItems: "center",
@@ -33,8 +34,8 @@ export const useStyles = MUITheme => ({
   closeMenuIcon: {
     color: MUITheme.palette.text.white,
     position: "absolute",
-    top: 30,
-    left: 40,
+    top: 20,
+    left: 20,
     cursor: "pointer",
   },
   mobileNavigation: {

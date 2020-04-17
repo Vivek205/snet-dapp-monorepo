@@ -22,6 +22,7 @@ export const useStyles = makeStyles(MUITheme => ({
       marginLeft: 11,
       fontWeight: 300,
       lineHeight: "30px",
+      "@media(max-width:420px)": { display: "none" },
     },
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
   },
@@ -31,6 +32,6 @@ export const useStyles = makeStyles(MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { padding: 0 },
   },
   headerActionsContainer: {
-    "@media(max-width:642px)": { display: "none" },
+    "@media(max-width:720px)": { display: "none" },
   },
 }));

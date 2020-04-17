@@ -70,7 +70,9 @@ var MobileHeader = function MobileHeader(_ref) {
     onClick: toggleMobileMenu
   })), /*#__PURE__*/_react.default.createElement("nav", {
     className: classes.mobileNavigation
-  }, /*#__PURE__*/_react.default.createElement("ul", null, mobileNavLinks.map(function (tab) {
+  }, /*#__PURE__*/_react.default.createElement("ul", {
+    className: isLoggedIn ? classes.hideNav : null
+  }, mobileNavLinks.map(function (tab) {
     return /*#__PURE__*/_react.default.createElement(_NavItem.default, {
       key: tab.label,
       title: tab.label,
@@ -97,7 +99,8 @@ var MobileHeader = function MobileHeader(_ref) {
   }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
-    LoggedOutActions: LoggedOutActions
+    LoggedOutActions: LoggedOutActions,
+    headerType: "mobile"
   })))));
 };
 

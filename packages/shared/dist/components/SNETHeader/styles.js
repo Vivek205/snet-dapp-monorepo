@@ -39,7 +39,10 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& h5": {
         marginLeft: 11,
         fontWeight: 300,
-        lineHeight: "30px"
+        lineHeight: "30px",
+        "@media(max-width:420px)": {
+          display: "none"
+        }
       }
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
@@ -53,7 +56,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: 0
     }),
     headerActionsContainer: {
-      "@media(max-width:642px)": {
+      "@media(max-width:720px)": {
         display: "none"
       }
     }
