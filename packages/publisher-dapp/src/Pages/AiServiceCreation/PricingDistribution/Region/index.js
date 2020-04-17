@@ -44,9 +44,9 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const selectedOrgGroup = orgGroups[0];
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.endpoints);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      setAlert({ type: alertTypes.ERROR, message: `${value}  is not a valid endpoint` });
       return false;
     }
     return true;
