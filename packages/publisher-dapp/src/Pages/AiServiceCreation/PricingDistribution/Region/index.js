@@ -46,7 +46,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const handleEndPointValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: isNotValid });
+      setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
       return false;
     }
     return true;
