@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -17,21 +17,37 @@ import { onboardingActions, preferenceActions } from "../../../Services/Redux/ac
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
 import InformationBox from "./InformationBox";
+import { organizationTypes } from "../../../Utils/organizationSetup";
+const selectState = state => ({
+  userEntity: state.user.entity,
+  organization: state.organization,
+  email: state.user.email,
+  publisherTnC: state.user.publisherTnC,
+});
 
 const SingularityAccount = ({ classes, history }) => {
-  const userEntity = useSelector(state => state.user.entity);
   const [emailPreferences, setEmailPreferences] = useState({
     [userPreferenceTypes.FEATURE_RELEASE]: false,
     [userPreferenceTypes.WEEKLY_SUMMARY]: false,
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const [verifiedInvitation, setVerifiedInvitation] = useState(false);
-  const entity = useSelector(state => state.user.entity);
+  const { userEntity, organization, email, publisherTnC } = useSelector(selectState);
   const dispatch = useDispatch();
 
-  const handleContinue = () => {
+  useEffect(() => {
+    if (!publisherTnC.accepted) {
+      history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
+    }
+  }, [history, publisherTnC.accepted]);
+
+  const handleContinue = async () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
+    if (userEntity === userEntities.INDIVIDUAL) {
+      await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
+      dispatch(organizationActions.setOrgOwner(email));
+    }
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
   const handleCancel = () => {
@@ -59,8 +75,8 @@ const SingularityAccount = ({ classes, history }) => {
   };
 
   const shouldContinueBeDisabled = () => {
-    let disableContinue = !entity || entity === userEntities.DEFAULT;
-    if (entity === userEntities.INVITEE) {
+    let disableContinue = !userEntity || userEntity === userEntities.DEFAULT;
+    if (userEntity === userEntities.INVITEE) {
       disableContinue = disableContinue || !verifiedInvitation;
     }
     return disableContinue;
@@ -76,7 +92,7 @@ const SingularityAccount = ({ classes, history }) => {
             <StyledDropdown
               labelTxt="Please Select"
               inputLabel="Entity Type"
-              value={entity}
+              value={userEntity}
               list={[
                 { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
                 { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
