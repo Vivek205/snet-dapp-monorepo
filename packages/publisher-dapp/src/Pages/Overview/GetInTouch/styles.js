@@ -42,6 +42,7 @@ export const useStyles = MUITheme => ({
     "& input": {
       width: 411,
       display: "block",
+      background: MUITheme.palette.background.white,
       [MUITheme.breakpoints.down("xs")]: { width: 300 },
     },
     "& button": {
