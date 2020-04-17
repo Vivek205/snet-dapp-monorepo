@@ -254,7 +254,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               }}
             />
           </Grid>
-          <AlertBox type={alert.type} children={alert.children} />
+          <AlertBox type={alert.type} children={alert.message} />
 
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
