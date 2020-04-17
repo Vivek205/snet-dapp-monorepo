@@ -12,7 +12,7 @@ export const OnboardingRoutes = {
     name: "default",
     path: fullPath("/"),
     exact: true,
-    component: SingularityAccount,
+    component: AcceptServiceAgreement,
   },
   SINGULARITY_ACCOUNT: {
     name: "singularitynet account",

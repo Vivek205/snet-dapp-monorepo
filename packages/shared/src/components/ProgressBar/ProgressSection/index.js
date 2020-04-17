@@ -13,10 +13,17 @@ export const ProgressStatusList = {
 const ProgressSection = ({ progressNumber, progressText, progressStatus, onSectionClick }) => {
   const classes = useStyles();
 
+  const handleSectionClick = () => {
+    if (!onSectionClick) {
+      return;
+    }
+    onSectionClick(progressNumber, progressText, progressStatus);
+  };
+
   return (
     <li
       className={`${classes[progressStatus]} ${onSectionClick ? classes.clickableSection : ""}`}
-      onClick={() => onSectionClick(progressNumber, progressText, progressStatus)}
+      onClick={handleSectionClick}
     >
       <Fragment>
         <StatusToggler progressStatus={progressStatus} progressNumber={progressNumber} />
