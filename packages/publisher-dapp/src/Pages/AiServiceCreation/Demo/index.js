@@ -30,7 +30,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             </Typography>
             <Typography variant="subtitle2">
               The DApp source code enables you to build and test the interface for your service. You can also peruse
-              available UI components at{" "}
+              available UI components at &nbsp;
               <a
                 href="http://custom-ui.singularitynet.io.s3-website-us-east-1.amazonaws.com/?path=/story/alerts-alertbox--live-source"
                 target="_blank"
@@ -54,7 +54,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
               Step 2: Set Up Local Test Environment (ensure your node version is 10.20.0 or later)
             </Typography>
             <Typography variant="subtitle2">
-              Once you download the package extract the source code and follow the instructions detailed{" "}
+              Once you download the package extract the source code and follow the instructions detailed &nbsp;
               <a
                 href="https://dev.singularitynet.io/docs/ai-developers/dapp-ui-component/"
                 rel="noopener noreferrer"
