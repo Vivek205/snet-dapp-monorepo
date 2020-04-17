@@ -6,7 +6,7 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
-import { loaderActions } from "./";
+import { aiServiceListActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
@@ -15,6 +15,7 @@ import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -138,34 +139,34 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   }
 };
 
+const generatePricingpayload = pricing =>
+  pricing.map(price => ({
+    default: price.default,
+    price_model: price.priceModel,
+    price_in_cogs: Number(price.priceInCogs),
+  }));
+
+export const generateGroupsPayload = (groups, freeCallSignerAddress) =>
+  groups
+    .map(group => {
+      if (!group.id) {
+        return undefined;
+      }
+      return {
+        group_name: group.name,
+        group_id: group.id,
+        free_calls: Number(group.freeCallsAllowed),
+        free_call_signer_address: freeCallSignerAddress,
+        pricing: generatePricingpayload(group.pricing),
+        endpoints: group.endpoints,
+        test_endpoints: group.testEndpoints,
+        daemon_addresses: group.daemonAddresses,
+      };
+    })
+    .filter(el => el !== undefined);
+
 // TODO remove orgId. MPS has to figure out orgId from orgUuid
 const generateSaveServicePayload = serviceDetails => {
-  const generatePricingpayload = pricing =>
-    pricing.map(price => ({
-      default: price.default,
-      price_model: price.priceModel,
-      price_in_cogs: Number(price.priceInCogs),
-    }));
-
-  const generateGroupsPayload = () =>
-    serviceDetails.groups
-      .map(group => {
-        if (!group.id) {
-          return undefined;
-        }
-        return {
-          group_name: group.name,
-          group_id: group.id,
-          free_calls: Number(group.freeCallsAllowed),
-          free_call_signer_address: serviceDetails.freeCallSignerAddress,
-          pricing: generatePricingpayload(group.pricing),
-          endpoints: group.endpoints,
-          test_endpoints: group.testEndpoints,
-          daemon_addresses: group.daemonAddresses,
-        };
-      })
-      .filter(el => el !== undefined);
-
   const payloadForSubmit = {
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
@@ -188,7 +189,7 @@ const generateSaveServicePayload = serviceDetails => {
       },
     },
     contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    groups: generateGroupsPayload(),
+    groups: generateGroupsPayload(serviceDetails.groups, serviceDetails.freeCallSignerAddress),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
@@ -233,6 +234,22 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
   }
 };
 
+const patchServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.SAVE_AI_SERVICE(orgUuid, serviceUuid);
+  const body = serviceDetailsPayload;
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.patch(apiName, apiPath, apiOptions);
+};
+
+export const patchServiceDetails = (orgUuid, serviceUuid, patchDetailsPayload) => async dispatch => {
+  const { error } = await dispatch(patchServiceDetailsAPI(orgUuid, serviceUuid, patchDetailsPayload));
+  if (error.code) {
+    throw new APIError(error.message);
+  }
+};
+
 const getServiceDetailsAPI = (orgUuid, serviceUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
@@ -267,6 +284,17 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceInCogs: price.price_in_cogs,
     }));
   const parseGroups = groups => {
+    const retrieveTestEndpointFromGroup = group => {
+      if (!isEmpty(group.test_endpoints)) {
+        return group.test_endpoints;
+      }
+      if (!isEmpty(group.endpoints)) {
+        const endpoints = Object.keys(group.endpoints);
+        return [endpoints[0]];
+      }
+      return [];
+    };
+
     if (isEmpty(groups)) {
       return defaultGroups;
     }
@@ -276,7 +304,7 @@ const parseServiceDetails = (data, serviceUuid) => {
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
       daemonAddresses: group.daemon_addresses || [],
-      testEndpoints: group.test_endpoints || [],
+      testEndpoints: retrieveTestEndpointFromGroup(group),
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
     }));
@@ -448,6 +476,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
@@ -494,6 +523,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async hash => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
         resolve(hash);
@@ -501,7 +531,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };

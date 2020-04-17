@@ -14,6 +14,7 @@ const initialState = {
   data: [],
   pagination: defaultPagination,
   totalCount: 0,
+  recentlyPublishedService: undefined,
 };
 
 const aiServiceListReducer = (state = initialState, action) => {
@@ -24,6 +25,8 @@ const aiServiceListReducer = (state = initialState, action) => {
       return { ...state, pagination: { ...state.pagination, ...action.payload } };
     case aiServiceListActions.SET_AI_SERVICE_LIST_TOTAL_COUNT:
       return { ...state, totalCount: action.payload };
+    case aiServiceListActions.SET_RECENTLY_PUBLISHED_SERVICE:
+      return { ...state, recentlyPublishedService: action.payload };
     default:
       return state;
   }

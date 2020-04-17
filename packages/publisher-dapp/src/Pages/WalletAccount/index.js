@@ -112,20 +112,17 @@ class WalletAccount extends React.Component {
       })
       .filter(el => Boolean(el));
 
-    const validEndpoints = endpoints.map(endpoint => {
-      return Object.entries(endpoint)
-        .map(([key, value]) => {
-          if (value.valid) {
-            return key;
-          }
-          return undefined;
-        })
-        .filter(el => Boolean(el));
-    });
+    const validEndpoints = endpoints.reduce((acc, cur) => {
+      Object.entries(cur).forEach(([endpoint, value]) => {
+        if (value.valid && !acc.includes(endpoint)) {
+          acc.push(endpoint);
+        }
+      });
+      return acc;
+    }, []);
 
-    // TODO select endpoint that is valid
     const serviceHost = validEndpoints[0];
-    if (!serviceHost[0]) {
+    if (!serviceHost) {
       return this.setState({
         getPaymentsListAlert: {
           type: alertTypes.ERROR,
@@ -133,7 +130,7 @@ class WalletAccount extends React.Component {
         },
       });
     }
-    controlServiceRequest.serviceHost = serviceHost[0];
+    controlServiceRequest.serviceHost = serviceHost;
   };
 
   getUnclaimedPaymentsFromDaemon = async () => {
@@ -147,68 +144,74 @@ class WalletAccount extends React.Component {
   };
 
   claimMPEChannels = async payments => {
-    // payload order:- channelId, actualAmount, plannedAmount, isSendback, v, r, s
-    const defaultPayloadAccumulator = [[], [], [], [], [], [], []];
-    const payloadForMultiChannelClaim = payments.reduce((acc, cur) => {
-      const { channelId, signedAmount, signature } = cur;
-      const { v, r, s } = signatureHexToVRS(signature);
-      acc[0].push(channelId);
-      acc[1].push(signedAmount);
-      acc[2].push(signedAmount);
-      acc[6].push(false);
-      acc[3].push(v);
-      acc[4].push(r);
-      acc[5].push(s);
-      return acc;
-    }, defaultPayloadAccumulator);
-    const mpe = new MPEContract();
-    this.props.startAppLoader(LoaderContent.SIGN_CLAIMS_IN_MM);
-    const method = await mpe.multiChannelClaim(...payloadForMultiChannelClaim);
-    method.on(blockChainEvents.TRANSACTION_HASH, () => {
-      // TODO call daemon start claims
-      this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
-    });
-    method.once(blockChainEvents.CONFIRMATION, async () => {
-      // TODO stop loader
-      // TODO refetch claims list
-      const currentTransaction = payments.reduce(
-        (acc, cur) => ({
-          channelsClaimed: acc.channelsClaimed.push(cur.channelId),
-          amountClaimed: BigNumber.sum(acc.amountClaimed, cur.signedAmount),
-        }),
-        { channelsClaimed: [], amountClaimed: "" }
-      );
-      this.setState(prevState => ({
-        claimChannelsAlert: {
-          type: alertTypes.SUCCESS,
-          message: `Selected channels have been claimed from the blockchain successfully. 
+    try {
+      // payload order:- channelId, actualAmount, plannedAmount, isSendback, v, r, s
+      const defaultPayloadAccumulator = [[], [], [], [], [], [], []];
+      const payloadForMultiChannelClaim = payments.reduce((acc, cur) => {
+        const { channelId, signedAmount, signature } = cur;
+        const { v, r, s } = signatureHexToVRS(signature);
+        acc[0].push(channelId);
+        acc[1].push(signedAmount);
+        acc[2].push(signedAmount);
+        acc[3].push(false);
+        acc[4].push(v);
+        acc[5].push(r);
+        acc[6].push(s);
+        return acc;
+      }, defaultPayloadAccumulator);
+      const mpe = new MPEContract();
+      this.props.startAppLoader(LoaderContent.SIGN_CLAIMS_IN_MM);
+      await mpe._initBlockChain();
+      const address = await mpe._getAddress();
+      const method = mpe.multiChannelClaim(...payloadForMultiChannelClaim)(address);
+      method.on(blockChainEvents.TRANSACTION_HASH, () => {
+        // TODO call daemon start claims
+        this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
+      });
+      method.once(blockChainEvents.CONFIRMATION, async () => {
+        // TODO stop loader
+        // TODO refetch claims list
+        const currentTransaction = payments.reduce(
+          (acc, cur) => ({
+            channelsClaimed: [...acc.channelsClaimed, cur.channelId],
+            amountClaimed: BigNumber.sum(acc.amountClaimed, cur.signedAmount),
+          }),
+          { channelsClaimed: [], amountClaimed: 0 }
+        );
+        this.setState(prevState => ({
+          claimChannelsAlert: {
+            type: alertTypes.SUCCESS,
+            message: `Selected channels have been claimed from the blockchain successfully. 
           Please refresh the list, to fetch the latest payments`,
-        },
-        showClaimsSuccessPopup: true,
-        transactionDetails: {
-          latest: {
-            channelsClaimed: currentTransaction.channelsClaimed,
-            amountClaimed: currentTransaction.amountClaimed,
           },
-          session: {
-            channelsClaimed: [
-              ...prevState.transactionDetails.session.channelsClaimed,
-              ...currentTransaction.channelsClaimed,
-            ],
-            amountClaimed: BigNumber.sum(
-              prevState.transactionDetails.session.amountClaimed,
-              currentTransaction.channelsClaimed
-            ),
+          showClaimsSuccessPopup: true,
+          transactionDetails: {
+            latest: {
+              channelsClaimed: currentTransaction.channelsClaimed,
+              amountClaimed: currentTransaction.amountClaimed,
+            },
+            session: {
+              channelsClaimed: [
+                ...prevState.transactionDetails.session.channelsClaimed,
+                ...currentTransaction.channelsClaimed,
+              ],
+              amountClaimed: BigNumber.sum(
+                prevState.transactionDetails.session.amountClaimed,
+                currentTransaction.channelsClaimed
+              ),
+            },
           },
-        },
-      }));
-      this.props.stopAppLoader();
-      await method.off();
-    });
-    method.on(blockChainEvents.ERROR, e => {
-      this.props.stopAppLoader();
-      throw new MetamaskError(e);
-    });
+        }));
+        await this.props.stopAppLoader();
+        await method.off();
+      });
+      method.on(blockChainEvents.ERROR, e => {
+        this.props.stopAppLoader();
+        throw new MetamaskError(e);
+      });
+    } catch (e) {
+      // TODO handle error
+    }
   };
 
   claimChannelInBlockchain = async () => {
@@ -387,6 +390,7 @@ class WalletAccount extends React.Component {
               agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
               channelIdList={transactionDetails.latest.channelsClaimed}
               handleClose={this.handleSuccessPopupClose}
+              escrowBalance={mmAccDetails.escrowBalance}
             />
             <div className={classes.claimSelectedSection}>
               <SNETButton

@@ -42,7 +42,7 @@ const BasicDetails = ({ classes }) => {
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.basicDetailsContainer}>
       <Typography variant="subtitle2" className={classes.description}>
-        This information that will be displayed as the Provider for all the AI services your company publishes to AI
+        This information will be displayed as the Provider for all the AI services your company publishes to AI
         Marketplace
       </Typography>
       <SNETTextfield

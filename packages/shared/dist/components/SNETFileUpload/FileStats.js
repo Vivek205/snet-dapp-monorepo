@@ -72,12 +72,7 @@ var FileStats = function FileStats(props) {
     color: "primary",
     variant: "text",
     disabled: !uploadSuccess
-  })), /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
-    children: "delete files",
-    color: "red",
-    variant: "text",
-    disabled: !uploadSuccess
-  }))));
+  })), "        ")));
 };
 
 FileStats.prototypes = {

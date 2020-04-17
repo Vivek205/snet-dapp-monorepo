@@ -50,11 +50,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
   const [websiteValidation, setWebsiteValidation] = useState({});
 
-  const setServiceTouchedFlag = () => {
-    // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-  };
-
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
     try {
@@ -77,7 +72,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   };
 
   const handleWebsiteValidation = value => {
-    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.projectURL);
     if (isNotValid) {
       return setWebsiteValidation({
         type: alertTypes.ERROR,
@@ -89,7 +84,6 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
       return changeServiceDetailsLeaf("newId", value);
@@ -154,27 +148,22 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       }
       setTags("");
     });
-
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-
-    // Set State
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
+
   const handleResetImage = () => {
     changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );

@@ -42,7 +42,21 @@ const array = (arrayItems, itemConstraints, key) => {
   }, []);
   return validate.isEmpty(arrayItemErrors) ? null : `^${arrayItemErrors}`;
 };
-
+const validURL = (str, options) => {
+  var pattern = new RegExp(
+    "^(https ?:\\/\\/)?" +
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  );
+  if (pattern.test(str)) {
+    return;
+  }
+  return options.message || `${str}  is not a valid url`;
+};
 validator.validators = {
   ...validate.validators,
   // custom validators
@@ -51,6 +65,7 @@ validator.validators = {
   hasNumber,
   hasAWSPasswordSplChar,
   array,
+  validURL,
 };
 
 // default options

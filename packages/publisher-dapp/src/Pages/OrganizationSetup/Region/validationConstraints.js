@@ -1,6 +1,7 @@
 import { validBlockChainAdressEquality } from "../../../Utils/validation";
 
 export const orgSetupRegionValidationConstraints = {
+  URL: { validURL: true },
   groups: {
     array: {
       name: { presence: { allowEmpty: false, message: "^Group name cannot be empty" } },
