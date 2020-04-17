@@ -23,7 +23,11 @@ const MmAuthorization = ({ classes, handleAuthorizeMM, alert }) => {
             <Typography className={classes.metamaskDesc}>
               Metamask signature is needed to fetch the claims list from blockchain.
               <span>
-                <AnchorLink label="Click here " href="https://dev.singularitynet.io/" newTab={true} />
+                <AnchorLink
+                  label="Click here "
+                  href="https://dev.singularitynet.io/docs/ai-developers/claim/"
+                  newTab={true}
+                />
                 to learn more about claim revenue and how to collect it.
               </span>
             </Typography>
