@@ -15,16 +15,10 @@ const selectState = state => ({
 });
 const AcceptServiceAgreement = ({ history }) => {
   const classes = useStyles();
-  const { isInitialized, isLoggedIn, publisherTnC } = useSelector(selectState);
+  const { isInitialized, isLoggedIn } = useSelector(selectState);
 
   const [agreed, setAgreed] = useState(false);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (publisherTnC.accepted) {
-      history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
-    }
-  });
 
   useEffect(() => {
     if (isInitialized && !isLoggedIn) {
