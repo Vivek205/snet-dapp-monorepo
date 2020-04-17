@@ -16,7 +16,7 @@ import { verificationCodeConstraints } from "./validationConstraints";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
-const VerifyInvitation = ({ classes, verifyInvitation, setVerifiedInvitation }) => {
+const VerifyInvitation = ({ classes, setVerifiedInvitation }) => {
   const userEntity = useSelector(state => state.user.entity);
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
@@ -30,7 +30,11 @@ const VerifyInvitation = ({ classes, verifyInvitation, setVerifiedInvitation }) 
       if (isNotValid) {
         throw new ValidationError(isNotValid[0]);
       }
-      await dispatch(inviteMembersActions.verifyInvitation(code));
+      const data = await dispatch(inviteMembersActions.verifyInvitation(code));
+      if (data !== "OK") {
+        setAlert({ type: alertTypes.ERROR, message: "The invitation code entered is not valid" });
+        return setVerifiedInvitation(false);
+      }
       setAlert({ type: alertTypes.SUCCESS, message: "Verified" });
       setVerifiedInvitation(true);
     } catch (error) {
