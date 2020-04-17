@@ -84,7 +84,7 @@ const UploadProto = ({ changeProtoFiles }) => {
       <Typography variant="subtitle1">Upload the Proto files</Typography>
       <Typography className={classes.description}>
         Services define their API using protocol buffers. This allows SingularityNET clients to determine the
-        request/response schema programmatically. Read more
+        request/response schema programmatically. Read more{" "}
         <a
           href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
           rel="noopener noreferrer"
