@@ -91,7 +91,7 @@ const Enroll = ({ classes, history }) => {
           In order to publish your AI services and company or individual entity to the blockchain, you will need to use
           Metamask app plugin. It is recommended that you{" "}
           <a target="_blank" href="https://dev.singularitynet.io/docs/ai-consumers/wallet/">
-            setup and install Metamask Wallet
+            setup and install Metamask Wallet{" "}
           </a>
           account so that you will be perform the publishing actions to the blockchain as well as collect AGI tokens
           that your AI services gains from customers purchases.
@@ -135,7 +135,7 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="body2">
           Joining team members will be required to provided their Metamask address in order to securly gain permissions
           to company organization or individual enttiy’s blockchain. They will NOT be charged ETH gas cost to join. The
-          owner of the company or individual entity will be responsible to add the team members to the blockchain. .
+          owner of the company or individual entity will be responsible for adding team members to the blockchain.
         </Typography>
       </Grid>
 

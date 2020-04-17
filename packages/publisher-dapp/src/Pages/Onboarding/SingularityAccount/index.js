@@ -88,7 +88,7 @@ const SingularityAccount = ({ classes, history }) => {
           {userEntity === userEntities.INVITEE ? (
             <Grid item sx={12} sm={12} md={6} lg={6}>
               <Typography>
-                Owner of an existing approved company entity will need to send you an invitation through your email.
+                The Owner of an existing approved company entity will need to send you an invitation through email.
               </Typography>
             </Grid>
           ) : null}
