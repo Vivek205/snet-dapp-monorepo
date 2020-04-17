@@ -11,8 +11,7 @@ export const servicePricingValidationConstraints = {
   },
   groups: {
     array: {
-      endpoints: { validURL: { message: "^Endpoints cannot be blank" } },
-
+      endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
       testEndpoints: { presence: { allowEmpty: false, message: "^Test Endpoints cannot be blank" } },
       pricing: {
         array: {
