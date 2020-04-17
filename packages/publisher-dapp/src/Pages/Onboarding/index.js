@@ -15,7 +15,17 @@ import { AuthenticateRoutes } from "./Authenticate/AuthenitcateRouter/Routes";
 
 class Onboarding extends Component {
   navigateToAppropriatePage = () => {
-    const { email, ownerEmail, orgStatus, orgUuid, orgType, location, history, publisherTnC } = this.props;
+    const {
+      email,
+      ownerEmail,
+      orgStatus,
+      orgUuid,
+      orgType,
+      location,
+      history,
+      publisherTnC,
+      allowChangeRequestEdit,
+    } = this.props;
     if (!isEmpty(email) && Boolean(orgUuid) && !isEmpty(ownerEmail) && email === ownerEmail) {
       if (orgType === organizationTypes.INDIVIDUAL) {
         if (
@@ -27,10 +37,7 @@ class Onboarding extends Component {
           return history.push(AuthenticateRoutes.INDIVIDUAL.path);
         }
       } else if (orgType === organizationTypes.ORGANIZATION) {
-        if (
-          orgStatus === organizationSetupStatuses.ONBOARDING_REJECTED ||
-          orgStatus === organizationSetupStatuses.CHANGE_REQUESTED
-        ) {
+        if (orgStatus === organizationSetupStatuses.CHANGE_REQUESTED && allowChangeRequestEdit) {
           if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
             return history.push(AuthenticateRoutes.ORGANIZATION.path);
           }
@@ -98,6 +105,7 @@ const mapStateToProps = state => ({
   orgUuid: state.organization.uuid,
   orgType: state.organization.type,
   publisherTnC: state.user.publisherTnC,
+  allowChangeRequestEdit: state.organization.allowChangeRequestEdit,
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps)(Onboarding));
