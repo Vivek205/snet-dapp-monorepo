@@ -14,7 +14,7 @@ import { assetTypes } from "../../../../Utils/FileUpload";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
-const UploadProto = ({ changeProtoFiles }) => {
+const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
   const serviceDetails = useSelector(state => state.aiServiceDetails);
@@ -100,8 +100,8 @@ const UploadProto = ({ changeProtoFiles }) => {
         showFileDetails
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
-        fileDownloadURL={serviceDetails.assets.protoFiles.url}
-        uploadSuccess={Boolean(serviceDetails.assets.protoFiles.url)}
+        fileDownloadURL={protoFilesUrl}
+        uploadSuccess={Boolean(protoFilesUrl)}
       />
       <AlertBox type={alert.type} message={alert.message} />
     </Fragment>
