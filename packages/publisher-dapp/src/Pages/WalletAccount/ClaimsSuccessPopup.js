@@ -8,6 +8,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
 import { useStyles } from "./styles";
+import AlertText from "shared/dist/components/AlertText";
+import { alertTypes } from "shared/dist/components/AlertBox";
 
 const ClaimsSuccessPopup = ({ classes, show, channelIdList, agiClaimed, escrowBalance, handleClose }) => {
   return (
@@ -22,11 +24,16 @@ const ClaimsSuccessPopup = ({ classes, show, channelIdList, agiClaimed, escrowBa
             </IconButton>
           }
         />
-        <div>
-          {channelIdList.map(channelId => (
-            <span key={channelId}>{channelId}</span>
-          ))}
+        <div className={classes.greyBox}>
+          <div>
+            <p>Channels IDs :</p>
+            {channelIdList.map(channelId => (
+              <span key={channelId}>{channelId}</span>
+            ))}
+          </div>
         </div>
+        <AlertText type={alertTypes.SUCCESS} message="Claims successfully Processed" />
+        <Typography variant="h6">Transaction Receipt</Typography>
         <div className={classes.greyBox}>
           <div>
             <div className={classes.iconContainer}>
