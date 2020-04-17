@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import JSZip from "jszip";
 import last from "lodash/last";
 
@@ -17,7 +17,6 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
@@ -29,7 +28,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
         message: "File have been uploaded. You can download your files on clicking the download button",
       });
     }
-  }, [serviceDetails.assets.protoFiles.url, alert.message, protoFilesUrl]);
+  }, [alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
     const protoFilesExtn = "proto";
