@@ -23,13 +23,13 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
   const { orgUuid, serviceUuid } = useParams();
 
   useEffect(() => {
-    if (!alert.message && Boolean(serviceDetails.assets.protoFiles.url)) {
+    if (!alert.message && Boolean(protoFilesUrl)) {
       setAlert({
         type: alertTypes.SUCCESS,
         message: "File have been uploaded. You can download your files on clicking the download button",
       });
     }
-  }, [serviceDetails.assets.protoFiles.url, alert.message]);
+  }, [serviceDetails.assets.protoFiles.url, alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
     const protoFilesExtn = "proto";
