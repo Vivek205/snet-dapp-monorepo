@@ -5,6 +5,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import { useDispatch, useSelector } from "react-redux";
+import isEmpty from "lodash/isEmpty";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
@@ -15,6 +18,8 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
+import { agiToCogs } from "shared/dist/utils/Pricing";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 import AlertText from "shared/dist/components/AlertText";
 
@@ -39,18 +44,21 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const selectedOrgGroup = orgGroups[0];
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: "Invalid endpoint : " + value });
+      setAlert({ type: alertTypes.ERROR, message: isNotValid });
       return false;
     }
     return true;
   };
 
-  const handleNewEndpointsChange = event => {
+  const handleNewEndpointsChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewEndpointsChange();
+  };
+  const handleNewEndpointsChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
     let updatedEndpoints = { ...selectedServiceGroup.endpoints };
@@ -62,12 +70,22 @@ const Region = ({ changeGroups, serviceGroups }) => {
           ...updatedEndpoints,
           [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
         };
+        setAlert({ type: alertTypes.ERROR, message: "" });
       } else {
         updatedEndpoints = { ...selectedServiceGroup.endpoints };
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, endpoints: updatedEndpoints, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      endpoints: updatedEndpoints,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
+    if (isEmpty(updatedServiceGroups[0].testEndpoints)) {
+      const endpoint = Object.keys(updatedServiceGroups[0].endpoints)[0];
+      updatedServiceGroups[0].testEndpoints = [endpoint];
+    }
     changeGroups(updatedServiceGroups);
     endpointRef.current.value = "";
   };
@@ -81,10 +99,13 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
-  const handleNewDaemonAddressChange = event => {
+  const handleNewDaemonAddressChangeOnKeyPress = event => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
+    handleNewDaemonAddressChange();
+  };
+  const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newAddresses = addressRef.current.value;
     let updatedAddresses = [...selectedServiceGroup.daemonAddresses];
@@ -98,7 +119,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
       }
     });
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, daemonAddresses: updatedAddresses, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      daemonAddresses: updatedAddresses,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
     addressRef.current.value = "";
   };
@@ -113,18 +139,14 @@ const Region = ({ changeGroups, serviceGroups }) => {
     changeGroups(updatedServiceGroups);
   };
 
-  const handleNewTestEndpointsChange = event => {
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-    const newEndpoints = [event.target.value];
-    const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, testEndpoints: newEndpoints, id: selectedOrgGroup.id };
-    changeGroups(updatedServiceGroups);
-  };
-
   const handleFreeCallsValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.groups.array.freeCallsAllowed);
+    if (value === "") return;
+    const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
     if (isNotValid) {
-      return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
+      return setfreeCallsValidation({
+        type: alertTypes.ERROR,
+        message: "Free calls value should be greater than or equal to 0",
+      });
     }
     return setfreeCallsValidation({ type: alertTypes.SUCCESS, message: "" });
   };
@@ -134,7 +156,12 @@ const Region = ({ changeGroups, serviceGroups }) => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handleFreeCallsValidation(value);
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, freeCallsAllowed: value, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      freeCallsAllowed: value,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -146,13 +173,19 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
   };
   const handlePriceChange = event => {
-    const { value } = event.target;
+    let { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handlePriceValidation(value);
+    value = agiToCogs(value);
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
-    updatedServiceGroups[0] = { ...selectedServiceGroup, pricing: updatedServicePricing, id: selectedOrgGroup.id };
+    updatedServiceGroups[0] = {
+      ...selectedServiceGroup,
+      pricing: updatedServicePricing,
+      id: selectedOrgGroup.id,
+      name: selectedOrgGroup.name,
+    };
     changeGroups(updatedServiceGroups);
   };
 
@@ -179,7 +212,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               <SNETTextfield
                 icon
                 name="price"
-                defaultValue={selectedServicePricing && selectedServicePricing.priceInCogs}
+                defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
@@ -209,9 +242,16 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="endpoints"
               inputRef={endpointRef}
-              onKeyUp={handleNewEndpointsChange}
+              onKeyUp={handleNewEndpointsChangeOnKeyPress}
               label="Daemon Endpoints"
               description="Enter all the public Daemon end points that will be used to call the service."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewEndpointsChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
@@ -243,12 +283,19 @@ const Region = ({ changeGroups, serviceGroups }) => {
               icon
               name="daemonAdresses"
               inputRef={addressRef}
-              onKeyUp={handleNewDaemonAddressChange}
+              onKeyUp={handleNewDaemonAddressChangeOnKeyPress}
               label="Daemon Addresses"
               description="Daemon address is the Ethereum public address , this was introduced to help say when Daemon
                wants to talk / send some information to a third party ( ex Metering stats) , the third party can know
                if the request came in from an Authentic Daemon , Deamon will have the pvt key associated to this address
                 in its configuration and will sign using this pvt key when making any requests to other systems."
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleNewDaemonAddressChange}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
 
@@ -272,17 +319,6 @@ const Region = ({ changeGroups, serviceGroups }) => {
               </Card>
               <span className={classes.extraInfo}>You can add up to 20 addresses</span>
             </div>
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <SNETTextfield
-              icon
-              name="testEndpoints"
-              value={selectedServiceGroup.testEndpoints}
-              onChange={handleNewTestEndpointsChange}
-              label="Test - Daemon Endpoints"
-              description="Enter the public end point of the daemon to be used for curation. This is an optional field and only needed if you want to modify a service that has already been published to the Marketplace"
-            />
           </Grid>
         </Grid>
       </div>

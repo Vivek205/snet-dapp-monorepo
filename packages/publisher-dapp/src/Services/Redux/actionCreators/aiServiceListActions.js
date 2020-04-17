@@ -11,6 +11,7 @@ import { defaultPagination } from "../reducers/aiServiceListReducer";
 export const SET_AI_SERVICE_LIST = "SET_AI_SERVICE_LIST";
 export const SET_AI_SERVICE_LIST_PAGINATION = "SET_AI_SERVICE_LIST_PAGINATION";
 export const SET_AI_SERVICE_LIST_TOTAL_COUNT = "SET_AI_SERVICE_LIST_TOTAL_COUNT";
+export const SET_RECENTLY_PUBLISHED_SERVICE = "SET_RECENTLY_PUBLISHED_SERVICE";
 
 const setAiServiceList = aiServiceList => ({
   type: SET_AI_SERVICE_LIST,
@@ -27,6 +28,11 @@ export const setAiServiceListTotalCount = totalCount => ({
   payload: totalCount,
 });
 
+export const setRecentlyPublishedService = serviceName => ({
+  type: SET_RECENTLY_PUBLISHED_SERVICE,
+  payload: serviceName,
+});
+
 const getAiServiceListAPI = (orgUuid, pagination) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
@@ -41,9 +47,13 @@ const parseGroups = groups => {
 
   return groups.map(group => ({
     id: group.group_id,
+    name: group.group_name,
     pricing: parsePricing(group.pricing),
     endpoints: group.endpoints,
-    freeCallsAllowed: group.freecalls_allowed,
+    freeCallsAllowed: group.free_calls,
+    freeCallSignerAddress: group.free_call_signer_address,
+    testEndpoints: group.test_endpoints,
+    daemonAddresses: group.daemon_addresses,
   }));
 };
 
@@ -60,9 +70,9 @@ const parseAiServiceData = service => ({
     heroImage: isEmpty(service.assets.hero_image)
       ? {}
       : { url: service.assets.hero_image.url, ipfsHash: service.assets.hero_image.ipfs_hash },
-    protoFiles: isEmpty(service.assets.proto)
+    protoFiles: isEmpty(service.assets.proto_files)
       ? {}
-      : { url: service.assets.proto.url, ipfsHash: service.assets.proto.ipfs_hash },
+      : { url: service.assets.proto_files.url, ipfsHash: service.assets.proto_files.ipfs_hash },
     demoFiles: isEmpty(service.assets.demo_files)
       ? {}
       : { url: service.assets.demo_files.url, ipfsHash: service.assets.demo_files.ipfs_hash },

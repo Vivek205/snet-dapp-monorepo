@@ -8,11 +8,8 @@ import { withStyles } from "@material-ui/core";
 import { useStyles } from "./styles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
-import { useSelector } from "react-redux";
 
-const Rejected = ({ classes }) => {
-  const comments = useSelector(state => state.aiServiceDetails.comments.SERVICE_APPROVER);
-
+const Rejected = ({ classes, approverComments }) => {
   return (
     <div className={classes.launchServiceContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -32,7 +29,7 @@ const Rejected = ({ classes }) => {
           />
           <div className={classes.approvalCommentSection}>
             <Typography variant="h6">Reviewers Comment</Typography>
-            <Typography>{ParseHTML(comments) || "No comments Provided"}</Typography>
+            <Typography>{ParseHTML(approverComments) || "No comments Provided"}</Typography>
           </div>
           <SNETButton
             color="primary"

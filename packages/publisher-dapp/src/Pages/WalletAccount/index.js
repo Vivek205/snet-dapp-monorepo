@@ -112,20 +112,17 @@ class WalletAccount extends React.Component {
       })
       .filter(el => Boolean(el));
 
-    const validEndpoints = endpoints.map(endpoint => {
-      return Object.entries(endpoint)
-        .map(([key, value]) => {
-          if (value.valid) {
-            return key;
-          }
-          return undefined;
-        })
-        .filter(el => Boolean(el));
-    });
+    const validEndpoints = endpoints.reduce((acc, cur) => {
+      Object.entries(cur).forEach(([endpoint, value]) => {
+        if (value.valid && !acc.includes(endpoint)) {
+          acc.push(endpoint);
+        }
+      });
+      return acc;
+    }, []);
 
-    // TODO select endpoint that is valid
     const serviceHost = validEndpoints[0];
-    if (!serviceHost[0]) {
+    if (!serviceHost) {
       return this.setState({
         getPaymentsListAlert: {
           type: alertTypes.ERROR,
@@ -133,7 +130,7 @@ class WalletAccount extends React.Component {
         },
       });
     }
-    controlServiceRequest.serviceHost = serviceHost[0];
+    controlServiceRequest.serviceHost = serviceHost;
   };
 
   getUnclaimedPaymentsFromDaemon = async () => {
@@ -155,10 +152,10 @@ class WalletAccount extends React.Component {
       acc[0].push(channelId);
       acc[1].push(signedAmount);
       acc[2].push(signedAmount);
-      acc[6].push(false);
-      acc[3].push(v);
-      acc[4].push(r);
-      acc[5].push(s);
+      acc[3].push(false);
+      acc[4].push(v);
+      acc[5].push(r);
+      acc[6].push(s);
       return acc;
     }, defaultPayloadAccumulator);
     const mpe = new MPEContract();

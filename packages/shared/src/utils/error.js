@@ -6,7 +6,8 @@ export const checkIfKnownError = error =>
   error instanceof APIError ||
   error instanceof ValidationError ||
   error instanceof BlockChainError ||
-  error instanceof GrpcError;
+  error instanceof GrpcError ||
+  error instanceof MetamaskError;
 
 export class GrpcError extends Error {
   constructor(message) {

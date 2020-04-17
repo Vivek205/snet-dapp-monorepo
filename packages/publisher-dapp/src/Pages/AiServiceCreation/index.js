@@ -53,7 +53,7 @@ class AiServiceCreation extends Component {
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgId, orgUuid, serviceUuid, serviceTouched } = this.props;
+    const { orgId, orgUuid, serviceUuid, serviceTouched, serviceDetails } = this.props;
     if (
       orgId &&
       orgUuid &&
@@ -66,6 +66,12 @@ class AiServiceCreation extends Component {
       if (this.state.serviceDetails.touched !== serviceTouched) {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
+    }
+    if (
+      serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
+      serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
+    ) {
+      this.handleServiceStateChange(serviceDetails.serviceState.state);
     }
   };
 
@@ -117,13 +123,14 @@ class AiServiceCreation extends Component {
   };
 
   handleServiceDetailsLeafChange = (name, value) => {
-    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, [name]: value } }));
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, [name]: value, touched: true } }));
   };
 
   handleHeroImageChange = url => {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           heroImage: { ...prevState.serviceDetails.assets.heroImage, url },
@@ -136,6 +143,7 @@ class AiServiceCreation extends Component {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           demoFiles: { ...prevState.serviceDetails.assets.demoFiles, url },
@@ -148,6 +156,7 @@ class AiServiceCreation extends Component {
     this.setState(prevState => ({
       serviceDetails: {
         ...prevState.serviceDetails,
+        touched: true,
         assets: {
           ...prevState.serviceDetails.assets,
           protoFiles: { ...prevState.serviceDetails.assets.protoFiles, url },
@@ -156,8 +165,29 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  handleServiceProviderCommentsChange = comments => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        comments: {
+          ...prevState.serviceDetails.comments,
+          SERVICE_PROVIDER: comments,
+        },
+      },
+    }));
+  };
+
   handleGroupsChange = groups => {
-    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups } }));
+    this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups, touched: true } }));
+  };
+
+  handleServiceStateChange = updatedState => {
+    this.setState(prevState => ({
+      serviceDetails: {
+        ...prevState.serviceDetails,
+        serviceState: { ...prevState.serviceDetails.serviceState, state: updatedState },
+      },
+    }));
   };
 
   render() {
@@ -181,7 +211,10 @@ class AiServiceCreation extends Component {
           changeDemoFiles={this.handleDemoFilesChange}
           changeProtoFiles={this.handleProtoFilesChange}
           changeGroups={this.handleGroupsChange}
+          changeServiceProviderComments={this.handleServiceProviderCommentsChange}
+          changeServiceState={this.handleServiceStateChange}
           setServiceDetailsInRedux={setServiceDetailsInRedux}
+          handleBackToDashboard={this.handleBackToDashboard}
         />
         <Loader />
       </div>

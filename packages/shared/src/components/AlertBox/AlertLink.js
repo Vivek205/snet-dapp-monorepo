@@ -1,9 +1,9 @@
 import React from "react";
 
-const AlertLink = ({ link }) => {
+const AlertLink = ({ link, linkTo }) => {
   if (link) {
     return (
-      <a href="#" title="demo">
+      <a href={linkTo} title={link} target="_blank">
         {link}
       </a>
     );

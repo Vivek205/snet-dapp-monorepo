@@ -13,7 +13,7 @@ import PrettyPrintJson from "shared/dist/components/PrettyPrintJSON";
 
 let clearAlertTimeout;
 
-const DaemonConfig = ({ config, classes, footerNote }) => {
+const DaemonConfig = ({ config, classes, title, footerNote }) => {
   const [alert, setAlert] = useState({});
   if (isEmpty(config)) {
     return null;
@@ -32,7 +32,7 @@ const DaemonConfig = ({ config, classes, footerNote }) => {
   return (
     <Grid Item>
       <Typography variant="subtitle1" className={classes.configTitle}>
-        Daemon config for Curation
+        {title}
       </Typography>
       <div className={classes.grayBoxContainer}>
         <Grid container className={classes.grayBox}>

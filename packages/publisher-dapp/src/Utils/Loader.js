@@ -144,4 +144,8 @@ export const LoaderContent = {
     title: "Claiming channels in blockchain",
     content: "Please don't reload or go back, the channel is being claimed in blockchain",
   },
+  VALIDATING_DAEMON_ENDPOINTS: {
+    title: "Validating daemon endpoints",
+    content: "Please wait we are validating daemon",
+  },
 };
