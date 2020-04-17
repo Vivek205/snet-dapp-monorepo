@@ -8,7 +8,7 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     alertBoxContainer: {
-      padding: '7px 11px',
+      padding: "7px 11px",
       borderWidth: 1,
       borderStyle: "solid",
       borderRadius: 4,
@@ -26,8 +26,8 @@ var useStyles = function useStyles(MUITheme) {
         color: MUITheme.palette.text.primary,
         fontSize: 14,
         lineHeight: "18px",
-        '& a': {
-          textDecoration: 'none'
+        "& a": {
+          textDecoration: "none"
         }
       }
     },
@@ -83,8 +83,8 @@ var useStyles = function useStyles(MUITheme) {
     alertHeader: {
       color: MUITheme.palette.text.primary,
       fontSize: 14,
-      lineHeight: '18px',
-      fontWeight: 'bold'
+      lineHeight: "18px",
+      fontWeight: "bold"
     }
   };
 };

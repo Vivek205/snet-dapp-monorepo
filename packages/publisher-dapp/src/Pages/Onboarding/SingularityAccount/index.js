@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -22,6 +22,7 @@ const selectState = state => ({
   userEntity: state.user.entity,
   organization: state.organization,
   email: state.user.email,
+  publisherTnC: state.user.publisherTnC,
 });
 
 const SingularityAccount = ({ classes, history }) => {
@@ -31,8 +32,14 @@ const SingularityAccount = ({ classes, history }) => {
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const [verifiedInvitation, setVerifiedInvitation] = useState(false);
-  const { userEntity, organization, email } = useSelector(selectState);
+  const { userEntity, organization, email, publisherTnC } = useSelector(selectState);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!publisherTnC.accepted) {
+      history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
+    }
+  }, [history, publisherTnC.accepted]);
 
   const handleContinue = async () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
