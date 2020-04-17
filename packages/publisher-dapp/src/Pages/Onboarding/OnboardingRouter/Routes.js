@@ -15,7 +15,7 @@ export const OnboardingRoutes = {
     component: SingularityAccount,
   },
   SINGULARITY_ACCOUNT: {
-    name: "singularity account",
+    name: "singularitynet account",
     path: fullPath("/singularityaccount"),
     component: SingularityAccount,
   },

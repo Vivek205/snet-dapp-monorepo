@@ -56,7 +56,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBloc
         onChange={handleThresholdChange}
         description={
           <p>
-            Time in block numbers for the payment channel to expire. Details
+            Time in block numbers for the payment channel to expire. Details{" "}
             <a
               href="https://dev.singularitynet.io/docs/ai-developers/daemon-channel-storage/"
               rel="noopener noreferrer"

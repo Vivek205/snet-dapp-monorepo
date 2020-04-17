@@ -157,7 +157,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               label="ETCD Endpoint"
               description={
                 <p>
-                  Enter all the ETCD end points that will be used. Details{" "}
+                  Enter all the ETCD endpoints that will be used. Details{" "}
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/etcd/"
                     rel="noopener noreferrer"
@@ -209,7 +209,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
           />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
             <SNETButton
-              children={showAdvancedSettings ? "hide advanced settings" : "show advanced setting"}
+              children={showAdvancedSettings ? "hide advanced settings" : "show advanced settings"}
               variant="text"
               color="primary"
               onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}

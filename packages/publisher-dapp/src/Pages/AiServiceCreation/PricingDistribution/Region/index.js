@@ -18,6 +18,8 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
+import { agiToCogs } from "shared/dist/utils/Pricing";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 import AlertText from "shared/dist/components/AlertText";
 
@@ -44,7 +46,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const handleEndPointValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.URL);
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, children: isNotValid });
+      setAlert({ type: alertTypes.ERROR, message: isNotValid });
       return false;
     }
     return true;
@@ -171,9 +173,10 @@ const Region = ({ changeGroups, serviceGroups }) => {
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
   };
   const handlePriceChange = event => {
-    const { value } = event.target;
+    let { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handlePriceValidation(value);
+    value = agiToCogs(value);
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
@@ -209,7 +212,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               <SNETTextfield
                 icon
                 name="price"
-                defaultValue={selectedServicePricing && selectedServicePricing.priceInCogs}
+                defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />
