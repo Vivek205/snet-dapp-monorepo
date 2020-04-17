@@ -75,13 +75,24 @@ var array = function array(arrayItems, itemConstraints, key) {
   return _validate.default.isEmpty(arrayItemErrors) ? null : "^".concat(arrayItemErrors);
 };
 
+var validURL = function validURL(str, options) {
+  var pattern = new RegExp("^(https ?:\\/\\/)?" + "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + "((\\d{1,3}\\.){3}\\d{1,3}))" + "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + "(\\?[;&a-z\\d%_.~+=-]*)?" + "(\\#[-a-z\\d_]*)?$", "i");
+
+  if (pattern.test(str)) {
+    return;
+  }
+
+  return options.message || "".concat(str, "  is not a valid url");
+};
+
 validator.validators = _objectSpread({}, _validate.default.validators, {
   // custom validators
   hasLowerCase: hasLowerCase,
   hasUpperCase: hasUpperCase,
   hasNumber: hasNumber,
   hasAWSPasswordSplChar: hasAWSPasswordSplChar,
-  array: array
+  array: array,
+  validURL: validURL
 }); // default options
 
 validator.options = {

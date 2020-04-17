@@ -10,12 +10,14 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AlertLink = function AlertLink(_ref) {
-  var link = _ref.link;
+  var link = _ref.link,
+      linkTo = _ref.linkTo;
 
   if (link) {
     return /*#__PURE__*/_react.default.createElement("a", {
-      href: "#",
-      title: "demo"
+      href: linkTo,
+      title: link,
+      target: "_blank"
     }, link);
   }
 

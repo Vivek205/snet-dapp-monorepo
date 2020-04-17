@@ -1,5 +1,5 @@
 export const servicePricingValidationConstraints = {
-  website: { url: { schemes: ["https"] } },
+  URL: { validURL: true },
   freeCallsAllowed: {
     numericality: { onlyInteger: true, greaterThanOrEqualTo: 0 },
   },

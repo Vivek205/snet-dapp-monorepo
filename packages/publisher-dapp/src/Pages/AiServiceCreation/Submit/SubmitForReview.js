@@ -148,8 +148,8 @@ class SubmitForReview extends React.Component {
           <Typography variant="h6">Review Process</Typography>
           <div className={classes.wrapper}>
             <Typography className={classes.submitDescription}>
-              Once you have submitted your service, SingularityNET will review your service protocols. You will be
-              notified once the review has been completed, please be patient as this process could take a few days.
+              SingularityNET will review your service protocols. You will be notified once the review has been
+              completed, please be patient as this process could take a few days.
             </Typography>
             <ValidateConfig
               daemonConfig={daemonConfig}
@@ -176,6 +176,7 @@ class SubmitForReview extends React.Component {
                 color="primary"
                 variant="contained"
                 onClick={this.handleSubmitForReview}
+                disabled={validateDaemonAlert.type !== alertTypes.SUCCESS}
               />
             </div>
           </div>
