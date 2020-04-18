@@ -17,7 +17,7 @@ const selectState = state => ({
   userEmail: state.user.email,
 });
 
-const LoggedInActions = ({ classes }) => {
+const LoggedInActions = ({ classes, headerType }) => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const location = useLocation();
   const { orgName, userNickname, orgOwnerEmail, userEmail } = useSelector(selectState);
@@ -32,7 +32,11 @@ const LoggedInActions = ({ classes }) => {
     return (
       <div className={classes.loggedInActionsContainer} onClick={handleProfileIconClick}>
         <AccountCircleIcon fontSize="large" className={classes.AccountCircleIcon} />
-        <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
+        <UserProfilePopUp
+          show={showProfilePopup}
+          handleClose={() => setShowProfilePopup(false)}
+          headerType={headerType}
+        />
         <div className={classes.orgNameContainer}>
           <Typography className={classes.orgName}>{orgName}</Typography>
           {/*<Typography className={classes.role}>Owner</Typography>*/}
@@ -44,7 +48,11 @@ const LoggedInActions = ({ classes }) => {
   return (
     <div className={classes.loggedInActionsContainer} onClick={handleProfileIconClick}>
       <AccountCircleIcon fontSize="large" className={classes.AccountCircleIcon} />
-      <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
+      <UserProfilePopUp
+        show={showProfilePopup}
+        handleClose={() => setShowProfilePopup(false)}
+        headerType={headerType}
+      />
       <div className={classes.orgNameContainer}>
         <Typography className={classes.orgName}>{userNickname}</Typography>
         <Typography className={classes.role}>{userRole()}</Typography>
