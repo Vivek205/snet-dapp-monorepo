@@ -11,6 +11,7 @@ import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
 import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
@@ -30,7 +31,12 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
   };
 
   const handleContinue = async () => {
-    const isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
+    let isNotValid = [];
+    if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1))
+      isNotValid
+        ? isNotValid.push(`Price of the service should be greater than or equal to ${cogsToAgi(1)}`)
+        : (isNotValid = [`Price of the service should be greater than or equal to ${cogsToAgi(1)}`]);
+    isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
 
     if (isNotValid) {
       for (let i = 0; i < isNotValid.length; i++) {
@@ -40,6 +46,7 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
           isNotValid.push(...res);
         }
       }
+
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
       return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
