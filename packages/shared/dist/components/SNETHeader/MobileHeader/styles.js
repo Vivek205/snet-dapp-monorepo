@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
       }
     },
     hideNav: {
-      display: 'none'
+      display: "none"
     },
     mobileNavContainer: {
       display: "flex",
