@@ -32,12 +32,13 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
 
   const handleContinue = async () => {
     let isNotValid = [];
-    if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1))
+    isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
+
+    if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1)) {
       isNotValid
         ? isNotValid.push(`Price of the service should be greater than or equal to ${cogsToAgi(1)}`)
         : (isNotValid = [`Price of the service should be greater than or equal to ${cogsToAgi(1)}`]);
-    isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
-
+    }
     if (isNotValid) {
       for (let i = 0; i < isNotValid.length; i++) {
         if (isNotValid[i].includes(",")) {
@@ -46,7 +47,6 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
           isNotValid.push(...res);
         }
       }
-
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
       return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
