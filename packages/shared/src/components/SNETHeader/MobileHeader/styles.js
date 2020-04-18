@@ -74,6 +74,11 @@ export const useStyles = MUITheme => ({
     },
     "@media(min-width: 1024px)": { display: "none" },
   },
+  active: {
+    color: MUITheme.palette.text.white,
+    fontWeight: 600,
+    borderBottom: "2px solid #fff",
+  },
   mobileActionBtns: {
     display: "flex",
     justifyContent: "center",

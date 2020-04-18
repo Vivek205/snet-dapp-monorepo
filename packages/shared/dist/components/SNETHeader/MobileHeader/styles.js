@@ -29,7 +29,7 @@ var useStyles = function useStyles(MUITheme) {
       }
     },
     hideNav: {
-      display: 'none'
+      display: "none"
     },
     mobileNavContainer: {
       display: "flex",
@@ -89,6 +89,11 @@ var useStyles = function useStyles(MUITheme) {
       "@media(min-width: 1024px)": {
         display: "none"
       }
+    },
+    active: {
+      color: MUITheme.palette.text.white,
+      fontWeight: 600,
+      borderBottom: '2px solid #fff'
     },
     mobileActionBtns: {
       display: "flex",
