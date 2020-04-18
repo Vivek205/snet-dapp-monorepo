@@ -21,7 +21,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             AI publishers can create a unique demo experience that users on the AI Marketplace can engage with. A
             positive demo experience will encourage users to engage and integrate your AI into their applications. We
             encourage you to follow our best practices on how to properly set up your demo on our AI Marketplace.
-            <span>The steps for creating a demo UI involves:</span>
+            <span>The steps for creating a demo UI are:</span>
           </Typography>
 
           <div className={classes.stepOneContainer}>
@@ -30,13 +30,13 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             </Typography>
             <Typography variant="subtitle2">
               The DApp source code enables you to build and test the interface for your service. You can also peruse
-              available UI components at
+              available UI components at &nbsp;
               <a
                 href="http://custom-ui.singularitynet.io.s3-website-us-east-1.amazonaws.com/?path=/story/alerts-alertbox--live-source"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                SingularityNet storybook
+                SingularityNet storybook{" "}
               </a>
               . This lists all common components used in the marketplace and can be reused for your service. Download
               the package from the following link and follow the instructions to set up a local environment.
@@ -51,16 +51,16 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
 
           <div className={classes.stepTwoContainer}>
             <Typography variant="subtitle1" className={classes.stepsHeading}>
-              Step 2: Set Up Local Test Environment
+              Step 2: Set Up Local Test Environment (ensure your node version is 10.20.0 or later)
             </Typography>
             <Typography variant="subtitle2">
-              Once you download the package extract the source code and follow the instructions detailed
+              Once you download the package extract the source code and follow the instructions detailed &nbsp;
               <a
                 href="https://dev.singularitynet.io/docs/ai-developers/dapp-ui-component/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                here
+                here{" "}
               </a>
             </Typography>
             <div className={classes.stepTwoBtnsContaier}>

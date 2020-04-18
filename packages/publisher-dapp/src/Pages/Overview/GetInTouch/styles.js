@@ -1,8 +1,8 @@
 export const useStyles = MUITheme => ({
-  getInTouchContainer: { background: MUITheme.palette.background.mainContent },
+  getInTouchContainer: { background: MUITheme.palette.background.white },
   getInTouch: {
     maxWidth: 870,
-    padding: "97px 30px 71px !important",
+    padding: "62px 30px 71px !important",
     margin: "0 auto",
     textAlign: "center",
     "& p": { textAlign: "initial" },
@@ -42,11 +42,13 @@ export const useStyles = MUITheme => ({
     "& input": {
       width: 411,
       display: "block",
+      background: MUITheme.palette.background.white,
       [MUITheme.breakpoints.down("xs")]: { width: 300 },
     },
     "& button": {
       padding: "16px 28px 16px",
       marginTop: "0 !important",
+      [MUITheme.breakpoints.down("xs")]: { marginTop: "15px !important" },
     },
     [MUITheme.breakpoints.down("sm")]: {
       maxWidth: "100%",

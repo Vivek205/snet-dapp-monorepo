@@ -38,7 +38,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var checkIfKnownError = function checkIfKnownError(error) {
-  return error instanceof _API.APIError || error instanceof _validationError.default || error instanceof _BlockChainError.default || error instanceof GrpcError;
+  return error instanceof _API.APIError || error instanceof _validationError.default || error instanceof _BlockChainError.default || error instanceof GrpcError || error instanceof MetamaskError;
 };
 
 exports.checkIfKnownError = checkIfKnownError;

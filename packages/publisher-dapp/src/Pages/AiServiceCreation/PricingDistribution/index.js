@@ -53,7 +53,7 @@ class PricingDistribution extends Component {
               per service. Support for multiple groups per Service is coming soon.
             </Typography>
             <Region changeGroups={changeGroups} serviceGroups={serviceDetails.groups} />
-            <UploadProto changeProtoFiles={changeProtoFiles} />
+            <UploadProto changeProtoFiles={changeProtoFiles} protoFilesUrl={serviceDetails.assets.protoFiles.url} />
             <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
             <div className={classes.alertContainer}>
               <AlertBox type={alert.ERROR} message={alert.message} />

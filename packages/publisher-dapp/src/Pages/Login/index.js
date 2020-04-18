@@ -2,7 +2,6 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
-import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
 
@@ -39,7 +38,7 @@ const Login = ({ history }) => {
       if (error.code === "UserNotConfirmedException") {
         return handleUserNotConfirmed();
       }
-      setError(loginErrorMsg);
+      setError(error.message);
     }
   };
 
