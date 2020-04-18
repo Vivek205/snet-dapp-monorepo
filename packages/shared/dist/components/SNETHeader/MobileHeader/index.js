@@ -51,7 +51,12 @@ var MobileHeader = function MobileHeader(_ref) {
       openMobileMenu = _useState2[0],
       setOpenMobileMenu = _useState2[1];
 
-  var toggleMobileMenu = function toggleMobileMenu() {
+  var stopProgationOfEventToHeader = function stopProgationOfEventToHeader(e) {
+    e.stopPropagation();
+  };
+
+  var toggleMobileMenu = function toggleMobileMenu(e) {
+    stopProgationOfEventToHeader(e);
     setOpenMobileMenu(!openMobileMenu);
   };
 
@@ -62,8 +67,9 @@ var MobileHeader = function MobileHeader(_ref) {
     }, /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null));
   }
 
-  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-    className: classes.mobileNavContainer
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.mobileNavContainer,
+    onClick: stopProgationOfEventToHeader
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.closeMenuIcon
   }, /*#__PURE__*/_react.default.createElement(_Close.default, {
@@ -101,7 +107,7 @@ var MobileHeader = function MobileHeader(_ref) {
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions,
     headerType: "mobile"
-  })))));
+  }))));
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(MobileHeader);
