@@ -44,7 +44,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const selectedOrgGroup = orgGroups[0];
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.validators.validURL(value, `${value} is not a valid endpoint`);
+    const isNotValid = validator.validators.validURL(value, { message: `${value} is not a valid endpoint` });
     if (isNotValid) {
       setAlert({ type: alertTypes.ERROR, message: isNotValid });
       return false;
