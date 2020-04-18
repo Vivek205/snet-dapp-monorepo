@@ -50,9 +50,12 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
   };
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, orgSetupRegionValidationConstraints.URL);
+    const isNotValid = validator.single(
+      value,
+      orgSetupRegionValidationConstraints.groups.array["paymentConfig.paymentChannelStorageClient.endpoints"]
+    );
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      setAlert({ type: alertTypes.ERROR, message: `${value}  is not a valid endpoint` });
       return false;
     }
     return true;

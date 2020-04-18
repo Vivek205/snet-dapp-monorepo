@@ -1,5 +1,4 @@
 export const servicePricingValidationConstraints = {
-  URL: { validURL: true },
   freeCallsAllowed: {
     numericality: { onlyInteger: true, greaterThanOrEqualTo: 0 },
   },
@@ -13,7 +12,6 @@ export const servicePricingValidationConstraints = {
   groups: {
     array: {
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
-
       testEndpoints: { presence: { allowEmpty: false, message: "^Test Endpoints cannot be blank" } },
       pricing: {
         array: {

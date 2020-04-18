@@ -82,7 +82,7 @@ var validURL = function validURL(str, options) {
     return;
   }
 
-  return options.message || "".concat(str, "  is not a valid url");
+  return options.message || "".concat(str, "  is not valid");
 };
 
 validator.validators = _objectSpread({}, _validate.default.validators, {
