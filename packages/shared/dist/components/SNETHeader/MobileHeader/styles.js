@@ -28,6 +28,9 @@ var useStyles = function useStyles(MUITheme) {
         backgroundColor: "#000"
       }
     },
+    hideNav: {
+      display: "none"
+    },
     mobileNavContainer: {
       display: "flex",
       alignItems: "center",
@@ -45,8 +48,8 @@ var useStyles = function useStyles(MUITheme) {
     closeMenuIcon: {
       color: MUITheme.palette.text.white,
       position: "absolute",
-      top: 30,
-      left: 40,
+      top: 20,
+      left: 20,
       cursor: "pointer"
     },
     mobileNavigation: {
@@ -80,12 +83,21 @@ var useStyles = function useStyles(MUITheme) {
           color: MUITheme.palette.text.white,
           fontSize: 24,
           lineHeight: "33px",
-          textDecoration: "none"
+          textDecoration: "none",
+          '&:hover': {
+            color: MUITheme.palette.primary.main,
+            textDecoration: 'underline'
+          }
         }
       },
       "@media(min-width: 1024px)": {
         display: "none"
       }
+    },
+    active: {
+      color: MUITheme.palette.text.white,
+      fontWeight: 600,
+      borderBottom: "2px solid #fff"
     },
     mobileActionBtns: {
       display: "flex",
