@@ -83,7 +83,11 @@ var useStyles = function useStyles(MUITheme) {
           color: MUITheme.palette.text.white,
           fontSize: 24,
           lineHeight: "33px",
-          textDecoration: "none"
+          textDecoration: "none",
+          '&:hover': {
+            color: MUITheme.palette.primary.main,
+            textDecoration: 'underline'
+          }
         }
       },
       "@media(min-width: 1024px)": {
@@ -93,7 +97,7 @@ var useStyles = function useStyles(MUITheme) {
     active: {
       color: MUITheme.palette.text.white,
       fontWeight: 600,
-      borderBottom: '2px solid #fff'
+      borderBottom: "2px solid #fff"
     },
     mobileActionBtns: {
       display: "flex",

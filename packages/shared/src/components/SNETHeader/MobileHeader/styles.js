@@ -70,6 +70,10 @@ export const useStyles = MUITheme => ({
         fontSize: 24,
         lineHeight: "33px",
         textDecoration: "none",
+        "&:hover": {
+          color: MUITheme.palette.primary.main,
+          textDecoration: "underline",
+        },
       },
     },
     "@media(min-width: 1024px)": { display: "none" },
