@@ -168,7 +168,10 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const handlePriceValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
     if (isNotValid) {
-      return setPriceValidation({ type: alertTypes.ERROR, message: "Price of the service cannot be a decimal value." });
+      return setPriceValidation({
+        type: alertTypes.ERROR,
+        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)}.`,
+      });
     }
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
   };
