@@ -28,7 +28,7 @@ export const overViewArticles = [
       {
         title: "Store and control AI in one hub: ",
         description:
-          " Editors and developers can easily test, refine, and deploy changes to mulitple platforms, and global regions from one interface.",
+          " Editors and developers can easily test, refine, and deploy changes to multiple platforms, and global regions from one interface.",
       },
       {
         title: "Engage new AI experiences: ",
