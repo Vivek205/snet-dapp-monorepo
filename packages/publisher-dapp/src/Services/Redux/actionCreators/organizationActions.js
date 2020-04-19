@@ -19,6 +19,7 @@ import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { defaultContacts } from "../reducers/organizationReducer";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -456,7 +457,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
@@ -481,7 +482,7 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };

@@ -86,7 +86,7 @@ const PublishToBlockchain = ({ classes, handleFinishLater, history }) => {
         <TechnicalInfo />
       </div>
       <div className={classes.publishAlertContainer}>
-        <AlertBox message={alert.message} type={alert.type} />
+        <AlertBox message={alert.message} type={alert.type} children={alert.children} />
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />
