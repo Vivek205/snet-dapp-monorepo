@@ -19,6 +19,7 @@ import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { defaultContacts } from "../reducers/organizationReducer";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -406,7 +407,6 @@ export const publishToIPFS = uuid => async dispatch => {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -436,11 +436,11 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createOrganization(orgId, orgMetadataURI, members)
@@ -459,7 +459,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
@@ -484,7 +484,7 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
