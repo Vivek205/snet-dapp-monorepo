@@ -407,7 +407,6 @@ export const publishToIPFS = uuid => async dispatch => {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -437,11 +436,11 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createOrganization(orgId, orgMetadataURI, members)
