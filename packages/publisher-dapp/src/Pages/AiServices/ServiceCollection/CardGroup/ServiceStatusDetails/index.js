@@ -64,6 +64,7 @@ const ServiceStatusDetails = props => {
 */
   const tabs = [{ name: "Pricing", activeIndex: 2, component: <Pricing groups={groups} /> }];
   const activeComponent = tabs.find(el => el.activeIndex === activeTab);
+
   const validateDaemonConfig = async () => {
     try {
       setAlert({});
@@ -178,7 +179,9 @@ const ServiceStatusDetails = props => {
         <div>
           <div className={classes.statusDetails}>
             <Typography className={classes.property}>status</Typography>
-            <Typography className={classes.value}>{status}</Typography>
+            <Typography data-status-type={status} className={classes.value}>
+              {status}
+            </Typography>
           </div>
           <div className={classes.tabsContainer}>
             <AppBar position="static" className={classes.tabsHeader}>

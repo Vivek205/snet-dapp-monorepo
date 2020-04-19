@@ -69,7 +69,8 @@ var SNETHeader = function SNETHeader(_ref) {
   }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
-    LoggedOutActions: LoggedOutActions
+    LoggedOutActions: LoggedOutActions,
+    headerType: "desktop"
   })))));
 };
 

@@ -136,6 +136,11 @@ export const setupRouteAuthentications = () => {
 
   return {
     ...GlobalRoutes,
+    ONBOARDING: {
+      ...GlobalRoutes.ONBOARDING,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
     ORGANIZATION_SETUP: {
       ...GlobalRoutes.ORGANIZATION_SETUP,
       isAllowed: isLoggedIn,

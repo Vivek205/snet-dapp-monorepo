@@ -20,13 +20,13 @@ const AccountBalance = ({ classes, metamaskDetails }) => {
           <div className={classes.warningBox}>
             <span>You need Metamask wallet to create requests.</span>
             <Typography>
-              Please Login or Install to your Metamask wallet account and connect to SingularityNet.{" "}
+              Please Login or Install to your Metamask wallet account and connect to SingularityNet.&nbsp;
             </Typography>
             <Typography>
               <a href="https://metamask.io/" target="_new">
-                Click here{" "}
+                Click here
               </a>
-              to install and learn more about how to use Metamask and your AGI credits with SinguarlityNet AI
+              &nbsp; to install and learn more about how to use Metamask and your AGI credits with SinguarlityNet AI
               Marketplace.
             </Typography>
           </div>

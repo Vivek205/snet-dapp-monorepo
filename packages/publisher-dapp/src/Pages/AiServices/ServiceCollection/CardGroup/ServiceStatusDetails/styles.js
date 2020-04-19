@@ -10,10 +10,15 @@ export const useStyles = MUITheme => ({
   statusDetails: {
     display: "flex",
     alignItems: "baseline",
-    [`& p[data-status-type="${serviceCreationStatus.DRAFT}"], p[data-status-type="${serviceCreationStatus.PUBLISHED}"],p[data-status-type="${serviceCreationStatus.APPROVED}"]`]: {
+    [`& p[data-status-type="${serviceCreationStatus.DRAFT}"], 
+      p[data-status-type="${serviceCreationStatus.PUBLISHED}"],
+      p[data-status-type="${serviceCreationStatus.APPROVED}"], 
+      p[data-status-type="${serviceCreationStatus.APPROVAL_PENDING}"], 
+      p[data-status-type="${serviceCreationStatus.BLOCKCHAIN_SUBMITTED}"],
+      p[data-status-type="${serviceCreationStatus.PUBLISH_IN_PROGRESS}"]`]: {
       color: MUITheme.palette.warning.main,
     },
-    [`& p[data-status-type="${serviceCreationStatus.OFFLINE}"], p[data-status-type="${serviceCreationStatus.REJECTED}"]`]: {
+    [`& p[data-status-type="${serviceCreationStatus.OFFLINE}"], p[data-status-type="${serviceCreationStatus.REJECTED}"], p[data-status-type="${serviceCreationStatus.CHANGE_REQUESTED}"]`]: {
       color: MUITheme.palette.text.statusRed,
     },
     [`& p[data-status-type="${serviceCreationStatus.ACTIVE}"]`]: { color: MUITheme.palette.success.main },

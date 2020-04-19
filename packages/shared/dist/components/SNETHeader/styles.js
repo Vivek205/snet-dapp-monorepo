@@ -39,8 +39,9 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       "& h5": {
         marginLeft: 11,
         fontWeight: 300,
+        letterSpacing: -1,
         lineHeight: "30px",
-        "@media(max-width:400px)": {
+        "@media(max-width:420px)": {
           display: "none"
         }
       }
@@ -56,7 +57,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       padding: 0
     }),
     headerActionsContainer: {
-      "@media(max-width:642px)": {
+      "@media(max-width:720px)": {
         display: "none"
       }
     }

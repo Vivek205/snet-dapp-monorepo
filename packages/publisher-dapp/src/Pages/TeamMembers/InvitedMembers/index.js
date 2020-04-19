@@ -28,10 +28,10 @@ const InvitedMembers = ({
     <Grid container className={classes.invitedMembersContainer}>
       <Typography variant="h6">Invited {invitedMembers.length > 0 ? invitedMembers.length : null}</Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
+        <Grid item xs={12} sm={12} md={7} lg={7}>
           <span>email</span>
         </Grid>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
+        <Grid item xs={12} sm={12} md={5} lg={5}>
           <span>invited on</span>
         </Grid>
       </Grid>
@@ -41,11 +41,11 @@ const InvitedMembers = ({
         ) : (
           invitedMembers.map(item => (
             <Grid item xs={12} sm={12} md={12} lg={12} className={classes.data} key={item.username}>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item xs={12} sm={12} md={7} lg={7}>
                 <span className={classes.mobileTableHeader}>email</span>
                 <span className={classes.tableBodyCell}>{item.username}</span>
               </Grid>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
                 <span className={classes.mobileTableHeader}>invited on</span>
                 <span className={classes.tableBodyCell}>{parseDateFromAPIResponse(item.invited_on)}</span>
               </Grid>
