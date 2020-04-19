@@ -18,6 +18,7 @@ export const useStyles = MUITheme => ({
       backgroundColor: "#000",
     },
   },
+  hideNav: { display: "none" },
   mobileNavContainer: {
     display: "flex",
     alignItems: "center",
@@ -33,8 +34,8 @@ export const useStyles = MUITheme => ({
   closeMenuIcon: {
     color: MUITheme.palette.text.white,
     position: "absolute",
-    top: 30,
-    left: 40,
+    top: 20,
+    left: 20,
     cursor: "pointer",
   },
   mobileNavigation: {
@@ -69,9 +70,18 @@ export const useStyles = MUITheme => ({
         fontSize: 24,
         lineHeight: "33px",
         textDecoration: "none",
+        "&:hover": {
+          color: MUITheme.palette.primary.main,
+          textDecoration: "underline",
+        },
       },
     },
     "@media(min-width: 1024px)": { display: "none" },
+  },
+  active: {
+    color: MUITheme.palette.text.white,
+    fontWeight: 600,
+    borderBottom: "2px solid #fff",
   },
   mobileActionBtns: {
     display: "flex",

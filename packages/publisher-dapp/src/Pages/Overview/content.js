@@ -1,18 +1,19 @@
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import WhatDoWithPublisher from "shared/dist/assets/images/services.png";
-import YoutubeVideoFrame from "shared/dist/assets/images/youtubeVideoFrame.png";
+import Overview from "shared/dist/assets/images/Overview.png";
 
 export const overViewArticles = [
   {
     title: "Try Publisher Free Today",
     description: [
-      "Publish your AI services to the largest open decentralized AI marketplace blockchain and reach customers around the world.",
-      " You’ll also get access to beta software and advanced AI app capabilities.",
+      "Publish and monetize your AI services onto the largest open decentralized AI marketplace in the world, extending your reach to obtain more customers globally.",
+      " You’ll also get free access to beta software, advanced AI app capabilities, extensive beta testing tools, and AI usage analytics.",
     ],
-    media: YoutubeVideoFrame,
+    media: Overview,
     btnDetails: {
       text: "get started",
-      type: "blue",
+      color: "blue",
+      variant: "outlined",
       linkTo: `${GlobalRoutes.ENROLL.path}`,
     },
   },

@@ -23,10 +23,10 @@ const AcceptedMembers = ({
         Accepted Invitations {acceptedMembers.length > 0 ? acceptedMembers.length : null}
       </Typography>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.column}>
-        <Grid item xs={12} sm={12} md={8} lg={8}>
+        <Grid item xs={12} sm={12} md={7} lg={7}>
           <span>joining member</span>
         </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
+        <Grid item xs={12} sm={12} md={5} lg={5}>
           <span>role</span>
         </Grid>
       </Grid>
@@ -36,11 +36,11 @@ const AcceptedMembers = ({
         ) : (
           acceptedMembers.map(item => (
             <Grid item sx={12} sm={12} md={12} lg={12} className={classes.data} key={item.email}>
-              <Grid item sx={12} sm={12} md={8} lg={8}>
+              <Grid item sx={12} sm={12} md={7} lg={7}>
                 <span className={classes.mobileTableHeader}>joining member:</span>
                 <UserCard userName={item.username} userEmail={item.username} />
               </Grid>
-              <Grid item sx={12} sm={12} md={4} lg={4}>
+              <Grid item sx={12} sm={12} md={5} lg={5}>
                 <span className={classes.mobileTableHeader}>role:</span>
                 <span className={classes.tableBodyCell}>{item.role}</span>
               </Grid>

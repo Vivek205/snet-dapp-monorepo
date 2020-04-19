@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import JSZip from "jszip";
 import last from "lodash/last";
 
@@ -14,22 +14,21 @@ import { assetTypes } from "../../../../Utils/FileUpload";
 import ValidationError from "shared/dist/utils/validationError";
 import { checkIfKnownError } from "shared/dist/utils/error";
 
-const UploadProto = ({ changeProtoFiles }) => {
+const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
 
   useEffect(() => {
-    if (!alert.message && Boolean(serviceDetails.assets.protoFiles.url)) {
+    if (!alert.message && Boolean(protoFilesUrl)) {
       setAlert({
         type: alertTypes.SUCCESS,
         message: "File have been uploaded. You can download your files on clicking the download button",
       });
     }
-  }, [serviceDetails.assets.protoFiles.url, alert.message]);
+  }, [alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
     const protoFilesExtn = "proto";
@@ -100,8 +99,8 @@ const UploadProto = ({ changeProtoFiles }) => {
         showFileDetails
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
-        fileDownloadURL={serviceDetails.assets.protoFiles.url}
-        uploadSuccess={Boolean(serviceDetails.assets.protoFiles.url)}
+        fileDownloadURL={protoFilesUrl}
+        uploadSuccess={Boolean(protoFilesUrl)}
       />
       <AlertBox type={alert.type} message={alert.message} />
     </Fragment>

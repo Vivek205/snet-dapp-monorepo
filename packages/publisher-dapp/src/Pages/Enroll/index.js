@@ -26,7 +26,7 @@ const Enroll = ({ classes, history }) => {
 
   const handleContinue = () => {
     if (isLoggedIn) {
-      return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
+      return history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
     }
     history.push(GlobalRoutes.SIGNUP.path);
   };

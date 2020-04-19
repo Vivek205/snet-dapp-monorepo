@@ -23,7 +23,7 @@ export const orgSetupRegionValidationConstraints = {
         numericality: { greaterThan: 0 },
       },
       "paymentConfig.paymentChannelStorageClient.endpoints": {
-        presence: { allowEmpty: false, message: "^ETCD Endpoints cannot be empty" },
+        validURL: { message: "^Endpoints cannot be empty" },
       },
     },
   },

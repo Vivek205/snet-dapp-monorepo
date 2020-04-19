@@ -17,7 +17,7 @@ import { useStyles } from "./styles";
 import { userActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
-const UserProfilePopUp = ({ classes, show, handleClose, orgImg }) => {
+const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType }) => {
   const { nickname, orgName, orgUuid } = useSelector(state => ({
     orgUuid: state.organization.uuid,
     nickname: state.user.nickname,
@@ -41,7 +41,9 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg }) => {
 
   return (
     <Modal open={show} onClose={handleClose}>
-      <div className={classes.UserProfilePopUpContainer}>
+      <div
+        className={`${classes.UserProfilePopUpContainer} ${headerType === "mobile" ? classes.mobUserProPopup : null}`}
+      >
         <UserProfileCard nickName={nickname} />
         <ul className={classes.userProfileMenuList}>
           {orgUuid ? (
