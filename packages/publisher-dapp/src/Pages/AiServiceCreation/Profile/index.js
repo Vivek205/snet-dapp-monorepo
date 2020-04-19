@@ -72,7 +72,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   };
 
   const handleWebsiteValidation = value => {
-    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.projectURL);
     if (isNotValid) {
       return setWebsiteValidation({
         type: alertTypes.ERROR,

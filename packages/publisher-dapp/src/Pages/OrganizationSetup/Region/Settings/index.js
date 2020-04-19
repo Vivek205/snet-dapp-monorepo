@@ -50,9 +50,12 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
   };
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, orgSetupRegionValidationConstraints.URL);
+    const isNotValid = validator.single(
+      value,
+      orgSetupRegionValidationConstraints.groups.array["paymentConfig.paymentChannelStorageClient.endpoints"]
+    );
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      setAlert({ type: alertTypes.ERROR, message: `${value}  is not a valid endpoint` });
       return false;
     }
     return true;
@@ -129,15 +132,15 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               description={
                 <p>
                   The ethereum address to which all payments will be processed for this group. See Payment Address
-                  section{" "}
+                  section &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    here{" "}
+                    here &nbsp;
                   </a>
-                  and creating ethereum identity{" "}
+                  and creating ethereum identity &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/ethereum-identity/"
                     rel="noopener noreferrer"
@@ -157,7 +160,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               label="ETCD Endpoint"
               description={
                 <p>
-                  Enter all the ETCD endpoints that will be used. Details{" "}
+                  Enter all the ETCD endpoints that will be used. Details &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/etcd/"
                     rel="noopener noreferrer"

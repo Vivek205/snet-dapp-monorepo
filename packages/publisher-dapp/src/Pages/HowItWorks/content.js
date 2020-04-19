@@ -8,7 +8,6 @@ import CreateAIServicesIcon from "shared/dist/assets/images/CreateAIServices.png
 import PublishDistributeIcon from "shared/dist/assets/images/PublishDistribute.png";
 import EditUpdateIcon from "shared/dist/assets/images/EditUpdate.png";
 import CollectAGIIcon from "shared/dist/assets/images/CollectAGI.png";
-import StayConnectedIcon from "shared/dist/assets/images/StayConnected.png";
 
 export const relatedContentData = [
   {
@@ -16,8 +15,8 @@ export const relatedContentData = [
     cardTitle: "SingularityNET White Paper",
     cardDescription:
       "A Decentralized, Open Market and Network for AIs.  Read our white paper to get a better understanding our mission and technology development",
-    cardAction: "Download WhitePaper",
-    cardLinkTo: "https://dev.singularitynet.io/docs/overview/",
+    cardAction: "View",
+    cardLinkTo: "https://public.singularitynet.io/whitepaper.pdf",
   },
   {
     cardMedia: PlatformRoadmapImage,
@@ -25,15 +24,15 @@ export const relatedContentData = [
     cardDescription:
       "SingularityNET lets anyone create, share, and monetize AI services at scale. It's a full-stack AI solution powered by a decentralized protocol…",
     cardAction: "view",
-    cardLinkTo: "https://dev.singularitynet.io/docs/overview/",
+    cardLinkTo: "https://singularitynet.io/roadmap/",
   },
   {
     cardMedia: ResearchInitiativesImage,
     cardTitle: "Research Initiatives",
     cardDescription:
-      "SingularityNThe initiatives outlined below consist of core research areas that will strengthen the long-term AI capabilities of the network…",
+      "SingularityNET initiatives outlined below consist of core research areas that will strengthen the long-term AI capabilities of the network…",
     cardAction: "view",
-    cardLinkTo: "https://dev.singularitynet.io/docs/overview/",
+    cardLinkTo: "https://singularitynet.io/research-initiatives/",
   },
 ];
 
@@ -50,7 +49,7 @@ export const howItWorksContent = [
     title: "Form a Dream Team",
     description: "to help create and manage your AI services.  Share your revenue with your contributors.",
     btnTitle: "learn more",
-    linkTo: "https://dev.singularitynet.io/docs/ai-developers/grpc/",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/collaboration/",
   },
   {
     icon: CreateAIServicesIcon,
@@ -76,15 +75,15 @@ export const howItWorksContent = [
   {
     icon: CollectAGIIcon,
     title: "Collect AGI Tokens",
-    description: "and transfer them to your preferred wallet and team memebers.",
+    description: "and transfer them to your preferred wallet and team members.",
     btnTitle: "learn more",
-    linkTo: "https://dev.singularitynet.io/docs/ai-developers/grpc/",
+    linkTo: "https://dev.singularitynet.io/docs/ai-developers/claim/",
   },
-  {
+  /*{
     icon: StayConnectedIcon,
     title: "Stay Connected",
     description: "with alerts and notifications on actions and feedback from your users.",
     btnTitle: "learn more",
     linkTo: "https://dev.singularitynet.io/docs/ai-developers/grpc/",
-  },
+  },*/
 ];

@@ -51,6 +51,7 @@ const SNETHeader = ({
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}
               LoggedOutActions={LoggedOutActions}
+              headerType="desktop"
             />
           </div>
         </SNETAppBar>

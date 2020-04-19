@@ -42,6 +42,7 @@ export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
 export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
 export const SET_ORGANIZATION_TOUCHED_FLAG = "SET_ORGANIZATION_TOUCHED_FLAG";
 export const SET_ORGANIZATION_AVAILABILITY = "SET_ORGANIZATION_AVAILABILITY";
+export const SET_ORG_ALLOW_CHANGE_REQUEST_EDIT = "SET_ALLOW_CHANGE_REQUEST_EDIT";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -85,6 +86,8 @@ export const setOrgAvailability = orgAvailability => ({
   type: SET_ORGANIZATION_AVAILABILITY,
   payload: orgAvailability,
 });
+
+export const setOrgAllowChangeRequestEdit = allow => ({ type: SET_ORG_ALLOW_CHANGE_REQUEST_EDIT, payload: allow });
 
 const validateOrgIdAPI = orgUuid => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());

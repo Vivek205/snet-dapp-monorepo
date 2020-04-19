@@ -72,7 +72,7 @@ var FileStats = function FileStats(props) {
     color: "primary",
     variant: "text",
     disabled: !uploadSuccess
-  })), "        ")));
+  })), " ")));
 };
 
 FileStats.prototypes = {

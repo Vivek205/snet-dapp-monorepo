@@ -55,7 +55,7 @@ const validURL = (str, options) => {
   if (pattern.test(str)) {
     return;
   }
-  return options.message || `${str}  is not a valid url`;
+  return options.message || `${str}  is not valid`;
 };
 validator.validators = {
   ...validate.validators,
