@@ -23,7 +23,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
       for (let i = 0; i < isNotValid.length; i++) {
         if (isNotValid[i].includes(",")) {
           let res = isNotValid[i].split(",");
-          delete isNotValid[i];
+          isNotValid.splice(0);
           isNotValid.push(...res);
         }
       }
