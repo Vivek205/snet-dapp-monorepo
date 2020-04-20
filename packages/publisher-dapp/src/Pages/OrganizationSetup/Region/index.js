@@ -20,6 +20,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const handleContinue = () => {
     const isNotValid = validator(organization, orgSetupRegionValidationConstraints);
     if (isNotValid) {
+      for (let i = 0; i < isNotValid.length; i++) {
+        if (isNotValid[i].includes(",")) {
+          let res = isNotValid[i].split(",");
+          delete isNotValid[i];
+          isNotValid.push(...res);
+        }
+      }
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
       return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
