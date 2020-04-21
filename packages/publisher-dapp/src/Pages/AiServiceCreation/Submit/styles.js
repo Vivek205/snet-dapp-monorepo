@@ -245,4 +245,5 @@ export const useStyles = MUITheme => ({
     },
     "& button": { marginTop: 16 },
   },
+  alertBoxContainer: { marginTop: 10 },
 });

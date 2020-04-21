@@ -8,4 +8,5 @@ export const useStyles = makeStyles(MUITheme => ({
     lineHeight: "20px",
   },
   modelTextfieldContainer: { marginTop: 32 },
+  errorContainer: { marginTop: 25 },
 }));
