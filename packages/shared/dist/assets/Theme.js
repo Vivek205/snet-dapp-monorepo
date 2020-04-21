@@ -23,6 +23,7 @@ var MUITheme = (0, _styles.createMuiTheme)({
       primary: "#666",
       secondary: "#fff",
       disabled: "#D6D6D6",
+      statusRed: "#EF5265",
       red: "#D0021B",
       darkGrey: "#212121",
       lightGrey: "#9b9b9b",
@@ -73,14 +74,19 @@ var MUITheme = (0, _styles.createMuiTheme)({
       mainContent: "#fafafa",
       alertBox: "#E67381",
       warningBox: "#F18D5A",
-      grey: "#D6D6D6"
+      grey: "#D6D6D6",
+      inputBorder: "rgba(25,25,25,.32)"
     },
-    success: "#00C48C",
+    success: {
+      main: "#00C48C"
+    },
     error: {
       main: "#B00020"
     },
     infoBoxLink: "#067AD7",
-    warning: "#F18D5A"
+    warning: {
+      main: "#F18D5A"
+    }
   },
   typography: {
     fontFamily: "Muli",
