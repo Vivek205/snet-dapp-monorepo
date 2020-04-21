@@ -93,7 +93,7 @@ class SubmitForReview extends React.Component {
           return this.setState({
             validateDaemonAlert: {
               type: alertTypes.ERROR,
-              message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
+              message: `The Ropsten endpoint ${testEndPoint}  is either down or Invalid `,
             },
           });
         }
@@ -137,7 +137,7 @@ class SubmitForReview extends React.Component {
     }
   };
 
-  handleTEstEndpointValidation = value => {
+  handleTestEndpointValidation = value => {
     const errorMessage = validator.single(value, submitServiceConstraints.testEndpoints);
     return this.setState({
       testEndpointAlert: {
@@ -150,7 +150,7 @@ class SubmitForReview extends React.Component {
   handleTestEndpointsChange = event => {
     const { changeGroups, serviceDetails } = this.props;
     const newEndpoints = [event.target.value];
-    this.handleTEstEndpointValidation(newEndpoints);
+    this.handleTestEndpointValidation(newEndpoints);
     const updatedServiceGroups = [...serviceDetails.groups];
     updatedServiceGroups[0] = { ...serviceDetails.groups[0], testEndpoints: newEndpoints };
     changeGroups(updatedServiceGroups);
