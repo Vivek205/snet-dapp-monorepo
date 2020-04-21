@@ -16,7 +16,7 @@ import UnclaimedPayments from "./UnclaimedPayments";
 import MPEContract from "../../Utils/PlatformContracts/MPEContract";
 import { blockChainEvents } from "../../Utils/Blockchain";
 import { blocksToDays, signatureHexToVRS, toBNString } from "../../Utils/Grpc";
-import { initSDK } from "shared/src/utils/snetSdk";
+import { initSDK } from "shared/dist/utils/snetSdk";
 import { itemsPerPageOptions } from "./content";
 import MmAuthorization from "./MMAuthorization";
 import AccountDetails from "./AccountDetails";
@@ -26,7 +26,7 @@ import { LoaderContent } from "../../Utils/Loader";
 import AlertBox from "shared/dist/components/AlertBox";
 import { MetamaskError } from "shared/dist/utils/error";
 import ClaimsSuccessPopup from "./ClaimsSuccessPopup";
-import { cogsToAgi } from "shared/src/utils/Pricing";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 import ConnectMetamask from "./ConnectMetamask";
 
 let controlServiceRequest;
