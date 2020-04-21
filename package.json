@@ -40,7 +40,7 @@
     "build:rfai": "cd packages/rfai-dapp && yarn build",
     "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
     "storybook": "lerna exec --scope shared  -- yarn run storybook",
-    "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
+    "build:storybook": "lerna exec --scope shared  -- yarn run build-storybook",
     "lint": "eslint .",
     "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
     "lint:fix-shared": "eslint packages/shared/. --fix",
