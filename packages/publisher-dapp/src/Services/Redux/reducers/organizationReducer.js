@@ -68,6 +68,7 @@ const initialState = {
   },
   owner: "",
   rejectReason: "",
+  allowChangeRequestEdit: false,
 };
 
 const OrganizationReducer = (state = initialState, action) => {
@@ -118,6 +119,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, foundInBlockchain: action.payload };
     case orgVerificationActions.SET_ORG_REJECT_REASON:
       return { ...state, rejectReason: action.payload };
+    case organizationActions.SET_ORG_ALLOW_CHANGE_REQUEST_EDIT:
+      return { ...state, allowChangeRequestEdit: action.payload };
     default:
       return state;
   }

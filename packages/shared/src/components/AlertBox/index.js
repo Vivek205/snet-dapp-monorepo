@@ -51,6 +51,7 @@ AlertBox.propTypes = {
 
 AlertBox.defaultProps = {
   type: "error",
+  message: undefined,
 };
 
 export default withStyles(useStyles)(AlertBox);

@@ -1,19 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
-
 import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
+import { organizationActions } from "../../Services/Redux/actionCreators";
 
 const selectState = state => ({ rejectReason: state.organization.rejectReason });
 
 const VerificationChangeRequested = () => {
   const { rejectReason } = useSelector(selectState);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handleEditOrgDetails = () => {
+  const handleEditOrgDetails = async () => {
+    await dispatch(organizationActions.setOrgAllowChangeRequestEdit(true));
     history.push(AuthenticateRoutes.ORGANIZATION.path);
   };
 

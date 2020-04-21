@@ -18,6 +18,8 @@ import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreato
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
+import { agiToCogs } from "shared/dist/utils/Pricing";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 import AlertText from "shared/dist/components/AlertText";
 
@@ -42,9 +44,9 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const selectedOrgGroup = orgGroups[0];
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(value, servicePricingValidationConstraints.website);
+    const isNotValid = validator.validators.validURL(value, { message: `${value} is not a valid endpoint` });
     if (isNotValid) {
-      setAlert({ type: alertTypes.ERROR, message: "Invalid endpoint : " + value });
+      setAlert({ type: alertTypes.ERROR, message: isNotValid });
       return false;
     }
     return true;
@@ -68,6 +70,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
           ...updatedEndpoints,
           [endpoint]: { ...selectedServiceGroup[endpoint], valid: false },
         };
+        setAlert({ type: alertTypes.ERROR, message: "" });
       } else {
         updatedEndpoints = { ...selectedServiceGroup.endpoints };
       }
@@ -140,7 +143,10 @@ const Region = ({ changeGroups, serviceGroups }) => {
     if (value === "") return;
     const isNotValid = validator.single(value, servicePricingValidationConstraints.freeCallsAllowed);
     if (isNotValid) {
-      return setfreeCallsValidation({ type: alertTypes.ERROR, message: "Free calls value should be greater than 0" });
+      return setfreeCallsValidation({
+        type: alertTypes.ERROR,
+        message: "Free calls value should be greater than or equal to 0",
+      });
     }
     return setfreeCallsValidation({ type: alertTypes.SUCCESS, message: "" });
   };
@@ -162,14 +168,18 @@ const Region = ({ changeGroups, serviceGroups }) => {
   const handlePriceValidation = value => {
     const isNotValid = validator.single(value, servicePricingValidationConstraints.price);
     if (isNotValid) {
-      return setPriceValidation({ type: alertTypes.ERROR, message: "Price of the service cannot be a decimal value." });
+      return setPriceValidation({
+        type: alertTypes.ERROR,
+        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)}.`,
+      });
     }
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
   };
   const handlePriceChange = event => {
-    const { value } = event.target;
+    let { value } = event.target;
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     handlePriceValidation(value);
+    value = agiToCogs(value);
     const updatedServicePricing = [...selectedServiceGroup.pricing];
     updatedServicePricing[0] = { ...selectedServicePricing, priceInCogs: value };
     const updatedServiceGroups = [...serviceGroups];
@@ -205,7 +215,7 @@ const Region = ({ changeGroups, serviceGroups }) => {
               <SNETTextfield
                 icon
                 name="price"
-                defaultValue={selectedServicePricing && selectedServicePricing.priceInCogs}
+                defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
               />

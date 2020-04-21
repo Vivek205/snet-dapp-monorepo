@@ -168,6 +168,7 @@ export default class SNETImageUpload extends React.Component {
     this.imageDiv = React.createRef();
     this.inputImage = React.createRef();
     this.outputImage = React.createRef();
+    this.uploadedStateImg = React.createRef();
 
     // Function binding
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -807,6 +808,7 @@ export default class SNETImageUpload extends React.Component {
             src={this.state.inputImageData}
             onError={() => this.displayErrorMessage(this.urlErrorMessage)}
             id="loadedImage"
+            ref={this.uploadedStateImg}
             // crossOrigin="anonymous"
             style={
               this.props.displayProportionalImage

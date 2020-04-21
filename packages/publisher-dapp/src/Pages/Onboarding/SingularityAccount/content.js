@@ -3,13 +3,13 @@ import { userPreferenceTypes } from "../../../Utils/user";
 export const entityTypeDetails = {
   title: "Entity Type",
   description:
-    "You will be able to choose publish and develop as Company Organization, Indivdual / Sole Proprietor / Single Person Business or join an existing approved entity with an invitation. The first two options require certain amount of information to proceed.",
+    "You will be able to publish and develop as an Organization, Indivdual / Sole Proprietor / Single Person Business or join an existing approved entity with an invitation. The first two options require certain amount of information to proceed.",
 };
 
 export const loggedInDetails = {
   subtitle: "This is your Singularlity account that will be associated with your AI Publisher account.",
   description:
-    "If you would like to use a different account, you can choose from the options below. If you are an organization, consider registering a new Singularity account rather using a personal account.",
+    "If you would like to use a different account, you can choose from the options below. If you are an organization, consider registering a new SingularityNet account rather using a personal account.",
 };
 
 export const loggedOutDetails = {

@@ -59,7 +59,7 @@ export default class MPEContract {
    * @param r channel senders signatures in V R S for each channel
    * @param s channel senders signatures in V R S for each channel
    */
-  multiChannelClaim = async (
+  multiChannelClaim = (
     channelIdList,
     actualAmountList,
     plannedAmountList,
@@ -67,12 +67,9 @@ export default class MPEContract {
     vList,
     rList,
     sList
-  ) => {
-    await this._initBlockChain();
-
+  ) => address => {
     const bytesRList = rList.map(this._web3.utils.hexToBytes);
     const bytesSList = sList.map(this._web3.utils.hexToBytes);
-    const address = await this._getAddress();
 
     return this._contract.methods
       .multiChannelClaim(

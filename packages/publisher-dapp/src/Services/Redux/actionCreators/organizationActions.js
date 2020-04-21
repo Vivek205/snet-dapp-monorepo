@@ -19,6 +19,7 @@ import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { defaultContacts } from "../reducers/organizationReducer";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -41,6 +42,7 @@ export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
 export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
 export const SET_ORGANIZATION_TOUCHED_FLAG = "SET_ORGANIZATION_TOUCHED_FLAG";
 export const SET_ORGANIZATION_AVAILABILITY = "SET_ORGANIZATION_AVAILABILITY";
+export const SET_ORG_ALLOW_CHANGE_REQUEST_EDIT = "SET_ALLOW_CHANGE_REQUEST_EDIT";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -84,6 +86,8 @@ export const setOrgAvailability = orgAvailability => ({
   type: SET_ORGANIZATION_AVAILABILITY,
   payload: orgAvailability,
 });
+
+export const setOrgAllowChangeRequestEdit = allow => ({ type: SET_ORG_ALLOW_CHANGE_REQUEST_EDIT, payload: allow });
 
 const validateOrgIdAPI = orgUuid => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -403,7 +407,6 @@ export const publishToIPFS = uuid => async dispatch => {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -433,11 +436,11 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createOrganization(orgId, orgMetadataURI, members)
@@ -456,7 +459,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
@@ -481,7 +484,7 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
