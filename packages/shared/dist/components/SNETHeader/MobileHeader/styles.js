@@ -84,9 +84,9 @@ var useStyles = function useStyles(MUITheme) {
           fontSize: 24,
           lineHeight: "33px",
           textDecoration: "none",
-          '&:hover': {
+          "&:hover": {
             color: MUITheme.palette.primary.main,
-            textDecoration: 'underline'
+            textDecoration: "underline"
           }
         }
       },
