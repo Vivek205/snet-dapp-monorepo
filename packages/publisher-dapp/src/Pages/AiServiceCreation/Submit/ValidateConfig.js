@@ -8,7 +8,15 @@ import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 
 const ValidateConfig = props => {
-  const { classes, daemonConfig, handleValidateConfig, testEndPoint, handleTestEndpointsChange, alert } = props;
+  const {
+    classes,
+    daemonConfig,
+    handleValidateConfig,
+    testEndPoint,
+    handleTestEndpointsChange,
+    alert,
+    testEndpointAlert,
+  } = props;
 
   return (
     <div className={classes.validateConfigContainer}>
@@ -26,6 +34,12 @@ const ValidateConfig = props => {
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />
+      <AlertBox
+        type={testEndpointAlert.type}
+        message={testEndpointAlert.message}
+        children={testEndpointAlert.children}
+      />
+
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
       <AlertBox type={alert.type} message={alert.message} children={alert.children} />
       <SNETButton children="validate endpoint" color="primary" variant="contained" onClick={handleValidateConfig} />
