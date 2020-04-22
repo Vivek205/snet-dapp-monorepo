@@ -37,10 +37,10 @@ export const useStyles = MUITheme => ({
       lineHeight: "28px",
     },
     "& + div": { paddingTop: 33 },
-    [MUITheme.breakpoints.down("xs")]: {
+    "@media(max-width:640px)": {
       boxSizing: "border-box",
-      width: "100%",
-      padding: "0 20px",
+      width: "auto%",
+      padding: "40px 20px o",
     },
   },
   description: {

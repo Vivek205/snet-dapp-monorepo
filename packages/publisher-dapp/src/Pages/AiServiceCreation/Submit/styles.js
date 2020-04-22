@@ -246,4 +246,13 @@ export const useStyles = MUITheme => ({
     "& button": { marginTop: 16 },
   },
   alertBoxContainer: { marginTop: 10 },
+  statusBannerContainer: {
+    width: 845,
+    margin: "40px auto",
+    "@media(max-width:800px)": {
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "0 25px",
+    },
+  },
 });
