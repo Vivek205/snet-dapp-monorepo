@@ -21,10 +21,7 @@ const ValidateConfig = props => {
   } = props;
   const shouldValidateDaemonEnabled = () => {
     const error = validator.single(testEndPoint, submitServiceConstraints.testEndpoints);
-    if (error) {
-      return true;
-    }
-    return false;
+    return Boolean(error);
   };
 
   return (
