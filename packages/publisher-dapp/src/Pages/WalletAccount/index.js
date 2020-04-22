@@ -16,7 +16,7 @@ import UnclaimedPayments from "./UnclaimedPayments";
 import MPEContract from "../../Utils/PlatformContracts/MPEContract";
 import { blockChainEvents } from "../../Utils/Blockchain";
 import { blocksToDays, signatureHexToVRS, toBNString } from "../../Utils/Grpc";
-import { initSDK } from "shared/src/utils/snetSdk";
+import { initSDK } from "shared/dist/utils/snetSdk";
 import { itemsPerPageOptions } from "./content";
 import MmAuthorization from "./MMAuthorization";
 import AccountDetails from "./AccountDetails";
@@ -26,7 +26,7 @@ import { LoaderContent } from "../../Utils/Loader";
 import AlertBox from "shared/dist/components/AlertBox";
 import { MetamaskError } from "shared/dist/utils/error";
 import ClaimsSuccessPopup from "./ClaimsSuccessPopup";
-import { cogsToAgi } from "shared/src/utils/Pricing";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 import ConnectMetamask from "./ConnectMetamask";
 
 let controlServiceRequest;
@@ -169,8 +169,9 @@ class WalletAccount extends React.Component {
         this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
       });
       method.once(blockChainEvents.CONFIRMATION, async () => {
-        // TODO stop loader
-        // TODO refetch claims list
+        const { unclaimedPayments, pendingPayments, selectedChannels } = this.state;
+        await this.initEscrow();
+
         const currentTransaction = payments.reduce(
           (acc, cur) => ({
             channelsClaimed: [...acc.channelsClaimed, cur.channelId],
@@ -178,10 +179,29 @@ class WalletAccount extends React.Component {
           }),
           { channelsClaimed: [], amountClaimed: 0 }
         );
+
+        const updatedUnclaimedPayments = unclaimedPayments.filter(
+          el => !currentTransaction.channelsClaimed.includes(el.channelId)
+        );
+
+        const updatedPendingPayments = pendingPayments.filter(
+          el => !currentTransaction.channelsClaimed.includes(el.channelId)
+        );
+
+        const updatedSelectedChannels = { ...selectedChannels };
+        currentTransaction.channelsClaimed.forEach(channel => {
+          delete updatedSelectedChannels[channel];
+        });
+
         this.setState(prevState => ({
+          unclaimedPayments: updatedUnclaimedPayments,
+          pendingPayments: updatedPendingPayments,
+          selectedChannels: updatedSelectedChannels,
           claimChannelsAlert: {
             type: alertTypes.SUCCESS,
-            message: `Selected channels have been claimed from the blockchain successfully. 
+            message: `channels ${currentTransaction.channelsClaimed.join(
+              ","
+            )} have been claimed from the blockchain successfully. 
           Please refresh the list, to fetch the latest payments`,
           },
           showClaimsSuccessPopup: true,
@@ -210,40 +230,50 @@ class WalletAccount extends React.Component {
         throw new MetamaskError(e);
       });
     } catch (e) {
-      // TODO handle error
+      this.props.stopAppLoader();
+      if (checkIfKnownError(e)) {
+        return this.setState({ claimChannelsAlert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      this.setState({
+        claimChannelsAlert: { type: alertTypes.ERROR, message: "Unable to execute the claims. Please try later" },
+      });
     }
   };
 
   claimChannelInBlockchain = async () => {
-    this.props.startAppLoader(LoaderContent.START_CHANNEL_CLAIMS);
-    this.setState({ claimChannelsAlert: {} });
-    const { selectedChannels } = this.state;
-    let pendingPayments = [],
-      unclaimedPayments = [];
-
-    Object.entries(selectedChannels).forEach(([channelId, checked]) => {
-      if (checked) {
-        const pendingPaymentSelected = this.state.pendingPayments.find(el => el.channelId === channelId);
-        const unclaimedPaymentSelected = this.state.unclaimedPayments.find(el => el.channelId === channelId);
-        if (pendingPaymentSelected) {
-          pendingPayments.push(pendingPaymentSelected);
-        } else if (unclaimedPaymentSelected) {
-          unclaimedPayments.push(unclaimedPaymentSelected);
-        }
-      }
-    });
-    const paymentsToBeClaimedInBlockchain = [...pendingPayments];
-    if (!isEmpty(unclaimedPayments)) {
-      const channelIdList = unclaimedPayments.map(el => el.channelId);
-      const startedPayments = await controlServiceRequest.startClaimForMultipleChannels(channelIdList);
-      paymentsToBeClaimedInBlockchain.push(...startedPayments);
-    }
     try {
+      this.props.startAppLoader(LoaderContent.START_CHANNEL_CLAIMS);
+      this.setState({ claimChannelsAlert: {} });
+      const { selectedChannels } = this.state;
+      let pendingPayments = [],
+        unclaimedPayments = [];
+
+      Object.entries(selectedChannels).forEach(([channelId, checked]) => {
+        if (checked) {
+          const pendingPaymentSelected = this.state.pendingPayments.find(el => el.channelId === channelId);
+          const unclaimedPaymentSelected = this.state.unclaimedPayments.find(el => el.channelId === channelId);
+          if (pendingPaymentSelected) {
+            pendingPayments.push(pendingPaymentSelected);
+          } else if (unclaimedPaymentSelected) {
+            unclaimedPayments.push(unclaimedPaymentSelected);
+          }
+        }
+      });
+      const paymentsToBeClaimedInBlockchain = [...pendingPayments];
+      if (!isEmpty(unclaimedPayments)) {
+        const channelIdList = unclaimedPayments.map(el => el.channelId);
+        const startedPayments = await controlServiceRequest.startClaimForMultipleChannels(channelIdList);
+        paymentsToBeClaimedInBlockchain.push(...startedPayments);
+      }
       await this.claimMPEChannels(paymentsToBeClaimedInBlockchain);
     } catch (e) {
       this.props.stopAppLoader();
-      this.setState({ claimChannelsAlert: { type: alertTypes.ERROR, message: e.message } });
-      // TODO handle error
+      if (checkIfKnownError(e)) {
+        return this.setState({ claimChannelsAlert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      this.setState({
+        claimChannelsAlert: { type: alertTypes.ERROR, message: "Unable to execute the claims. Please try later" },
+      });
     }
   };
 
