@@ -18,9 +18,10 @@ import { generateDetailedErrorMessageFromValidation } from "../../../Utils/valid
 import { ConfigurationServiceRequest } from "../../../Utils/Daemon/ConfigurationService";
 import ValidateConfig from "./ValidateConfig";
 import ValidationError from "shared/dist/utils/validationError";
+import isEmpty from "lodash/isEmpty";
 
 class SubmitForReview extends React.Component {
-  state = { daemonConfig: {}, alert: {}, validateDaemonAlert: {} };
+  state = { daemonConfig: {}, alert: {}, validateDaemonAlert: {}, testEndpointAlert: {} };
 
   fetchSampleDaemonConfig = async () => {
     try {
@@ -54,6 +55,14 @@ class SubmitForReview extends React.Component {
   validateDaemonEndpoint = async () => {
     const { serviceDetails } = this.props;
     const testEndPoint = serviceDetails.groups[0].testEndpoints;
+    if (isEmpty(testEndPoint)) {
+      return this.setState({
+        validateDaemonAlert: {
+          type: alertTypes.ERROR,
+          message: "The Ropsten endpoint can not be empty.",
+        },
+      });
+    }
     try {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
@@ -84,7 +93,7 @@ class SubmitForReview extends React.Component {
           return this.setState({
             validateDaemonAlert: {
               type: alertTypes.ERROR,
-              message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
+              message: `The Ropsten endpoint ${testEndPoint}  is either down or Invalid `,
             },
           });
         }
@@ -128,9 +137,20 @@ class SubmitForReview extends React.Component {
     }
   };
 
+  handleTestEndpointValidation = value => {
+    const errorMessage = validator.single(value, submitServiceConstraints.testEndpoints);
+    return this.setState({
+      testEndpointAlert: {
+        type: alertTypes.ERROR,
+        message: errorMessage,
+      },
+    });
+  };
+
   handleTestEndpointsChange = event => {
     const { changeGroups, serviceDetails } = this.props;
     const newEndpoints = [event.target.value];
+    this.handleTestEndpointValidation(newEndpoints);
     const updatedServiceGroups = [...serviceDetails.groups];
     updatedServiceGroups[0] = { ...serviceDetails.groups[0], testEndpoints: newEndpoints };
     changeGroups(updatedServiceGroups);
@@ -138,7 +158,7 @@ class SubmitForReview extends React.Component {
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig, alert, validateDaemonAlert } = this.state;
+    const { daemonConfig, alert, validateDaemonAlert, testEndpointAlert } = this.state;
     const charCount = serviceDetails.comments.SERVICE_PROVIDER.length;
     const testEndPoint = serviceDetails.groups[0].testEndpoints[0];
 
@@ -157,6 +177,7 @@ class SubmitForReview extends React.Component {
               testEndPoint={testEndPoint}
               handleTestEndpointsChange={this.handleTestEndpointsChange}
               alert={validateDaemonAlert}
+              testEndpointAlert={testEndpointAlert}
             />
             <div className={classes.commentField}>
               <SNETTextarea
