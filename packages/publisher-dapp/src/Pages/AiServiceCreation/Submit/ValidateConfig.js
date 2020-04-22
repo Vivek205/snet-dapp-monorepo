@@ -1,11 +1,15 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import DaemonConfig from "../../../Components/DaemonConfig";
-import AlertBox from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
+
+import validator from "shared/dist/utils/validator";
+
+import { submitServiceConstraints } from "./validationConstraints";
 
 const ValidateConfig = props => {
   const {
@@ -17,7 +21,13 @@ const ValidateConfig = props => {
     alert,
     testEndpointAlert,
   } = props;
-
+  const test = () => {
+    const error = validator.single(testEndPoint, submitServiceConstraints.testEndpoints);
+    if (!error) {
+      testEndpointAlert.type = alertTypes.SUCCESS;
+    }
+  };
+  test();
   return (
     <div className={classes.validateConfigContainer}>
       <Typography variant="h6">Insert Testing Configuration File</Typography>
@@ -39,10 +49,15 @@ const ValidateConfig = props => {
         message={testEndpointAlert.message}
         children={testEndpointAlert.children}
       />
-
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
       <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-      <SNETButton children="validate endpoint" color="primary" variant="contained" onClick={handleValidateConfig} />
+      <SNETButton
+        children="validate endpoint"
+        color="primary"
+        variant="contained"
+        onClick={handleValidateConfig}
+        disabled={testEndpointAlert.type !== alertTypes.SUCCESS}
+      />
     </div>
   );
 };
