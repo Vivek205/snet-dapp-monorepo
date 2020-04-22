@@ -22,6 +22,7 @@ export const useStyles = MUITheme => ({
       "&:disabled": {
         background: MUITheme.palette.background.white,
         borderColor: MUITheme.palette.border.secondary,
+        color: "#999",
       },
     },
   },
