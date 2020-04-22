@@ -169,9 +169,9 @@ class WalletAccount extends React.Component {
         this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
       });
       method.once(blockChainEvents.CONFIRMATION, async () => {
-        // TODO stop loader
-        // TODO refetch claims list
+        const { unclaimedPayments, pendingPayments, selectedChannels } = this.state;
         await this.initEscrow();
+
         const currentTransaction = payments.reduce(
           (acc, cur) => ({
             channelsClaimed: [...acc.channelsClaimed, cur.channelId],
@@ -179,10 +179,29 @@ class WalletAccount extends React.Component {
           }),
           { channelsClaimed: [], amountClaimed: 0 }
         );
+
+        const updatedUnclaimedPayments = unclaimedPayments.filter(
+          el => !currentTransaction.channelsClaimed.includes(el.channelId)
+        );
+
+        const updatedPendingPayments = pendingPayments.filter(
+          el => !currentTransaction.channelsClaimed.includes(el.channelId)
+        );
+
+        const updatedSelectedChannels = { ...selectedChannels };
+        currentTransaction.channelsClaimed.forEach(channel => {
+          delete updatedSelectedChannels[channel];
+        });
+
         this.setState(prevState => ({
+          unclaimedPayments: updatedUnclaimedPayments,
+          pendingPayments: updatedPendingPayments,
+          selectedChannels: updatedSelectedChannels,
           claimChannelsAlert: {
             type: alertTypes.SUCCESS,
-            message: `Selected channels have been claimed from the blockchain successfully. 
+            message: `channels ${currentTransaction.channelsClaimed.join(
+              ","
+            )} have been claimed from the blockchain successfully. 
           Please refresh the list, to fetch the latest payments`,
           },
           showClaimsSuccessPopup: true,
