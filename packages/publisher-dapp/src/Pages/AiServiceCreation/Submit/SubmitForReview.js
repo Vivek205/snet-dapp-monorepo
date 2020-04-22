@@ -59,7 +59,7 @@ class SubmitForReview extends React.Component {
       return this.setState({
         validateDaemonAlert: {
           type: alertTypes.ERROR,
-          message: `The Ropsten end point can not be empty `,
+          message: "The Ropsten endpoint can not be empty.",
         },
       });
     }
