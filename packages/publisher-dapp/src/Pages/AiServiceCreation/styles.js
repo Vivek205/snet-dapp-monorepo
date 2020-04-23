@@ -37,10 +37,10 @@ export const useStyles = MUITheme => ({
       lineHeight: "28px",
     },
     "& + div": { paddingTop: 33 },
-    "@media(max-width:640px)": {
+    [MUITheme.breakpoints.down(640)]: {
       boxSizing: "border-box",
-      width: "auto%",
-      padding: "40px 20px o",
+      width: "auto",
+      padding: "40px 20px",
     },
   },
   description: {
@@ -75,6 +75,6 @@ export const useStyles = MUITheme => ({
   },
   editHeaderBtns: {
     "& button:last-of-type": { marginLeft: 40 },
-    "@media(max-width:720px)": { marginTop: 25 },
+    [MUITheme.breakpoints.down(720)]: { marginTop: 25 },
   },
 });
