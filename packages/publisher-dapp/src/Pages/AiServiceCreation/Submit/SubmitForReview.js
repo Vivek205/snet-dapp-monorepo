@@ -57,7 +57,8 @@ class SubmitForReview extends React.Component {
     const configValidation = [
       ["allowed_user_flag", "true"],
       ["blockchain_enabled", "false"],
-      ["passthrough_enabled", "true"][("organization_id", orgId)],
+      ["passthrough_enabled", "true"],
+      ["organization_id", orgId],
       ["service_id", serviceId],
     ];
     const invalidConfig = [];
