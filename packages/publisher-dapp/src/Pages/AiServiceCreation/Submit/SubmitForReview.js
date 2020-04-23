@@ -54,13 +54,13 @@ class SubmitForReview extends React.Component {
 
   validateDaemonEndpoint = async () => {
     const { orgId, serviceId } = this.props;
-    const configValidation = [
-      ["allowed_user_flag", "true"],
-      ["blockchain_enabled", "false"],
-      ["passthrough_enabled", "true"],
-      ["organization_id", orgId],
-      ["service_id", serviceId],
-    ];
+    const configValidation = {
+      allowed_user_flag: "true",
+      blockchain_enabled: "false",
+      passthrough_enabled: "true",
+      organization_id: String(orgId),
+      service_id: String(serviceId),
+    };
     const invalidConfig = [];
     const { serviceDetails } = this.props;
     const testEndPoint = serviceDetails.groups[0].testEndpoints;
@@ -76,13 +76,12 @@ class SubmitForReview extends React.Component {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(element => {
-        configValidation.forEach(element1 => {
-          if (element[0] === element1[0]) {
-            if (element[1] !== element1[1]) {
-              invalidConfig.push(`${element1[0]} should be  ${element1[1]}`);
-            }
+        if (element[0] in configValidation) {
+          if (element[1] !== configValidation[element[0]]) {
+            invalidConfig.push(`${element[0]} should be  ${configValidation[element[0]]}`);
           }
-        });
+        }
+
         if (invalidConfig) {
           const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
           this.setState({
