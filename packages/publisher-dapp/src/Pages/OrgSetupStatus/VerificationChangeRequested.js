@@ -7,7 +7,7 @@ import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETSt
 import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
 import { organizationActions } from "../../Services/Redux/actionCreators";
 
-const selectState = state => ({ rejectReason: state.organization.rejectReason.pop });
+const selectState = state => ({ rejectReason: state.organization.rejectReason });
 
 const VerificationChangeRequested = () => {
   const { rejectReason } = useSelector(selectState);
