@@ -31,7 +31,7 @@ export const getVerificationStatus = orgUuid => async dispatch => {
       throw new APIError(error.message);
     }
     if (data.status === orgVerificationStatus.REJECTED || data.status === orgVerificationStatus.CHANGE_REQUESTED) {
-      dispatch(setOrgRejectReason(data.duns.comments[0].comment));
+      dispatch(setOrgRejectReason(data.duns.comments.slice(-1)[0].comment));
     }
     dispatch(loaderActions.stopAppLoader());
   } catch (e) {
