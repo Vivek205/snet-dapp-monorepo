@@ -53,6 +53,15 @@ class SubmitForReview extends React.Component {
   };
 
   validateDaemonEndpoint = async () => {
+    const { orgId, serviceId } = this.props;
+    const configValidation = {
+      allowed_user_flag: "true",
+      blockchain_enabled: "false",
+      passthrough_enabled: "true",
+      organization_id: String(orgId),
+      service_id: String(serviceId),
+    };
+    const invalidConfig = [];
     const { serviceDetails } = this.props;
     const testEndPoint = serviceDetails.groups[0].testEndpoints;
     if (isEmpty(testEndPoint)) {
@@ -67,24 +76,29 @@ class SubmitForReview extends React.Component {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(element => {
-        if (element[0] === "blockchain_enabled") {
-          if (element[1] === "false") {
-            this.setState({ alert: {} });
-            this.setState({
-              validateDaemonAlert: {
-                type: alertTypes.SUCCESS,
-                message:
-                  "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
-              },
-            });
-          } else {
-            this.setState({
-              validateDaemonAlert: {
-                type: alertTypes.ERROR,
-                message: `The Ropsten endpoint ${testEndPoint} does not have the configuration displayed above`,
-              },
-            });
+        if (element[0] in configValidation) {
+          if (element[1] !== configValidation[element[0]]) {
+            invalidConfig.push(`${element[0]} should be  ${configValidation[element[0]]}`);
           }
+        }
+
+        if (invalidConfig) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
+          this.setState({
+            validateDaemonAlert: {
+              type: alertTypes.ERROR,
+              children: errorMessage,
+            },
+          });
+        } else {
+          this.setState({
+            alert: {},
+            validateDaemonAlert: {
+              type: alertTypes.SUCCESS,
+              message:
+                "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
+            },
+          });
         }
       });
     } catch (error) {
