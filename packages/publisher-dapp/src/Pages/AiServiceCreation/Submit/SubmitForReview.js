@@ -91,16 +91,14 @@ class SubmitForReview extends React.Component {
             },
           });
         } else {
-          this.setState(
-            { alert: {} },
-            {
-              validateDaemonAlert: {
-                type: alertTypes.SUCCESS,
-                message:
-                  "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
-              },
-            }
-          );
+          this.setState({
+            alert: {},
+            validateDaemonAlert: {
+              type: alertTypes.SUCCESS,
+              message:
+                "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
+            },
+          });
         }
       });
     } catch (error) {
