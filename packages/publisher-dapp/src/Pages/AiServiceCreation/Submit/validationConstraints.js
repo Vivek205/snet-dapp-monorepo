@@ -4,6 +4,7 @@ export const submitServiceConstraints = {
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },
   contributors: { presence: { allowEmpty: false, message: "^Please provide the contributors details of the service" } },
+  testEndpoints: { validURL: { message: "Invalid Endpoint. Endpoint should start with Https" } },
   tags: { presence: { allowEmpty: false, message: "^Please provide the tags for the service" } },
   "assets.heroImage.url": {
     presence: {

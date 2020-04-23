@@ -1,5 +1,12 @@
 # SingularityNET Frontend Monorepo
 
+## Quick links
+ - [Marketplace](https://beta.singularitynet.io/)
+ - [Publisher-portal](https://publisher.singularitynet.io/)
+ - [Staking-portal](https://staking.singularitynet.io/)
+ - [RFAI-portal](https://rfai.singularitynet.io/)
+ - [UI-components](https://custom-ui.singularitynet.io/index.html)
+ 
 ## Prerequisites
 ### Windows
 - Node >= 10.14.1 < 12.0.0
