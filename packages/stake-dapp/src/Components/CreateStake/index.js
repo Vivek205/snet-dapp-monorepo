@@ -69,6 +69,7 @@ const CreateStake = () => {
             <Typography>There is no active stake window.</Typography>
             <Typography> Please wait for stake to open.</Typography>
           </div>
+          <StakeSummary />
         </Grid>
       </Grid>
     );

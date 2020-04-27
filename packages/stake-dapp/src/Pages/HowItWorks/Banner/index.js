@@ -31,7 +31,7 @@ const calculaterFields = {
   recentWindowLoaded: false,
 };
 
-const Banner = ({ classes, recentStakeWindow }) => {
+const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
   const history = useHistory();
 
   const currentTime = moment().unix();
@@ -112,7 +112,41 @@ const Banner = ({ classes, recentStakeWindow }) => {
       );
     }
 
-    return <Typography>Next Session will open soon</Typography>;
+    //return <Typography>Next Session will open soon</Typography>;
+    return (
+      <Fragment>
+        <Typography>Stake stats</Typography>
+        <Typography>so far</Typography>
+      </Fragment>
+    );
+  };
+
+  const toDisplayFormat = val => {
+    return new BigNumber(fromWei(val)).toFormat(0, BigNumber.ROUND_FLOOR);
+  };
+
+  const NumFormatter = ({ num }) => {
+    const numInAGI = new BigNumber(fromWei(num));
+    let numToDisplay = 0;
+    let textToDisplay = "";
+    if (numInAGI.gte(1000000)) {
+      textToDisplay = "M";
+      numToDisplay = numInAGI.div(1000000).integerValue(BigNumber.ROUND_FLOOR);
+    }
+    if (numInAGI.gte(1000)) {
+      textToDisplay = "K";
+      numToDisplay = numInAGI.div(1000).integerValue(BigNumber.ROUND_FLOOR);
+    } else {
+      textToDisplay = "";
+      numToDisplay = numInAGI.integerValue(BigNumber.ROUND_FLOOR);
+    }
+
+    return (
+      <Typography className={classes.metricsValue}>
+        {numToDisplay.toString()}
+        <span>{textToDisplay}</span>
+      </Typography>
+    );
   };
 
   const ShowTimer = () => {
@@ -131,7 +165,23 @@ const Banner = ({ classes, recentStakeWindow }) => {
         />
       );
     }
-    return null;
+
+    return (
+      <div className={classes.metrics}>
+        <div>
+          <NumFormatter num={stakeOverallSummary.overallStake} />
+          <Typography className={classes.metricsUnit}>Tokens Staked</Typography>
+        </div>
+        <div>
+          <Typography className={classes.metricsValue}>{stakeOverallSummary.totalUniqueStakers}+</Typography>
+          <Typography className={classes.metricsUnit}>Stakers</Typography>
+        </div>
+        <div>
+          <Typography className={classes.metricsValue}>{toDisplayFormat(stakeOverallSummary.totalReward)}</Typography>
+          <Typography className={classes.metricsUnit}>Token Reward Distributed</Typography>
+        </div>
+      </div>
+    );
   };
 
   return (

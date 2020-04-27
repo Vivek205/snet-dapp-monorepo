@@ -26,12 +26,23 @@ class StakeTab extends Component {
   }
 
   componentDidMount = () => {
-    const { metamaskDetails, fetchCurrentActiveStakeWindow, fetchActiveStakes, fetchClaimStakes } = this.props;
+    const {
+      metamaskDetails,
+      fetchCurrentActiveStakeWindow,
+      fetchActiveStakes,
+      fetchClaimStakes,
+      fetchStakeOverallSummary,
+      fetchStakeWindowsSummary,
+    } = this.props;
 
     // Initiate the Fetch Calls
     fetchCurrentActiveStakeWindow(metamaskDetails);
     fetchActiveStakes(metamaskDetails);
     fetchClaimStakes(metamaskDetails);
+
+    // Initiate Summary Calls
+    fetchStakeOverallSummary();
+    fetchStakeWindowsSummary();
 
     // Get the User Preferences - Will be enhancing in the next release
     //getUserPreferences();
@@ -151,6 +162,8 @@ const mapDispatchToProps = dispatch => ({
   fetchClaimStakes: metamaskDetails => dispatch(stakeActions.fetchClaimStakes(metamaskDetails)),
   getUserPreferences: () => dispatch(userActions.preferenceActions.getUserPreferences()),
   registerWallet: address => dispatch(userWalletActions.registerWallet(address)),
+  fetchStakeOverallSummary: () => dispatch(stakeActions.fetchStakeOverallSummary()),
+  fetchStakeWindowsSummary: () => dispatch(stakeActions.fetchStakeWindowsSummary()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(StakeTab));
