@@ -20,16 +20,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Footer = function Footer(_ref) {
   var data = _ref.data;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("footer", {
+  return /*#__PURE__*/_react.default.createElement("footer", {
     className: classes.footer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.footerWrapper
-  }, _react.default.createElement(_PrimaryFooter.default, {
+  }, /*#__PURE__*/_react.default.createElement(_PrimaryFooter.default, {
     leftData: data.PrimaryFooterLeft,
     mainData: data.PrimaryFooterMain
-  }), _react.default.createElement(_SecondaryFooter.default, {
+  }), /*#__PURE__*/_react.default.createElement(_SecondaryFooter.default, {
     data: data.SecondaryFooter
   })));
 };

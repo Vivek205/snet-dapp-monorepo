@@ -31,24 +31,24 @@ var SNETTextarea = function SNETTextarea(_ref) {
       showInfoIcon = _ref.showInfoIcon,
       extraInfo = _ref.extraInfo,
       disabled = _ref.disabled;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaIconContainer
-  }, showInfoIcon ? _react.default.createElement("div", {
+  }, showInfoIcon ? /*#__PURE__*/_react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaContainer
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: classes.label
-  }, label), _react.default.createElement("textarea", {
+  }, label), /*#__PURE__*/_react.default.createElement("textarea", {
     rows: rowCount,
     cols: colCount,
     name: name,
     value: value,
     onChange: onChange,
     disabled: disabled
-  }, content), maxCount ? _react.default.createElement("span", {
+  }, content), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
-  }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {
+  }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.extraInfo
   }, extraInfo) : null));
 };

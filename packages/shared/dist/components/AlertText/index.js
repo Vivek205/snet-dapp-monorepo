@@ -31,7 +31,7 @@ var AlertText = function AlertText(_ref) {
   var classes = (0, _styles.useStyles)();
 
   if (message) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
       className: (0, _clsx.default)(classes.errorMsg, classes[textColor[type]])
     }, message);
   }

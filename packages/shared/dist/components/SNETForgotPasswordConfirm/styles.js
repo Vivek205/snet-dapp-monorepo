@@ -36,15 +36,15 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       backgroundColor: MUITheme.palette.background.mainContent,
       textAlign: "center",
       "& h3": {
-        lineHeight: '48px'
+        lineHeight: "48px"
       },
       "& p": {
         margin: "19px 0 0",
         color: MUITheme.palette.text.primary,
         fontSize: "20px",
-        lineHeight: '30px',
-        '& span': {
-          display: 'block'
+        lineHeight: "30px",
+        "& span": {
+          display: "block"
         }
       },
       "@media (max-width:527px)": {
@@ -66,13 +66,13 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         marginBottom: 10
       },
       "& label": {
-        padding: '0 5px',
+        padding: "0 5px",
         background: MUITheme.palette.background.mainContent,
         color: MUITheme.palette.text.darkGrey,
         fontSize: 12,
         letterSpacing: 0.4,
         lineHeight: "16px",
-        transform: 'translate(14px, -6px) scale(0.90)'
+        transform: "translate(14px, -6px) scale(0.90)"
       },
       "@media (max-width:527px)": {
         width: "100%"

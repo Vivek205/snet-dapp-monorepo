@@ -15,6 +15,9 @@ export const useStyles = MUITheme => ({
       [MUITheme.breakpoints.down("sm")]: { marginBottom: 25 },
     },
   },
+  stakeSummaryIcon: {
+    "& img": { width: 62 },
+  },
   stakeSummaryValues: {
     textAlign: "center",
     "& p": {

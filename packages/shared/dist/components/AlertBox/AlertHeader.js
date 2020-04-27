@@ -13,7 +13,7 @@ var AlertHeader = function AlertHeader(_ref) {
   var header = _ref.header;
 
   if (header) {
-    return _react.default.createElement("span", null, header);
+    return /*#__PURE__*/_react.default.createElement("span", null, header);
   }
 
   return null;

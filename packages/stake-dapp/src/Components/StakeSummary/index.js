@@ -5,6 +5,10 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
+import TokenStakedImg from "shared/dist/assets/images/tokenStaked.png";
+import StakersImg from "shared/dist/assets/images/stakers.png";
+import TokenRewardDistributedImg from "shared/dist/assets/images/rewardDistributed.png";
+
 import { useStyles } from "./styles";
 
 const StakeSummary = ({ classes }) => {
@@ -15,7 +19,7 @@ const StakeSummary = ({ classes }) => {
       <Grid container className={classes.stakeSummaryDetails}>
         <Grid item xs={12} sm={4} md={4} lg={4}>
           <div className={classes.stakeSummaryIcon}>
-            <img src="http://placehold.it/72x64" alt="" />
+            <img src={TokenStakedImg} alt="Tokens Staked" />
           </div>
           <div className={classes.stakeSummaryValues}>
             <Typography>
@@ -26,7 +30,7 @@ const StakeSummary = ({ classes }) => {
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={4}>
           <div className={classes.stakeSummaryIcon}>
-            <img src="http://placehold.it/72x76" alt="" />
+            <img src={StakersImg} alt="Stakers" />
           </div>
           <div className={classes.stakeSummaryValues}>
             <Typography>
@@ -37,7 +41,7 @@ const StakeSummary = ({ classes }) => {
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={4}>
           <div className={classes.stakeSummaryIcon}>
-            <img src="http://placehold.it/72x76" alt="" />
+            <img src={TokenRewardDistributedImg} alt="Token Reward Distributed" />
           </div>
           <div className={classes.stakeSummaryValues}>
             <Typography>
