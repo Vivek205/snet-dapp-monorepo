@@ -7,6 +7,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
+import Terms from "./Terms";
 
 const AcceptServiceAgreement = ({ history }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const AcceptServiceAgreement = ({ history }) => {
         formLabel={TermsAndConditionsDetails.formLabel}
         agreed={agreed}
         onChangeAgreed={() => setAgreed(!agreed)}
+        Content={Terms}
       />
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" variant="contained" children="accept" onClick={handleAccept} disabled={!agreed} />

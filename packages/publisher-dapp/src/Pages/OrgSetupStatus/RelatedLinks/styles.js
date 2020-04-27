@@ -4,6 +4,7 @@ export const useStyles = MUITheme => ({
     display: "flex",
     flexDirection: "column",
     "& a": {
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 14,
       marginBottom: 10,
       display: "block",

@@ -2,6 +2,7 @@ import React from "react";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import moment from "moment";
 
 import { useStyles } from "./styles";
 import { fromWei } from "../../Utils/GenHelperFunctions";
@@ -124,7 +125,12 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
           <Grid key={t.txnHash} item xs={12} sm={12} md={12} lg={12} className={classes.expandedTableRow}>
             <Grid item xs={12} sm={12} md={2} lg={2} className={classes.dateDetails}>
               <Typography className={classes.mobileTitle}>Date: </Typography>
-              <Typography>{t.txnDate}</Typography>
+              <Typography>
+                {moment
+                  .utc(t.txnDate)
+                  .local()
+                  .format("YYYY-MM-DD HH:mm:ss")}
+              </Typography>
               {/* <Typography>{"time??"}</Typography> */}
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>

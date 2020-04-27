@@ -11,15 +11,22 @@ export const toWei = val => {
 
 export const fromWei = weiValue => {
   const decimalsToDisplay = 2;
+  let decimalFactor = Math.pow(10, decimalsToDisplay);
   const factor = Math.pow(10, 8);
 
+  let valBN;
   if (BigNumber.isBigNumber(weiValue)) {
-    return weiValue.div(factor).toFixed(decimalsToDisplay);
+    valBN = weiValue;
+  } else {
+    valBN = new BigNumber(weiValue);
   }
 
-  let valBN = new BigNumber(weiValue);
   valBN = valBN.div(factor);
-  return valBN.toFixed(decimalsToDisplay);
+  return valBN
+    .multipliedBy(decimalFactor)
+    .integerValue(BigNumber.ROUND_FLOOR)
+    .div(decimalFactor)
+    .toFixed(decimalsToDisplay);
 };
 
 export const toShortAddress = address => {

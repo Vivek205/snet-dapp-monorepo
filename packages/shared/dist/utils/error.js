@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GrpcError = exports.checkIfKnownError = void 0;
+exports.MetamaskError = exports.GrpcError = exports.checkIfKnownError = void 0;
 
 var _API = require("./API");
 
@@ -38,7 +38,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var checkIfKnownError = function checkIfKnownError(error) {
-  return error instanceof _API.APIError || error instanceof _validationError.default || error instanceof _BlockChainError.default || error instanceof GrpcError;
+  return error instanceof _API.APIError || error instanceof _validationError.default || error instanceof _BlockChainError.default || error instanceof GrpcError || error instanceof MetamaskError;
 };
 
 exports.checkIfKnownError = checkIfKnownError;
@@ -62,3 +62,23 @@ var GrpcError = /*#__PURE__*/function (_Error) {
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
 exports.GrpcError = GrpcError;
+
+var MetamaskError = /*#__PURE__*/function (_Error2) {
+  _inherits(MetamaskError, _Error2);
+
+  var _super2 = _createSuper(MetamaskError);
+
+  function MetamaskError(message) {
+    var _this2;
+
+    _classCallCheck(this, MetamaskError);
+
+    _this2 = _super2.call(this, message);
+    _this2.name = "MetamaskError";
+    return _this2;
+  }
+
+  return MetamaskError;
+}( /*#__PURE__*/_wrapNativeSuper(Error));
+
+exports.MetamaskError = MetamaskError;

@@ -4,7 +4,12 @@ export const useStyles = MUITheme => ({
     background: MUITheme.palette.background.mainContent,
     [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
+  backToHomeLinkContainer: {
+    maxWidth: "19%",
+    flexBasis: "19%",
+  },
   backToHomeLink: {
+    marginLeft: 45,
     cursor: "pointer",
     "& svg": {
       marginRight: 7,

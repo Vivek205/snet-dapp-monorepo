@@ -122,7 +122,7 @@ class Notification extends Component {
     var message = "";
 
     if (!isLoggedIn) {
-      message = "User need to login to the RFAI DApp.";
+      message = "User need to login to the Staking DApp.";
       return message;
     }
 
@@ -155,21 +155,8 @@ class Notification extends Component {
   };
 
   storeMetamaskDetails = async (isConnected, account, networkId, isTxnsAllowed) => {
-    const { updateMetamaskDetails, walletList, registerWallet } = this.props;
+    const { updateMetamaskDetails } = this.props;
     await updateMetamaskDetails(isConnected, account, networkId, isTxnsAllowed);
-
-    if (isTxnsAllowed) {
-      if (!isEmpty(walletList) && account !== "0x0") {
-        const wallets = walletList.filter(w => w.address.toLowerCase() === account.toLowerCase());
-        if (wallets.length === 0) {
-          // Call the Register API to associate the Wallet to User
-          registerWallet(account);
-        }
-      } else if (account !== "0x0") {
-        // Call the Register API to associate the Wallet to User
-        registerWallet(account);
-      }
-    }
   };
 
   render() {
@@ -204,7 +191,6 @@ const mapDispatchToProps = dispatch => ({
   updateTokenBalance: metamaskDetails => dispatch(tokenActions.updateTokenBalance(metamaskDetails)),
   updateTokenAllowance: metamaskDetails => dispatch(tokenActions.updateTokenAllowance(metamaskDetails)),
   fetchWallet: () => dispatch(userWalletActions.fetchWallet()),
-  registerWallet: address => dispatch(userWalletActions.registerWallet(address)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Notification));

@@ -81,5 +81,6 @@ export const useStyles = makeStyles(MUITheme => ({
   noServicesFoundContainer: {
     margin: "25px auto",
     "& h6": { marginBottom: 25 },
+    "& a": { fontFamily: MUITheme.typography.fontFamily },
   },
 }));

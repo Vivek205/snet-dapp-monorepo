@@ -16,6 +16,7 @@ export const MUITheme = createMuiTheme({
       primary: "#666",
       secondary: "#fff",
       disabled: "#D6D6D6",
+      statusRed: "#EF5265",
       red: "#D0021B",
       darkGrey: "#212121",
       lightGrey: "#9b9b9b",
