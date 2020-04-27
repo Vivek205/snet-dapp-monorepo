@@ -148,4 +148,8 @@ export const LoaderContent = {
     title: "Validating daemon endpoints",
     content: "Please wait we are validating daemon",
   },
+  GET_LATEST_ORG: {
+    title: "Get latest org details",
+    content: "Please wait until we fetch the latest organization details",
+  },
 };
