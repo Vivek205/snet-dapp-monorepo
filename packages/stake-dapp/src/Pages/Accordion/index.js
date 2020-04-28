@@ -12,7 +12,7 @@ import { useStyles } from "./styles";
 const FAQAccordion = ({ classes, question, answer, index }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const handleChange = panel => isExpanded => {
+  const handleChange = panel => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 

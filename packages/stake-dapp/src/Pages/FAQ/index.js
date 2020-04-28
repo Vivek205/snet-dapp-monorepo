@@ -19,7 +19,7 @@ const FAQ = ({ classes }) => {
   const [value, setValue] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleChange = newValue => {
+  const handleChange = (_event, newValue) => {
     setValue(newValue);
     setSelectedTab(newValue);
   };
