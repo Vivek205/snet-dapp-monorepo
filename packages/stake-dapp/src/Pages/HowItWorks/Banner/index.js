@@ -130,11 +130,11 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
     let numToDisplay = 0;
     let textToDisplay = "";
     if (numInAGI.gte(1000000)) {
-      textToDisplay = "M";
+      textToDisplay = "M+";
       numToDisplay = numInAGI.div(1000000).integerValue(BigNumber.ROUND_FLOOR);
     }
     if (numInAGI.gte(1000)) {
-      textToDisplay = "K";
+      textToDisplay = "K+";
       numToDisplay = numInAGI.div(1000).integerValue(BigNumber.ROUND_FLOOR);
     } else {
       textToDisplay = "";
