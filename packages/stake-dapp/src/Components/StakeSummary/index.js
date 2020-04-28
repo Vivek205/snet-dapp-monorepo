@@ -103,7 +103,7 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>toolTip</Typography>
+                    <Typography>The number of people who have contributed AGI tokens to this stake session</Typography>
                   </div>
                   <Typography className={classes.title}>Stakers</Typography>
                 </div>
@@ -116,7 +116,7 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>toolTip</Typography>
+                    <Typography>the total amount of AGI tokens that have been contributed by all stakers</Typography>
                   </div>
                   <Typography className={classes.title}>Final Pool Size</Typography>
                 </div>
@@ -129,7 +129,9 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>toolTip</Typography>
+                    <Typography>
+                      The total reward amount of AGI tokens that will be divided and distrubuted to stakers
+                    </Typography>
                   </div>
                   <Typography className={classes.title}>Reward Pool</Typography>
                 </div>
@@ -142,7 +144,7 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>toolTip</Typography>
+                    <Typography>The stake period completion date</Typography>
                   </div>
                   <Typography className={classes.title}>Closed Date</Typography>
                 </div>
