@@ -36,7 +36,7 @@ const ClaimsAggregate = ({ classes, aggregatePaymentDetails }) => {
           <Typography>Expiring Amount</Typography>
         </div>
         <Typography>
-          {cogsToAgi(aggregatePaymentDetails.expiry.d7.amount)}
+          {cogsToAgi(aggregatePaymentDetails.expiry.d7.amount.toString())}
           <span>AGI</span>
         </Typography>
       </Grid>
