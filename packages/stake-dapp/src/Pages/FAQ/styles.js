@@ -6,14 +6,31 @@ export const useStyles = MUITheme => ({
     },
   },
   appBar: {
-    paddingLeft: 168,
+    paddingLeft: "10%",
     background: MUITheme.palette.background.mainContent,
     boxShadow: "none",
     "& .MuiTab-wrapper": {
       padding: "27px 0",
       "& p": {
         margin: 0,
-        "& span": { display: "block" },
+        "& span": {
+          display: "block",
+          "@media(max-width: 480px)": { display: "inline-block" },
+        },
+      },
+      [MUITheme.breakpoints.down("xs")]: { padding: 0 },
+    },
+    [MUITheme.breakpoints.down("sm")]: {
+      display: "flex",
+      alignItems: "center",
+      padding: "0 15px",
+    },
+  },
+  tabs: {
+    "& .MuiTabs-flexContainer": {
+      "@media(max-width: 480px)": {
+        flexDirection: "column",
+        alignItems: "flex-start",
       },
     },
   },
@@ -27,14 +44,31 @@ export const useStyles = MUITheme => ({
     fontSize: 20,
     lineHeight: "25px",
     textTransform: "capitalize",
+    "&:last-of-type": { marginRight: 0 },
     "&:first-of-type img": { width: 45 },
     "& img": {
       width: 70,
       marginBottom: 0,
+      [MUITheme.breakpoints.down("xs")]: { display: "none" },
     },
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "20%",
+      minWidth: "auto",
+    },
+    "@media(max-width: 730px)": {
+      padding: "0 25px",
+      fontSize: 16,
+    },
+    [MUITheme.breakpoints.down("xs")]: {
+      width: "auto",
+      padding: 0,
+      background: MUITheme.palette.background.mainContent,
+      boxShadow: "none",
+    },
+    "@media(max-width: 480px)": { marginRight: 0 },
   },
   accordionContainer: {
-    padding: "32px 14% 0",
+    padding: "32px 10% 0",
   },
   // Learn and Share Community
   learnAndShareContainer: {

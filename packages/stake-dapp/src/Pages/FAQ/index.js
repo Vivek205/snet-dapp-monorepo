@@ -16,11 +16,11 @@ import { communityDetails, generalFAQ, metamaskFAQ } from "./content";
 import { useStyles } from "./styles";
 
 const FAQ = ({ classes }) => {
-  // const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleChange = newValue => {
-    // setValue(newValue);
+    setValue(newValue);
     setSelectedTab(newValue);
   };
   return (
@@ -28,7 +28,8 @@ const FAQ = ({ classes }) => {
       <Typography variant="h2">Frequently Asked Questions</Typography>
       <AppBar position="static" className={classes.appBar}>
         <Tabs
-          value={selectedTab}
+          className={classes.tabs}
+          value={value}
           onChange={handleChange}
           variant="scrollable"
           indicatorColor="primary"
