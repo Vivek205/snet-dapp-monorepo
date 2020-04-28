@@ -31,12 +31,12 @@ const ValidateConfig = props => {
         In order for SingularityNET reviewers to test your service, you will need to update your configuration file with
         a <span>Testing Configuration File.</span> This allows only SingularityNET reviewers access to your service in a
         non-blockchain mode. After you insert the testing configuration file, please validate the endpoint to continue
-        to submission process. public endpoint for curation should be a https.
+        to submission process.
       </Typography>
       <SNETTextfield
         name="id"
         label="Public curation Endpoint"
-        description="The curation enpoint that will be used for non-blockchain mode reviewing of service.It should be Https"
+        description="The public curation endpoint that will be used for non-blockchain mode reviewing of service. This end point needs to be https"
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />
