@@ -82,7 +82,7 @@ class SubmitForReview extends React.Component {
           }
         }
 
-        if (invalidConfig) {
+        if (!isEmpty(invalidConfig)) {
           const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
           this.setState({
             validateDaemonAlert: {
