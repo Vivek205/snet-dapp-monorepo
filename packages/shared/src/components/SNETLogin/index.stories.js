@@ -5,7 +5,7 @@ import { BrowserRouter as ReactRouter } from "react-router-dom";
 
 import SNETLogin from "./";
 
-storiesOf("SNETLogin", module)
+storiesOf("Auth|SNETLogin", module)
   .addParameters({ props: { propTables: [SNETLogin] } })
   .addDecorator(withLiveEditScope({ React, SNETLogin, ReactRouter }))
   .addLiveSource(
