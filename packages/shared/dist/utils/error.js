@@ -60,8 +60,6 @@ var GrpcError = /*#__PURE__*/function (_Error) {
 
   return GrpcError;
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-<<<<<<< HEAD
-=======
 
 exports.GrpcError = GrpcError;
 
@@ -82,6 +80,5 @@ var MetamaskError = /*#__PURE__*/function (_Error2) {
 
   return MetamaskError;
 }( /*#__PURE__*/_wrapNativeSuper(Error));
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
 
 exports.MetamaskError = MetamaskError;

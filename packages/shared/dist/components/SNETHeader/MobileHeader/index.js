@@ -60,43 +60,22 @@ var MobileHeader = function MobileHeader(_ref) {
     setOpenMobileMenu(!openMobileMenu);
   };
 
-<<<<<<< HEAD
-  if (!hamburgerMenu) {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: classes.hamburger,
-=======
   if (!openMobileMenu) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "".concat(classes.hamburger, " ").concat(color === "white" ? classes.whiteHamburger : null),
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
       onClick: toggleMobileMenu
     }, /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null), /*#__PURE__*/_react.default.createElement("span", null));
   }
 
-<<<<<<< HEAD
-  return /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-    className: classes.mobileNavContainer
-=======
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.mobileNavContainer,
     onClick: stopProgationOfEventToHeader
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.closeMenuIcon
   }, /*#__PURE__*/_react.default.createElement(_Close.default, {
     onClick: toggleMobileMenu
   })), /*#__PURE__*/_react.default.createElement("nav", {
     className: classes.mobileNavigation
-<<<<<<< HEAD
-  }, /*#__PURE__*/_react.default.createElement("ul", null, data.tabs.map(function (tab) {
-    return /*#__PURE__*/_react.default.createElement(_NavItem.default, {
-      key: tab.title,
-      title: tab.title,
-      link: tab.link,
-      active: tab.active
-    });
-  }), data.dropdowns.map(function (dropdown) {
-=======
   }, /*#__PURE__*/_react.default.createElement("ul", {
     className: isLoggedIn ? classes.hideNav : null
   }, mobileNavLinks.map(function (tab) {
@@ -107,7 +86,6 @@ var MobileHeader = function MobileHeader(_ref) {
       active: tab.active
     });
   }), mobileDropDown ? mobileDropDown.map(function (dropdown) {
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
     return /*#__PURE__*/_react.default.createElement("div", {
       key: dropdown.label,
       className: classes.subMenues
@@ -122,27 +100,6 @@ var MobileHeader = function MobileHeader(_ref) {
         subListItem: true
       });
     })));
-<<<<<<< HEAD
-  })), /*#__PURE__*/_react.default.createElement("div", {
-    className: "".concat(classes.mobileActionBtns, " ").concat(isLoggedIn ? classes.loggedInState : "")
-  }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
-    isLoggedIn: isLoggedIn
-  })))));
-};
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    hamburgerMenu: state.stylesReducer.hamburgerMenu
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    updateHamburgerState: function updateHamburgerState(hamburgerState) {
-      return dispatch(_actionCreators.stylesActions.updateHamburgerState(hamburgerState));
-    }
-  };
-=======
   }) : null), /*#__PURE__*/_react.default.createElement("div", {
     className: "".concat(classes.mobileActionBtns, " ").concat(color === "white" ? classes.whiteHeader : null)
   }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
@@ -151,7 +108,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     LoggedOutActions: LoggedOutActions,
     headerType: "mobile"
   }))));
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(MobileHeader);

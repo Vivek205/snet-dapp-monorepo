@@ -18,13 +18,9 @@ var AlertHeader = function AlertHeader(_ref) {
       classes = _ref.classes;
 
   if (header) {
-<<<<<<< HEAD
-    return /*#__PURE__*/_react.default.createElement("span", null, header);
-=======
     return /*#__PURE__*/_react.default.createElement("span", {
       className: classes.alertHeader
     }, header);
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   }
 
   return null;

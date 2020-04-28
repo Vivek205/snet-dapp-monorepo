@@ -47,9 +47,6 @@ var SNETHeader = function SNETHeader(_ref) {
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.logoContainer,
     onClick: onLogoClick
-<<<<<<< HEAD
-  }, /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
-=======
   }, /*#__PURE__*/_react.default.createElement(_MobileHeader.default, {
     mobileNavLinks: mobileNavLinks,
     mobileDropDown: mobileDropDown,
@@ -58,7 +55,6 @@ var SNETHeader = function SNETHeader(_ref) {
     LoggedOutActions: LoggedOutActions,
     color: color
   }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
@@ -68,13 +64,9 @@ var SNETHeader = function SNETHeader(_ref) {
     className: classes.navContainer
   }, /*#__PURE__*/_react.default.createElement(_Navbar.default, {
     NavigationBar: NavigationBar
-<<<<<<< HEAD
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
-=======
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.headerActionsContainer
   }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
     LoggedOutActions: LoggedOutActions,

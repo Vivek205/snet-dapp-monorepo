@@ -18,13 +18,9 @@ var HeaderActions = function HeaderActions(_ref) {
       headerType = _ref.headerType;
 
   if (isLoggedIn) {
-<<<<<<< HEAD
-    return /*#__PURE__*/_react.default.createElement(LoggedInActions, null);
-=======
     return /*#__PURE__*/_react.default.createElement(LoggedInActions, {
       headerType: headerType
     });
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   }
 
   return /*#__PURE__*/_react.default.createElement(LoggedOutActions, null);

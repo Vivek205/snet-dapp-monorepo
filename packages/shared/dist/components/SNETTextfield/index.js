@@ -72,12 +72,8 @@ var SNETTextfield = function SNETTextfield(_ref) {
     fullWidth: true,
     onKeyUp: onKeyUp,
     disabled: disabled,
-<<<<<<< HEAD
-    inputRef: inputRef
-=======
     inputRef: inputRef,
     InputProps: InputProps
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   }, rest)), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {

@@ -20,30 +20,6 @@ var NavItem = function NavItem(_ref) {
       link = _ref.link,
       isActive = _ref.isActive;
   var classes = (0, _styles.useStyles)();
-<<<<<<< HEAD
-
-  var isActive = function isActive(unused, _ref2) {
-    var pathname = _ref2.pathname;
-
-    switch (link) {
-      case "/".concat(_Routes.default.AI_MARKETPLACE):
-        {
-          if (pathname === "/" || pathname.includes(_Routes.default.AI_MARKETPLACE)) {
-            return true;
-          }
-
-          return false;
-        }
-
-      default:
-        {
-          return pathname === link;
-        }
-    }
-  };
-
-=======
->>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   return /*#__PURE__*/_react.default.createElement("li", {
     className: classes.navLinks
   }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.NavLink, {
