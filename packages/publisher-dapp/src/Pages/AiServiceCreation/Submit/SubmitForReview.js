@@ -249,9 +249,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
-  getLatestOrgLoader: dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),
-  getLatestOrgDetails: dispatch(organizationActions.getStatus),
-  stopAppLoader: dispatch(loaderActions.stopAppLoader()),
+  getLatestOrgLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),
+  getLatestOrgDetails: () => dispatch(organizationActions.getStatus),
+  stopAppLoader: () => dispatch(loaderActions.stopAppLoader()),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SubmitForReview));
