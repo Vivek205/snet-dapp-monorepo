@@ -36,7 +36,7 @@ const ValidateConfig = props => {
       <SNETTextfield
         name="id"
         label="Public curation Endpoint"
-        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service."
+        description="The curation enpoint that will be used for non-blockchain mode reviewing of service.It should be Https"
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />
