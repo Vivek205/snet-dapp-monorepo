@@ -8,7 +8,8 @@ import { withStyles } from "@material-ui/styles";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
-import FAQAccordion from "./FAQAccordion";
+import Accordion from "../../Accordion";
+import { questionAnswers } from "./content";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 const FAQ = ({ classes, history }) => {
@@ -25,7 +26,11 @@ const FAQ = ({ classes, history }) => {
           participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet. Have
           questions? Browse through these FAQ’s to find answers to commonly asked questions.
         </Typography>
-        <FAQAccordion />
+        <div className={classes.accordionContainer}>
+          {questionAnswers.map((item, index) => (
+            <Accordion question={item.question} answer={item.answer} key={item.question} index={index} />
+          ))}
+        </div>
         <Typography className={classes.fullViewText}>
           <Link to="/">Click here </Link>to view full FAQ
         </Typography>

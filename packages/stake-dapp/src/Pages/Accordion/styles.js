@@ -1,18 +1,16 @@
 export const useStyles = MUITheme => ({
-  accordionContainer: {
-    "& .MuiExpansionPanel-root": {
-      margin: 0,
-      boxShadow: "none",
-      "&::before": {
-        display: "none",
-      },
-      "&::after": {
-        content: "' '",
-        width: "100%",
-        height: 1,
-        display: "block",
-        backgroundColor: MUITheme.palette.border.secondary,
-      },
+  expansionPanel: {
+    margin: "0 !important",
+    boxShadow: "none",
+    "&::before": {
+      display: "none",
+    },
+    "&::after": {
+      content: "' '",
+      width: "100%",
+      height: 1,
+      display: "block",
+      backgroundColor: MUITheme.palette.border.secondary,
     },
     "& .MuiExpansionPanelSummary-root": {
       padding: "12px 24px",

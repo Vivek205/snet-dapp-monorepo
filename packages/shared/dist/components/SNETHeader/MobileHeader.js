@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var MobileHeader = function MobileHeader(_ref) {
   var MobileHeader = _ref.MobileHeader;
-  return _react.default.createElement(MobileHeader, null);
+  return /*#__PURE__*/_react.default.createElement(MobileHeader, null);
 };
 
 MobileHeader.propTypes = {
