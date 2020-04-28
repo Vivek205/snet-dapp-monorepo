@@ -14,11 +14,11 @@ import CalculatorImage from "shared/dist/assets/images/calculator.png";
 
 import Banner from "./Banner";
 import Benefits from "./Benefits";
+import FAQ from "./FAQ";
 import { useStyles } from "./styles";
-import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
-const HowItWorks = ({ classes, history }) => {
+const HowItWorks = ({ classes }) => {
   const dispatch = useDispatch();
 
   const { recentStakeWindow } = useSelector(state => state.stakeReducer);
@@ -26,10 +26,6 @@ const HowItWorks = ({ classes, history }) => {
   useEffect(() => {
     dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
   }, [dispatch]);
-
-  const navigateToLanding = () => {
-    history.push(GlobalRoutes.LANDING.path);
-  };
 
   return (
     <Grid container className={classes.howItWorksContainer}>
@@ -48,16 +44,7 @@ const HowItWorks = ({ classes, history }) => {
           <img src={ComputeMailsImage} alt="Computer And Mails" />
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12} className={classes.howItWorksSection}>
-        <Typography variant="h2">How It Works</Typography>
-        <Typography className={classes.howItWorksDesc}>
-          Staking is the process of holding funds in a cryptocurrency wallet to support the operations of a blockchain
-          network. Essentially, it consists of locking cryptocurrencies to receive rewards. The process relies on users
-          participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet.
-        </Typography>
-        <img src="http://placehold.it/738x416" alt="Youtube Video" />
-        <SNETButton children="start staking tokens" color="primary" variant="contained" onClick={navigateToLanding} />
-      </Grid>
+      <FAQ />
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.titlesContainer}>
         <ul className={classes.titlesContainer}>
           <li>
