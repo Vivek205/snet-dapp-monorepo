@@ -83,7 +83,7 @@ class SubmitForReview extends React.Component {
           }
         }
 
-        if (invalidConfig) {
+        if (!isEmpty(invalidConfig)) {
           const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
           this.setState({
             validateDaemonAlert: {
@@ -164,7 +164,13 @@ class SubmitForReview extends React.Component {
   };
 
   handleTestEndpointValidation = value => {
-    const errorMessage = validator.single(value, submitServiceConstraints.testEndpoints);
+    this.setState({
+      validateDaemonAlert: {
+        type: alertTypes.ERROR,
+        children: "",
+      },
+    });
+    const errorMessage = validator.single(value, submitServiceConstraints.groups.array.testEndpoints);
     return this.setState({
       testEndpointAlert: {
         type: alertTypes.ERROR,
