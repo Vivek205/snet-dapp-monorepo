@@ -1,5 +1,12 @@
 # SingularityNET Frontend Monorepo
 
+## Quick links
+ - [Marketplace](https://beta.singularitynet.io/)
+ - [Publisher-portal](https://publisher.singularitynet.io/)
+ - [Staking-portal](https://staking.singularitynet.io/)
+ - [RFAI-portal](https://rfai.singularitynet.io/)
+ - [UI-components](https://custom-ui.singularitynet.io/index.html)
+ 
 ## Prerequisites
 ### Windows
 - Node >= 10.14.1 < 12.0.0
@@ -48,3 +55,14 @@ Awesome. You can start using your components in any other project. Just import i
 
 ## Cleaning the node_modules
 Developers try new things and may end up in mess. Don't worry! we got you covered! Just run `yarn nuke` from the `root`. Node modules from all the packages will be cleaned and you can start fresh.
+
+
+## Troubleshooting Monorepo.
+<details>
+<summary>If the import of the shared packages is not working</summary>
+Try running <code>lerna exec -- yarn link</code>.
+This will recreate the symlinks of all the packages in the monorepo.
+
+If lerna is not installed globally, then try <code>yarn run link:all</code>. 
+This will use the locally installed version of lerna
+</details>

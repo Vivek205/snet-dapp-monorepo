@@ -7,7 +7,7 @@ var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var ProviderControlService = (function () {
   function ProviderControlService() {}
-  ProviderControlService.serviceName = "escrow.ControlService";
+  ProviderControlService.serviceName = "escrow.ProviderControlService";
   return ProviderControlService;
 }());
 
@@ -36,6 +36,15 @@ ProviderControlService.StartClaim = {
   responseStream: false,
   requestType: control_service_pb.StartClaimRequest,
   responseType: control_service_pb.PaymentReply
+};
+
+ProviderControlService.StartClaimForMultipleChannels = {
+  methodName: "StartClaimForMultipleChannels",
+  service: ProviderControlService,
+  requestStream: false,
+  responseStream: false,
+  requestType: control_service_pb.StartMultipleClaimRequest,
+  responseType: control_service_pb.PaymentsListReply
 };
 
 exports.ProviderControlService = ProviderControlService;
@@ -112,6 +121,37 @@ ProviderControlServiceClient.prototype.startClaim = function startClaim(requestM
     callback = arguments[1];
   }
   var client = grpc.unary(ProviderControlService.StartClaim, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
+  });
+  return {
+    cancel: function () {
+      callback = null;
+      client.close();
+    }
+  };
+};
+
+ProviderControlServiceClient.prototype.startClaimForMultipleChannels = function startClaimForMultipleChannels(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(ProviderControlService.StartClaimForMultipleChannels, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,

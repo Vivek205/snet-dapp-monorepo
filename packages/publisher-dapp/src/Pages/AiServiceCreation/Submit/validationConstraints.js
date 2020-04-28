@@ -27,6 +27,7 @@ export const submitServiceConstraints = {
     array: {
       name: { presence: { allowEmpty: false, message: "^Please enter group details" } },
       id: { presence: { allowEmpty: false, message: "^Please enter group details" } },
+      testEndpoints: { validURL: { message: "Invalid Endpoint. Endpoint should start with Https" } },
     },
   },
 };

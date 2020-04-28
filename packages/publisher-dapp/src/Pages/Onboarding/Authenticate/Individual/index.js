@@ -10,7 +10,7 @@ import { documentList } from "./content";
 import { useStyles } from "./styles";
 import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import { checkIfKnownError } from "shared/src/utils/error";
+import { checkIfKnownError } from "shared/dist/utils/error";
 import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
 import { individualVerificationStatusList } from "../../constant";
 import { getEmailDomain } from "../../../../Utils/validation";

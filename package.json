@@ -38,14 +38,15 @@
     "build:publisher": "cd packages/publisher-dapp && yarn build",
     "build:stake": "cd packages/stake-dapp && yarn build",
     "build:rfai": "cd packages/rfai-dapp && yarn build",
-    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
+    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files --delete-dir-on-start",
     "storybook": "lerna exec --scope shared  -- yarn run storybook",
-    "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
+    "build:storybook": "lerna exec --scope shared  -- yarn run build-storybook",
     "lint": "eslint .",
     "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
     "lint:fix-shared": "eslint packages/shared/. --fix",
     "lint:fix": "eslint . --fix",
-    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done",
+    "link:all": "lerna exec -- yarn link"
   },
   "lint-staged": {
     "*.{js,jsx}": [

@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
+import withTncHeader from "../HOC/withTncHeader";
 import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
@@ -36,8 +37,7 @@ const ForgotPasswordConfirmComponent = withRegistrationHeader(
   LOGIN_PATH
 );
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
-
-const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
+const AcceptAgreementComponent = withTncHeader(AcceptAgreement, null, "Logout", LOGIN_PATH);
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
@@ -98,23 +98,37 @@ export const GlobalRoutes = {
 
 export const setupRouteAuthentications = () => {
   const state = store.getState();
-  const { isLoggedIn } = state.user;
+  const { isLoggedIn, isEmailVerified } = state.user;
+
+  const redirectPath = getRedirectPath(isLoggedIn, isEmailVerified);
+  const isAllowed = isLoggedIn && isEmailVerified;
+
   return {
     ...GlobalRoutes,
     LANDING: {
       ...GlobalRoutes.LANDING,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     ACCEPT_AGREEMENT: {
       ...GlobalRoutes.ACCEPT_AGREEMENT,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     USER_PROFILE: {
       ...GlobalRoutes.USER_PROFILE,
-      isAllowed: state.user.isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
   };
+};
+
+const getRedirectPath = (isLoggedIn, isEmailVerified) => {
+  if (!isLoggedIn) {
+    return GlobalRoutes.LOGIN.path;
+  } else if (!isEmailVerified) {
+    return GlobalRoutes.SIGNUP_CONFIRM.path;
+  } else {
+    return GlobalRoutes.LOGIN.path;
+  }
 };

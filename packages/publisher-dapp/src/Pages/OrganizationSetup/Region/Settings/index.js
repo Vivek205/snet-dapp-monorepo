@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import { useStyles } from "./styles";
 import AdvanceSettings from "./AdvanceSettings";
@@ -14,6 +16,9 @@ import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import { keyCodes } from "shared/dist/utils/keyCodes";
+import { orgSetupRegionValidationConstraints } from "../validationConstraints";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
 
 const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
@@ -22,7 +27,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
   const etcdEndpointsRef = useRef(null);
 
   const { name, paymentAddress, paymentConfig } = group;
-
+  const [alert, setAlert] = useState({});
   const handlePaymentAddressChange = event => {
     const { value } = event.target;
     const updatedGroups = [...groups];
@@ -44,6 +49,18 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
     return groupsToBeUpdated;
   };
 
+  const handleEndPointValidation = value => {
+    const isNotValid = validator.single(
+      value,
+      orgSetupRegionValidationConstraints.groups.array["paymentConfig.paymentChannelStorageClient.endpoints"]
+    );
+    if (isNotValid) {
+      setAlert({ type: alertTypes.ERROR, message: `${value}  is not a valid endpoint` });
+      return false;
+    }
+    return true;
+  };
+
   const handleKeyEnterInTags = () => {
     const updatedEndpoints = [...group.paymentConfig.paymentChannelStorageClient.endpoints];
     const endpointsEntered = localEndpoints.split(",");
@@ -52,12 +69,15 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
     endpointsEntered.forEach(endpoint => {
       endpoint = endpoint.replace(/\s/g, "");
       if (!endpoint) return;
-      const index = updatedEndpoints.findIndex(el => el === endpoint);
+      if (endpoint && handleEndPointValidation(endpoint)) {
+        const index = updatedEndpoints.findIndex(el => el === endpoint);
 
-      if (index === -1) {
-        updatedEndpoints.push(endpoint);
+        if (index === -1) {
+          updatedEndpoints.push(endpoint);
+        }
+        updatedGroups = updateEndpointsInGroup(updatedGroups, updatedEndpoints);
+        setAlert({ type: alertTypes.ERROR, message: "" });
       }
-      updatedGroups = updateEndpointsInGroup(updatedGroups, updatedEndpoints);
     });
     dispatch(organizationActions.setGroups(updatedGroups));
     etcdEndpointsRef.current.value = "";
@@ -112,15 +132,15 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               description={
                 <p>
                   The ethereum address to which all payments will be processed for this group. See Payment Address
-                  section{" "}
+                  section &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    here
-                  </a>{" "}
-                  and creating ethereum identity{" "}
+                    here &nbsp;
+                  </a>
+                  and creating ethereum identity &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/ethereum-identity/"
                     rel="noopener noreferrer"
@@ -140,7 +160,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               label="ETCD Endpoint"
               description={
                 <p>
-                  Enter all the ETCD end points that will be used. Details{" "}
+                  Enter all the ETCD endpoints that will be used. Details &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/etcd/"
                     rel="noopener noreferrer"
@@ -152,23 +172,36 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
               }
               onKeyUp={handleAddEndpoints}
               inputRef={etcdEndpointsRef}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleKeyEnterInTags}>+</IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.cardContainer}>
+          <AlertBox type={alert.type} message={alert.message} />
+
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
               <InfoIcon />
             </div>
-            <Card className={classes.card}>
-              {paymentConfig.paymentChannelStorageClient.endpoints.map(endpoint => (
-                <Chip
-                  className={classes.chip}
-                  key={endpoint}
-                  label={endpoint}
-                  color="primary"
-                  onDelete={() => handleDeleteEndpoints(endpoint)}
-                />
-              ))}
-            </Card>
+            <div className={classes.cardContainer}>
+              <span className={classes.label}>Added Endpoints</span>
+
+              <Card className={classes.card}>
+                {paymentConfig.paymentChannelStorageClient.endpoints.map(endpoint => (
+                  <Chip
+                    className={classes.chip}
+                    key={endpoint}
+                    label={endpoint}
+                    color="primary"
+                    onDelete={() => handleDeleteEndpoints(endpoint)}
+                  />
+                ))}
+              </Card>
+            </div>
           </Grid>
           <AdvanceSettings
             show={showAdvancedSettings}
@@ -179,7 +212,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
           />
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
             <SNETButton
-              children={showAdvancedSettings ? "hide advanced settings" : "show advanced setting"}
+              children={showAdvancedSettings ? "hide advanced settings" : "show advanced settings"}
               variant="text"
               color="primary"
               onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}

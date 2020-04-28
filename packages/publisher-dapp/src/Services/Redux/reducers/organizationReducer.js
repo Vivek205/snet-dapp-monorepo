@@ -4,6 +4,11 @@ import { organizationSetupStatuses, organizationTypes } from "../../../Utils/org
 import { memberStatus } from "../../../Utils/TeamMembers.js";
 import { orgVerificationActions } from "../actionCreators/userActions";
 
+export const defaultContacts = [
+  { type: ContactsTypes.GENERAL, email: "", phone: "" },
+  { type: ContactsTypes.SUPPORT, email: "", phone: "" },
+];
+
 const initialState = {
   state: {
     state: organizationSetupStatuses.NOT_STARTED,
@@ -24,10 +29,7 @@ const initialState = {
   availability: "",
   longDescription: "",
   metadataIpfsUri: "",
-  contacts: [
-    { type: ContactsTypes.GENERAL, email: "", phone: "" },
-    { type: ContactsTypes.SUPPORT, email: "", phone: "" },
-  ],
+  contacts: defaultContacts,
   groups: [
     {
       name: "default_group",
@@ -66,6 +68,7 @@ const initialState = {
   },
   owner: "",
   rejectReason: "",
+  allowChangeRequestEdit: false,
 };
 
 const OrganizationReducer = (state = initialState, action) => {
@@ -116,6 +119,8 @@ const OrganizationReducer = (state = initialState, action) => {
       return { ...state, foundInBlockchain: action.payload };
     case orgVerificationActions.SET_ORG_REJECT_REASON:
       return { ...state, rejectReason: action.payload };
+    case organizationActions.SET_ORG_ALLOW_CHANGE_REQUEST_EDIT:
+      return { ...state, allowChangeRequestEdit: action.payload };
     default:
       return state;
   }

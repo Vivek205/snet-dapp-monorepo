@@ -31,14 +31,23 @@ var TermsAndConditions = function TermsAndConditions(props) {
       formLabel = props.formLabel,
       onAccept = props.onAccept,
       agreed = props.agreed,
+<<<<<<< HEAD
       onChangeAgreed = props.onChangeAgreed;
+=======
+      onChangeAgreed = props.onChangeAgreed,
+      Content = props.Content;
+>>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.onboardingContainer
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.termsAndConditionsContainer
   }, /*#__PURE__*/_react.default.createElement("h3", null, title), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.termsAndConditions
+<<<<<<< HEAD
   }, /*#__PURE__*/_react.default.createElement(_PrivacyTerms.default, null)), /*#__PURE__*/_react.default.createElement("div", {
+=======
+  }, /*#__PURE__*/_react.default.createElement(Content, null)), /*#__PURE__*/_react.default.createElement("div", {
+>>>>>>> 24a8482d6719438eb46217e3347b9a6eb8077314
     className: classes.checkboxAndButton
   }, /*#__PURE__*/_react.default.createElement(_FormControlLabel.default, {
     control: /*#__PURE__*/_react.default.createElement(_Checkbox.default, {
@@ -61,7 +70,11 @@ TermsAndConditions.protoTypes = {
   formLabel: _propTypes.default.string,
   onAccept: _propTypes.default.func,
   agreed: _propTypes.default.bool,
-  onChangeAgreed: _propTypes.default.func
+  onChangeAgreed: _propTypes.default.func,
+  Content: _propTypes.default.element
+};
+TermsAndConditions.defaultProps = {
+  Content: _PrivacyTerms.default
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(TermsAndConditions);

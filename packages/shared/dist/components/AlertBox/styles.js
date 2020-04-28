@@ -8,14 +8,14 @@ exports.useStyles = void 0;
 var useStyles = function useStyles(MUITheme) {
   return {
     alertBoxContainer: {
-      padding: 14,
+      padding: "7px 11px",
       borderWidth: 1,
       borderStyle: "solid",
       borderRadius: 4,
       display: "flex",
       alignItems: "center",
       "& svg": {
-        paddingRight: 16
+        paddingRight: 14
       }
     },
     content: {
@@ -25,7 +25,10 @@ var useStyles = function useStyles(MUITheme) {
         margin: "0 !important",
         color: MUITheme.palette.text.primary,
         fontSize: 14,
-        lineHeight: "18px"
+        lineHeight: "18px",
+        "& a": {
+          textDecoration: "none"
+        }
       }
     },
     messageBox: {
@@ -52,7 +55,7 @@ var useStyles = function useStyles(MUITheme) {
       borderColor: MUITheme.palette.success.main,
       backgroundColor: MUITheme.palette.background.succesBox,
       "& svg": {
-        color: MUITheme.palette.success.main
+        color: "".concat(MUITheme.palette.success.main, " !important")
       }
     },
     warning: {
@@ -69,10 +72,19 @@ var useStyles = function useStyles(MUITheme) {
     info: {
       borderColor: MUITheme.palette.primary.main,
       backgroundColor: MUITheme.palette.background.infoBox,
+      "& svg": {
+        color: MUITheme.palette.primary.main
+      },
       "& a": {
         color: MUITheme.palette.infoBoxLink,
         fontWeight: 600
       }
+    },
+    alertHeader: {
+      color: MUITheme.palette.text.primary,
+      fontSize: 14,
+      lineHeight: "18px",
+      fontWeight: "bold"
     }
   };
 };

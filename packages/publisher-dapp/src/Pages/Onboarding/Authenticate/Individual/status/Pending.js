@@ -22,9 +22,9 @@ const Pending = () => {
 
   return (
     <SNETStatusBanner
-      title="Your Jumio ID verificatoion is in progress…"
+      title="Your Jumio ID verification is in progress…"
       img={orgSetupPendingImg}
-      description="This review may take a few minutes to complete. In the meantime you can add team memebers to your organization to help you setup and manage your AI services more efficiently."
+      description="This review may take a few minutes to complete. In the meantime you can add team members to your organization to help you setup and manage your AI services more efficiently."
       actions={[
         {
           children: "Invite Team members",

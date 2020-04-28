@@ -4,7 +4,7 @@ import { grpc } from "@improbable-eng/grpc-web";
 import Web3 from "web3";
 
 import { GrpcError } from "shared/dist/utils/error";
-import { hexToB64 } from "../../Grpc";
+import { hexToB64, solidityTypes } from "../../Grpc";
 
 const methods = {
   GetConfiguration: "GetConfiguration",
@@ -14,6 +14,7 @@ export class ConfigurationServiceRequest {
   constructor(serviceHost) {
     this.serviceHost = serviceHost;
     this._web3 = undefined;
+    this._initWeb3();
   }
 
   _initWeb3 = async () => {
@@ -31,33 +32,38 @@ export class ConfigurationServiceRequest {
 
   _getMethodDescriptor = method => ConfigurationService[method];
 
-  _getCurrentBlockNumber = async () => await this._web3.eth.getBlockNumber();
+  getCurrentBlockNumber = async () => {
+    await this._initWeb3();
+    return await this._web3.eth.getBlockNumber();
+  };
 
   _getAddress = async () => {
+    await this._initWeb3();
     const address = await this._web3.eth.getAccounts();
     return address[0];
   };
 
-  getConfiguration = async signature => {
+  generateSignatureForGetConfiguration = async currentBlock => {
     await this._initWeb3();
-    const generateSignature = async () => {
-      const address = await this._getAddress();
-      const currentBlockNumber = await this._getCurrentBlockNumber();
-      const sha3Message = this._web3.utils.soliditySha3(
-        { t: "string", v: "_GetConfiguration" },
-        { t: "uint256", v: currentBlockNumber }
-      );
-      const sha3Hash = this._web3.eth.accounts.hashMessage(sha3Message);
-      const signature = await this._web3.eth.sign(sha3Hash, address);
-      return hexToB64(signature);
-    };
+    const address = await this._getAddress();
+    const currentBlockNumber = currentBlock ? currentBlock : await this.getCurrentBlockNumber();
+    const sha3Message = this._web3.utils.soliditySha3(
+      { t: solidityTypes.STRING, v: "_GetConfiguration" },
+      { t: solidityTypes.UINT256, v: currentBlockNumber }
+    );
+    const sha3Hash = this._web3.eth.accounts.hashMessage(sha3Message);
+    const signature = await this._web3.eth.sign(sha3Hash, address);
+    return hexToB64(signature);
+  };
 
+  getConfiguration = async (signature, currentBlock) => {
+    await this._initWeb3();
     const methodDescriptor = this._getMethodDescriptor(methods.GetConfiguration);
     const request = new methodDescriptor.requestType();
     // request.setSignature(signature ? signature : await generateSignature());
     const callerAuthentication = new configuration_service_pb.CallerAuthentication();
-    callerAuthentication.setSignature(signature ? signature : await generateSignature());
-    callerAuthentication.setCurrentBlock(await this._getCurrentBlockNumber());
+    callerAuthentication.setCurrentBlock(currentBlock ? currentBlock : await this.getCurrentBlockNumber());
+    callerAuthentication.setSignature(signature ? signature : await this.generateSignatureForGetConfiguration());
     request.setAuth(callerAuthentication);
 
     return new Promise((resolve, reject) => {

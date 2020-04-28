@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import ArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import InfoIcon from "@material-ui/icons/Info";
+// import InfoIcon from "@material-ui/icons/Info";
 
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 import { useStyles } from "./styles";
-import { userPreferenceTypes } from "../../../Utils/user";
-import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
+// import { userPreferenceTypes } from "../../../Utils/user";
+// import { preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import { stakeActions } from "../../../Services/Redux/actionCreators";
 
 import Timer from "./Timer";
@@ -25,7 +25,7 @@ import Timer from "./Timer";
 
 const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
-  stakeNotification: state.user.userPreferences,
+  // stakeNotificationotification: state.user.userPreferences,
 });
 
 const SessionTime = ({ stakeDetails }) => {
@@ -34,7 +34,7 @@ const SessionTime = ({ stakeDetails }) => {
 
   const currentTime = moment().unix();
 
-  const { metamaskDetails, stakeNotification } = useSelector(state => stateSelector(state));
+  const { metamaskDetails } = useSelector(state => stateSelector(state));
 
   const [showTimer, setShowTimer] = useState(currentTime < stakeDetails.startPeriod ? 0 : 1);
 
@@ -56,7 +56,7 @@ const SessionTime = ({ stakeDetails }) => {
       sessionTitle = "Next Session in:";
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
-      sessionTitle = "Staking window open for:";
+      sessionTitle = "Open Staking for:";
     }
 
     return sessionTitle;
@@ -66,10 +66,20 @@ const SessionTime = ({ stakeDetails }) => {
     let closeTime = "-";
 
     if (currentTime < stakeDetails.startPeriod) {
-      closeTime = "Opens: " + moment.unix(stakeDetails.startPeriod).format("DD MMM YYYY");
+      closeTime =
+        "Opens: " +
+        moment
+          .unix(stakeDetails.startPeriod)
+          .local()
+          .format("DD MMM YYYY");
     }
     if (currentTime >= stakeDetails.startPeriod && currentTime <= stakeDetails.submissionEndPeriod) {
-      closeTime = "Closes: " + moment.unix(stakeDetails.submissionEndPeriod).format("DD MMM YYYY");
+      closeTime =
+        "Closes: " +
+        moment
+          .unix(stakeDetails.submissionEndPeriod)
+          .local()
+          .format("DD MMM YYYY");
     }
 
     return closeTime;
@@ -94,15 +104,15 @@ const SessionTime = ({ stakeDetails }) => {
     }
   };
 
-  const handleStakeNotificationChange = event => {
-    //setStakeNotification(event.target.checked);
+  // const handleStakeNotificationChange = event => {
+  //   //setStakeNotification(event.target.checked);
 
-    const emailPreferences = {
-      [userPreferenceTypes.TOKEN_STAKE_NOTIFICATION]: event.target.checked,
-    };
+  //   const emailPreferences = {
+  //     [userPreferenceTypes.TOKEN_STAKE_NOTIFICATION]: event.target.checked,
+  //   };
 
-    dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-  };
+  //   dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
+  // };
 
   return (
     <div className={classes.sessionTimeContainer}>
@@ -113,7 +123,7 @@ const SessionTime = ({ stakeDetails }) => {
       <div className={classes.content}>
         <CircularProgressbarWithChildren
           circleRatio={0.75}
-          strokeWidth={5}
+          strokeWidth={4}
           minValue={progressStartTime}
           maxValue={endTime}
           value={currentTime}
@@ -147,7 +157,7 @@ const SessionTime = ({ stakeDetails }) => {
           <Typography className={classes.closingTime}>{getClosingTime()}</Typography>
         </CircularProgressbarWithChildren>
 
-        <div className={classes.checkbox}>
+        {/*<div className={classes.checkbox}>
           <div className={classes.toolTipContainer}>
             <InfoIcon />
             <Typography>
@@ -160,7 +170,7 @@ const SessionTime = ({ stakeDetails }) => {
             }
             label="Staking notifications"
           />
-        </div>
+        </div>*/}
       </div>
     </div>
   );

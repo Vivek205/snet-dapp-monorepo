@@ -13,16 +13,16 @@ import InfoIcon from "@material-ui/icons/Info";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import ApproxSymbolImg from "shared/dist/assets/images/ApproxSymbol.png";
 
 import { useStyles } from "./styles";
 import { toWei, fromWei, isValidInputAmount } from "../../../Utils/GenHelperFunctions";
-import { waitForTransaction, approveToken, submitStake } from "../../../Utils/BlockchainHelper";
+import { approveTokenV2, submitStakeV2 } from "../../../Utils/BlockchainHelper";
 import { LoaderContent } from "../../../Utils/Loader";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 
@@ -66,34 +66,33 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const tokenBalanceBN = new BN(tokenBalance);
     const tokenAllowanceBN = new BN(tokenAllowance);
 
+    const myStakeBN = new BN(stakeDetails.myStake);
+    const finalStakeBN = myStakeBN.add(stakeAmountBN);
+
     const minStakeBN = new BN(stakeDetails.minStake);
 
-    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && stakeAmountBN.gte(minStakeBN)) {
-      let txHash;
+    if (stakeAmountBN.gt(zeroBN) && stakeAmountBN.lte(tokenBalanceBN) && finalStakeBN.gte(minStakeBN)) {
       let bAllowanceCalled = false;
 
       try {
         // Need to have an Token Approval before Deposit
         if (tokenAllowanceBN.lt(stakeAmountBN)) {
-          txHash = await approveToken(metamaskDetails, stakeAmountBN);
-
           setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
 
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
 
-          bAllowanceCalled = true;
-          await waitForTransaction(txHash);
-        }
+          await approveTokenV2(metamaskDetails, stakeAmountBN);
 
-        // Initiate the SubmitStake Operation
-        txHash = await submitStake(metamaskDetails, stakeAmountBN, autoRenewal);
+          bAllowanceCalled = true;
+        }
 
         if (!bAllowanceCalled) {
           dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_STAKE));
           setAlert({ type: alertTypes.INFO, message: "Transaction is in Progress" });
         }
 
-        await waitForTransaction(txHash);
+        // Initiate the SubmitStake Operation
+        await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
 
         setAlert({
           type: alertTypes.SUCCESS,
@@ -108,6 +107,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         // Update the AGI Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
+        dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
         // To get the latest state from Blockchain
         dispatch(stakeActions.fetchUserStakeFromBlockchain(metamaskDetails, stakeDetails.stakeMapIndex));
@@ -115,17 +115,17 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         setAlert({ type: alertTypes.ERROR, message: "Transaction has failed." });
         dispatch(loaderActions.stopAppLoader());
       }
-    } else if (stakeAmountBN.lt(minStakeBN)) {
+    } else if (finalStakeBN.lt(minStakeBN)) {
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! Needs to stake atleast minimum amount.`,
+        message: `Oops! Needs to stake at least minimum amount.`,
       });
     } else {
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! No sufficient AGI Balance in your wallet.`,
+        message: `Oops! Insufficient AGI Balance in your wallet.`,
       });
     }
   };
@@ -146,16 +146,34 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
     if (stakeAmount.lte(0)) return 0;
 
+    const myStake = new BigNumber(stakeDetails.myStake);
+    const myStakeProcessed = new BigNumber(stakeDetails.myStakeProcessed);
+
     const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
-    let totalStakedAmount = new BigNumber(
-      stakeDetails.totalStakedAmount === 0 ? stakeDetails.myStake : stakeDetails.totalStakedAmount
-    );
+
+    let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
+    const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
+
+    if (myStake.gt(myStakeProcessed)) {
+      totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
+    }
+
+    if (myStake.lt(myStakeProcessed)) {
+      totalStakedAmount = totalStakedAmount.minus(myStakeProcessed.minus(myStake));
+    }
+
+    if (totalStakedAmount.lte(0)) {
+      totalStakedAmount = new BigNumber(stakeDetails.myStake);
+    }
 
     // Assuming that the new Stake will be part of total stake amount
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
 
     let _rewardAmount = new BigNumber(0);
+
+    // Considering Auto Renewed Stake For calculation
+    totalStakedAmount = totalStakedAmount.plus(windowTotalStake);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
@@ -190,18 +208,18 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <SNETTextfield
                 name="stakeAmount"
                 label="Input Stake Amount"
-                extraInfo="Avaialble Balance:"
+                extraInfo={"Avaialble Balance: " + fromWei(tokenBalance)}
                 value={stakeAmount}
                 onChange={handleAmountChange}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">agi</InputAdornment>,
                 }}
               />
-              <SwapHorizontalCircleIcon />
+              <img src={ApproxSymbolImg} alt="Approximate Symbol" />
               <SNETTextfield
                 label="Reward Amount"
                 readOnly={true}
-                extraInfo="Approximate Estimate"
+                extraInfo="Approximate based on the current pool size"
                 value={fromWei(rewardAmount)}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">agi</InputAdornment>,
@@ -211,13 +229,16 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
             <div className={classes.stakeAmtDetailsContainer}>
               {addStakeAmountDetails.map(item => (
                 <div className={classes.stakeAmtDetail} key={item.title}>
-                  <div className={classes.iconTitleContainer}>
-                    <InfoIcon />
+                  <div className={classes.label}>
+                    <div className={classes.iconTooltipContainer}>
+                      <InfoIcon />
+                      <p>{item.toolTip}</p>
+                    </div>
                     <Typography className={classes.title}>{item.title}</Typography>
                   </div>
                   <div className={classes.value}>
                     <Typography>{item.amount}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>{item.unit}</Typography>
                   </div>
                 </div>
               ))}

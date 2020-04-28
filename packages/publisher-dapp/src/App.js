@@ -12,7 +12,8 @@ import DefaultHelmet from "./Services/Helmet";
 import { aws_config } from "./Services/AWS/aws_config";
 import GlobalLoader from "./Components/GlobalLoader";
 import initQuantcast from "shared/dist/scripts/quantcast";
-import initHotjar from "snet-dapp-redesign/src/assets/externalScripts/hotjar";
+import initHotjar from "shared/dist/scripts/hotjar";
+import UserFeedbackSlack from "./Components/UserFeedbackSlack";
 
 Amplify.configure(aws_config);
 
@@ -36,6 +37,7 @@ function App() {
         <DefaultHelmet />
         <GlobalRouter />
         <GlobalLoader />
+        <UserFeedbackSlack />
       </MUIThemeProvider>
     </ReactReduxProvider>
   );

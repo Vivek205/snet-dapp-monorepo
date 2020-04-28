@@ -23,11 +23,11 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 var StyledTextField = function StyledTextField(_ref) {
   var classes = _ref.classes,
-      className = _ref.className,
       label = _ref.label,
       handleChange = _ref.handleChange,
       value = _ref.value,
-      restProps = _objectWithoutProperties(_ref, ["classes", "className", "label", "handleChange", "value"]);
+      InputProps = _ref.InputProps,
+      restProps = _objectWithoutProperties(_ref, ["classes", "label", "handleChange", "value", "InputProps"]);
 
   return /*#__PURE__*/_react.default.createElement(_TextField.default, _extends({
     id: "outlined-name",
@@ -36,7 +36,8 @@ var StyledTextField = function StyledTextField(_ref) {
     value: value,
     onChange: handleChange,
     margin: "normal",
-    variant: "outlined"
+    variant: "outlined",
+    InputProps: InputProps
   }, restProps));
 };
 
