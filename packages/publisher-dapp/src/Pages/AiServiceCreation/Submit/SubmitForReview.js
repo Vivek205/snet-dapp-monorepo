@@ -152,7 +152,7 @@ class SubmitForReview extends React.Component {
   };
 
   handleTestEndpointValidation = value => {
-    const errorMessage = validator.single(value, submitServiceConstraints.testEndpoints);
+    const errorMessage = validator.single(value, submitServiceConstraints.groups.array.testEndpoints);
     return this.setState({
       testEndpointAlert: {
         type: alertTypes.ERROR,
