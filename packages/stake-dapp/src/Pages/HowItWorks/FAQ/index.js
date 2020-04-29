@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,8 +7,6 @@ import { withStyles } from "@material-ui/styles";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
-import Accordion from "../../Accordion";
-import { questionAnswers } from "./content";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 const FAQ = ({ classes, history }) => {
@@ -25,10 +22,6 @@ const FAQ = ({ classes, history }) => {
           network. Essentially, it consists of locking cryptocurrencies to receive rewards. The process relies on users
           participating in blockchain activities through a personal crypto wallet, such as Metamask Wallet. Have
           questions? Browse through these FAQ’s to find answers to commonly asked questions.
-        </Typography>
-        <Accordion data={questionAnswers} />
-        <Typography className={classes.fullViewText}>
-          <Link to="/">Click here </Link>to view full FAQ
         </Typography>
         <SNETButton children="start staking tokens" color="primary" variant="contained" onClick={navigateToLanding} />
       </Grid>

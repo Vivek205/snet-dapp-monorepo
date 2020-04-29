@@ -4,17 +4,20 @@ import TelegramImage from "shared/dist/assets/images/Telegram.png";
 
 export const communityDetails = [
   {
+    to: "https://community.singularitynet.io/",
     image: DiscussionImage,
     title: "Join the Discussion",
     description: "Get in touch with community experts and other users in the SingularityNET Staking Help forum.",
   },
   {
+    to: "https://dev.singularitynet.io",
     image: DocumentationImage,
     title: "Full Staking Documentation",
     description:
       "Learn more about the stages of the staking process and what happens to your AGI tokens whilst they are staked.",
   },
   {
+    to: "https://telegram.me/singularitynet",
     image: TelegramImage,
     title: "Telegram Community",
     description:

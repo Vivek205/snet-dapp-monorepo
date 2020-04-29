@@ -8,8 +8,8 @@ import Tab from "@material-ui/core/Tab";
 
 import General from "shared/dist/assets/images/General.png";
 import Metamask from "shared/dist/assets/images/Metamask.png";
-import Troubleshooting from "shared/dist/assets/images/Troubleshooting.png";
-import AutoRenewal from "shared/dist/assets/images/AutoRenewal.png";
+// import Troubleshooting from "shared/dist/assets/images/Troubleshooting.png";
+// import AutoRenewal from "shared/dist/assets/images/AutoRenewal.png";
 
 import Accordion from "../Accordion";
 import { communityDetails, generalFAQ, metamaskFAQ } from "./content";
@@ -56,7 +56,7 @@ const FAQ = ({ classes }) => {
             icon={<img src={Metamask} alt="Metamask FAQ" />}
             value={1}
           />
-          <Tab
+          {/*<Tab
             className={classes.tab}
             label={
               <p>
@@ -75,7 +75,7 @@ const FAQ = ({ classes }) => {
             }
             icon={<img src={AutoRenewal} alt="Auto Renewal FAQ" />}
             value={3}
-          />
+          /> */}
         </Tabs>
       </AppBar>
       {selectedTab === 0 && (
@@ -88,16 +88,16 @@ const FAQ = ({ classes }) => {
           <Accordion data={metamaskFAQ} />
         </div>
       )}
-      {selectedTab === 2 && <div className={classes.accordionContainer} />}
-      {selectedTab === 3 && <div className={classes.accordionContainer} />}
       <div className={classes.learnAndShareContainer}>
         <Typography variant="h2">Learn and share in the community</Typography>
         <ul>
           {communityDetails.map(item => (
             <li key={item.title}>
-              <img src={item.image} alt={item.title} />
-              <Typography variant="h6">{item.title}</Typography>
-              <Typography>{item.description}</Typography>
+              <a href={item.to} title={item.title} target="_blank">
+                <img src={item.image} alt={item.title} />
+                <Typography variant="h6">{item.title}</Typography>
+                <Typography>{item.description}</Typography>
+              </a>
             </li>
           ))}
         </ul>

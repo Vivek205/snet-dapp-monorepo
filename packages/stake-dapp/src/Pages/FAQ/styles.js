@@ -72,6 +72,7 @@ export const useStyles = MUITheme => ({
   },
   // Learn and Share Community
   learnAndShareContainer: {
+    "& a": { textDecoration: "none" },
     "& h2": { textAlign: "center" },
     "& ul": {
       padding: "0 25px 64px",
