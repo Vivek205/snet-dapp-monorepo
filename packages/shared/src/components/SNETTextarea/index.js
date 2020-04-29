@@ -60,7 +60,7 @@ SNETTextarea.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   content: PropTypes.string,
-  mainCount: PropTypes.number,
+  minCount: PropTypes.number,
   maxCount: PropTypes.number,
 };
 
