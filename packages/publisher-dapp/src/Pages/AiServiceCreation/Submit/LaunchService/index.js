@@ -133,10 +133,7 @@ class LaunchService extends React.Component {
             to proceed to launch the service.
           </Typography>
 
-          <DaemonConfig
-            config={daemonConfig}
-            footerNote="Please use the above configuration values in your daemon configuration. This is to ensure that your daemon is not in the curation mode anymore. Once the Service has been successfully published on the SingularityNet Platform, restart the daemon."
-          />
+          <DaemonConfig config={daemonConfig} />
 
           <div className={classes.launchServiceAlertButtonContainer}>
             <AlertBox
