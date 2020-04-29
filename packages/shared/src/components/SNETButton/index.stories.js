@@ -4,7 +4,7 @@ import withLiveEditScope from "storybook-addon-react-live-edit/dist/withLiveEdit
 
 import SNETButton from "./";
 
-storiesOf("SNETButton", module)
+storiesOf("Form|SNETButton", module)
   .addParameters({ props: { propTables: [SNETButton] } })
   .addDecorator(withLiveEditScope({ React, SNETButton }))
   .addLiveSource(

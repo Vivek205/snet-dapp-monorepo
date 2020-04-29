@@ -61,7 +61,7 @@ SNETTextarea.propTypes = {
   value: _propTypes.default.string,
   onChange: _propTypes.default.func,
   content: _propTypes.default.string,
-  mainCount: _propTypes.default.number,
+  minCount: _propTypes.default.number,
   maxCount: _propTypes.default.number
 };
 
