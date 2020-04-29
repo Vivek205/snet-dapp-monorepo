@@ -9,7 +9,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { useStyles } from "./styles";
 
-const FAQAccordion = ({ classes, question, answer, index }) => {
+const FAQAccordion = ({ classes, data }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = panel => (_event, isExpanded) => {
@@ -17,14 +17,23 @@ const FAQAccordion = ({ classes, question, answer, index }) => {
   };
 
   return (
-    <ExpansionPanel expanded={expanded === index} onChange={handleChange(index)} className={classes.expansionPanel}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.panelSummary}>
-        <Typography className={classes.question}>{question}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
-        <Typography className={classes.answer}>{answer}</Typography>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+    <div className={classes.accordionContainer}>
+      {data.map((item, index) => (
+        <ExpansionPanel
+          expanded={expanded === index}
+          onChange={handleChange(index)}
+          className={classes.expansionPanel}
+          key={index}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.panelSummary}>
+            <Typography className={classes.question}>{item.question}</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Typography className={classes.answer}>{item.answer}</Typography>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))}
+    </div>
   );
 };
 

@@ -80,16 +80,12 @@ const FAQ = ({ classes }) => {
       </AppBar>
       {selectedTab === 0 && (
         <div className={classes.accordionContainer}>
-          {generalFAQ.map((item, index) => (
-            <Accordion question={item.question} answer={item.answer} key={item.question} index={index} />
-          ))}
+          <Accordion data={generalFAQ} />
         </div>
       )}
       {selectedTab === 1 && (
         <div className={classes.accordionContainer}>
-          {metamaskFAQ.map((item, index) => (
-            <Accordion question={item.question} answer={item.answer} key={item.question} index={index} />
-          ))}
+          <Accordion data={metamaskFAQ} />
         </div>
       )}
       {selectedTab === 2 && <div className={classes.accordionContainer} />}
