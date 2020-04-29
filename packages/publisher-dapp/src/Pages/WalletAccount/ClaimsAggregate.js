@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 const ClaimsAggregate = ({ classes, aggregatePaymentDetails }) => {
   return (
@@ -15,7 +16,7 @@ const ClaimsAggregate = ({ classes, aggregatePaymentDetails }) => {
           <Typography>Pending</Typography>
         </div>
         <Typography>
-          {`${aggregatePaymentDetails.amount}`}
+          {cogsToAgi(aggregatePaymentDetails.amount.toString())}
           <span>AGI</span>
         </Typography>
       </Grid>
@@ -35,7 +36,7 @@ const ClaimsAggregate = ({ classes, aggregatePaymentDetails }) => {
           <Typography>Expiring Amount</Typography>
         </div>
         <Typography>
-          {`${aggregatePaymentDetails.expiry.d7.amount}`}
+          {cogsToAgi(aggregatePaymentDetails.expiry.d7.amount.toString())}
           <span>AGI</span>
         </Typography>
       </Grid>
