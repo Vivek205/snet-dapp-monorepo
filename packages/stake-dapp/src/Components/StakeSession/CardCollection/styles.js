@@ -13,7 +13,6 @@ export const useStyles = makeStyles(MUITheme => ({
       color: MUITheme.palette.text.disabled,
       fontSize: 18,
     },
-    "&:first-of-type": { paddingBottom: 34 },
     "@media(max-width: 760px)": {
       width: "50%",
       "&:nth-child(3)": { paddingBottom: 34 },
@@ -37,6 +36,7 @@ export const useStyles = makeStyles(MUITheme => ({
     display: "flex",
     justifyContent: "space-between",
     backgroundColor: MUITheme.palette.background.mainContent,
+    [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
   },
   title: {
     fontSize: 16,
