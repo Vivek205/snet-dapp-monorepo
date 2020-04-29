@@ -25,12 +25,21 @@ const computeReward = activeStake => {
   return rewardAmount;
 };
 
-export const cardDetails = activeStake => [
+export const yourStakeDetails = activeStake => [
   {
-    title: "Stake Session",
+    title: "Added Stake",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
-    toolTip: "",
+  },
+  {
+    title: "Renewed Amount",
+    value: "?",
+    unit: "AGI",
+  },
+  {
+    title: "Total Stake",
+    value: "?",
+    unit: "AGI",
   },
   {
     title: "Max Reward",
@@ -38,12 +47,9 @@ export const cardDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation",
   },
-  {
-    title: "Incubating Period",
-    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
-    unit: "days",
-    toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
-  },
+];
+
+export const sessionDetails = activeStake => [
   {
     title: "Stakers",
     value: activeStake.totalStakers,
@@ -51,7 +57,7 @@ export const cardDetails = activeStake => [
     toolTip: "Current number of participants who have contributed AGI tokens to the stake",
   },
   {
-    title: "Current Pool Size",
+    title: "Curent Pool Size",
     value: fromWei(activeStake.totalStakedAmount),
     unit: "AGI",
     toolTip: "Current total amount of AGI tokens that have contributed by all stakers",
@@ -61,6 +67,12 @@ export const cardDetails = activeStake => [
     value: fromWei(activeStake.rewardAmount),
     unit: "AGI",
     toolTip: "",
+  },
+  {
+    title: "Incubation Time",
+    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
+    unit: "days",
+    toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
   },
 ];
 

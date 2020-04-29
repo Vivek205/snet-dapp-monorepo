@@ -40,7 +40,7 @@ const computeReward = stakeDetails => {
   return rewardAmount;
 };
 
-export const cardDetails = stakeDetails => [
+export const yourStakeDetails = stakeDetails => [
   {
     title: "Accepted Stake Amount",
     value: fromWei(
@@ -62,10 +62,14 @@ export const cardDetails = stakeDetails => [
     toolTip:
       "The amount of AGI tokens refunded automatically to your wallet account from the unused portion of your original stake not accepted by the SingularityNet foundation.",
   },
+];
+
+export const stakeSessionDetails = stakeDetails => [
   {
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
+    toolTip: "Current number of participants who have contributed AGI tokens to the stake",
   },
   {
     title: "Current Pool Size",

@@ -8,7 +8,7 @@ import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { useStyles } from "./styles";
 import StakeSession from "../StakeSession";
-import { cardDetails, incubationProgressDetails, agreementDetails } from "./content";
+import { yourStakeDetails, stakeSessionDetails, incubationProgressDetails, agreementDetails } from "./content";
 import InlineLoader from "../InlineLoader";
 
 const stateSelector = state => ({
@@ -43,7 +43,8 @@ const UserStake = () => {
         <Grid key={stake.stakeMapIndex} item xs={12} sm={12} md={12} lg={12} className={classes.userStakeContainerItem}>
           <StakeSession
             incubationProgressDetails={incubationProgressDetails(stake)}
-            cardDetails={cardDetails(stake)}
+            yourStakeDetails={yourStakeDetails(stake)}
+            stakeSessionDetails={stakeSessionDetails(stake)}
             agreementDetails={agreementDetails}
             stakeDetails={stake}
           />

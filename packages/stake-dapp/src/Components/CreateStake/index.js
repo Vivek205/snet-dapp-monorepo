@@ -10,11 +10,12 @@ import SessionTime from "./SessionTime";
 import AccountBalance from "../AccountBalance";
 import StakeSession from "../StakeSession";
 import {
-  cardDetails,
   btnDetails,
   agreementDetails,
   withdrawStakeAmountDetails,
   addStakeAmountDetails,
+  yourStakeDetails,
+  sessionDetails,
 } from "./content";
 import WithdrawStake from "./WithdrawStake";
 import AddStake from "./AddStake";
@@ -81,7 +82,8 @@ const CreateStake = () => {
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>
         <StakeSession
-          cardDetails={cardDetails(activeStake)}
+          yourStakeDetails={yourStakeDetails(activeStake)}
+          sessionDetails={sessionDetails(activeStake)}
           btnDetails={btnDetails}
           agreementDetails={agreementDetails}
           handleClick={handleClick}

@@ -36,6 +36,9 @@ export const useStyles = makeStyles(MUITheme => ({
   btnContainer: {
     marginTop: 24,
     textAlign: "center",
+    "& button": {
+      "&:first-of-type": { marginRight: 25 },
+    },
   },
   noDataFoundSection: {
     textAlign: "center",
@@ -47,10 +50,9 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   infoBox: {
-    padding: "0 25px",
-    marginTop: 32,
-    display: "flex",
-    justifyContent: "center",
+    padding: "0 30px",
+    margin: "32px 0 15px",
+    "& > div": { display: "flex" },
     "& > p": {
       margin: 0,
       display: "flex",
@@ -92,4 +94,5 @@ export const useStyles = makeStyles(MUITheme => ({
     fontWeight: 600,
     letterSpacing: 0.25,
   },
+  alertBoxContainer: { margin: "0 30px" },
 }));

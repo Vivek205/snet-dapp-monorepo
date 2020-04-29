@@ -9,7 +9,7 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import IncubationProgressDetails from "./IncubationProgressDetails";
 import Agreement from "./Agreement";
 import InfoBox from "./InfoBox";
-import Card from "./Card";
+import CardCollection from "./CardCollection";
 import Button from "./Button";
 import { useStyles } from "./styles";
 import { LoaderContent } from "../../Utils/Loader";
@@ -17,12 +17,13 @@ import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators
 import { waitForTransaction, updateAutoRenewal } from "../../Utils/BlockchainHelper";
 
 const StakeSession = ({
-  cardDetails,
   incubationProgressDetails,
   agreementDetails,
   btnDetails,
   handleClick,
   stakeDetails,
+  yourStakeDetails,
+  sessionDetails,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -166,28 +167,24 @@ const StakeSession = ({
       </div>
       <div className={classes.content}>
         <IncubationProgressDetails details={incubationProgressDetails} />
-        <div className={classes.cards}>
-          {cardDetails.map(item => (
-            <Card key={item.title} title={item.title} value={item.value} unit={item.unit} toolTip={item.toolTip} />
-          ))}
-        </div>
-        <Agreement
-          details={agreementDetails}
-          autoRenewal={autoRenewal}
-          handleChange={handleAutoRenewalChange}
-          disableAutoRenewal={disableAutoRenewal()}
-        />
-        <div className={classes.infoBox}>
-          <InfoBox stakeDetails={stakeDetails} />
-        </div>
-        <AlertBox type={alert.type} message={alert.message} />
-        <Button
-          details={btnDetails}
-          handleClick={handleClick}
-          autoRenewal={autoRenewal}
-          disableUserStakeActions={disableUserStakeActions()}
-        />
+        <CardCollection yourStakeData={yourStakeDetails} sessionDetailsData={sessionDetails} />
       </div>
+      <Agreement
+        details={agreementDetails}
+        autoRenewal={autoRenewal}
+        handleChange={handleAutoRenewalChange}
+        disableAutoRenewal={disableAutoRenewal()}
+      />
+      <div className={classes.infoBox}>
+        <InfoBox stakeDetails={stakeDetails} />
+      </div>
+      <AlertBox type={alert.type} message={alert.message} />
+      <Button
+        details={btnDetails}
+        handleClick={handleClick}
+        autoRenewal={autoRenewal}
+        disableUserStakeActions={disableUserStakeActions()}
+      />
     </div>
   );
 };
