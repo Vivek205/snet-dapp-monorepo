@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -30,23 +30,23 @@ var ProgressBar = function ProgressBar(_ref) {
       onSectionClick = _ref.onSectionClick;
 
   var computeProgressStatus = function computeProgressStatus(progressNumber, activeSection) {
-    if (progressNumber < activeSection) {
+    if (progressNumber < Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.COMPLETED;
     }
 
-    if (progressNumber === activeSection) {
+    if (progressNumber === Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.ACTIVE;
     }
 
-    if (progressNumber > activeSection) {
+    if (progressNumber > Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.IDLE;
     }
   };
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.tabsContainer
-  }, _react.default.createElement("ul", null, progressText.map(function (text, index) {
-    return _react.default.createElement(_ProgressSection.default, {
+  }, /*#__PURE__*/_react.default.createElement("ul", null, progressText.map(function (text, index) {
+    return /*#__PURE__*/_react.default.createElement(_ProgressSection.default, {
       progressNumber: index + 1,
       progressText: text,
       progressStatus: computeProgressStatus(index + 1, activeSection),

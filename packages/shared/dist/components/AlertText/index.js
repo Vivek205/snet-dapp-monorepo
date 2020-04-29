@@ -26,12 +26,11 @@ var textColor = {
 
 var AlertText = function AlertText(_ref) {
   var type = _ref.type,
-      message = _ref.message,
-      inline = _ref.inline;
+      message = _ref.message;
   var classes = (0, _styles.useStyles)();
 
   if (message) {
-    return _react.default.createElement("span", {
+    return /*#__PURE__*/_react.default.createElement("span", {
       className: (0, _clsx.default)(classes.errorMsg, classes[textColor[type]])
     }, message);
   }
@@ -41,11 +40,11 @@ var AlertText = function AlertText(_ref) {
 
 AlertText.propTypes = {
   message: _propTypes.default.string,
-  type: _propTypes.default.oneOf(["error", "success", "warning", "info"]),
-  inline: _propTypes.default.bool
+  type: _propTypes.default.oneOf(["error", "success", "warning", "info"])
 };
 AlertText.defaultProps = {
-  type: "error"
+  type: "error",
+  message: undefined
 };
 var _default = AlertText;
 exports.default = _default;

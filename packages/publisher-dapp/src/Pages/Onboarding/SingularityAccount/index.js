@@ -17,21 +17,32 @@ import { onboardingActions, preferenceActions } from "../../../Services/Redux/ac
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
 import InformationBox from "./InformationBox";
+import { organizationTypes } from "../../../Utils/organizationSetup";
+
+const selectState = state => ({
+  userEntity: state.user.entity,
+  organization: state.organization,
+  email: state.user.email,
+  publisherTnC: state.user.publisherTnC,
+});
 
 const SingularityAccount = ({ classes, history }) => {
-  const userEntity = useSelector(state => state.user.entity);
   const [emailPreferences, setEmailPreferences] = useState({
     [userPreferenceTypes.FEATURE_RELEASE]: false,
     [userPreferenceTypes.WEEKLY_SUMMARY]: false,
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const [verifiedInvitation, setVerifiedInvitation] = useState(false);
-  const entity = useSelector(state => state.user.entity);
+  const { userEntity, organization, email } = useSelector(selectState);
   const dispatch = useDispatch();
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
+    if (userEntity === userEntities.INDIVIDUAL) {
+      await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
+      dispatch(organizationActions.setOrgOwner(email));
+    }
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
   const handleCancel = () => {
@@ -59,8 +70,8 @@ const SingularityAccount = ({ classes, history }) => {
   };
 
   const shouldContinueBeDisabled = () => {
-    let disableContinue = !entity || entity === userEntities.DEFAULT;
-    if (entity === userEntities.INVITEE) {
+    let disableContinue = !userEntity || userEntity === userEntities.DEFAULT;
+    if (userEntity === userEntities.INVITEE) {
       disableContinue = disableContinue || !verifiedInvitation;
     }
     return disableContinue;
@@ -76,7 +87,7 @@ const SingularityAccount = ({ classes, history }) => {
             <StyledDropdown
               labelTxt="Please Select"
               inputLabel="Entity Type"
-              value={entity}
+              value={userEntity}
               list={[
                 { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
                 { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
@@ -88,7 +99,7 @@ const SingularityAccount = ({ classes, history }) => {
           {userEntity === userEntities.INVITEE ? (
             <Grid item sx={12} sm={12} md={6} lg={6}>
               <Typography>
-                Owner of an existing approved company entity will need to send you an invitation through your email.
+                The Owner of an existing approved company entity will need to send you an invitation through email.
               </Typography>
             </Grid>
           ) : null}

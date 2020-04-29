@@ -1,12 +1,5 @@
 export const useStyles = MUITheme => ({
-  appBar: {
-    marginTop: 84,
-  },
-  appBarTitle: {
-    flexGrow: 1,
-  },
   serviceCreationContainer: {
-    paddingTop: 60,
     "& h3": { lineHeight: "48px" },
     "& > div": {
       "&:nth-child(2)": {
@@ -32,7 +25,7 @@ export const useStyles = MUITheme => ({
   },
   topSection: {
     width: 600,
-    padding: "0 10px",
+    padding: "60px 10px 0",
     margin: "0 auto",
     textAlign: "center",
     "& span": {
@@ -44,10 +37,10 @@ export const useStyles = MUITheme => ({
       lineHeight: "28px",
     },
     "& + div": { paddingTop: 33 },
-    [MUITheme.breakpoints.down("xs")]: {
+    [MUITheme.breakpoints.down(640)]: {
       boxSizing: "border-box",
-      width: "100%",
-      padding: "0 20px",
+      width: "auto",
+      padding: "40px 20px",
     },
   },
   description: {
@@ -56,5 +49,32 @@ export const useStyles = MUITheme => ({
     fontSize: 20,
     fontWeight: 300,
     lineHeight: "28px",
+  },
+  editHeaderContainer: {
+    padding: "17px 60px",
+    marginTop: 83,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    background: "#211D24",
+    "& svg": {
+      marginRight: 8,
+      color: MUITheme.palette.text.disabled,
+    },
+    [MUITheme.breakpoints.down("sm")]: { padding: "17px 15px" },
+    "@media(max-width:720px)": {
+      flexDirection: "column",
+      alignItems: "flex-start",
+    },
+  },
+  editHeaderTitleContainer: { display: "flex" },
+  editHeaderTitle: {
+    color: "rgba(255,255,255,0.87)",
+    fontSize: 24,
+    lineHeight: "24px",
+  },
+  editHeaderBtns: {
+    "& button:last-of-type": { marginLeft: 40 },
+    [MUITheme.breakpoints.down(720)]: { marginTop: 25 },
   },
 });

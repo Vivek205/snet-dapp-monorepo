@@ -15,17 +15,21 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var validator = _validate.default;
 
-var hasLowerCase = function hasLowerCase(value, options, key, attributes) {
+var hasLowerCase = function hasLowerCase(value, options) {
   if (/[a-z]/.test(value)) {
     return;
   }
@@ -33,7 +37,7 @@ var hasLowerCase = function hasLowerCase(value, options, key, attributes) {
   return options.message || "must contain a lowercase character";
 };
 
-var hasUpperCase = function hasUpperCase(value, options, key, attributes) {
+var hasUpperCase = function hasUpperCase(value, options) {
   if (/[A-Z]/.test(value)) {
     return;
   }
@@ -41,7 +45,7 @@ var hasUpperCase = function hasUpperCase(value, options, key, attributes) {
   return options.message || "must contain an uppercase character";
 };
 
-var hasNumber = function hasNumber(value, options, key, attributes) {
+var hasNumber = function hasNumber(value, options) {
   if (/[0-9]/.test(value)) {
     return;
   }
@@ -49,7 +53,7 @@ var hasNumber = function hasNumber(value, options, key, attributes) {
   return options.message || "must contain a number";
 };
 
-var hasAWSPasswordSplChar = function hasAWSPasswordSplChar(value, options, key, attributes) {
+var hasAWSPasswordSplChar = function hasAWSPasswordSplChar(value, options) {
   // eslint-disable-next-line no-useless-escape
   if (/[\^\$\*\.\[\]\{\}\(\)\?\-\"\!\@\#\%\&\/\,\>\<\'\:\;\|\_\~\`]/.test(value)) {
     return;
@@ -63,12 +67,22 @@ var array = function array(arrayItems, itemConstraints, key) {
     return "".concat(key, " is not a valid array");
   }
 
-  var arrayItemErrors = arrayItems.reduce(function (errors, item, index) {
+  var arrayItemErrors = arrayItems.reduce(function (errors, item) {
     var error = (0, _validate.default)(item, itemConstraints);
     if (error) errors.push.apply(errors, _toConsumableArray(error));
     return errors;
   }, []);
-  return _validate.default.isEmpty(arrayItemErrors) ? null : "^".concat(arrayItemErrors[0]);
+  return _validate.default.isEmpty(arrayItemErrors) ? null : "^".concat(arrayItemErrors);
+};
+
+var validURL = function validURL(str, options) {
+  var pattern = new RegExp("^(https ?:\\/\\/)?" + "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + "((\\d{1,3}\\.){3}\\d{1,3}))" + "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + "(\\?[;&a-z\\d%_.~+=-]*)?" + "(\\#[-a-z\\d_]*)?$", "i");
+
+  if (pattern.test(str)) {
+    return;
+  }
+
+  return options.message || "".concat(str, "  is not valid");
 };
 
 validator.validators = _objectSpread({}, _validate.default.validators, {
@@ -77,7 +91,8 @@ validator.validators = _objectSpread({}, _validate.default.validators, {
   hasUpperCase: hasUpperCase,
   hasNumber: hasNumber,
   hasAWSPasswordSplChar: hasAWSPasswordSplChar,
-  array: array
+  array: array,
+  validURL: validURL
 }); // default options
 
 validator.options = {

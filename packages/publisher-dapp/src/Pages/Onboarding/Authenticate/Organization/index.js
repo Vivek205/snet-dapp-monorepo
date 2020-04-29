@@ -10,10 +10,10 @@ import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import validator from "shared/dist/utils/validator";
 import { orgOnboardingConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
+import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
 const Organization = props => {
   const classes = useStyles();
@@ -33,8 +33,12 @@ const Organization = props => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
       setAlert({
         type: alertTypes.ERROR,
-        message:
-          "Your organization has been rejected. Please validate the details provided and submit again for approval",
+        message: "Your organization has been rejected.",
+      });
+    } else if (organization.state.state === organizationSetupStatuses.CHANGE_REQUESTED && !Boolean(alert.type)) {
+      setAlert({
+        type: alertTypes.ERROR,
+        message: "Please validate the details provided and submit again for approval",
       });
     }
   }, [organization.state.state, setAlert, alert]);
@@ -48,11 +52,12 @@ const Organization = props => {
     try {
       const isNotValid = validator(organization, orgOnboardingConstraints);
       if (isNotValid) {
-        throw new ValidationError(isNotValid[0]);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
-      if (orgData.state.state === organizationSetupStatuses.ONBOARDING_REJECTED) {
+      if (orgData.state.state === organizationSetupStatuses.CHANGE_REQUESTED) {
         const data = await dispatch(organizationActions.finishLater(orgData, "ONBOARDING"));
         orgUuid = data.org_uuid;
       } else {
@@ -63,9 +68,6 @@ const Organization = props => {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
       dispatch(organizationActions.initializeOrg);
     } catch (error) {
-      if (error instanceof ValidationError) {
-        return setAlert({ type: alertTypes.ERROR, message: error.message });
-      }
       return setAlert({
         type: alertTypes.ERROR,
         message: "Unable to finish organization authentication. Please try later",
@@ -89,14 +91,20 @@ const Organization = props => {
           <BasicDetails allowDuns={allowDuns} setAllowDuns={setAllowDuns} />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>
-            <AlertBox type={alert.type} message={alert.message} />
+            <AlertBox type={alert.type} message={alert.message} children={alert.children} />
           </div>
         </div>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
-        <SNETButton color="primary" variant="contained" children="finish" onClick={handleFinish} />
+        <SNETButton
+          color="primary"
+          variant="contained"
+          children="finish"
+          onClick={handleFinish}
+          disabled={organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED}
+        />
       </div>
     </Fragment>
   );

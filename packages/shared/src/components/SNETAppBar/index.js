@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,5 +16,9 @@ const SNETAppBar = withStyles(MuiTheme => ({
     return rootStyles;
   },
 }))(AppBar);
+
+SNETAppBar.propTypes = {
+  color: PropTypes.oneOf(["white", "purple"]),
+};
 
 export default SNETAppBar;

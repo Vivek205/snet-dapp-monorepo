@@ -30,7 +30,7 @@ const VerificationApproved = () => {
       title="Your organization entity is approved!"
       img={VerificationApprovedImg}
       description="Set up your company details and publish your organization entity to the blockchain.
-      After that, you will be ready to create and publish your new services to the AI Marketplace, congratulations!
+      After that, you will be ready to create and publish your new services to the AI Marketplace.
       You can also invite team members to help set up and manage your AI services more efficiently."
       actions={[
         { children: "organization setup", variant: "contained", color: "primary", onClick: handleOrgSetup },

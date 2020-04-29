@@ -8,13 +8,17 @@ import { useStyles } from "./styles";
 
 const Agreement = ({ details, autoRenewal, handleChange, disableAutoRenewal }) => {
   const classes = useStyles();
-
   if (details) {
     return (
       <div className={classes.checkboxContent}>
         <FormControlLabel
           control={
-            <Checkbox checked={autoRenewal} disabled={disableAutoRenewal} onClick={handleChange} color="primary" />
+            <Checkbox
+              checked={autoRenewal === undefined ? true : autoRenewal}
+              disabled={disableAutoRenewal}
+              onClick={handleChange}
+              color="primary"
+            />
           }
           label={details.label}
         />

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import validator from "shared/dist/utils/validator";
 import { orgSetupRegionValidationConstraints } from "./validationConstraints";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
 const Region = ({ history, classes, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
@@ -19,7 +20,15 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const handleContinue = () => {
     const isNotValid = validator(organization, orgSetupRegionValidationConstraints);
     if (isNotValid) {
-      return setAlert({ type: alertTypes.ERROR, message: isNotValid[0] });
+      for (let i = 0; i < isNotValid.length; i++) {
+        if (isNotValid[i].includes(",")) {
+          let res = isNotValid[i].split(",");
+          isNotValid.splice(i, 1);
+          isNotValid.push(...res);
+        }
+      }
+      const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+      return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
@@ -34,7 +43,8 @@ const Region = ({ history, classes, handleFinishLater }) => {
         <Typography variant="h6">Regional Groups Configuration</Typography>
         <Typography variant="subtitle2">
           Every AI service your company publishes can be optimized for users based in various regions and groups. Groups
-          provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details{" "}
+          provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details
+          &nbsp;
           <a
             href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
             rel="noopener noreferrer"
@@ -52,11 +62,10 @@ const Region = ({ history, classes, handleFinishLater }) => {
             foundInBlockchain={organization.foundInBlockchain}
           />
         ))}
-        {alert.message ? (
-          <div className={classes.alertContainer}>
-            <AlertBox type={alert.type} message={alert.message} />
-          </div>
-        ) : null}
+
+        <div className={classes.alertContainer}>
+          <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+        </div>
       </div>
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="finish later" onClick={handleFinishLater} />

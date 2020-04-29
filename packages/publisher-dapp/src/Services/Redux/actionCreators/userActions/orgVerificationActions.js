@@ -17,7 +17,7 @@ const getVerificationStatusAPI = orgUuid => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.VERIFICATION.name;
   const apiPath = APIPaths.USER_VERIFICATION_STATUS;
-  const queryParams = { type: verificationTypes.DUNS, org_uuid: orgUuid };
+  const queryParams = { type: verificationTypes.DUNS, entity_id: orgUuid };
   const apiOptions = initializeAPIOptions(token, null, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };
@@ -26,12 +26,12 @@ export const getVerificationStatus = orgUuid => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.USER_VERIFICATION_STATUS));
 
-    const { data, error } = await getVerificationStatusAPI(orgUuid);
+    const { data, error } = await dispatch(getVerificationStatusAPI(orgUuid));
     if (error.code) {
       throw new APIError(error.message);
     }
-    if (data.status === orgVerificationStatus.REJECTED) {
-      dispatch(setOrgRejectReason(data.comments[0].comment));
+    if (data.status === orgVerificationStatus.REJECTED || data.status === orgVerificationStatus.CHANGE_REQUESTED) {
+      dispatch(setOrgRejectReason(data.duns.comments.slice(-1)[0].comment));
     }
     dispatch(loaderActions.stopAppLoader());
   } catch (e) {

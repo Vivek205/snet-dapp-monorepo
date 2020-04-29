@@ -49,8 +49,17 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
   },
   cardContainer: {
-    marginTop: 16,
-    display: "flex",
+    width: "90%",
+    position: "relative",
+  },
+  label: {
+    padding: "0 5px",
+    position: "absolute",
+    top: -9,
+    left: 10,
+    background: MUITheme.palette.background.white,
+    color: MUITheme.palette.text.darkGrey,
+    fontSize: 12,
   },
   infoIconContainer: {
     "& svg": {
@@ -67,5 +76,9 @@ export const useStyles = MUITheme => ({
     "& button": {
       "&:first-of-type": { paddingLeft: 26 },
     },
+  },
+  addedEndpointsContainer: {
+    marginTop: 24,
+    display: "flex",
   },
 });

@@ -37,7 +37,10 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
   const handleWebsiteValidation = value => {
     const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
     if (isNotValid) {
-      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+      return setWebsiteValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid URL. URL should start with https:`,
+      });
     }
     return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
   };

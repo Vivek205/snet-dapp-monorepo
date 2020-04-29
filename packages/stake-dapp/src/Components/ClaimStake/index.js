@@ -15,11 +15,12 @@ import AccountBalance from "../AccountBalance";
 import CardCollection from "../StakeSession/CardCollection";
 import InfoBox from "../StakeSession/InfoBox";
 import { LoaderContent } from "../../Utils/Loader";
-import { loaderActions, stakeActions } from "../../Services/Redux/actionCreators";
-import { waitForTransaction, claimStake, withdrawStake } from "../../Utils/BlockchainHelper";
+import { loaderActions, stakeActions, tokenActions } from "../../Services/Redux/actionCreators";
+import { claimStakeV2, withdrawStakeV2 } from "../../Utils/BlockchainHelper";
 import { toBigNumber } from "../../Utils/GenHelperFunctions";
 
 import InlineLoader from "../InlineLoader";
+import NoMetaMask from "../NoMetamask";
 
 const stateSelector = state => ({
   claimStakes: state.stakeReducer.claimStakes,
@@ -39,32 +40,32 @@ const ClaimStake = () => {
     return <InlineLoader />;
   }
 
+  if (!metamaskDetails.isTxnsAllowed) {
+    return <NoMetaMask />;
+  }
+
   if (claimStakes.length === 0) {
     return (
       <div className={classes.noDataFoundSection}>
         <img src={NoDataFoundImg} alt="No Data Found" />
-        <Typography>You have no stakes to claim</Typography>
+        <Typography>You have no stakes to claim.</Typography>
       </div>
     );
   }
 
   const initiateClaimState = async stakeMapIndex => {
-    let txHash;
     try {
-      // Initiate the Withdraw Stake Operation
-      txHash = await claimStake(metamaskDetails, stakeMapIndex);
-
       setAlert({ [stakeMapIndex]: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
 
       dispatch(loaderActions.startAppLoader(LoaderContent.CLAIM_STAKE));
 
-      await waitForTransaction(txHash);
+      // Initiate the Withdraw Stake Operation
+      await claimStakeV2(metamaskDetails, stakeMapIndex);
 
       setAlert({
         [stakeMapIndex]: {
           type: alertTypes.SUCCESS,
-          message:
-            "Congratulations! You have successfully claimed your stake and reward. You can safely close this window.",
+          message: "Congratulations! You have successfully claimed your stake and reward.",
         },
       });
 
@@ -77,6 +78,10 @@ const ClaimStake = () => {
         })
       );
 
+      // Update the AGI Token Balances
+      dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+      dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
+
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {
       setAlert({ [stakeMapIndex]: { type: alertTypes.ERROR, message: "Transaction has failed." } });
@@ -85,16 +90,13 @@ const ClaimStake = () => {
   };
 
   const initiateWithdrawStake = async (stakeMapIndex, pendingForApprovalAmountBN) => {
-    let txHash;
     try {
-      // Initiate the Withdraw Stake Operation
-      txHash = await withdrawStake(metamaskDetails, stakeMapIndex, pendingForApprovalAmountBN);
-
       setAlert({ [stakeMapIndex]: { type: alertTypes.INFO, message: "Transaction is in Progress" } });
 
       dispatch(loaderActions.startAppLoader(LoaderContent.WITHDRAW_STAKE));
 
-      await waitForTransaction(txHash);
+      // Initiate the Withdraw Stake Operation
+      await withdrawStakeV2(metamaskDetails, stakeMapIndex, pendingForApprovalAmountBN);
 
       setAlert({
         [stakeMapIndex]: { type: alertTypes.SUCCESS, message: "Transaction has been completed successfully" },
@@ -108,6 +110,10 @@ const ClaimStake = () => {
           },
         })
       );
+
+      // Update the AGI Token Balances
+      dispatch(tokenActions.updateTokenBalance(metamaskDetails));
+      dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
 
       dispatch(loaderActions.stopAppLoader());
     } catch (err) {

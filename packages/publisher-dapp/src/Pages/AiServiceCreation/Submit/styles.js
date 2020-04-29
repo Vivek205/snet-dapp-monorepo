@@ -22,16 +22,16 @@ export const useStyles = MUITheme => ({
     },
     [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
-  wrapper: { padding: "21px 24px 42px" },
+  wrapper: { padding: "16px 24px 42px" },
   submitDescription: {
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
   },
   reviewProcessDescription: {
-    padding: " 20px 21px 22px",
+    padding: " 16px 21px 22px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
   },
   metamaskAddText: {
@@ -41,7 +41,7 @@ export const useStyles = MUITheme => ({
     letterSpacing: 0.29,
     lineHeight: "20px",
   },
-  commentField: { padding: "50px 0 0" },
+  commentField: { padding: "32px 0 0" },
   btnContainer: {
     marginTop: 12,
     display: "flex",
@@ -229,6 +229,30 @@ export const useStyles = MUITheme => ({
     textAlign: "center",
     "& button": {
       "&:first-of-type": { marginRight: 25 },
+    },
+  },
+  validateConfigContainer: {
+    marginTop: 35,
+    "& h6": {
+      paddingBottom: 16,
+      fontSize: 18,
+      lineHeight: "23px",
+      fontWeight: 400,
+      "& + p": {
+        marginBottom: 24,
+        "& span": { fontWeight: "bold" },
+      },
+    },
+    "& button": { marginTop: 16 },
+  },
+  alertBoxContainer: { marginTop: 10 },
+  statusBannerContainer: {
+    width: 845,
+    margin: "40px auto",
+    "@media(max-width:800px)": {
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "0 25px",
     },
   },
 });

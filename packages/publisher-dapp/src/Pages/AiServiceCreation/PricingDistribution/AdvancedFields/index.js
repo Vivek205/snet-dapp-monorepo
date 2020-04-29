@@ -4,11 +4,9 @@ import MPENetworks from "singularitynet-platform-contracts/networks/MultiPartyEs
 
 import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import { useSelector } from "react-redux";
 
-const AdvancedFields = () => {
+const AdvancedFields = ({ freeCallSignerAddress }) => {
   const classes = useStyles();
-  const freeCallSignerAddress = useSelector(state => state.aiServiceDetails.freeCallSignerAddress);
   return (
     <div className={classes.advFilesContainer}>
       <Typography variant="subtitle1">Advanced Fields</Typography>
@@ -22,7 +20,7 @@ const AdvancedFields = () => {
         label="MPE Address"
         description={
           <p>
-            The ethereum address of the MultiParty Escrow contract on the Ethereum mainnet. Details{" "}
+            The ethereum address of the MultiParty Escrow contract on the Ethereum mainnet. Details &nbsp;
             <a href="https://dev.singularitynet.io/docs/ai-developers/mpe/" rel="noopener noreferrer" target="_blank">
               here
             </a>
