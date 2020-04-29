@@ -30,15 +30,15 @@ var ProgressBar = function ProgressBar(_ref) {
       onSectionClick = _ref.onSectionClick;
 
   var computeProgressStatus = function computeProgressStatus(progressNumber, activeSection) {
-    if (progressNumber < activeSection) {
+    if (progressNumber < Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.COMPLETED;
     }
 
-    if (progressNumber === activeSection) {
+    if (progressNumber === Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.ACTIVE;
     }
 
-    if (progressNumber > activeSection) {
+    if (progressNumber > Number(activeSection)) {
       return _ProgressSection.ProgressStatusList.IDLE;
     }
   };

@@ -81,7 +81,8 @@ SNETStatusBanner.propTypes = {
   title: _propTypes.default.string.isRequired,
   img: _propTypes.default.string.isRequired,
   description: _propTypes.default.string.isRequired,
-  actions: _propTypes.default.array.isRequired
+  actions: _propTypes.default.array,
+  type: _propTypes.default.oneOf([statusTitleType.PENDING, statusTitleType.REJECTED])
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(SNETStatusBanner);

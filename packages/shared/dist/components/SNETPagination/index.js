@@ -19,6 +19,8 @@ var _OutlinedInput = _interopRequireDefault(require("@material-ui/core/OutlinedI
 
 var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _styles = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -96,5 +98,17 @@ var SNETPagination = function SNETPagination(_ref) {
   }))), /*#__PURE__*/_react.default.createElement("span", null, from, "-", to, " of ", totalCount)));
 };
 
+SNETPagination.propTypes = {
+  limit: _propTypes.default.number.isRequired,
+  offset: _propTypes.default.number.isRequired,
+  totalCount: _propTypes.default.number.isRequired,
+  itemsPerPageOptions: _propTypes.default.arrayOf(_propTypes.default.shape({
+    value: _propTypes.default.number,
+    label: _propTypes.default.string
+  })).isRequired,
+  itemsPerPage: _propTypes.default.number.isRequired,
+  onItemsPerPageChange: _propTypes.default.func.isRequired,
+  onPageChange: _propTypes.default.func.isRequired
+};
 var _default = SNETPagination;
 exports.default = _default;

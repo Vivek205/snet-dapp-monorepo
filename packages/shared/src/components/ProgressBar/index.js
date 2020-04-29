@@ -7,13 +7,13 @@ import { useStyles } from "./styles";
 
 const ProgressBar = ({ classes, activeSection, progressText, onSectionClick }) => {
   const computeProgressStatus = (progressNumber, activeSection) => {
-    if (progressNumber < activeSection) {
+    if (progressNumber < Number(activeSection)) {
       return ProgressStatusList.COMPLETED;
     }
-    if (progressNumber === activeSection) {
+    if (progressNumber === Number(activeSection)) {
       return ProgressStatusList.ACTIVE;
     }
-    if (progressNumber > activeSection) {
+    if (progressNumber > Number(activeSection)) {
       return ProgressStatusList.IDLE;
     }
   };

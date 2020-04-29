@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
-import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
+import { aiServiceDetailsActions, loaderActions, organizationActions } from "../../../Services/Redux/actionCreators";
 import SNETButton from "shared/dist/components/SNETButton";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
@@ -19,6 +19,7 @@ import { ConfigurationServiceRequest } from "../../../Utils/Daemon/Configuration
 import ValidateConfig from "./ValidateConfig";
 import ValidationError from "shared/dist/utils/validationError";
 import isEmpty from "lodash/isEmpty";
+import { LoaderContent } from "../../../Utils/Loader";
 
 class SubmitForReview extends React.Component {
   state = { daemonConfig: {}, alert: {}, validateDaemonAlert: {}, testEndpointAlert: {} };
@@ -122,7 +123,17 @@ class SubmitForReview extends React.Component {
   handleSubmitForReview = async () => {
     try {
       this.setState({ alert: {} });
-      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+      const {
+        submitServiceDetailsForReview,
+        orgUuid,
+        serviceDetails,
+        getLatestOrgDetails,
+        getLatestOrgLoader,
+      } = this.props;
+      getLatestOrgLoader();
+      const orgList = await getLatestOrgDetails();
+      const selectedOrg = orgList[0];
+      const orgStatus = selectedOrg.state.state;
       if (this.state.validateDaemonAlert.type !== alertTypes.SUCCESS) {
         throw new ValidationError("Please validate the daemon endpoint before submitting for review");
       }
@@ -142,6 +153,7 @@ class SubmitForReview extends React.Component {
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
+      this.props.stopAppLoader();
       if (checkIfKnownError(e)) {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
       }
@@ -237,6 +249,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
+  getLatestOrgLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),
+  getLatestOrgDetails: () => dispatch(organizationActions.getStatus),
+  stopAppLoader: () => dispatch(loaderActions.stopAppLoader()),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SubmitForReview));
