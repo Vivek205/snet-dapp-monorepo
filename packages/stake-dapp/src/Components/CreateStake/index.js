@@ -9,6 +9,7 @@ import { useStyles } from "./styles";
 import SessionTime from "./SessionTime";
 import AccountBalance from "../AccountBalance";
 import StakeSession from "../StakeSession";
+import StakeSummary from "../StakeSummary";
 import {
   cardDetails,
   btnDetails,
@@ -87,6 +88,7 @@ const CreateStake = () => {
           handleClick={handleClick}
           stakeDetails={activeStake}
         />
+        <StakeSummary />
       </Grid>
       <WithdrawStake
         open={showWithdrawPopup}

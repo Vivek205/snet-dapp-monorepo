@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import SNETImageUpload from "shared/dist/components/SNETImageUpload";
 import DummyCardImg from "shared/dist/assets/images/dummy-card.png";
@@ -33,26 +35,20 @@ import { generateDetailedErrorMessageFromValidation } from "../../../Utils/valid
 let validateTimeout = "";
 
 const selectState = state => ({
-  serviceDetails: state.aiServiceDetails,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
 
-const Profile = ({ classes }) => {
+const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const { serviceDetails, isValidateServiceIdLoading } = useSelector(selectState);
+  const { isValidateServiceIdLoading } = useSelector(selectState);
 
   const [tags, setTags] = useState(""); // Only to render in the chip comp
 
   const [alert, setAlert] = useState({});
 
   const [websiteValidation, setWebsiteValidation] = useState({});
-
-  const setServiceTouchedFlag = () => {
-    // TODO - See if we can manage from local state (useState()) instead of redux state
-    dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
-  };
 
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
@@ -76,7 +72,7 @@ const Profile = ({ classes }) => {
   };
 
   const handleWebsiteValidation = value => {
-    const isNotValid = validator.single(value, serviceProfileValidationConstraints.website);
+    const isNotValid = validator.single(value, serviceProfileValidationConstraints.projectURL);
     if (isNotValid) {
       return setWebsiteValidation({
         type: alertTypes.ERROR,
@@ -88,15 +84,14 @@ const Profile = ({ classes }) => {
 
   const handleControlChange = event => {
     const { name, value } = event.target;
-    setServiceTouchedFlag();
     if (name === "id") {
       debouncedValidate(value);
-      return dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("newId", value));
+      return changeServiceDetailsLeaf("newId", value);
     }
     if (name === "projectURL") {
       handleWebsiteValidation(value);
     }
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value));
+    changeServiceDetailsLeaf(name, value);
   };
 
   const handleSave = async () => {
@@ -104,7 +99,7 @@ const Profile = ({ classes }) => {
       throw new ValidationError("Service id is not available. Try with a different service id");
     }
     if (serviceDetails.touched) {
-      // Call API to save
+      setServiceDetailsInRedux(serviceDetails);
       await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceDetails.uuid, serviceDetails));
     }
 
@@ -147,36 +142,35 @@ const Profile = ({ classes }) => {
 
     tagsEntered.forEach(tag => {
       tag = tag.replace(/\s/g, "");
+      if (!tag) {
+        return;
+      }
       const index = localItems.findIndex(el => el === tag);
       if (index === -1) {
         localItems.push(tag);
       }
+      setTags("");
     });
-
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
 
   const handleDeleteTag = tag => {
     const localItems = serviceDetails.tags;
     const index = localItems.findIndex(el => el === tag);
     localItems.splice(index, 1);
-
-    // Set State
-    dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf("tags", [...localItems]));
-    setServiceTouchedFlag();
+    changeServiceDetailsLeaf("tags", localItems);
   };
+
   const handleResetImage = () => {
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(""));
+    changeHeroImage("");
   };
   const handleImageChange = async (data, mimeType, _encoding, filename) => {
     const arrayBuffer = base64ToArrayBuffer(data);
     const fileBlob = new File([arrayBuffer], filename, { type: mimeType });
-    setServiceTouchedFlag();
     const { url } = await dispatch(
       aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_ASSETS, fileBlob, orgUuid, serviceDetails.uuid)
     );
-    dispatch(aiServiceDetailsActions.setServiceHeroImageUrl(url));
+    changeHeroImage(url);
   };
 
   const handleFinishLater = async () => {
@@ -266,6 +260,13 @@ const Profile = ({ classes }) => {
             value={tags}
             onKeyUp={handleAddTags}
             onChange={e => setTags(e.target.value.toLowerCase())}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleKeyEnterInTags}>+</IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <div className={classes.addedTagsContainer}>
             <div>

@@ -30,7 +30,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>When you are logged into your <a href="/${Routes.SIGNUP}">SingularityNET account</a> and <a href="https://metamask.io/" target="_blank">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be avaliable for you to “Reclaim” (or be refunded) back to you.</p>`,
+        value: `<p>When you are logged into your <a href="/${Routes.SIGNUP}">SingularityNET account</a> and <a href="https://metamask.io/" target="_blank">Metamask </a>, you can begin the request process.  You will need provide some general information such as request title, detailed descriptions, and define the acceptance criteria.   As the request creator, you will be the first user to “back” (or fund) the request with AGI tokens.  Your tokens along with other backers will be distributed to developers with the valid and most voted solutions.  If no developers submit solutions for your request, then your AGI tokens will be available for you to “Reclaim” (or be refunded) back to you.</p>`,
       },
       {
         type: "listHeading",
@@ -60,7 +60,7 @@ export const GetStartedCategoriesData = [
     content: [
       {
         type: "description",
-        value: `<p>There are two ways to “back” or fund a request.  You can create a request and be the first “backer” for that request.  Or you can “back” any of the avaliable requests on the <a href="/${Routes.RFAI_LANDING}">View Requests </a>page. </p><p>After you have backed one or multiple requests, you will be given the ability to vote on any submitted solution during the Solution Vote period.  Only “backers” of a request can vote.   Your vote will determine who will get your share of the AGI tokens that you funded.  If you vote for one solution, then the developer for that solution will get your alloted backed AGI tokens.  If you vote for more than one solution for single request, then your alloted backed AGI tokens will be split amongst solutions you voted for evenly. </p><p>The higher the pool of AGI tokens for a request, the more likely developer will submit solutions.  Remember to vote!.</p>`,
+        value: `<p>There are two ways to “back” or fund a request.  You can create a request and be the first “backer” for that request.  Or you can “back” any of the available requests on the <a href="/${Routes.RFAI_LANDING}">View Requests </a>page. </p><p>After you have backed one or multiple requests, you will be given the ability to vote on any submitted solution during the Solution Vote period.  Only “backers” of a request can vote.   Your vote will determine who will get your share of the AGI tokens that you funded.  If you vote for one solution, then the developer for that solution will get your alloted backed AGI tokens.  If you vote for more than one solution for single request, then your alloted backed AGI tokens will be split amongst solutions you voted for evenly. </p><p>The higher the pool of AGI tokens for a request, the more likely developer will submit solutions.  Remember to vote!.</p>`,
       },
     ],
   },

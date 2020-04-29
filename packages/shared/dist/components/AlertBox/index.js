@@ -42,6 +42,7 @@ var AlertBox = function AlertBox(_ref) {
       message = _ref.message,
       type = _ref.type,
       link = _ref.link,
+      linkTo = _ref.linkTo,
       children = _ref.children,
       icon = _ref.icon,
       header = _ref.header;
@@ -62,7 +63,8 @@ var AlertBox = function AlertBox(_ref) {
     }, /*#__PURE__*/_react.default.createElement(_AlertHeader.default, {
       header: header
     }), /*#__PURE__*/_react.default.createElement("p", null, message, " ", /*#__PURE__*/_react.default.createElement(_AlertLink.default, {
-      link: link
+      link: link,
+      linkTo: linkTo
     }))));
   }
 
@@ -74,7 +76,8 @@ AlertBox.propTypes = {
   message: _propTypes.default.string
 };
 AlertBox.defaultProps = {
-  type: "error"
+  type: "error",
+  message: undefined
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(AlertBox);

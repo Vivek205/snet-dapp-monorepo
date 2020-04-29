@@ -4,18 +4,19 @@ import { useHistory, useParams } from "react-router-dom";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import validator from "shared/dist/utils/validator";
 import { servicePricingValidationConstraints } from "../validationConstraints";
 import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-const Actions = () => {
+
+const Actions = ({ serviceDetails, setServiceDetailsInRedux }) => {
   const classes = useStyles();
   const history = useHistory();
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
   const { orgUuid, serviceUuid } = useParams();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState({});
@@ -25,12 +26,19 @@ const Actions = () => {
   };
 
   const handleSave = async () => {
+    setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
   };
 
   const handleContinue = async () => {
-    const isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
+    let isNotValid = [];
+    isNotValid = validator(serviceDetails, servicePricingValidationConstraints);
 
+    if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1)) {
+      isNotValid
+        ? isNotValid.push(`Price of the service should be greater than or equal to ${cogsToAgi(1)}`)
+        : (isNotValid = [`Price of the service should be greater than or equal to ${cogsToAgi(1)}`]);
+    }
     if (isNotValid) {
       for (let i = 0; i < isNotValid.length; i++) {
         if (isNotValid[i].includes(",")) {

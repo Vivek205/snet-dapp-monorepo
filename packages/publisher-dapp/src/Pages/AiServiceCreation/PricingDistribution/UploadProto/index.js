@@ -1,31 +1,51 @@
-import React, { Fragment, useCallback, useState, useEffect } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import JSZip from "jszip";
+import last from "lodash/last";
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
+import ValidationError from "shared/dist/utils/validationError";
+import { checkIfKnownError } from "shared/dist/utils/error";
 
-const UploadProto = () => {
+const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
   const classes = useStyles();
   const [alert, setAlert] = useState({});
-  const serviceDetails = useSelector(state => state.aiServiceDetails);
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
   const { orgUuid, serviceUuid } = useParams();
 
   useEffect(() => {
-    if (!alert.message && Boolean(serviceDetails.assets.protoFiles.url)) {
+    if (!alert.message && Boolean(protoFilesUrl)) {
       setAlert({
         type: alertTypes.SUCCESS,
         message: "File have been uploaded. You can download your files on clicking the download button",
       });
     }
-  }, [serviceDetails.assets.protoFiles.url, alert.message]);
+  }, [alert.message, protoFilesUrl]);
+
+  const validateProtoFile = uploadedFile => {
+    const protoFilesExtn = "proto";
+    return new Promise((resolve, reject) => {
+      const zip = new JSZip();
+      zip.loadAsync(uploadedFile).then(entry => {
+        const someFileIsNotAProto = Object.values(entry.files).some(file => {
+          const fileExtn = last(file.name.split("."));
+          return fileExtn !== protoFilesExtn;
+        });
+        if (someFileIsNotAProto) {
+          reject(new ValidationError("The zip file should contain only proto files"));
+        }
+        resolve();
+      });
+    });
+  };
 
   const handleDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
@@ -36,21 +56,24 @@ const UploadProto = () => {
       if (!isEmpty(acceptedFiles)) {
         try {
           const fileBlob = acceptedFiles[0];
+          await validateProtoFile(fileBlob);
           const { name, size, type } = fileBlob;
           setSelectedFile({ name, size, type });
-
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PROTO_FILES, fileBlob, orgUuid, serviceUuid)
           );
-          dispatch(aiServiceDetailsActions.setServiceDetailsProtoUrl(url));
+          changeProtoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
+          if (checkIfKnownError(error)) {
+            return setAlert({ type: alertTypes.ERROR, message: error.message });
+          }
           setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
         }
       }
     },
-    [dispatch, orgUuid, serviceUuid]
+    [changeProtoFiles, dispatch, orgUuid, serviceUuid]
   );
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
@@ -60,14 +83,13 @@ const UploadProto = () => {
       <Typography variant="subtitle1">Upload the Proto files</Typography>
       <Typography className={classes.description}>
         Services define their API using protocol buffers. This allows SingularityNET clients to determine the
-        request/response schema programmatically. Read more
+        request/response schema programmatically. Read more &nbsp;
         <a
           href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
           rel="noopener noreferrer"
           target="_blank"
         >
-          {" "}
-          here{" "}
+          here
         </a>
       </Typography>
       <SNETFileUpload
@@ -77,8 +99,8 @@ const UploadProto = () => {
         showFileDetails
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
-        fileDownloadURL={serviceDetails.assets.protoFiles.url}
-        uploadSuccess={Boolean(serviceDetails.assets.protoFiles.url)}
+        fileDownloadURL={protoFilesUrl}
+        uploadSuccess={Boolean(protoFilesUrl)}
       />
       <AlertBox type={alert.type} message={alert.message} />
     </Fragment>

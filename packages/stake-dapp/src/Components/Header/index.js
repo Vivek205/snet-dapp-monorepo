@@ -5,6 +5,7 @@ import SNETHeader from "shared/dist/components/SNETHeader";
 import NavigationBar from "./NavigationBar";
 import LoggedInActions from "./LoggedInActions";
 import LoggedOutActions from "./LoggedOutActions";
+import { navbarItems, dropdowns } from "./NavigationBar/constant.js";
 
 const Header = () => {
   const { isLoggedIn } = useSelector(state => state.user);
@@ -17,6 +18,8 @@ const Header = () => {
       NavigationBar={NavigationBar}
       LoggedInActions={LoggedInActions}
       LoggedOutActions={LoggedOutActions}
+      mobileNavLinks={navbarItems}
+      mobileDropDown={dropdowns}
     />
   );
 };

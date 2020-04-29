@@ -17,11 +17,11 @@ export const defaultGroups = [
     endpoints: {},
     testEndpoints: [],
     daemonAddresses: [],
-    freeCallsAllowed: "",
+    freeCallsAllowed: 0,
   },
 ];
 
-const initialState = {
+export const initialAiServiceDetailsState = {
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
   },
@@ -69,7 +69,7 @@ const initialState = {
   foundInBlockchain: false,
 };
 
-const serviceDetailsReducer = (state = initialState, action) => {
+const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
   switch (action.type) {
     case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };

@@ -1,7 +1,7 @@
 import React from "react";
 import InfoIcon from "@material-ui/icons/Info";
 import Typography from "@material-ui/core/Typography";
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import { withStyles } from "@material-ui/core/styles";
 
 import { useStyles } from "./styles";

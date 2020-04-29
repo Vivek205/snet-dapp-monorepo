@@ -9,7 +9,6 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import SNETButton from "shared/dist/components/SNETButton";
-import DaemonConfig from "./DaemonConfig";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
 import { checkIfKnownError, GrpcError } from "shared/dist/utils/error";
@@ -17,13 +16,12 @@ import validator from "shared/dist/utils/validator";
 import { submitServiceConstraints } from "./validationConstraints";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 import { ConfigurationServiceRequest } from "../../../Utils/Daemon/ConfigurationService";
+import ValidateConfig from "./ValidateConfig";
+import ValidationError from "shared/dist/utils/validationError";
+import isEmpty from "lodash/isEmpty";
 
 class SubmitForReview extends React.Component {
-  state = {
-    daemonConfig: {},
-    charCount: 0,
-    alert: {},
-  };
+  state = { daemonConfig: {}, alert: {}, validateDaemonAlert: {}, testEndpointAlert: {} };
 
   fetchSampleDaemonConfig = async () => {
     try {
@@ -51,95 +49,155 @@ class SubmitForReview extends React.Component {
   };
 
   handleCommentChange = event => {
-    this.props.setServiceProviderComment(event.target.value);
+    this.props.changeServiceProviderComments(event.target.value);
   };
 
-  handleSubmitForReview = async () => {
+  validateDaemonEndpoint = async () => {
+    const { orgId, serviceId } = this.props;
+    const configValidation = {
+      allowed_user_flag: "true",
+      blockchain_enabled: "false",
+      passthrough_enabled: "true",
+      organization_id: String(orgId),
+      service_id: String(serviceId),
+    };
+    const invalidConfig = [];
     const { serviceDetails } = this.props;
     const testEndPoint = serviceDetails.groups[0].testEndpoints;
+    if (isEmpty(testEndPoint)) {
+      return this.setState({
+        validateDaemonAlert: {
+          type: alertTypes.ERROR,
+          message: "The Ropsten endpoint can not be empty.",
+        },
+      });
+    }
     try {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
-      res.currentConfigurationMap.forEach(async element => {
-        if (element[0] === "blockchain_enabled") {
-          if (element[1] === "false") {
-            this.setState({ alert: {} });
-            const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
-            if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
-              if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
-                return this.setState({
-                  alert: {
-                    type: alertTypes.ERROR,
-                    message:
-                      "Organization is being published in blockchain. Service can be submitted only when organization is published",
-                  },
-                });
-              }
-              return this.setState({
-                alert: {
-                  type: alertTypes.ERROR,
-                  message:
-                    "Organization is not published. Please publish the organization before publishing the service",
-                },
-              });
-            }
-            if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
-              return this.setState({
-                alert: {
-                  type: alertTypes.ERROR,
-                  message: "No changes in draft. Please edit a field before submitting",
-                },
-              });
-            }
-
-            const isNotValid = validator(serviceDetails, submitServiceConstraints);
-            if (isNotValid) {
-              const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-              return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
-            }
-            await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
-          } else {
-            this.setState({
-              alert: {
-                type: alertTypes.ERROR,
-                message: `The Ropsten endpoint ${testEndPoint} does not have the configuration displayed above`,
-              },
-            });
+      res.currentConfigurationMap.forEach(element => {
+        if (element[0] in configValidation) {
+          if (element[1] !== configValidation[element[0]]) {
+            invalidConfig.push(`${element[0]} should be  ${configValidation[element[0]]}`);
           }
+        }
+
+        if (!isEmpty(invalidConfig)) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
+          this.setState({
+            validateDaemonAlert: {
+              type: alertTypes.ERROR,
+              children: errorMessage,
+            },
+          });
+        } else {
+          this.setState({
+            alert: {},
+            validateDaemonAlert: {
+              type: alertTypes.SUCCESS,
+              message:
+                "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
+            },
+          });
         }
       });
     } catch (error) {
       if (checkIfKnownError(error)) {
         if (error instanceof GrpcError) {
           return this.setState({
-            alert: {
+            validateDaemonAlert: {
               type: alertTypes.ERROR,
-              message: `The Ropsten end point ${testEndPoint}  is either down or Invalid `,
+              message: `The Ropsten endpoint ${testEndPoint}  is either down or Invalid `,
             },
           });
         }
-        return this.setState({ alert: { type: alertTypes.ERROR, message: error.message } });
+        return this.setState({ validateDaemonAlert: { type: alertTypes.ERROR, message: error.message } });
       }
-      return this.setState({ alert: { type: alertTypes.ERROR, message: `Something went wrong. Please try again` } });
+      return this.setState({
+        validateDaemonAlert: { type: alertTypes.ERROR, message: `Something went wrong. Please try again` },
+      });
     }
+  };
+
+  handleSubmitForReview = async () => {
+    try {
+      this.setState({ alert: {} });
+      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+      if (this.state.validateDaemonAlert.type !== alertTypes.SUCCESS) {
+        throw new ValidationError("Please validate the daemon endpoint before submitting for review");
+      }
+      if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+        if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+          throw new ValidationError("Organization is being published in blockchain. Service cannot be published now");
+        }
+        throw new ValidationError("Organization must be published before publishing the service");
+      }
+      if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
+        throw new ValidationError("No changes in draft. Please edit a field before submitting");
+      }
+      const isNotValid = validator(serviceDetails, submitServiceConstraints);
+      if (isNotValid) {
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return this.setState({ alert: { type: alertTypes.ERROR, children: errorMessage } });
+      }
+      await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
+    } catch (e) {
+      if (checkIfKnownError(e)) {
+        return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
+      }
+      return this.setState({
+        alert: { type: alertTypes.ERROR, message: "Unable to publish service. Please try again later" },
+      });
+    }
+  };
+
+  handleTestEndpointValidation = value => {
+    this.setState({
+      validateDaemonAlert: {
+        type: alertTypes.ERROR,
+        children: "",
+      },
+    });
+    const errorMessage = validator.single(value, submitServiceConstraints.groups.array.testEndpoints);
+    return this.setState({
+      testEndpointAlert: {
+        type: alertTypes.ERROR,
+        message: errorMessage,
+      },
+    });
+  };
+
+  handleTestEndpointsChange = event => {
+    const { changeGroups, serviceDetails } = this.props;
+    const newEndpoints = [event.target.value];
+    this.handleTestEndpointValidation(newEndpoints);
+    const updatedServiceGroups = [...serviceDetails.groups];
+    updatedServiceGroups[0] = { ...serviceDetails.groups[0], testEndpoints: newEndpoints };
+    changeGroups(updatedServiceGroups);
   };
 
   render() {
     const { classes, serviceDetails } = this.props;
-    const { daemonConfig, alert } = this.state;
+    const { daemonConfig, alert, validateDaemonAlert, testEndpointAlert } = this.state;
     const charCount = serviceDetails.comments.SERVICE_PROVIDER.length;
+    const testEndPoint = serviceDetails.groups[0].testEndpoints[0];
+
     return (
       <Grid container className={classes.submitContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
           <Typography variant="h6">Review Process</Typography>
           <div className={classes.wrapper}>
             <Typography className={classes.submitDescription}>
-              Once you have submitted your service, SingularityNET will review your service protocols. You will be
-              notified once the review has been completed, please be patient as this process could take a few days.
+              SingularityNET will review your service protocols. You will be notified once the review has been
+              completed, please be patient as this process could take a few days.
             </Typography>
-            <DaemonConfig
-              config={daemonConfig}
-              footerNote="Please use the above configuration values in your daemon configuration and restart your daemon. This will allow your AI service to be tested by the curation team of the SingularityNet foundation. This is essential for approving your service."
+            <ValidateConfig
+              daemonConfig={daemonConfig}
+              handleValidateConfig={this.validateDaemonEndpoint}
+              testEndPoint={testEndPoint}
+              handleTestEndpointsChange={this.handleTestEndpointsChange}
+              alert={validateDaemonAlert}
+              testEndpointAlert={testEndpointAlert}
             />
             <div className={classes.commentField}>
               <SNETTextarea
@@ -159,6 +217,7 @@ class SubmitForReview extends React.Component {
                 color="primary"
                 variant="contained"
                 onClick={this.handleSubmitForReview}
+                disabled={validateDaemonAlert.type !== alertTypes.SUCCESS}
               />
             </div>
           </div>
@@ -169,7 +228,6 @@ class SubmitForReview extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  serviceDetails: state.aiServiceDetails,
   orgUuid: state.organization.uuid,
   orgStatus: state.organization.state.state,
 });
@@ -177,7 +235,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getSampleDaemonConfig: (orgUuid, serviceUuid, testDaemon) =>
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
-  setServiceProviderComment: comment => dispatch(aiServiceDetailsActions.setServiceProviderComment(comment)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });

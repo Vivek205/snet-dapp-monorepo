@@ -20,6 +20,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const handleContinue = () => {
     const isNotValid = validator(organization, orgSetupRegionValidationConstraints);
     if (isNotValid) {
+      for (let i = 0; i < isNotValid.length; i++) {
+        if (isNotValid[i].includes(",")) {
+          let res = isNotValid[i].split(",");
+          isNotValid.splice(i, 1);
+          isNotValid.push(...res);
+        }
+      }
       const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
       return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
@@ -37,6 +44,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
         <Typography variant="subtitle2">
           Every AI service your company publishes can be optimized for users based in various regions and groups. Groups
           provide a mechanism of having multiple instances of a service in a geographically distributed manner. Details
+          &nbsp;
           <a
             href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
             rel="noopener noreferrer"

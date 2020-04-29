@@ -6,8 +6,10 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
+import JSZip from "jszip";
+import ValidationError from "shared/dist/utils/validationError";
 
-const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
+const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles }) => {
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
@@ -21,22 +23,38 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl }) => {
       if (!isEmpty(acceptedFiles)) {
         try {
           const fileBlob = acceptedFiles[0];
+          await validateIndexFile(fileBlob);
           const { name, size, type } = fileBlob;
           setSelectedFile({ name, size, type });
 
           const { url } = await dispatch(
             aiServiceDetailsActions.uploadFile(assetTypes.SERVICE_PAGE_COMPONENTS, fileBlob, orgUuid, serviceUuid)
           );
-          dispatch(aiServiceDetailsActions.setServiceDemoFilesUrl(url));
+          changeDemoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
         } catch (error) {
-          setAlert({ type: alertTypes.ERROR, message: "Unable to upload file" });
+          setAlert({ type: alertTypes.ERROR, message: "Unable to upload due to missing index.js file" });
         }
       }
     },
-    [dispatch, orgUuid, serviceUuid]
+    [changeDemoFiles, dispatch, orgUuid, serviceUuid]
   );
+  const validateIndexFile = uploadedFile => {
+    const fileToBePresent = "index.js";
+    return new Promise((resolve, reject) => {
+      const zip = new JSZip();
+      zip.loadAsync(uploadedFile).then(entry => {
+        const indexFileFound = Object.values(entry.files).some(file => {
+          return file.name === fileToBePresent;
+        });
+        if (!indexFileFound) {
+          reject(new ValidationError("The zip file should contain index.js file"));
+        }
+        resolve();
+      });
+    });
+  };
 
   const acceptedFileTypes = ["application/zip", "application/x-zip-compressed"];
 

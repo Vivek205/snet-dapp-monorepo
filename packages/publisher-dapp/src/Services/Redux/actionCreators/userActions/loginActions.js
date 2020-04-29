@@ -6,7 +6,6 @@ import { getCurrentUTCEpoch } from "shared/dist/utils/Date";
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_NICKNAME = "SET_USER_NICKNAME";
-export const SET_USER_EMAIL_VERIFIED = "SET_USER_EMAIL_VERIFIED";
 export const SET_APP_INITIALIZED = "SET_APP_INITIALIZED";
 export const SIGNOUT = "SIGNOUT";
 export const SET_JWT_EXP = "SET_JWT_EXP";
@@ -18,8 +17,6 @@ const setUserLoggedIn = isLoggedin => ({ type: SET_USER_LOGGED_IN, payload: isLo
 export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
 
 export const setUserNickname = nickname => ({ type: SET_USER_NICKNAME, payload: nickname });
-
-const setUserEmailVerified = isEmailVerified => ({ type: SET_USER_EMAIL_VERIFIED, payload: isEmailVerified });
 
 const setAppInitialized = isInitialized => ({ type: SET_APP_INITIALIZED, payload: isInitialized });
 
@@ -45,23 +42,31 @@ export const fetchAuthenticatedUser = () => async (dispatch, getState) => {
   const publisherTnC = currentUser.attributes["custom:publisher_tnc"]
     ? JSON.parse(currentUser.attributes["custom:publisher_tnc"])
     : {};
+
   return {
     nickname: currentUser.attributes.nickname,
     email: currentUser.attributes.email,
     email_verified: currentUser.attributes.email_verified,
     token: currentUser.signInUserSession.idToken.jwtToken,
-    publisherTnC: { ...publisherTnC },
+    publisherTnC,
   };
 };
+
 export const initializeApplication = async dispatch => {
   try {
-    const { nickname, email, email_verified } = await dispatch(fetchAuthenticatedUser());
+    const { nickname, email, email_verified, publisherTnC } = await dispatch(fetchAuthenticatedUser());
     await dispatch(organizationActions.initializeOrg);
-    dispatch(setUserLoggedIn(true));
-    dispatch(setUserEmail(email));
-    dispatch(setUserNickname(nickname));
-    dispatch(setUserEmailVerified(email_verified));
-    dispatch(setAppInitialized(true));
+
+    const userAttributes = {
+      isLoggedIn: true,
+      email,
+      nickname,
+      isEmailVerified: email_verified,
+      isInitialized: true,
+      publisherTnC,
+    };
+
+    dispatch(setUserAttributes(userAttributes));
   } catch (error) {
     dispatch(setAppInitialized(true));
   }

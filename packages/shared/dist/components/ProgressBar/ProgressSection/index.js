@@ -34,11 +34,18 @@ var ProgressSection = function ProgressSection(_ref) {
       progressStatus = _ref.progressStatus,
       onSectionClick = _ref.onSectionClick;
   var classes = (0, _styles.useStyles)();
+
+  var handleSectionClick = function handleSectionClick() {
+    if (!onSectionClick) {
+      return;
+    }
+
+    onSectionClick(progressNumber, progressText, progressStatus);
+  };
+
   return /*#__PURE__*/_react.default.createElement("li", {
     className: "".concat(classes[progressStatus], " ").concat(onSectionClick ? classes.clickableSection : ""),
-    onClick: function onClick() {
-      return onSectionClick(progressNumber, progressText, progressStatus);
-    }
+    onClick: handleSectionClick
   }, /*#__PURE__*/_react.default.createElement(_react.Fragment, null, /*#__PURE__*/_react.default.createElement(_StatusToggler.default, {
     progressStatus: progressStatus,
     progressNumber: progressNumber

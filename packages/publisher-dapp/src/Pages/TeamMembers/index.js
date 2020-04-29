@@ -132,7 +132,7 @@ class TeamMembers extends Component {
     const { showPopup, textareaValue } = this.state;
     return (
       <Grid container className={classes.teammembersContainer}>
-        <Grid item xs={12} sm={12} md={2} lg={2}>
+        <Grid item xs={12} sm={12} md={2} lg={2} className={classes.backToHomeLinkContainer}>
           <div className={classes.backToHomeLink} onClick={this.handleBackToHome}>
             <BackIcon />
             <span>Back to Home </span>

@@ -22,7 +22,7 @@ const backgroundColor = {
   info: alertTypes.INFO,
 };
 
-const AlertBox = ({ classes, message, type, link, children, icon, header }) => {
+const AlertBox = ({ classes, message, type, link, linkTo, children, icon, header }) => {
   if (children) {
     return <div className={clsx(classes.messageBox, classes[backgroundColor[type]])}>{children}</div>;
   }
@@ -34,7 +34,7 @@ const AlertBox = ({ classes, message, type, link, children, icon, header }) => {
         <div className={classes.content}>
           <AlertHeader header={header} />
           <p>
-            {message} <AlertLink link={link} />
+            {message} <AlertLink link={link} linkTo={linkTo} />
           </p>
         </div>
       </div>
@@ -51,6 +51,7 @@ AlertBox.propTypes = {
 
 AlertBox.defaultProps = {
   type: "error",
+  message: undefined,
 };
 
 export default withStyles(useStyles)(AlertBox);
