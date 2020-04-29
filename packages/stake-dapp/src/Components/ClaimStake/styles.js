@@ -52,9 +52,7 @@ export const useStyles = makeStyles(MUITheme => ({
   infoBox: {
     padding: "0 30px",
     margin: "32px 0 15px",
-    "& > div": { display: "flex" },
-    "& > p": {
-      margin: 0,
+    "& > div": {
       display: "flex",
       "& svg": {
         marginRight: 17,
