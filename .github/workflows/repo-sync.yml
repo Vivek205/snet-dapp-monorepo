@@ -16,7 +16,6 @@ jobs:
         source_branch: "development"
         destination_branch: "development"
         github_token: ${{ secrets.GITHUB_TOKEN }}
-:
      
   repo-sync-publisher:
     runs-on: ubuntu-latest
