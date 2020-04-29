@@ -20,7 +20,7 @@ const ValidateConfig = props => {
     testEndpointAlert,
   } = props;
   const shouldValidateDaemonEnabled = () => {
-    const error = validator.single(testEndPoint, submitServiceConstraints.testEndpoints);
+    const error = validator.single(testEndPoint, submitServiceConstraints.groups.array.testEndpoints);
     return Boolean(error);
   };
 
@@ -35,9 +35,9 @@ const ValidateConfig = props => {
       </Typography>
       <SNETTextfield
         name="id"
-        label="Public Daemon Endpoint"
-        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service."
-        value={testEndPoint}
+        label="Public curation Endpoint"
+        description="The public curation endpoint that will be used for non-blockchain mode reviewing of service. This end point needs to be https"
+        value={testEndPoint || ""}
         onChange={handleTestEndpointsChange}
       />
       <AlertBox

@@ -142,6 +142,9 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
 
     tagsEntered.forEach(tag => {
       tag = tag.replace(/\s/g, "");
+      if (!tag) {
+        return;
+      }
       const index = localItems.findIndex(el => el === tag);
       if (index === -1) {
         localItems.push(tag);

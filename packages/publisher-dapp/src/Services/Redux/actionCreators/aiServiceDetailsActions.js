@@ -167,6 +167,14 @@ export const generateGroupsPayload = (groups, freeCallSignerAddress) =>
 
 // TODO remove orgId. MPS has to figure out orgId from orgUuid
 const generateSaveServicePayload = serviceDetails => {
+  const parseContributors = () => {
+    return serviceDetails.contributors
+      .split(",")
+      .map(el => el.trim())
+      .filter((el, index, data) => data.indexOf(el) === index && !isEmpty(el))
+      .map(c => ({ name: c, email_id: "" }));
+  };
+
   const payloadForSubmit = {
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
@@ -188,7 +196,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
+    contributors: parseContributors(),
     groups: generateGroupsPayload(serviceDetails.groups, serviceDetails.freeCallSignerAddress),
     tags: serviceDetails.tags,
     price: serviceDetails.price,

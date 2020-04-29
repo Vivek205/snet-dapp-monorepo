@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import SNETTextarea from "shared/dist/components/SNETTextarea";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { useStyles } from "./styles";
-import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
+import { aiServiceDetailsActions, loaderActions, organizationActions } from "../../../Services/Redux/actionCreators";
 import SNETButton from "shared/dist/components/SNETButton";
 import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
 import { serviceCreationStatus } from "../constant";
@@ -19,6 +19,7 @@ import { ConfigurationServiceRequest } from "../../../Utils/Daemon/Configuration
 import ValidateConfig from "./ValidateConfig";
 import ValidationError from "shared/dist/utils/validationError";
 import isEmpty from "lodash/isEmpty";
+import { LoaderContent } from "../../../Utils/Loader";
 
 class SubmitForReview extends React.Component {
   state = { daemonConfig: {}, alert: {}, validateDaemonAlert: {}, testEndpointAlert: {} };
@@ -53,6 +54,15 @@ class SubmitForReview extends React.Component {
   };
 
   validateDaemonEndpoint = async () => {
+    const { orgId, serviceId } = this.props;
+    const configValidation = {
+      allowed_user_flag: "true",
+      blockchain_enabled: "false",
+      passthrough_enabled: "true",
+      organization_id: String(orgId),
+      service_id: String(serviceId),
+    };
+    const invalidConfig = [];
     const { serviceDetails } = this.props;
     const testEndPoint = serviceDetails.groups[0].testEndpoints;
     if (isEmpty(testEndPoint)) {
@@ -67,24 +77,29 @@ class SubmitForReview extends React.Component {
       const configurationServiceRequest = new ConfigurationServiceRequest(testEndPoint);
       const res = await configurationServiceRequest.getConfiguration();
       res.currentConfigurationMap.forEach(element => {
-        if (element[0] === "blockchain_enabled") {
-          if (element[1] === "false") {
-            this.setState({ alert: {} });
-            this.setState({
-              validateDaemonAlert: {
-                type: alertTypes.SUCCESS,
-                message:
-                  "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
-              },
-            });
-          } else {
-            this.setState({
-              validateDaemonAlert: {
-                type: alertTypes.ERROR,
-                message: `The Ropsten endpoint ${testEndPoint} does not have the configuration displayed above`,
-              },
-            });
+        if (element[0] in configValidation) {
+          if (element[1] !== configValidation[element[0]]) {
+            invalidConfig.push(`${element[0]} should be  ${configValidation[element[0]]}`);
           }
+        }
+
+        if (!isEmpty(invalidConfig)) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(invalidConfig);
+          this.setState({
+            validateDaemonAlert: {
+              type: alertTypes.ERROR,
+              children: errorMessage,
+            },
+          });
+        } else {
+          this.setState({
+            alert: {},
+            validateDaemonAlert: {
+              type: alertTypes.SUCCESS,
+              message:
+                "Endpoint connection to test configuration file successfully validated You are ready to submit for review",
+            },
+          });
         }
       });
     } catch (error) {
@@ -108,7 +123,17 @@ class SubmitForReview extends React.Component {
   handleSubmitForReview = async () => {
     try {
       this.setState({ alert: {} });
-      const { submitServiceDetailsForReview, orgUuid, orgStatus, serviceDetails } = this.props;
+      const {
+        submitServiceDetailsForReview,
+        orgUuid,
+        serviceDetails,
+        getLatestOrgDetails,
+        getLatestOrgLoader,
+      } = this.props;
+      getLatestOrgLoader();
+      const orgList = await getLatestOrgDetails();
+      const selectedOrg = orgList[0];
+      const orgStatus = selectedOrg.state.state;
       if (this.state.validateDaemonAlert.type !== alertTypes.SUCCESS) {
         throw new ValidationError("Please validate the daemon endpoint before submitting for review");
       }
@@ -128,6 +153,7 @@ class SubmitForReview extends React.Component {
       }
       await submitServiceDetailsForReview(orgUuid, serviceDetails.uuid, serviceDetails);
     } catch (e) {
+      this.props.stopAppLoader();
       if (checkIfKnownError(e)) {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
       }
@@ -138,7 +164,13 @@ class SubmitForReview extends React.Component {
   };
 
   handleTestEndpointValidation = value => {
-    const errorMessage = validator.single(value, submitServiceConstraints.testEndpoints);
+    this.setState({
+      validateDaemonAlert: {
+        type: alertTypes.ERROR,
+        children: "",
+      },
+    });
+    const errorMessage = validator.single(value, submitServiceConstraints.groups.array.testEndpoints);
     return this.setState({
       testEndpointAlert: {
         type: alertTypes.ERROR,
@@ -217,6 +249,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
+  getLatestOrgLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),
+  getLatestOrgDetails: () => dispatch(organizationActions.getStatus),
+  stopAppLoader: () => dispatch(loaderActions.stopAppLoader()),
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SubmitForReview));
