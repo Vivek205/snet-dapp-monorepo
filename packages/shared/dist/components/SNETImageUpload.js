@@ -541,7 +541,7 @@ var SNETImageUpload = /*#__PURE__*/function (_React$Component) {
         },
         style: {
           borderWidth: 1,
-          borderColor: "".concat(this.props.error ? 'red' : "#d6d6d6"),
+          borderColor: "#d6d6d6",
           borderStyle: "dashed",
           borderRadius: 4,
           cursor: "pointer",
@@ -1476,7 +1476,6 @@ SNETImageUpload.propTypes = {
   disableOutputTab: _propTypes.default.bool,
   disableComparisonTab: _propTypes.default.bool,
   disableDownloadButton: _propTypes.default.bool,
-  error: _propTypes.default.bool,
   overlayInputImage: _propTypes.default.bool,
   inputTabTitle: _propTypes.default.string,
   outputTabTitle: _propTypes.default.string,
