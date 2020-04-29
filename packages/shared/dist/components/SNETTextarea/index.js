@@ -30,7 +30,8 @@ var SNETTextarea = function SNETTextarea(_ref) {
       maxCount = _ref.maxCount,
       showInfoIcon = _ref.showInfoIcon,
       extraInfo = _ref.extraInfo,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      error = _ref.error;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaIconContainer
   }, showInfoIcon ? /*#__PURE__*/_react.default.createElement("div", {
@@ -45,7 +46,8 @@ var SNETTextarea = function SNETTextarea(_ref) {
     name: name,
     value: value,
     onChange: onChange,
-    disabled: disabled
+    disabled: disabled,
+    className: error ? classes.error : ""
   }, content), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
   }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {

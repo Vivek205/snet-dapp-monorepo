@@ -5,10 +5,9 @@ export const useStyles = MUITheme => ({
     fontWeight: "normal",
   },
   configFooter: {
-    marginTop: 16,
-    border: "none !important",
+    margin: "15px 25px",
     color: MUITheme.palette.text.primary,
-
+    fontSize: 14,
     fontWeight: "normal",
   },
   configList: {
