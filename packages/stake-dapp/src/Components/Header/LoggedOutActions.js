@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,9 +13,9 @@ const LoggedOutActions = ({ classes }) => {
   return (
     <div className={classes.logOutActionContainer}>
       <div className={classes.faqLink}>
-        <Link to={GlobalRoutes.FAQ.path}>
+        <a href={GlobalRoutes.FAQ.path} alt="FAQ Help" target="_blank">
           FAQ Help <HelpOutlineIcon />
-        </Link>
+        </a>
       </div>
       <Typography onClick={() => history.push(GlobalRoutes.LOGIN.path)} className={classes.loginBtn}>
         Login{" "}
