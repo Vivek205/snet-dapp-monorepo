@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 // import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -21,9 +20,9 @@ const LoggedInActions = ({ classes }) => {
     <div className={classes.loggedInActionsContainer}>
       {/*<NotificationsIcon fontSize="large" className={classes.NotificationsIcon} /> */}
       <div className={classes.faqLink}>
-        <Link to={GlobalRoutes.FAQ.path}>
+        <a href={GlobalRoutes.FAQ.path} alt="FAQ Help" target="_blank">
           FAQ Help <HelpOutlineIcon />
-        </Link>
+        </a>
       </div>
       <AccountCircleIcon fontSize="large" onClick={handleProfileIconClick} className={classes.AccountCircleIcon} />
       <UserProfilePopUp show={showProfilePopup} handleClose={() => setShowProfilePopup(false)} />
