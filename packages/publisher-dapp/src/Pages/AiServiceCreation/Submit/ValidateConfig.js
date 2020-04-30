@@ -35,8 +35,8 @@ const ValidateConfig = props => {
       </Typography>
       <SNETTextfield
         name="id"
-        label="Public Daemon Endpoint"
-        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service."
+        label="Public curation Endpoint"
+        description="The public curation endpoint that will be used for non-blockchain mode reviewing of service. This end point needs to be https"
         value={testEndPoint}
         onChange={handleTestEndpointsChange}
       />
