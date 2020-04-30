@@ -101,7 +101,7 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   alertBoxContainer: {
-    padding: "32px 33px 0",
+    padding: "0 33px 0",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
@@ -158,6 +158,22 @@ export const useStyles = makeStyles(MUITheme => ({
     "&:hover": {
       "& svg": { color: MUITheme.palette.primary.main },
       "& p": { display: "block" },
+    },
+  },
+  infoBox: {
+    "& > div": {
+      margin: "25px 33px 0",
+      display: "flex",
+    },
+    "& svg": {
+      marginRight: 17,
+      color: MUITheme.palette.primary.main,
+      fontSize: 20,
+    },
+    "& p": {
+      color: MUITheme.palette.text.primary,
+      fontSize: 14,
+      lineHeight: "18px",
     },
   },
 }));
