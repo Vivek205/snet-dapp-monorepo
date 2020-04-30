@@ -71,6 +71,7 @@ var useStyles = function useStyles(MUITheme) {
     },
     errorField: {
       "& .MuiOutlinedInput-notchedOutline": {
+        borderWidth: 2,
         borderColor: MUITheme.palette.border.alertBox
       }
     }

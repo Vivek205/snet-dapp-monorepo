@@ -100,7 +100,7 @@ export const useStyles = makeStyles(MUITheme => ({
       "& p": { paddingLeft: 0 },
     },
   },
-  alertBoxConatiner: {
+  alertBoxContainer: {
     padding: "32px 33px 0",
     display: "flex",
     justifyContent: "center",

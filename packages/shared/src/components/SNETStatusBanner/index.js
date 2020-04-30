@@ -41,7 +41,8 @@ SNETStatusBanner.propTypes = {
   title: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  actions: PropTypes.array.isRequired,
+  actions: PropTypes.array,
+  type: PropTypes.oneOf([statusTitleType.PENDING, statusTitleType.REJECTED]),
 };
 
 export default withStyles(useStyles)(SNETStatusBanner);

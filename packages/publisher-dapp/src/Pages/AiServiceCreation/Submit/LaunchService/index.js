@@ -7,7 +7,7 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import { connect } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 
-import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
+import { aiServiceDetailsActions, loaderActions, organizationActions } from "../../../../Services/Redux/actionCreators";
 import { serviceCreationStatus } from "../../constant";
 import { useStyles } from "./styles";
 import DaemonConfig from "../../../../Components/DaemonConfig";
@@ -15,8 +15,10 @@ import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import SNETButton from "shared/dist/components/SNETButton";
 import ReadyToLaunch from "../ReadyToLaunch";
 import { checkIfKnownError } from "shared/dist/utils/error";
-import validationError from "shared/dist/utils/validationError";
 import DaemonConfigModal from "./DaemonConfigModal";
+import { LoaderContent } from "../../../../Utils/Loader";
+import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
+import ValidationError from "shared/dist/utils/validationError";
 
 class LaunchService extends React.Component {
   state = { daemonConfig: {}, alert: {}, continueToLaunch: false, showDaemonConfigModal: false };
@@ -49,19 +51,38 @@ class LaunchService extends React.Component {
   handlePublishToBlockchain = async () => {
     try {
       this.setState({ alert: {} });
-      const { publishToIPFS, organization, serviceDetails, history, publishService } = this.props;
+      const {
+        publishToIPFS,
+        organization,
+        serviceDetails,
+        history,
+        publishService,
+        getLatestOrgDetails,
+        getLatestOrgLoader,
+      } = this.props;
+      getLatestOrgLoader();
+      const orgList = await getLatestOrgDetails();
+      const selectedOrg = orgList[0];
+      const orgStatus = selectedOrg.state.state;
+      if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
+        if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
+          throw new ValidationError("Organization is being published in blockchain. Service cannot be published now");
+        }
+        throw new ValidationError("Organization must be published before publishing the service");
+      }
       if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISHED) {
-        throw new validationError("Service is already published. No new changes to be published.");
+        throw new ValidationError("Service is already published. No new changes to be published.");
       }
       if (serviceDetails.serviceState.state === serviceCreationStatus.PUBLISH_IN_PROGRESS) {
-        throw new validationError("Service is already being published. Please wait.");
+        throw new ValidationError("Service is already being published. Please wait.");
       }
       if (serviceDetails.serviceState.state !== serviceCreationStatus.APPROVED) {
-        throw new validationError("Service is not yet approved. Please submit for approval.");
+        throw new ValidationError("Service is not yet approved. Please submit for approval.");
       }
       const { metadata_ipfs_hash } = await publishToIPFS(organization.uuid, serviceDetails.uuid);
       await publishService(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags, history);
     } catch (e) {
+      this.props.stopAppLoader();
       if (checkIfKnownError(e)) {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
       }
@@ -112,10 +133,7 @@ class LaunchService extends React.Component {
             to proceed to launch the service.
           </Typography>
 
-          <DaemonConfig
-            config={daemonConfig}
-            footerNote="Please use the above configuration values in your daemon configuration. This is to ensure that your daemon is not in the curation mode anymore. Once the Service has been successfully published on the SingularityNet Platform, restart the daemon."
-          />
+          <DaemonConfig config={daemonConfig} />
 
           <div className={classes.launchServiceAlertButtonContainer}>
             <AlertBox
@@ -147,5 +165,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, tags, history)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
+  getLatestOrgLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),
+  getLatestOrgDetails: () => dispatch(organizationActions.getStatus),
+  stopAppLoader: () => dispatch(loaderActions.stopAppLoader()),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(LaunchService)));
