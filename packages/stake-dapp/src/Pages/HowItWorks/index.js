@@ -19,18 +19,24 @@ import FAQ from "./FAQ";
 import { useStyles } from "./styles";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 
+const stateSelector = state => ({
+  recentStakeWindow: state.stakeReducer.recentStakeWindow,
+  stakeOverallSummary: state.stakeReducer.stakeOverallSummary,
+});
+
 const HowItWorks = ({ classes }) => {
   const dispatch = useDispatch();
 
-  const { recentStakeWindow } = useSelector(state => state.stakeReducer);
+  const { recentStakeWindow, stakeOverallSummary } = useSelector(state => stateSelector(state));
 
   useEffect(() => {
     dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
+    dispatch(stakeActions.fetchStakeOverallSummary());
   }, [dispatch]);
 
   return (
     <Grid container className={classes.howItWorksContainer}>
-      <Banner recentStakeWindow={recentStakeWindow} />
+      <Banner recentStakeWindow={recentStakeWindow} stakeOverallSummary={stakeOverallSummary} />
       <Benefits />
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.signUpContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
