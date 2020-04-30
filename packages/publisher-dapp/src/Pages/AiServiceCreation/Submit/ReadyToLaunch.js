@@ -1,16 +1,20 @@
 import React, { Fragment } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+
+import { useStyles } from "./styles";
+
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
 import AlertBox from "shared/dist/components/AlertBox";
 import VerificationApprovedImage from "shared/dist/assets/images/VerificationApproved.png";
-import Typography from "@material-ui/core/Typography";
 
-const ReadyToLaunch = ({ handlePublish, handleBackToDashboard, alert, openDaemonConfigModal }) => {
+const ReadyToLaunch = ({ classes, handlePublish, handleBackToDashboard, alert, openDaemonConfigModal }) => {
   const handleOpenDaemonConfigModal = e => {
     e.preventDefault();
     openDaemonConfigModal();
   };
   return (
-    <Fragment>
+    <div className={classes.statusBannerContainer}>
       <SNETStatusBanner
         title="Ready to Launch"
         img={VerificationApprovedImage}
@@ -47,8 +51,8 @@ const ReadyToLaunch = ({ handlePublish, handleBackToDashboard, alert, openDaemon
         type={statusTitleType.PENDING}
       />
       <AlertBox type={alert.type} message={alert.message} />
-    </Fragment>
+    </div>
   );
 };
 
-export default ReadyToLaunch;
+export default withStyles(useStyles)(ReadyToLaunch);

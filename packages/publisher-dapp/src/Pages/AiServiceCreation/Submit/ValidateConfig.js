@@ -37,7 +37,7 @@ const ValidateConfig = props => {
         name="id"
         label="Public curation Endpoint"
         description="The public curation endpoint that will be used for non-blockchain mode reviewing of service. This end point needs to be https"
-        value={testEndPoint}
+        value={testEndPoint || ""}
         onChange={handleTestEndpointsChange}
       />
       <AlertBox
@@ -46,7 +46,9 @@ const ValidateConfig = props => {
         children={testEndpointAlert.children}
       />
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
-      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+      </div>
       <SNETButton
         children="validate endpoint"
         color="primary"

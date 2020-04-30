@@ -37,12 +37,26 @@ const computeReward = activeStake => {
   return rewardAmount;
 };
 
-export const cardDetails = activeStake => [
+export const yourStakeDetails = activeStake => [
   {
-    title: "Stake Amount",
+    title: "Added Stake",
     value: fromWei(activeStake.myStake),
     unit: "AGI",
-    toolTip: "Total amount of AGI tokens that you have for this stake session",
+    toolTip: "The amount of AGI tokens that you have added to this stake session.",
+  },
+  {
+    title: "Renewed Amount",
+    value: "?",
+    unit: "AGI",
+    toolTip:
+      "This is the amount of AGI tokens that were auto renewed from a previous stake session.  You will not be able to withdraw these tokens until the incubation period complete and auto renewed is turned off.   See Transactions for session details.",
+  },
+  {
+    title: "Total Stake",
+    value: "?",
+    unit: "AGI",
+    toolTip:
+      "The total amount of AGI tokens that you have for this stake session.   This combines the amounts from “Added Stake” and “Renewed Amount”.",
   },
   {
     title: "Max Reward",
@@ -50,17 +64,14 @@ export const cardDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.",
   },
-  {
-    title: "Incubating Period",
-    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
-    unit: "days",
-    toolTip: "Amount of time that AGI tokens staked will be vested and locked in.",
-  },
+];
+
+export const sessionDetails = activeStake => [
   {
     title: "Stakers",
     value: activeStake.totalStakers,
     unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
+    toolTip: "Current number of participants who have contributed AGI tokens to the stake.",
   },
   {
     title: "Current Pool Size",
@@ -73,6 +84,12 @@ export const cardDetails = activeStake => [
     value: fromWei(activeStake.rewardAmount),
     unit: "AGI",
     toolTip: "The total reward amount of AGI tokens that will be divided and distributed to stakers",
+  },
+  {
+    title: "Incubation Time",
+    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
+    unit: "days",
+    toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
   },
 ];
 
@@ -110,17 +127,17 @@ export const withdrawStakeAmountDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.",
   },
-  {
-    title: "Current Pool Size",
-    amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
-  },
-  {
-    title: "Stakers",
-    amount: activeStake.totalStakers,
-    unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
-  },
+  // {
+  //   title: "Current Pool Size",
+  //   amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
+  //   toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+  // },
+  // {
+  //   title: "Stakers",
+  //   amount: activeStake.totalStakers,
+  //   unit: "people",
+  //   toolTip: "The number of people who have contributed AGI tokens to this stake session",
+  // },
 ];
 
 export const addStakeAmountDetails = activeStake => [
@@ -136,16 +153,16 @@ export const addStakeAmountDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.",
   },
-  {
-    title: "Current Pool Size",
-    amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
-    unit: "AGI",
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
-  },
-  {
-    title: "Stakers",
-    amount: activeStake.totalStakers,
-    unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
-  },
+  // {
+  //   title: "Current Pool Size",
+  //   amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
+  //   unit: "AGI",
+  //   toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+  // },
+  // {
+  //   title: "Stakers",
+  //   amount: activeStake.totalStakers,
+  //   unit: "people",
+  //   toolTip: "The number of people who have contributed AGI tokens to this stake session",
+  // },
 ];

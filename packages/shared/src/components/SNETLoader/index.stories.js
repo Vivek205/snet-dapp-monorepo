@@ -1,7 +1,13 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { SNETLoader } from ".";
+import withLiveEditScope from "storybook-addon-react-live-edit/dist/withLiveEditScope";
 
-storiesOf("AppLoader", module).add("_default", () => (
-  <SNETLoader isLoading title="Sample Header" content="Please wait. this is a sample loader text" />
-));
+import SNETLoader from "./";
+
+storiesOf("SNETLoader", module)
+  .addParameters({ props: { propTables: [SNETLoader] } })
+  .addDecorator(withLiveEditScope({ React, SNETLoader }))
+  .addLiveSource(
+    "live source",
+    `return <SNETLoader isLoading title="Sample Header" content="Please wait. this is a sample loader text" />`
+  );
