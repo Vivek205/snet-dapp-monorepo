@@ -127,17 +127,17 @@ export const withdrawStakeAmountDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.",
   },
-  {
-    title: "Current Pool Size",
-    amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
-  },
-  {
-    title: "Stakers",
-    amount: activeStake.totalStakers,
-    unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
-  },
+  // {
+  //   title: "Current Pool Size",
+  //   amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
+  //   toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+  // },
+  // {
+  //   title: "Stakers",
+  //   amount: activeStake.totalStakers,
+  //   unit: "people",
+  //   toolTip: "The number of people who have contributed AGI tokens to this stake session",
+  // },
 ];
 
 export const addStakeAmountDetails = activeStake => [
@@ -153,16 +153,16 @@ export const addStakeAmountDetails = activeStake => [
     unit: "AGI",
     toolTip: "Max amount of AGI tokens you could gain as reward at the end of the stake incubation.",
   },
-  {
-    title: "Current Pool Size",
-    amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
-    unit: "AGI",
-    toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
-  },
-  {
-    title: "Stakers",
-    amount: activeStake.totalStakers,
-    unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
-  },
+  // {
+  //   title: "Current Pool Size",
+  //   amount: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
+  //   unit: "AGI",
+  //   toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
+  // },
+  // {
+  //   title: "Stakers",
+  //   amount: activeStake.totalStakers,
+  //   unit: "people",
+  //   toolTip: "The number of people who have contributed AGI tokens to this stake session",
+  // },
 ];

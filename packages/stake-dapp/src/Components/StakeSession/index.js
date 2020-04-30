@@ -175,7 +175,9 @@ const StakeSession = ({
       <div className={classes.infoBox}>
         <InfoBox stakeDetails={stakeDetails} />
       </div>
-      <AlertBox type={alert.type} message={alert.message} />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox type={alert.type} message={alert.message} />
+      </div>
       <Button
         details={btnDetails}
         handleClick={handleClick}
