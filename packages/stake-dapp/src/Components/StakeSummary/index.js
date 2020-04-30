@@ -10,7 +10,7 @@ import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
 import TokenStakedImg from "shared/dist/assets/images/tokenStaked.png";
-import StakersImg from "shared/dist/assets/images/stakers.png";
+import StakersImg from "shared/dist/assets/images/Stakers.png";
 import TokenRewardDistributedImg from "shared/dist/assets/images/rewardDistributed.png";
 
 import { useStyles } from "./styles";
