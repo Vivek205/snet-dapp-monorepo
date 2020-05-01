@@ -3,15 +3,17 @@ import BigNumber from "bignumber.js";
 
 // Do the Calculation in AGI rather than wei
 const computeReward = activeStake => {
-  const myStake = new BigNumber(activeStake.myStake);
+  let myStake = new BigNumber(activeStake.myStake);
+  const myStakeAutoRenewed = new BigNumber(activeStake.myStakeAutoRenewed);
   const myStakeProcessed = new BigNumber(activeStake.myStakeProcessed);
 
-  if (myStake.lte(0)) return 0;
+  if (myStake.lte(0) && myStakeAutoRenewed.lte(0)) return 0;
 
   const windowRewardAmount = new BigNumber(activeStake.rewardAmount);
   const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
   let totalStakedAmount = new BigNumber(activeStake.totalStakedAmount);
   const windowTotalStake = new BigNumber(activeStake.windowTotalStake);
+  const totalAutoRenewAmount = new BigNumber(activeStake.totalAutoRenewAmount);
 
   if (myStake.gt(myStakeProcessed)) {
     totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -26,8 +28,11 @@ const computeReward = activeStake => {
 
   let rewardAmount = new BigNumber(0);
 
+  // Add AutoRenewed State
+  myStake = myStake.plus(myStakeAutoRenewed);
+
   // Considering Auto Renewed Stake For calculation
-  totalStakedAmount = totalStakedAmount.plus(windowTotalStake);
+  totalStakedAmount = totalStakedAmount.plus(windowTotalStake).plus(totalAutoRenewAmount);
   if (totalStakedAmount.lt(windowMaxCap)) {
     rewardAmount = myStake.times(windowRewardAmount).div(totalStakedAmount);
   } else {
@@ -46,14 +51,14 @@ export const yourStakeDetails = activeStake => [
   },
   {
     title: "Renewed Amount",
-    value: "?",
+    value: fromWei(activeStake.myStakeAutoRenewed),
     unit: "AGI",
     toolTip:
       "This is the amount of AGI tokens that were auto renewed from a previous stake session.  You will not be able to withdraw these tokens until the incubation period complete and auto renewed is turned off.   See Transactions for session details.",
   },
   {
     title: "Total Stake",
-    value: "?",
+    value: fromWei(BigNumber.sum(activeStake.myStake, activeStake.myStakeAutoRenewed)),
     unit: "AGI",
     toolTip:
       "The total amount of AGI tokens that you have for this stake session.   This combines the amounts from “Added Stake” and “Renewed Amount”.",
@@ -75,7 +80,9 @@ export const sessionDetails = activeStake => [
   },
   {
     title: "Current Pool Size",
-    value: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
+    value: fromWei(
+      BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake, activeStake.totalAutoRenewAmount)
+    ),
     unit: "AGI",
     toolTip: "Current total amount of AGI tokens that have been contributed by all stakers",
   },
@@ -117,7 +124,7 @@ export const agreementDetails = {
 export const withdrawStakeAmountDetails = activeStake => [
   {
     title: "Total Stake Amount",
-    amount: fromWei(activeStake.myStake),
+    amount: fromWei(BigNumber.sum(activeStake.myStake, activeStake.myStakeAutoRenewed)),
     unit: "AGI",
     toolTip: "Total amount of AGI tokens that you have for this stake session",
   },
@@ -143,7 +150,7 @@ export const withdrawStakeAmountDetails = activeStake => [
 export const addStakeAmountDetails = activeStake => [
   {
     title: "Total Stake Amount",
-    amount: fromWei(activeStake.myStake),
+    amount: fromWei(BigNumber.sum(activeStake.myStake, activeStake.myStakeAutoRenewed)),
     unit: "AGI",
     toolTip: "Total amount of AGI tokens that you have for this stake session",
   },

@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 import TimerIcon from "@material-ui/icons/Timer";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
@@ -106,6 +107,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
     ) {
       return (
         <Fragment>
+          <TimerIcon />
           <Typography>Current Session</Typography>
           <Typography>Open for</Typography>
         </Fragment>
@@ -115,6 +117,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
     //return <Typography>Next Session will open soon</Typography>;
     return (
       <Fragment>
+        <TrendingUpIcon />
         <Typography>Stake stats</Typography>
         <Typography>so far</Typography>
       </Fragment>
@@ -306,7 +309,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.countDownContainer}>
         <div className={classes.countDownTitle}>
-          <TimerIcon />
+          {/* <TimerIcon /> */}
           <CounterTitle />
         </div>
         <ShowTimer />
