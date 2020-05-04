@@ -32,24 +32,26 @@ var StyledDropdown = function StyledDropdown(_ref) {
       inputLabel = _ref.inputLabel,
       disabled = _ref.disabled;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement(_FormControl.default, _extends({
+  return /*#__PURE__*/_react.default.createElement(_FormControl.default, _extends({
     variant: "outlined",
     className: classes.formControl
-  }, formControlProps), inputLabel ? _react.default.createElement(_InputLabel.default, {
+  }, formControlProps), inputLabel ? /*#__PURE__*/_react.default.createElement(_InputLabel.default, {
     htmlFor: "age-simple"
-  }, inputLabel) : null, _react.default.createElement(_Select.default, {
+  }, inputLabel) : null, /*#__PURE__*/_react.default.createElement(_Select.default, {
     value: value,
     onChange: onChange,
     name: labelTxt,
     className: classes.selectEmpty,
     variant: "outlined",
     disabled: disabled
-  }, _react.default.createElement(_MenuItem.default, {
-    value: "default"
+  }, /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
+    value: "default",
+    className: classes.defaultMenuItem
   }, labelTxt || "Select a value"), list && list.map(function (item) {
-    return _react.default.createElement(_MenuItem.default, {
+    return /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
       key: item.value,
-      value: item.value
+      value: item.value,
+      className: classes.menuItem
     }, item.label);
   })));
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@material-ui/core";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import { useStyles } from "./styles";
 import { ProgressStatusList } from "./";
@@ -9,12 +9,18 @@ const StatusToggler = ({ progressNumber, progressStatus }) => {
 
   if (progressStatus === ProgressStatusList.COMPLETED) {
     return (
-      <span className={classes.completedIcon}>
-        <Icon className="fas fa-check-circle" />
-      </span>
+      <div className={classes.numberContaienr}>
+        <span className={classes.completedIcon}>
+          <CheckCircleIcon />
+        </span>
+      </div>
     );
   }
-  return <span className={classes.number}>{progressNumber}</span>;
+  return (
+    <div className={classes.numberContaienr}>
+      <span className={classes.number}>{progressNumber}</span>
+    </div>
+  );
 };
 
 export default StatusToggler;

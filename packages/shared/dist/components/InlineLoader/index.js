@@ -20,11 +20,11 @@ var InlineLoader = function InlineLoader(_ref) {
   var classes = (0, _styles.useStyles)();
 
   if (loading) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: classes.pendingSection
-    }, _react.default.createElement(_core.Icon, {
+    }, /*#__PURE__*/_react.default.createElement(_core.Icon, {
       className: "far fa-hourglass"
-    }), _react.default.createElement("span", null, "Pending"));
+    }), /*#__PURE__*/_react.default.createElement("span", null, "Pending"));
   }
 
   return null;

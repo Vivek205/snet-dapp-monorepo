@@ -4,10 +4,11 @@ import { NavLink } from "react-router-dom";
 
 import { useStyles } from "./styles";
 
-const NavbarLink = ({ activeLinks, label, openInNewTab, to }) => {
+const NavbarLink = props => {
+  const { activeLinks, label, openInNewTab, to } = props;
   const classes = useStyles();
 
-  const isActive = (unused, { pathname }) => {
+  const isActive = (_unused, { pathname }) => {
     return activeLinks.includes(pathname);
   };
 
@@ -28,7 +29,7 @@ NavbarLink.propTypes = {
   activeLinks: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string,
   openInNewTab: PropTypes.bool,
-  to: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default NavbarLink;

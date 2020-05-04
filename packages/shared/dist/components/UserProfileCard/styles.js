@@ -5,31 +5,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     Userdetails: {
+      padding: "12px 18px",
       display: "flex",
-      marginBottom: 10,
-      "& span": {
-        color: theme.palette.text.lightShadedGray,
-        fontSize: 66
+      "& svg": {
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 81
       },
       "& div": {
-        marginLeft: 22,
+        marginLeft: 16,
         "& h4": {
           fontWeight: 600,
           margin: 0,
-          color: theme.palette.text.black1,
-          lineHeight: "27px",
+          color: MUITheme.palette.text.darkGrey,
+          lineHeight: "25px",
           fontSize: 20
         },
         "& a": {
-          color: theme.palette.text.lightShadedGray,
+          color: MUITheme.palette.text.lightGrey,
           fontSize: 16,
           lineHeight: "22px",
           textDecoration: "none",
           "&:hover": {
-            color: theme.palette.text.primary,
+            color: MUITheme.palette.primary.main,
             fontweight: 600
           }
         }

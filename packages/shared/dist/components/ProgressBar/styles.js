@@ -5,10 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.useStyles = void 0;
 
-var useStyles = function useStyles(theme) {
+var useStyles = function useStyles(MUITheme) {
   return {
     tabsContainer: {
-      width: 630,
+      width: 600,
       paddingTop: 41,
       margin: "0 auto",
       "& ul": {
@@ -22,36 +22,31 @@ var useStyles = function useStyles(theme) {
         }
       },
       "& li": {
+        width: "100%",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         listStyle: "none",
-        "&:first-of-type": {
-          "&::before": {
-            display: "none"
-          }
-        },
-        "&::before": {
-          content: '""',
-          width: 90,
-          height: 1,
-          marginRight: 16,
-          display: "inline-block",
-          backgroundColor: theme.palette.text.lightGray,
-          verticalAlign: "middle",
-          "@media (max-width:1150px)": {
-            width: 50
-          }
-        },
+        textAlign: "center",
         "& i": {
           marginRight: 5,
-          color: theme.palette.text.green,
+          color: MUITheme.palette.success,
           fontSize: 20
+        },
+        "&:last-of-type": {
+          "& > div": {
+            "& span": {
+              "&::after": {
+                display: "none"
+              }
+            }
+          }
         },
         "@media (max-width:470px)": {
           marginBottom: 20
         }
       },
-      "@media (max-width:724px)": {
+      "@media (max-width:660px)": {
         width: "90%"
       }
     }

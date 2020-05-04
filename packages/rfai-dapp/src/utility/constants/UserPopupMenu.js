@@ -18,7 +18,7 @@ export const UserMenuList = [
   },
   {
     menuIcon: SettingIcon,
-    menuTitle: "Claims",
+    menuTitle: "ProviderControlService",
     menuLink: `${Routes.USER_PROFILE}/claims`,
   },
   {

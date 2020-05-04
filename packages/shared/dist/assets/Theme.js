@@ -3,135 +3,146 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.MUITheme = void 0;
 
 var _styles = require("@material-ui/core/styles");
 
-var customBlue = "#4086ff";
-var customHoverBlue = "#005ACB";
-var transBlueBorderTextHover = "#005ACB";
-var transBlueBorderBgHover = "rgba(0,90,203,0.05)";
-var alertBoxColor = "rgba(0,0,0,0.6)";
-var alertBoxBorder = "#E67381";
-var alertBoxBackgroundColor = "#FDE5E8";
-var warningBoxBg = "#FDF3E5";
-var warningBoxBorder = "#F18D5A";
-var infoBoxBg = "#DEEAFF";
-var infoBoxLink = "#067AD7";
-var userProfileIconColor = "#757575";
-var purple = "#220D3A";
-var darkShadedGray = "#212121";
-var mediumShadeGray = "#666";
-var lightShadedGray = "#9b9b9b";
-var grayTitleText = "#4a4a4a";
-var succesBoxBg = "#E7FFF8";
-var successBoxBorder = "#00C48C";
-var lightGray = "#D6D6D6";
-var disabledBtnBg = "#ccc";
-var gray = "rgba(0,0,0,0.04)";
-var gray1 = "#F5F7F8";
-var cardBackground = "#f8f8f8";
-var iconColor = "#AAAEB3";
-var cardSeparator = "#e5e5e5";
-var whiteColor = "#fff";
-var offWhiteColor = "#fAFAFA";
-var offWhite = "rgba(255,255,255,.60)";
-var errorBgColor = "rgba(208,2,27,0.2)";
-var githubBlack = "#333";
-var black1 = "rgba(0,0,0,.87)";
-var green = "#00C48C";
-var footerBgColor = "#211D24";
-var darkOrange = "#AC5C2C";
-var orange = "#F29132";
-var orange1 = "#FFF8E7";
-var RatingStarColor = "#FFC000";
-var aqua = "#00C48C";
-var errorRed = "#B00020";
-var redBtnText = "#D0021B";
-var redBtnBg = "#E67381";
-var verticalTabLeftBorder = "#e2e2e2";
-var inputBoxBorder = "#979797";
-var dialogTitle = "rgba(0,0,0,0.87)";
-var outlinedBtnHoverBg = "rgba(241,241,241,0.15)";
-var h2 = {
-  size: 32,
-  color: darkShadedGray
-};
-var offlineRed = "#EF5265";
-var offlineRedBg = "rgba(239,82,101,0.15)";
-var informationBarBg = "#2196F3";
-var infoBg = "#DEEAFF";
-var warningBg = "#FDF3E5";
-var warningBorder = "#F18D5A";
-var theme = (0, _styles.createMuiTheme)({
-  palette: {
-    text: {
-      primary: customBlue,
-      white: whiteColor,
-      customHoverBlue: customHoverBlue,
-      disabledBtnBg: disabledBtnBg,
-      black1: black1,
-      darkShadedGray: darkShadedGray,
-      mediumShadeGray: mediumShadeGray,
-      lightShadedGray: lightShadedGray,
-      offWhiteColor: offWhiteColor,
-      offWhite: offWhite,
-      green: green,
-      purple: purple,
-      darkOrange: darkOrange,
-      orange: orange,
-      orange1: orange1,
-      aqua: aqua,
-      lightGray: lightGray,
-      gray: gray,
-      gray1: gray1,
-      cardBackground: cardBackground,
-      iconColor: iconColor,
-      errorRed: errorRed,
-      RatingStarColor: RatingStarColor,
-      offlineRed: offlineRed,
-      successBoxBorder: successBoxBorder,
-      grayTitleText: grayTitleText,
-      redBtnText: redBtnText,
-      transBlueBorderTextHover: transBlueBorderTextHover,
-      transBlueBorderBgHover: transBlueBorderBgHover,
-      cardSeparator: cardSeparator,
-      userProfileIconColor: userProfileIconColor,
-      alertBoxBorder: alertBoxBorder,
-      alertBoxColor: alertBoxColor,
-      alertBoxBackgroundColor: alertBoxBackgroundColor,
-      infoBg: infoBg,
-      warningBg: warningBg,
-      warningBorder: warningBorder,
-      verticalTabLeftBorder: verticalTabLeftBorder,
-      redBtnBg: redBtnBg,
-      warningBoxBorder: warningBoxBorder,
-      warningBoxBg: warningBoxBg,
-      infoBoxBg: infoBoxBg,
-      infoBoxLink: infoBoxLink,
-      inputBoxBorder: inputBoxBorder,
-      dialogTitle: dialogTitle,
-      outlinedBtnHoverBg: outlinedBtnHoverBg,
-      informationBarBg: informationBarBg
+var MUITheme = (0, _styles.createMuiTheme)({
+  breakpoints: {
+    keys: ["xs", "sm", "md", "lg", "xl"],
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920
     }
   },
-  backgroundColor: {
-    blue: customBlue,
-    red: errorBgColor,
-    white: whiteColor,
-    githubBlack: githubBlack,
-    offlineRedBg: offlineRedBg,
-    footerBgColor: footerBgColor,
-    succesBoxBg: succesBoxBg
-  },
-  font: {
-    h2: h2
+  palette: {
+    text: {
+      primary: "#666",
+      secondary: "#fff",
+      disabled: "#D6D6D6",
+      statusRed: "#EF5265",
+      red: "#D0021B",
+      darkGrey: "#212121",
+      lightGrey: "#9b9b9b",
+      footerText: "#FFFFE1",
+      white: "#fff",
+      black: "#000",
+      hover: {
+        blue: "#005ACB",
+        red: "#D0021B",
+        black: "#333"
+      }
+    },
+    primary: {
+      main: "#4086ff",
+      dark: "#005ACB"
+    },
+    secondary: {
+      main: "#E67381",
+      dark: "#D0021B"
+    },
+    purple: {
+      main: "#220D3A",
+      light: "#412f55"
+    },
+    background: {
+      disabled: {
+        gray: "#D6D6D6"
+      },
+      hover: {
+        blue: "#ecf3fe",
+        red: "#D0021B",
+        black: "#333"
+      },
+      grey: "#D6D6D6",
+      mainContent: "#fafafa",
+      footer: "#211D24",
+      white: "#fff",
+      black: "#333",
+      red: "#D0021B",
+      succesBox: "#E7FFF8",
+      alertBox: "#FDE5E8",
+      warningBox: "#FDF3E5",
+      infoBox: "#DEEAFF"
+    },
+    border: {
+      primary: "#f5f7f8",
+      secondary: "#ccc",
+      mainContent: "#fafafa",
+      alertBox: "#E67381",
+      warningBox: "#F18D5A",
+      grey: "#D6D6D6",
+      inputBorder: "rgba(25,25,25,.32)"
+    },
+    success: {
+      main: "#00C48C"
+    },
+    error: {
+      main: "#B00020"
+    },
+    infoBoxLink: "#067AD7",
+    warning: {
+      main: "#F18D5A"
+    }
   },
   typography: {
-    primary: {
-      main: "Muli, sans-serif"
+    fontFamily: "Muli",
+    h2: {
+      color: "#212121",
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: "45px"
+    },
+    h3: {
+      color: "#212121",
+      fontSize: 32,
+      fontWeight: 600,
+      letterSpacing: -0.5,
+      lineHeight: "32px"
+    },
+    h4: {
+      color: "#212121",
+      fontSize: 24,
+      fontWeight: 600,
+      lineHeight: "30px"
+    },
+    h5: {
+      color: "#212121",
+      fontSize: 22,
+      fontWeight: 600,
+      lineHeight: "32px"
+    },
+    h6: {
+      color: "#212121",
+      fontSize: 20,
+      fontWeight: 600,
+      lineHeight: "25px"
+    },
+    body1: {
+      color: "#9b9b9b",
+      fontSize: 24,
+      lineHeight: "30px"
+    },
+    body2: {
+      color: "#616161",
+      fontSize: 18,
+      lineHeight: "28px"
+    },
+    subtitle1: {
+      color: "#212121",
+      fontSize: 18,
+      fontWeight: "bold"
+    },
+    subtitle2: {
+      color: "#666",
+      fontSize: 14,
+      lineHeight: "21px"
     }
   }
 });
-var _default = theme;
+exports.MUITheme = MUITheme;
+var _default = MUITheme;
 exports.default = _default;
