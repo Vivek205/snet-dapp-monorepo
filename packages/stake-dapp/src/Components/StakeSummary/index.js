@@ -116,7 +116,7 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>the total amount of AGI tokens that have been contributed by all stakers</Typography>
+                    <Typography>The total amount of AGI tokens that have been contributed by all stakers</Typography>
                   </div>
                   <Typography className={classes.title}>Final Pool Size</Typography>
                 </div>

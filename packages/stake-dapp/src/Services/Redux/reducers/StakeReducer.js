@@ -25,6 +25,8 @@ const InitialRequestDetails = {
     myStake: 0,
     myStakeProcessed: 0,
     autoRenewal: true,
+    myStakeAutoRenewed: 0,
+    totalAutoRenewAmount: 0,
   },
   incubationStakes: [],
   claimStakes: [],

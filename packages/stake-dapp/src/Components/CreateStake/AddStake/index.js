@@ -154,6 +154,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
 
     let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
     const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
+    const totalAutoRenewAmount = new BigNumber(stakeDetails.totalAutoRenewAmount);
 
     if (myStake.gt(myStakeProcessed)) {
       totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -173,7 +174,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     let _rewardAmount = new BigNumber(0);
 
     // Considering Auto Renewed Stake For calculation
-    totalStakedAmount = totalStakedAmount.plus(windowTotalStake);
+    totalStakedAmount = totalStakedAmount.plus(windowTotalStake).plus(totalAutoRenewAmount);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
@@ -241,7 +242,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                     <Typography className={classes.title}>Renewed Amount</Typography>
                   </div>
                   <div className={classes.value}>
-                    <Typography>?</Typography>
+                    <Typography>{fromWei(stakeDetails.myStakeAutoRenewed)}</Typography>
                     <Typography>AGI</Typography>
                   </div>
                 </div>

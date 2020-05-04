@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-
+import BigNumber from "bignumber.js";
 import { APIError } from "shared/dist/utils/API";
 
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -157,9 +157,16 @@ const parseAndTransformStakeWindow = data => {
     tokenOperator: stakeWindow.token_operator,
     totalStakers: stakeWindow.no_of_stakers,
     totalStakedAmount: stakeWindow.total_stake_deposited,
-    myStake: stakeWindow.stake_amount_for_given_staker_address,
-    myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
+    myStake: stakeWindow.pending_stake_amount_for_staker,
+    myStakeProcessed: stakeWindow.pending_stake_amount_for_staker,
+    myStakeAutoRenewed: BigNumber.sum(
+      stakeWindow.auto_renew_amount_for_staker,
+      stakeWindow.approved_stake_amount_for_staker
+    ).toString(),
+    totalAutoRenewAmount: stakeWindow.total_auto_renew_amount,
   };
+  //myStake: stakeWindow.stake_amount_for_given_staker_address,
+  //myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
 
   return stakeWindowDetails;
 };

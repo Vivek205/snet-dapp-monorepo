@@ -159,7 +159,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                     <Typography className={classes.title}>Renewed Amount</Typography>
                   </div>
                   <div className={classes.value}>
-                    <Typography>?</Typography>
+                    <Typography>{fromWei(stakeDetails.myStakeAutoRenewed)}</Typography>
                     <Typography>AGI</Typography>
                   </div>
                 </div>

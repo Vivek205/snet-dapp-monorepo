@@ -50,7 +50,7 @@ const UserStake = () => {
           <StakeSession
             incubationProgressDetails={incubationProgressDetails(stake)}
             yourStakeDetails={yourStakeDetails(stake)}
-            stakeSessionDetails={stakeSessionDetails(stake)}
+            sessionDetails={stakeSessionDetails(stake)}
             agreementDetails={agreementDetails}
             stakeDetails={stake}
           />
