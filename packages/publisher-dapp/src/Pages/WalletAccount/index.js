@@ -420,7 +420,7 @@ class WalletAccount extends React.Component {
               agiClaimed={cogsToAgi(transactionDetails.latest.amountClaimed)}
               channelIdList={transactionDetails.latest.channelsClaimed}
               handleClose={this.handleSuccessPopupClose}
-              escrowBalance={mmAccDetails.escrowBalance}
+              escrowBalance={cogsToAgi(mmAccDetails.escrowBalance)}
             />
             <div className={classes.claimSelectedSection}>
               <SNETButton

@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 
 import { useStyles } from "./styles";
 
-export const SNETLoader = ({ isLoading, title, content }) => {
+const SNETLoader = ({ isLoading, title, content }) => {
   const classes = useStyles();
 
   return (

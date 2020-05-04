@@ -42,7 +42,7 @@ const computeReward = stakeDetails => {
   return rewardAmount;
 };
 
-export const cardDetails = stakeDetails => [
+export const yourStakeDetails = stakeDetails => [
   {
     title: "Accepted Stake Amount",
     value: fromWei(
@@ -65,11 +65,14 @@ export const cardDetails = stakeDetails => [
     toolTip:
       "When incubation period begins, SNET foundation will accept all or a partial amount of your stake amount. Unaccepted stake portions will be returned to your wallet account automatically (you will not be charged any transaction fee in this case).",
   },
+];
+
+export const stakeSessionDetails = stakeDetails => [
   {
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
-    toolTip: "The number of people who have contributed AGI tokens to this stake session",
+    toolTip: "Current number of participants who have contributed AGI tokens to the stake",
   },
   {
     title: "Current Pool Size",

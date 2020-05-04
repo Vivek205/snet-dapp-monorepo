@@ -46,7 +46,9 @@ const ValidateConfig = props => {
         children={testEndpointAlert.children}
       />
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
-      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+      </div>
       <SNETButton
         children="validate endpoint"
         color="primary"

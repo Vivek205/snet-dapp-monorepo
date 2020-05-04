@@ -55,7 +55,7 @@ export const useStyles = MUITheme => ({
       alignItems: "flex-start",
     },
   },
-  profileImgContainer: { padding: "30px 0 0 30px" },
+  profileImgContainer: { padding: "30px 0 0 30px !important" },
   uploaderContentConatiner: {
     marginTop: 12,
     display: "flex",

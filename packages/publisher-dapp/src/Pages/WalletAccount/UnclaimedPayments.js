@@ -8,6 +8,7 @@ import SNETPagination from "shared/dist/components/SNETPagination";
 import { itemsPerPageOptions } from "./content";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
+import { cogsToAgi } from "shared/dist/utils/Pricing";
 
 const UnclaimedPayments = ({
   classes,
@@ -57,7 +58,7 @@ const UnclaimedPayments = ({
             <Typography>{payment.channelNonce}</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
-            <Typography>{payment.signedAmount}</Typography>
+            <Typography>{cogsToAgi(payment.signedAmount)} AGI</Typography>
           </Grid>
         </Grid>
       ))}
