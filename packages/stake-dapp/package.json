@@ -5,6 +5,7 @@
   "dependencies": {
     "@sentry/browser": "^5.10.2",
     "bignumber.js": "^9.0.0",
+    "html-react-parser": "^0.10.3",
     "lodash": "latest",
     "moment": "2.24.0",
     "react": "^16.12.0",

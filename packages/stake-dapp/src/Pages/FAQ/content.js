@@ -28,29 +28,29 @@ export const communityDetails = [
 export const generalFAQ = [
   {
     question: "What browser and wallet combination is supported?",
-    answer:
-      "The staking DApp works only with Metamask. Our recommended combinations are Chrome with latest stable version of Metamask Firefox with latest stable version of Metamask ",
+    answer: `<p>The staking DApp works only with Metamask. Our recommended combinations are</p> 
+      <ol>
+      <li>Chrome with latest stable version of Metamask.</li>
+      <li>Firefox with latest stable version of Metamask.</li>
+      </ol>`,
   },
   {
     question: "What type of wallets can I use to stake on the Staking DApp?",
-    answer: "The staking DApp works only with Metamask. Please set up your ethereum account on Metamask to stake ",
+    answer: `<p>The staking DApp works only with Metamask. Please set up your ethereum account on Metamask to stake.</p>`,
   },
 ];
 
 export const metamaskFAQ = [
   {
     question: "How can I use my hardware wallet to stake on the Staking DApp?",
-    answer:
-      "The staking DApp works only with Metamask. Please set up your hardware wallet on Metamask using this guide ",
+    answer: `<p><span>The staking DApp works only with Metamask. Please set up your hardware wallet on Metamask using this guide </span><a href="https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet" target="_new"><span>https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet</span></a>.</p>`,
   },
   {
     question: "I am using Metamask but I am unable to connect on the portal",
-    answer:
-      "Please check the version of your Metamask. The staking DApp works with the stable version of Metamask and not with any beta versions",
+    answer: `<p>Please check the version of your Metamask. The staking DApp works with the stable version of Metamask and not with any beta versions.</p>`,
   },
   {
     question: "I connected my Ledger hardware wallet to Metamask but am still unable to connect or stake",
-    answer:
-      "If you are using a hardware wallet from ledger connected to metamask, you need to have enabled contract data. Activate contract data in the settings of the app if you want to send ERC-20 tokens.",
+    answer: `<p>If you are using a hardware wallet from ledger connected to metamask, you need to have enabled contract data. Activate contract data in the settings of the app if you want to send ERC-20 tokens.</p>`,
   },
 ];

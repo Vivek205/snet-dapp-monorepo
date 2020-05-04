@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ParseHTML from "html-react-parser";
 
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
@@ -29,7 +30,7 @@ const FAQAccordion = ({ classes, data }) => {
             <Typography className={classes.question}>{item.question}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography className={classes.answer}>{item.answer}</Typography>
+            <Typography className={classes.answer}>{ParseHTML(item.answer)}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ))}
