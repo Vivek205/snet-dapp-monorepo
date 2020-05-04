@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import BigNumber from "bignumber.js";
 
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
@@ -57,6 +58,18 @@ const StakeSession = ({
       stakeDetails.openForExternal === false
     ) {
       return true;
+    }
+
+    if (
+      currentTimestamp >= stakeDetails.startPeriod &&
+      currentTimestamp <= stakeDetails.submissionEndPeriod &&
+      stakeDetails.openForExternal === true
+    ) {
+      // myStakeAutoRenewed only for Open Stake Details
+      const myStakeAutoRenewed = new BigNumber(stakeDetails.myStakeAutoRenewed);
+      if (myStakeAutoRenewed.gt(0)) {
+        return true;
+      }
     }
 
     // Check for Non Auto Renewal Period
