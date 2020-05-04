@@ -43,7 +43,7 @@ export const generalFAQ = [
 export const metamaskFAQ = [
   {
     question: "How can I use my hardware wallet to stake on the Staking DApp?",
-    answer: `<p><span>The staking DApp works only with Metamask. Please set up your hardware wallet on Metamask using this  </span><a href="https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet" target="_new"><span>guide</span></a>.</p>`,
+    answer: `<p><span>The staking DApp works only with Metamask. Please set up your hardware wallet on Metamask using this  </span><a href="https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet" target="_new" rel="noopener noreferrer"><span>guide</span></a>.</p>`,
   },
   {
     question: "I am using Metamask but I am unable to connect on the portal",
