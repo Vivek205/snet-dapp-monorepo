@@ -25,6 +25,8 @@ const InitialRequestDetails = {
     myStake: 0,
     myStakeProcessed: 0,
     autoRenewal: true,
+    myStakeAutoRenewed: 0,
+    totalAutoRenewAmount: 0,
   },
   incubationStakes: [],
   claimStakes: [],
@@ -44,6 +46,12 @@ const InitialRequestDetails = {
     windowRewardAmount: 0,
     totalPendingApprovalStake: 0,
   },
+  stakeOverallSummary: {
+    overallStake: 0,
+    totalUniqueStakers: 0,
+    totalReward: 0,
+  },
+  stakeWindowsSummary: [],
 };
 
 const stakeReducer = (state = InitialRequestDetails, action) => {
@@ -95,6 +103,12 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
     }
     case stakeActions.UPDATE_CLAIM_STAKES_ACTIONS: {
       return { ...state, claimStakesActions: { ...state.claimStakesActions, ...action.payload } };
+    }
+    case stakeActions.UPDATE_STAKE_OVERALL_SUMMARY: {
+      return { ...state, stakeOverallSummary: action.payload };
+    }
+    case stakeActions.UPDATE_STAKE_WINDOWS_SUMMARY: {
+      return { ...state, stakeWindowsSummary: action.payload };
     }
     default: {
       return state;

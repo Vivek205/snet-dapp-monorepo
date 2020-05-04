@@ -102,7 +102,9 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl }) => {
         fileDownloadURL={protoFilesUrl}
         uploadSuccess={Boolean(protoFilesUrl)}
       />
-      <AlertBox type={alert.type} message={alert.message} />
+      <div className={classes.errorContainer}>
+        <AlertBox type={alert.type} message={alert.message} />
+      </div>
     </Fragment>
   );
 };

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.SNETLoader = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -49,7 +49,6 @@ var SNETLoader = function SNETLoader(_ref) {
   }, content))));
 };
 
-exports.SNETLoader = SNETLoader;
 SNETLoader.propTypes = {
   isLoading: _propTypes.default.bool,
   title: _propTypes.default.string,

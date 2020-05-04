@@ -6,9 +6,23 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
+import validator from "shared/dist/utils/validator";
+import { submitServiceConstraints } from "./validationConstraints";
 
 const ValidateConfig = props => {
-  const { classes, daemonConfig, handleValidateConfig, testEndPoint, handleTestEndpointsChange, alert } = props;
+  const {
+    classes,
+    daemonConfig,
+    handleValidateConfig,
+    testEndPoint,
+    handleTestEndpointsChange,
+    alert,
+    testEndpointAlert,
+  } = props;
+  const shouldValidateDaemonEnabled = () => {
+    const error = validator.single(testEndPoint, submitServiceConstraints.groups.array.testEndpoints);
+    return Boolean(error);
+  };
 
   return (
     <div className={classes.validateConfigContainer}>
@@ -21,14 +35,27 @@ const ValidateConfig = props => {
       </Typography>
       <SNETTextfield
         name="id"
-        label="Public Daemon Endpoint"
-        description="The public daemon enpoint that will be used for non-blockchain mode reviewing of service."
-        value={testEndPoint}
+        label="Public curation Endpoint"
+        description="The public curation endpoint that will be used for non-blockchain mode reviewing of service. This end point needs to be https"
+        value={testEndPoint || ""}
         onChange={handleTestEndpointsChange}
       />
+      <AlertBox
+        type={testEndpointAlert.type}
+        message={testEndpointAlert.message}
+        children={testEndpointAlert.children}
+      />
       <DaemonConfig config={daemonConfig} title="Test Configuration File" />
-      <AlertBox type={alert.type} message={alert.message} children={alert.children} />
-      <SNETButton children="validate endpoint" color="primary" variant="contained" onClick={handleValidateConfig} />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox type={alert.type} message={alert.message} children={alert.children} />
+      </div>
+      <SNETButton
+        children="validate endpoint"
+        color="primary"
+        variant="contained"
+        onClick={handleValidateConfig}
+        disabled={shouldValidateDaemonEnabled()}
+      />
     </div>
   );
 };

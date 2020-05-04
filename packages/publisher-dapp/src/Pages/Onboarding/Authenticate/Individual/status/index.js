@@ -10,7 +10,7 @@ import Pending from "./Pending";
 import Denied from "./Denied";
 import Approved from "./Approved";
 import RelatedLinks from "./RelatedLinks";
-import { checkIfKnownError } from "shared/src/utils/error";
+import { checkIfKnownError } from "shared/dist/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
 import { AuthenticateRoutes } from "../../AuthenitcateRouter/Routes";

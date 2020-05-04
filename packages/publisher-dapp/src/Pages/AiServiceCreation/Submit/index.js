@@ -22,9 +22,10 @@ const Submit = props => {
     history,
   } = props;
 
-  const { orgUuid, orgStatus } = useSelector(state => ({
+  const { orgUuid, orgStatus, orgId } = useSelector(state => ({
     orgUuid: state.organization.uuid,
     orgStatus: state.organization.state.state,
+    orgId: state.organization.id,
   }));
 
   const handleContinueEdit = () => {
@@ -44,6 +45,8 @@ const Submit = props => {
         serviceDetails={serviceDetails}
         changeServiceProviderComments={changeServiceProviderComments}
         changeGroups={changeGroups}
+        orgId={orgId}
+        serviceId={serviceDetails.id}
       />
     ),
     [serviceCreationStatus.PUBLISH_IN_PROGRESS]: (

@@ -76,7 +76,8 @@ AlertBox.propTypes = {
   message: _propTypes.default.string
 };
 AlertBox.defaultProps = {
-  type: "error"
+  type: "error",
+  message: undefined
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(AlertBox);
