@@ -502,29 +502,17 @@ export default class SNETImageUpload extends React.Component {
               spacing={spacingUnit}
             >
               <Grid item style={{ padding: "0 40px" }}>
-                <CloudUpload
-                  style={this.props.error ? { fontSize: 48, color: snetRed } : { fontSize: 48, color: this.mainColor }}
-                />
+                <CloudUpload style={{ fontSize: 48, color: this.mainColor }} />
               </Grid>
               <Grid item style={{ padding: "0 40px" }}>
                 <Typography
-                  style={
-                    this.props.error
-                      ? {
-                          fontFamily: snetFont,
-                          fontVariantCaps: "normal",
-                          textTransform: "initial",
-                          fontSize: 16,
-                          color: snetRed,
-                        }
-                      : {
-                          fontFamily: snetFont,
-                          fontVariantCaps: "normal",
-                          textTransform: "initial",
-                          fontSize: 16,
-                          color: snetGrey,
-                        }
-                  }
+                  style={{
+                    fontFamily: snetFont,
+                    fontVariantCaps: "normal",
+                    textTransform: "initial",
+                    fontSize: 16,
+                    color: snetGrey,
+                  }}
                 >
                   Drag and drop image here or
                   <span style={{ color: this.mainColor }}> click</span>
@@ -1428,7 +1416,6 @@ SNETImageUpload.propTypes = {
   galleryCols: PropTypes.number,
   infoTip: PropTypes.string,
   mainColor: PropTypes.object,
-  error: PropTypes.bool,
 
   // Output mode props
   displayModeTitle: PropTypes.string,

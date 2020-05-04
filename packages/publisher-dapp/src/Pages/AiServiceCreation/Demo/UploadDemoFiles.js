@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import JSZip from "jszip";
 import ValidationError from "shared/dist/utils/validationError";
 
-const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles, error }) => {
+const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles }) => {
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
@@ -73,7 +73,6 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
         fileSize={selectedFile.size}
         fileDownloadURL={demoFilesUrl}
         uploadSuccess={Boolean(demoFilesUrl)}
-        error={error}
       />
       <AlertBox type={alert.type} message={alert.message} />
     </div>

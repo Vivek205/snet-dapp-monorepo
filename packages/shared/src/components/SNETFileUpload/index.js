@@ -23,7 +23,6 @@ const SNETFileUpload = props => {
     fileSize,
     fileDownloadURL,
     uploadSuccess,
-    error,
   } = props;
   const classes = useStyles();
 
@@ -56,7 +55,6 @@ const SNETFileUpload = props => {
           fileSize={fileSize}
           fileDownloadURL={fileDownloadURL}
           uploadSuccess={uploadSuccess}
-          error={error}
         />
       </Grid>
     </Grid>

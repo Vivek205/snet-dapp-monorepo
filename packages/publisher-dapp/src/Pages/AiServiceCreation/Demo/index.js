@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +11,6 @@ import UploadDemoFiles from "./UploadDemoFiles";
 
 const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
   const { orgUuid } = useParams();
-  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
 
   return (
     <Grid container className={classes.demoContainer}>
@@ -92,16 +91,10 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             serviceUuid={serviceDetails.uuid}
             demoFilesUrl={serviceDetails.assets.demoFiles.url}
             changeDemoFiles={changeDemoFiles}
-            error={serviceDetails.assets.demoFiles.url ? "" : invalidFieldsFlag}
           />
         </div>
       </Grid>
-      <Actions
-        classes={classes}
-        serviceDetails={serviceDetails}
-        setServiceDetailsInRedux={setServiceDetailsInRedux}
-        setInvalidFieldsFlag={setInvalidFieldsFlag}
-      />
+      <Actions classes={classes} serviceDetails={serviceDetails} setServiceDetailsInRedux={setServiceDetailsInRedux} />
     </Grid>
   );
 };

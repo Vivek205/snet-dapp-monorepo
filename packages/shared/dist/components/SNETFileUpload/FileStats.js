@@ -24,8 +24,7 @@ var FileStats = function FileStats(props) {
       show = props.show,
       fileName = props.fileName,
       fileSize = props.fileSize,
-      fileDownloadURL = props.fileDownloadURL,
-      error = props.error;
+      fileDownloadURL = props.fileDownloadURL;
   var classes = (0, _styles.useStyles)();
 
   if (!show) {
@@ -38,11 +37,9 @@ var FileStats = function FileStats(props) {
     className: classes.uploadDetails
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: uploadSuccess ? classes.successfullUpload : classes.uploadStatusContainer
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: error ? classes.errorField : classes.uploadStatusContainer
   }, /*#__PURE__*/_react.default.createElement(_Folder.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: uploadSuccess ? classes.uploaded : classes.uploadStatus
-  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded"))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+  }, uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.title
   }, "File Name:"), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.value

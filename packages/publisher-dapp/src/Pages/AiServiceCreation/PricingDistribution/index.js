@@ -15,7 +15,6 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 class PricingDistribution extends Component {
   state = {
     alert: { type: alertTypes.ERROR, message: "An error occurred while saving groups" },
-    invalidFields: {},
   };
 
   componentDidMount = async () => {
@@ -41,10 +40,6 @@ class PricingDistribution extends Component {
     }
   };
 
-  setInvalidFields = invalidFields => {
-    this.setState({ invalidFields });
-  };
-
   render() {
     const { classes, changeGroups, serviceDetails, changeProtoFiles, setServiceDetailsInRedux } = this.props;
     return (
@@ -57,31 +52,20 @@ class PricingDistribution extends Component {
               manner. All service metadata can be managed at a group level. At this point we only support a single group
               per service. Support for multiple groups per Service is coming soon.
             </Typography>
-            <Region
-              changeGroups={changeGroups}
-              serviceGroups={serviceDetails.groups}
-              invalidFields={this.state.invalidFields}
-            />
-            <UploadProto
-              changeProtoFiles={changeProtoFiles}
-              protoFilesUrl={serviceDetails.assets.protoFiles.url}
-              invalidFields={this.state.invalidFields}
-            />
+            <Region changeGroups={changeGroups} serviceGroups={serviceDetails.groups} />
+            <UploadProto changeProtoFiles={changeProtoFiles} protoFilesUrl={serviceDetails.assets.protoFiles.url} />
             <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
             <div className={classes.alertContainer}>
               <AlertBox type={alert.ERROR} message={alert.message} />
             </div>
           </div>
         </Grid>
-        <Actions
-          serviceDetails={serviceDetails}
-          setServiceDetailsInRedux={setServiceDetailsInRedux}
-          setInvalidFields={this.setInvalidFields}
-        />
+        <Actions serviceDetails={serviceDetails} setServiceDetailsInRedux={setServiceDetailsInRedux} />
       </Grid>
     );
   }
 }
+
 const mapStateToProps = state => ({
   orgId: state.organization.id,
   groupId: state.organization.groups[0].id,
