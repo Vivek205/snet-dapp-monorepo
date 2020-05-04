@@ -110,7 +110,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
           {...basicDetailsFormData.DUNS}
           value={orgDetails.duns}
           onChange={handleChange}
-          disabled={!allowDuns}
+          disabled={allowDuns}
         />
       </div>
       <div className={classes.websiteUrlContainer}>

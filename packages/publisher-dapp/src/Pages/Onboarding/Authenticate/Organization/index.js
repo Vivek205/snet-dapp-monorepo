@@ -88,7 +88,7 @@ const Organization = props => {
           <Typography>
             Please provide your company organization details and your DUNS number for the verification process.
           </Typography>
-          <BasicDetails allowDuns={allowDuns} setAllowDuns={setAllowDuns} />
+          <BasicDetails allowDuns={Boolean(organization.duns)} setAllowDuns={setAllowDuns} />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>
             <AlertBox type={alert.type} message={alert.message} children={alert.children} />
