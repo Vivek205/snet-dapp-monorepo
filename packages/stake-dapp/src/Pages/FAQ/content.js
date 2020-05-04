@@ -10,7 +10,7 @@ export const communityDetails = [
     description: "Get in touch with community experts and other users in the SingularityNET Staking Help forum.",
   },
   {
-    to: "https://dev.singularitynet.io",
+    to: "https://dev.singularitynet.io/products/stake-timeline/",
     image: DocumentationImage,
     title: "Full Staking Documentation",
     description:
