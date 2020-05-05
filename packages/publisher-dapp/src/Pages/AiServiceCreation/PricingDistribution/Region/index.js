@@ -170,7 +170,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     if (isNotValid) {
       return setPriceValidation({
         type: alertTypes.ERROR,
-        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)}.`,
+        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)} AGI.`,
       });
     }
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
