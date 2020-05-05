@@ -52,7 +52,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 const snetGreyError = grey[700];
 const snetGrey = grey[500];
 const snetBackgroundGrey = grey[100];
-const snetRed = red[500];
+const snetRed = red[900];
 const snetBackgroundRed = red[100];
 
 // Definitions
