@@ -110,7 +110,7 @@ var SNETLogin = function SNETLogin(props) {
     value: email,
     autoFocus: true,
     onChange: function onChange(e) {
-      return setEmail(e.target.value);
+      return setEmail(e.target.value.toLowerCase());
     }
   }), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     id: "outlined-password-input",

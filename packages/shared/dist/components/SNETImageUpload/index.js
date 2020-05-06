@@ -95,7 +95,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 var snetGreyError = _colors.grey[700];
 var snetGrey = _colors.grey[500];
 var snetBackgroundGrey = _colors.grey[100];
-var snetRed = _colors.red[500];
+var snetRed = _colors.red[900];
 var snetBackgroundRed = _colors.red[100]; // Definitions
 
 var spacingUnit = 8;
