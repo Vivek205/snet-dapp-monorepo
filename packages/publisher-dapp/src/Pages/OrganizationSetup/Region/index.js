@@ -30,7 +30,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
       }
     }
     if (invalidFields) {
-      const isNotValid = Object.values(invalidFields);
+      const isNotValid = Object.values(invalidFields).map(key => key[0]);
       if (isNotValid) {
         for (let i = 0; i < isNotValid.length; i++) {
           if (isNotValid[i].includes(",")) {

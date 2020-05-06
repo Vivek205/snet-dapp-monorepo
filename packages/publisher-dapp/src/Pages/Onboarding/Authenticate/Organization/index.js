@@ -19,8 +19,9 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
+  const [allowDuns, setAllowDuns] = useState(false);
+
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const invalidFields = validator(organization, orgOnboardingConstraints);
@@ -29,6 +30,10 @@ const Organization = props => {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
   }, [history, organization.state.state, organization.uuid]);
+
+  useEffect(() => {
+    setAllowDuns(organization.duns ? true : false);
+  }, [organization.duns, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
