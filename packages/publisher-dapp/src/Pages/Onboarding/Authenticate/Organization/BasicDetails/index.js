@@ -35,7 +35,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     phone = contact.phone;
   }
   const handleWebsiteValidation = value => {
-    const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
+    const isNotValid = validator.single(value, orgProfileValidationConstraints.website, "Format:grouped");
     if (isNotValid) {
       return setWebsiteValidation({
         type: alertTypes.ERROR,
