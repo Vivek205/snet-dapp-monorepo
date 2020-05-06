@@ -7,7 +7,6 @@ import Chip from "@material-ui/core/Chip";
 import InfoIcon from "@material-ui/icons/Info";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
-import isEmpty from "lodash/isEmpty";
 
 import { useStyles } from "./styles";
 import AdvanceSettings from "./AdvanceSettings";
@@ -152,7 +151,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
                 </p>
               }
               disabled={foundInBlockchain}
-              error={!isEmpty(invalidFields) ? "paymentAddress" in invalidFields : false}
+              error={!!invalidFields ? "paymentAddress" in invalidFields : false}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -181,9 +180,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
                   </InputAdornment>
                 ),
               }}
-              error={
-                !isEmpty(invalidFields) ? "paymentConfig.paymentChannelStorageClient.endpoints" in invalidFields : false
-              }
+              error={!!invalidFields ? "paymentConfig.paymentChannelStorageClient.endpoints" in invalidFields : false}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />

@@ -19,16 +19,21 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
+  const [allowDuns, setAllowDuns] = useState(false);
+
   const dispatch = useDispatch();
-  const [invalidFeildsFlag, setInvalidFeildsFlag] = useState();
-  const invalidFeilds = validator(organization, orgOnboardingConstraints);
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
+  const invalidFields = validator(organization, orgOnboardingConstraints);
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
   }, [history, organization.state.state, organization.uuid]);
+
+  useEffect(() => {
+    setAllowDuns(organization.duns ? true : false);
+  }, [organization.duns, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
@@ -50,12 +55,15 @@ const Organization = props => {
 
   const handleFinish = async () => {
     setAlert({});
+
     try {
-      const isNotValid = Object.keys(invalidFeilds).map(key => test[key][0]);
-      if (isNotValid) {
-        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-        setInvalidFeildsFlag(true);
-        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      if (invalidFields) {
+        const isNotValid = Object.values(invalidFields);
+        if (isNotValid) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+          setInvalidFieldsFlag(true);
+          return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+        }
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
@@ -93,7 +101,7 @@ const Organization = props => {
           <BasicDetails
             allowDuns={allowDuns}
             setAllowDuns={setAllowDuns}
-            invalidFeilds={typeof invalidFeildsFlag !== "undefined" ? invalidFeilds : {}}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" ? invalidFields : {}}
           />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>
