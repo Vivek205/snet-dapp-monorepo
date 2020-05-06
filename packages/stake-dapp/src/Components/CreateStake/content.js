@@ -94,7 +94,7 @@ export const sessionDetails = activeStake => [
   },
   {
     title: "Incubation Time",
-    value: Math.floor((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
+    value: Math.ceil((activeStake.endPeriod - activeStake.submissionEndPeriod) / (60 * 60 * 24)),
     unit: "days",
     toolTip: "Amount of the time that AGI tokens in the stake will be vested and locked in",
   },
