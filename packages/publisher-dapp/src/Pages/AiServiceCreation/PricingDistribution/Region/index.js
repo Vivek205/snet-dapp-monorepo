@@ -216,7 +216,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                 defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
-                error={!isEmpty(invalidFields) ? "pricing" in invalidFields : false}
+                error={!!invalidFields ? "pricing" in invalidFields : false}
               />
               <AlertText type={priceValidation.type} message={priceValidation.message} />
             </Grid>
@@ -254,7 +254,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                   </InputAdornment>
                 ),
               }}
-              error={!isEmpty(invalidFields) ? "endpoints" in invalidFields : false}
+              error={!!invalidFields ? "endpoints" in invalidFields : false}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
@@ -298,7 +298,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                   </InputAdornment>
                 ),
               }}
-              error={!isEmpty(invalidFields) ? "daemonAddresses" in invalidFields : false}
+              error={!!invalidFields ? "daemonAddresses" in invalidFields : false}
             />
           </Grid>
 

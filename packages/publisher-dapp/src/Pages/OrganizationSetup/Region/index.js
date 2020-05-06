@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import isEmpty from "lodash/isEmpty";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -31,7 +30,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
       }
     }
     if (invalidFields) {
-      const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+      const isNotValid = Object.values(invalidFields);
       if (isNotValid) {
         for (let i = 0; i < isNotValid.length; i++) {
           if (isNotValid[i].includes(",")) {
@@ -77,7 +76,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
             group={group}
             key={group.id}
             foundInBlockchain={organization.foundInBlockchain}
-            invalidFields={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? invalidFields : {}}
           />
         ))}
 

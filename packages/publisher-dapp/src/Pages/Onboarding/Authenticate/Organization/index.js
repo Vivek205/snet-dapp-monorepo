@@ -53,7 +53,7 @@ const Organization = props => {
 
     try {
       if (invalidFields) {
-        const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+        const isNotValid = Object.values(invalidFields);
         if (isNotValid) {
           const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
           setInvalidFieldsFlag(true);
