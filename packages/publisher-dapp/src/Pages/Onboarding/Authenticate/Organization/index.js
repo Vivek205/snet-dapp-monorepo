@@ -51,7 +51,7 @@ const Organization = props => {
   const handleFinish = async () => {
     setAlert({});
     try {
-      const isNotValid = Object.keys(invalidFeilds).map(key => test[key][0]);
+      const isNotValid = Object.keys(invalidFeilds).map(key => invalidFeilds[key][0]);
       if (isNotValid) {
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         setInvalidFeildsFlag(true);

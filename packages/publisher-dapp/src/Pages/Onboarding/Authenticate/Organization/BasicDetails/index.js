@@ -85,14 +85,18 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
   };
   return (
     <Grid container>
-      <SNETTextField {...basicDetailsFormData.ORG_ID} value={orgDetails.id} onChange={handleChange} />
+      <SNETTextField
+        {...basicDetailsFormData.ORG_ID}
+        value={orgDetails.id}
+        onChange={handleChange}
+        error={"id" in invalidFeilds}
+      />
       <OrganizationIdAvailability
         orgDetails={orgDetails}
         id={orgDetails.id}
         availability={orgDetails.availability}
         classes={classes}
         loading={isValidateOrgIdLoading}
-        error={"id" in invalidFeilds}
       />
 
       <SNETTextField
