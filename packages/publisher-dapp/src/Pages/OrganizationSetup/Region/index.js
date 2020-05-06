@@ -20,7 +20,8 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
 
   const handleContinue = () => {
-    let invalidFields = validator(organization, orgSetupRegionValidationConstraints, { format: "grouped" });
+    let invalidFields = validator(organization, orgSetupRegionValidationConstraints);
+
     for (const property in invalidFields) {
       if (property === "groups") {
         const invalidProperty = JSON.parse(invalidFields[property]);
@@ -38,7 +39,6 @@ const Region = ({ history, classes, handleFinishLater }) => {
             isNotValid.push(...res);
           }
         }
-
         setInvalidFieldsFlag(true);
         setInvalidFields(invalidFields);
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);

@@ -25,6 +25,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var GetStarted = function GetStarted(_ref) {
   var classes = _ref.classes,
+      title = _ref.title,
+      description = _ref.description,
+      CTATitle = _ref.CTATitle,
       CTAType = _ref.CTAType,
       pageBtnRoute = _ref.pageBtnRoute,
       GetStartedDetails = _ref.GetStartedDetails,

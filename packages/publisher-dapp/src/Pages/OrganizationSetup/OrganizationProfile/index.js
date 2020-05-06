@@ -22,7 +22,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const validateForm = () => {
-    let isNotValid = validator(organization, orgProfileValidationConstraints, { format: "grouped" });
+    let isNotValid = validator(organization, orgProfileValidationConstraints);
     if (isNotValid) {
       return isNotValid;
     }

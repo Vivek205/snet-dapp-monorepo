@@ -77,12 +77,17 @@ var SNETHeader = function SNETHeader(_ref) {
 SNETHeader.propTypes = {
   isLoggedIn: _propTypes.default.bool,
   color: _propTypes.default.string,
-  LoggedInActions: _propTypes.default.object,
-  LoggedOutActions: _propTypes.default.object,
-  onLogoClick: _propTypes.default.func
-};
-SNETHeader.defaultProps = {
-  isLoggedIn: _propTypes.default.bool,
+  navbar: _propTypes.default.shape({
+    navbarItems: _propTypes.default.arrayOf(_propTypes.default.shape({
+      type: _propTypes.default.string,
+      activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
+      label: _propTypes.default.string,
+      openInNewTab: _propTypes.default.bool,
+      to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
+    }))
+  }),
+  LoggedInActions: _propTypes.default.elementType,
+  LoggedOutActions: _propTypes.default.elementType,
   onLogoClick: _propTypes.default.func
 };
 var _default = SNETHeader;
