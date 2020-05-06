@@ -23,7 +23,7 @@ const selectState = state => ({
   orgDetails: state.organization,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
-const BasicDetails = ({ allowDuns, setAllowDuns }) => {
+const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [websiteValidation, setWebsiteValidation] = useState({});
@@ -92,6 +92,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
         availability={orgDetails.availability}
         classes={classes}
         loading={isValidateOrgIdLoading}
+        error={"id" in invalidFeilds}
       />
 
       <SNETTextField
@@ -100,6 +101,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
         minCount={orgDetails.name.length}
         maxCount={50}
         onChange={handleChange}
+        error={"name" in invalidFeilds}
       />
       <div className={classes.dunsContainer}>
         <FormControlLabel

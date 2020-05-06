@@ -9,7 +9,7 @@ import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
-const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux }) => {
+const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalidFieldsFlag }) => {
   const history = useHistory();
 
   const { orgUuid, serviceUuid } = useParams();
@@ -33,8 +33,10 @@ const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux }) => {
           .replace(":orgUuid", orgUuid)
           .replace(":serviceUuid", serviceUuid)
       );
+      setInvalidFieldsFlag(false);
       setAlert({ type: alertTypes.ERROR, message: "" });
     } else {
+      setInvalidFieldsFlag(true);
       return setAlert({ type: alertTypes.ERROR, message: "Please upload Demo Files" });
     }
   };
