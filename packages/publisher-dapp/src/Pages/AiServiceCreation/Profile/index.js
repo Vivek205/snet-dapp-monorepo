@@ -47,7 +47,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const [alert, setAlert] = useState({});
   const [websiteValidation, setWebsiteValidation] = useState({});
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const invalidFields = validator(serviceDetails, serviceProfileValidationConstraints);
+  const invalidFields = validator(serviceDetails, serviceProfileValidationConstraints, { format: "grouped" });
 
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id

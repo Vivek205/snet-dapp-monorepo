@@ -24,7 +24,7 @@ const Organization = props => {
 
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const invalidFields = validator(organization, orgOnboardingConstraints);
+  const invalidFields = validator(organization, orgOnboardingConstraints, { format: "grouped" });
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
