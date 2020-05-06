@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { useSelector } from "react-redux";
-import isEmpty from "lodash/isEmpty";
 
 import BasicDetails from "./BasicDetails";
 import OrgImg from "./OrgImg";
@@ -44,7 +43,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const invalidFields = validateForm();
   const handleContinue = () => {
     if (invalidFields) {
-      const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+      const isNotValid = Object.values(invalidFields);
       if (isNotValid) {
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         setInvalidFieldsFlag(true);
@@ -76,11 +75,11 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
       <Grid className={classes.box}>
         <Typography variant="h6">Organization Profile</Typography>
         <BasicDetails
-          invalidFeilds={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
+          invalidFields={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? invalidFields : {}}
         />
         <OrgImg
           error={
-            typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
+            typeof invalidFieldsFlag !== "undefined" && !!invalidFields
               ? "assets.heroImage.url" in invalidFields
               : false
           }
