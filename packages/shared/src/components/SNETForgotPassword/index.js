@@ -16,7 +16,9 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
   const [validationErr, setValidationErr] = useState("");
 
   useEffect(() => {
-    setEmail(email);
+    if (email) {
+      setEmail(email.toLowerCase());
+    }
   }, [email]);
 
   const handleSubmit = event => {
@@ -46,7 +48,7 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
             margin="normal"
             variant="outlined"
             value={localEmail}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value.toLowerCase())}
           />
           <div className={classes.alertBoxContainer}>
             <AlertBox type="error" message={validationErr || forgotPasswordError} />

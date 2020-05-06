@@ -18,7 +18,9 @@ const SNETForgotPasswordConfirm = ({ email, forgotPasswordConfirmError, onSubmit
   const [validationErr, setValidationErr] = useState("");
 
   useEffect(() => {
-    setLocalEmail(email);
+    if (email) {
+      setLocalEmail(email.toLowerCase());
+    }
   }, [email]);
 
   const handleSubmit = event => {
@@ -52,7 +54,7 @@ const SNETForgotPasswordConfirm = ({ email, forgotPasswordConfirmError, onSubmit
             variant="outlined"
             value={localEmail}
             required
-            onChange={e => setLocalEmail(e.target.value)}
+            onChange={e => setLocalEmail(e.target.value.toLowerCase())}
           />
           <TextField
             id="outlined-code-input"

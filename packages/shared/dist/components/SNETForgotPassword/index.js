@@ -63,7 +63,9 @@ var SNETForgotPassword = function SNETForgotPassword(_ref) {
       setValidationErr = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    setEmail(email);
+    if (email) {
+      setEmail(email.toLowerCase());
+    }
   }, [email]);
 
   var handleSubmit = function handleSubmit(event) {
@@ -109,7 +111,7 @@ var SNETForgotPassword = function SNETForgotPassword(_ref) {
     variant: "outlined",
     value: localEmail,
     onChange: function onChange(e) {
-      return setEmail(e.target.value);
+      return setEmail(e.target.value.toLowerCase());
     }
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.alertBoxContainer

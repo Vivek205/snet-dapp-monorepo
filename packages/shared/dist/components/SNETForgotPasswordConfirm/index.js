@@ -77,7 +77,9 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
       setValidationErr = _useState10[1];
 
   (0, _react.useEffect)(function () {
-    setLocalEmail(email);
+    if (email) {
+      setLocalEmail(email.toLowerCase());
+    }
   }, [email]);
 
   var handleSubmit = function handleSubmit(event) {
@@ -126,7 +128,7 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     value: localEmail,
     required: true,
     onChange: function onChange(e) {
-      return setLocalEmail(e.target.value);
+      return setLocalEmail(e.target.value.toLowerCase());
     }
   }), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     id: "outlined-code-input",
