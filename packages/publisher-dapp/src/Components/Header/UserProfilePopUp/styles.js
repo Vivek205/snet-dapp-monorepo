@@ -56,6 +56,9 @@ export const useStyles = MUITheme => ({
   orgNameContainer: {
     display: "flex",
     justifyContent: "space-between",
+    "& span": {
+      display: "block",
+    },
   },
   signoutLink: {
     borderTopWidth: 1,
