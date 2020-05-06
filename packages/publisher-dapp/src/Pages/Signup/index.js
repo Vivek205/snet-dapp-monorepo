@@ -23,7 +23,14 @@ const Signup = props => {
       setSignupError("Singup Failed");
     }
   };
-  return <SNETSignup info={signupInfo} onSubmit={handleSubmit} signupError={signupError} />;
+  return (
+    <SNETSignup
+      info={signupInfo}
+      onSubmit={handleSubmit}
+      signupError={signupError}
+      resetSignupError={() => setSignupError(undefined)}
+    />
+  );
 };
 
 export default Signup;

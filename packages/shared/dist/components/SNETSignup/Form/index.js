@@ -49,7 +49,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Form = function Form(props) {
   var onSubmit = props.onSubmit,
-      signupError = props.signupError;
+      signupError = props.signupError,
+      resetSignupError = props.resetSignupError;
   var classes = (0, _styles.useStyles)();
 
   var _useState = (0, _react.useState)(""),
@@ -101,6 +102,24 @@ var Form = function Form(props) {
     return null;
   };
 
+  var handleNicknameChange = function handleNicknameChange(e) {
+    setNickname(e.target.value);
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
+  var handleEmailChange = function handleEmailChange(e) {
+    setEmail(e.target.value);
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
+  var handlePasswordChange = function handlePasswordChange(e) {
+    setPassword(e.target.value);
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
   return /*#__PURE__*/_react.default.createElement("form", {
     noValidate: true,
     autoComplete: "off",
@@ -112,9 +131,7 @@ var Form = function Form(props) {
     value: nickname,
     margin: "normal",
     variant: "outlined",
-    onChange: function onChange(e) {
-      return setNickname(e.target.value);
-    }
+    onChange: handleNicknameChange
   }), /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
   }, nickname.length, "/20 char")), /*#__PURE__*/_react.default.createElement("div", {
@@ -129,9 +146,7 @@ var Form = function Form(props) {
     margin: "normal",
     variant: "outlined",
     value: email,
-    onChange: function onChange(e) {
-      return setEmail(e.target.value);
-    }
+    onChange: handleEmailChange
   }), /*#__PURE__*/_react.default.createElement(_AlertText.default, {
     type: _AlertBox.alertTypes.ERROR,
     message: emailValidationMsg()
@@ -144,9 +159,7 @@ var Form = function Form(props) {
     margin: "normal",
     variant: "outlined",
     value: password,
-    onChange: function onChange(e) {
-      return setPassword(e.target.value);
-    }
+    onChange: handlePasswordChange
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.passwordCriteriaContainer
   }, /*#__PURE__*/_react.default.createElement("p", null, "Include:"), /*#__PURE__*/_react.default.createElement(_PasswordInlineValidation.default, {
@@ -166,7 +179,8 @@ var Form = function Form(props) {
 
 Form.propTypes = {
   onSubmit: _propTypes.default.func,
-  signupError: _propTypes.default.string
+  signupError: _propTypes.default.string,
+  resetSignupError: _propTypes.default.func
 };
 var _default = Form;
 exports.default = _default;

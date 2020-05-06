@@ -55,7 +55,8 @@ SNETSignup.propTypes = {
     list: _propTypes.default.arrayOf(_propTypes.default.string)
   }),
   onSubmit: _propTypes.default.func,
-  signupError: _propTypes.default.string
+  signupError: _propTypes.default.string,
+  resetSignupError: _propTypes.default.func
 };
 var _default = SNETSignup;
 exports.default = _default;

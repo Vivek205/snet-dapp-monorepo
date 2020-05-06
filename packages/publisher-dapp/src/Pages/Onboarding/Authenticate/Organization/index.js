@@ -19,15 +19,21 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
-  const dispatch = useDispatch();
+  const [allowDuns, setAllowDuns] = useState(false);
 
+  const dispatch = useDispatch();
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
+  const invalidFields = validator(organization, orgOnboardingConstraints);
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
   }, [history, organization.state.state, organization.uuid]);
+
+  useEffect(() => {
+    setAllowDuns(organization.duns ? true : false);
+  }, [organization.duns, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
@@ -49,11 +55,15 @@ const Organization = props => {
 
   const handleFinish = async () => {
     setAlert({});
+
     try {
-      const isNotValid = validator(organization, orgOnboardingConstraints);
-      if (isNotValid) {
-        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      if (invalidFields) {
+        const isNotValid = Object.values(invalidFields);
+        if (isNotValid) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+          setInvalidFieldsFlag(true);
+          return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+        }
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
@@ -88,7 +98,11 @@ const Organization = props => {
           <Typography>
             Please provide your company organization details and your DUNS number for the verification process.
           </Typography>
-          <BasicDetails allowDuns={allowDuns} setAllowDuns={setAllowDuns} />
+          <BasicDetails
+            allowDuns={allowDuns}
+            setAllowDuns={setAllowDuns}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" ? invalidFields : {}}
+          />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>
             <AlertBox type={alert.type} message={alert.message} children={alert.children} />
