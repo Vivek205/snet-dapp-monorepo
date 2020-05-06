@@ -19,8 +19,9 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
+  const [allowDuns, setAllowDuns] = useState(organization.duns ? true : false);
+
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const invalidFields = validator(organization, orgOnboardingConstraints);
