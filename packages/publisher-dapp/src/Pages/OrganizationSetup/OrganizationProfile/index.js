@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { useSelector } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 
 import BasicDetails from "./BasicDetails";
 import OrgImg from "./OrgImg";
@@ -20,12 +21,13 @@ import { generateDetailedErrorMessageFromValidation } from "../../../Utils/valid
 const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
   const organization = useSelector(state => state.organization);
   const [alert, setAlert] = useState({});
-
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const validateForm = () => {
     let isNotValid = validator(organization, orgProfileValidationConstraints);
     if (isNotValid) {
       return isNotValid;
     }
+
     const supportContacts = organization.contacts.find(el => el.type === ContactsTypes.SUPPORT);
     if (supportContacts) {
       if (Boolean(supportContacts.email)) {
@@ -39,11 +41,15 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
     return isNotValid;
   };
 
+  const invalidFields = validateForm();
   const handleContinue = () => {
-    const isNotValid = validateForm();
-    if (isNotValid) {
-      const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-      return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+    if (invalidFields) {
+      const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+      if (isNotValid) {
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        setInvalidFieldsFlag(true);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      }
     }
     if (!organization.assets.heroImage.raw && !organization.assets.heroImage.url) {
       return setAlert({ type: alertTypes.ERROR, message: errorMsg.IMAGE_NOT_FOUND });
@@ -69,8 +75,16 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
     <Fragment>
       <Grid className={classes.box}>
         <Typography variant="h6">Organization Profile</Typography>
-        <BasicDetails />
-        <OrgImg />
+        <BasicDetails
+          invalidFeilds={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
+        />
+        <OrgImg
+          error={
+            typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
+              ? "assets.heroImage.url" in invalidFields
+              : false
+          }
+        />
         <hr />
         <SupportDetails />
 

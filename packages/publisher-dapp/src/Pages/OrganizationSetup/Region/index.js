@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import isEmpty from "lodash/isEmpty";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -16,20 +17,36 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const [alert, setAlert] = useState({});
   const organization = useSelector(state => state.organization);
   const { groups } = organization;
+  const [invalidFields, setInvalidFields] = useState();
+  const [invalidFieldsFlag, setInvalidFeildsFlag] = useState();
 
   const handleContinue = () => {
-    const isNotValid = validator(organization, orgSetupRegionValidationConstraints);
-    if (isNotValid) {
-      for (let i = 0; i < isNotValid.length; i++) {
-        if (isNotValid[i].includes(",")) {
-          let res = isNotValid[i].split(",");
-          isNotValid.splice(i, 1);
-          isNotValid.push(...res);
-        }
+    let invalidFields = validator(organization, orgSetupRegionValidationConstraints);
+
+    for (const property in invalidFields) {
+      if (property === "groups") {
+        const invalidProperty = JSON.parse(invalidFields[property]);
+        Object.assign(invalidFields, invalidProperty[0]);
+        delete invalidFields.groups;
       }
-      const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-      return setAlert({ type: alertTypes.ERROR, children: errorMessage });
     }
+    if (invalidFields) {
+      const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+      if (isNotValid) {
+        for (let i = 0; i < isNotValid.length; i++) {
+          if (isNotValid[i].includes(",")) {
+            let res = isNotValid[i].split(",");
+            isNotValid.splice(i, 1);
+            isNotValid.push(...res);
+          }
+        }
+        setInvalidFeildsFlag(true);
+        setInvalidFields(invalidFields);
+        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      }
+    }
+    setInvalidFeildsFlag(false);
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
 
@@ -60,6 +77,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
             group={group}
             key={group.id}
             foundInBlockchain={organization.foundInBlockchain}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
           />
         ))}
 
