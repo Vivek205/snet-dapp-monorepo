@@ -21,6 +21,8 @@ var _ListItemIcon = _interopRequireDefault(require("@material-ui/core/ListItemIc
 
 var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _ToggleMenu = _interopRequireDefault(require("./ToggleMenu"));
 
 var _styles = require("./styles");
@@ -101,5 +103,9 @@ var VerticalTabs = function VerticalTabs(_ref) {
   }))));
 };
 
+VerticalTabs.propTypes = {
+  upperTabs: _propTypes.default.object,
+  lowerTabs: _propTypes.default.object
+};
 var _default = VerticalTabs;
 exports.default = _default;
