@@ -18,7 +18,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const organization = useSelector(state => state.organization);
   const { groups } = organization;
   const [invalidFields, setInvalidFields] = useState();
-  const [invalidFieldsFlag, setInvalidFeildsFlag] = useState();
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
 
   const handleContinue = () => {
     let invalidFields = validator(organization, orgSetupRegionValidationConstraints);
@@ -40,13 +40,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
             isNotValid.push(...res);
           }
         }
-        setInvalidFeildsFlag(true);
+        setInvalidFieldsFlag(true);
         setInvalidFields(invalidFields);
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         return setAlert({ type: alertTypes.ERROR, children: errorMessage });
       }
     }
-    setInvalidFeildsFlag(false);
+    setInvalidFieldsFlag(false);
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
 

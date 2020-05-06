@@ -76,7 +76,7 @@ const OrganizationProfile = ({ classes, history, handleFinishLater }) => {
       <Grid className={classes.box}>
         <Typography variant="h6">Organization Profile</Typography>
         <BasicDetails
-          invalidFeilds={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
+          invalidFields={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
         />
         <OrgImg
           error={
