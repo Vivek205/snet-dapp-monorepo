@@ -54,7 +54,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                 fromWei(BigNumber.sum(recentStakeWindow.windowTotalStake, recentStakeWindow.totalPendingApprovalStake))
               )
             : stakeCalculatorFields.poolStakeAmount,
-        incubationPeriodInDays: Math.floor(
+        incubationPeriodInDays: Math.ceil(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
         ),
         recentWindowLoaded: true,
