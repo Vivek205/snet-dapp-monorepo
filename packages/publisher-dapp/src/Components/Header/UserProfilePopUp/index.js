@@ -51,8 +51,10 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, user
               <li className={classes.orgNameContainer}>
                 <div>
                   <Avatar aria-label="recipe" className={classes.avatar} src={orgImg || SingularityLogo} />
-                  <span>{orgName}</span>
-                  <span>{userRole}</span>
+                  <div className={classes.orgNameAndRole}>
+                    <span>{orgName}</span>
+                    <span>{userRole}</span>
+                  </div>
                 </div>
                 <CheckIcon />
               </li>

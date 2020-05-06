@@ -56,9 +56,11 @@ export const useStyles = MUITheme => ({
   orgNameContainer: {
     display: "flex",
     justifyContent: "space-between",
-    "& span": {
-      display: "block",
-    },
+  },
+  orgNameAndRole: {
+    flexDirection: "column",
+    display: "flex",
+    marginTop: "-7px",
   },
   signoutLink: {
     borderTopWidth: 1,
