@@ -22,8 +22,8 @@ const Organization = props => {
   const [allowDuns, setAllowDuns] = useState(false);
   const organization = useSelector(state => state.organization);
   const dispatch = useDispatch();
-  const [invalidFeildsFlag, setInvalidFeildsFlag] = useState();
-  const invalidFeilds = validator(organization, orgOnboardingConstraints);
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
+  const invalidFields = validator(organization, orgOnboardingConstraints);
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
@@ -52,11 +52,11 @@ const Organization = props => {
     setAlert({});
 
     try {
-      if (invalidFeilds) {
-        const isNotValid = Object.keys(invalidFeilds).map(key => invalidFeilds[key][0]);
+      if (invalidFields) {
+        const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
         if (isNotValid) {
           const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-          setInvalidFeildsFlag(true);
+          setInvalidFieldsFlag(true);
           return setAlert({ type: alertTypes.ERROR, children: errorMessage });
         }
       }
@@ -96,7 +96,7 @@ const Organization = props => {
           <BasicDetails
             allowDuns={allowDuns}
             setAllowDuns={setAllowDuns}
-            invalidFeilds={typeof invalidFeildsFlag !== "undefined" ? invalidFeilds : {}}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" ? invalidFields : {}}
           />
           <CompanyAddress />
           <div className={classes.alertBoxContainer}>

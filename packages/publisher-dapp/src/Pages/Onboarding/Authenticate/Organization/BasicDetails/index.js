@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import isEmpty from "lodash/isEmpty";
 
 import SNETTextField from "shared/dist/components/SNETTextfield";
 import AlertText from "shared/dist/components/AlertText";
@@ -24,7 +23,7 @@ const selectState = state => ({
   orgDetails: state.organization,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
-const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
+const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [websiteValidation, setWebsiteValidation] = useState({});
@@ -90,7 +89,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
         {...basicDetailsFormData.ORG_ID}
         value={orgDetails.id}
         onChange={handleChange}
-        error={!isEmpty(invalidFeilds) ? "id" in invalidFeilds : ""}
+        error={!!invalidFields ? "id" in invalidFields : ""}
       />
       <OrganizationIdAvailability
         orgDetails={orgDetails}
@@ -106,7 +105,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
         minCount={orgDetails.name.length}
         maxCount={50}
         onChange={handleChange}
-        error={!isEmpty(invalidFeilds) ? "name" in invalidFeilds : ""}
+        error={!!invalidFields ? "name" in invalidFields : ""}
       />
       <div className={classes.dunsContainer}>
         <FormControlLabel
