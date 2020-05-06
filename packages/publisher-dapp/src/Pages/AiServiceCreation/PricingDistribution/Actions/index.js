@@ -31,7 +31,7 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
   };
 
   const handleContinue = async () => {
-    let invalidFields = validator(serviceDetails, servicePricingValidationConstraints);
+    let invalidFields = validator(serviceDetails, servicePricingValidationConstraints, { format: "grouped" });
     for (const property in invalidFields) {
       if (property === "groups") {
         const invalidProperty = JSON.parse(invalidFields[property]);
