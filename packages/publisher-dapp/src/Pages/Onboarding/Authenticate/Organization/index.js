@@ -50,12 +50,15 @@ const Organization = props => {
 
   const handleFinish = async () => {
     setAlert({});
+
     try {
-      const isNotValid = Object.keys(invalidFeilds).map(key => invalidFeilds[key][0]);
-      if (isNotValid) {
-        const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
-        setInvalidFeildsFlag(true);
-        return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+      if (invalidFeilds) {
+        const isNotValid = Object.keys(invalidFeilds).map(key => invalidFeilds[key][0]);
+        if (isNotValid) {
+          const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+          setInvalidFeildsFlag(true);
+          return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+        }
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };

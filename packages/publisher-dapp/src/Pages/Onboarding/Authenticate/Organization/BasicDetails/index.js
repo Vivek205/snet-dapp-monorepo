@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import isEmpty from "lodash/isEmpty";
 
 import SNETTextField from "shared/dist/components/SNETTextfield";
 import AlertText from "shared/dist/components/AlertText";
@@ -89,7 +90,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
         {...basicDetailsFormData.ORG_ID}
         value={orgDetails.id}
         onChange={handleChange}
-        error={"id" in invalidFeilds}
+        error={!isEmpty(invalidFeilds) ? "id" in invalidFeilds : ""}
       />
       <OrganizationIdAvailability
         orgDetails={orgDetails}
@@ -105,7 +106,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFeilds }) => {
         minCount={orgDetails.name.length}
         maxCount={50}
         onChange={handleChange}
-        error={"name" in invalidFeilds}
+        error={!isEmpty(invalidFeilds) ? "name" in invalidFeilds : ""}
       />
       <div className={classes.dunsContainer}>
         <FormControlLabel
