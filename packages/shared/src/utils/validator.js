@@ -36,7 +36,7 @@ const array = (arrayItems, itemConstraints, key) => {
     return `${key} is not a valid array`;
   }
   const arrayItemErrors = arrayItems.reduce((errors, item) => {
-    const error = validate(item, itemConstraints);
+    const error = validate(item, itemConstraints, { format: "grouped" });
     if (!!error) errors.push(error);
     return errors;
   }, []);
@@ -68,4 +68,5 @@ validator.validators = {
   validURL,
 };
 
+validator.options = { format: "flat" };
 export default validator;
