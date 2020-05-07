@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import isEmpty from "lodash/isEmpty";
@@ -13,6 +13,10 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) setAlert({ type: alertTypes.ERROR, message: "Please upload Demo Files" });
+  }, [error]);
 
   const handleFileDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
