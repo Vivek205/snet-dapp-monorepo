@@ -15,16 +15,21 @@ import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
 import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
+const selectState = state => ({
+  organization: state.organization,
+  email: state.user.email,
+});
+
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const organization = useSelector(state => state.organization);
+  const { organization, email } = useSelector(selectState);
   const [allowDuns, setAllowDuns] = useState(false);
 
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const invalidFields = validator(organization, orgOnboardingConstraints);
+  const invalidFields = validator(organization, orgOnboardingConstraints, { format: "grouped" });
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
@@ -76,7 +81,7 @@ const Organization = props => {
       }
       dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
-      dispatch(organizationActions.initializeOrg);
+      dispatch(organizationActions.initializeOrg(email));
     } catch (error) {
       return setAlert({
         type: alertTypes.ERROR,
