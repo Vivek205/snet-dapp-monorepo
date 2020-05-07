@@ -20,7 +20,7 @@ import { orgSetupRegionValidationConstraints } from "../validationConstraints";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 
-const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => {
+const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, invalidFields }) => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [localEndpoints, setLocalEndpoints] = useState("");
   const dispatch = useDispatch();
@@ -151,6 +151,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
                 </p>
               }
               disabled={foundInBlockchain}
+              error={!!invalidFields ? "paymentAddress" in invalidFields : false}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -179,10 +180,10 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain }) => 
                   </InputAdornment>
                 ),
               }}
+              error={!!invalidFields ? "paymentConfig.paymentChannelStorageClient.endpoints" in invalidFields : false}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
-
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
               <InfoIcon />

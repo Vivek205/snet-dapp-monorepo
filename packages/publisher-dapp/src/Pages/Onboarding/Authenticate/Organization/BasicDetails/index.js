@@ -23,7 +23,7 @@ const selectState = state => ({
   orgDetails: state.organization,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
-const BasicDetails = ({ allowDuns, setAllowDuns }) => {
+const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [websiteValidation, setWebsiteValidation] = useState({});
@@ -85,7 +85,12 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
   };
   return (
     <Grid container>
-      <SNETTextField {...basicDetailsFormData.ORG_ID} value={orgDetails.id} onChange={handleChange} />
+      <SNETTextField
+        {...basicDetailsFormData.ORG_ID}
+        value={orgDetails.id}
+        onChange={handleChange}
+        error={!!invalidFields ? "id" in invalidFields : ""}
+      />
       <OrganizationIdAvailability
         orgDetails={orgDetails}
         id={orgDetails.id}
@@ -100,6 +105,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns }) => {
         minCount={orgDetails.name.length}
         maxCount={50}
         onChange={handleChange}
+        error={!!invalidFields ? "name" in invalidFields : ""}
       />
       <div className={classes.dunsContainer}>
         <FormControlLabel
