@@ -12,6 +12,7 @@ import Heading from "./Heading";
 import { organizationSetupStatuses, organizationTypes } from "../../Utils/organizationSetup";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { AuthenticateRoutes } from "./Authenticate/AuthenitcateRouter/Routes";
+import { memberStatus } from "../../Utils/TeamMembers";
 
 class Onboarding extends Component {
   navigateToAppropriatePage = () => {
@@ -25,8 +26,16 @@ class Onboarding extends Component {
       history,
       publisherTnC,
       allowChangeRequestEdit,
+      orgMembershipStatus,
     } = this.props;
-    if (!isEmpty(email) && Boolean(orgUuid) && !isEmpty(ownerEmail) && email === ownerEmail) {
+
+    const userAllowedToProceed = () => {
+      const isUserTheOwner = !isEmpty(ownerEmail) && email === ownerEmail;
+      const userAcceptedInvitation = orgMembershipStatus && orgMembershipStatus !== memberStatus.PENDING;
+      return isUserTheOwner || userAcceptedInvitation;
+    };
+
+    if (!isEmpty(email) && Boolean(orgUuid) && userAllowedToProceed()) {
       if (orgType === organizationTypes.INDIVIDUAL) {
         if (
           orgStatus === organizationSetupStatuses.PUBLISHED ||
@@ -106,6 +115,7 @@ const mapStateToProps = state => ({
   orgType: state.organization.type,
   publisherTnC: state.user.publisherTnC,
   allowChangeRequestEdit: state.organization.allowChangeRequestEdit,
+  orgMembershipStatus: state.organization.membershipDetails.status,
 });
 
 export default withStyles(useStyles)(connect(mapStateToProps)(Onboarding));
