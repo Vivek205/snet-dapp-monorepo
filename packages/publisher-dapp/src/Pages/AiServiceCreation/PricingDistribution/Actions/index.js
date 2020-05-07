@@ -39,19 +39,15 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
         delete invalidFields.groups;
       }
     }
+    if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1)) {
+      invalidFields = {
+        ...invalidFields,
+        pricing: `Price of the service should be greater than or equal to ${cogsToAgi(1)}`,
+      };
+    }
     if (invalidFields) {
       let isNotValid = [];
       isNotValid = isNotValid = Object.values(invalidFields);
-      if (!serviceDetails.groups[0].pricing[0].priceInCogs >= cogsToAgi(1)) {
-        isNotValid
-          ? isNotValid.push(`Price of the service should be greater than or equal to ${cogsToAgi(1)}`)
-          : (isNotValid = [`Price of the service should be greater than or equal to ${cogsToAgi(1)}`]);
-        invalidFields = {
-          ...invalidFields,
-          pricing: `Price of the service should be greater than or equal to ${cogsToAgi(1)}`,
-        };
-      }
-
       if (isNotValid) {
         for (let i = 0; i < isNotValid.length; i++) {
           if (isNotValid[i].includes(",")) {
