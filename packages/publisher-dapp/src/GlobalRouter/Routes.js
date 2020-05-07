@@ -19,6 +19,7 @@ const TeamMembers = lazy(() => import("../Pages/TeamMembers"));
 const AiServices = lazy(() => import("../Pages/AiServices"));
 const AiServiceCreation = lazy(() => import("../Pages/AiServiceCreation"));
 const WalletAccount = lazy(() => import("../Pages/WalletAccount"));
+const UserProfile = lazy(() => import("../Pages/UserProfile"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -50,6 +51,7 @@ const TeamMembersComponent = withLightHeaderAndFooter(TeamMembers);
 const AiServicesComponent = withDashboardMenu(AiServices);
 const AiServiceCreationComponent = withLightHeaderAndFooter(AiServiceCreation);
 const WalletAccountComponent = withDashboardMenu(WalletAccount);
+const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -128,6 +130,11 @@ export const GlobalRoutes = {
     path: "/walletaccount",
     component: WalletAccountComponent,
   },
+  USER_PROFILE: {
+    name: "user profile",
+    path: "/userprofile",
+    component: UserProfileComponent,
+  },
 };
 
 export const setupRouteAuthentications = () => {
@@ -168,6 +175,11 @@ export const setupRouteAuthentications = () => {
     },
     SERVICES: {
       ...GlobalRoutes.SERVICES,
+      isAllowed: isLoggedIn,
+      redirectTo: GlobalRoutes.LOGIN.path,
+    },
+    USER_PROFILE: {
+      ...GlobalRoutes.USER_PROFILE,
       isAllowed: isLoggedIn,
       redirectTo: GlobalRoutes.LOGIN.path,
     },
