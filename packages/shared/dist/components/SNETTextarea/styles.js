@@ -24,6 +24,7 @@ var useStyles = function useStyles(MUITheme) {
         width: "100%",
         padding: 10,
         borderRadius: 4,
+        borderColor: "rgba(25,25,25,.32)",
         color: MUITheme.palette.text.darkGrey,
         fontFamily: MUITheme.typography.fontFamily,
         fontSize: 16,
