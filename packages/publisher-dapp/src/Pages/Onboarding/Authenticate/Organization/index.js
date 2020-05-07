@@ -24,7 +24,7 @@ const Organization = props => {
 
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const invalidFields = validator(organization, orgOnboardingConstraints, { format: "grouped" });
+  const invalidFields = validator(organization, orgOnboardingConstraints);
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
@@ -32,8 +32,8 @@ const Organization = props => {
   }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
-    setAllowDuns(organization.duns ? true : false);
-  }, [organization.duns, setAllowDuns]);
+    setAllowDuns(organization.uuid ? (organization.duns ? true : false) : true);
+  }, [organization.duns, organization.uuid, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
