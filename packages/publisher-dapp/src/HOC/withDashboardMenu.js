@@ -63,7 +63,7 @@ const withDashboardMenu = Component => {
       {
         icon: <SettingIcon />,
         title: "Settings",
-        href: GlobalRoutes.WALLET_ACCOUNT.path,
+        href: GlobalRoutes.USER_PROFILE.path,
         openInNewTab: false,
       },
     ];
