@@ -37,8 +37,8 @@ const Organization = props => {
   }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
-    setAllowDuns(organization.duns ? true : false);
-  }, [organization.duns, setAllowDuns]);
+    setAllowDuns(organization.uuid ? (organization.duns ? true : false) : true);
+  }, [organization.duns, organization.uuid, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
