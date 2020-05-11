@@ -41,7 +41,7 @@ const Enroll = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Typography variant="h4">Registering as an Individual</Typography>
         <Typography variant="body2">
-          If you are an individual or sole proprietor/single person business, get started by signing in with
+          If you are an individual, sole proprietor, or single person business, get started by signing in with your
           SingularityNET account. You’ll need to provide basic personal information, including your legal name and
           address.
         </Typography>
@@ -67,9 +67,10 @@ const Enroll = ({ classes, history }) => {
             Your organization must have a D-U-N-S Number so that we can verify your organization’s identity and legal
             entity status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as
             standard business identifiers. You can check to see if your organization already has a D-U-N-S Number and
-            request one if necessary. They are free in most jurisdictions.&nbsp;
+            request one if necessary, they are free of charge in most jurisdictions.
             <a target="_blank" rel="noopener noreferrer" href="https://www.dnb.com/duns-number/get-a-duns.html">
-              Learn more
+              {" "}
+              Learn more{" "}
             </a>
           </Typography>
         </div>
@@ -88,17 +89,15 @@ const Enroll = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.metamask}>
         <Typography variant="h4">Metamask</Typography>
         <Typography variant="body2">
-          In order to work with the publisher portal, you will need to use the Metamask plugin. It is necessary for you
-          to &nbsp;
-          <a target="_blank" rel="noopener noreferrer" href="https://dev.singularitynet.io/docs/ai-consumers/wallet/">
-            setup and install Metamask Wallet &nbsp;
-          </a>
-          account so that you can perform blockchain operations such as publishing the organization and services as well
-          as collect AGI tokens that your AI services earns from customer purchases.
+          In order to publish your AI services and company/individual entity to the blockchain, you will need to use the
+          Metamask app plugin. It is recommended that you set up and install a Metamask Wallet account to enable
+          publishing actions to the blockchain as well as collect AGI tokens that your AI services gained from customers
+          purchases.
         </Typography>
         <Typography variant="body2">
-          Publishing on SingularityNET platform is free, but there are minimal gas charges in ETH tokens that you will
-          need to spend in order to complete certain actions on blockchain.
+          Publishing services on the SingularityNET platform is free of charge, but there are minimal gas charges in ETH
+          tokens that have to be spent in order to complete actions on the Ethereum blockchain. It is important to
+          ensure you have some ETH stored in your Metamask wallet.
         </Typography>
         <ul>
           <Typography variant="subtitle1" display="inline">
@@ -124,9 +123,7 @@ const Enroll = ({ classes, history }) => {
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.website}>
         <Typography variant="h4">Website</Typography>
         <Typography variant="body2">
-          Your company organization or individual entity must have a website URL that is publicly available and the
-          domain name must be associated with your organization. Your company orgnaization or individual entity will
-          have your website URL displayed on the AI Marketplace.
+          Your company organization or individual entity will have your website URL displayed on the AI Marketplace.
         </Typography>
       </Grid>
 
@@ -134,8 +131,11 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="h4">Joining Team Members</Typography>
         <Typography variant="body2">
           Joining team members will be required to provide their Metamask address in order to securely gain permissions
-          to company organization or individual enttiy’s blockchain. They will NOT be charged ETH gas cost to join. The
-          owner of the company or individual entity will be responsible for adding team members to the blockchain.
+          to the company organization or individual entity’s blockchain.
+        </Typography>
+        <Typography variant="body2">
+          There is no 'ETH Gas' cost for joining team members. The owner of the company or individual entity will be
+          responsible to add the team members to the blockchain.
         </Typography>
       </Grid>
 
