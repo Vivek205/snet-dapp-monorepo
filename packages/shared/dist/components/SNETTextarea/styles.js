@@ -42,7 +42,7 @@ var useStyles = function useStyles(MUITheme) {
     },
     error: {
       borderWidth: 2,
-      borderColor: MUITheme.palette.border.alertBox
+      borderColor: "".concat(MUITheme.palette.border.alertBox, " !important")
     },
     label: {
       position: "absolute",

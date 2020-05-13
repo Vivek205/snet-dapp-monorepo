@@ -32,7 +32,7 @@ export const useStyles = MUITheme => ({
   },
   error: {
     borderWidth: 2,
-    borderColor: MUITheme.palette.border.alertBox,
+    borderColor: `${MUITheme.palette.border.alertBox} !important`,
   },
   label: {
     position: "absolute",
