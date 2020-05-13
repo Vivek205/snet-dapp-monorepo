@@ -101,7 +101,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
   };
 
   const validateDaemonAddress = value => {
-    const isNotValid = validator.single(value, daemonValidationConstraints.groups.array.daemonAddresses);
+    const isNotValid = validator.single(value, daemonValidationConstraints.daemonAddresses);
     if (isNotValid) {
       setDaemonAddressValidation({
         type: alertTypes.ERROR,
@@ -120,7 +120,9 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
-    if (validateDaemonAddress(value)) handleNewDaemonAddressChange();
+    if (validateDaemonAddress(value)) {
+      handleNewDaemonAddressChange();
+    }
   };
   const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));

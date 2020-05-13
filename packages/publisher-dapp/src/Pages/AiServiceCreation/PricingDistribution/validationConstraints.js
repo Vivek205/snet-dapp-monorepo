@@ -18,9 +18,5 @@ export const servicePricingValidationConstraints = {
   },
 };
 export const daemonValidationConstraints = {
-  groups: {
-    array: {
-      daemonAddresses: { equality: validBlockChainAdressEquality("paymentAddress") },
-    },
-  },
+  daemonAddresses: { equality: validBlockChainAdressEquality("paymentAddress") },
 };
