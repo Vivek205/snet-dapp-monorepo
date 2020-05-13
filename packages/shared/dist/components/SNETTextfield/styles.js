@@ -36,9 +36,9 @@ var useStyles = function useStyles(MUITheme) {
         fontSize: 14,
         letterSpacing: 0.25,
         lineHeight: "20px",
-        '& a': {
+        "& a": {
           color: MUITheme.palette.primary.main,
-          textDecoration: 'none'
+          textDecoration: "none"
         }
       }, MUITheme.breakpoints.down("sm"), {
         marginTop: 0
