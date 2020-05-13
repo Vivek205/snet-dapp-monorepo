@@ -28,6 +28,11 @@ export const useStyles = MUITheme => ({
       "&:hover": {
         borderColor: `${MUITheme.palette.text.primary} !important`,
       },
+      "&:focus": {
+        borderWidth: 2,
+        borderColor: `${MUITheme.palette.primary.main} !important`,
+        outline: "none",
+      },
     },
   },
   error: {

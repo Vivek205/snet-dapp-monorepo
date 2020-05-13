@@ -35,8 +35,13 @@ var useStyles = function useStyles(MUITheme) {
           borderColor: MUITheme.palette.border.secondary,
           color: "#999"
         },
-        '&:hover': {
+        "&:hover": {
           borderColor: "".concat(MUITheme.palette.text.primary, " !important")
+        },
+        "&:focus": {
+          borderWidth: 2,
+          borderColor: "".concat(MUITheme.palette.primary.main, " !important"),
+          outline: 'none'
         }
       }
     },
