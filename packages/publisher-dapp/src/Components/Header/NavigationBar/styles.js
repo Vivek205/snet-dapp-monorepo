@@ -44,7 +44,6 @@ export const useStyles = makeStyles(MUITheme => ({
       display: "inline-block",
       background: "rgba(155,155,155,0.4)",
       position: "absolute",
-      // top: 15,
     },
     "& .MuiSelect-selectMenu": {
       color: MUITheme.palette.text.lightGrey,
