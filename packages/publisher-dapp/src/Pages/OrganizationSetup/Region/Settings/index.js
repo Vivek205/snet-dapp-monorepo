@@ -16,7 +16,6 @@ import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import { keyCodes } from "shared/dist/utils/keyCodes";
-import { orgSetupRegionValidationConstraints } from "../validationConstraints";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
 
@@ -50,10 +49,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
   };
 
   const handleEndPointValidation = value => {
-    const isNotValid = validator.single(
-      value,
-      orgSetupRegionValidationConstraints.groups.array["paymentConfig.paymentChannelStorageClient.endpoints"]
-    );
+    const isNotValid = validator.validators.validURL(value, { message: `${value} is not a valid endpoint` });
     if (isNotValid) {
       setAlert({ type: alertTypes.ERROR, message: `${value}  is not a valid endpoint` });
       return false;
