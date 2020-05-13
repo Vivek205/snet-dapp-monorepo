@@ -25,6 +25,9 @@ export const useStyles = MUITheme => ({
         borderColor: MUITheme.palette.border.secondary,
         color: "#999",
       },
+      "&:hover": {
+        borderColor: `${MUITheme.palette.text.primary} !important`,
+      },
     },
   },
   error: {

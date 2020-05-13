@@ -34,6 +34,9 @@ var useStyles = function useStyles(MUITheme) {
           background: MUITheme.palette.background.white,
           borderColor: MUITheme.palette.border.secondary,
           color: "#999"
+        },
+        '&:hover': {
+          borderColor: "".concat(MUITheme.palette.text.primary, " !important")
         }
       }
     },
