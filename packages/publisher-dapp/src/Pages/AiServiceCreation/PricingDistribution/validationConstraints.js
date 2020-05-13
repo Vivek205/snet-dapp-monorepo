@@ -12,7 +12,6 @@ export const servicePricingValidationConstraints = {
   groups: {
     array: {
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
-      daemonAddresses: { presence: { allowEmpty: false, message: "^Daemon Addresses cannot be blank" } },
     },
   },
 };
