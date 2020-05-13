@@ -14,10 +14,12 @@ export const useStyles = MUITheme => ({
     width: 120,
     display: "inline-block",
     color: MUITheme.palette.text.primary,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
   },
   value: {
     color: MUITheme.palette.text.darkGrey,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 16,
   },
   btnContainer: {
