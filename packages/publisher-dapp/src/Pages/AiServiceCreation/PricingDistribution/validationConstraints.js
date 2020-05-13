@@ -18,5 +18,5 @@ export const servicePricingValidationConstraints = {
   },
 };
 export const daemonValidationConstraints = {
-  daemonAddresses: { equality: validBlockChainAdressEquality("paymentAddress") },
+  equality: validBlockChainAdressEquality("paymentAddress"),
 };

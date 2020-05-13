@@ -101,7 +101,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
   };
 
   const validateDaemonAddress = value => {
-    const isNotValid = validator.single(value, daemonValidationConstraints.daemonAddresses);
+    const isNotValid = validator.single(value, daemonValidationConstraints);
     if (isNotValid) {
       setDaemonAddressValidation({
         type: alertTypes.ERROR,
