@@ -17,7 +17,7 @@ import { useStyles } from "./styles";
 import { userActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
-const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType }) => {
+const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, userRole }) => {
   const { nickname, orgName, orgUuid } = useSelector(state => ({
     orgUuid: state.organization.uuid,
     nickname: state.user.nickname,
@@ -51,7 +51,10 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType }) =>
               <li className={classes.orgNameContainer}>
                 <div>
                   <Avatar aria-label="recipe" className={classes.avatar} src={orgImg || SingularityLogo} />
-                  <span>{orgName}</span>
+                  <div className={classes.orgNameAndRole}>
+                    <span>{orgName}</span>
+                    <span>{userRole}</span>
+                  </div>
                 </div>
                 <CheckIcon />
               </li>
