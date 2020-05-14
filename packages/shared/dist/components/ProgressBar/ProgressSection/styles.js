@@ -14,7 +14,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       borderRadius: 25,
       backgroundColor: MUITheme.palette.text.lightGrey,
       color: MUITheme.palette.text.white,
-      lineHeight: '28px',
+      lineHeight: "28px",
       "& span": {
         "&::after": {
           content: '""',
