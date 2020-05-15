@@ -9,6 +9,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _clsx2 = _interopRequireDefault(require("clsx"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _Drawer = _interopRequireDefault(require("@material-ui/core/Drawer"));
 
 var _List = _interopRequireDefault(require("@material-ui/core/List"));
@@ -21,7 +23,7 @@ var _ListItemIcon = _interopRequireDefault(require("@material-ui/core/ListItemIc
 
 var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
 
 var _ToggleMenu = _interopRequireDefault(require("./ToggleMenu"));
 
@@ -69,9 +71,11 @@ var VerticalTabs = function VerticalTabs(_ref) {
   }), /*#__PURE__*/_react.default.createElement(_List.default, {
     className: classes.list
   }, upperTabs.map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(_ListItem.default, {
+    return /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
+      title: !open ? item.title : "",
+      key: item.title
+    }, /*#__PURE__*/_react.default.createElement(_ListItem.default, {
       button: true,
-      key: item.title,
       className: classes.listItem,
       onClick: item.onRowClick
     }, /*#__PURE__*/_react.default.createElement("a", {
@@ -82,13 +86,15 @@ var VerticalTabs = function VerticalTabs(_ref) {
       className: classes.listItemIcon
     }, item.icon), /*#__PURE__*/_react.default.createElement(_ListItemText.default, {
       primary: item.title
-    })));
+    }))));
   })), /*#__PURE__*/_react.default.createElement(_Divider.default, null), /*#__PURE__*/_react.default.createElement(_List.default, {
     className: classes.list
   }, lowerTabs.map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(_ListItem.default, {
+    return /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
+      title: !open ? item.title : "",
+      key: item.title
+    }, /*#__PURE__*/_react.default.createElement(_ListItem.default, {
       button: true,
-      key: item.title,
       className: classes.listItem,
       onClick: item.onRowClick
     }, /*#__PURE__*/_react.default.createElement("a", {
@@ -99,7 +105,7 @@ var VerticalTabs = function VerticalTabs(_ref) {
       className: classes.listItemIcon
     }, item.icon), /*#__PURE__*/_react.default.createElement(_ListItemText.default, {
       primary: item.title
-    })));
+    }))));
   }))));
 };
 
