@@ -122,11 +122,15 @@ class WalletAccount extends React.Component {
     }, []);
 
     const serviceHost = validEndpoints[0];
+    const buttonText = "Validate Daemon";
     if (!serviceHost) {
       return this.setState({
         getPaymentsListAlert: {
           type: alertTypes.ERROR,
-          message: "No valid daemon endpoint is found. Please validate a daemon to proceed",
+          message:
+            "Please make sure atleast one daemon endpoint is up and has been validated after your service is published on blockchain, you can do this by clicking on the " +
+            buttonText.bold() +
+            " button on the service landing page.",
         },
       });
     }
