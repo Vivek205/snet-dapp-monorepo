@@ -15,11 +15,16 @@ import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses } from "../../../../Utils/organizationSetup";
 import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 
+const selectState = state => ({
+  organization: state.organization,
+  email: state.user.email,
+});
+
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const organization = useSelector(state => state.organization);
+  const { organization, email } = useSelector(selectState);
   const [allowDuns, setAllowDuns] = useState(false);
 
   const dispatch = useDispatch();
@@ -32,8 +37,8 @@ const Organization = props => {
   }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
-    setAllowDuns(organization.duns ? true : false);
-  }, [organization.duns, setAllowDuns]);
+    setAllowDuns(organization.uuid ? (organization.duns ? true : false) : true);
+  }, [organization.duns, organization.uuid, setAllowDuns]);
 
   useEffect(() => {
     if (organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED && !Boolean(alert.type)) {
@@ -76,7 +81,7 @@ const Organization = props => {
       }
       dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
-      dispatch(organizationActions.initializeOrg);
+      dispatch(organizationActions.initializeOrg(email));
     } catch (error) {
       return setAlert({
         type: alertTypes.ERROR,
