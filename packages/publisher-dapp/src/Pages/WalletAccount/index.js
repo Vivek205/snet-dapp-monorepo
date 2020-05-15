@@ -128,8 +128,8 @@ class WalletAccount extends React.Component {
           type: alertTypes.ERROR,
           children: (
             <span>
-              Please make sure atleast one daemon endpoint is up and has been validated after your service is published
-              on blockchain, you can do this by clicking on the
+              a Please make sure atleast one daemon endpoint is up and has been validated after your service is
+              published on blockchain, you can do this by clicking on the
               <strong>Validate Daemon</strong> button on the service landing page.
             </span>
           ),
