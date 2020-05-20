@@ -34,12 +34,20 @@ var useStyles = function useStyles(MUITheme) {
           background: MUITheme.palette.background.white,
           borderColor: MUITheme.palette.border.secondary,
           color: "#999"
+        },
+        "&:hover": {
+          borderColor: "".concat(MUITheme.palette.text.primary, " !important")
+        },
+        "&:focus": {
+          borderWidth: 2,
+          borderColor: "".concat(MUITheme.palette.primary.main, " !important"),
+          outline: "none"
         }
       }
     },
     error: {
       borderWidth: 2,
-      borderColor: MUITheme.palette.border.alertBox
+      borderColor: "".concat(MUITheme.palette.border.alertBox, " !important")
     },
     label: {
       position: "absolute",
