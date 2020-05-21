@@ -6,9 +6,16 @@ export const useStyles = MUITheme => ({
     "& > div": {
       padding: "10px 12px",
       background: MUITheme.palette.background.mainContent,
-      "&:first-of-type": { marginRight: 4 },
+      "&:first-of-type": {
+        marginRight: 4,
+        [MUITheme.breakpoints.down("sm")]: {
+          marginRight: 0,
+          marginBottom: 5,
+        },
+      },
     },
     "@media(max-width:1040px)": { paddingRight: 70 },
+    [MUITheme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   title: {
     width: 120,
