@@ -203,9 +203,13 @@ const payloadForSubmit = organization => {
   payload.groups = groupsToBeSubmitted;
 
   if (assets.heroImage.url) {
-    payload.assets.hero_image = { url: assets.heroImage.url };
+    payload.assets.hero_image = { ...payload.assets.hero_image, url: assets.heroImage.url };
   } else {
-    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+    payload.assets.hero_image = {
+      ...payload.assets.hero_image,
+      raw: assets.heroImage.raw,
+      file_type: assets.heroImage.fileType,
+    };
   }
 
   return payload;
