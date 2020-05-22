@@ -41,7 +41,7 @@ var useStyles = function useStyles(MUITheme) {
         "&:focus": {
           borderWidth: 2,
           borderColor: "".concat(MUITheme.palette.primary.main, " !important"),
-          outline: 'none'
+          outline: "none"
         }
       }
     },
