@@ -25,11 +25,19 @@ export const useStyles = MUITheme => ({
         borderColor: MUITheme.palette.border.secondary,
         color: "#999",
       },
+      "&:hover": {
+        borderColor: `${MUITheme.palette.text.primary} !important`,
+      },
+      "&:focus": {
+        borderWidth: 2,
+        borderColor: `${MUITheme.palette.primary.main} !important`,
+        outline: "none",
+      },
     },
   },
   error: {
     borderWidth: 2,
-    borderColor: MUITheme.palette.border.alertBox,
+    borderColor: `${MUITheme.palette.border.alertBox} !important`,
   },
   label: {
     position: "absolute",

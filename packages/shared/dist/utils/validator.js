@@ -75,7 +75,7 @@ var validURL = function validURL(str, options) {
   return options.message || "".concat(str, "  is not valid");
 };
 
-validator.validators = _objectSpread(_objectSpread({}, _validate.default.validators), {}, {
+validator.validators = _objectSpread({}, _validate.default.validators, {
   // custom validators
   hasLowerCase: hasLowerCase,
   hasUpperCase: hasUpperCase,
