@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 // import ShowMoreIcon from "@material-ui/icons/MoreVert";
-import InfoIcon from "@material-ui/icons/Info";
+// import InfoIcon from "@material-ui/icons/Info";
 
 import SNETPagination from "shared/dist/components/SNETPagination";
 import UserCard from "shared/dist/components/UserCard";
@@ -39,7 +39,7 @@ const MembersWithAccess = ({ classes, publisedMembers, publishedInProgressMember
             <Grid item xs={12} sm={12} md={2} lg={2}>
               <span className={classes.mobileTableHeader}>role</span>
               <div className={classes.infoIconContainer}>
-                <InfoIcon className={classes.infoIcon} />
+                {/* <InfoIcon className={classes.infoIcon} /> */}
                 <span className={classes.tableBodyCell}>{item.role}</span>
               </div>
             </Grid>
