@@ -179,7 +179,7 @@ const payloadForSubmit = organization => {
     assets: {
       hero_image: {
         url: organization.assets.heroImage.url,
-        ipfs_uri: organization.assets.heroImage.ipfsUri || "",
+        ipfs_hash: organization.assets.heroImage.ipfsHash || "",
       },
     },
     ownerAddress: organization.ownerAddress,
@@ -271,7 +271,7 @@ const parseOrgData = selectedOrg => {
     assets: {
       heroImage: {
         url: selectedOrg.assets.hero_image.url,
-        ipfsUri: selectedOrg.assets.hero_image.ipfs_uri,
+        ipfsHash: selectedOrg.assets.hero_image.ipfs_hash,
       },
     },
   };
