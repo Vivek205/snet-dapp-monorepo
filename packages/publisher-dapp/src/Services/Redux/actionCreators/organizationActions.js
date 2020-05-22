@@ -318,7 +318,7 @@ export const getStatus = async dispatch => {
 const finishLaterAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -343,7 +343,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
 const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
