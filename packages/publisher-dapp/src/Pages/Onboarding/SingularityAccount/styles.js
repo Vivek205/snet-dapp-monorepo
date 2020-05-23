@@ -121,7 +121,6 @@ export const useStyles = MUITheme => ({
   dropDownContainer: {
     paddingRight: 29,
     display: "flex",
-    "& .MuiFormControl-root": { paddingLeft: 0 },
     "& > div": {
       "& > p": {
         paddingLeft: 20,
@@ -134,6 +133,5 @@ export const useStyles = MUITheme => ({
   },
   infoBoxContainer: {
     padding: "16px 22px 0",
-    marginTop: 24,
   },
 });

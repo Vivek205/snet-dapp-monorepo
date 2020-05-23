@@ -14,6 +14,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
 import { individualVerificationStatusList } from "../../constant";
 import { getEmailDomain } from "../../../../Utils/validation";
+import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 
 const domainsToBeAutoApproved = ["singularitynet.io"];
 
@@ -44,7 +45,8 @@ class Individual extends Component {
       const userDomain = getEmailDomain(this.props.userEmail);
       if (domainsToBeAutoApproved.includes(userDomain)) {
         await setStatus(individualVerificationStatusList.APPROVED);
-        return history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
+        // history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+        return history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
       }
       await window.location.replace(redirectUrl);
     } catch (e) {
