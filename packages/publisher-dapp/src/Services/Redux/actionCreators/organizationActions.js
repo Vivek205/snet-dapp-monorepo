@@ -179,7 +179,7 @@ const payloadForSubmit = organization => {
     assets: {
       hero_image: {
         url: organization.assets.heroImage.url,
-        ipfs_uri: organization.assets.heroImage.ipfsUri || "",
+        ipfs_hash: organization.assets.heroImage.ipfsHash || "",
       },
     },
     ownerAddress: organization.ownerAddress,
@@ -203,9 +203,13 @@ const payloadForSubmit = organization => {
   payload.groups = groupsToBeSubmitted;
 
   if (assets.heroImage.url) {
-    payload.assets.hero_image = { url: assets.heroImage.url };
+    payload.assets.hero_image = { ...payload.assets.hero_image, url: assets.heroImage.url };
   } else {
-    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+    payload.assets.hero_image = {
+      ...payload.assets.hero_image,
+      raw: assets.heroImage.raw,
+      file_type: assets.heroImage.fileType,
+    };
   }
 
   return payload;
@@ -271,7 +275,7 @@ const parseOrgData = selectedOrg => {
     assets: {
       heroImage: {
         url: selectedOrg.assets.hero_image.url,
-        ipfsUri: selectedOrg.assets.hero_image.ipfs_uri,
+        ipfsHash: selectedOrg.assets.hero_image.ipfs_hash,
       },
     },
   };
@@ -318,7 +322,7 @@ export const getStatus = async dispatch => {
 const finishLaterAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -343,7 +347,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
 const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
