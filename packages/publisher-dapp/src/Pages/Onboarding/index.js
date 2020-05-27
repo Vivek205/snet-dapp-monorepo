@@ -96,7 +96,12 @@ class Onboarding extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, orgStatus, orgType } = this.props;
+
+    if (orgType === organizationTypes.INDIVIDUAL && !!orgStatus) {
+      return <OnboardingRouter />;
+    }
+
     return (
       <div className={classes.onboardingContainer}>
         <Heading {...this.activeSection().heading} />
