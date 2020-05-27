@@ -45,7 +45,6 @@ class Individual extends Component {
       const userDomain = getEmailDomain(this.props.userEmail);
       if (domainsToBeAutoApproved.includes(userDomain)) {
         await setStatus(individualVerificationStatusList.APPROVED);
-        // history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
         return history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
       }
       await window.location.replace(redirectUrl);

@@ -35,12 +35,12 @@ class AiServiceCreation extends Component {
     const {
       getAiServiceList,
       getServiceDetails,
-      // initServiceCreationLoader,
+      initServiceCreationLoader,
       stopInitServiceCreationLoader,
       orgId,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
-    // initServiceCreationLoader();
+    initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
     this.setState({ serviceDetails });
