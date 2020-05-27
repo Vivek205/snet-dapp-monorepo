@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useStyles } from "./styles";
@@ -56,10 +55,6 @@ const IndividualStatus = ({ classes, history }) => {
   if (Component) {
     return (
       <Grid container spacing={24} className={classes.individualStatusContainer}>
-        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
-          <Typography variant="h3">Welcome to the AI Publisher</Typography>
-          <Typography>With this publisher portal, you can publish and manage your AI services.</Typography>
-        </Grid>
         <Component handleVerify={handleVerify} rejectReason={rejectReason} />
         <AlertBox type={alert.type} message={alert.message} />
         <RelatedLinks />
