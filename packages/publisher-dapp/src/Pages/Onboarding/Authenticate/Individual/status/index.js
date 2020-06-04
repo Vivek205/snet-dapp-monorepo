@@ -57,7 +57,7 @@ const IndividualStatus = ({ classes, history }) => {
       <Grid container spacing={24} className={classes.individualStatusContainer}>
         <Component handleVerify={handleVerify} rejectReason={rejectReason} />
         <AlertBox type={alert.type} message={alert.message} />
-        <RelatedLinks />
+        <RelatedLinks show={status === individualVerificationStatusList.APPROVED} />
       </Grid>
     );
   }
