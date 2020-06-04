@@ -96,9 +96,9 @@ class Onboarding extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
 
-    if (window.location.pathname === "/onboarding/authenticate/individual/status") {
+    if (location.pathname === AuthenticateRoutes.INDIVIDUAL_STATUS.path) {
       return <OnboardingRouter />;
     }
 
