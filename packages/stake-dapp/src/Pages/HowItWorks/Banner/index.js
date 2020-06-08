@@ -49,9 +49,17 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
         ...stakeCalculatorFields,
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
-          recentStakeWindow.windowTotalStake > 0 || recentStakeWindow.totalPendingApprovalStake > 0
+          recentStakeWindow.windowTotalStake > 0 ||
+          recentStakeWindow.totalAutoRenewAmount > 0 ||
+          recentStakeWindow.totalPendingApprovalStake > 0
             ? Math.floor(
-                fromWei(BigNumber.sum(recentStakeWindow.windowTotalStake, recentStakeWindow.totalPendingApprovalStake))
+                fromWei(
+                  BigNumber.sum(
+                    recentStakeWindow.windowTotalStake,
+                    recentStakeWindow.totalAutoRenewAmount,
+                    recentStakeWindow.totalPendingApprovalStake
+                  )
+                )
               )
             : stakeCalculatorFields.poolStakeAmount,
         incubationPeriodInDays: Math.ceil(

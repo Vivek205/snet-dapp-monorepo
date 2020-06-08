@@ -31,4 +31,5 @@ export const APIPaths = {
   STAKE_TRANSACTIONS: staker => `/transactions?address=${staker}`,
   STAKE_OVERALL_SUMMARY: "/stake-summary",
   STAKE_WINDOWS_SUMMARY: "/stake-windows",
+  STAKE_CALCULATOR: "/stake-calculator",
 };
