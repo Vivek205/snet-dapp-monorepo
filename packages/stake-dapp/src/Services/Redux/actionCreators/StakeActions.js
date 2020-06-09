@@ -57,6 +57,11 @@ export const setRecentStakeWindowFromBlockchain = recentStakeWindowDetails => ({
   payload: recentStakeWindowDetails,
 });
 
+export const setRecentStakeWindow = recentStakeWindowDetails => ({
+  type: UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN,
+  payload: recentStakeWindowDetails,
+});
+
 export const setActiveStakes = activeStakes => ({
   type: UPDATE_ACTIVE_STAKES,
   payload: activeStakes,
@@ -398,6 +403,41 @@ export const fetchUserStakeBalanceFromBlockchain = metamaskDetails => async disp
 // *************************************************
 // Recent Stake Window from Blockchain Functionality
 // *************************************************
+
+const fetchStakeCalculatorDetailsAPI = async () => {
+  const url = `${APIEndpoints.STAKE.endpoint}${APIPaths.STAKE_CALCULATOR}`;
+  const response = await fetch(url);
+  return response.json();
+};
+
+export const fetchStakeCalculatorDetails = () => async dispatch => {
+  try {
+    const { data, error } = await fetchStakeCalculatorDetailsAPI();
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+
+    const recentStakeWindowDetails = {
+      startPeriod: data.start_period,
+      submissionEndPeriod: data.submission_end_period,
+      approvalEndPeriod: data.approval_end_period,
+      requestWithdrawStartPeriod: data.request_withdraw_start_period,
+      endPeriod: data.end_period,
+      minStake: data.min_stake,
+      maxStake: data.max_stake,
+      windowMaxCap: data.window_max_cap,
+      openForExternal: data.open_for_external,
+      windowTotalStake: data.total_stake,
+      windowRewardAmount: data.reward_amount,
+      totalPendingApprovalStake: data.total_stake_pending_for_approval,
+      totalAutoRenewAmount: data.total_auto_renew_amount,
+    };
+
+    dispatch(setRecentStakeWindow(recentStakeWindowDetails));
+  } catch (error) {
+    // Leave to default values in case of an error
+  }
+};
 
 export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
   try {
