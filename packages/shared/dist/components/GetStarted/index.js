@@ -25,46 +25,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var GetStarted = function GetStarted(_ref) {
   var classes = _ref.classes,
-      title = _ref.title,
-      description = _ref.description,
-      CTATitle = _ref.CTATitle,
       CTAType = _ref.CTAType,
       pageBtnRoute = _ref.pageBtnRoute,
       GetStartedDetails = _ref.GetStartedDetails,
       GetStartedCategories = _ref.GetStartedCategories;
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24,
     className: classes.GetStartedMainContaienr
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.TopSection
-  }, _react.default.createElement(_GetStartedDescription.default, {
+  }, /*#__PURE__*/_react.default.createElement(_GetStartedDescription.default, {
     title: GetStartedDetails.title,
     description: GetStartedDetails.description
   })), GetStartedCategories.map(function (item, index) {
-    return _react.default.createElement(_Category.default, {
+    return /*#__PURE__*/_react.default.createElement(_Category.default, {
       key: item.categoryTitle,
       title: item.title,
       content: item.content,
       media: item.media,
       rightAlign: (index + 1) % 2 === 0
     });
-  }), CTAType ? _react.default.createElement(_Grid.default, {
+  }), CTAType ? /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.btnContainer
-  }, _react.default.createElement(_reactRouterDom.Link, {
+  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: pageBtnRoute,
     className: classes.createRequestLink
-  }, _react.default.createElement(_StyledButton.default, {
+  }, /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
     type: "blue",
     btnText: "Create new Request"
   }))) : null);

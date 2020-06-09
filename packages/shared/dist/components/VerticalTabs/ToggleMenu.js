@@ -23,18 +23,18 @@ var ToggleMenu = function ToggleMenu(_ref) {
       classes = _ref.classes;
 
   if (isOpen) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: classes.toolbar
-    }, _react.default.createElement(_IconButton.default, {
+    }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
       onClick: function onClick() {
         return setIsOpen(false);
       }
-    }, _react.default.createElement(_ChevronLeft.default, {
+    }, /*#__PURE__*/_react.default.createElement(_ChevronLeft.default, {
       className: classes.chevronIcon
     })));
   }
 
-  return _react.default.createElement(_IconButton.default, {
+  return /*#__PURE__*/_react.default.createElement(_IconButton.default, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: function onClick() {
@@ -42,7 +42,7 @@ var ToggleMenu = function ToggleMenu(_ref) {
     },
     edge: "start",
     className: (0, _clsx.default)(classes.menuButton)
-  }, _react.default.createElement(_ChevronRight.default, {
+  }, /*#__PURE__*/_react.default.createElement(_ChevronRight.default, {
     className: classes.chevronIcon
   }));
 };

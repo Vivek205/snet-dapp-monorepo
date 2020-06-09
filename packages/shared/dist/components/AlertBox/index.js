@@ -42,27 +42,29 @@ var AlertBox = function AlertBox(_ref) {
       message = _ref.message,
       type = _ref.type,
       link = _ref.link,
+      linkTo = _ref.linkTo,
       children = _ref.children,
       icon = _ref.icon,
       header = _ref.header;
 
   if (children) {
-    return _react.default.createElement("p", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: (0, _clsx.default)(classes.messageBox, classes[backgroundColor[type]])
     }, children);
   }
 
   if (message) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: (0, _clsx.default)(classes.alertBoxContainer, classes[backgroundColor[type]])
-    }, _react.default.createElement(_AlertIcon.default, {
+    }, /*#__PURE__*/_react.default.createElement(_AlertIcon.default, {
       icon: icon
-    }), _react.default.createElement("div", {
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: classes.content
-    }, _react.default.createElement(_AlertHeader.default, {
+    }, /*#__PURE__*/_react.default.createElement(_AlertHeader.default, {
       header: header
-    }), _react.default.createElement("p", null, message, " ", _react.default.createElement(_AlertLink.default, {
-      link: link
+    }), /*#__PURE__*/_react.default.createElement("p", null, message, " ", /*#__PURE__*/_react.default.createElement(_AlertLink.default, {
+      link: link,
+      linkTo: linkTo
     }))));
   }
 
@@ -74,7 +76,8 @@ AlertBox.propTypes = {
   message: _propTypes.default.string
 };
 AlertBox.defaultProps = {
-  type: "error"
+  type: "error",
+  message: undefined
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(AlertBox);

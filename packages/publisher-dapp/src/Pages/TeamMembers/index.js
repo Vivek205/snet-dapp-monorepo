@@ -99,8 +99,8 @@ class TeamMembers extends Component {
 
   handleAddToBlockChain = async () => {
     try {
-      const { members, orgId, uuid, addAndPublishMembers } = this.props;
-      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid);
+      const { members, orgId, uuid, addAndPublishMembers, ownerAddress } = this.props;
+      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid, ownerAddress);
       this.setState({
         addBlockChainAlert: { type: alertTypes.SUCCESS, message: "Members have been added to blockchain" },
       });
@@ -132,13 +132,13 @@ class TeamMembers extends Component {
     const { showPopup, textareaValue } = this.state;
     return (
       <Grid container className={classes.teammembersContainer}>
-        <Grid item xs={12} sm={12} md={2} lg={2}>
+        <Grid item xs={12} sm={12} md={2} lg={2} className={classes.backToHomeLinkContainer}>
           <div className={classes.backToHomeLink} onClick={this.handleBackToHome}>
             <BackIcon />
             <span>Back to Home </span>
           </div>
         </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7} className={classes.rightSideSection}>
+        <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>
@@ -173,6 +173,7 @@ class TeamMembers extends Component {
             publishedInProgressMembers={members[memberStatus.PUBLISH_IN_PROGRESS]}
           />
         </Grid>
+        <Grid item xs={12} sm={12} md={2} lg={2} />
       </Grid>
     );
   }
@@ -185,6 +186,7 @@ const mapStateToProps = state => ({
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
+  ownerAddress: state.organization.ownerAddress,
   orgStatus: state.organization.state.state,
   orgFoundInBlockchain: state.organization.foundInBlockchain,
 });
@@ -192,8 +194,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
-  addAndPublishMembers: (members, orgId, uuid) =>
-    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid)),
+  addAndPublishMembers: (members, orgId, uuid, ownerAddress) =>
+    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid, ownerAddress)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TeamMembers));

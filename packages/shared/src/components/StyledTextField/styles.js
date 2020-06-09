@@ -4,9 +4,10 @@ export const useStyles = MUITheme => ({
     "& label": { color: MUITheme.palette.text.darkGrey },
     "& div": { color: `${MUITheme.palette.text.darkGrey} !important` },
     "& fieldset": { borderColor: MUITheme.palette.border.inputBorder },
-    "& p": { color: MUITheme.palette.text.disabled },
+    "& .MuiFormHelperText-contained": { color: "rgba(0,0,0,.6)" },
     "& .MuiInputLabel-outlined.MuiInputLabel-shrink": { transform: "translate(14px, -6px) scale(0.90)" },
     "& input": {
+      fontSize: 16,
       letterSpacing: 0.15,
       lineHeight: "24px",
       "&:disabled": { color: "#999" },

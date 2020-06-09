@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
-//import SNETPagination from "shared/dist/components/SNETPagination";
 import NoDataFoundImg from "shared/dist/assets/images/NoDataFound.png";
 
 import { useStyles } from "./styles";
@@ -11,8 +10,7 @@ import TableRow from "./TableRow";
 import ExpandedTable from "./ExpandedTable";
 import { stakeActions } from "../../Services/Redux/actionCreators";
 import InlineLoader from "../InlineLoader";
-
-//import { itemsPerPageOptions } from "./content";
+import NoMetaMask from "../NoMetamask";
 
 const stateSelector = state => ({
   myTransactions: state.stakeReducer.myTransactions,
@@ -28,15 +26,17 @@ const StakeTransitions = () => {
 
   const { myTransactions, metamaskDetails, isLoading } = useSelector(state => stateSelector(state));
 
-  useEffect(() => {
+  const fetchStakeTransactions = useCallback(() => {
     try {
-      // TODO: Convert the same to async Constant based on the need...
       dispatch(stakeActions.fetchStakeTransactions(metamaskDetails));
     } catch (_error) {
-      //console.log("error - ", error);
-      // TODO - Need to handle the error based on overall Web App
+      // Ignore as we show appropriate error
     }
   }, [dispatch, metamaskDetails]);
+
+  useEffect(() => {
+    fetchStakeTransactions();
+  }, [fetchStakeTransactions]);
 
   const handleExpandeTable = siteMapIndex => {
     const currentValue = expandTable[siteMapIndex] ? expandTable[siteMapIndex] : false;
@@ -46,6 +46,10 @@ const StakeTransitions = () => {
 
   if (isLoading) {
     return <InlineLoader />;
+  }
+
+  if (!metamaskDetails.isTxnsAllowed) {
+    return <NoMetaMask />;
   }
 
   if (myTransactions.length === 0) {

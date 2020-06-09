@@ -10,14 +10,14 @@ import { useStyles } from "./styles";
 import PrivacyTerms from "./PrivacyTerms";
 
 const TermsAndConditions = props => {
-  const { classes, title, formLabel, onAccept, agreed, onChangeAgreed } = props;
+  const { classes, title, formLabel, onAccept, agreed, onChangeAgreed, Content } = props;
 
   return (
     <div className={classes.onboardingContainer}>
       <div className={classes.termsAndConditionsContainer}>
         <h3>{title}</h3>
         <div className={classes.termsAndConditions}>
-          <PrivacyTerms />
+          <Content />
         </div>
         <div className={classes.checkboxAndButton}>
           <FormControlLabel control={<Checkbox onChange={onChangeAgreed} color="primary" />} label={formLabel} />
@@ -35,6 +35,11 @@ TermsAndConditions.protoTypes = {
   onAccept: PropTypes.func,
   agreed: PropTypes.bool,
   onChangeAgreed: PropTypes.func,
+  Content: PropTypes.element,
+};
+
+TermsAndConditions.defaultProps = {
+  Content: PrivacyTerms,
 };
 
 export default withStyles(useStyles)(TermsAndConditions);

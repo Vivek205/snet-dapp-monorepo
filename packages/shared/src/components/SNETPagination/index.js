@@ -5,6 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
+import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
 
@@ -66,6 +67,17 @@ const SNETPagination = ({
       </Grid>
     </Grid>
   );
+};
+
+SNETPagination.propTypes = {
+  limit: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.number, label: PropTypes.string }))
+    .isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  onItemsPerPageChange: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default SNETPagination;

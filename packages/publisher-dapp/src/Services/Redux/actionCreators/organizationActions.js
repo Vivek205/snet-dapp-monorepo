@@ -1,17 +1,26 @@
 import { API } from "aws-amplify";
 import isEmpty from "lodash/isEmpty";
-
+import * as Sentry from "@sentry/browser";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { fetchAuthenticatedUser } from "./userActions/loginActions";
-import { loaderActions } from "./";
+import { errorActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
-import { responseStatus, APIError } from "shared/dist/utils/API";
-import { organizationSetupStatuses, addressTypes, orgSubmitActions } from "../../../Utils/organizationSetup";
+import { APIError, responseStatus } from "shared/dist/utils/API";
+import {
+  addressTypes,
+  organizationSetupStatuses,
+  organizationTypes,
+  orgSubmitActions,
+} from "../../../Utils/organizationSetup";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { clientTypes } from "shared/dist/utils/clientTypes";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { defaultContacts } from "../reducers/organizationReducer";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
+import { userRoles } from "../../../Utils/user";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -32,6 +41,10 @@ export const SET_ORG_STATE_REVIEWED_BY = "SET_ORG_STATE_REVIEWED_BY";
 export const SET_ORG_STATE_REVIEWED_ON = "SET_ORG_STATE_REVIEWED_ON";
 export const SET_ORG_HERO_IMAGE_URL = "SET_ORG_HERO_IMAGE_URL";
 export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
+export const SET_ORGANIZATION_TOUCHED_FLAG = "SET_ORGANIZATION_TOUCHED_FLAG";
+export const SET_ORGANIZATION_AVAILABILITY = "SET_ORGANIZATION_AVAILABILITY";
+export const SET_ORG_ALLOW_CHANGE_REQUEST_EDIT = "SET_ALLOW_CHANGE_REQUEST_EDIT";
+export const SET_ORG_MEMBERSHIP_DETAILS = "SET_ORG_MEMBERSHIP_DETAILS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -66,6 +79,42 @@ export const setOrgHeroImageUrl = url => ({ type: SET_ORG_HERO_IMAGE_URL, payloa
 
 export const setOrgFoundInBlockchain = found => ({ type: SET_ORG_FOUND_IN_BLOCKCHAIN, payload: found });
 
+export const setOrganizationTouchedFlag = touchFlag => ({
+  type: SET_ORGANIZATION_TOUCHED_FLAG,
+  payload: touchFlag,
+});
+
+export const setOrgAvailability = orgAvailability => ({
+  type: SET_ORGANIZATION_AVAILABILITY,
+  payload: orgAvailability,
+});
+
+export const setOrgAllowChangeRequestEdit = allow => ({ type: SET_ORG_ALLOW_CHANGE_REQUEST_EDIT, payload: allow });
+
+export const setOrgMembershipDetails = details => ({ type: SET_ORG_MEMBERSHIP_DETAILS, payload: details });
+
+const validateOrgIdAPI = orgUuid => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.ORGANIZATION_ID_VALIDATE(orgUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const validateOrgId = orgId => async dispatch => {
+  try {
+    dispatch(loaderActions.startValidateOrgIdLoader());
+    const { data, error } = await dispatch(validateOrgIdAPI(orgId));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopValidateOrgIdLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopValidateOrgIdLoader());
+    throw error;
+  }
+};
 const uploadFileAPI = (assetType, fileBlob, orgUuid) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   let url = `${APIEndpoints.UTILITY.endpoint}${APIPaths.UPLOAD_FILE}?type=${assetType}&org_uuid=${orgUuid}`;
@@ -105,7 +154,7 @@ const payloadForSubmit = organization => {
     description: longDescription,
     short_description: shortDescription,
     url: website,
-    contacts,
+    contacts: contacts.map(contact => ({ contact_type: contact.type, email: contact.email, phone: contact.phone })),
     org_address: {
       mail_address_same_hq_address: sameMailingAddress,
       addresses: [
@@ -130,7 +179,7 @@ const payloadForSubmit = organization => {
     assets: {
       hero_image: {
         url: organization.assets.heroImage.url,
-        ipfs_uri: organization.assets.heroImage.ipfsUri || "",
+        ipfs_hash: organization.assets.heroImage.ipfsHash || "",
       },
     },
     ownerAddress: organization.ownerAddress,
@@ -154,9 +203,13 @@ const payloadForSubmit = organization => {
   payload.groups = groupsToBeSubmitted;
 
   if (assets.heroImage.url) {
-    payload.assets.hero_image = { url: assets.heroImage.url };
+    payload.assets.hero_image = { ...payload.assets.hero_image, url: assets.heroImage.url };
   } else {
-    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+    payload.assets.hero_image = {
+      ...payload.assets.hero_image,
+      raw: assets.heroImage.raw,
+      file_type: assets.heroImage.fileType,
+    };
   }
 
   return payload;
@@ -182,7 +235,7 @@ const parseOrgData = selectedOrg => {
       hqAddress: !hqAddressData
         ? {}
         : {
-            street_address: hqAddressData.street_address,
+            street: hqAddressData.street_address,
             apartment: hqAddressData.apartment,
             city: hqAddressData.city,
             zip: hqAddressData.pincode,
@@ -191,6 +244,7 @@ const parseOrgData = selectedOrg => {
       mailingAddress: !mailingAddressData
         ? {}
         : {
+            street: mailingAddressData.street_address,
             apartment: mailingAddressData.apartment,
             city: mailingAddressData.city,
             zip: mailingAddressData.pincode,
@@ -210,12 +264,18 @@ const parseOrgData = selectedOrg => {
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
     duns: selectedOrg.duns_no,
-    contacts: selectedOrg.contacts,
+    contacts: isEmpty(selectedOrg.contacts)
+      ? defaultContacts
+      : selectedOrg.contacts.map(contact => ({
+          type: contact.contact_type,
+          email: contact.email,
+          phone: contact.phone,
+        })),
     orgAddress: parseOrgAddress(),
     assets: {
       heroImage: {
         url: selectedOrg.assets.hero_image.url,
-        ipfsUri: selectedOrg.assets.hero_image.ipfs_uri,
+        ipfsHash: selectedOrg.assets.hero_image.ipfs_hash,
       },
     },
   };
@@ -253,16 +313,16 @@ export const getStatus = async dispatch => {
   }
   const selectedOrg = selectOrg(data);
   const organization = parseOrgData(selectedOrg);
-  const OrganizationDetailsFromBlockChain = await findOrganizationInBlockchain(organization.id);
+  const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
+  dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
   dispatch(setAllAttributes(organization));
-  dispatch(setOrgFoundInBlockchain(OrganizationDetailsFromBlockChain.found));
   return data;
 };
 
 const finishLaterAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -277,6 +337,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
     }
     await dispatch(finishLaterAPI(payload));
     dispatch(loaderActions.stopAppLoader());
+    return payload;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -286,7 +347,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
 const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -309,8 +370,10 @@ export const submitForApproval = organization => async dispatch => {
 
 const createOrganizationAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.CREATE_ORG;
+  const apiName =
+    payload.org_type === organizationTypes.ORGANIZATION ? APIEndpoints.ORCHESTRATOR.name : APIEndpoints.REGISTRY.name;
+  const apiPath =
+    payload.org_type === organizationTypes.ORGANIZATION ? APIPaths.CREATE_ORG_ORG : APIPaths.CREATE_ORG_INDIVIDUAL;
   const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
 };
@@ -352,7 +415,6 @@ export const publishToIPFS = uuid => async dispatch => {
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopAppLoader());
     return data.metadata_ipfs_uri;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
@@ -382,11 +444,11 @@ const saveTransaction = (orgUuid, hash, ownerAddress) => async dispatch => {
   }
 };
 const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
+  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
-  dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createOrganization(orgId, orgMetadataURI, members)
@@ -397,7 +459,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
         resolve(hash);
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
-        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setOrgFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
@@ -405,7 +467,7 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
@@ -423,21 +485,21 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
         resolve(hash);
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
-        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISHED));
+        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
         await method.off();
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
 
 const findOrganizationInBlockchain = async orgId => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getOrganizationById(orgId).call();
+  const registry = new RegistryContract();
+  return await registry.getOrganizationById(orgId).call();
 };
 
 export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, history) => async dispatch => {
@@ -456,28 +518,40 @@ export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, h
   }
 };
 
-const getOwnerAPI = uuid => async dispatch => {
+const getMembersAPI = (uuid, role) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.GET_MEMBERS(uuid);
-  const queryStringParameters = { role: "owner" };
+  const queryStringParameters = { role };
   const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
 export const getOwner = uuid => async dispatch => {
-  const { data } = await dispatch(getOwnerAPI(uuid));
+  const { data } = await dispatch(getMembersAPI(uuid, userRoles.OWNER));
   await dispatch(setOrgOwner(data[0].username));
   return data;
 };
 
-export const initializeOrg = async dispatch => {
+export const getMembershipDetails = (uuid, username) => async dispatch => {
+  const { data } = await dispatch(getMembersAPI(uuid, userRoles.MEMBER));
+  const membershipDetails = data.find(el => el.username === username);
+  if (membershipDetails) {
+    await dispatch(setOrgMembershipDetails(membershipDetails));
+  }
+  return membershipDetails;
+};
+
+export const initializeOrg = username => async dispatch => {
   try {
     const data = await dispatch(getStatus);
     if (data && data[0]) {
-      await dispatch(getOwner(data[0].org_uuid));
+      const orgUuid = data[0].org_uuid;
+      await Promise.all[(dispatch(getOwner(orgUuid)), dispatch(getMembershipDetails(orgUuid, username)))];
     }
   } catch (error) {
+    Sentry.captureException(error);
+    dispatch(errorActions.setAppError(error));
     // ! do not remove this catch. It stops the error bubbling and allows
     // ! the login to work seamlessly even if the initializeOrg fails
     return undefined;

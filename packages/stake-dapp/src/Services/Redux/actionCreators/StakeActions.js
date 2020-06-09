@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-
+import BigNumber from "bignumber.js";
 import { APIError } from "shared/dist/utils/API";
 
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -19,6 +19,29 @@ export const UPDATE_STAKE_TRANSACTIONS = "UPDATE_STAKE_TRANSACTIONS";
 export const UPDATE_STAKE_SUMMARY = "UPDATE_STAKE_SUMMARY";
 export const UPDATE_STAKE_BALANCE = "UPDATE_STAKE_BALANCE";
 
+export const UPDATE_ACTIVE_STAKE_AUTO_RENEWAL = "UPDATE_ACTIVE_STAKE_AUTO_RENEWAL";
+export const UPDATE_INCUBATING_STAKE_AUTO_RENEWAL = "UPDATE_INCUBATING_STAKE_AUTO_RENEWAL";
+
+export const UPDATE_CLAIM_STAKES_ACTIONS = "UPDATE_CLAIM_STAKES_ACTIONS";
+
+export const UPDATE_STAKE_WINDOWS_SUMMARY = "UPDATE_STAKE_WINDOWS_SUMMARY";
+export const UPDATE_STAKE_OVERALL_SUMMARY = "UPDATE_STAKE_OVERALL_SUMMARY";
+
+export const updateClaimStakesActions = claimAction => ({
+  type: UPDATE_CLAIM_STAKES_ACTIONS,
+  payload: claimAction,
+});
+
+export const updateActiveStakeAutoRenewal = activeAutoRenewal => ({
+  type: UPDATE_ACTIVE_STAKE_AUTO_RENEWAL,
+  payload: activeAutoRenewal,
+});
+
+export const updateIncubatingStakeAutoRenewal = incubatingAutoRenewal => ({
+  type: UPDATE_INCUBATING_STAKE_AUTO_RENEWAL,
+  payload: incubatingAutoRenewal,
+});
+
 export const setActiveStakeWindowDetails = stakeWindowDetails => ({
   type: UPDATE_ACTIVE_STAKE_WINDOW,
   payload: stakeWindowDetails,
@@ -30,6 +53,11 @@ export const setActiveStakeWindowDetailsFromBlockchain = stakeWindowDetails => (
 });
 
 export const setRecentStakeWindowFromBlockchain = recentStakeWindowDetails => ({
+  type: UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN,
+  payload: recentStakeWindowDetails,
+});
+
+export const setRecentStakeWindow = recentStakeWindowDetails => ({
   type: UPDATE_RECENT_STAKE_WINDOW_BLOCKCHAIN,
   payload: recentStakeWindowDetails,
 });
@@ -57,6 +85,16 @@ export const setStakeSummary = stakeSummary => ({
 export const setUserStakeBalance = stakeBalance => ({
   type: UPDATE_STAKE_BALANCE,
   payload: stakeBalance,
+});
+
+export const setStakeOverallSummary = stakeOverallSummary => ({
+  type: UPDATE_STAKE_OVERALL_SUMMARY,
+  payload: stakeOverallSummary,
+});
+
+export const setAllStakeWindowsSummary = allStakeWindows => ({
+  type: UPDATE_STAKE_WINDOWS_SUMMARY,
+  payload: allStakeWindows,
 });
 
 // **************************
@@ -91,7 +129,7 @@ export const fetchCurrentActiveStakeWindow = metamaskDetails => async dispatch =
     dispatch(setActiveStakeWindowDetails(stakeWindowDetails));
 
     // Get the latest State from Blockchain
-    if (data.length === 0) dispatch(fetchUserStakeFromBlockchain(metamaskDetails, stakeWindowDetails.stakeMapIndex));
+    dispatch(fetchUserStakeFromBlockchain(metamaskDetails, stakeWindowDetails.stakeMapIndex));
 
     dispatch(loaderActions.stopStakeWindowLoader());
   } catch (error) {
@@ -124,8 +162,16 @@ const parseAndTransformStakeWindow = data => {
     tokenOperator: stakeWindow.token_operator,
     totalStakers: stakeWindow.no_of_stakers,
     totalStakedAmount: stakeWindow.total_stake_deposited,
-    myStake: stakeWindow.stake_amount_for_given_staker_address,
+    myStake: stakeWindow.pending_stake_amount_for_staker,
+    myStakeProcessed: stakeWindow.pending_stake_amount_for_staker,
+    myStakeAutoRenewed: BigNumber.sum(
+      stakeWindow.auto_renew_amount_for_staker,
+      stakeWindow.approved_stake_amount_for_staker
+    ).toString(),
+    totalAutoRenewAmount: stakeWindow.total_auto_renew_amount,
   };
+  //myStake: stakeWindow.stake_amount_for_given_staker_address,
+  //myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
 
   return stakeWindowDetails;
 };
@@ -139,11 +185,10 @@ export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => 
 
     const stakeWindowDetails = {
       myStake: pendingForApprovalAmount,
-      autoRenewal,
+      autoRenewal: found ? autoRenewal : true,
       approvedAmount,
       userExist: found,
     };
-
     dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
   }
 };
@@ -177,6 +222,7 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
 
     //console.log("fetchActiveStakes - ", data);
     const activeStakes = parseAndTransformStakes(data);
+
     dispatch(setActiveStakes(activeStakes));
     dispatch(setStakeSummary({ incubatingCount: data.length }));
 
@@ -247,6 +293,7 @@ const parseAndTransformStakes = data => {
     rewardAmount: stake.stake_window.reward_amount,
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
+    totalStakedAmount: stake.stake_window.total_stake_deposited,
 
     staker: stake.stake_holder.staker,
     pendingForApprovalAmount: stake.stake_holder.amount_pending_for_approval,
@@ -318,6 +365,7 @@ const parseAndTransformStakeTransactions = data => {
     rewardAmount: stake.stake_window.reward_amount,
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
+    totalStakedAmount: stake.stake_window.total_stake_deposited,
 
     transactionList: stake.transactions.map(t => ({
       txnHash: t.transaction_hash,
@@ -356,6 +404,41 @@ export const fetchUserStakeBalanceFromBlockchain = metamaskDetails => async disp
 // Recent Stake Window from Blockchain Functionality
 // *************************************************
 
+const fetchStakeCalculatorDetailsAPI = async () => {
+  const url = `${APIEndpoints.STAKE.endpoint}${APIPaths.STAKE_CALCULATOR}`;
+  const response = await fetch(url);
+  return response.json();
+};
+
+export const fetchStakeCalculatorDetails = () => async dispatch => {
+  try {
+    const { data, error } = await fetchStakeCalculatorDetailsAPI();
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+
+    const recentStakeWindowDetails = {
+      startPeriod: data.start_period,
+      submissionEndPeriod: data.submission_end_period,
+      approvalEndPeriod: data.approval_end_period,
+      requestWithdrawStartPeriod: data.request_withdraw_start_period,
+      endPeriod: data.end_period,
+      minStake: data.min_stake,
+      maxStake: data.max_stake,
+      windowMaxCap: data.window_max_cap,
+      openForExternal: data.open_for_external,
+      windowTotalStake: data.total_stake,
+      windowRewardAmount: data.reward_amount,
+      totalPendingApprovalStake: data.total_stake_pending_for_approval,
+      totalAutoRenewAmount: data.total_auto_renew_amount,
+    };
+
+    dispatch(setRecentStakeWindow(recentStakeWindowDetails));
+  } catch (error) {
+    // Leave to default values in case of an error
+  }
+};
+
 export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
   try {
     const recentStakeWindowDetails = await getRecentStakeWindow();
@@ -365,83 +448,83 @@ export const fetchRecentStakeWindowFromBlockchain = () => async dispatch => {
   }
 };
 
-// TODO - Sample Structured returned from the API - TO BE Deleted from this file after the complete implementation:
+// *************************************************
+// Stake Overall Summary - Public API
+// *************************************************
 
-/*
-  blockchain_id: 100
-  start_period: 1582542242
-  submission_end_period: 1582742242
-  approval_end_period: 1582842242
-  request_withdraw_start_period: 1583142242
-  end_period: 1583242242
-  min_stake: 100000000
-  max_stake: 1000000000000
-  window_max_cap: 100000000000000
-  open_for_external: true
-  total_stake: 0
-  reward_amount: 100000
-  token_operator: "0x0"
-*/
+const fetchStakeOverallSummaryAPI = async () => {
+  const url = `${APIEndpoints.STAKE.endpoint}${APIPaths.STAKE_OVERALL_SUMMARY}`;
+  const response = await fetch(url);
+  return response.json();
+};
 
-// TODO - Sample Structure for ControlService
+export const fetchStakeOverallSummary = () => async dispatch => {
+  try {
+    const { data, error } = await fetchStakeOverallSummaryAPI();
+    if (error.code) {
+      throw new APIError(error.message);
+    }
 
-/*
+    const stakeOverallSummary = {
+      overallStake: data.total_stake_deposited,
+      totalUniqueStakers: data.no_of_stakers,
+      totalReward: data.total_reward,
+    };
 
-{
-    "status": "success",
-    "data": [
-        {
-            "stake_holder": {
-                "blockchain_id": 101,
-                "staker": "0xC4f3BFE7D69461B7f363509393D44357c084404c",
-                "amount_pending_for_approval": 20000000000,
-                "amount_approved": 0,
-                "auto_renewal": true,
-                "block_no_created": 12345
-            },
-            "stake_window": {
-                "blockchain_id": 101,
-                "start_period": 1572618187,
-                "submission_end_period": 1572877387,
-                "approval_end_period": 1573136587,
-                "request_withdraw_start_period": 1574691787,
-                "end_period": 1575123787,
-                "min_stake": 100000000,
-                "max_stake": 1000000000000,
-                "window_max_cap": 100000000000000,
-                "open_for_external": true,
-                "total_stake": 0,
-                "reward_amount": 100000,
-                "token_operator": "0x0"
-            }
-        },
-        {
-            "stake_holder": {
-                "blockchain_id": 102,
-                "staker": "0xC4f3BFE7D69461B7f363509393D44357c084404c",
-                "amount_pending_for_approval": 30000000000,
-                "amount_approved": 0,
-                "auto_renewal": true,
-                "block_no_created": 12346
-            },
-            "stake_window": {
-                "blockchain_id": 102,
-                "start_period": 1575210187,
-                "submission_end_period": 1575469387,
-                "approval_end_period": 1575728587,
-                "request_withdraw_start_period": 1577283787,
-                "end_period": 1577715787,
-                "min_stake": 200000000,
-                "max_stake": 2000000000000,
-                "window_max_cap": 200000000000000,
-                "open_for_external": true,
-                "total_stake": 0,
-                "reward_amount": 200000,
-                "token_operator": "0x0"
-            }
-        }
-    ],
-    "error": {}
-}
+    dispatch(setStakeOverallSummary(stakeOverallSummary));
+  } catch (error) {
+    throw error;
+  }
+};
 
-*/
+// *************************************************
+// All Stake Window Summary
+// *************************************************
+
+const fetchStakeWindowsSummaryAPI = () => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.STAKE.name;
+  const apiPath = APIPaths.STAKE_WINDOWS_SUMMARY;
+  const apiOptions = initializeAPIOptions(token);
+  return await API.get(apiName, apiPath, apiOptions);
+};
+
+export const fetchStakeWindowsSummary = () => async dispatch => {
+  try {
+    const { data, error } = await dispatch(fetchStakeWindowsSummaryAPI());
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+
+    const allStakeWindows = parseAndTransformStakeWindows(data);
+    dispatch(setAllStakeWindowsSummary(allStakeWindows));
+  } catch (error) {
+    throw error;
+  }
+};
+
+const parseAndTransformStakeWindows = data => {
+  if (data.length === 0) {
+    return [];
+  }
+
+  const stakeWindows = data.map(stakeWindow => ({
+    stakeMapIndex: stakeWindow.blockchain_id,
+    startPeriod: stakeWindow.start_period,
+    submissionEndPeriod: stakeWindow.submission_end_period,
+    approvalEndPeriod: stakeWindow.approval_end_period,
+    requestWithdrawStartPeriod: stakeWindow.request_withdraw_start_period,
+    endPeriod: stakeWindow.end_period,
+    minStake: stakeWindow.min_stake,
+    maxStake: stakeWindow.max_stake,
+    windowMaxCap: stakeWindow.window_max_cap,
+    openForExternal: stakeWindow.open_for_external,
+    windowTotalStake: stakeWindow.total_stake,
+    rewardAmount: stakeWindow.reward_amount,
+    tokenOperator: stakeWindow.token_operator,
+    numOfStakers: stakeWindow.no_of_stakers,
+    totalStakedAmount: stakeWindow.total_stake_deposited,
+  }));
+
+  return stakeWindows;
+};

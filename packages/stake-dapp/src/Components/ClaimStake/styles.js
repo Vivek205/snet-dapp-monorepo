@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles(MUITheme => ({
   stakeSessionBoxContainer: {
     paddingLeft: 24,
+    marginBottom: "32px",
     "& > div": {
       marginTop: 35,
       "&:first-of-type": { marginTop: 0 },
     },
-    marginBottom: "32px",
   },
   box: {
     paddingBottom: 33,
@@ -36,6 +36,9 @@ export const useStyles = makeStyles(MUITheme => ({
   btnContainer: {
     marginTop: 24,
     textAlign: "center",
+    "& button": {
+      "&:first-of-type": { marginRight: 25 },
+    },
   },
   noDataFoundSection: {
     textAlign: "center",
@@ -47,23 +50,19 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   infoBox: {
-    padding: "0 25px",
-    marginTop: 32,
-    display: "flex",
-    justifyContent: "center",
-    "& > p": {
-      margin: 0,
+    padding: "0 30px",
+    margin: "32px 0 15px",
+    "& > div": {
       display: "flex",
-    },
-    "& svg": {
-      marginRight: 17,
-      color: MUITheme.palette.primary.main,
-      fontSize: 20,
-    },
-    "& p": {
-      color: MUITheme.palette.text.primary,
-      fontSize: 14,
-      lineHeight: "18px",
+      "& svg": {
+        marginRight: 17,
+        fontSize: 20,
+      },
+      "& p": {
+        color: MUITheme.palette.text.primary,
+        fontSize: 14,
+        lineHeight: "18px",
+      },
     },
   },
   circularProgressContainer: {
@@ -72,9 +71,7 @@ export const useStyles = makeStyles(MUITheme => ({
     height: 500,
     display: "table",
     width: "100%",
-    "& div": {
-      color: MUITheme.palette.text.primary,
-    },
+    "& div": { color: MUITheme.palette.text.primary },
   },
   loaderChild: {
     display: "table-cell",
@@ -92,4 +89,5 @@ export const useStyles = makeStyles(MUITheme => ({
     fontWeight: 600,
     letterSpacing: 0.25,
   },
+  alertBoxContainer: { margin: "0 30px" },
 }));

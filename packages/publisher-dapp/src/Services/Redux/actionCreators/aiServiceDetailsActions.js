@@ -6,20 +6,23 @@ import { fetchAuthenticatedUser } from "./userActions/loginActions";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../Utils/API";
 import { APIError } from "shared/dist/utils/API";
-import { loaderActions } from "./";
+import { aiServiceListActions, loaderActions } from "./";
 import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
 import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import ValidationError from "shared/dist/utils/validationError";
+import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
+import { MetamaskError } from "shared/dist/utils/error";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
 export const SET_AI_SERVICE_ID_AVAILABILITY = "SET_AI_SERVICE_ID_AVAILABILITY";
 export const SET_AI_SERVICE_NAME = "SET_AI_SERVICE_NAME";
 export const SET_AI_SERVICE_UUID = "SET_AI_SERVICE_UUID";
-export const SET_AI_SERVICE_TOUCH_FLAG = "SET_AI_SERVICE_TOUCH_FLAG";
+export const SET_AI_SERVICE_TOUCHED_FLAG = "SET_AI_SERVICE_TOUCHED_FLAG";
 export const SET_AI_SERVICE_GROUPS = "SET_AI_SERVICE_ENDPOINTS";
 export const SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS = "SET_AI_SERVICE_FREE_CALL_SIGNER_ADDRESS";
 export const SET_AI_SERVICE_DETAIL_LEAF = "SET_AI_SERVICE_DETAIL_LEAF";
@@ -33,8 +36,8 @@ export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUN
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
-export const setServiceTouchFlag = touchFlag => ({
-  type: SET_AI_SERVICE_TOUCH_FLAG,
+export const setServiceTouchedFlag = touchFlag => ({
+  type: SET_AI_SERVICE_TOUCHED_FLAG,
   payload: touchFlag,
 });
 
@@ -72,7 +75,7 @@ const setAiServiceFreeCallSignerAddress = address => ({
   payload: address,
 });
 
-export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: [comment] });
+export const setServiceProviderComment = comment => ({ type: SET_SERVICE_PROVIDER_COMMENT, payload: comment });
 
 const setAiServiceStateState = state => ({ type: SET_AI_SERVICE_STATE_STATE, payload: state });
 
@@ -136,32 +139,41 @@ export const validateServiceId = (orgUuid, serviceId) => async dispatch => {
   }
 };
 
-// TODO remove orgId. MPS has to figure out orgId from orgUuid
-const generateSaveServicePayload = (serviceDetails, orgId) => {
-  const generatePricingpayload = pricing =>
-    pricing.map(price => ({
-      default: price.default,
-      price_model: price.priceModel,
-      price_in_cogs: Number(price.priceInCogs),
-    }));
+const generatePricingpayload = pricing =>
+  pricing.map(price => ({
+    default: price.default,
+    price_model: price.priceModel,
+    price_in_cogs: Number(price.priceInCogs),
+  }));
 
-  const generateGroupsPayload = () =>
-    serviceDetails.groups
-      .map(group => {
-        if (!group.id) {
-          return undefined;
-        }
-        return {
-          group_name: group.name,
-          group_id: group.id,
-          free_calls: Number(group.freeCallsAllowed),
-          free_call_signer_address: serviceDetails.freeCallSignerAddress,
-          pricing: generatePricingpayload(group.pricing),
-          endpoints: group.endpoints,
-          test_endpoints: group.testEndpoints,
-        };
-      })
-      .filter(el => el !== undefined);
+export const generateGroupsPayload = (groups, freeCallSignerAddress) =>
+  groups
+    .map(group => {
+      if (!group.id) {
+        return undefined;
+      }
+      return {
+        group_name: group.name,
+        group_id: group.id,
+        free_calls: Number(group.freeCallsAllowed),
+        free_call_signer_address: freeCallSignerAddress,
+        pricing: generatePricingpayload(group.pricing),
+        endpoints: group.endpoints,
+        test_endpoints: group.testEndpoints,
+        daemon_addresses: group.daemonAddresses,
+      };
+    })
+    .filter(el => el !== undefined);
+
+// TODO remove orgId. MPS has to figure out orgId from orgUuid
+const generateSaveServicePayload = serviceDetails => {
+  const parseContributors = () => {
+    return serviceDetails.contributors
+      .split(",")
+      .map(el => el.trim())
+      .filter((el, index, data) => data.indexOf(el) === index && !isEmpty(el))
+      .map(c => ({ name: c, email_id: "" }));
+  };
 
   const payloadForSubmit = {
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
@@ -184,22 +196,18 @@ const generateSaveServicePayload = (serviceDetails, orgId) => {
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
     },
-    contributors: serviceDetails.contributors.split(",").map(c => ({ name: c, email_id: "" })),
-    ipfs_hash: serviceDetails.ipfsHash,
-    groups: generateGroupsPayload(),
+    contributors: parseContributors(),
+    groups: generateGroupsPayload(serviceDetails.groups, serviceDetails.freeCallSignerAddress),
     tags: serviceDetails.tags,
     price: serviceDetails.price,
     priceModel: serviceDetails.priceModel,
-    comment: {
-      service_provider: serviceDetails.comments.serviceProvider,
+    comments: {
+      SERVICE_PROVIDER: serviceDetails.comments.SERVICE_PROVIDER,
+      SERVICE_APPROVER: serviceDetails.comments.SERVICE_APPROVER,
     },
     mpe_address: MPENetworks[process.env.REACT_APP_ETH_NETWORK].address,
   };
 
-  // TODO remove orgId. MPS has to figure out orgId from orgUuid
-  if (orgId) {
-    payloadForSubmit.org_id = "curation";
-  }
   return payloadForSubmit;
 };
 
@@ -214,6 +222,11 @@ const saveServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => a
 
 export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
     dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
@@ -221,10 +234,27 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
       dispatch(loaderActions.stopAppLoader());
       throw new APIError(error.message);
     }
+    dispatch(setAiServiceStateState(serviceCreationStatus.DRAFT));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
+  }
+};
+
+const patchServiceDetailsAPI = (orgUuid, serviceUuid, serviceDetailsPayload) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.SAVE_AI_SERVICE(orgUuid, serviceUuid);
+  const body = serviceDetailsPayload;
+  const apiOptions = initializeAPIOptions(token, body);
+  return await API.patch(apiName, apiPath, apiOptions);
+};
+
+export const patchServiceDetails = (orgUuid, serviceUuid, patchDetailsPayload) => async dispatch => {
+  const { error } = await dispatch(patchServiceDetailsAPI(orgUuid, serviceUuid, patchDetailsPayload));
+  if (error.code) {
+    throw new APIError(error.message);
   }
 };
 
@@ -248,6 +278,7 @@ export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch
     }
     const service = parseServiceDetails(data, serviceUuid);
     dispatch(setAllAttributes(service));
+    return service;
   } catch (error) {
     throw error;
   }
@@ -261,6 +292,17 @@ const parseServiceDetails = (data, serviceUuid) => {
       priceInCogs: price.price_in_cogs,
     }));
   const parseGroups = groups => {
+    const retrieveTestEndpointFromGroup = group => {
+      if (!isEmpty(group.test_endpoints)) {
+        return group.test_endpoints;
+      }
+      if (!isEmpty(group.endpoints)) {
+        const endpoints = Object.keys(group.endpoints);
+        return [endpoints[0]];
+      }
+      return [];
+    };
+
     if (isEmpty(groups)) {
       return defaultGroups;
     }
@@ -269,7 +311,8 @@ const parseServiceDetails = (data, serviceUuid) => {
       id: group.group_id,
       pricing: parsePricing(group.pricing),
       endpoints: group.endpoints || [],
-      testEndpoints: group.test_endpoints || [],
+      daemonAddresses: group.daemon_addresses || [],
+      testEndpoints: retrieveTestEndpointFromGroup(group),
       freeCallsAllowed: group.free_calls,
       freeCallSignerAddress: group.free_call_signer_address,
     }));
@@ -282,6 +325,7 @@ const parseServiceDetails = (data, serviceUuid) => {
     uuid: serviceUuid,
     name: data.display_name,
     id: data.service_id,
+    newId: data.service_id,
     shortDescription: data.short_description,
     longDescription: data.description,
     projectURL: data.project_url,
@@ -316,6 +360,10 @@ const parseServiceDetails = (data, serviceUuid) => {
     tags: data.tags,
     freecallsAllowed: data.freecalls_allowed,
     freeCallSignerAddress: isEmpty(data.groups) ? "" : data.groups[0].free_call_signer_address,
+    comments: {
+      SERVICE_APPROVER: data.comments.SERVICE_APPROVER ? data.comments.SERVICE_APPROVER : "",
+      SERVICE_PROVIDER: data.comments.SERVICE_PROVIDER ? data.comments.SERVICE_PROVIDER : "",
+    },
   };
 
   return service;
@@ -339,6 +387,7 @@ export const getFreeCallSignerAddress = (orgId, serviceId, groupId, username) =>
     }
     dispatch(setAiServiceFreeCallSignerAddress(data.free_call_signer_address));
     dispatch(loaderActions.stopAppLoader());
+    return data.free_call_signer_address;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -354,11 +403,16 @@ const submitServiceDetailsForReviewAPI = (orgUuid, serviceUuid, serviceDetailsPa
   return await API.put(apiName, apiPath, apiOptions);
 };
 
-export const submitServiceDetailsForReview = (orgId, orgUuid, serviceUuid, serviceDetails) => async dispatch => {
+export const submitServiceDetailsForReview = (orgUuid, serviceUuid, serviceDetails) => async dispatch => {
   try {
-    dispatch(loaderActions.startAppLoader(LoaderContent.FREE_CALL_SIGNER_ADDRESS));
+    if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
+      throw new ValidationError(
+        "Hi your service is rejected for any change/approval. Please contact support to proceed"
+      );
+    }
+    dispatch(loaderActions.startAppLoader(LoaderContent.SUBMIT_SERVICE_FOR_REVIEW));
     // TODO remove orgId. MPS has to figure out orgId from orgUuid
-    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails, orgId);
+    const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
     const { error } = await dispatch(submitServiceDetailsForReviewAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       throw new APIError(error.message);
@@ -430,6 +484,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async () => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
         dispatch(loaderActions.stopAppLoader());
@@ -476,6 +531,7 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
       .once(blockChainEvents.CONFIRMATION, async hash => {
+        await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
         resolve(hash);
@@ -483,14 +539,14 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
       })
       .on(blockChainEvents.ERROR, error => {
         dispatch(loaderActions.stopAppLoader());
-        reject(error);
+        reject(new MetamaskError(error.message));
       });
   });
 };
 
 const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
-  const sdk = await initSDK();
-  return await sdk._registryContract.getServiceRegistrationById(orgId, serviceId).call();
+  const registry = new RegistryContract();
+  return await registry.getServiceRegistrationById(orgId, serviceId).call();
 };
 
 export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
@@ -507,12 +563,13 @@ export const publishService = (organization, serviceDetails, serviceMetadataURI,
 };
 
 const getSampleDaemonConfigAPI = (orgUuid, serviceUuid, testDaemon = false) => async dispatch => {
+  const daemonConfigNetwork = { TEST: "TEST", MAIN: "MAIN" };
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = testDaemon
-    ? APIPaths.SAMPLE_DAEMON_CONFIG_TEST(orgUuid, serviceUuid)
-    : APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
-  const queryParams = testDaemon ? undefined : { network_id: process.env.REACT_APP_ETH_NETWORK };
+  const apiPath = APIPaths.SAMPLE_DAEMON_CONFIG(orgUuid, serviceUuid);
+  const queryParams = testDaemon
+    ? { network: daemonConfigNetwork.TEST }
+    : { network_id: process.env.REACT_APP_ETH_NETWORK, network: daemonConfigNetwork.MAIN };
   const apiOptions = initializeAPIOptions(token, undefined, queryParams);
   return await API.get(apiName, apiPath, apiOptions);
 };

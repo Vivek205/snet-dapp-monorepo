@@ -35,7 +35,11 @@ var useStyles = function useStyles(MUITheme) {
         color: MUITheme.palette.text.lightGrey,
         fontSize: 14,
         letterSpacing: 0.25,
-        lineHeight: "20px"
+        lineHeight: "20px",
+        "& a": {
+          color: MUITheme.palette.primary.main,
+          textDecoration: "none"
+        }
       }, MUITheme.breakpoints.down("sm"), {
         marginTop: 0
       })
@@ -71,6 +75,7 @@ var useStyles = function useStyles(MUITheme) {
     },
     errorField: {
       "& .MuiOutlinedInput-notchedOutline": {
+        borderWidth: 2,
         borderColor: MUITheme.palette.border.alertBox
       }
     }

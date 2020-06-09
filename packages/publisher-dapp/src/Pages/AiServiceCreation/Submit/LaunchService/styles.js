@@ -25,8 +25,9 @@ export const useStyles = MUITheme => ({
   reviewProcessDescription: {
     padding: " 20px 21px 22px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
+    "& span": { fontWeight: "bold" },
   },
   table: {
     padding: "0 21px",
@@ -83,7 +84,10 @@ export const useStyles = MUITheme => ({
   alertBoxBtnContainer: {
     marginTop: 25,
     textAlign: "center",
-    "& > div": { margin: "0 32px" },
+    "& > div": {
+      margin: "0 32px",
+      "&:first-of-type": { marginBottom: 15 },
+    },
     "& p": { margin: "0 32px 20px" },
     "& button": {
       padding: "13px 135px 13px",
@@ -107,5 +111,16 @@ export const useStyles = MUITheme => ({
   actionsColumn: {
     paddingRight: 16,
     textAlign: "right",
+  },
+  launchServiceAlertButtonContainer: {
+    padding: "0 23px 32px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    "& > div": {
+      boxSizing: "border-box",
+      width: "100%",
+      marginBottom: 16,
+    },
   },
 });

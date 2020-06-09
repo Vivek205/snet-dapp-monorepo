@@ -1,18 +1,20 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+import BigNumber from "bignumber.js";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
-import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import InfoIcon from "@material-ui/icons/Info";
 import TimerIcon from "@material-ui/icons/Timer";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
+import ApproxSymbolImg from "shared/dist/assets/images/ApproxSymbol.png";
 
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
@@ -30,7 +32,7 @@ const calculaterFields = {
   recentWindowLoaded: false,
 };
 
-const Banner = ({ classes, recentStakeWindow }) => {
+const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
   const history = useHistory();
 
   const currentTime = moment().unix();
@@ -47,10 +49,20 @@ const Banner = ({ classes, recentStakeWindow }) => {
         ...stakeCalculatorFields,
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
-          recentStakeWindow.windowTotalStake > 0
-            ? recentStakeWindow.windowTotalStake
+          recentStakeWindow.windowTotalStake > 0 ||
+          recentStakeWindow.totalAutoRenewAmount > 0 ||
+          recentStakeWindow.totalPendingApprovalStake > 0
+            ? Math.floor(
+                fromWei(
+                  BigNumber.sum(
+                    recentStakeWindow.windowTotalStake,
+                    recentStakeWindow.totalAutoRenewAmount,
+                    recentStakeWindow.totalPendingApprovalStake
+                  )
+                )
+              )
             : stakeCalculatorFields.poolStakeAmount,
-        incubationPeriodInDays: Math.floor(
+        incubationPeriodInDays: Math.ceil(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
         ),
         recentWindowLoaded: true,
@@ -63,19 +75,25 @@ const Banner = ({ classes, recentStakeWindow }) => {
   };
 
   const getRewardAmount = () => {
-    const _finalPoolStakeAmount =
-      parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount);
-
-    if (_finalPoolStakeAmount > parseInt(stakeCalculatorFields.maxStakeAmount)) return 0;
-
-    let _stakeAmount = parseInt(stakeCalculatorFields.stakeAmount);
-
-    const rewardAmount = Math.floor(
-      (_stakeAmount * parseInt(stakeCalculatorFields.stakeRewardAmount)) /
-        Math.min(_finalPoolStakeAmount, parseInt(stakeCalculatorFields.maxStakeAmount))
+    const maxStakeAmount = new BigNumber(stakeCalculatorFields.maxStakeAmount);
+    const stakeRewardAmount = new BigNumber(stakeCalculatorFields.stakeRewardAmount);
+    const _finalPoolStakeAmount = BigNumber.sum(
+      stakeCalculatorFields.stakeAmount,
+      stakeCalculatorFields.poolStakeAmount
     );
+    const _stakeAmount = new BigNumber(stakeCalculatorFields.stakeAmount);
 
-    return isNaN(rewardAmount) ? 0 : rewardAmount;
+    if (_finalPoolStakeAmount.gt(maxStakeAmount)) return 0;
+
+    let rewardAmount = new BigNumber(0);
+
+    if (_finalPoolStakeAmount.lt(maxStakeAmount)) {
+      rewardAmount = _stakeAmount.times(stakeRewardAmount).div(_finalPoolStakeAmount);
+    } else {
+      rewardAmount = _stakeAmount.times(stakeRewardAmount).div(maxStakeAmount);
+    }
+
+    return rewardAmount.isNaN() ? 0 : rewardAmount.integerValue(BigNumber.ROUND_FLOOR);
   };
 
   const handleDataChange = event => {
@@ -97,13 +115,48 @@ const Banner = ({ classes, recentStakeWindow }) => {
     ) {
       return (
         <Fragment>
+          <TimerIcon />
           <Typography>Current Session</Typography>
           <Typography>Open for</Typography>
         </Fragment>
       );
     }
 
-    return <Typography>Next Session will open soon</Typography>;
+    //return <Typography>Next Session will open soon</Typography>;
+    return (
+      <Fragment>
+        <TrendingUpIcon />
+        <Typography>Stake stats</Typography>
+        <Typography>so far</Typography>
+      </Fragment>
+    );
+  };
+
+  const toDisplayFormat = val => {
+    return new BigNumber(fromWei(val)).toFormat(0, BigNumber.ROUND_FLOOR);
+  };
+
+  const NumFormatter = ({ num }) => {
+    const numInAGI = new BigNumber(fromWei(num));
+    let numToDisplay = 0;
+    let textToDisplay = "";
+    if (numInAGI.gte(1000000)) {
+      textToDisplay = "M+";
+      numToDisplay = numInAGI.div(1000000).integerValue(BigNumber.ROUND_FLOOR);
+    } else if (numInAGI.gte(1000)) {
+      textToDisplay = "K+";
+      numToDisplay = numInAGI.div(1000).integerValue(BigNumber.ROUND_FLOOR);
+    } else {
+      textToDisplay = "";
+      numToDisplay = numInAGI.integerValue(BigNumber.ROUND_FLOOR);
+    }
+
+    return (
+      <Typography className={classes.metricsValue}>
+        {numToDisplay.toString()}
+        <span>{textToDisplay}</span>
+      </Typography>
+    );
   };
 
   const ShowTimer = () => {
@@ -122,7 +175,23 @@ const Banner = ({ classes, recentStakeWindow }) => {
         />
       );
     }
-    return null;
+
+    return (
+      <div className={classes.metrics}>
+        <div>
+          <NumFormatter num={stakeOverallSummary.overallStake} />
+          <Typography className={classes.metricsUnit}>Tokens Staked</Typography>
+        </div>
+        <div>
+          <Typography className={classes.metricsValue}>{stakeOverallSummary.totalUniqueStakers}+</Typography>
+          <Typography className={classes.metricsUnit}>Stakers</Typography>
+        </div>
+        <div>
+          <Typography className={classes.metricsValue}>{toDisplayFormat(stakeOverallSummary.totalReward)}</Typography>
+          <Typography className={classes.metricsUnit}>Token Reward Distributed</Typography>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -131,13 +200,14 @@ const Banner = ({ classes, recentStakeWindow }) => {
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerDescriptionContainer}>
           <Typography className={classes.bannerTitle}>Earn more while holding AGI tokens</Typography>
           <Typography className={classes.bannerDescPara1}>
-            By staking AGI coins, you support the operations of a blockchain network as well as rewarded with more AGI
-            tokens for your contributions.
+            By staking AGI tokens, you support the operations of our blockchain network and in doing so you will be
+            rewarded with more AGI tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
-            Every month there will be open staking sessions for you to add your AGI tokens to be vested for 30 days. The
-            SingularityNET foundation will use all or partial amount of your staked amounted. You can always auto renew
-            for continual compounded rewards and benefits.
+            Vest your AGI tokens in 30 day staking sessions. Tokens staked in this way will be used to fulfill
+            blockchain transactions on the SingularityNET platform. At the end of the 30 day period you can either
+            continue to allow your tokens to vest or withdraw them along with any reward earned during the staking
+            period.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerForm}>
@@ -157,22 +227,31 @@ const Banner = ({ classes, recentStakeWindow }) => {
                     : ""
                 }
                 value={stakeCalculatorFields.stakeAmount}
-                InputProps={{ inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount } }}
+                InputProps={{
+                  inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount },
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
                 onChange={handleDataChange}
               />
-              <SwapHorizontalCircleIcon />
+              <img src={ApproxSymbolImg} alt="Approximate Symbol" />
               <SNETTextfield
                 name="userRewardAmount"
                 label="Reward Amount"
-                extraInfo="~Approximate"
+                extraInfo="~Approximate based on pool size"
                 value={getRewardAmount()}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                }}
               />
             </div>
             <div className={classes.stakingDetails}>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Current Pool Size</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Current total amount of AGI tokens that have been contributed by all stakers</p>
+                  </div>
+                  <span>Current Pool Size</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -188,9 +267,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Reward Pool</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>The total reward amount of AGI tokens that will be divided and distributed to stakers</p>
+                  </div>
+                  <span>Reward Pool</span>
                 </div>
                 <div className={classes.valuesContainer}>
                   <TextField
@@ -206,9 +288,12 @@ const Banner = ({ classes, recentStakeWindow }) => {
                 </div>
               </div>
               <div>
-                <div className={classes.iconTitlContainer}>
-                  <InfoIcon />
-                  <Typography>Incubation Period</Typography>
+                <div className={classes.label}>
+                  <div className={classes.iconTooltipContainer}>
+                    <InfoIcon />
+                    <p>Amount of the time that AGI tokens in the stake will be vested and locked in</p>
+                  </div>
+                  <span>Incubation Period</span>
                 </div>
                 <div className={classes.incubationValuesConatiner}>
                   <Typography className={classes.incubationValue}>
@@ -220,7 +305,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
             </div>
             <div className={classes.formBtnContainer}>
               <SNETButton
-                children="stake & earntokens"
+                children="stake & earn tokens"
                 color="primary"
                 variant="contained"
                 onClick={navigateToLanding}
@@ -231,7 +316,7 @@ const Banner = ({ classes, recentStakeWindow }) => {
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.countDownContainer}>
         <div className={classes.countDownTitle}>
-          <TimerIcon />
+          {/* <TimerIcon /> */}
           <CounterTitle />
         </div>
         <ShowTimer />

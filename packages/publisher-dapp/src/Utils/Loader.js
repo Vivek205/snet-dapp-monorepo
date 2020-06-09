@@ -3,9 +3,21 @@ export const LoaderContent = {
     title: "Logging in",
     content: "Just a moment. We are logging you in",
   },
+  SIGNUP_CONFIRM: {
+    loaderHeader: "Confirming Account",
+    loaderText: "Just a moment. We are confirming your account",
+  },
   SIGN_OUT: {
-    title: "Signing out",
-    content: "Just a moment. We are signing you out",
+    loaderHeader: "Signing out",
+    loaderText: "Just a moment. We are signing you out",
+  },
+  FORGOT_PASSWORD: {
+    loaderHeader: "Forgot Password",
+    loaderText: "Sending you an email with the verification code",
+  },
+  FORGOT_PASSWORD_SUBMIT: {
+    loaderHeader: "Forgot Password Submit",
+    loaderText: "Resetting your password",
   },
   METAMASK_TRANSACTION: {
     title: "Waiting for Metamask Interaction",
@@ -111,5 +123,33 @@ export const LoaderContent = {
   SAMPLE_DAEMON_CONFIG: {
     title: "Retrieving Sample Daemon config",
     content: "Just a moment. We are retrieving the sample daemon configuration",
+  },
+  CONNECT_METAMASK: {
+    title: "Please connect Metamask",
+    content: "Please connect your Metamask Wallet",
+  },
+  GET_CLAIMS_LIST: {
+    title: "Waiting for MM interaction",
+    content: "Please approve the two requests in your Metamask wallet to fetch the latest claims list",
+  },
+  START_CHANNEL_CLAIMS: {
+    title: "Starting the Claims of the selected payment channels",
+    content: "Just a moment. We are initializing the claims of the selected payment channels",
+  },
+  SIGN_CLAIMS_IN_MM: {
+    title: "Waiting for MM interaction",
+    content: "Please sign the request for claiming channels in Metamask wallet",
+  },
+  CLAIMING_CHANNELS_IN_BLOCKCHAIN: {
+    title: "Claiming channels in blockchain",
+    content: "Please don't reload or go back, the channel is being claimed in blockchain",
+  },
+  VALIDATING_DAEMON_ENDPOINTS: {
+    title: "Validating daemon endpoints",
+    content: "Please wait we are validating daemon",
+  },
+  GET_LATEST_ORG: {
+    title: "Get latest org details",
+    content: "Please wait until we fetch the latest organization details",
   },
 };

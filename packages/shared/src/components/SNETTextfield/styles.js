@@ -23,6 +23,10 @@ export const useStyles = MUITheme => ({
       fontSize: 14,
       letterSpacing: 0.25,
       lineHeight: "20px",
+      "& a": {
+        color: MUITheme.palette.primary.main,
+        textDecoration: "none",
+      },
       [MUITheme.breakpoints.down("sm")]: { marginTop: 0 },
     },
     [MUITheme.breakpoints.down("sm")]: {
@@ -56,6 +60,9 @@ export const useStyles = MUITheme => ({
     lineHeight: "16px",
   },
   errorField: {
-    "& .MuiOutlinedInput-notchedOutline": { borderColor: MUITheme.palette.border.alertBox },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderWidth: 2,
+      borderColor: MUITheme.palette.border.alertBox,
+    },
   },
 });

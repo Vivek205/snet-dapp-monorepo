@@ -1,18 +1,19 @@
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import WhatDoWithPublisher from "shared/dist/assets/images/services.png";
-import YoutubeVideoFrame from "shared/dist/assets/images/youtubeVideoFrame.png";
+import Overview from "shared/dist/assets/images/Overview.png";
 
 export const overViewArticles = [
   {
     title: "Try Publisher Free Today",
     description: [
-      "Publish your AI services to the largest open decentralized AI marketplace blockchain and reach customers around the world.",
-      " You’ll also get access to beta software, advanced AI app capabilities, extensive beta testing tools, and AI usage analytics.",
+      "Publish and monetize your AI services onto the largest open decentralized AI marketplace in the world, extending your reach to obtain more customers globally.",
+      " You’ll also get free access to beta software, advanced AI app capabilities, extensive beta testing tools, and AI usage analytics.",
     ],
-    media: YoutubeVideoFrame,
+    media: Overview,
     btnDetails: {
       text: "get started",
-      type: "blue",
+      color: "blue",
+      variant: "outlined",
       linkTo: `${GlobalRoutes.ENROLL.path}`,
     },
   },
@@ -27,7 +28,7 @@ export const overViewArticles = [
       {
         title: "Store and control AI in one hub: ",
         description:
-          " Editors and developers can easily test, refine, and deploy changes to mulitple platforms, and global regions from one interface.",
+          " Editors and developers can easily test, refine, and deploy changes to multiple platforms, and global regions from one interface.",
       },
       {
         title: "Engage new AI experiences: ",
@@ -37,9 +38,10 @@ export const overViewArticles = [
     ],
     media: WhatDoWithPublisher,
     btnDetails: {
-      text: "see how it works",
+      linkTo: "",
+      /*text: "see how it works",
       type: "transparentBlueBorder",
-      linkTo: `${GlobalRoutes.HOW_IT_WORKS.path}`,
+      linkTo: `${GlobalRoutes.HOW_IT_WORKS.path}`,*/
     },
   },
 ];
@@ -47,5 +49,5 @@ export const overViewArticles = [
 export const getInTouch = {
   title: "More Questions? Get in Touch.",
   description:
-    "We can help you tackle demanding challenges, whether you’re a developer, business manager, or marketer. Our tools work together so that you and your team can improve your AI service performances while gaining valuable user insights.  Connect with us so we can assist you with the most optimal solutions.",
+    "We can help you tackle demanding challenges, whether you’re a developer, business manager, or marketer. Our tools work together so that you and your team can improve your AI service performance while gaining valuable user insights.  Connect with us so we can assist you with the most optimal solutions.",
 };

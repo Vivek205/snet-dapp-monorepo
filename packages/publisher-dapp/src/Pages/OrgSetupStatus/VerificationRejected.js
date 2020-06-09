@@ -1,37 +1,37 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
-import { useHistory, useParams } from "react-router-dom";
-import { GlobalRoutes } from "../../GlobalRouter/Routes";
-import { AuthenticateRoutes } from "../Onboarding/Authenticate/AuthenitcateRouter/Routes";
-import { useSelector } from "react-redux";
-import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+
+const selectState = state => ({ rejectReason: state.organization.rejectReason });
 
 const VerificationRejected = () => {
-  const status = useSelector(state => state.organization.state.state);
-  const history = useHistory();
-  const { orgUuid } = useParams();
-
-  const handleEditOrgDetails = () => {
-    if (status === organizationSetupStatuses.ONBOARDING_REJECTED) {
-      return history.push(AuthenticateRoutes.ORGANIZATION.path);
-    }
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
-  };
+  const { rejectReason } = useSelector(selectState);
 
   return (
     <SNETStatusBanner
-      title="Your Jumio ID verification was unsuccesful."
+      title="Your organization was rejected."
       img={VerificationFailed}
-      description="Please check and re-prepare the required documents, then retry the Jumio ID verification process. If you believe there was an error by Jumio or by SingularityNET, please contact our support staff who will assist you."
+      description={
+        <span>
+          Unfortunatetly your organization is rejected during the internal verification. Please check your inbox for
+          mail from singularitynet team with detailed explanation for your rejection. You can reinitiate the
+          organization creation once all criteria is met.
+          <br />
+          <br />
+          <strong>Comments:</strong> {rejectReason}.
+          <br />
+        </span>
+      }
       actions={[
         {
-          children: "access jumio verification",
-          variant: "contained",
+          children: "contact support",
+          variant: "outlined",
           color: "primary",
-          onClick: handleEditOrgDetails,
+          href: `mailto:${process.env.REACT_APP_SNET_SUPPORT_MAIL}`,
+          target: "_blank",
+          rel: "noreferrer noopener",
         },
-        { children: "contact support", variant: "outlined", color: "primary", disabled: true },
       ]}
       type={statusTitleType.REJECTED}
     />

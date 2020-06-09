@@ -17,20 +17,21 @@ export const useStyles = MUITheme => ({
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
+      fontWeight: 400,
       lineHeight: "50px !important",
     },
     [MUITheme.breakpoints.down("sm")]: { width: "100%" },
   },
-  wrapper: { padding: "21px 24px 42px" },
+  wrapper: { padding: "16px 24px 42px" },
   submitDescription: {
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
   },
   reviewProcessDescription: {
-    padding: " 20px 21px 22px",
+    padding: " 16px 21px 22px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "24px",
   },
   metamaskAddText: {
@@ -40,7 +41,7 @@ export const useStyles = MUITheme => ({
     letterSpacing: 0.29,
     lineHeight: "20px",
   },
-  commentField: { padding: "50px 0 0" },
+  commentField: { padding: "32px 0 0" },
   btnContainer: {
     marginTop: 12,
     display: "flex",
@@ -178,5 +179,80 @@ export const useStyles = MUITheme => ({
     borderColor: "#F1F1F1",
     borderRadius: 4,
     backgroundColor: "#F6F6F6",
+  },
+  launchServiceContainer: {
+    width: 845,
+    margin: "48px auto 0",
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "0 25px",
+    },
+  },
+  rejectedAlertAndBtnContainer: {
+    padding: "0 30px 25px",
+    textAlign: "center",
+    "& button": { marginTop: 25 },
+  },
+  approvalCommentSection: {
+    marginTop: 25,
+    "& h6": {
+      textAlign: "left",
+    },
+    "& p": {
+      padding: "10px 15px",
+      borderRadius: 4,
+      marginTop: 10,
+      backgroundColor: MUITheme.palette.background.mainContent,
+      fontSize: 16,
+      textAlign: "left",
+    },
+  },
+  changesReqAlertContainer: { padding: "0 25px" },
+  changeReqTextarea: {
+    margin: 25,
+    "& h6": {
+      "&:last-of-type": { margin: "20px 0" },
+    },
+    "& p": {
+      padding: "10px 15px",
+      borderRadius: 4,
+      marginTop: 10,
+      backgroundColor: MUITheme.palette.background.mainContent,
+      fontSize: 16,
+    },
+    "& > div": {
+      "& > div": { width: "100%" },
+    },
+  },
+  changeReqBtnContainer: {
+    paddingBottom: 30,
+    textAlign: "center",
+    "& button": {
+      "&:first-of-type": { marginRight: 25 },
+    },
+  },
+  validateConfigContainer: {
+    marginTop: 35,
+    "& h6": {
+      paddingBottom: 16,
+      fontSize: 18,
+      lineHeight: "23px",
+      fontWeight: 400,
+      "& + p": {
+        marginBottom: 24,
+        "& span": { fontWeight: "bold" },
+      },
+    },
+    "& button": { marginTop: 16 },
+  },
+  alertBoxContainer: { marginTop: 10 },
+  statusBannerContainer: {
+    width: 845,
+    margin: "40px auto",
+    "@media(max-width:800px)": {
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "0 25px",
+    },
   },
 });

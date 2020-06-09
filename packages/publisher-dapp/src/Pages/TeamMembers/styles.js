@@ -5,6 +5,7 @@ export const useStyles = MUITheme => ({
     [MUITheme.breakpoints.down("md")]: { padding: "40px 24px 52px" },
   },
   backToHomeLink: {
+    marginLeft: 45,
     cursor: "pointer",
     "& svg": {
       marginRight: 7,
@@ -18,18 +19,7 @@ export const useStyles = MUITheme => ({
       "&:hover": { textDecoration: "underline" },
     },
   },
-  rightSideSection: {
-    maxWidth: "60.47%",
-    flexBasis: "60.47%",
-    "@media(max-width:1280px)": {
-      maxWidth: "69.47%",
-      flexBasis: "69.47%",
-    },
-    [MUITheme.breakpoints.down("sm")]: {
-      maxWidth: "100%",
-      flexBasis: "100%",
-    },
-  },
+  rightSideSection: { padding: "0 50px" },
   topSection: {
     marginBottom: 48,
     display: "flex",

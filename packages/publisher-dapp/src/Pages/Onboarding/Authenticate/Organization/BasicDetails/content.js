@@ -9,7 +9,6 @@ export const basicDetailsFormData = {
     id: "organization Name - 15/50 char",
     name: "name",
     label: "Organization Name",
-    helperText: "15/50 char",
     description: `The organization name will be displayed on the AI Marketplace.`,
   },
   DUNS: {
@@ -32,4 +31,8 @@ export const basicDetailsFormData = {
     label: "Phone Number",
     description: `Please include your country code. For example +1-800-555-1234.`,
   },
+};
+export const orgIdAvailability = {
+  AVAILABLE: "AVAILABLE",
+  UNAVAILABLE: "UNAVAILABLE",
 };

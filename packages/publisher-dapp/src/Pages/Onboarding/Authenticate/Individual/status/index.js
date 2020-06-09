@@ -10,7 +10,7 @@ import Pending from "./Pending";
 import Denied from "./Denied";
 import Approved from "./Approved";
 import RelatedLinks from "./RelatedLinks";
-import { checkIfKnownError } from "shared/src/utils/error";
+import { checkIfKnownError } from "shared/dist/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
 import { AuthenticateRoutes } from "../../AuthenitcateRouter/Routes";
@@ -58,10 +58,7 @@ const IndividualStatus = ({ classes, history }) => {
       <Grid container spacing={24} className={classes.individualStatusContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
           <Typography variant="h3">Welcome to the AI Publisher</Typography>
-          <Typography>
-            With this pubilsher portal, you can publish and manage yourAI services. You will be able to edit your
-            services, demos, and tutorial content.
-          </Typography>
+          <Typography>With this publisher portal, you can publish and manage your AI services.</Typography>
         </Grid>
         <Component handleVerify={handleVerify} rejectReason={rejectReason} />
         <AlertBox type={alert.type} message={alert.message} />

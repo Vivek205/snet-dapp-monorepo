@@ -25,6 +25,8 @@ var _HeaderActions = _interopRequireDefault(require("./HeaderActions"));
 
 var _Navbar = _interopRequireDefault(require("./Navbar"));
 
+var _MobileHeader = _interopRequireDefault(require("./MobileHeader"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SNETHeader = function SNETHeader(_ref) {
@@ -33,45 +35,55 @@ var SNETHeader = function SNETHeader(_ref) {
       NavigationBar = _ref.NavigationBar,
       LoggedInActions = _ref.LoggedInActions,
       LoggedOutActions = _ref.LoggedOutActions,
-      portalName = _ref.portalName;
+      portalName = _ref.portalName,
+      mobileNavLinks = _ref.mobileNavLinks,
+      mobileDropDown = _ref.mobileDropDown,
+      onLogoClick = _ref.onLogoClick;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_SNETAppBar.default, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement(_SNETAppBar.default, {
     position: "fixed",
     color: color,
     className: "".concat(classes.appBar, " ").concat(color === "purple" ? classes.purple : null)
-  }, _react.default.createElement("div", {
-    className: classes.logoContainer
-  }, _react.default.createElement(_CardMedia.default, {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.logoContainer,
+    onClick: onLogoClick
+  }, /*#__PURE__*/_react.default.createElement(_MobileHeader.default, {
+    mobileNavLinks: mobileNavLinks,
+    mobileDropDown: mobileDropDown,
+    isLoggedIn: isLoggedIn,
+    LoggedInActions: LoggedInActions,
+    LoggedOutActions: LoggedOutActions,
+    color: color
+  }), /*#__PURE__*/_react.default.createElement(_CardMedia.default, {
     component: "img",
     image: color === "purple" ? _WhiteLogo.default : _BlackLogo.default,
     alt: "SingularityNET"
-  }), _react.default.createElement(_Typography.default, {
+  }), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     variant: "h5"
-  }, portalName)), _react.default.createElement("div", {
+  }, portalName)), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.navContainer
-  }, _react.default.createElement(_Navbar.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Navbar.default, {
     NavigationBar: NavigationBar
-  })), _react.default.createElement("div", null, _react.default.createElement(_HeaderActions.default, {
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.headerActionsContainer
+  }, /*#__PURE__*/_react.default.createElement(_HeaderActions.default, {
     isLoggedIn: isLoggedIn,
     LoggedInActions: LoggedInActions,
-    LoggedOutActions: LoggedOutActions
+    LoggedOutActions: LoggedOutActions,
+    headerType: "desktop"
   })))));
 };
 
 SNETHeader.propTypes = {
   isLoggedIn: _propTypes.default.bool,
   color: _propTypes.default.string,
-  navbar: _propTypes.default.shape({
-    navbarItems: _propTypes.default.arrayOf(_propTypes.default.shape({
-      type: _propTypes.default.string,
-      activeLinks: _propTypes.default.arrayOf(_propTypes.default.string),
-      label: _propTypes.default.string,
-      openInNewTab: _propTypes.default.bool,
-      to: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
-    }))
-  }),
-  LoggedInActions: _propTypes.default.elementType,
-  LoggedOutActions: _propTypes.default.elementType
+  LoggedInActions: _propTypes.default.object,
+  LoggedOutActions: _propTypes.default.object,
+  onLogoClick: _propTypes.default.func
+};
+SNETHeader.defaultProps = {
+  isLoggedIn: _propTypes.default.bool,
+  onLogoClick: _propTypes.default.func
 };
 var _default = SNETHeader;
 exports.default = _default;

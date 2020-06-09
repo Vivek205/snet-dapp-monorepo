@@ -13,7 +13,7 @@ import validator from "shared/dist/utils/validator";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import { orgProfileValidationConstraints } from "../validationConstraints";
 
-const BasicDetails = ({ classes }) => {
+const BasicDetails = ({ classes, invalidFields }) => {
   const { id, name, shortDescription, longDescription, website, foundInBlockchain } = useSelector(
     state => state.organization
   );
@@ -23,7 +23,10 @@ const BasicDetails = ({ classes }) => {
   const handleWebsiteValidation = value => {
     const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
     if (isNotValid) {
-      return setWebsiteValidation({ type: alertTypes.ERROR, message: `${value} is not a valid URL` });
+      return setWebsiteValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid URL. URL should start with https:`,
+      });
     }
     return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
   };
@@ -39,7 +42,7 @@ const BasicDetails = ({ classes }) => {
   return (
     <Grid item xs={12} sm={12} md={12} lg={12} className={classes.basicDetailsContainer}>
       <Typography variant="subtitle2" className={classes.description}>
-        This information that will be displayed as the Provider for all the AI services your company publishes to AI
+        This information will be displayed as the Provider for all the AI services your company publishes to AI
         Marketplace
       </Typography>
       <SNETTextfield
@@ -49,6 +52,7 @@ const BasicDetails = ({ classes }) => {
         description="The organziation id is the unique id for the organization."
         onChange={handleFormInputsChange}
         disabled
+        error={"id" in invalidFields}
       />
       <SNETTextfield
         name="name"
@@ -56,33 +60,37 @@ const BasicDetails = ({ classes }) => {
         label="Organization Name"
         description="The organziation name is displayed to users on the AI Marketplace."
         onChange={handleFormInputsChange}
-        minCount="15"
+        minCount={name.length}
         maxCount="50"
         disabled={foundInBlockchain}
+        error={"name" in invalidFields}
       />
+
       <SNETTextarea
         label="Short Description"
         rowCount="4"
         colCount="102"
-        minCount="0"
+        minCount={shortDescription.length}
         maxCount="160"
         name="shortDescription"
         value={shortDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
         disabled={foundInBlockchain}
+        error={"shortDescription" in invalidFields}
       />
       <SNETTextarea
         label="Long Description"
         rowCount="8"
         colCount="102"
-        minCount="0"
+        minCount={longDescription.length}
         maxCount="5000"
         name="longDescription"
         value={longDescription}
         onChange={handleFormInputsChange}
         showInfoIcon
         disabled={foundInBlockchain}
+        error={"longDescription" in invalidFields}
       />
       <div className={classes.orgWebsiteUrl}>
         <SNETTextfield
@@ -91,6 +99,7 @@ const BasicDetails = ({ classes }) => {
           onChange={handleFormInputsChange}
           label="Organization Website URL"
           description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
+          error={"website" in invalidFields}
         />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>

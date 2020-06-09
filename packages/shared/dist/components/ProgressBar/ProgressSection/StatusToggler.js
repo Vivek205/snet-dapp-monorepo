@@ -7,7 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _CheckCircle = _interopRequireDefault(require("@material-ui/icons/CheckCircle"));
+var _Check = _interopRequireDefault(require("@material-ui/icons/Check"));
 
 var _styles = require("./styles");
 
@@ -21,16 +21,16 @@ var StatusToggler = function StatusToggler(_ref) {
   var classes = (0, _styles.useStyles)();
 
   if (progressStatus === _.ProgressStatusList.COMPLETED) {
-    return _react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: classes.numberContaienr
-    }, _react.default.createElement("span", {
+    }, /*#__PURE__*/_react.default.createElement("span", {
       className: classes.completedIcon
-    }, _react.default.createElement(_CheckCircle.default, null)));
+    }, /*#__PURE__*/_react.default.createElement(_Check.default, null)));
   }
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.numberContaienr
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: classes.number
   }, progressNumber));
 };

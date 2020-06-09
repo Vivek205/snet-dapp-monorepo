@@ -7,7 +7,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const FileStats = props => {
-  const { uploadSuccess, show, fileName, fileSize, fileDownloadURL } = props;
+  const { uploadSuccess, show, fileName, fileSize, fileDownloadURL, error } = props;
   const classes = useStyles();
 
   if (!show) {
@@ -18,10 +18,12 @@ const FileStats = props => {
     <div className={classes.imgUploaderContainer}>
       <div className={classes.uploadDetails}>
         <div className={uploadSuccess ? classes.successfullUpload : classes.uploadStatusContainer}>
-          <FolderIcon />
-          <Typography className={uploadSuccess ? classes.uploaded : classes.uploadStatus}>
-            {uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded"}
-          </Typography>
+          <div className={error ? classes.errorField : classes.uploadStatusContainer}>
+            <FolderIcon />
+            <Typography className={uploadSuccess ? classes.uploaded : classes.uploadStatus}>
+              {uploadSuccess ? "Files Uploaded Successfully" : "No Files Uploaded"}
+            </Typography>
+          </div>
         </div>
         <div>
           <Typography className={classes.title}>File Name:</Typography>
@@ -45,9 +47,10 @@ const FileStats = props => {
         </div>
         <div className={classes.uploadBtns}>
           <a href={fileDownloadURL} download onClick={e => e.stopPropagation()}>
-            <SNETButton children="download files" color="primary" variant="text" />
+            <SNETButton children="download files" color="primary" variant="text" disabled={!uploadSuccess} />
           </a>
-          <SNETButton children="delete files" color="red" variant="text" />
+          {/* <SNETButton children="delete files" color="red" variant="text" disabled={!uploadSuccess} />
+           */}{" "}
         </div>
       </div>
     </div>

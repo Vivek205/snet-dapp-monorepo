@@ -41,7 +41,10 @@ class MetaMaskAccountBalance extends Component {
         <div className={classes.accountDetails}>
           <div>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Your account is linked to a third-party crypto wallet such as Metamask</p>
+              </div>
               <span>Wallet</span>
             </div>
             <span>Metamask</span>
@@ -49,7 +52,13 @@ class MetaMaskAccountBalance extends Component {
 
           <div>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>
+                  Metamask allows you to select your Ethereum network. Please be sure you are using the correct network
+                  for proper access to your wallet.
+                </p>
+              </div>
               <span>Current Network</span>
             </div>
             <span>
@@ -59,7 +68,6 @@ class MetaMaskAccountBalance extends Component {
 
           <div className={classes.walletIdContainer}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
               <span>Wallet ID</span>
             </div>
             <span className={classes.walletId}>{metamaskDetails.account}</span>
@@ -67,26 +75,41 @@ class MetaMaskAccountBalance extends Component {
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Token Balance</span>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Account balance displaying the total number of AGI tokens currently available with the wallet.</p>
+              </div>
+              <span>Total Tokens</span>
             </div>
             <span>{fromWei(tokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Staking Balance</span>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>
+                  Are the tokens user authorizes escrow to transfer from user wallet to escrow based on user
+                  deposit/transfer action. User cannot transfer more than the authorized amount.
+                </p>
+              </div>
+              <span>Authorized Tokens</span>
             </div>
-            <span>{fromWei(stakeBalance)} AGI</span>
+            <span>{fromWei(tokenAllowance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
-              <InfoIcon className={classes.infoIcon} />
-              <span>Authorized Tokens</span>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>
+                  The total amount of AGI tokens that you have involved across all stake sessions. This includes pending
+                  and active staking amounts.
+                </p>
+              </div>
+              <span>Total Staked</span>
             </div>
-            <span>{fromWei(tokenAllowance)} AGI</span>
+            <span>{fromWei(stakeBalance)} AGI</span>
           </div>
         </div>
       </div>

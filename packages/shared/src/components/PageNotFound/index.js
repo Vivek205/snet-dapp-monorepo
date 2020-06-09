@@ -3,13 +3,22 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
 
 import StyledButton from "shared/dist/components/StyledButton";
 import PageNotFoundImage from "../../assets/images/pageNotFound.png";
 import AnchorLink from "../AnchorLink";
 import { useStyles } from "./styles";
 
-const PageNotFound = ({ classes, handleGoToHome }) => {
+const PageNotFound = ({ classes, homePath }) => {
+  const history = useHistory();
+
+  const handleGoToHome = () => {
+    if (homePath) {
+      history.push(homePath);
+    }
+  };
+
   return (
     <Grid container className={classes.pageNotFoundContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.mediaContentContainer}>
@@ -26,9 +35,8 @@ const PageNotFound = ({ classes, handleGoToHome }) => {
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.description}>
         <Typography>
-          If you are seeing this message repeatedly, let us know at
-          <AnchorLink label="support@singularitynet.io" href="/" />
-          and we will look into it.
+          If you are seeing this message repeatedly, let us know at{" "}
+          <AnchorLink label="support@singularitynet.io" href="/" /> and we will look into it.
         </Typography>
       </Grid>
     </Grid>

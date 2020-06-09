@@ -1,7 +1,7 @@
 const PrimaryFooterLeft = [
   { label: "Contact Us", link: "https://singularitynet.io/#contact" },
   { label: "Foundation Site", link: "https://singularitynet.io/" },
-  { label: "Singularity Studio", link: "https://singularitynet.io/studio/" },
+  { label: "SingularityNet Studio", link: "https://singularitynet.io/studio/" },
   { label: "White Paper", link: "https://public.singularitynet.io/whitepaper.pdf" },
   { label: "Jobs", link: "https://singularitynet.io/jobs-temp/" },
 ];

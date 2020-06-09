@@ -1,29 +1,47 @@
 import { lazy } from "react";
 import withLightHeaderAndFooter from "../HOC/withLightHeaderAndFooter";
 import withRegistrationHeader from "../HOC/withRegistrationHeader";
+import withTncHeader from "../HOC/withTncHeader";
 import store from "../Services/Redux/Store";
 
 const Login = lazy(() => import("../Pages/Login"));
 const Signup = lazy(() => import("../Pages/Signup"));
+const ForgotPassword = lazy(() => import("../Pages/ForgotPassword"));
+const ForgotPasswordConfirm = lazy(() => import("../Pages/ForgotPasswordConfirm"));
 const HowItWorks = lazy(() => import("../Pages/HowItWorks"));
 const SignupConfirm = lazy(() => import("../Pages/SignupConfirm"));
 const AcceptAgreement = lazy(() => import("../Pages/AcceptServiceAgreement"));
 const UserProfile = lazy(() => import("../Pages/UserProfile"));
 
 const Landing = lazy(() => import("../Pages/Landing"));
+const FAQ = lazy(() => import("../Pages/FAQ"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
+const FORGOT_PASSWORD_PATH = "/forgotpassword";
+const FORGOT_PASSWORD_CONFIRM_PATH = "/forgotpasswordconfirm";
 
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
 const SignupComponent = withRegistrationHeader(Signup, "Already have an account?", "Login", LOGIN_PATH);
 const SingupConfirmComponent = withRegistrationHeader(SignupConfirm, "Already have an account?", "Login", LOGIN_PATH);
+const ForgotPasswordComponent = withRegistrationHeader(
+  ForgotPassword,
+  "Switch to another account?",
+  "Login",
+  LOGIN_PATH
+);
+const ForgotPasswordConfirmComponent = withRegistrationHeader(
+  ForgotPasswordConfirm,
+  "Switch to another account?",
+  "Login",
+  LOGIN_PATH
+);
 const HowItWorksComponent = withLightHeaderAndFooter(HowItWorks);
-
-const AcceptAgreementComponent = withLightHeaderAndFooter(AcceptAgreement);
+const AcceptAgreementComponent = withTncHeader(AcceptAgreement, null, "Logout", LOGIN_PATH);
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
+const FAQComponent = withLightHeaderAndFooter(FAQ);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -40,6 +58,16 @@ export const GlobalRoutes = {
     name: "signup confirm",
     path: "/signupconfirmation",
     component: SingupConfirmComponent,
+  },
+  FORGOT_PASSWORD: {
+    name: "forgot password",
+    path: FORGOT_PASSWORD_PATH,
+    component: ForgotPasswordComponent,
+  },
+  FORGOT_PASSWORD_CONFIRM: {
+    name: "forgot password",
+    path: FORGOT_PASSWORD_CONFIRM_PATH,
+    component: ForgotPasswordConfirmComponent,
   },
   HOW_IT_WORKS: {
     name: "how it works",
@@ -61,27 +89,46 @@ export const GlobalRoutes = {
     path: "/userprofile",
     component: UserProfileComponent,
   },
+  FAQ: {
+    name: "faq",
+    path: "/faq",
+    component: FAQComponent,
+  },
 };
 
 export const setupRouteAuthentications = () => {
   const state = store.getState();
-  const { isLoggedIn } = state.user;
+  const { isLoggedIn, isEmailVerified } = state.user;
+
+  const redirectPath = getRedirectPath(isLoggedIn, isEmailVerified);
+  const isAllowed = isLoggedIn && isEmailVerified;
+
   return {
     ...GlobalRoutes,
     LANDING: {
       ...GlobalRoutes.LANDING,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     ACCEPT_AGREEMENT: {
       ...GlobalRoutes.ACCEPT_AGREEMENT,
-      isAllowed: isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
     USER_PROFILE: {
       ...GlobalRoutes.USER_PROFILE,
-      isAllowed: state.user.isLoggedIn,
-      redirectTo: GlobalRoutes.LOGIN.path,
+      isAllowed,
+      redirectTo: redirectPath,
     },
   };
+};
+
+const getRedirectPath = (isLoggedIn, isEmailVerified) => {
+  if (!isLoggedIn) {
+    return GlobalRoutes.LOGIN.path;
+  } else if (!isEmailVerified) {
+    return GlobalRoutes.SIGNUP_CONFIRM.path;
+  } else {
+    return GlobalRoutes.LOGIN.path;
+  }
 };

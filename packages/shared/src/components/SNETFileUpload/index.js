@@ -23,6 +23,7 @@ const SNETFileUpload = props => {
     fileSize,
     fileDownloadURL,
     uploadSuccess,
+    error,
   } = props;
   const classes = useStyles();
 
@@ -39,9 +40,9 @@ const SNETFileUpload = props => {
   });
 
   return (
-    <Grid container {...getRootProps()}>
+    <Grid container>
       <input {...getInputProps()} />
-      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.grayBox}>
+      <Grid item xs={12} sm={12} md={6} lg={6} className={classes.grayBox} {...getRootProps()}>
         <CloudUpload />
         <Typography>
           Drag and drop image here or<span> click</span>
@@ -55,6 +56,7 @@ const SNETFileUpload = props => {
           fileSize={fileSize}
           fileDownloadURL={fileDownloadURL}
           uploadSuccess={uploadSuccess}
+          error={error}
         />
       </Grid>
     </Grid>

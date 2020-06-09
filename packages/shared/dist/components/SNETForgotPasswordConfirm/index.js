@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -33,24 +33,28 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
-  var title = _ref.title,
+  var email = _ref.email,
       forgotPasswordConfirmError = _ref.forgotPasswordConfirmError,
       onSubmit = _ref.onSubmit;
   var classes = (0, _styles.useStyles)();
 
-  var _useState = (0, _react.useState)(true),
+  var _useState = (0, _react.useState)(email),
       _useState2 = _slicedToArray(_useState, 2),
-      showEmailSentAlert = _useState2[0],
-      setShowEmailSentAlert = _useState2[1];
+      localEmail = _useState2[0],
+      setLocalEmail = _useState2[1];
 
   var _useState3 = (0, _react.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -72,10 +76,9 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
       validationErr = _useState10[0],
       setValidationErr = _useState10[1];
 
-  var handleEnterOtp = function handleEnterOtp(event) {
-    event.preventDefault();
-    setShowEmailSentAlert(false);
-  };
+  (0, _react.useEffect)(function () {
+    setLocalEmail(email);
+  }, [email]);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
@@ -83,47 +86,54 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     var isNotValid = (0, _validator.default)({
       password: password,
       confirmPassword: confirmPassword,
-      code: code
+      code: code,
+      localEmail: localEmail
     }, _validationConstraints.forgotPassworSubmitConstraints);
 
     if (isNotValid) {
       setValidationErr(isNotValid[0]);
       return;
-    } // Assuming the user state has the email, no need to explicitly pass it to this comp
+    } // Assuming the user state has the email, no need to explicitly pass it to this component
 
 
-    onSubmit(code, password);
+    onSubmit(localEmail, code, password);
   };
 
-  if (showEmailSentAlert) {
-    return _react.default.createElement("section", {
-      className: classes.resetPasswordContainer
-    }, _react.default.createElement("span", null, "Reset Password Email Sent."), _react.default.createElement("p", null, "Click ", _react.default.createElement("a", {
-      onClick: handleEnterOtp
-    }, "here"), " to enter the verification code."));
-  }
-
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     spacing: 24
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.forgotPwdContent
-  }, _react.default.createElement(_Typography.default, {
-    variant: "h2"
-  }, title), _react.default.createElement("p", null, "Enter the verification code and new password."), _react.default.createElement("form", {
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+    variant: "h3"
+  }, "Reset your password"), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Thanks for confirming your email.", /*#__PURE__*/_react.default.createElement("span", null, "Input your new password")), /*#__PURE__*/_react.default.createElement("form", {
+    className: classes.forgotPwdForm,
+    noValidate: ""
+  }, /*#__PURE__*/_react.default.createElement(_TextField.default, {
+    id: "outlined-email-input",
+    label: "Email",
+    className: classes.textField,
     autoComplete: "off",
-    className: classes.forgotPwdForm
-  }, _react.default.createElement(_TextField.default, {
+    type: "email",
+    name: "email",
+    margin: "normal",
+    variant: "outlined",
+    value: localEmail,
+    required: true,
+    onChange: function onChange(e) {
+      return setLocalEmail(e.target.value);
+    }
+  }), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     id: "outlined-code-input",
     label: "Code",
     className: classes.textField,
     autoComplete: "off",
-    type: "text",
+    type: "code",
     name: "code",
     margin: "normal",
     variant: "outlined",
@@ -131,7 +141,7 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     onChange: function onChange(e) {
       return setCode(e.target.value);
     }
-  }), _react.default.createElement(_TextField.default, {
+  }), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     id: "outlined-new-password-input",
     label: "New Password",
     className: classes.textField,
@@ -144,7 +154,7 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  }), _react.default.createElement(_TextField.default, {
+  }), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     id: "outlined-confirm-password-input",
     label: "Confirm Password",
     className: classes.textField,
@@ -157,10 +167,10 @@ var SNETForgotPasswordConfirm = function SNETForgotPasswordConfirm(_ref) {
     onChange: function onChange(e) {
       return setConfirmPassword(e.target.value);
     }
-  }), _react.default.createElement(_AlertBox.default, {
+  }), /*#__PURE__*/_react.default.createElement(_AlertBox.default, {
     type: "error",
     message: validationErr || forgotPasswordConfirmError
-  }), _react.default.createElement(_SNETButton.default, {
+  }), /*#__PURE__*/_react.default.createElement(_SNETButton.default, {
     color: "primary",
     variant: "contained",
     children: "reset password",

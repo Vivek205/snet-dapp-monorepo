@@ -1,10 +1,13 @@
 import React from "react";
+import { withStyles } from "@material-ui/styles";
 
-const AlertHeader = ({ header }) => {
+import { useStyles } from "./styles";
+
+const AlertHeader = ({ header, classes }) => {
   if (header) {
-    return <span>{header}</span>;
+    return <span className={classes.alertHeader}>{header}</span>;
   }
   return null;
 };
 
-export default AlertHeader;
+export default withStyles(useStyles)(AlertHeader);

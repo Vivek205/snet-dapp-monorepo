@@ -44,7 +44,8 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     drawerOpen: {
       width: 193,
-      top: 65,
+      top: 71,
+      zIndex: 1,
       background: "#220D3A",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
@@ -58,7 +59,8 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     drawerClose: {
       width: 60,
-      top: 65,
+      top: 71,
+      zIndex: 1,
       background: "#220D3A",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
@@ -93,6 +95,10 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       padding: 0
     },
     listItem: {
+      "& a": {
+        display: "flex",
+        textDecoration: "none"
+      },
       "& span": {
         marginLeft: 11,
         color: "#9b9b9b",

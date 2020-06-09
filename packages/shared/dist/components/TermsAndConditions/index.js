@@ -31,26 +31,27 @@ var TermsAndConditions = function TermsAndConditions(props) {
       formLabel = props.formLabel,
       onAccept = props.onAccept,
       agreed = props.agreed,
-      onChangeAgreed = props.onChangeAgreed;
-  return _react.default.createElement("div", {
+      onChangeAgreed = props.onChangeAgreed,
+      Content = props.Content;
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.onboardingContainer
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.termsAndConditionsContainer
-  }, _react.default.createElement("h3", null, title), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("h3", null, title), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.termsAndConditions
-  }, _react.default.createElement(_PrivacyTerms.default, null)), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(Content, null)), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.checkboxAndButton
-  }, _react.default.createElement(_FormControlLabel.default, {
-    control: _react.default.createElement(_Checkbox.default, {
+  }, /*#__PURE__*/_react.default.createElement(_FormControlLabel.default, {
+    control: /*#__PURE__*/_react.default.createElement(_Checkbox.default, {
       onChange: onChangeAgreed,
       color: "primary"
     }),
     label: formLabel
-  }), onAccept ? _react.default.createElement(_StyledButton.default, {
+  }), onAccept ? /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
     btnText: "accept",
     disabled: !agreed,
     onClick: onAccept
-  }) : ""), _react.default.createElement(_AlertBox.default, {
+  }) : ""), /*#__PURE__*/_react.default.createElement(_AlertBox.default, {
     type: alert.type,
     message: alert.message
   })));
@@ -61,7 +62,11 @@ TermsAndConditions.protoTypes = {
   formLabel: _propTypes.default.string,
   onAccept: _propTypes.default.func,
   agreed: _propTypes.default.bool,
-  onChangeAgreed: _propTypes.default.func
+  onChangeAgreed: _propTypes.default.func,
+  Content: _propTypes.default.element
+};
+TermsAndConditions.defaultProps = {
+  Content: _PrivacyTerms.default
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(TermsAndConditions);

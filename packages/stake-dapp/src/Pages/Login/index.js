@@ -1,29 +1,44 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
 import { loginErrorMsg } from "./content";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
+import { tncAgreementVesrion } from "../AcceptServiceAgreement/content";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { isLoggedIn, stakingTnC } = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  const checkUserTnCAcceptance = useCallback(() => {
+    if (stakingTnC) {
+      if (stakingTnC.ver === tncAgreementVesrion && stakingTnC.accepted === true) {
+        return true;
+      }
+    }
+
+    return false;
+  }, [stakingTnC]);
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
+      if (checkUserTnCAcceptance()) history.push(GlobalRoutes.LANDING.path);
+      else history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
     }
-  }, [isLoggedIn, history]);
+  }, [isLoggedIn, history, checkUserTnCAcceptance]);
 
   const handleSubmit = async (email, password) => {
     try {
       await dispatch(loginActions.login(email, password));
-      history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
+      //history.push(GlobalRoutes.ACCEPT_AGREEMENT.path);
     } catch (error) {
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
+      }
+      if (error.code === "UserNotConfirmedException") {
+        history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
       }
       setError(loginErrorMsg);
     }
@@ -32,9 +47,8 @@ const Login = ({ history }) => {
   return (
     <Fragment>
       <SNETLogin
-        title="Welcome Back"
-        //   TODO : create a page for forgotPassword and pass the link here
-        //   forgotPasswordLink={}
+        title="Welcome Back to AGI Staking"
+        forgotPasswordLink={GlobalRoutes.FORGOT_PASSWORD.path}
         loginError={error}
         onSubmit={handleSubmit}
       />

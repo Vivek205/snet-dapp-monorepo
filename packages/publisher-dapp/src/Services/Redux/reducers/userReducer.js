@@ -5,6 +5,7 @@ const initialState = {
   entity: "",
   isInitialized: false,
   isLoggedIn: false,
+  publisherTnC: { ver: "", accepted: "" },
   email: undefined,
   nickname: undefined,
   isEmailVerified: false,
@@ -28,16 +29,13 @@ const userReducer = (state = initialState, action) => {
     case userActions.loginActions.SET_USER_NICKNAME: {
       return { ...state, nickname: action.payload };
     }
-    case userActions.loginActions.SET_USER_EMAIL_VERIFIED: {
-      return { ...state, isEmailVerified: action.payload };
-    }
     case userActions.loginActions.SET_APP_INITIALIZED: {
       return { ...state, isInitialized: action.payload };
     }
     case userActions.onboardingActions.SET_USER_ENTITY: {
       return { ...state, entity: action.payload };
     }
-    case userActions.loginActions.RESET_USER_ON_SIGNOUT: {
+    case userActions.loginActions.SIGNOUT: {
       return { ...initialState, isInitialized: true };
     }
     case userActions.loginActions.SET_JWT_EXP: {
@@ -52,6 +50,12 @@ const userReducer = (state = initialState, action) => {
       return { ...state, individualVerificationStatus: action.payload };
     case userActions.individualVerificationActions.SET_INDIVIDUAL_VERIFICATION_REJECT_REASON:
       return { ...state, individualVerificationRejectReason: action.payload };
+    case userActions.loginActions.SET_USER_ATTRIBUTES: {
+      return { ...state, ...action.payload };
+    }
+    case userActions.loginActions.SET_IS_MM_CONNECTED: {
+      return { ...state, isMMConnected: action.payload };
+    }
     default:
       return state;
   }

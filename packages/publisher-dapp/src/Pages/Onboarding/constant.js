@@ -1,15 +1,15 @@
 export const onboardingSections = {
   SINGULARITY_ACCOUNT: {
-    key: 1,
+    key: 2,
     heading: {
-      title: "Lets Get Started",
+      title: "Let's Get Started",
       description: "Log in or create your SingularityNET account",
     },
   },
   ACCEPT_SERVICE_AGREEMENT: {
-    key: 2,
+    key: 1,
     heading: {
-      title: "Singularity AI Publisher's Agreement",
+      title: "SingularityNet AI Publisher's Agreement",
       description: "Please review and agree to the terms to continue",
     },
   },
@@ -22,7 +22,7 @@ export const onboardingSections = {
   },
 };
 
-export const progressText = ["Singularity Account", "Accept Service Agreement", "Authenticate ID"];
+export const progressText = ["Accept Service Agreement", "SingularityNet Account", "Authenticate ID"];
 
 export const individualVerificationStatusList = {
   NOT_STARTED: undefined,
@@ -31,4 +31,16 @@ export const individualVerificationStatusList = {
   REJECTED: "REJECTED",
   FAILED: "FAILED",
   ERROR: "ERROR",
+};
+export const organizationIdAvailability = {
+  AVAILABLE: "AVAILABLE",
+  UNAVAILABLE: "UNAVAILABLE",
+};
+
+export const orgVerificationStatus = {
+  NOT_STARTED: undefined,
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  REJECTED: "REJECTED",
+  CHANGE_REQUESTED: "CHANGE_REQUESTED",
 };

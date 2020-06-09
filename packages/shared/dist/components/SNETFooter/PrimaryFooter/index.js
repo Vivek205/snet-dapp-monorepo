@@ -23,21 +23,21 @@ var PrimaryFooter = function PrimaryFooter(_ref) {
   var classes = _ref.classes,
       leftData = _ref.leftData,
       mainData = _ref.mainData;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.PrimaryFooter
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.LeftData
-  }, _react.default.createElement(_FooterLogo.default, null), _react.default.createElement("ul", {
+  }, /*#__PURE__*/_react.default.createElement(_FooterLogo.default, null), /*#__PURE__*/_react.default.createElement("ul", {
     className: classes.footerLogoSection
   }, leftData.map(function (item) {
-    return _react.default.createElement(_FooterLink.default, {
+    return /*#__PURE__*/_react.default.createElement(_FooterLink.default, {
       key: item.label,
       image: item.image,
       link: item.link,
       label: item.label,
       internalLink: item.internalLink
     });
-  }))), _react.default.createElement(_FooterLinks.default, {
+  }))), /*#__PURE__*/_react.default.createElement(_FooterLinks.default, {
     data: mainData
   }));
 };

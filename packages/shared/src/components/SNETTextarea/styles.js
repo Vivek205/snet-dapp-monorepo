@@ -14,12 +14,30 @@ export const useStyles = MUITheme => ({
       width: "100%",
       padding: 10,
       borderRadius: 4,
+      borderColor: "rgba(25,25,25,.32)",
       color: MUITheme.palette.text.darkGrey,
       fontFamily: MUITheme.typography.fontFamily,
       fontSize: 16,
       lineHeight: "20px",
       resize: "none",
+      "&:disabled": {
+        background: MUITheme.palette.background.white,
+        borderColor: MUITheme.palette.border.secondary,
+        color: "#999",
+      },
+      "&:hover": {
+        borderColor: `${MUITheme.palette.text.primary} !important`,
+      },
+      "&:focus": {
+        borderWidth: 2,
+        borderColor: `${MUITheme.palette.primary.main} !important`,
+        outline: "none",
+      },
     },
+  },
+  error: {
+    borderWidth: 2,
+    borderColor: `${MUITheme.palette.border.alertBox} !important`,
   },
   label: {
     position: "absolute",
@@ -38,6 +56,7 @@ export const useStyles = MUITheme => ({
     display: "block",
     paddingLeft: 14,
     color: MUITheme.palette.text.primary,
+    fontFamily: MUITheme.typography.fontFamily,
     fontSize: 12,
     letterSpacing: 0.39,
   },

@@ -14,17 +14,18 @@ export const defaultGroups = [
         priceInCogs: 1,
       },
     ],
-    endpoints: [],
+    endpoints: {},
     testEndpoints: [],
-    freeCallsAllowed: "",
+    daemonAddresses: [],
+    freeCallsAllowed: 0,
   },
 ];
 
-const initialState = {
+export const initialAiServiceDetailsState = {
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
   },
-  touch: false,
+  touched: false,
   status: serviceSetupStatuses.NOT_STARTED,
   uuid: "",
   name: "",
@@ -62,17 +63,18 @@ const initialState = {
   groups: defaultGroups,
   tags: [],
   comments: {
-    serviceProvider: [],
+    SERVICE_PROVIDER: "",
+    SERVICE_APPROVER: "<div></div>",
   },
   foundInBlockchain: false,
 };
 
-const serviceDetailsReducer = (state = initialState, action) => {
+const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
   switch (action.type) {
     case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };
-    case aiServiceDetailsActions.SET_AI_SERVICE_TOUCH_FLAG:
-      return { ...state, touch: action.payload };
+    case aiServiceDetailsActions.SET_AI_SERVICE_TOUCHED_FLAG:
+      return { ...state, touched: action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_ID:
       return { ...state, id: action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_ID_AVAILABILITY:
@@ -94,7 +96,7 @@ const serviceDetailsReducer = (state = initialState, action) => {
         ...state,
         comments: {
           ...state.comments,
-          serviceProvider: action.payload,
+          SERVICE_PROVIDER: action.payload,
         },
       };
     case aiServiceDetailsActions.SET_AI_SERVICE_STATE_STATE:

@@ -14,16 +14,18 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 class PricingDistribution extends Component {
   state = {
-    alert: { type: alertTypes.ERROR, message: "Lorem ipsum" },
+    alert: { type: alertTypes.ERROR, message: "An error occurred while saving groups" },
+    invalidFields: {},
   };
 
   componentDidMount = async () => {
-    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
-    await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress, changeServiceDetailsLeaf } = this.props;
+    const freeCallSignerAddress = await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+    changeServiceDetailsLeaf("freeCallSignerAddress", freeCallSignerAddress);
   };
 
   componentDidUpdate = async prevProps => {
-    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress } = this.props;
+    const { orgId, groupId, serviceId, username, getFreeCallSignerAddress, changeServiceDetailsLeaf } = this.props;
     if (
       Boolean(orgId) &&
       Boolean(groupId) &&
@@ -34,33 +36,52 @@ class PricingDistribution extends Component {
         serviceId !== prevProps.serviceId ||
         username !== prevProps.username)
     ) {
-      await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+      const freeCallSignerAddress = await getFreeCallSignerAddress(orgId, groupId, serviceId, username);
+      changeServiceDetailsLeaf("freeCallSignerAddress", freeCallSignerAddress);
     }
   };
 
+  setInvalidFields = invalidFields => {
+    this.setState({ invalidFields });
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, changeGroups, serviceDetails, changeProtoFiles, setServiceDetailsInRedux } = this.props;
     return (
       <Grid container className={classes.pricingContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
           <Typography variant="h6">Pricing distribution</Typography>
           <div className={classes.wrapper}>
             <Typography className={classes.description}>
-              Lorem ipsum dolor sit amet, consectetur et mihi. Accusatores directam qui ut accusatoris. Communiter
-              videbatur hominum vitam ut qui eiusdem fore accommodatior maximis vetere communitatemque.
+              Groups provide a mechanism of having multiple instances of a service in a geographically distributed
+              manner. All service metadata can be managed at a group level. At this point we only support a single group
+              per service. Support for multiple groups per Service is coming soon.
             </Typography>
-            <Region />
-            <UploadProto />
-            <AdvancedFields />
-            <AlertBox type={alert.type} message={alert.message} />
+            <Region
+              changeGroups={changeGroups}
+              serviceGroups={serviceDetails.groups}
+              invalidFields={this.state.invalidFields}
+            />
+            <UploadProto
+              changeProtoFiles={changeProtoFiles}
+              protoFilesUrl={serviceDetails.assets.protoFiles.url}
+              invalidFields={this.state.invalidFields}
+            />
+            <AdvancedFields freeCallSignerAddress={serviceDetails.freeCallSignerAddress} />
+            <div className={classes.alertContainer}>
+              <AlertBox type={alert.ERROR} message={alert.message} />
+            </div>
           </div>
         </Grid>
-        <Actions />
+        <Actions
+          serviceDetails={serviceDetails}
+          setServiceDetailsInRedux={setServiceDetailsInRedux}
+          setInvalidFields={this.setInvalidFields}
+        />
       </Grid>
     );
   }
 }
-
 const mapStateToProps = state => ({
   orgId: state.organization.id,
   groupId: state.organization.groups[0].id,

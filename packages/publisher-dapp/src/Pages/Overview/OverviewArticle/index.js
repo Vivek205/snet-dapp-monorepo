@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/CheckCircle";
 
 import { useStyles } from "./styles";
-import StyledButton from "shared/dist/components/StyledButton";
+import SNETButton from "shared/dist/components/SNETButton";
 
 const OverviewArticle = ({ classes, title, description, list, media, btnDetails, rightAlign }) => {
   return (
@@ -23,7 +23,12 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
     >
       <Grid item xs={12} sm={12} md={12} lg={6} className={classes.overviewArticleContent}>
         <Typography variant="h2">{title}</Typography>
-        {description ? <Typography className={classes.description}>{description}</Typography> : null}
+        {description ? (
+          <Fragment>
+            <Typography className={classes.description}>{description[0]}</Typography>
+            <Typography className={classes.description}>{description[1]}</Typography>
+          </Fragment>
+        ) : null}
         {list ? (
           <List>
             {list.map((item, index) => (
@@ -39,9 +44,11 @@ const OverviewArticle = ({ classes, title, description, list, media, btnDetails,
             ))}
           </List>
         ) : null}
-        <Link to={btnDetails.linkTo}>
-          <StyledButton btnText={btnDetails.text} type={btnDetails.type} />
-        </Link>
+        {btnDetails.linkTo ? (
+          <Link to={btnDetails.linkTo}>
+            <SNETButton children={btnDetails.text} color={btnDetails.color} variant={btnDetails.variant} />
+          </Link>
+        ) : null}
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={6} className={classes.mediaContainer}>
         <img src={media} alt="media" />

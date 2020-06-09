@@ -9,8 +9,19 @@ import WhiteSnetLogo from "../../assets/images/WhiteLogo.svg";
 import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
+import MobileHeader from "./MobileHeader";
 
-const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedOutActions, portalName }) => {
+const SNETHeader = ({
+  isLoggedIn,
+  color,
+  NavigationBar,
+  LoggedInActions,
+  LoggedOutActions,
+  portalName,
+  mobileNavLinks,
+  mobileDropDown,
+  onLogoClick,
+}) => {
   const classes = useStyles();
   return (
     <div>
@@ -20,18 +31,27 @@ const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedO
           color={color}
           className={`${classes.appBar} ${color === "purple" ? classes.purple : null}`}
         >
-          <div className={classes.logoContainer}>
+          <div className={classes.logoContainer} onClick={onLogoClick}>
+            <MobileHeader
+              mobileNavLinks={mobileNavLinks}
+              mobileDropDown={mobileDropDown}
+              isLoggedIn={isLoggedIn}
+              LoggedInActions={LoggedInActions}
+              LoggedOutActions={LoggedOutActions}
+              color={color}
+            />
             <CardMedia component="img" image={color === "purple" ? WhiteSnetLogo : SnetSvgLogo} alt="SingularityNET" />
             <Typography variant="h5">{portalName}</Typography>
           </div>
           <div className={classes.navContainer}>
             <Navbar NavigationBar={NavigationBar} />
           </div>
-          <div>
+          <div className={classes.headerActionsContainer}>
             <HeaderActions
               isLoggedIn={isLoggedIn}
               LoggedInActions={LoggedInActions}
               LoggedOutActions={LoggedOutActions}
+              headerType="desktop"
             />
           </div>
         </SNETAppBar>
@@ -43,20 +63,14 @@ const SNETHeader = ({ isLoggedIn, color, NavigationBar, LoggedInActions, LoggedO
 SNETHeader.propTypes = {
   isLoggedIn: PropTypes.bool,
   color: PropTypes.string,
-  navbar: PropTypes.shape({
-    navbarItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        type: PropTypes.string,
-        activeLinks: PropTypes.arrayOf(PropTypes.string),
-        label: PropTypes.string,
-        openInNewTab: PropTypes.bool,
-        to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-      })
-    ),
-  }),
 
-  LoggedInActions: PropTypes.elementType,
-  LoggedOutActions: PropTypes.elementType,
+  LoggedInActions: PropTypes.object,
+  LoggedOutActions: PropTypes.object,
+  onLogoClick: PropTypes.func,
 };
 
+SNETHeader.defaultProps = {
+  isLoggedIn: PropTypes.bool,
+  onLogoClick: PropTypes.func,
+};
 export default SNETHeader;

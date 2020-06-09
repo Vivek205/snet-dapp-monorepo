@@ -14,12 +14,12 @@ export const useStyles = makeStyles(MUITheme => ({
     },
   },
   navLink: {
+    fontFamily: MUITheme.typography.fontFamily,
     textDecoration: "none",
     color: MUITheme.palette.text.lightGrey,
   },
   navLinkActive: {
     borderBottom: `2px solid ${MUITheme.palette.primary.main}`,
-    paddingBottom: 3,
     color: MUITheme.palette.primary.main,
     fontWeight: 600,
     "&: visited": {
@@ -44,9 +44,13 @@ export const useStyles = makeStyles(MUITheme => ({
       display: "inline-block",
       background: "rgba(155,155,155,0.4)",
       position: "absolute",
-      top: 15,
     },
     "& .MuiSelect-selectMenu": {
+      color: MUITheme.palette.text.lightGrey,
+      fontSize: 20,
+    },
+    "& > span": {
+      marginLeft: 24,
       color: MUITheme.palette.text.lightGrey,
       fontSize: 20,
     },
