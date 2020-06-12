@@ -1,9 +1,11 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ReactGA from "react-ga";
 
 import SNETLogin from "shared/dist/components/SNETLogin";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { loginActions } from "../../Services/Redux/actionCreators/userActions";
+import { GAEventsContent } from "../../Utils/GAEvents";
 
 const Login = ({ history }) => {
   const [error, setError] = useState(undefined);
@@ -29,6 +31,7 @@ const Login = ({ history }) => {
   };
 
   const handleSubmit = async (email, password) => {
+    ReactGA.event(GAEventsContent.LOGIN);
     try {
       await dispatch(loginActions.login(email, password));
     } catch (error) {
