@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ReactGA from "react-ga";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +9,7 @@ import StyledButton from "shared/dist/components/StyledButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { OnboardingRoutes } from "../Onboarding/OnboardingRouter/Routes";
+import { GAEventsContent } from "../../Utils/GAEvents";
 
 const selectState = state => ({
   isLoggedIn: state.user.isLoggedIn,
@@ -25,6 +27,7 @@ const Enroll = ({ classes, history }) => {
   }, [history, isLoggedIn, orgUuid, publisherTnC]);
 
   const handleContinue = () => {
+    ReactGA.event(GAEventsContent.ENROLL_CONTINUE);
     if (isLoggedIn) {
       return history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
     }
