@@ -20,6 +20,7 @@ import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { defaultContacts } from "../reducers/organizationReducer";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 import { MetamaskError } from "shared/dist/utils/error";
+import { userRoles } from "../../../Utils/user";
 
 export const SET_ALL_ORG_ATTRIBUTES = "SET_ALL_ORG_ATTRIBUTES";
 export const SET_ONE_BASIC_DETAIL = "SET_ONE_BASIC_DETAIL";
@@ -43,6 +44,7 @@ export const SET_ORG_FOUND_IN_BLOCKCHAIN = "SET_ORG_FOUND_IN_BLOCKCHAIN";
 export const SET_ORGANIZATION_TOUCHED_FLAG = "SET_ORGANIZATION_TOUCHED_FLAG";
 export const SET_ORGANIZATION_AVAILABILITY = "SET_ORGANIZATION_AVAILABILITY";
 export const SET_ORG_ALLOW_CHANGE_REQUEST_EDIT = "SET_ALLOW_CHANGE_REQUEST_EDIT";
+export const SET_ORG_MEMBERSHIP_DETAILS = "SET_ORG_MEMBERSHIP_DETAILS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_ORG_ATTRIBUTES, payload: value });
 
@@ -88,6 +90,8 @@ export const setOrgAvailability = orgAvailability => ({
 });
 
 export const setOrgAllowChangeRequestEdit = allow => ({ type: SET_ORG_ALLOW_CHANGE_REQUEST_EDIT, payload: allow });
+
+export const setOrgMembershipDetails = details => ({ type: SET_ORG_MEMBERSHIP_DETAILS, payload: details });
 
 const validateOrgIdAPI = orgUuid => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -175,7 +179,7 @@ const payloadForSubmit = organization => {
     assets: {
       hero_image: {
         url: organization.assets.heroImage.url,
-        ipfs_uri: organization.assets.heroImage.ipfsUri || "",
+        ipfs_hash: organization.assets.heroImage.ipfsHash || "",
       },
     },
     ownerAddress: organization.ownerAddress,
@@ -199,9 +203,13 @@ const payloadForSubmit = organization => {
   payload.groups = groupsToBeSubmitted;
 
   if (assets.heroImage.url) {
-    payload.assets.hero_image = { url: assets.heroImage.url };
+    payload.assets.hero_image = { ...payload.assets.hero_image, url: assets.heroImage.url };
   } else {
-    payload.assets.hero_image = { raw: assets.heroImage.raw, file_type: assets.heroImage.fileType };
+    payload.assets.hero_image = {
+      ...payload.assets.hero_image,
+      raw: assets.heroImage.raw,
+      file_type: assets.heroImage.fileType,
+    };
   }
 
   return payload;
@@ -267,7 +275,7 @@ const parseOrgData = selectedOrg => {
     assets: {
       heroImage: {
         url: selectedOrg.assets.hero_image.url,
-        ipfsUri: selectedOrg.assets.hero_image.ipfs_uri,
+        ipfsHash: selectedOrg.assets.hero_image.ipfs_hash,
       },
     },
   };
@@ -314,7 +322,7 @@ export const getStatus = async dispatch => {
 const finishLaterAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.DRAFT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -339,7 +347,7 @@ export const finishLater = (organization, type = "") => async dispatch => {
 const submitForApprovalAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
-  const apiPath = APIPaths.ORG_SETUP;
+  const apiPath = APIPaths.UPDATE_ORG(payload.org_uuid);
   const queryStringParameters = { action: orgSubmitActions.SUBMIT };
   const apiOptions = initializeAPIOptions(token, payload, queryStringParameters);
   return await API.post(apiName, apiPath, apiOptions);
@@ -510,26 +518,36 @@ export const publishOrganizationInBlockchain = (organization, metadataIpfsUri, h
   }
 };
 
-const getOwnerAPI = uuid => async dispatch => {
+const getMembersAPI = (uuid, role) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.GET_MEMBERS(uuid);
-  const queryStringParameters = { role: "owner" };
+  const queryStringParameters = { role };
   const apiOptions = initializeAPIOptions(token, null, queryStringParameters);
   return await API.get(apiName, apiPath, apiOptions);
 };
 
 export const getOwner = uuid => async dispatch => {
-  const { data } = await dispatch(getOwnerAPI(uuid));
+  const { data } = await dispatch(getMembersAPI(uuid, userRoles.OWNER));
   await dispatch(setOrgOwner(data[0].username));
   return data;
 };
 
-export const initializeOrg = async dispatch => {
+export const getMembershipDetails = (uuid, username) => async dispatch => {
+  const { data } = await dispatch(getMembersAPI(uuid, userRoles.MEMBER));
+  const membershipDetails = data.find(el => el.username === username);
+  if (membershipDetails) {
+    await dispatch(setOrgMembershipDetails(membershipDetails));
+  }
+  return membershipDetails;
+};
+
+export const initializeOrg = username => async dispatch => {
   try {
     const data = await dispatch(getStatus);
     if (data && data[0]) {
-      await dispatch(getOwner(data[0].org_uuid));
+      const orgUuid = data[0].org_uuid;
+      await Promise.all[(dispatch(getOwner(orgUuid)), dispatch(getMembershipDetails(orgUuid, username)))];
     }
   } catch (error) {
     Sentry.captureException(error);

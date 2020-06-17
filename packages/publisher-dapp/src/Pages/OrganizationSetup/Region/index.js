@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import isEmpty from "lodash/isEmpty";
 
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -18,10 +17,10 @@ const Region = ({ history, classes, handleFinishLater }) => {
   const organization = useSelector(state => state.organization);
   const { groups } = organization;
   const [invalidFields, setInvalidFields] = useState();
-  const [invalidFieldsFlag, setInvalidFeildsFlag] = useState();
+  const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
 
   const handleContinue = () => {
-    let invalidFields = validator(organization, orgSetupRegionValidationConstraints);
+    let invalidFields = validator(organization, orgSetupRegionValidationConstraints, { format: "grouped" });
 
     for (const property in invalidFields) {
       if (property === "groups") {
@@ -31,7 +30,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
       }
     }
     if (invalidFields) {
-      const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+      const isNotValid = Object.values(invalidFields).map(key => key[0]);
       if (isNotValid) {
         for (let i = 0; i < isNotValid.length; i++) {
           if (isNotValid[i].includes(",")) {
@@ -40,13 +39,13 @@ const Region = ({ history, classes, handleFinishLater }) => {
             isNotValid.push(...res);
           }
         }
-        setInvalidFeildsFlag(true);
+        setInvalidFieldsFlag(true);
         setInvalidFields(invalidFields);
         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
         return setAlert({ type: alertTypes.ERROR, children: errorMessage });
       }
     }
-    setInvalidFeildsFlag(false);
+    setInvalidFieldsFlag(false);
     history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path.replace(":orgUuid", organization.uuid));
   };
 
@@ -77,7 +76,7 @@ const Region = ({ history, classes, handleFinishLater }) => {
             group={group}
             key={group.id}
             foundInBlockchain={organization.foundInBlockchain}
-            invalidFields={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? invalidFields : {}}
+            invalidFields={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? invalidFields : {}}
           />
         ))}
 

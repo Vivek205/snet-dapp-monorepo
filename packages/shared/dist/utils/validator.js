@@ -56,7 +56,9 @@ var array = function array(arrayItems, itemConstraints, key) {
   }
 
   var arrayItemErrors = arrayItems.reduce(function (errors, item) {
-    var error = (0, _validate.default)(item, itemConstraints);
+    var error = (0, _validate.default)(item, itemConstraints, {
+      format: "grouped"
+    });
     if (!!error) errors.push(error);
     return errors;
   }, []);
@@ -82,5 +84,8 @@ validator.validators = _objectSpread({}, _validate.default.validators, {
   array: array,
   validURL: validURL
 });
+validator.options = {
+  format: "flat"
+};
 var _default = validator;
 exports.default = _default;

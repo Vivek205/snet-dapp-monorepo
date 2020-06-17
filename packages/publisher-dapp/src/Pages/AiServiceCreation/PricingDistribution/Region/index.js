@@ -17,7 +17,7 @@ import { keyCodes } from "shared/dist/utils/keyCodes";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import validator from "shared/dist/utils/validator";
-import { servicePricingValidationConstraints } from "../validationConstraints";
+import { servicePricingValidationConstraints, daemonValidationConstraints } from "../validationConstraints";
 import { agiToCogs } from "shared/dist/utils/Pricing";
 import { cogsToAgi } from "shared/dist/utils/Pricing";
 
@@ -37,6 +37,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
   const [alert, setAlert] = useState({});
   const [freeCallsValidation, setfreeCallsValidation] = useState({});
   const [priceValidation, setPriceValidation] = useState({});
+  const [daemonAddressValidation, setDaemonAddressValidation] = useState({});
 
   const selectedServiceGroup = serviceGroups[0];
   const selectedServicePricing = selectedServiceGroup.pricing ? selectedServiceGroup.pricing[0] : {};
@@ -99,11 +100,29 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     changeGroups(updatedServiceGroups);
   };
 
+  const validateDaemonAddress = value => {
+    const isNotValid = validator.single(value, daemonValidationConstraints);
+    if (isNotValid) {
+      setDaemonAddressValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid daemon address`,
+      });
+      return false;
+    }
+    setDaemonAddressValidation({
+      type: alertTypes.ERROR,
+      message: "",
+    });
+    return true;
+  };
   const handleNewDaemonAddressChangeOnKeyPress = event => {
+    const value = event.target.value;
     if (event.keyCode !== keyCodes.enter) {
       return;
     }
-    handleNewDaemonAddressChange();
+    if (validateDaemonAddress(value)) {
+      handleNewDaemonAddressChange();
+    }
   };
   const handleNewDaemonAddressChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
@@ -216,7 +235,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                 defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
                 label="AI Service Price (in AGI)"
                 onChange={handlePriceChange}
-                error={!isEmpty(invalidFields) ? "pricing" in invalidFields : false}
+                error={!!invalidFields ? "pricing" in invalidFields : false}
               />
               <AlertText type={priceValidation.type} message={priceValidation.message} />
             </Grid>
@@ -254,7 +273,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                   </InputAdornment>
                 ),
               }}
-              error={!isEmpty(invalidFields) ? "endpoints" in invalidFields : false}
+              error={!!invalidFields ? "endpoints" in invalidFields : false}
             />
           </Grid>
           <AlertBox type={alert.type} message={alert.message} />
@@ -298,10 +317,10 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                   </InputAdornment>
                 ),
               }}
-              error={!isEmpty(invalidFields) ? "daemonAddresses" in invalidFields : false}
+              error={!!invalidFields ? "daemonAddresses" in invalidFields : false}
             />
+            <AlertBox type={daemonAddressValidation.type} message={daemonAddressValidation.message} />
           </Grid>
-
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.addedEndpointsContainer}>
             <div className={classes.infoIconContainer}>
               <InfoIcon />

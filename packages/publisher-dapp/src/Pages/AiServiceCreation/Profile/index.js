@@ -31,7 +31,6 @@ import ServiceIdAvailability from "./ServiceIdAvailability";
 import { serviceIdAvailability } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
-import isEmpty from "lodash/isEmpty";
 
 let validateTimeout = "";
 
@@ -48,7 +47,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const [alert, setAlert] = useState({});
   const [websiteValidation, setWebsiteValidation] = useState({});
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const invalidFields = validator(serviceDetails, serviceProfileValidationConstraints);
+  const invalidFields = validator(serviceDetails, serviceProfileValidationConstraints, { format: "grouped" });
 
   const validateServiceId = serviceId => async () => {
     // Call the API to Validate the Service Id
@@ -109,7 +108,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const handleContinue = async () => {
     try {
       if (invalidFields) {
-        const isNotValid = Object.keys(invalidFields).map(key => invalidFields[key][0]);
+        const isNotValid = Object.values(invalidFields);
         setInvalidFieldsFlag(true);
         if (isNotValid) {
           const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
@@ -204,7 +203,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
             description="The name of your service has to be unique within your organization"
             value={serviceDetails.name}
             onChange={handleControlChange}
-            error={typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? "name" in invalidFields : ""}
+            error={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "name" in invalidFields : ""}
           />
           <div className={classes.serviceIdContainer}>
             <SNETTextfield
@@ -216,9 +215,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
               description="The ID of your service has to be unique withing your organization"
               value={serviceDetails.newId}
               onChange={handleControlChange}
-              error={
-                typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? "id" in invalidFields : false
-              }
+              error={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "id" in invalidFields : false}
             />
           </div>
           <ServiceIdAvailability
@@ -240,7 +237,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
               value={serviceDetails.shortDescription}
               onChange={handleControlChange}
               error={
-                typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
+                typeof invalidFieldsFlag !== "undefined" && !!invalidFields
                   ? "shortDescription" in invalidFields
                   : false
               }
@@ -259,9 +256,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
               value={serviceDetails.longDescription}
               onChange={handleControlChange}
               error={
-                typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
-                  ? "longDescription" in invalidFields
-                  : false
+                typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "longDescription" in invalidFields : false
               }
             />
           </div>
@@ -281,9 +276,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
                 </InputAdornment>
               ),
             }}
-            error={
-              typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields) ? "tags" in invalidFields : false
-            }
+            error={typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "tags" in invalidFields : false}
           />
           <div className={classes.addedTagsContainer}>
             <div>
@@ -312,9 +305,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
               value={serviceDetails.projectURL}
               onChange={handleControlChange}
               error={
-                typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
-                  ? "projectURL" in invalidFields
-                  : false
+                typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "projectURL" in invalidFields : false
               }
             />
             <AlertText type={websiteValidation.type} message={websiteValidation.message} />
@@ -329,9 +320,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
               value={serviceDetails.contributors}
               onChange={handleControlChange}
               error={
-                typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
-                  ? "contributors" in invalidFields
-                  : false
+                typeof invalidFieldsFlag !== "undefined" && !!invalidFields ? "contributors" in invalidFields : false
               }
             />
           </div>
@@ -352,7 +341,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
                   disableResetButton={false}
                   disableDownloadButton={true}
                   error={
-                    typeof invalidFieldsFlag !== "undefined" && !isEmpty(invalidFields)
+                    typeof invalidFieldsFlag !== "undefined" && !!invalidFields
                       ? "assets.heroImage.url" in invalidFields
                       : false
                   }

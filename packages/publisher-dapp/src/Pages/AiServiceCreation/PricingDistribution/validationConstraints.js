@@ -1,3 +1,5 @@
+import { validBlockChainAdressEquality } from "../../../Utils/validation";
+
 export const servicePricingValidationConstraints = {
   freeCallsAllowed: {
     numericality: { onlyInteger: true, greaterThanOrEqualTo: 0 },
@@ -12,7 +14,9 @@ export const servicePricingValidationConstraints = {
   groups: {
     array: {
       endpoints: { presence: { allowEmpty: false, message: "^Endpoints cannot be blank" } },
-      daemonAddresses: { presence: { allowEmpty: false, message: "^Daemon Addresses cannot be blank" } },
     },
   },
+};
+export const daemonValidationConstraints = {
+  equality: validBlockChainAdressEquality("paymentAddress"),
 };

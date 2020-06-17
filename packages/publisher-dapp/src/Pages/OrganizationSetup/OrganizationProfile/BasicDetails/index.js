@@ -13,7 +13,7 @@ import validator from "shared/dist/utils/validator";
 import { alertTypes } from "shared/dist/components/AlertBox";
 import { orgProfileValidationConstraints } from "../validationConstraints";
 
-const BasicDetails = ({ classes, invalidFeilds }) => {
+const BasicDetails = ({ classes, invalidFields }) => {
   const { id, name, shortDescription, longDescription, website, foundInBlockchain } = useSelector(
     state => state.organization
   );
@@ -52,7 +52,7 @@ const BasicDetails = ({ classes, invalidFeilds }) => {
         description="The organziation id is the unique id for the organization."
         onChange={handleFormInputsChange}
         disabled
-        error={"id" in invalidFeilds}
+        error={"id" in invalidFields}
       />
       <SNETTextfield
         name="name"
@@ -63,7 +63,7 @@ const BasicDetails = ({ classes, invalidFeilds }) => {
         minCount={name.length}
         maxCount="50"
         disabled={foundInBlockchain}
-        error={"name" in invalidFeilds}
+        error={"name" in invalidFields}
       />
 
       <SNETTextarea
@@ -77,7 +77,7 @@ const BasicDetails = ({ classes, invalidFeilds }) => {
         onChange={handleFormInputsChange}
         showInfoIcon
         disabled={foundInBlockchain}
-        error={"shortDescription" in invalidFeilds}
+        error={"shortDescription" in invalidFields}
       />
       <SNETTextarea
         label="Long Description"
@@ -90,7 +90,7 @@ const BasicDetails = ({ classes, invalidFeilds }) => {
         onChange={handleFormInputsChange}
         showInfoIcon
         disabled={foundInBlockchain}
-        error={"longDescription" in invalidFeilds}
+        error={"longDescription" in invalidFields}
       />
       <div className={classes.orgWebsiteUrl}>
         <SNETTextfield
@@ -99,7 +99,7 @@ const BasicDetails = ({ classes, invalidFeilds }) => {
           onChange={handleFormInputsChange}
           label="Organization Website URL"
           description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
-          error={"website" in invalidFeilds}
+          error={"website" in invalidFields}
         />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
