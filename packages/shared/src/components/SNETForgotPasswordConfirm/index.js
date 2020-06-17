@@ -8,8 +8,9 @@ import AlertBox from "../AlertBox";
 import SNETButton from "../SNETButton";
 import validator from "../../utils/validator";
 import { forgotPassworSubmitConstraints } from "./validationConstraints";
+import SNETForgotPassword from "../SNETForgotPassword";
 
-const SNETForgotPasswordConfirm = ({ email, forgotPasswordConfirmError, onSubmit }) => {
+const SNETForgotPasswordConfirm = ({ email, title, description, forgotPasswordConfirmError, onSubmit }) => {
   const classes = useStyles();
   const [localEmail, setLocalEmail] = useState(email);
   const [code, setCode] = useState("");
@@ -36,10 +37,8 @@ const SNETForgotPasswordConfirm = ({ email, forgotPasswordConfirmError, onSubmit
   return (
     <Grid container spacing={24}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.forgotPwdContent}>
-        <Typography variant="h3">Reset your password</Typography>
-        <Typography>
-          Thanks for confirming your email.<span>Input your new password</span>
-        </Typography>
+        <Typography variant="h3">{title}</Typography>
+        <Typography>{description}</Typography>
         <form className={classes.forgotPwdForm} noValidate="">
           <TextField
             id="outlined-email-input"
@@ -106,8 +105,18 @@ const SNETForgotPasswordConfirm = ({ email, forgotPasswordConfirmError, onSubmit
 
 SNETForgotPasswordConfirm.propTypes = {
   title: PropTypes.string,
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   forgotPasswordConfirmError: PropTypes.string,
   onSubmit: PropTypes.func,
+};
+
+SNETForgotPassword.defaultProps = {
+  title: "Reset your password",
+  description: (
+    <>
+      Thanks for confirming your email.<span>Input your new password</span>
+    </>
+  ),
 };
 
 export default SNETForgotPasswordConfirm;

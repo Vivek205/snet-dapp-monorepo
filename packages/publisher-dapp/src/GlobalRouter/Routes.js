@@ -24,6 +24,7 @@ const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
 const FORGOT_PASSWORD_PATH = "/forgotpassword";
 const FORGOT_PASSWORD_CONFIRM_PATH = "/forgotpasswordconfirm";
+const RESET_PASSWORD_PATH = "/resetpasswordpath";
 
 const EnrollComponent = withLightHeaderAndFooter(Enroll);
 const LoginComponent = withRegistrationHeader(Login, "New to SingularityNET?", "Sign up", SIGNUP_PATH);
@@ -76,6 +77,11 @@ export const GlobalRoutes = {
     name: "forgot password",
     path: FORGOT_PASSWORD_CONFIRM_PATH,
     component: ForgotPasswordConfirmComponent,
+  },
+  RESET_PASSWORD: {
+    name: "forgot password",
+    path: RESET_PASSWORD_PATH,
+    component: ForgotPasswordComponent,
   },
   OVERVIEW: {
     name: "overview",
