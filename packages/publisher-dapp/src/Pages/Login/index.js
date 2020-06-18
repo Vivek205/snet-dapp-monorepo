@@ -35,6 +35,9 @@ const Login = ({ history }) => {
     try {
       await dispatch(loginActions.login(email, password));
     } catch (error) {
+      if (error.code === "PasswordResetRequiredException") {
+        return history.push(GlobalRoutes.RESET_PASSWORD.path);
+      }
       if (error.code === "UserNotFoundException") {
         return setError(error.message);
       }

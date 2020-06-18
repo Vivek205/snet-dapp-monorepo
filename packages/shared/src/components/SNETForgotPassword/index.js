@@ -9,7 +9,7 @@ import SNETButton from "../SNETButton";
 import validator from "../../utils/validator";
 import { forgotPasswordConstraints } from "./validationConstraints";
 
-const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => {
+const SNETForgotPassword = ({ title, desription, email, forgotPasswordError, onSubmit }) => {
   const classes = useStyles();
 
   const [localEmail, setEmail] = useState(email);
@@ -35,7 +35,7 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
     <Grid container spacing={24} className={classes.forgotPwdMainContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.forgotPwdContent}>
         <Typography variant="h3">{title}</Typography>
-        <p>We'll email you instructions on how to reset it.</p>
+        <p>{desription}</p>
         <form noValidate autoComplete="off" className={classes.forgotPwdForm}>
           <TextField
             id="outlined-username-input"
@@ -66,9 +66,14 @@ const SNETForgotPassword = ({ title, email, forgotPasswordError, onSubmit }) => 
 
 SNETForgotPassword.propTypes = {
   title: PropTypes.string,
+  description: PropTypes.string,
   email: PropTypes.string,
   forgotPasswordError: PropTypes.string,
   onSubmit: PropTypes.func,
+};
+
+SNETForgotPassword.defaultProps = {
+  desription: "We'll email you instructions on how to reset it.",
 };
 
 export default SNETForgotPassword;
