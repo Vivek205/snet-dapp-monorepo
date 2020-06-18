@@ -31,6 +31,7 @@ SNETSignup.propTypes = {
   }),
   onSubmit: PropTypes.func,
   signupError: PropTypes.string,
+  resetSignupError: PropTypes.func,
 };
 
 export default SNETSignup;

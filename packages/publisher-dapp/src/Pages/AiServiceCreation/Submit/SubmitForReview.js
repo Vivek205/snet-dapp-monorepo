@@ -139,12 +139,12 @@ class SubmitForReview extends React.Component {
       }
       if (orgStatus !== organizationSetupStatuses.PUBLISHED) {
         if (orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS) {
-          throw new ValidationError("Organization is being published in blockchain. Service cannot be published now");
+          throw new ValidationError("Service cannot be submitted for approval as organization is not yet submitted.");
         }
-        throw new ValidationError("Organization must be published before publishing the service");
+        throw new ValidationError("Organization must be published before submitting the service for review");
       }
       if (serviceDetails.serviceState.state !== serviceCreationStatus.DRAFT) {
-        throw new ValidationError("No changes in draft. Please edit a field before submitting");
+        throw new ValidationError("No changes in draft. Please edit a field before submitting for review");
       }
       const isNotValid = validator(serviceDetails, submitServiceConstraints);
       if (isNotValid) {
