@@ -16,6 +16,12 @@ import UserProfileCard from "shared/dist/components/UserProfileCard";
 import { useStyles } from "./styles";
 import { userActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
+import { organizationSetupStatuses } from "../../../Utils/organizationSetup";
+
+const selectState = state => ({
+  status: state.organization.state.state,
+  uuid: state.organization.uuid,
+});
 
 const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, userRole }) => {
   const { nickname, orgName, orgUuid } = useSelector(state => ({
@@ -24,7 +30,15 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, user
     orgName: state.organization.name,
   }));
   const dispatch = useDispatch();
+  const { status } = useSelector(selectState);
   const history = useHistory();
+  const rejectedStatuses = [
+    organizationSetupStatuses.ONBOARDING,
+    organizationSetupStatuses.ONBOARDING_REJECTED,
+    organizationSetupStatuses.CHANGE_REQUESTED,
+    organizationSetupStatuses.APPROVAL_PENDING,
+    organizationSetupStatuses.REJECTED,
+  ];
 
   const handleSignout = () => {
     dispatch(userActions.loginActions.signout);
@@ -46,7 +60,7 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, user
       >
         <UserProfileCard nickName={nickname} />
         <ul className={classes.userProfileMenuList}>
-          {orgUuid ? (
+          {orgUuid && !rejectedStatuses.includes(status) ? (
             <Fragment>
               <li className={classes.orgNameContainer}>
                 <div>
@@ -69,9 +83,9 @@ const UserProfilePopUp = ({ classes, show, handleClose, orgImg, headerType, user
             </Fragment>
           ) : null}
 
-          <li className={classes.signoutLink}>
+          <li className={classes.signoutLink} onClick={handleSignout}>
             <ExitToAppIcon />
-            <span onClick={handleSignout}>Sign Out</span>
+            <span>Sign Out</span>
           </li>
         </ul>
       </div>
