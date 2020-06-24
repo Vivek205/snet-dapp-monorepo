@@ -14,6 +14,7 @@ const AcceptAgreement = lazy(() => import("../Pages/AcceptServiceAgreement"));
 const UserProfile = lazy(() => import("../Pages/UserProfile"));
 
 const Landing = lazy(() => import("../Pages/Landing"));
+const FAQ = lazy(() => import("../Pages/FAQ"));
 
 const SIGNUP_PATH = "/signup";
 const LOGIN_PATH = "/login";
@@ -41,6 +42,7 @@ const AcceptAgreementComponent = withTncHeader(AcceptAgreement, null, "Logout", 
 
 const LandingComponent = withLightHeaderAndFooter(Landing);
 const UserProfileComponent = withLightHeaderAndFooter(UserProfile);
+const FAQComponent = withLightHeaderAndFooter(FAQ);
 
 export const GlobalRoutes = {
   LOGIN: {
@@ -92,6 +94,11 @@ export const GlobalRoutes = {
     name: "userprofile",
     path: "/userprofile",
     component: UserProfileComponent,
+  },
+  FAQ: {
+    name: "faq",
+    path: "/faq",
+    component: FAQComponent,
   },
 };
 
