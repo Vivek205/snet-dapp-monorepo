@@ -104,6 +104,10 @@ export const login = (email, password) => async dispatch => {
     return await dispatch(loginSucess(loginResponse));
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
+    if (error.code === "PasswordResetRequiredException") {
+      dispatch(setUserEmail(email));
+      throw error;
+    }
     if (error.code === "UserNotConfirmedException") {
       await dispatch(handleUserNotConfirmed(email));
     }
