@@ -45,6 +45,7 @@ const InitialRequestDetails = {
     windowTotalStake: 0,
     windowRewardAmount: 0,
     totalPendingApprovalStake: 0,
+    totalAutoRenewAmount: 0,
   },
   stakeOverallSummary: {
     overallStake: 0,

@@ -30,7 +30,8 @@ const HowItWorks = ({ classes }) => {
   const { recentStakeWindow, stakeOverallSummary } = useSelector(state => stateSelector(state));
 
   useEffect(() => {
-    dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
+    //dispatch(stakeActions.fetchRecentStakeWindowFromBlockchain());
+    dispatch(stakeActions.fetchStakeCalculatorDetails());
     dispatch(stakeActions.fetchStakeOverallSummary());
   }, [dispatch]);
 

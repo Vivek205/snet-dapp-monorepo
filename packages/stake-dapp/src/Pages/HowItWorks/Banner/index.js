@@ -49,12 +49,20 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
         ...stakeCalculatorFields,
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
-          recentStakeWindow.windowTotalStake > 0 || recentStakeWindow.totalPendingApprovalStake > 0
+          recentStakeWindow.windowTotalStake > 0 ||
+          recentStakeWindow.totalAutoRenewAmount > 0 ||
+          recentStakeWindow.totalPendingApprovalStake > 0
             ? Math.floor(
-                fromWei(BigNumber.sum(recentStakeWindow.windowTotalStake, recentStakeWindow.totalPendingApprovalStake))
+                fromWei(
+                  BigNumber.sum(
+                    recentStakeWindow.windowTotalStake,
+                    recentStakeWindow.totalAutoRenewAmount,
+                    recentStakeWindow.totalPendingApprovalStake
+                  )
+                )
               )
             : stakeCalculatorFields.poolStakeAmount,
-        incubationPeriodInDays: Math.floor(
+        incubationPeriodInDays: Math.ceil(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
         ),
         recentWindowLoaded: true,
@@ -135,8 +143,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
     if (numInAGI.gte(1000000)) {
       textToDisplay = "M+";
       numToDisplay = numInAGI.div(1000000).integerValue(BigNumber.ROUND_FLOOR);
-    }
-    if (numInAGI.gte(1000)) {
+    } else if (numInAGI.gte(1000)) {
       textToDisplay = "K+";
       numToDisplay = numInAGI.div(1000).integerValue(BigNumber.ROUND_FLOOR);
     } else {

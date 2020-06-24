@@ -35,8 +35,7 @@ const StakeSummary = ({ classes }) => {
     if (numInAGI.gte(1000000)) {
       textToDisplay = "M+";
       numToDisplay = numInAGI.div(1000000).integerValue(BigNumber.ROUND_FLOOR);
-    }
-    if (numInAGI.gte(1000)) {
+    } else if (numInAGI.gte(1000)) {
       textToDisplay = "K+";
       numToDisplay = numInAGI.div(1000).integerValue(BigNumber.ROUND_FLOOR);
     } else {
