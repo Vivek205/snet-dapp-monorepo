@@ -55,19 +55,19 @@ export const metamaskFAQ = [
   },
   {
     question: "When the Metamask window opens up it does not give me an option to confirm or submit the transaction",
-    answer: `<p><ul>
+    answer: `<ul>
     <li>At times Metamask windows does not pop-up and just shows a notification on the Metamask plugin icon on the browser tab. You have to open Metamask and confirm the transaction.</li>
     <li>Ensure that you have enough ETH in the account you are using.</li>
-    </ul></p>`,
+    </ul>`,
   },
   {
     question: "Metamask shows operation as pending for a long time. What should I do?",
-    answer: `<p>This occurs when the gas price provided for the transaction is very low
+    answer: `This occurs when the gas price provided for the transaction is very low
     <ul>
         <li>If a transaction is submitted with a low gas price, subsequent transactions will be stuck.</li>
         <li>If the original low cost transaction is submitted via metamask then you can resubmit by increasing gas price.</li>
         <li>Note that re-submitting the transaction multiple times will not fix this problem.</li>
-    </ul></p>`,
+    </ul>`,
   },
 ];
 
@@ -95,13 +95,12 @@ export const stakingFAQ = [
   },
   {
     question: "I staked on the site, but I see the amount staked as 0, why?",
-    answer: `<p>
+    answer: `
     Staking tokens is a two step process. 
     <ul>
     <li>Approve tokens - First metamask interaction</li>
     <li>Deposit tokens - Second metamask interaction</li>
-    </ul>Ensure that you have performed both transactions. 
-    </p>`,
+    </ul>Ensure that you have performed both transactions.`,
   },
   {
     question: "I am unable to view my stake after I login. What should I do?",
