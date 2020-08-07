@@ -42,8 +42,8 @@ class Onboarding extends Component {
           orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS
         ) {
           return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
-        } else if (location.pathname !== GlobalRoutes.INDIVIDUAL_STATUS.path) {
-          return history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
+        } else if (location.pathname !== AuthenticateRoutes.INDIVIDUAL.path) {
+          return history.push(AuthenticateRoutes.INDIVIDUAL.path);
         }
       } else if (orgType === organizationTypes.ORGANIZATION) {
         if (orgStatus === organizationSetupStatuses.CHANGE_REQUESTED && allowChangeRequestEdit) {

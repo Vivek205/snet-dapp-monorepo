@@ -14,6 +14,7 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import { individualVerificationStatusList } from "../../constant";
 import { getEmailDomain } from "../../../../Utils/validation";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
+import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
 
 const domainsToBeAutoApproved = ["singularitynet.io"];
 
@@ -25,18 +26,18 @@ class Individual extends Component {
   componentDidMount = async () => {
     const { status, getVerificationStatus } = this.props;
     const newStatusData = await getVerificationStatus(status);
-    if (newStatusData.status !== individualVerificationStatusList.NOT_STARTED) {
+    if (newStatusData.status === individualVerificationStatusList.NOT_STARTED) {
       return this.props.history.push(GlobalRoutes.ONBOARDING.path);
     }
-    this.props.history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
+    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   };
 
   componentDidUpdate(prevProps) {
     const { status, history } = this.props;
-    if (prevProps.status !== status && status !== individualVerificationStatusList.NOT_STARTED) {
+    if (prevProps.status !== status && status === individualVerificationStatusList.NOT_STARTED) {
       return history.push(GlobalRoutes.ONBOARDING.path);
     }
-    this.props.history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
+    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   }
 
   handleVerify = async () => {
@@ -54,7 +55,7 @@ class Individual extends Component {
         return this.setState({ alert: { type: alertTypes.ERROR, message: e.message } });
       }
       return this.setState({
-        alert: { type: alertTypes.ERROR, message: "Unable to initiate Jumio verification. Please try again" },
+        alert: { type: alertTypes.ERROR, message: "Unable to initiate ID verification. Please try again" },
       });
     }
   };
