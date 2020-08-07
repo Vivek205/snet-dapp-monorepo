@@ -12,7 +12,7 @@ import RelatedLinks from "./RelatedLinks";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
-import { AuthenticateRoutes } from "../../AuthenitcateRouter/Routes";
+import { GlobalRoutes } from "../../../../../GlobalRouter/Routes";
 
 const StatusComponents = {
   [individualVerificationStatusList.PENDING]: Pending,
@@ -34,7 +34,7 @@ const IndividualStatus = ({ classes, history }) => {
 
   useEffect(() => {
     if (status === individualVerificationStatusList.NOT_STARTED) {
-      history.push(AuthenticateRoutes.INDIVIDUAL.path);
+      history.push(GlobalRoutes.ONBOARDING.path);
     }
   }, [history, status]);
 
