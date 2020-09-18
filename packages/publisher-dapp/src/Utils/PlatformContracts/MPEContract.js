@@ -15,8 +15,8 @@ export default class MPEContract {
     const web3Provider = window.ethereum;
     const accounts = await web3Provider.enable();
     // eslint-disable-next-line require-atomic-updates
-    window.web3.eth.defaultAccount = accounts[0];
     this._web3 = new Web3(web3Provider, null, {});
+    this._web3.eth.defaultAccount = accounts[0];
     this._contract = new this._web3.eth.Contract(MPEAbi, MPENetworks[process.env.REACT_APP_ETH_NETWORK].address);
     return;
   };
