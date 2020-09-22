@@ -1,5 +1,9 @@
 import SnetSDK from "snet-sdk-web";
 
+export const ethereumMethods = {
+  REQUEST_ACCOUNTS: "eth_requestAccounts",
+};
+
 const DEFAULT_GAS_LIMIT = undefined;
 const DEFAULT_GAS_PRICE = undefined;
 const ON_ACCOUNT_CHANGE = "accountsChanged";
@@ -9,7 +13,9 @@ export const initSDK = async () => {
   let sdk;
   let web3Provider;
   const updateSDK = () => {
-    const networkId = web3Provider.networkVersion;
+    const chainIdHex = web3Provider.chainId;
+    const networkId = parseInt(chainIdHex);
+
     const config = {
       networkId,
       web3Provider,
@@ -24,9 +30,8 @@ export const initSDK = async () => {
   try {
     if (hasEth && hasWeb3) {
       web3Provider = window.ethereum;
-      const accounts = await web3Provider.enable();
+      await web3Provider.request({ method: ethereumMethods.REQUEST_ACCOUNTS });
       // eslint-disable-next-line require-atomic-updates
-      window.web3.eth.defaultAccount = accounts[0];
       web3Provider.addListener(ON_ACCOUNT_CHANGE, accounts => {
         const event = new CustomEvent("snetMMAccountChanged", { detail: { address: accounts[0] } });
         window.dispatchEvent(event);

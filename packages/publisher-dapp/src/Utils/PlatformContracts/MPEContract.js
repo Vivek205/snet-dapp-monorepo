@@ -1,6 +1,7 @@
 import MPEAbi from "singularitynet-platform-contracts/abi/MultiPartyEscrow";
 import MPENetworks from "singularitynet-platform-contracts/networks/MultiPartyEscrow";
 import Web3 from "web3";
+import { ethereumMethods } from "shared/dist/utils/snetSdk";
 
 export default class MPEContract {
   constructor() {
@@ -13,7 +14,7 @@ export default class MPEContract {
       return;
     }
     const web3Provider = window.ethereum;
-    const accounts = await web3Provider.enable();
+    const accounts = await web3Provider.request({ method: ethereumMethods.REQUEST_ACCOUNTS });
     // eslint-disable-next-line require-atomic-updates
     this._web3 = new Web3(web3Provider, null, {});
     this._web3.eth.defaultAccount = accounts[0];
