@@ -27,22 +27,29 @@ const NoMetamask = () => {
     if (window.ethereum) {
       try {
         const ethereum = window.ethereum;
-        window.web3 = new window.Web3(ethereum);
 
-        // Enable Metamask for this Web Site
-        //const accounts = await ethereum.enable();
-        await ethereum.enable();
+        const chainId = ethereum.chainId;
+        const netId = parseInt(chainId);
 
-        window.web3.version.getNetwork(async (_err, netId) => {
-          const isTxnsAllowed =
-            Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
-          await storeMetamaskDetails(
-            Boolean(window.web3.eth.defaultAccount),
-            toChecksumAddress(window.web3.eth.defaultAccount),
-            netId,
-            isTxnsAllowed
-          );
-        });
+        // const _netId = ethereum.networkVersion;
+        // console.log("1. ethereum.networkVersion - ", ethereum.networkVersion);
+
+        // const _selectedAddress = ethereum.selectedAddress;
+        // console.log("1. ethereum.selectedAddress - ", _selectedAddress);
+
+        // const _accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        // console.log("1. eth_requestAccounts _accounts[0] - ", _accounts[0]);
+
+        // const _accounts2 = await ethereum.request({ method: 'eth_accounts' });
+        // console.log("1. eth_accounts _accounts2[0] - ", _accounts2[0]);
+
+        // await ethereum.request({ method: 'eth_accounts' });
+        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+
+        if (accounts.length > 0) {
+          const isTxnsAllowed = Boolean(accounts[0]) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
+          await storeMetamaskDetails(Boolean(accounts[0]), toChecksumAddress(accounts[0]), netId, isTxnsAllowed);
+        }
 
         // Subscribe to Metamask after connection
         subscribeToMetamask();
@@ -53,27 +60,44 @@ const NoMetamask = () => {
     }
   };
 
-  const subscribeToMetamask = () => {
+  const subscribeToMetamask = async () => {
     if (window.ethereum) {
       const ethereum = window.ethereum;
-      window.web3 = new window.Web3(ethereum);
 
       try {
-        window.web3.currentProvider.publicConfigStore.on("update", () => {
-          window.web3.version.getNetwork(async (_err, netId) => {
-            const isTxnsAllowed =
-              Boolean(window.web3.eth.defaultAccount) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
-            await storeMetamaskDetails(
-              Boolean(window.web3.eth.defaultAccount),
-              toChecksumAddress(window.web3.eth.defaultAccount),
-              netId,
-              isTxnsAllowed
-            );
-          });
+        // const _netId = ethereum.networkVersion;
+        // console.log("2. ethereum.networkVersion - ", ethereum.networkVersion);
+
+        // const _selectedAddress = ethereum.selectedAddress;
+        // console.log("2. ethereum.selectedAddress - ", _selectedAddress);
+
+        // const _accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        // console.log("2. eth_requestAccounts _accounts[0] - ", _accounts[0]);
+        // console.log("2. eth_requestAccounts _accounts - ", _accounts);
+
+        // const _accounts2 = await ethereum.request({ method: 'eth_accounts' });
+        // console.log("2. eth_accounts _accounts2[0] - ", _accounts2[0]);
+        // console.log("2. eth_accounts _accounts2 - ", _accounts2);
+
+        // On Network Change
+        ethereum.on("chainChanged", _chainId => {
+          window.location.reload();
+        });
+
+        const chainId = ethereum.chainId;
+        const netId = parseInt(chainId);
+        // On Account Change
+        ethereum.on("accountsChanged", async accounts => {
+          if (accounts.length > 0) {
+            const isTxnsAllowed = Boolean(accounts[0]) && netId.toString() === process.env.REACT_APP_ETH_NETWORK;
+            await storeMetamaskDetails(Boolean(accounts[0]), toChecksumAddress(accounts[0]), netId, isTxnsAllowed);
+          } else {
+            await storeMetamaskDetails(false, "0x0", 0, false);
+          }
         });
       } catch (_error) {
         // User has denied account access...
-        storeMetamaskDetails(false, "0x0", 0, false);
+        await storeMetamaskDetails(false, "0x0", 0, false);
       }
     }
   };

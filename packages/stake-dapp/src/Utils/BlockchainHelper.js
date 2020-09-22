@@ -580,3 +580,44 @@ const getStakingInstance = () => {
     throw error;
   }
 };
+
+// ******************* User Token Balance Functions ***********************
+export const getTokenBalance = async metamaskDetails => {
+  let tokenBalance = 0;
+  const tokenContractAddress = getTokenContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  if (metamaskDetails.isTxnsAllowed) {
+    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+
+    const result = await tokenInstance.methods.balanceOf(accountAddress).call();
+
+    tokenBalance = result.toString();
+
+    return tokenBalance;
+  } else {
+    return tokenBalance.toString();
+  }
+};
+
+// ********************* Fetching The the Token Allowance *******************
+export const getTokenAllowance = async metamaskDetails => {
+  var tokenAllowance = 0;
+  const tokenContractAddress = getTokenContractAddress();
+  const stakingContractAddress = getStakingContractAddress();
+  const accountAddress = metamaskDetails.account;
+
+  if (metamaskDetails.isTxnsAllowed) {
+    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
+    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+
+    const result = await tokenInstance.methods.allowance(accountAddress, stakingContractAddress).call();
+
+    tokenAllowance = result.toString();
+
+    return tokenAllowance;
+  } else {
+    return tokenAllowance.toString();
+  }
+};
