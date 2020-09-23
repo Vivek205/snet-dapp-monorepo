@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
+import SNETButton from "shared/dist/components/SNETButton";
+
 import { useStyles } from "./styles";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { NetworkNames } from "../../../Utils/constants/NetworkNames";
 
+import { LoaderContent } from "../../../Utils/Loader";
 import { fromWei } from "../../../Utils/GenHelperFunctions";
+import { approveTokenV2 } from "../../../Utils/BlockchainHelper";
 
 class MetaMaskAccountBalance extends Component {
   constructor(props) {
@@ -29,6 +33,26 @@ class MetaMaskAccountBalance extends Component {
     await updateTokenBalance(metamaskDetails);
     await updateTokenAllowance(metamaskDetails);
     await fetchUserStakeBalanceFromBlockchain(metamaskDetails);
+  };
+
+  handleApproveStake = async () => {
+    const { startLoader, stopLoader, updateTokenAllowance, metamaskDetails } = this.props;
+
+    const defaultAuthorizedAmount = "11000000000"; // 100 AGI - need to update the same to 10M
+
+    try {
+      startLoader(LoaderContent.SUBMIT_STAKE);
+
+      await approveTokenV2(metamaskDetails, defaultAuthorizedAmount);
+
+      await updateTokenAllowance(metamaskDetails);
+
+      stopLoader();
+      //console.log("Approve Token completed successfully...");
+    } catch (_error) {
+      //console.log("Error during Approval - ", _error);
+      stopLoader();
+    }
   };
 
   render() {
@@ -111,6 +135,7 @@ class MetaMaskAccountBalance extends Component {
             </div>
             <span>{fromWei(stakeBalance)} AGI</span>
           </div>
+          <SNETButton children="tbd-approve" color="primary" variant="contained" onClick={this.handleApproveStake} />
         </div>
       </div>
     );
@@ -130,7 +155,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserStakeBalanceFromBlockchain: metamaskDetails =>
     dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails)),
   startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
-  stopLoader: () => dispatch(loaderActions.stopAppLoader),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(MetaMaskAccountBalance));
