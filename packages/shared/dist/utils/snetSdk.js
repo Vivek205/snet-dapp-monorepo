@@ -3,11 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.initSDK = void 0;
+exports.initSDK = exports.ethereumMethods = void 0;
 
 var _snetSdkWeb = _interopRequireDefault(require("snet-sdk-web"));
-
-var _Blockchain = require("../../../publisher-dapp/src/Utils/Blockchain");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15,43 +13,67 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var ethereumMethods = {
+  REQUEST_ACCOUNTS: "eth_requestAccounts"
+};
+exports.ethereumMethods = ethereumMethods;
 var DEFAULT_GAS_LIMIT = undefined;
 var DEFAULT_GAS_PRICE = undefined;
 var ON_ACCOUNT_CHANGE = "accountsChanged";
 var ON_NETWORK_CHANGE = "networkChanged";
 
 var initSDK = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var sdk, web3Provider, updateSDK, hasEth, hasWeb3;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
-            updateSDK = function updateSDK() {
-              var chainIdHex = web3Provider.chainId;
-              var networkId = parseInt(chainIdHex);
-              var config = {
-                networkId: networkId,
-                web3Provider: web3Provider,
-                defaultGasLimit: DEFAULT_GAS_LIMIT,
-                defaultGasPrice: DEFAULT_GAS_PRICE
+            updateSDK = /*#__PURE__*/function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var chainIdHex, networkId, config;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        chainIdHex = web3Provider.chainId;
+                        networkId = parseInt(chainIdHex);
+                        config = {
+                          networkId: networkId,
+                          web3Provider: web3Provider,
+                          defaultGasLimit: DEFAULT_GAS_LIMIT,
+                          defaultGasPrice: DEFAULT_GAS_PRICE
+                        };
+                        sdk = new _snetSdkWeb.default(config);
+                        _context.next = 6;
+                        return sdk.setupAccount();
+
+                      case 6:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+
+              return function updateSDK() {
+                return _ref2.apply(this, arguments);
               };
-              sdk = new _snetSdkWeb.default(config);
-            };
+            }();
 
             hasEth = typeof window.ethereum !== "undefined";
             hasWeb3 = typeof window.web3 !== "undefined";
-            _context.prev = 3;
+            _context2.prev = 3;
 
             if (!(hasEth && hasWeb3)) {
-              _context.next = 12;
+              _context2.next = 13;
               break;
             }
 
             web3Provider = window.ethereum;
-            _context.next = 8;
+            _context2.next = 8;
             return web3Provider.request({
-              method: _Blockchain.ethereumMethods.REQUEST_ACCOUNTS
+              method: ethereumMethods.REQUEST_ACCOUNTS
             });
 
           case 8:
@@ -72,24 +94,27 @@ var initSDK = /*#__PURE__*/function () {
               });
               window.dispatchEvent(event);
             });
-            updateSDK();
-            return _context.abrupt("return", sdk);
+            _context2.next = 12;
+            return updateSDK();
 
           case 12:
-            _context.next = 17;
+            return _context2.abrupt("return", sdk);
+
+          case 13:
+            _context2.next = 18;
             break;
 
-          case 14:
-            _context.prev = 14;
-            _context.t0 = _context["catch"](3);
-            throw _context.t0;
+          case 15:
+            _context2.prev = 15;
+            _context2.t0 = _context2["catch"](3);
+            throw _context2.t0;
 
-          case 17:
+          case 18:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, null, [[3, 14]]);
+    }, _callee2, null, [[3, 15]]);
   }));
 
   return function initSDK() {

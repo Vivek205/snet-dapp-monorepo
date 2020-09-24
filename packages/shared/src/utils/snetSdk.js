@@ -12,7 +12,7 @@ const ON_NETWORK_CHANGE = "networkChanged";
 export const initSDK = async () => {
   let sdk;
   let web3Provider;
-  const updateSDK = () => {
+  const updateSDK = async () => {
     const chainIdHex = web3Provider.chainId;
     const networkId = parseInt(chainIdHex);
 
@@ -23,6 +23,7 @@ export const initSDK = async () => {
       defaultGasPrice: DEFAULT_GAS_PRICE,
     };
     sdk = new SnetSDK(config);
+    await sdk.setupAccount();
   };
 
   const hasEth = typeof window.ethereum !== "undefined";
@@ -40,7 +41,7 @@ export const initSDK = async () => {
         const event = new CustomEvent("snetMMNetworkChanged", { detail: { network } });
         window.dispatchEvent(event);
       });
-      updateSDK();
+      await updateSDK();
       return sdk;
     }
   } catch (error) {
