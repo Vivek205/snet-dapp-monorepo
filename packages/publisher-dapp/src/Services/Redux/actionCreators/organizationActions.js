@@ -443,25 +443,29 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
   return new Promise((resolve, reject) => {
-    const method = sdk._registryContract
-      .createOrganization(orgId, orgMetadataURI, members)
-      .send()
-      .on(blockChainEvents.TRANSACTION_HASH, async hash => {
-        await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
-        dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
-        resolve(hash);
-      })
-      .once(blockChainEvents.CONFIRMATION, async () => {
-        dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
-        await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
-        await dispatch(setOrgFoundInBlockchain(true));
-        dispatch(loaderActions.stopAppLoader());
-        await method.off();
-      })
-      .on(blockChainEvents.ERROR, error => {
-        dispatch(loaderActions.stopAppLoader());
-        reject(new MetamaskError(error.message));
-      });
+    try {
+      const method = sdk._registryContract
+        .createOrganization(orgId, orgMetadataURI, members)
+        .send()
+        .on(blockChainEvents.TRANSACTION_HASH, async hash => {
+          await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
+          dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
+          resolve(hash);
+        })
+        .once(blockChainEvents.CONFIRMATION, async () => {
+          dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
+          await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+          await dispatch(setOrgFoundInBlockchain(true));
+          dispatch(loaderActions.stopAppLoader());
+          await method.off();
+        })
+        .on(blockChainEvents.ERROR, error => {
+          dispatch(loaderActions.stopAppLoader());
+          reject(new MetamaskError(error.message));
+        });
+    } catch (error) {
+      reject(error);
+    }
   });
 };
 const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) => async dispatch => {
