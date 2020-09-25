@@ -105,7 +105,7 @@ class MetaMaskAccountBalance extends Component {
             <span className={classes.walletId}>{metamaskDetails.account}</span>
           </div>
 
-          <div className={classes.bgBox}>
+          <div className={classes.switchToggleContainer}>
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />

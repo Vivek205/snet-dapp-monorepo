@@ -23,7 +23,7 @@ export const useStyles = MUITheme => ({
           "@media(max-width: 960px)": { fontSize: 16 },
         },
       },
-      "& span": {
+      "& > span": {
         width: "44%",
         display: "inline-block",
         color: MUITheme.palette.text.darkGrey,
@@ -155,6 +155,39 @@ export const useStyles = MUITheme => ({
     "&:hover": {
       "& svg": { color: MUITheme.palette.primary.main },
       "& p": { display: "block" },
+    },
+  },
+
+  switchToggleContainer: {
+    "& > div": {
+      width: "auto !important",
+      margin: 0,
+    },
+    "& > label": {
+      width: "100%",
+      margin: 0,
+      "& > span": {
+        "&:first-of-type": {
+          width: 55,
+          height: 35,
+          "& span": {
+            "&.MuiSwitch-thumb": {
+              width: 16,
+              height: 17,
+              background: MUITheme.palette.text.darkGrey,
+            },
+            "&:hover": {
+              background: "none",
+            },
+          },
+        },
+        "&:last-of-type": {
+          width: "100%",
+          color: MUITheme.palette.text.darkGrey,
+          fontSize: 16,
+          lineHeight: "20px",
+        },
+      },
     },
   },
 });
