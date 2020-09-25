@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
@@ -19,6 +22,7 @@ class MetaMaskAccountBalance extends Component {
 
     this.state = {
       amount: 0,
+      switchState: false,
     };
   }
 
@@ -53,6 +57,10 @@ class MetaMaskAccountBalance extends Component {
       //console.log("Error during Approval - ", _error);
       stopLoader();
     }
+  };
+
+  handleSwitchChange = _event => {
+    this.setState({ switchState: !this.state.switchState });
   };
 
   render() {
@@ -101,11 +109,24 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Account balance displaying the total number of AGI tokens currently available with the wallet.</p>
+                <p>
+                  Are the tokens user authorizes escrow to transfer from user wallet to escrow based on user
+                  deposit/transfer action.
+                </p>
               </div>
-              <span>Total Tokens</span>
+              {/* <span>Authorized Tokens</span> */}
             </div>
-            <span>{fromWei(tokenBalance)} AGI</span>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.switchState}
+                  onChange={this.handleSwitchChange}
+                  color="primary"
+                  name="authorizeTokens"
+                />
+              }
+              label="Auto autorize staking escrow contract"
+            />
           </div>
 
           <div className={classes.bgBox}>
@@ -120,6 +141,17 @@ class MetaMaskAccountBalance extends Component {
               <span>Authorized Tokens</span>
             </div>
             <span>{fromWei(tokenAllowance)} AGI</span>
+          </div>
+
+          <div className={classes.bgBox}>
+            <div className={classes.label}>
+              <div className={classes.iconTooltipContainer}>
+                <InfoIcon />
+                <p>Account balance displaying the total number of AGI tokens currently available with the wallet.</p>
+              </div>
+              <span>Total Tokens</span>
+            </div>
+            <span>{fromWei(tokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
