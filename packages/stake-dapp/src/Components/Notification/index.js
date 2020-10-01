@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import isEmpty from "lodash/isEmpty";
+//import isEmpty from "lodash/isEmpty";
 
 import { withStyles } from "@material-ui/styles";
 import NotificationIcon from "@material-ui/icons/ErrorOutline";
@@ -21,18 +21,6 @@ class Notification extends Component {
 
         const chainId = ethereum.chainId;
         const netId = parseInt(chainId);
-
-        // const _netId = ethereum.networkVersion;
-        // console.log("1. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("1. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("1. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("1. eth_accounts _accounts2[0] - ", _accounts2[0]);
 
         //await ethereum.request({ method: 'eth_accounts' });
         const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -56,20 +44,6 @@ class Notification extends Component {
       const ethereum = window.ethereum;
 
       try {
-        // const _netId = ethereum.networkVersion;
-        // console.log("2. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("2. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("2. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-        // console.log("2. eth_requestAccounts _accounts - ", _accounts);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("2. eth_accounts _accounts2[0] - ", _accounts2[0]);
-        // console.log("2. eth_accounts _accounts2 - ", _accounts2);
-
         // On Network Change
         ethereum.on("chainChanged", _chainId => {
           window.location.reload();
@@ -94,40 +68,17 @@ class Notification extends Component {
   };
 
   loadMetamaskDetails = async () => {
-    const {
-      metamaskDetails,
-      updateTokenBalance,
-      updateTokenAllowance,
-      isLoggedIn,
-      fetchWallet,
-      walletList,
-    } = this.props;
+    const { metamaskDetails, updateTokenBalance, updateTokenAllowance, isLoggedIn } = this.props;
 
     if (!isLoggedIn) {
       this.storeMetamaskDetails(false, "0x0", 0, false);
       return;
-    } else {
-      if (isEmpty(walletList)) {
-        await fetchWallet();
-      }
     }
 
     if (window.ethereum) {
       const ethereum = window.ethereum;
 
       try {
-        // const _netId = ethereum.networkVersion;
-        // console.log("3. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("3. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        // console.log("3. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-
-        // const _accounts2 = await ethereum.request({ method: "eth_accounts" });
-        // console.log("3. eth_accounts _accounts2[0] - ", _accounts2[0]);
-
         const chainId = ethereum.chainId;
         const netId = parseInt(chainId);
 
