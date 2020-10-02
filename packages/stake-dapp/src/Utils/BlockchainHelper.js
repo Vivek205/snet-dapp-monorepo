@@ -435,16 +435,18 @@ export const getRecentStakeWindow = async () => {
 };
 
 export const getUserStakeBalance = async metamaskDetails => {
-  const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
+  let usetStakeBalance = 0;
 
-  const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-
-  const stakingInstance = new web3.eth.Contract(stakingABI, stakingContractAddress);
-
-  const result = await stakingInstance.methods.balances(accountAddress).call();
-
-  return result;
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const stakingInstance = getStakingInstance();
+      usetStakeBalance = await stakingInstance.methods.balances(accountAddress).call();
+    }
+    return usetStakeBalance.toString();
+  } catch (_error) {
+    return usetStakeBalance.toString();
+  }
 };
 
 export const getBlockNumber = () => {
@@ -500,43 +502,50 @@ const getStakingInstance = () => {
   }
 };
 
+const getTokenInstance = () => {
+  const tokenContractAddress = getTokenContractAddress();
+
+  try {
+    const ethereum = window.ethereum;
+
+    const web3 = new Web3(ethereum);
+    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
+
+    return tokenInstance;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // ******************* User Token Balance Functions ***********************
 export const getTokenBalance = async metamaskDetails => {
   let tokenBalance = 0;
-  const tokenContractAddress = getTokenContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
-
-    const result = await tokenInstance.methods.balanceOf(accountAddress).call();
-
-    tokenBalance = result.toString();
-
-    return tokenBalance;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const tokenInstance = getTokenInstance();
+      tokenBalance = await tokenInstance.methods.balanceOf(accountAddress).call();
+    }
+    return tokenBalance.toString();
+  } catch (_error) {
     return tokenBalance.toString();
   }
 };
 
 // ********************* Fetching The the Token Allowance *******************
 export const getTokenAllowance = async metamaskDetails => {
-  var tokenAllowance = 0;
-  const tokenContractAddress = getTokenContractAddress();
+  let tokenAllowance = 0;
   const stakingContractAddress = getStakingContractAddress();
   const accountAddress = metamaskDetails.account;
 
-  if (metamaskDetails.isTxnsAllowed) {
-    const web3 = new Web3(process.env.REACT_APP_INFURA_ENDPOINT);
-    const tokenInstance = new web3.eth.Contract(tokenABI, tokenContractAddress);
-
-    const result = await tokenInstance.methods.allowance(accountAddress, stakingContractAddress).call();
-
-    tokenAllowance = result.toString();
-
-    return tokenAllowance;
-  } else {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const tokenInstance = getTokenInstance();
+      tokenAllowance = await tokenInstance.methods.allowance(accountAddress, stakingContractAddress).call();
+    }
+    return tokenAllowance.toString();
+  } catch (_error) {
     return tokenAllowance.toString();
   }
 };
