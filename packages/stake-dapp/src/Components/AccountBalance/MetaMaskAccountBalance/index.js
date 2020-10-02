@@ -3,18 +3,11 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import InfoIcon from "@material-ui/icons/Info";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-
-import SNETButton from "shared/dist/components/SNETButton";
-
 import { useStyles } from "./styles";
 import { tokenActions, stakeActions, loaderActions } from "../../../Services/Redux/actionCreators";
 import { NetworkNames } from "../../../Utils/constants/NetworkNames";
 
-import { LoaderContent } from "../../../Utils/Loader";
 import { fromWei } from "../../../Utils/GenHelperFunctions";
-import { approveTokenV2 } from "../../../Utils/BlockchainHelper";
 
 class MetaMaskAccountBalance extends Component {
   constructor(props) {
@@ -22,7 +15,6 @@ class MetaMaskAccountBalance extends Component {
 
     this.state = {
       amount: 0,
-      switchState: false,
     };
   }
 
@@ -37,30 +29,6 @@ class MetaMaskAccountBalance extends Component {
     await updateTokenBalance(metamaskDetails);
     await updateTokenAllowance(metamaskDetails);
     await fetchUserStakeBalanceFromBlockchain(metamaskDetails);
-  };
-
-  handleApproveStake = async () => {
-    const { startLoader, stopLoader, updateTokenAllowance, metamaskDetails } = this.props;
-
-    const defaultAuthorizedAmount = "11000000000"; // 100 AGI - need to update the same to 10M
-
-    try {
-      startLoader(LoaderContent.SUBMIT_STAKE);
-
-      await approveTokenV2(metamaskDetails, defaultAuthorizedAmount);
-
-      await updateTokenAllowance(metamaskDetails);
-
-      stopLoader();
-      //console.log("Approve Token completed successfully...");
-    } catch (_error) {
-      //console.log("Error during Approval - ", _error);
-      stopLoader();
-    }
-  };
-
-  handleSwitchChange = _event => {
-    this.setState({ switchState: !this.state.switchState });
   };
 
   render() {
@@ -105,28 +73,15 @@ class MetaMaskAccountBalance extends Component {
             <span className={classes.walletId}>{metamaskDetails.account}</span>
           </div>
 
-          <div className={classes.switchToggleContainer}>
+          <div className={classes.bgBox}>
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>
-                  Are the tokens user authorizes escrow to transfer from user wallet to escrow based on user
-                  deposit/transfer action.
-                </p>
+                <p>Account balance displaying the total number of AGI tokens currently available with the wallet.</p>
               </div>
-              {/* <span>Authorized Tokens</span> */}
+              <span>Total Tokens</span>
             </div>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.switchState}
-                  onChange={this.handleSwitchChange}
-                  color="primary"
-                  name="authorizeTokens"
-                />
-              }
-              label="Auto autorize staking escrow contract"
-            />
+            <span>{fromWei(tokenBalance)} AGI</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -147,17 +102,6 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Account balance displaying the total number of AGI tokens currently available with the wallet.</p>
-              </div>
-              <span>Total Tokens</span>
-            </div>
-            <span>{fromWei(tokenBalance)} AGI</span>
-          </div>
-
-          <div className={classes.bgBox}>
-            <div className={classes.label}>
-              <div className={classes.iconTooltipContainer}>
-                <InfoIcon />
                 <p>
                   The total amount of AGI tokens that you have involved across all stake sessions. This includes pending
                   and active staking amounts.
@@ -167,7 +111,6 @@ class MetaMaskAccountBalance extends Component {
             </div>
             <span>{fromWei(stakeBalance)} AGI</span>
           </div>
-          <SNETButton children="tbd-approve" color="primary" variant="contained" onClick={this.handleApproveStake} />
         </div>
       </div>
     );
@@ -187,7 +130,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserStakeBalanceFromBlockchain: metamaskDetails =>
     dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails)),
   startLoader: loaderContent => dispatch(loaderActions.startAppLoader(loaderContent)),
-  stopLoader: () => dispatch(loaderActions.stopAppLoader()),
+  stopLoader: () => dispatch(loaderActions.stopAppLoader),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(MetaMaskAccountBalance));
