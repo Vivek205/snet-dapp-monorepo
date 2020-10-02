@@ -31,18 +31,6 @@ const NoMetamask = () => {
         const chainId = ethereum.chainId;
         const netId = parseInt(chainId);
 
-        // const _netId = ethereum.networkVersion;
-        // console.log("1. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("1. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        // console.log("1. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-
-        // const _accounts2 = await ethereum.request({ method: 'eth_accounts' });
-        // console.log("1. eth_accounts _accounts2[0] - ", _accounts2[0]);
-
         // await ethereum.request({ method: 'eth_accounts' });
         const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
@@ -65,20 +53,6 @@ const NoMetamask = () => {
       const ethereum = window.ethereum;
 
       try {
-        // const _netId = ethereum.networkVersion;
-        // console.log("2. ethereum.networkVersion - ", ethereum.networkVersion);
-
-        // const _selectedAddress = ethereum.selectedAddress;
-        // console.log("2. ethereum.selectedAddress - ", _selectedAddress);
-
-        // const _accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        // console.log("2. eth_requestAccounts _accounts[0] - ", _accounts[0]);
-        // console.log("2. eth_requestAccounts _accounts - ", _accounts);
-
-        // const _accounts2 = await ethereum.request({ method: 'eth_accounts' });
-        // console.log("2. eth_accounts _accounts2[0] - ", _accounts2[0]);
-        // console.log("2. eth_accounts _accounts2 - ", _accounts2);
-
         // On Network Change
         ethereum.on("chainChanged", _chainId => {
           window.location.reload();
