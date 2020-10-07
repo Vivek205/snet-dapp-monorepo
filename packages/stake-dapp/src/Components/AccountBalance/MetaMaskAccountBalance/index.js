@@ -111,9 +111,9 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Allows staking contract to auto authorize 10M AGI for efficient and fast staking. This saves you gas
-                  cost (ETH) for every stake you submit up to 10M AGI. Recommended if you are planning to stake more
-                  than once. See FAQ for more information.
+                  Allows staking contract to authorize higher amount of AGI for efficient and fast staking. This saves
+                  you gas cost (ETH) for every stake you submit. Recommended if you are planning to stake more than
+                  once. See FAQ for more information.
                 </p>
               </div>
             </div>
@@ -124,6 +124,7 @@ class MetaMaskAccountBalance extends Component {
                   onChange={this.handleSwitchChange}
                   color="primary"
                   name="authorizeTokens"
+                  inputProps={{ "aria-label": "primary checkbox" }}
                 />
               }
               label="Authorize staking escrow contract"

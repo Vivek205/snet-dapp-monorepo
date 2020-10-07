@@ -176,17 +176,7 @@ export const useStyles = MUITheme => ({
       "& > span": {
         "&:first-of-type": {
           width: 55,
-          height: 35,
-          "& span": {
-            "&.MuiSwitch-thumb": {
-              width: 16,
-              height: 17,
-              background: MUITheme.palette.text.darkGrey,
-            },
-            "&:hover": {
-              background: "none",
-            },
-          },
+          height: 38,
         },
         "&:last-of-type": {
           width: "100%",
