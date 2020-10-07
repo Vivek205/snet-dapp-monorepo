@@ -12,6 +12,7 @@ import RelatedLinks from "./RelatedLinks";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
+import ChangeRequested from "./ChangeRequested";
 
 const StatusComponents = {
   [individualVerificationStatusList.PENDING]: Pending,
@@ -19,6 +20,7 @@ const StatusComponents = {
   [individualVerificationStatusList.REJECTED]: Denied,
   [individualVerificationStatusList.FAILED]: Denied,
   [individualVerificationStatusList.ERROR]: Denied,
+  [individualVerificationStatusList.CHANGE_REQUESTED]: ChangeRequested,
 };
 
 const selectState = state => ({
