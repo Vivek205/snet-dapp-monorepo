@@ -1,5 +1,4 @@
 export const useStyles = MUITheme => ({
-  metamaskAccBalanceContainer: { padding: "0 19px 0" },
   accountDetails: {
     "& div": {
       display: "flex",
@@ -33,6 +32,7 @@ export const useStyles = MUITheme => ({
       },
     },
     "& > div": {
+      padding: "0 19px",
       "@media(max-width:1280px)": {
         flexDirection: "column",
         justifyContent: "center",
@@ -159,16 +159,29 @@ export const useStyles = MUITheme => ({
   },
 
   switchToggleContainer: {
-    paddingTop: "5px",
-    paddingBottom: "5px",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#e2e2e2",
+    padding: "5px !important",
+    border: "1px solid #e2e2e2",
     borderRadius: 4,
+    margin: "10px !important",
+    position: "relative",
     backgroundColor: "#f8f8f8",
+    "& > span": {
+      width: "47px !important",
+      borderRadius: 4,
+      position: "absolute",
+      top: -10,
+      right: "47%",
+      backgroundColor: "#6F106A",
+      color: "#fff !important",
+      fontStyle: "italic",
+      fontWeight: "bold",
+      textAlign: "center",
+      textTransform: "uppercase",
+    },
     "& > div": {
       width: "auto !important",
       margin: 0,
+      "& svg": { paddingRight: 0 },
     },
     "& > label": {
       width: "100%",

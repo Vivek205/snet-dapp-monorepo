@@ -107,6 +107,7 @@ class MetaMaskAccountBalance extends Component {
           </div>
 
           <div className={classes.switchToggleContainer}>
+            <span>new</span>
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
