@@ -111,7 +111,7 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Allows staking contract to authorize higer amount of AGI for efficient and fast staking. This saves
+                  Allows staking contract to authorize higher amount of AGI for efficient and fast staking. This saves
                   you gas cost (ETH) for every stake you submit. Recommended if you are planning to stake more than
                   once. See FAQ for more information.
                 </p>
