@@ -132,7 +132,7 @@ class MetaMaskAccountBalance extends Component {
             />
           </div>
 
-          <div className={classes.bgBox}>
+          {/* <div className={classes.bgBox}>
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
@@ -144,7 +144,7 @@ class MetaMaskAccountBalance extends Component {
               <span>Authorized Tokens</span>
             </div>
             <span>{fromWei(tokenAllowance)} AGI</span>
-          </div>
+          </div> */}
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
