@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 
 import Grid from "@material-ui/core/Grid";
@@ -17,9 +17,12 @@ import { organizationActions } from "../../../../../Services/Redux/actionCreator
 import { ContactsTypes } from "../../../../../Utils/Contacts";
 import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/OrganizationProfile/validationConstraints";
 import OrganizationIdAvailability from "./OrganizationIdAvailability";
+import { userEntities } from "../../../../../Utils/user";
+import { organizationTypes } from "../../../../../Utils/organizationSetup";
 
 let validateTimeout = "";
 const selectState = state => ({
+  userEntity: state.user.entity,
   orgDetails: state.organization,
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
 });
@@ -27,7 +30,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [websiteValidation, setWebsiteValidation] = useState({});
-  const { orgDetails, isValidateOrgIdLoading } = useSelector(selectState);
+  const { orgDetails, isValidateOrgIdLoading, userEntity } = useSelector(selectState);
   const contact = orgDetails.contacts.find(el => el.type === ContactsTypes.GENERAL);
 
   let phone = "";
@@ -85,19 +88,23 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
   };
   return (
     <Grid container>
-      <SNETTextField
-        {...basicDetailsFormData.ORG_ID}
-        value={orgDetails.id}
-        onChange={handleChange}
-        error={!!invalidFields ? "id" in invalidFields : ""}
-      />
-      <OrganizationIdAvailability
-        orgDetails={orgDetails}
-        id={orgDetails.id}
-        availability={orgDetails.availability}
-        classes={classes}
-        loading={isValidateOrgIdLoading}
-      />
+      {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
+        <Fragment>
+          <SNETTextField
+            {...basicDetailsFormData.ORG_ID}
+            value={orgDetails.id}
+            onChange={handleChange}
+            error={!!invalidFields ? "id" in invalidFields : ""}
+          />
+          <OrganizationIdAvailability
+            orgDetails={orgDetails}
+            id={orgDetails.id}
+            availability={orgDetails.availability}
+            classes={classes}
+            loading={isValidateOrgIdLoading}
+          />
+        </Fragment>
+      ) : null}
 
       <SNETTextField
         {...basicDetailsFormData.ORGANIZATION_NAME}
@@ -107,18 +114,20 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         onChange={handleChange}
         error={!!invalidFields ? "name" in invalidFields : ""}
       />
-      <div className={classes.dunsContainer}>
-        <FormControlLabel
-          control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
-          label="I have my DUNS number"
-        />
-        <SNETTextField
-          {...basicDetailsFormData.DUNS}
-          value={orgDetails.duns}
-          onChange={handleChange}
-          disabled={!allowDuns}
-        />
-      </div>
+      {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
+        <div className={classes.dunsContainer}>
+          <FormControlLabel
+            control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
+            label="I have my DUNS number"
+          />
+          <SNETTextField
+            {...basicDetailsFormData.DUNS}
+            value={orgDetails.duns}
+            onChange={handleChange}
+            disabled={!allowDuns}
+          />
+        </div>
+      ) : null}
       <div className={classes.websiteUrlContainer}>
         <SNETTextField {...basicDetailsFormData.WEBSITE} value={orgDetails.website} onChange={handleChange} />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
