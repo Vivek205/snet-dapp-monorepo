@@ -15,6 +15,7 @@ import { individualVerificationStatusList } from "../../constant";
 import { getEmailDomain } from "../../../../Utils/validation";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { AuthenticateRoutes } from "../AuthenitcateRouter/Routes";
+import Organization from "../Organization";
 
 const domainsToBeAutoApproved = ["singularitynet.io"];
 
@@ -26,18 +27,29 @@ class Individual extends Component {
   componentDidMount = async () => {
     const { status, getVerificationStatus } = this.props;
     const newStatusData = await getVerificationStatus(status);
-    if (newStatusData.status === individualVerificationStatusList.NOT_STARTED) {
-      return this.props.history.push(GlobalRoutes.ONBOARDING.path);
+    if (
+      newStatusData.status === individualVerificationStatusList.NOT_STARTED ||
+      newStatusData.status === individualVerificationStatusList.CHANGE_REQUESTED
+    ) {
+      return;
+      // return this.props.history.push(GlobalRoutes.ONBOARDING.path);
+    } else {
+      this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
     }
-    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   };
 
   componentDidUpdate(prevProps) {
-    const { status, history } = this.props;
-    if (prevProps.status !== status && status === individualVerificationStatusList.NOT_STARTED) {
-      return history.push(GlobalRoutes.ONBOARDING.path);
+    const { status } = this.props;
+
+    if (prevProps.status !== status) {
+      if (
+        status === individualVerificationStatusList.NOT_STARTED ||
+        status === individualVerificationStatusList.CHANGE_REQUESTED
+      ) {
+        return;
+      }
+      this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
     }
-    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   }
 
   handleVerify = async () => {
@@ -61,8 +73,13 @@ class Individual extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, orgStatus, status } = this.props;
     const { alert } = this.state;
+
+    if (!orgStatus || !status || status === individualVerificationStatusList.CHANGE_REQUESTED) {
+      return <Organization />;
+    }
+
     return (
       <Grid container className={classes.individualContainer}>
         <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
@@ -104,6 +121,7 @@ class Individual extends Component {
 }
 
 const mapStateToProps = state => ({
+  orgStatus: state.organization.state.state,
   status: state.user.individualVerificationStatus,
   userEmail: state.user.email,
 });
