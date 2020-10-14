@@ -9,51 +9,80 @@ var _styles = require("@material-ui/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   return {
-    number: {
+    numberContaienr: {
+      width: 28,
       borderRadius: 25,
-      padding: "4px 10px",
-      marginRight: 8,
       backgroundColor: MUITheme.palette.text.lightGrey,
       color: MUITheme.palette.text.white,
-      "@media(max-width:480px)": {
-        padding: "4px 8px",
-        fontSize: 12
+      lineHeight: "28px",
+      "& span": {
+        "&::after": {
+          content: '""',
+          width: 150,
+          height: 1,
+          margin: "15px 0 0 20px",
+          display: "inline-block",
+          position: "absolute",
+          backgroundColor: MUITheme.palette.background.grey,
+          "@media (max-width:660px)": {
+            width: "18%"
+          },
+          "@media (max-width:540px)": {
+            width: "16%",
+            marginTop: 11
+          },
+          "@media (max-width:470px)": {
+            display: "none"
+          }
+        }
       }
     },
     TabTitle: {
-      color: MUITheme.palette.lightGrey,
-      fontSize: 14
+      paddingTop: 10,
+      color: MUITheme.palette.text.lightGrey,
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 14,
+      letterSpacing: 0.13
     },
     completedIcon: {
+      "&::after": {
+        marginLeft: "10px !important"
+      },
       "& svg": {
-        color: MUITheme.palette.success,
-        fontSize: 28,
-        marginRight: 10,
-        "@media(max-width:480px)": {
-          padding: "0 !important",
-          marginRight: "0 !important",
-          fontSize: "21px !important"
-        }
+        padding: 3,
+        borderRadius: 25,
+        background: MUITheme.palette.success.main,
+        color: MUITheme.palette.text.white,
+        fontSize: 22
       },
       "@media(max-width:480px)": {
-        padding: "0 !important",
-        margin: 0
+        padding: "0 !important"
       }
     },
     active: {
+      "& div": {
+        backgroundColor: MUITheme.palette.primary.main,
+        "& span": {
+          color: MUITheme.palette.text.white
+        }
+      },
+      "& > span": {
+        color: MUITheme.palette.text.darkGrey
+      }
+    },
+    completed: {
+      "& > div": {
+        background: "transparent"
+      },
       "& span": {
-        "&:first-of-type": {
-          backgroundColor: MUITheme.palette.primary.main
-        },
         "&:last-of-type": {
+          paddingTop: 0,
           color: MUITheme.palette.text.darkGrey
         }
       }
     },
-    completed: {
-      "&:last-of-type span": {
-        color: MUITheme.palette.text.darkGrey
-      }
+    clickableSection: {
+      cursor: "pointer"
     }
   };
 });

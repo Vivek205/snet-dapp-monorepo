@@ -5,7 +5,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@material-ui/core": "^4.7.0",
+    "@material-ui/core": "^4.4.0",
+    "@material-ui/icons": "^4.1.0",
+    "@material-ui/styles": "^4.0.2",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^4.3.0",
@@ -16,30 +18,35 @@
     "husky": "^2.7.0",
     "lerna": "^3.19.0",
     "lint-staged": "^8.2.0",
+    "material-ui-flat-pagination": "^4.0.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-dropzone": "^10.2.1",
     "react-helmet": "^5.2.1",
     "react-scripts": "3.2.0",
     "typescript": "^3.7.3",
-    "snet-sdk-web": "^1.0.0-beta.10"
+    "snet-sdk-web": "^1.0.0-beta.16"
   },
   "scripts": {
     "start:marketplace": "cd packages/marketplace-dapp && yarn start",
     "start:rfai": "cd packages/rfai-dapp && yarn start",
     "start:publisher": "cd packages/publisher-dapp && yarn start",
+    "start:stake": "cd packages/stake-dapp && yarn start",
     "build:marketplace": "cd packages/marketplace-dapp && yarn build",
     "build:publisher": "cd packages/publisher-dapp && yarn build",
+    "build:stake": "cd packages/stake-dapp && yarn build",
     "build:rfai": "cd packages/rfai-dapp && yarn build",
-    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files",
+    "build:shared": "lerna exec --scope shared -- babel src -d dist --copy-files  --delete-dir-on-start --no-copy-ignored --ignore **/*.stories.js ",
     "storybook": "lerna exec --scope shared  -- yarn run storybook",
-    "build-storybook": "lerna exec --scope shared  -- yarn run build-storybook",
+    "build:storybook": "lerna exec --scope shared  -- yarn run build-storybook",
     "lint": "eslint .",
     "lint:fix-publisher": "eslint packages/publisher-dapp/. --fix",
     "lint:fix-shared": "eslint packages/shared/. --fix",
     "lint:fix": "eslint . --fix",
-    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done"
+    "nuke": "rm -r node_modules ; for d in packages/*/node_modules; do echo $d; rm -r $d; done",
+    "link:all": "lerna exec -- yarn link"
   },
   "lint-staged": {
     "*.{js,jsx}": [

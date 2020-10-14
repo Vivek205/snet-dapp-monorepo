@@ -38,14 +38,16 @@ const InvitePopup = ({
         <CardContent className={classes.popupContent}>
           <SNETTextarea
             label="Email Address(es)"
-            extraInfo="For multiple emails, separated by comma"
+            extraInfo="For multiple emails, separate by comma"
             rowCount="6"
             value={textareaValue}
             onChange={onTextareaChange}
           />
         </CardContent>
         {inviteMembersAlert.type === alertTypes.ERROR ? (
-          <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
+          <div className={classes.alertContainer}>
+            <AlertBox type={inviteMembersAlert.type} message={inviteMembersAlert.message} />
+          </div>
         ) : null}
         <CardActions className={classes.btnContainer}>
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleClose} />

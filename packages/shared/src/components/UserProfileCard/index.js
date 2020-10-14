@@ -2,14 +2,14 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
-import PersonIcon from "@material-ui/icons/Person";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { useStyles } from "./styles";
 
 const UserProfileCard = ({ classes, nickName, onClose }) => {
   return (
     <div className={classes.Userdetails}>
-      <PersonIcon />
+      <AccountCircleIcon />
       <div>
         <h4>{nickName}</h4>
       </div>

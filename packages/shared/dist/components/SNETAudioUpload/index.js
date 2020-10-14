@@ -73,15 +73,9 @@ var _styles3 = require("./styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -90,6 +84,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 // Color Palette
 var snetGreyError = _colors.grey[700];
@@ -102,10 +106,10 @@ var spacingUnit = 8;
 var snetFont = "Muli";
 var minimumTabHeight = 160;
 
-var SNETAudioUpload =
-/*#__PURE__*/
-function (_React$Component) {
+var SNETAudioUpload = /*#__PURE__*/function (_React$Component) {
   _inherits(SNETAudioUpload, _React$Component);
+
+  var _super = _createSuper(SNETAudioUpload);
 
   _createClass(SNETAudioUpload, null, [{
     key: "getBase64ImageType",
@@ -145,7 +149,7 @@ function (_React$Component) {
 
     _classCallCheck(this, SNETAudioUpload);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(SNETAudioUpload).call(this, props)); // It is the same thing, only difference is Component where we do the binding.
+    _this = _super.call(this, props); // It is the same thing, only difference is Component where we do the binding.
     // Component is lower in the tree, and now button has the logic how to open the screen.
     // Setting minimum tab height
 
@@ -210,9 +214,9 @@ function (_React$Component) {
     _this.inputImageErrorMessage = "Content image could not be rendered.";
     _this.outputImageErrorMessage = "Output image could not be rendered."; // Refs
 
-    _this.imageDiv = _react.default.createRef();
-    _this.inputImage = _react.default.createRef();
-    _this.outputImage = _react.default.createRef(); // Function binding
+    _this.imageDiv = /*#__PURE__*/_react.default.createRef();
+    _this.inputImage = /*#__PURE__*/_react.default.createRef();
+    _this.outputImage = /*#__PURE__*/_react.default.createRef(); // Function binding
 
     _this.handleMouseMove = _this.handleMouseMove.bind(_assertThisInitialized(_this));
     _this.handleSearchSubmit = _this.handleSearchSubmit.bind(_assertThisInitialized(_this));
@@ -505,18 +509,18 @@ function (_React$Component) {
       var _this5 = this;
 
       var classes = this.props.classes;
-      return _react.default.createElement(_Grid.default, {
+      return /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         sm: 12,
         md: 12,
         lg: 12,
         className: classes.uploadTabContainer
-      }, _react.default.createElement(_reactFileDrop.default, {
+      }, /*#__PURE__*/_react.default.createElement(_reactFileDrop.default, {
         onDrop: function onDrop(files, event) {
           return _this5.handleImageUpload(files, event);
         }
-      }, _react.default.createElement("input", {
+      }, /*#__PURE__*/_react.default.createElement("input", {
         id: "myInput",
         type: "file",
         accept: this.props.allowedInputTypes,
@@ -526,18 +530,18 @@ function (_React$Component) {
         ref: function ref(input) {
           return _this5.inputElement = input;
         }
-      }), _react.default.createElement("div", {
+      }), /*#__PURE__*/_react.default.createElement("div", {
         onClick: function onClick() {
           return _this5.inputElement.click();
         },
         className: (classes.uploadBox, classes.Box)
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         className: classes.uploadBoxContent
-      }, _react.default.createElement(_icons.CloudUpload, null), _react.default.createElement(_Typography.default, {
+      }, /*#__PURE__*/_react.default.createElement(_icons.CloudUpload, null), /*#__PURE__*/_react.default.createElement(_Typography.default, {
         className: classes.uploadBoxTitle
-      }, "Drag and drop file here or ", _react.default.createElement("a", {
+      }, "Drag and drop file here or ", /*#__PURE__*/_react.default.createElement("a", {
         href: "#"
-      }, "click")), _react.default.createElement(_Typography.default, {
+      }, "click")), /*#__PURE__*/_react.default.createElement(_Typography.default, {
         className: classes.uploadBoxDescription
       }, "(Image must be under ", this.props.maxImageSize / 1000000, "mb. Source images are not saved on the servers after the job is processed.)")))));
     }
@@ -632,28 +636,28 @@ function (_React$Component) {
       var _this6 = this;
 
       var classes = this.props.classes;
-      return _react.default.createElement(_Grid.default, {
+      return /*#__PURE__*/_react.default.createElement(_Grid.default, {
         container: true,
         className: classes.Box
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         className: classes.urlTabContainer
-      }, _react.default.createElement(_styles.MuiThemeProvider, {
+      }, /*#__PURE__*/_react.default.createElement(_styles.MuiThemeProvider, {
         theme: this.theme
-      }, _react.default.createElement(_TextField.default, {
+      }, /*#__PURE__*/_react.default.createElement(_TextField.default, {
         variant: "outlined",
         type: "text",
-        label: _react.default.createElement("span", null, "Image URL"),
+        label: /*#__PURE__*/_react.default.createElement("span", null, "Image URL"),
         onChange: this.searchTextUpdate,
         InputProps: {
-          endAdornment: _react.default.createElement(_InputAdornment.default, {
+          endAdornment: /*#__PURE__*/_react.default.createElement(_InputAdornment.default, {
             position: "end"
-          }, _react.default.createElement(_IconButton.default, {
+          }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
             onClick: this.state.searchText !== null ? function () {
               return _this6.handleSearchSubmit(null);
             } : undefined
-          }, _react.default.createElement(_Search.default, null)))
+          }, /*#__PURE__*/_react.default.createElement(_Search.default, null)))
         }
       }))));
     }
@@ -667,23 +671,23 @@ function (_React$Component) {
       var _this7 = this;
 
       var classes = this.props.classes;
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: classes.galleryTabContainer
-      }, _react.default.createElement(_GridList.default, {
+      }, /*#__PURE__*/_react.default.createElement(_GridList.default, {
         className: classes.galleryTabGridList,
         cols: this.props.galleryCols,
         spacing: spacingUnit
       }, this.props.imageGallery.map(function (url, i) {
-        return _react.default.createElement(_Grow.default, {
+        return /*#__PURE__*/_react.default.createElement(_Grow.default, {
           in: _this7.state.value === 2,
           style: {
             transformOrigin: "0 0 0"
           },
           timeout: i * 500,
           key: i
-        }, _react.default.createElement(_GridListTile.default, {
+        }, /*#__PURE__*/_react.default.createElement(_GridListTile.default, {
           key: i
-        }, _react.default.createElement("img", {
+        }, /*#__PURE__*/_react.default.createElement("img", {
           src: url,
           alt: "Gallery Image " + i,
           onClick: function onClick() {
@@ -702,9 +706,9 @@ function (_React$Component) {
     key: "renderLoadingState",
     value: function renderLoadingState() {
       var classes = this.props.classes;
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: (classes.tabStyle, classes.loadingStateContainer)
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         container: true,
         direction: "row",
         justify: "center",
@@ -713,7 +717,7 @@ function (_React$Component) {
           flexGrow: 1,
           height: this.tabHeight + "px"
         }
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         style: {
@@ -722,10 +726,10 @@ function (_React$Component) {
           justifyContent: "center",
           alignItems: "center"
         }
-      }, _react.default.createElement(_Fade.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "loading",
         unmountOnExit: true
-      }, _react.default.createElement(_CircularProgress.default, {
+      }, /*#__PURE__*/_react.default.createElement(_CircularProgress.default, {
         style: {
           color: this.mainColor,
           margin: 10
@@ -761,9 +765,9 @@ function (_React$Component) {
     value: function renderUploadedState() {
       var _this9 = this;
 
-      return _react.default.createElement(_Fade.default, {
+      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "uploaded"
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -783,7 +787,7 @@ function (_React$Component) {
             displayImageName: false
           });
         }
-      }, _react.default.createElement("img", {
+      }, /*#__PURE__*/_react.default.createElement("img", {
         alt: "Service input",
         src: this.state.inputImageData,
         onError: function onError() {
@@ -798,10 +802,10 @@ function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), _react.default.createElement(_Fade.default, {
+      }), /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, _react.default.createElement(_GridListTileBar.default, {
-        title: _react.default.createElement(_Typography.default, {
+      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -831,18 +835,18 @@ function (_React$Component) {
       var _this10 = this;
 
       var classes = this.props.classes;
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: (classes.tabStyle, classes.tabsMainContainer)
-      }, _react.default.createElement(_reactSwipeableViews.default, {
+      }, /*#__PURE__*/_react.default.createElement(_reactSwipeableViews.default, {
         axis: "x",
         index: this.state.value
-      }, _react.default.createElement("div", null, this.renderUploadTab()), _react.default.createElement("div", null, this.renderUrlTab()), _react.default.createElement("div", null, this.renderGalleryTab()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableInputTab && this.renderInputImage()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableOutputTab && this.renderOutputImage()), _react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableComparisonTab && this.renderComparison())), _react.default.createElement(_ClickAwayListener.default, {
+      }, /*#__PURE__*/_react.default.createElement("div", null, this.renderUploadTab()), /*#__PURE__*/_react.default.createElement("div", null, this.renderUrlTab()), /*#__PURE__*/_react.default.createElement("div", null, this.renderGalleryTab()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableInputTab && this.renderInputImage()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableOutputTab && this.renderOutputImage()), /*#__PURE__*/_react.default.createElement("div", null, this.state.mainState === "display" && !this.props.disableComparisonTab && this.renderComparison())), /*#__PURE__*/_react.default.createElement(_ClickAwayListener.default, {
         onClickAway: function onClickAway() {
           return _this10.setState({
             displayError: false
           });
         }
-      }, _react.default.createElement(_Snackbar.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Snackbar.default, {
         className: classes.tabsSnackbar,
         open: this.state.displayError,
         autoHideDuration: 5000,
@@ -853,24 +857,24 @@ function (_React$Component) {
             displayError: false
           });
         }
-      }, _react.default.createElement(_SnackbarContent.default, {
+      }, /*#__PURE__*/_react.default.createElement(_SnackbarContent.default, {
         className: classes.tabsSnackbarContent,
         style: {
           backgroundColor: snetBackgroundRed,
           borderColor: snetRed
         },
         "aria-describedby": "client-snackbar",
-        message: _react.default.createElement("span", {
+        message: /*#__PURE__*/_react.default.createElement("span", {
           style: {
             color: snetGreyError
           }
-        }, _react.default.createElement(_Error.default, {
+        }, /*#__PURE__*/_react.default.createElement(_Error.default, {
           style: {
             fontSize: 16,
             opacity: 0.9,
             marginRight: spacingUnit
           }
-        }), _react.default.createElement(_Typography.default, {
+        }), /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             color: snetGrey
           }
@@ -886,9 +890,9 @@ function (_React$Component) {
     value: function renderInputImage() {
       var _this11 = this;
 
-      return _react.default.createElement(_Fade.default, {
+      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -908,7 +912,7 @@ function (_React$Component) {
             displayImageName: false
           });
         }
-      }, _react.default.createElement("img", {
+      }, /*#__PURE__*/_react.default.createElement("img", {
         alt: "Service input",
         src: this.state.inputImageData,
         onError: function onError() {
@@ -923,11 +927,11 @@ function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), _react.default.createElement(_Fade.default, {
+      }), /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, _react.default.createElement(_GridListTileBar.default, {
+      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
         style: {},
-        title: _react.default.createElement(_Typography.default, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -946,9 +950,9 @@ function (_React$Component) {
     value: function renderOutputImage() {
       var _this12 = this;
 
-      return _react.default.createElement(_Fade.default, {
+      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         style: {
           position: "relative",
           overflow: "hidden",
@@ -968,7 +972,7 @@ function (_React$Component) {
             displayImageName: false
           });
         }
-      }, _react.default.createElement("img", {
+      }, /*#__PURE__*/_react.default.createElement("img", {
         alt: "Service output",
         src: this.state.outputImage,
         onError: function onError() {
@@ -983,11 +987,11 @@ function (_React$Component) {
           height: this.tabHeight + "px",
           width: "100%"
         }
-      }), this.state.outputImageName !== null ? _react.default.createElement(_Fade.default, {
+      }), this.state.outputImageName !== null ? /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.displayImageName
-      }, _react.default.createElement(_GridListTileBar.default, {
+      }, /*#__PURE__*/_react.default.createElement(_GridListTileBar.default, {
         style: {},
-        title: _react.default.createElement(_Typography.default, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             display: "flex",
             justifyContent: "center",
@@ -999,7 +1003,7 @@ function (_React$Component) {
             fontSize: 14
           }
         }, " ", this.state.outputImageName, " ")
-      })) : _react.default.createElement(_react.default.Fragment, null)));
+      })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null)));
     }
   }, {
     key: "handleMouseMove",
@@ -1029,9 +1033,9 @@ function (_React$Component) {
   }, {
     key: "renderComparison",
     value: function renderComparison() {
-      return _react.default.createElement(_Fade.default, {
+      return /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         ref: this.imageDiv,
         id: "imageDiv",
         style: {
@@ -1046,7 +1050,7 @@ function (_React$Component) {
           cursor: "ew-resize"
         },
         onMouseMove: this.handleMouseMove
-      }, _react.default.createElement("img", {
+      }, /*#__PURE__*/_react.default.createElement("img", {
         ref: this.inputImage,
         style: this.props.displayProportionalImage ? {
           maxHeight: this.tabHeight + "px",
@@ -1062,7 +1066,7 @@ function (_React$Component) {
         alt: "Service response...",
         src: this.state.inputImageData,
         onLoad: this.setInputImageDimensions
-      }), _react.default.createElement("img", {
+      }), /*#__PURE__*/_react.default.createElement("img", {
         ref: this.outputImage,
         style: this.props.displayProportionalImage ? {
           maxHeight: this.tabHeight + "px",
@@ -1082,14 +1086,14 @@ function (_React$Component) {
         width: this.props.overlayInputImage && this.state.inputImageWidth,
         alt: "Service response...",
         src: this.state.outputImage
-      }), _react.default.createElement("div", {
+      }), /*#__PURE__*/_react.default.createElement("div", {
         style: {
           position: "absolute",
           left: this.state.dividerXPosition - 1.5 + "px",
           borderLeft: "3px solid white",
           height: this.tabHeight
         }
-      }), _react.default.createElement("div", {
+      }), /*#__PURE__*/_react.default.createElement("div", {
         style: {
           position: "absolute",
           left: this.state.dividerXPosition - 15 + "px",
@@ -1099,7 +1103,7 @@ function (_React$Component) {
           borderRadius: "15px",
           backgroundColor: "white"
         }
-      }), _react.default.createElement(_UnfoldMore.default, {
+      }), /*#__PURE__*/_react.default.createElement(_UnfoldMore.default, {
         style: {
           color: this.mainColor,
           width: "30px",
@@ -1115,34 +1119,34 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var classes = this.props.classes;
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: classes.mainContainer
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         container: true,
         className: classes.audioUploderContainer,
         spacing: 0
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         sm: 12,
         md: 12,
         lg: 12,
         className: classes.audioUploderParentGrid
-      }, _react.default.createElement(_Grid.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 4,
         className: classes.audioUploderHeader
-      }, _react.default.createElement(_Typography.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
         color: "inherit",
         noWrap: true,
         variant: "h6"
-      }, this.state.mainState === "display" ? this.props.displayModeTitle : this.props.imageName)), _react.default.createElement(_Grid.default, {
+      }, this.state.mainState === "display" ? this.props.displayModeTitle : this.props.imageName)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 6,
         className: classes.mainTabs
-      }, _react.default.createElement(_styles.MuiThemeProvider, {
+      }, /*#__PURE__*/_react.default.createElement(_styles.MuiThemeProvider, {
         theme: this.theme
-      }, _react.default.createElement(_Tabs.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Tabs.default, {
         value: this.state.value,
         onChange: this.handleTabChange,
         indicatorColor: "primary",
@@ -1152,17 +1156,17 @@ function (_React$Component) {
           color: snetGrey
         },
         TabIndicatorProps: true
-      }, this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUploadTab && _react.default.createElement(_Tab.default, {
+      }, this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUploadTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         value: 0,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, "Upload")
-      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUrlTab && _react.default.createElement(_Tab.default, {
+      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && !this.props.disableUrlTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         value: 1,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, "URL")
-      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && this.props.imageGallery.length > 0 && _react.default.createElement(_Tab.default, {
+      }), this.state.mainState !== "uploaded" && !(this.state.mainState === "display") && this.props.imageGallery.length > 0 && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1172,10 +1176,10 @@ function (_React$Component) {
           paddingLeft: 10
         },
         value: 2,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, "Gallery")
-      }), this.state.mainState === "display" && !this.props.disableInputTab && _react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableInputTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         style: {
           marginRight: "0",
           minWidth: "fit-content",
@@ -1184,80 +1188,80 @@ function (_React$Component) {
           flexBasis: 0
         },
         value: 3,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, this.props.inputTabTitle)
-      }), this.state.mainState === "display" && !this.props.disableOutputTab && _react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableOutputTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         style: {
           minWidth: "5%"
         },
         value: 4,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, this.props.outputTabTitle)
-      }), this.state.mainState === "display" && !this.props.disableComparisonTab && _react.default.createElement(_Tab.default, {
+      }), this.state.mainState === "display" && !this.props.disableComparisonTab && /*#__PURE__*/_react.default.createElement(_Tab.default, {
         style: {
           minWidth: "5%"
         },
         value: 5,
-        label: _react.default.createElement("span", {
+        label: /*#__PURE__*/_react.default.createElement("span", {
           className: classes.tabLabelStyle
         }, this.props.comparisonTabTitle)
-      })))), _react.default.createElement(_Grid.default, {
+      })))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 1
-      }, this.props.infoTip.length > 0 && _react.default.createElement(_core.Tooltip, {
-        title: _react.default.createElement(_Typography.default, {
+      }, this.props.infoTip.length > 0 && /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, this.props.infoTip)
-      }, _react.default.createElement(_Info.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Info.default, {
         style: {
           fontSize: 20,
           color: snetGrey
         }
-      }))), _react.default.createElement(_Grid.default, {
+      }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 1
-      }, this.state.mainState === "uploaded" && !this.props.disableResetButton && _react.default.createElement(_Fade.default, {
+      }, this.state.mainState === "uploaded" && !this.props.disableResetButton && /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "uploaded"
-      }, _react.default.createElement(_core.Tooltip, {
-        title: _react.default.createElement(_Typography.default, {
+      }, /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, "Click to reset!")
-      }, _react.default.createElement(_IconButton.default, {
+      }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
         onClick: this.handleImageReset.bind(this)
-      }, _react.default.createElement(_Refresh.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Refresh.default, {
         style: {
           fontSize: 20,
           color: this.mainColor
         }
-      })))), this.state.mainState === "display" && !this.props.disableDownloadButton && _react.default.createElement(_Fade.default, {
+      })))), this.state.mainState === "display" && !this.props.disableDownloadButton && /*#__PURE__*/_react.default.createElement(_Fade.default, {
         in: this.state.mainState === "display"
-      }, _react.default.createElement(_core.Tooltip, {
-        title: _react.default.createElement(_Typography.default, {
+      }, /*#__PURE__*/_react.default.createElement(_core.Tooltip, {
+        title: /*#__PURE__*/_react.default.createElement(_Typography.default, {
           style: {
             fontFamily: snetFont,
             fontSize: 12,
             color: "white"
           }
         }, "Download output image")
-      }, _react.default.createElement("a", {
+      }, /*#__PURE__*/_react.default.createElement("a", {
         href: this.state.outputImage,
         download: this.state.outputImageName
-      }, _react.default.createElement(_IconButton.default, null, _react.default.createElement(_CloudDownload.default, {
+      }, /*#__PURE__*/_react.default.createElement(_IconButton.default, null, /*#__PURE__*/_react.default.createElement(_CloudDownload.default, {
         style: {
           fontSize: 20,
           color: this.mainColor
         }
-      }))))))), _react.default.createElement(_Grid.default, {
+      }))))))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
         item: true,
         xs: 12,
         style: {

@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import Pagination from "material-ui-flat-pagination";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
+import PropTypes from "prop-types";
 
 import { useStyles } from "./styles";
 
-const SNETPagination = ({ limit, offset, totalCount, itemsPerPageOptions, from, to }) => {
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+const SNETPagination = ({
+  limit,
+  offset,
+  totalCount,
+  itemsPerPageOptions,
+  itemsPerPage,
+  onItemsPerPageChange,
+  onPageChange,
+}) => {
   const classes = useStyles();
 
   const handleItemsPerPage = event => {
-    setItemsPerPage(event.target.value);
+    onItemsPerPageChange(parseFloat(event.target.value));
   };
 
   const handlePageChange = selectedOffset => {
     if (selectedOffset === parseFloat(offset)) {
       return;
     }
+    onPageChange(parseFloat(selectedOffset));
   };
+
+  const from = offset;
+  const to = parseFloat(offset) + parseFloat(limit);
 
   return (
     <Grid container spacing={24} className={classes.paginationContainer}>
@@ -30,7 +42,7 @@ const SNETPagination = ({ limit, offset, totalCount, itemsPerPageOptions, from, 
           offset={offset}
           total={totalCount}
           reduced={true}
-          onClick={(e, offset) => handlePageChange(offset)}
+          onClick={(_e, offset) => handlePageChange(offset)}
           className={classes.styledPagination}
         />
       </Grid>
@@ -55,6 +67,17 @@ const SNETPagination = ({ limit, offset, totalCount, itemsPerPageOptions, from, 
       </Grid>
     </Grid>
   );
+};
+
+SNETPagination.propTypes = {
+  limit: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.shape({ value: PropTypes.number, label: PropTypes.string }))
+    .isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  onItemsPerPageChange: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default SNETPagination;

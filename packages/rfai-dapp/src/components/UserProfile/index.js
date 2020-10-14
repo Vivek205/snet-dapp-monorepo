@@ -35,11 +35,11 @@ const UserProfile = ({ classes, nickname, history, location, email, metamaskDeta
   const tabs = [
     { name: "Account", activeIndex: 0, path: userProfileRoutes.ACCOUNT.path },
     { name: "Settings", activeIndex: 1, path: userProfileRoutes.SETTINGS.path },
-    { name: "Claims", activeIndex: 2, path: userProfileRoutes.CLAIMS.path },
+    { name: "ProviderControlService", activeIndex: 2, path: userProfileRoutes.CLAIMS.path },
     { name: "Admin", activeIndex: 3, path: userProfileRoutes.ADMIN.path },
   ];
 
-  const onTabChange = (activeTab, activePath) => {
+  const onTabChange = (_activeTab, activePath) => {
     history.push(activePath);
   };
 

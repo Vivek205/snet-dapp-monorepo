@@ -11,6 +11,7 @@ export const useStyles = MUITheme => ({
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
+      fontWeight: 400,
     },
     "& hr": {
       height: 1,
@@ -18,9 +19,15 @@ export const useStyles = MUITheme => ({
       margin: "31px 23px",
       backgroundColor: MUITheme.palette.background.grey,
     },
-    [MUITheme.breakpoints.down("sm")]: { width: "auto" },
+    "& > p": { margin: "20px 24px 0" },
+    [MUITheme.breakpoints.down("sm")]: {
+      width: "auto",
+      margin: "40px 25px 0",
+    },
   },
+  errorContainer: { margin: "27px 42px 0 23px" },
   buttonsContainer: {
+    padding: "0 25px",
     marginTop: 40,
     marginBottom: 64,
     display: "flex",

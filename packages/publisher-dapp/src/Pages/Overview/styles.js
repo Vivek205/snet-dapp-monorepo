@@ -11,22 +11,29 @@ export const useStyles = MUITheme => ({
       alignItems: "flex-start",
       "&:last-of-type": { marginBottom: 0 },
     },
-    "& .MuiListItemText-root": {
-      margin: 0,
-      "& span": {
-        color: MUITheme.palette.text.primary,
-        fontSize: 16,
-        lineHeight: "24px",
-      },
-    },
     "& .MuiListItemIcon-root": { minWidth: "auto" },
     "& button, & a": { marginTop: 32 },
     "& img": { width: "100%" },
+    "& > div": {
+      "&:first-of-type": {
+        padding: "60px 60px 54px",
+        background: "linear-gradient(134.77deg, #2196F3 0%, #512DA8 100%)",
+        "& > div": {
+          "&:first-of-type": {
+            paddingTop: 20,
+            "& button": {
+              border: "2px solid #fff",
+              color: MUITheme.palette.text.white,
+            },
+          },
+        },
+      },
+    },
   },
   checkCircleIcon: {
     width: 20,
     marginRight: 16,
-    color: MUITheme.palette.success,
+    color: MUITheme.palette.success.main,
   },
   features: {
     padding: "40px 60px !important",

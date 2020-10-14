@@ -24,25 +24,25 @@ var SNETSignup = function SNETSignup(props) {
   var info = props.info,
       onSubmit = props.onSubmit,
       signupError = props.signupError;
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.signupContainer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     className: classes.signupWrapper
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
-    md: 5,
-    lg: 5,
+    md: 6,
+    lg: 6,
     className: classes.signupInfo
-  }, _react.default.createElement(_Info.default, info)), _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, info)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
-    md: 7,
-    lg: 7
-  }, _react.default.createElement(_Form.default, {
+    md: 6,
+    lg: 6
+  }, /*#__PURE__*/_react.default.createElement(_Form.default, {
     onSubmit: onSubmit,
     signupError: signupError
   }))));
@@ -55,7 +55,8 @@ SNETSignup.propTypes = {
     list: _propTypes.default.arrayOf(_propTypes.default.string)
   }),
   onSubmit: _propTypes.default.func,
-  signupError: _propTypes.default.string
+  signupError: _propTypes.default.string,
+  resetSignupError: _propTypes.default.func
 };
 var _default = SNETSignup;
 exports.default = _default;

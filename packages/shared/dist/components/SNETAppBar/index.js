@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _AppBar = _interopRequireDefault(require("@material-ui/core/AppBar"));
 
 var _styles = require("@material-ui/core/styles");
@@ -30,5 +32,8 @@ var SNETAppBar = (0, _styles.withStyles)(function (MuiTheme) {
     }
   };
 })(_AppBar.default);
+SNETAppBar.propTypes = {
+  color: _propTypes.default.oneOf(["white", "purple"])
+};
 var _default = SNETAppBar;
 exports.default = _default;

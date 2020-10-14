@@ -1,7 +1,8 @@
-export const useStyles = MUITheme => ({
-  basicDetailsContainer: { padding: "16px 21px 0 24px" },
+export const useStyles = () => ({
+  basicDetailsContainer: { padding: "16px 24px 0" },
   description: {
-    paddingBottom: 14,
+    padding: "0 0 25px !important",
+    borderBottomWidth: "0 !important",
     "& + div": {
       padding: "0 30px",
       marginBottom: 16,
@@ -12,5 +13,12 @@ export const useStyles = MUITheme => ({
     },
   },
   basicDetailsTextfield: { backgroundColor: "red" },
-  orgWebsiteUrl: { padding: "0 30px" },
+  orgWebsiteUrl: {
+    padding: "0 30px",
+    "& div": {
+      "& p": { marginTop: 15 },
+    },
+    "& .MuiFormControl-marginNormal": { marginBottom: 0 },
+    "& span": { paddingLeft: 10 },
+  },
 });

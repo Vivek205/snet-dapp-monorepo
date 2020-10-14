@@ -33,7 +33,8 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         textTransform: "uppercase"
       },
       "& button": {
-        width: "100%"
+        width: "100%",
+        marginTop: 17
       }
     }, MUITheme.breakpoints.down("xs"), {
       width: "auto",
@@ -47,6 +48,14 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         letterSpacing: 0.4,
         lineHeight: "16px"
       },
+      "& input": {
+        color: MUITheme.palette.text.darkGrey,
+        fontSize: 16,
+        letterSpacing: 0.15
+      },
+      "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+        transform: "translate(14px, -6px) scale(0.90)"
+      },
       "& fieldset": {
         borderColor: "#828282 !important"
       },
@@ -55,7 +64,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
       }
     },
     checkboxAndLink: {
-      margin: "10px 0 91px",
+      marginTop: 10,
       display: "flex",
       alignItems: "baseline",
       justifyContent: "space-between",

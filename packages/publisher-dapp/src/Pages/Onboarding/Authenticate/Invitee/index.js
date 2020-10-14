@@ -1,20 +1,23 @@
 import React, { useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch, useSelector } from "react-redux";
+
+import SNETButton from "shared/dist/components/SNETButton";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { checkIfKnownError } from "shared/dist/utils/error";
+import validator from "shared/dist/utils/validator";
+import ValidationError from "shared/dist/utils/validationError";
 
 import { profileIdentityDetails } from "./content";
 import { useStyles } from "./styles";
 import MMAddress from "./MMAddress";
-import SNETButton from "shared/dist/components/SNETButton";
 import { OnboardingRoutes } from "../../OnboardingRouter/Routes";
 import { inviteMembersActions } from "../../../../Services/Redux/actionCreators";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import { checkIfKnownError } from "shared/dist/utils/error";
-import validator from "shared/dist/utils/validator";
 import { inviteeValidationConstraints } from "./validationConstraints";
-import ValidationError from "shared/dist/utils/validationError";
+
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 
 const Invitee = ({ classes, history }) => {
@@ -42,8 +45,10 @@ const Invitee = ({ classes, history }) => {
         invite_code: inviteCode,
         wallet_address: address,
       };
-      await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
+      const org = await dispatch(inviteMembersActions.acceptInvitationAndGetLatestOrgStatus(payload));
+      if (org) {
+        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", org.uuid));
+      }
     } catch (error) {
       if (checkIfKnownError(error)) {
         return setAlert({ type: alertTypes.ERROR, message: error.message });
@@ -67,7 +72,7 @@ const Invitee = ({ classes, history }) => {
       <div className={classes.buttonsContainer}>
         <SNETButton color="primary" children="cancel" onClick={handleCancel} />
         <SNETButton color="primary" children="back" onClick={handleNavigateBack} />
-        <SNETButton color="primary" variant="contained" children="finish" onClick={handleFinish} />
+        <SNETButton color="primary" variant="contained" children="finish" disabled={!address} onClick={handleFinish} />
       </div>
     </Fragment>
   );

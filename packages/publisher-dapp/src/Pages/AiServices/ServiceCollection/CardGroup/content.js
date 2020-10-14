@@ -1,6 +1,17 @@
 export const serviceCreationArticlesLink = [
-  { label: "How to create a service.", href: "/", newTab: true },
-  { label: "How to set up ETCD Cluster.", href: "/", newTab: true },
-  { label: "What are the Daemon configurations.", href: "/", newTab: true },
-  { label: "What are Regions? How to set them up.", href: "/", newTab: true },
+  {
+    label: "Setting up a Service",
+    href: "https://dev.singularitynet.io/docs/ai-developers/service-setup/",
+    newTab: true,
+  },
+  {
+    label: "SingularityNet Daemon Setup",
+    href: "https://dev.singularitynet.io/docs/ai-developers/daemon-setup/",
+    newTab: true,
+  },
+  {
+    label: "Building the UI for your Service",
+    href: "https://dev.singularitynet.io/docs/ai-developers/dapp-ui-component/",
+    newTab: true,
+  },
 ];

@@ -38,25 +38,31 @@ var SNETTextfield = function SNETTextfield(_ref) {
       onChange = _ref.onChange,
       maxCount = _ref.maxCount,
       minCount = _ref.minCount,
+      disabled = _ref.disabled,
       description = _ref.description,
       icon = _ref.icon,
       onKeyUp = _ref.onKeyUp,
-      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "description", "icon", "onKeyUp"]);
+      extraInfo = _ref.extraInfo,
+      inputRef = _ref.inputRef,
+      InputProps = _ref.InputProps,
+      error = _ref.error,
+      rest = _objectWithoutProperties(_ref, ["classes", "name", "label", "helperText", "value", "onChange", "maxCount", "minCount", "disabled", "description", "icon", "onKeyUp", "extraInfo", "inputRef", "InputProps", "error"]);
 
-  return _react.default.createElement(_Grid.default, {
-    container: true
-  }, _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    container: true,
+    className: error ? classes.errorField : ""
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.basicTextFieldGrid
-  }, icon ? _react.default.createElement("div", {
+  }, icon ? /*#__PURE__*/_react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textFieldWithExtraText
-  }, _react.default.createElement(_StyledTextField.default, _extends({
+  }, /*#__PURE__*/_react.default.createElement(_StyledTextField.default, _extends({
     name: name,
     label: label,
     helperText: helperText,
@@ -64,17 +70,22 @@ var SNETTextfield = function SNETTextfield(_ref) {
     value: value,
     onChange: onChange,
     fullWidth: true,
-    onKeyUp: onKeyUp
-  }, rest)), maxCount ? _react.default.createElement("span", {
+    onKeyUp: onKeyUp,
+    disabled: disabled,
+    inputRef: inputRef,
+    InputProps: InputProps
+  }, rest)), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
-  }, minCount, "/", maxCount, " char") : null)), _react.default.createElement(_Grid.default, {
+  }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {
+    className: classes.extraInfo
+  }, extraInfo) : null)), description ? /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.description
-  }, _react.default.createElement(_Typography.default, null, description)));
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, null, description)) : null);
 };
 
 SNETTextfield.propTypes = {

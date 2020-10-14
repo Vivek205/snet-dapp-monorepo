@@ -6,7 +6,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import { emailPreferencesList, entityTypeDetails } from "./content";
-import SNETButton from "shared/src/components/SNETButton";
+import SNETButton from "shared/dist/components/SNETButton";
 import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useStyles } from "./styles";
 import { OnboardingRoutes } from "../OnboardingRouter/Routes";
@@ -16,6 +16,12 @@ import { organizationActions } from "../../../Services/Redux/actionCreators";
 import { onboardingActions, preferenceActions } from "../../../Services/Redux/actionCreators/userActions";
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
+import InformationBox from "./InformationBox";
+
+const selectState = state => ({
+  userEntity: state.user.entity,
+  publisherTnC: state.user.publisherTnC,
+});
 
 const SingularityAccount = ({ classes, history }) => {
   const [emailPreferences, setEmailPreferences] = useState({
@@ -24,12 +30,12 @@ const SingularityAccount = ({ classes, history }) => {
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const [verifiedInvitation, setVerifiedInvitation] = useState(false);
-  const entity = useSelector(state => state.user.entity);
+  const { userEntity } = useSelector(selectState);
   const dispatch = useDispatch();
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-    history.push(OnboardingRoutes.ACCEPT_SERVICE_AGREEMENT.path);
+    history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 
   const handleCancel = () => {
@@ -57,8 +63,8 @@ const SingularityAccount = ({ classes, history }) => {
   };
 
   const shouldContinueBeDisabled = () => {
-    let disableContinue = !entity || entity === userEntities.DEFAULT;
-    if (entity === userEntities.INVITEE) {
+    let disableContinue = !userEntity || userEntity === userEntities.DEFAULT;
+    if (userEntity === userEntities.INVITEE) {
       disableContinue = disableContinue || !verifiedInvitation;
     }
     return disableContinue;
@@ -69,18 +75,32 @@ const SingularityAccount = ({ classes, history }) => {
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
         <Typography variant="h6">{entityTypeDetails.title}</Typography>
         <Typography className={classes.singularityAccDescription}>{entityTypeDetails.description}</Typography>
-        <StyledDropdown
-          labelTxt="Please Select"
-          inputLabel="Entity Type"
-          value={entity}
-          list={[
-            { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
-            { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
-            { value: userEntities.INVITEE, label: "Accept Invitation" },
-          ]}
-          onChange={handleEntityChange}
-        />
+        <div className={classes.dropDownContainer}>
+          <Grid item sx={12} sm={12} md={6} lg={6} className={classes.dropDown}>
+            <StyledDropdown
+              labelTxt="Please Select"
+              inputLabel="Entity Type"
+              value={userEntity}
+              list={[
+                { value: userEntities.ORGANIZATION, label: userEntities.ORGANIZATION },
+                { value: userEntities.INDIVIDUAL, label: userEntities.INDIVIDUAL },
+                { value: userEntities.INVITEE, label: "Accept Invitation" },
+              ]}
+              onChange={handleEntityChange}
+            />
+          </Grid>
+          {userEntity === userEntities.INVITEE ? (
+            <Grid item sx={12} sm={12} md={6} lg={6}>
+              <Typography>
+                The Owner of an existing approved company entity will need to send you an invitation through email.
+              </Typography>
+            </Grid>
+          ) : null}
+        </div>
         <VerifyInvitation verifiedInvitation={verifiedInvitation} setVerifiedInvitation={setVerifiedInvitation} />
+        <div className={classes.infoBoxContainer}>
+          <InformationBox />
+        </div>
       </Grid>
       <LoginBanner classes={classes} />
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>

@@ -12,7 +12,7 @@ import validator from "../../../utils/validator";
 import { signupFormConstraints } from "./validationConstraints";
 
 const Form = props => {
-  const { onSubmit, signupError } = props;
+  const { onSubmit, signupError, resetSignupError } = props;
   const classes = useStyles();
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -36,19 +36,39 @@ const Form = props => {
     return null;
   };
 
+  const handleNicknameChange = e => {
+    setNickname(e.target.value);
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
+  const handleEmailChange = e => {
+    setEmail(e.target.value.toLowerCase());
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+    setValidationErr(undefined);
+    resetSignupError && resetSignupError();
+  };
+
   return (
     <form noValidate autoComplete="off" className={classes.signupForm}>
-      <TextField
-        id="outlined-user-name"
-        label="Nickname"
-        className={classes.textField}
-        value={nickname}
-        onChange={e => setNickname(e.target.value)}
-        margin="normal"
-        variant="outlined"
-        autoFocus
-      />
       <div>
+        <TextField
+          id="outlined-user-name"
+          label="Username"
+          className={classes.textField}
+          value={nickname}
+          margin="normal"
+          variant="outlined"
+          onChange={handleNicknameChange}
+        />
+        <span className={classes.charLength}>{nickname.length}/20 char</span>
+      </div>
+      <div className={classes.emailContainer}>
         <TextField
           id="outlined-email-input"
           label="Email"
@@ -59,7 +79,7 @@ const Form = props => {
           margin="normal"
           variant="outlined"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={handleEmailChange}
         />
         <AlertText type={alertTypes.ERROR} message={emailValidationMsg()} />
       </div>
@@ -72,14 +92,15 @@ const Form = props => {
         margin="normal"
         variant="outlined"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
       <div className={classes.passwordCriteriaContainer}>
         <p>Include:</p>
         <PasswordInlineValidation password={password} />
       </div>
-      <AlertBox message={signupError || validationErr} />
-      <div />
+      <div className={classes.alertBoxContainer}>
+        <AlertBox message={signupError || validationErr} />
+      </div>
       <SNETButton color="primary" variant="contained" children="Create Account" onClick={handleSubmit} type="submit" />
     </form>
   );
@@ -88,6 +109,7 @@ const Form = props => {
 Form.propTypes = {
   onSubmit: PropTypes.func,
   signupError: PropTypes.string,
+  resetSignupError: PropTypes.func,
 };
 
 export default Form;

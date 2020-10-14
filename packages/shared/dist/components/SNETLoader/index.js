@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.SNETLoader = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -32,24 +32,23 @@ var SNETLoader = function SNETLoader(_ref) {
       title = _ref.title,
       content = _ref.content;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement(_Modal.default, {
+  return /*#__PURE__*/_react.default.createElement(_Modal.default, {
     disableBackdropClick: true,
     open: isLoading
-  }, _react.default.createElement(_Card.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Card.default, {
     className: classes.card
-  }, _react.default.createElement(_CardHeader.default, {
-    title: _react.default.createElement("h2", null, title)
-  }), _react.default.createElement(_Divider.default, null), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_CardHeader.default, {
+    title: /*#__PURE__*/_react.default.createElement("h2", null, title)
+  }), /*#__PURE__*/_react.default.createElement(_Divider.default, null), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.circularProgressContainer
-  }, _react.default.createElement(_CircularProgress.default, {
+  }, /*#__PURE__*/_react.default.createElement(_CircularProgress.default, {
     className: classes.circularProgress
-  })), _react.default.createElement(_CardContent.default, null, _react.default.createElement(_Typography.default, {
+  })), /*#__PURE__*/_react.default.createElement(_CardContent.default, null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     variant: "body2",
     component: "p"
   }, content))));
 };
 
-exports.SNETLoader = SNETLoader;
 SNETLoader.propTypes = {
   isLoading: _propTypes.default.bool,
   title: _propTypes.default.string,

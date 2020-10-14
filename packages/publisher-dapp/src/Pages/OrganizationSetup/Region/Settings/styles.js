@@ -7,6 +7,7 @@ export const useStyles = MUITheme => ({
     },
   },
   dropDownBtn: {
+    marginBottom: 13,
     display: "flex",
     alignItems: "center",
     "& button": {
@@ -16,7 +17,7 @@ export const useStyles = MUITheme => ({
   },
   grayBoxContainer: { padding: "0 24px" },
   grayBox: {
-    padding: "24px 16px 36px",
+    padding: "24px 16px 25px",
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "#F1F1F1",
@@ -44,10 +45,23 @@ export const useStyles = MUITheme => ({
     minHeight: 100,
     boxShadow: "none",
     padding: 15,
-    border: "1px solid #828282",
+    border: "1px solid rgba(25,25,25,.32)",
     borderRadius: 4,
+    [MUITheme.breakpoints.down("xs")]: { width: "auto" },
   },
-  cardContainer: { display: "flex" },
+  cardContainer: {
+    width: "90%",
+    position: "relative",
+  },
+  label: {
+    padding: "0 5px",
+    position: "absolute",
+    top: -9,
+    left: 10,
+    background: MUITheme.palette.background.white,
+    color: MUITheme.palette.text.darkGrey,
+    fontSize: 12,
+  },
   infoIconContainer: {
     "& svg": {
       padding: "5px 10px 0 0",
@@ -55,9 +69,25 @@ export const useStyles = MUITheme => ({
       color: "#d6d6d6",
     },
   },
-  chip: { marginLeft: 10 },
+  chip: {
+    marginLeft: 10,
+    "& span": {
+      [MUITheme.breakpoints.down("xs")]: {
+        wordBreak: "break-all",
+        whiteSpace: "normal",
+      },
+    },
+  },
   btnContainer: {
+    marginTop: 22,
     display: "flex",
     justifyContent: "space-between",
+    "& button": {
+      "&:first-of-type": { paddingLeft: 26 },
+    },
+  },
+  addedEndpointsContainer: {
+    marginTop: 24,
+    display: "flex",
   },
 });

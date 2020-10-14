@@ -2,7 +2,6 @@ import SingularityAccount from "../SingularityAccount";
 import AcceptServiceAgreement from "../AcceptServiceAgreement";
 import Authenticate from "../Authenticate";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import Default from "../_default";
 
 const basePath = GlobalRoutes.ONBOARDING.path;
 
@@ -13,10 +12,10 @@ export const OnboardingRoutes = {
     name: "default",
     path: fullPath("/"),
     exact: true,
-    component: Default,
+    component: AcceptServiceAgreement,
   },
   SINGULARITY_ACCOUNT: {
-    name: "singularity account",
+    name: "singularitynet account",
     path: fullPath("/singularityaccount"),
     component: SingularityAccount,
   },

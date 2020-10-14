@@ -1,47 +1,137 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
+
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import SNETTextField from "shared/dist/components/SNETTextfield";
+import AlertText from "shared/dist/components/AlertText";
+import { alertTypes } from "shared/dist/components/AlertBox";
+import validator from "shared/dist/utils/validator";
+
+import { useStyles } from "../styles";
 import { basicDetailsFormData } from "./content";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 import { ContactsTypes } from "../../../../../Utils/Contacts";
+import { orgProfileValidationConstraints } from "../../../../OrganizationSetup/OrganizationProfile/validationConstraints";
+import OrganizationIdAvailability from "./OrganizationIdAvailability";
+import { userEntities } from "../../../../../Utils/user";
+import { organizationTypes } from "../../../../../Utils/organizationSetup";
 
-const BasicDetails = () => {
-  const { id, name, website, duns, ownerFullName, contacts } = useSelector(state => state.organization);
-  const contact = contacts.find(el => el.type === ContactsTypes.GENERAL);
+let validateTimeout = "";
+const selectState = state => ({
+  userEntity: state.user.entity,
+  orgDetails: state.organization,
+  isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+});
+const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const [websiteValidation, setWebsiteValidation] = useState({});
+  const { orgDetails, isValidateOrgIdLoading, userEntity } = useSelector(selectState);
+  const contact = orgDetails.contacts.find(el => el.type === ContactsTypes.GENERAL);
+
   let phone = "";
   if (contact) {
     phone = contact.phone;
   }
+  const handleWebsiteValidation = value => {
+    const isNotValid = validator.single(value, orgProfileValidationConstraints.website);
+    if (isNotValid) {
+      return setWebsiteValidation({
+        type: alertTypes.ERROR,
+        message: `${value} is not a valid URL. URL should start with https:`,
+      });
+    }
+    return setWebsiteValidation({ type: alertTypes.SUCCESS, message: "website is valid" });
+  };
 
-  const dispatch = useDispatch();
+  const validateOrgId = orgId => async () => {
+    // Call the API to Validate the Org Id
+    try {
+      const orgAvailability = await dispatch(organizationActions.validateOrgId(orgId));
+      dispatch(organizationActions.setOrgAvailability(orgAvailability));
+    } catch (error) {
+      dispatch(organizationActions.setOrgAvailability(""));
+    }
+  };
+  const debouncedValidate = (newOrgId, timeout = 200) => {
+    if (validateTimeout) {
+      clearTimeout(validateTimeout);
+    }
+    validateTimeout = setTimeout(validateOrgId(newOrgId), timeout);
+  };
 
   const handleChange = event => {
     const { name, value } = event.target;
+    if (name === basicDetailsFormData.WEBSITE.name) {
+      handleWebsiteValidation(value);
+    }
+    if (name === basicDetailsFormData.ORG_ID.name) {
+      debouncedValidate(value);
+    }
     dispatch(organizationActions.setOneBasicDetail(name, value));
   };
 
   const handleContactsChange = event => {
     const { name, value } = event.target;
-    const updatedContacts = [...contacts];
-    const index = contacts.findIndex(el => el.type === ContactsTypes.GENERAL);
+    const updatedContacts = [...orgDetails.contacts];
+    const index = orgDetails.contacts.findIndex(el => el.type === ContactsTypes.GENERAL);
     if (index !== -1) {
-      updatedContacts[index] = { ...contacts[index], [name]: value };
+      updatedContacts[index] = { ...orgDetails.contacts[index], [name]: value };
     } else {
-      updatedContacts[contacts.length] = { type: ContactsTypes.GENERAL, [name]: value };
+      updatedContacts[orgDetails.contacts.length] = { type: ContactsTypes.GENERAL, [name]: value };
     }
     dispatch(organizationActions.setContacts(updatedContacts));
   };
-
   return (
     <Grid container>
-      <SNETTextField {...basicDetailsFormData.ORG_ID} value={id} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.ORGANIZATION_NAME} value={name} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.DUNS} value={duns} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.WEBSITE} value={website} onChange={handleChange} />
-      <SNETTextField {...basicDetailsFormData.OWNERS_FULL_NAME} value={ownerFullName} onChange={handleChange} />
+      {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
+        <Fragment>
+          <SNETTextField
+            {...basicDetailsFormData.ORG_ID}
+            value={orgDetails.id}
+            onChange={handleChange}
+            error={!!invalidFields ? "id" in invalidFields : ""}
+          />
+          <OrganizationIdAvailability
+            orgDetails={orgDetails}
+            id={orgDetails.id}
+            availability={orgDetails.availability}
+            classes={classes}
+            loading={isValidateOrgIdLoading}
+          />
+        </Fragment>
+      ) : null}
+
+      <SNETTextField
+        {...basicDetailsFormData.ORGANIZATION_NAME}
+        value={orgDetails.name}
+        minCount={orgDetails.name.length}
+        maxCount={50}
+        onChange={handleChange}
+        error={!!invalidFields ? "name" in invalidFields : ""}
+      />
+      {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
+        <div className={classes.dunsContainer}>
+          <FormControlLabel
+            control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
+            label="I have my DUNS number"
+          />
+          <SNETTextField
+            {...basicDetailsFormData.DUNS}
+            value={orgDetails.duns}
+            onChange={handleChange}
+            disabled={!allowDuns}
+          />
+        </div>
+      ) : null}
+      <div className={classes.websiteUrlContainer}>
+        <SNETTextField {...basicDetailsFormData.WEBSITE} value={orgDetails.website} onChange={handleChange} />
+        <AlertText type={websiteValidation.type} message={websiteValidation.message} />
+      </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
     </Grid>
   );
@@ -52,7 +142,6 @@ BasicDetails.propTypes = {
     name: PropTypes.string,
     duns: PropTypes.string,
     website: PropTypes.string,
-    ownerFullName: PropTypes.string,
     phone: PropTypes.string,
   }),
 };

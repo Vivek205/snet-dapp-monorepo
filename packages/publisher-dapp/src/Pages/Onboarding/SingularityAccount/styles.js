@@ -11,10 +11,11 @@ export const useStyles = MUITheme => ({
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
     "& > h6": {
-      padding: "0 23px",
+      padding: "0 24px",
       borderBottomWidth: 1,
       borderBottomStyle: "solid",
       borderBottomColor: MUITheme.palette.border.primary,
+      fontWeight: 400,
       lineHeight: "50px !important",
     },
     "& > div": {
@@ -26,10 +27,9 @@ export const useStyles = MUITheme => ({
     },
   },
   singularityAccDescription: {
-    padding: "0 23px",
-    margin: "7px 0 34px",
+    padding: "19px  20px 34px 24px",
     color: MUITheme.palette.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: "21px",
   },
   signInBtns: {
@@ -52,6 +52,7 @@ export const useStyles = MUITheme => ({
     marginRight: 10,
     display: "flex",
     wordBreak: "break-word",
+    "& img": { width: 260 },
   },
   avatar: {
     width: 70,
@@ -94,16 +95,43 @@ export const useStyles = MUITheme => ({
     justifyContent: "center",
   },
   verifyInvitationContainer: {
-    padding: "0 27px",
+    padding: "0 24px",
     alignItems: "center",
     "& > div": {
       "& > div": {
         "& > div": {
           maxWidth: "100%",
           flexBasis: "91%",
+          "& > div": {
+            "& > div": { marginBottom: 0 },
+          },
           [MUITheme.breakpoints.down("sm")]: { flexBasis: "100%" },
         },
       },
     },
+    "& > span": {
+      padding: "3px 0 0 16px",
+      fontFamily: MUITheme.typography.fontFamily,
+      fontSize: 12.17,
+      letterSpacing: 0.4,
+      lineHeight: "17px",
+    },
+    "& button": { marginTop: 15 },
+  },
+  dropDownContainer: {
+    paddingRight: 29,
+    display: "flex",
+    "& > div": {
+      "& > p": {
+        paddingLeft: 20,
+        color: MUITheme.palette.text.lightGrey,
+        fontSize: 14,
+        letterSpacing: 0.25,
+        lineHeight: "20px",
+      },
+    },
+  },
+  infoBoxContainer: {
+    padding: "16px 22px 0",
   },
 });

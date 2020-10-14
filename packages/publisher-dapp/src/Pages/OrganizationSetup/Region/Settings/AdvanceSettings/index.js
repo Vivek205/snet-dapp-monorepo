@@ -7,7 +7,7 @@ import SNETTextfield from "shared/dist/components/SNETTextfield";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
-const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
+const AdvanceSettings = ({ classes, show, groups, group, groupIndex, foundInBlockchain }) => {
   const dispatch = useDispatch();
   const { paymentExpirationThreshold, paymentChannelStorageClient } = group.paymentConfig;
   const { connectionTimeout, requestTimeout } = paymentChannelStorageClient;
@@ -54,7 +54,19 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
         value={paymentExpirationThreshold}
         label="Expiration Threashold"
         onChange={handleThresholdChange}
-        description="Lorem ipsum dolor sit amet, pri no agam elit salutatus. An duo odio idque. "
+        description={
+          <p>
+            Time in block numbers for the payment channel to expire. Details &nbsp;
+            <a
+              href="https://dev.singularitynet.io/docs/ai-developers/daemon-channel-storage/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+          </p>
+        }
+        disabled={foundInBlockchain}
       />
       <SNETTextfield
         icon
@@ -62,7 +74,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
         value={connectionTimeout}
         label="Client Connection Timeout"
         onChange={handleTimeoutChange}
-        description="Lorem ipsum dolor sit amet, summo dicnu debitis ea has, prompta tacimates eam an."
+        description="Time period within which a connection between the daemon and the etcd storage server must be established"
       />
       <SNETTextfield
         icon
@@ -70,7 +82,7 @@ const AdvanceSettings = ({ classes, show, groups, group, groupIndex }) => {
         value={requestTimeout}
         label="Client Request Timeout"
         onChange={handleTimeoutChange}
-        description="At debitis luptatum eam, sit eu eirmod prompta necessitatibus, in vis ferri postea. Aliquam iudicabit."
+        description="Time period within which a request needs to be completed by etcd"
       />
     </Fragment>
   );

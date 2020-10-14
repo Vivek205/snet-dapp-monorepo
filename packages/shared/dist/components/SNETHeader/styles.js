@@ -10,38 +10,57 @@ var _styles = require("@material-ui/styles");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
+  var _appBar;
+
   return {
+    appBar: (_appBar = {
+      padding: "14px 60px",
+      flexDirection: "row",
+      alignItems: "center",
+      boxShadow: "0 2px 6px 0 rgba(0,0,0,0.2)",
+      zIndex: 1110
+    }, _defineProperty(_appBar, MUITheme.breakpoints.down("md"), {
+      padding: "14px 10px"
+    }), _defineProperty(_appBar, "@media(max-width:1028px)", {
+      justifyContent: "space-between"
+    }), _appBar),
+    purple: {
+      "& h5": {
+        color: "".concat(MUITheme.palette.text.white, " !important")
+      }
+    },
     logoContainer: _defineProperty({
+      cursor: "pointer",
       display: "flex",
       alignItems: "center",
-      flexGrow: 1,
       "& img": {
         width: 172
+      },
+      "& h5": {
+        marginLeft: 11,
+        fontWeight: 300,
+        letterSpacing: -1,
+        lineHeight: "30px",
+        "@media(max-width:420px)": {
+          display: "none"
+        }
       }
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
-    portalName: {
-      marginLeft: 8,
-      color: MUITheme.palette.text.darkGrey,
-      fontSize: 22,
-      fontWeight: 300,
-      lineHeight: "30px"
-    },
     navContainer: _defineProperty({
-      flexGrow: 1
+      flexGrow: 1,
+      "@media(max-width:1028px)": {
+        display: "none"
+      }
     }, MUITheme.breakpoints.down("md"), {
       padding: 0
     }),
-    actionsContainer: _defineProperty({
-      flexGrow: 1,
-      "& *": {
-        marginLeft: 5
-      },
-      textAlign: "end"
-    }, MUITheme.breakpoints.down("md"), {
-      padding: 0
-    })
+    headerActionsContainer: {
+      "@media(max-width:720px)": {
+        display: "none"
+      }
+    }
   };
 });
 exports.useStyles = useStyles;

@@ -16,13 +16,17 @@ export const useStyles = MUITheme => ({
     flexDirection: "column",
   },
   description: {
-    paddingLeft: 30,
+    paddingLeft: 40,
     "& p": {
       marginTop: 20,
       color: MUITheme.palette.text.lightGrey,
       fontSize: 14,
       letterSpacing: 0.25,
       lineHeight: "20px",
+      "& a": {
+        color: MUITheme.palette.primary.main,
+        textDecoration: "none",
+      },
       [MUITheme.breakpoints.down("sm")]: { marginTop: 0 },
     },
     [MUITheme.breakpoints.down("sm")]: {
@@ -46,5 +50,19 @@ export const useStyles = MUITheme => ({
     fontSize: 12,
     letterSpacing: 0.39,
     [MUITheme.breakpoints.down("sm")]: { marginBottom: 10 },
+  },
+  extraInfo: {
+    marginLeft: 17,
+    color: MUITheme.palette.text.primary,
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 12.17,
+    letterSpacing: 0.4,
+    lineHeight: "16px",
+  },
+  errorField: {
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderWidth: 2,
+      borderColor: MUITheme.palette.border.alertBox,
+    },
   },
 });

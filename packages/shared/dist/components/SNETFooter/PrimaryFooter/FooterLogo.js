@@ -7,24 +7,27 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _WhiteLogo = _interopRequireDefault(require("../../../assets/images/WhiteLogo.svg"));
+var _styles = require("@material-ui/styles");
 
-var _styles = require("./styles");
+var _styles2 = require("./styles");
+
+var _WhiteLogo = _interopRequireDefault(require("../../../assets/images/WhiteLogo.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FooterLogo = function FooterLogo() {
-  var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("div", {
+var FooterLogo = function FooterLogo(_ref) {
+  var classes = _ref.classes;
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.FooterLogo
-  }, _react.default.createElement("h1", null, _react.default.createElement("a", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, /*#__PURE__*/_react.default.createElement("a", {
     href: "/",
     title: "SingularityNET"
-  }, _react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
     src: _WhiteLogo.default,
     alt: "SingularityNET"
   }))));
 };
 
-var _default = FooterLogo;
+var _default = (0, _styles.withStyles)(_styles2.useStyles)(FooterLogo);
+
 exports.default = _default;

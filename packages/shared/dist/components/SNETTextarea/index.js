@@ -29,24 +29,29 @@ var SNETTextarea = function SNETTextarea(_ref) {
       minCount = _ref.minCount,
       maxCount = _ref.maxCount,
       showInfoIcon = _ref.showInfoIcon,
-      extraInfo = _ref.extraInfo;
-  return _react.default.createElement("div", {
+      extraInfo = _ref.extraInfo,
+      disabled = _ref.disabled,
+      error = _ref.error;
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaIconContainer
-  }, showInfoIcon ? _react.default.createElement("div", {
+  }, showInfoIcon ? /*#__PURE__*/_react.default.createElement("div", {
     className: classes.infoIconContainer
-  }, _react.default.createElement(_Info.default, null)) : null, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_Info.default, null)) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textareaContainer
-  }, _react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: classes.label
-  }, label), _react.default.createElement("textarea", {
+  }, label), /*#__PURE__*/_react.default.createElement("textarea", {
     rows: rowCount,
     cols: colCount,
     name: name,
     value: value,
-    onChange: onChange
-  }, content), maxCount ? _react.default.createElement("span", {
+    onChange: onChange,
+    disabled: disabled,
+    className: error ? classes.error : "",
+    maxLength: maxCount
+  }, content), maxCount ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.charLength
-  }, minCount, "/", maxCount, " char") : null, extraInfo ? _react.default.createElement("span", {
+  }, minCount, "/", maxCount, " char") : null, extraInfo ? /*#__PURE__*/_react.default.createElement("span", {
     className: classes.extraInfo
   }, extraInfo) : null));
 };
@@ -59,7 +64,7 @@ SNETTextarea.propTypes = {
   value: _propTypes.default.string,
   onChange: _propTypes.default.func,
   content: _propTypes.default.string,
-  mainCount: _propTypes.default.number,
+  minCount: _propTypes.default.number,
   maxCount: _propTypes.default.number
 };
 

@@ -20,14 +20,14 @@ var NavbarLink = function NavbarLink(props) {
       label = props.label,
       openInNewTab = props.openInNewTab,
       to = props.to;
-  var classes = (0, _styles.useStyles)(props);
+  var classes = (0, _styles.useStyles)();
 
-  var isActive = function isActive(unused, _ref) {
+  var isActive = function isActive(_unused, _ref) {
     var pathname = _ref.pathname;
     return activeLinks.includes(pathname);
   };
 
-  return _react.default.createElement(_reactRouterDom.NavLink, {
+  return /*#__PURE__*/_react.default.createElement(_reactRouterDom.NavLink, {
     children: label,
     to: to,
     isActive: isActive,

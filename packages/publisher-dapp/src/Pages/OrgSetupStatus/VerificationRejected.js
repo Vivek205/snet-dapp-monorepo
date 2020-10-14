@@ -1,26 +1,39 @@
 import React from "react";
-import StatusBanner from "./StatusBanner";
-import { useHistory } from "react-router-dom";
-import { GlobalRoutes } from "../../GlobalRouter/Routes";
+import { useSelector } from "react-redux";
+import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
+import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETStatusBanner";
+
+const selectState = state => ({ rejectReason: state.organization.rejectReason });
 
 const VerificationRejected = () => {
-  const history = useHistory();
-
-  const handleOrgSetup = () => {
-    history.push(GlobalRoutes.ORGANIZATION_SETUP.path);
-  };
+  const { rejectReason } = useSelector(selectState);
 
   return (
-    <StatusBanner
-      title="Verification rejected."
-      img="http://placehold.it/302x242"
-      description={`You can continue finishing setting up your company details and publish your company entity to the blockchain.
-                    Then you will be ready to create and publish your new AI services to the AI Marketplace. You can also invite
-                team members to help setup and manage your AI services more efficiently.`}
+    <SNETStatusBanner
+      title="Your organization was rejected."
+      img={VerificationFailed}
+      description={
+        <span>
+          Unfortunatetly your organization is rejected during the internal verification. Please check your inbox for
+          mail from singularitynet team with detailed explanation for your rejection. You can reinitiate the
+          organization creation once all criteria is met.
+          <br />
+          <br />
+          <strong>Comments:</strong> {rejectReason}.
+          <br />
+        </span>
+      }
       actions={[
-        { children: "organization setup", variant: "contained", color: "primary", onClick: handleOrgSetup },
-        { children: "Invite Team Members", variant: "outlined", color: "primary", disabled: true },
+        {
+          children: "contact support",
+          variant: "outlined",
+          color: "primary",
+          href: `mailto:${process.env.REACT_APP_SNET_SUPPORT_MAIL}`,
+          target: "_blank",
+          rel: "noreferrer noopener",
+        },
       ]}
+      type={statusTitleType.REJECTED}
     />
   );
 };

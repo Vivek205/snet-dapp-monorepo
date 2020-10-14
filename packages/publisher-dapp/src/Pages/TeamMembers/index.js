@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import BackIcon from "@material-ui/icons/KeyboardBackspace";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +10,7 @@ import { memberStatus } from "../../Utils/TeamMembers";
 import InvitedMembers from "./InvitedMembers";
 import MembersWithAccess from "./MembersWithAccess";
 import AcceptedMembers from "./AcceptedMembers";
-import { TopSectionContent, invitationError } from "./content";
+import { invitationError, TopSectionContent } from "./content";
 
 import { useStyles } from "./styles";
 import { alertTypes } from "shared/dist/components/AlertBox";
@@ -19,6 +18,8 @@ import { checkIfKnownError } from "shared/dist/utils/error";
 import ValidationError from "shared/dist/utils/validationError";
 import { inviteEmailsConstraints } from "./validationConstraints";
 import validator from "shared/dist/utils/validator";
+import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 class TeamMembers extends Component {
   state = {
@@ -29,7 +30,7 @@ class TeamMembers extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getAllMembers(this.props.uuid);
+    this.props.getAllMembers(this.props.match.params.orgUuid);
   };
 
   handleInviteMembersOpen = () => {
@@ -77,10 +78,14 @@ class TeamMembers extends Component {
     try {
       const allEmails = this.state.textareaValue.split(",");
       validateIfEmailAlreadyExists(allEmails);
-      await this.props.inviteMembers(allEmails, this.props.uuid);
-      this.setState({
-        inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" },
-      });
+      await this.props.inviteMembers(allEmails, this.props.match.params.orgUuid);
+      this.setState(
+        { inviteMembersAlert: { type: alertTypes.SUCCESS, message: "Members have been successfully invited" } },
+        () =>
+          setTimeout(() => {
+            this.setState({ inviteMembersAlert: {} });
+          }, 3000)
+      );
       this.handleInviteMembersClose();
     } catch (error) {
       if (checkIfKnownError(error)) {
@@ -94,8 +99,8 @@ class TeamMembers extends Component {
 
   handleAddToBlockChain = async () => {
     try {
-      const { members, orgId, uuid, addAndPublishMembers } = this.props;
-      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid);
+      const { members, orgId, uuid, addAndPublishMembers, ownerAddress } = this.props;
+      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid, ownerAddress);
       this.setState({
         addBlockChainAlert: { type: alertTypes.SUCCESS, message: "Members have been added to blockchain" },
       });
@@ -109,25 +114,35 @@ class TeamMembers extends Component {
     }
   };
 
+  handleBackToHome = () => {
+    const { orgFoundInBlockchain, history, orgUuid } = this.props;
+    if (orgFoundInBlockchain) {
+      return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
+    }
+    history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+  };
+
   shouldAddToBlockChainBeEnabled = () =>
-    this.props.members[memberStatus.ACCEPTED].length > 0 ||
-    this.props.email === this.props.ownerEmail ||
-    this.props.orgStatus === "PUBLISHED";
+    this.props.members[memberStatus.ACCEPTED].length > 0 &&
+    this.props.email === this.props.ownerEmail &&
+    this.props.orgStatus === organizationSetupStatuses.PUBLISHED;
 
   render() {
     const { classes, members } = this.props;
     const { showPopup, textareaValue } = this.state;
     return (
       <Grid container className={classes.teammembersContainer}>
-        <Grid item xs={12} sm={12} md={2} lg={2} className={classes.backToHomeLink}>
-          <BackIcon />
-          <Link to="/">Back to Home </Link>
+        <Grid item xs={12} sm={12} md={2} lg={2} className={classes.backToHomeLinkContainer}>
+          <div className={classes.backToHomeLink} onClick={this.handleBackToHome}>
+            <BackIcon />
+            <span>Back to Home </span>
+          </div>
         </Grid>
-        <Grid item xs={12} sm={12} md={9} lg={9}>
+        <Grid item xs={12} sm={12} md={8} lg={8} className={classes.rightSideSection}>
           <div className={classes.topSection}>
             <div className={classes.topSectionContent}>
               <Typography variant="h3">{TopSectionContent.title}</Typography>
-              <Typography variant="h5">{TopSectionContent.description}</Typography>
+              <Typography className={classes.description}>{TopSectionContent.description}</Typography>
             </div>
             <div className={classes.topSectionMedia}>
               <img src={TopSectionContent.media} alt="Team Members" />
@@ -158,6 +173,7 @@ class TeamMembers extends Component {
             publishedInProgressMembers={members[memberStatus.PUBLISH_IN_PROGRESS]}
           />
         </Grid>
+        <Grid item xs={12} sm={12} md={2} lg={2} />
       </Grid>
     );
   }
@@ -166,18 +182,20 @@ class TeamMembers extends Component {
 const mapStateToProps = state => ({
   [memberStatus.PUBLISHED]: state.organization.members[memberStatus.PUBLISHED],
   orgId: state.organization.id,
-  uuid: state.organization.uuid,
+  orgUuid: state.organization.uuid,
   members: state.organization.members,
   email: state.user.email,
   ownerEmail: state.organization.owner,
-  orgStatus: state.organization.status,
+  ownerAddress: state.organization.ownerAddress,
+  orgStatus: state.organization.state.state,
+  orgFoundInBlockchain: state.organization.foundInBlockchain,
 });
 
 const mapDispatchToProps = dispatch => ({
   getAllMembers: uuid => dispatch(inviteMembersActions.getAllMembers(uuid)),
   inviteMembers: (members, uuid) => dispatch(inviteMembersActions.inviteMembers(members, uuid)),
-  addAndPublishMembers: (members, orgId, uuid) =>
-    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid)),
+  addAndPublishMembers: (members, orgId, uuid, ownerAddress) =>
+    dispatch(inviteMembersActions.addAndPublishMembers(members, orgId, uuid, ownerAddress)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TeamMembers));

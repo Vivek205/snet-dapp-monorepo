@@ -1,4 +1,6 @@
 import { API } from "aws-amplify";
+import isEmpty from "lodash/isEmpty";
+
 import { initializeAPIOptions } from "../../../Utils/API";
 import { memberStatus } from "../../../Utils/TeamMembers";
 import { APIEndpoints, APIPaths } from "../../AWS/APIEndpoints";
@@ -9,6 +11,7 @@ import { APIError } from "shared/dist/utils/API";
 import { setUserInviteeStatus, setUserInviteCode } from "./userActions/onboardingActions";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
+import ValidationError from "shared/dist/utils/validationError";
 
 export const SET_MEMBERS_FOR_STATUS = "SET_MEMBERS_FOR_STATUS";
 
@@ -87,8 +90,14 @@ export const acceptInvitationAndGetLatestOrgStatus = payload => async dispatch =
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ACCEPT_INVITATION));
     await dispatch(acceptInvitation(payload));
-    await dispatch(organizationActions.getStatus);
+    const orgList = await dispatch(organizationActions.getStatus);
+
     dispatch(loaderActions.stopAppLoader());
+    if (isEmpty(orgList)) {
+      return null;
+    }
+    const selectedOrg = orgList[0];
+    return selectedOrg;
   } catch (error) {
     dispatch(loaderActions.stopAppLoader());
     throw error;
@@ -168,9 +177,13 @@ export const publishMembers = (members, uuid, txnHash) => async dispatch => {
 
 const filterAdressFromMembers = members => members.map(member => member.address).filter(value => !!value);
 
-export const addAndPublishMembers = (members, orgId, uuid) => async dispatch => {
+export const addAndPublishMembers = (members, orgId, uuid, ownerAddress) => async dispatch => {
   try {
     const sdk = await initSDK();
+    const address = await sdk.account.getAddress();
+    if (address !== ownerAddress) {
+      throw new ValidationError("The account selected in the Metamask is not the owner of this organization");
+    }
     const newMembersAddress = filterAdressFromMembers(members);
     dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
     return new Promise((resolve, reject) => {

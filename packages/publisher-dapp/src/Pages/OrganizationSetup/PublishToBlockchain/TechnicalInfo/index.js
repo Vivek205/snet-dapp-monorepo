@@ -1,10 +1,12 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
-import { useStyles } from "./styles";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import { useSelector } from "react-redux";
+
+import { useStyles } from "./styles";
 import MMAddress from "./MMAddress";
 
 const TechnicalInfo = ({ classes }) => {
@@ -14,12 +16,11 @@ const TechnicalInfo = ({ classes }) => {
       <Typography variant="subtitle1">Technical Information</Typography>
       <MMAddress classes={classes} />
       {groups.map(group => (
-        <Fragment key={group.id}>
-          <Typography variant="subtitle1">Group Information</Typography>
+        <div key={group.id} className={classes.groupInfoContainer}>
           <SNETTextfield
             disabled
             label="Payment Address"
-            description="The Metamask address to which all the payments will be transferred "
+            description="The ethereum address to which all the payments will be transferred "
             name="paymentaddress"
             value={group.paymentAddress}
           />
@@ -33,7 +34,7 @@ const TechnicalInfo = ({ classes }) => {
               key={endpoint}
             />
           ))}
-        </Fragment>
+        </div>
       ))}
     </div>
   );

@@ -17,35 +17,50 @@ const OrganizationSetup = ({ classes, location, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (organization.status === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path);
-    } else if (organization.status === organizationSetupStatuses.PUBLISHED) {
-      history.push(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path);
+    if (
+      organization.state.state === organizationSetupStatuses.APPROVAL_PENDING ||
+      organization.state.state === organizationSetupStatuses.ONBOARDING
+    ) {
+      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
     }
-  }, [organization.status, history]);
+  }, [organization.state.state, organization.uuid, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
+    if (organization.foundInBlockchain) {
+      return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
+    }
+    history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
   };
 
   const activeSection = () => {
     const { pathname: path } = location;
     const { ORGANIZATION_PROFILE, REGION, PUBLISH_TO_BLOCKCHAIN } = organizationSetupSections;
-
-    if (path.includes(OrganizationSetupRoutes.ORGANIZATION_PROFILE.path)) {
+    if (path.includes(path.match(OrganizationSetupRoutes.ORGANIZATION_PROFILE.match))) {
       return ORGANIZATION_PROFILE;
-    } else if (path.includes(OrganizationSetupRoutes.REGION.path)) {
+    } else if (path.includes(path.match(OrganizationSetupRoutes.REGION.match))) {
       return REGION;
-    } else if (path.includes(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.path)) {
+    } else if (path.includes(path.match(OrganizationSetupRoutes.PUBLISH_TO_BLOCKCHAIN.match))) {
       return PUBLISH_TO_BLOCKCHAIN;
     }
     return ORGANIZATION_PROFILE;
   };
 
+  const handleSectionClick = progressNumber => {
+    const clickedSection = Object.values(organizationSetupSections).find(el => el.key === progressNumber);
+    if (clickedSection) {
+      history.push(clickedSection.route.path.replace(":orgUuid", organization.uuid));
+    }
+  };
+
   return (
     <div className={classes.organizationSetupContainer}>
       <Heading {...activeSection().heading} />
-      <ProgressBar activeSection={activeSection().key} progressText={progressText} />
+      <ProgressBar
+        activeSection={activeSection().key}
+        progressText={progressText}
+        onSectionClick={progressNumber => handleSectionClick(progressNumber)}
+      />
       <OrganizationSetupRouter handleFinishLater={handleFinishLater} />
     </div>
   );

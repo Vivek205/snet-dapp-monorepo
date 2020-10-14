@@ -6,7 +6,14 @@ export const useStyles = MUITheme => ({
       borderTopWidth: 1,
       borderTopColor: MUITheme.palette.text.disabled,
       borderTopStyle: "solid",
-      "&:last-of-type, &:first-of-type": { borderTop: "none" },
+      "&:first-of-type": {
+        padding: "40px 0 48px",
+        borderTop: "none",
+      },
+      "&:last-of-type": {
+        padding: "16px 0 0",
+        borderTop: "none",
+      },
       "& > p": {
         "&:first-of-type": { marginBottom: 15 },
       },
@@ -25,8 +32,10 @@ export const useStyles = MUITheme => ({
     textAlign: "center",
     "& h3": { lineHeight: "48px" },
     "& span": {
-      paddingTop: 10,
+      paddingTop: 8,
+      display: "inline-block",
       color: MUITheme.palette.text.primary,
+      fontFamily: MUITheme.typography.fontFamily,
       fontSize: 20,
       fontWeight: 300,
       lineHeight: "28px",
@@ -57,7 +66,7 @@ export const useStyles = MUITheme => ({
     },
   },
   joiningTeamMember: {
-    "& p": { marginBottom: "0 !important" },
+    "& a": { padding: "auto 2px" },
   },
   website: {
     "& p": { marginBottom: "0 !important" },

@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FooterLinkTitle = function FooterLinkTitle(_ref) {
   var title = _ref.title;
   var classes = (0, _styles.useStyles)();
-  return _react.default.createElement("span", {
+  return /*#__PURE__*/_react.default.createElement("span", {
     className: classes.footerLinksTitle
   }, title);
 };

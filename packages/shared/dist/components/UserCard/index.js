@@ -15,7 +15,7 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _Avatar = _interopRequireDefault(require("@material-ui/core/Avatar"));
 
-var _avatar = _interopRequireDefault(require("shared/src/assets/images/avatar.png"));
+var _avatar = _interopRequireDefault(require("shared/dist/assets/images/avatar.png"));
 
 var _styles2 = require("./styles");
 
@@ -26,27 +26,27 @@ var UserCard = function UserCard(_ref) {
       userImg = _ref.userImg,
       userName = _ref.userName,
       userEmail = _ref.userEmail;
-  return _react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 12,
     lg: 12,
     className: classes.userCardContainer
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sx: 12,
     sm: 12,
     md: 6,
     lg: 6,
     className: classes.userDetails
-  }, _react.default.createElement(_Avatar.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Avatar.default, {
     alt: "Singularity",
     src: userImg || _avatar.default,
     className: classes.avatar
-  }), _react.default.createElement("div", null, _react.default.createElement(_Typography.default, {
+  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.userName
-  }, userName), _react.default.createElement(_Typography.default, {
+  }, userName), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     className: classes.userEmail
   }, userEmail))));
 };
