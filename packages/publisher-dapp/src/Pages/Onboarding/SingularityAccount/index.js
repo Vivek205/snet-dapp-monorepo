@@ -17,12 +17,9 @@ import { onboardingActions, preferenceActions } from "../../../Services/Redux/ac
 import LoginBanner from "./LoginBanner";
 import VerifyInvitation from "./VerifyInvitation";
 import InformationBox from "./InformationBox";
-import { organizationTypes } from "../../../Utils/organizationSetup";
 
 const selectState = state => ({
   userEntity: state.user.entity,
-  organization: state.organization,
-  email: state.user.email,
   publisherTnC: state.user.publisherTnC,
 });
 
@@ -33,15 +30,11 @@ const SingularityAccount = ({ classes, history }) => {
     [userPreferenceTypes.COMMENTS_AND_MESSAGES]: false,
   });
   const [verifiedInvitation, setVerifiedInvitation] = useState(false);
-  const { userEntity, organization, email } = useSelector(selectState);
+  const { userEntity } = useSelector(selectState);
   const dispatch = useDispatch();
 
   const handleContinue = async () => {
     dispatch(preferenceActions.updateEmailPreferences(emailPreferences));
-    if (userEntity === userEntities.INDIVIDUAL) {
-      await dispatch(organizationActions.createOrganization({ ...organization, type: organizationTypes.INDIVIDUAL }));
-      dispatch(organizationActions.setOrgOwner(email));
-    }
     history.push(OnboardingRoutes.AUTHENTICATE_ID.path);
   };
 

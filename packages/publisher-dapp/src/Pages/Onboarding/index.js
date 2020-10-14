@@ -42,9 +42,14 @@ class Onboarding extends Component {
           orgStatus === organizationSetupStatuses.PUBLISH_IN_PROGRESS
         ) {
           return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
-        } else if (location.pathname !== AuthenticateRoutes.INDIVIDUAL.path) {
-          return history.push(AuthenticateRoutes.INDIVIDUAL.path);
         }
+        if (orgStatus === organizationSetupStatuses.CHANGE_REQUESTED) {
+          if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
+            return history.push(AuthenticateRoutes.ORGANIZATION.path);
+          }
+          return;
+        }
+        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
       } else if (orgType === organizationTypes.ORGANIZATION) {
         if (orgStatus === organizationSetupStatuses.CHANGE_REQUESTED && allowChangeRequestEdit) {
           if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
@@ -92,15 +97,11 @@ class Onboarding extends Component {
     } else if (path.includes(OnboardingRoutes.AUTHENTICATE_ID.path)) {
       return AUTHENTICATE_ID;
     }
-    return SINGULARITY_ACCOUNT;
+    return ACCEPT_SERVICE_AGREEMENT;
   };
 
   render() {
-    const { classes, location } = this.props;
-
-    if (location.pathname === AuthenticateRoutes.INDIVIDUAL_STATUS.path) {
-      return <OnboardingRouter />;
-    }
+    const { classes } = this.props;
 
     return (
       <div className={classes.onboardingContainer}>

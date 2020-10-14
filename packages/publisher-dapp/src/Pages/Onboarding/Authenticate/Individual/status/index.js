@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import RelatedLinks from "./RelatedLinks";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { individualVerificationActions } from "../../../../../Services/Redux/actionCreators/userActions";
-import { AuthenticateRoutes } from "../../AuthenitcateRouter/Routes";
+import ChangeRequested from "./ChangeRequested";
 
 const StatusComponents = {
   [individualVerificationStatusList.PENDING]: Pending,
@@ -20,6 +20,7 @@ const StatusComponents = {
   [individualVerificationStatusList.REJECTED]: Denied,
   [individualVerificationStatusList.FAILED]: Denied,
   [individualVerificationStatusList.ERROR]: Denied,
+  [individualVerificationStatusList.CHANGE_REQUESTED]: ChangeRequested,
 };
 
 const selectState = state => ({
@@ -27,16 +28,10 @@ const selectState = state => ({
   rejectReason: state.user.individualVerificationRejectReason,
 });
 
-const IndividualStatus = ({ classes, history }) => {
+const IndividualStatus = ({ classes }) => {
   const { status, rejectReason } = useSelector(selectState);
   const [alert, setAlert] = useState({});
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (status === individualVerificationStatusList.NOT_STARTED) {
-      history.push(AuthenticateRoutes.INDIVIDUAL.path);
-    }
-  }, [history, status]);
 
   const Component = StatusComponents[status];
 
@@ -48,7 +43,7 @@ const IndividualStatus = ({ classes, history }) => {
       if (checkIfKnownError(e)) {
         return setAlert({ type: alertTypes.ERROR, message: e.message });
       }
-      return setAlert({ type: alertTypes.ERROR, message: "Unable to initiate Jumio verification. Please try again" });
+      return setAlert({ type: alertTypes.ERROR, message: "Unable to initiate ID verification. Please try again" });
     }
   };
 
