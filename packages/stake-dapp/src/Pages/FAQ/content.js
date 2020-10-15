@@ -25,6 +25,114 @@ export const communityDetails = [
   },
 ];
 
+export const stakingFAQ = [
+  {
+    question: "How long is a Staking window?",
+    answer: `
+    <ul>
+      <li>Every 30 days a stake window open for 7 days</li>
+      <li>You can reference the dates at the portal</li>
+      <li>You will see the details once you login in to the portal</li>
+      <li>You would see the timer telling you till when the next staking window will open.</li>
+    </ul>
+    <img src={TelegramImage} alt="Staking Window" />
+    <p> Once the window opens</p>
+    <p>You will see the below screen</p>
+    <h1>Open Staking</h1>
+    <img src={TelegramImage} alt="Open Staking" />
+    <p>Click on the Add Stake Amount button</p>
+    <h1>Add Stake</h1>
+    <img src={TelegramImage} alt="Add Stake Amount" />
+    <img src={TelegramImage} alt="Add Stake Amount" />
+    <h1>Submit Stake ( Initiate transactions on block chain) </h1>
+    <p>Once you hit the Submit Stake button , you will be connected to the metamask asking you to authorize the deposit </p>
+    <img src={TelegramImage} alt="Submitting Stake" />
+    <h2>Transaction / Gas Fee</h2>
+    <p>Click on the Edit option and you would see the below options , this is to help one with the speed of acceptance of transaction on blockchain,</p>
+    <p>You would be presented with the options shown below</p>
+    <img src={TelegramImage} alt="Customizing Gas" />
+    <h2>Block chain transaction</h2>
+    <p>Once the block chain transaction is successfully completed , you will see a  confirmation message in green ( show below) saying </p>
+    `,
+  },
+  {
+    question: "What happens if my transaction fails ?",
+    answer: `
+      <p>Please attempt again as your AGIs have not been Staked yet.</p>
+      <p>You could see the Balance of Your account on the landing page itself </p>
+      <p>You will see the same account balance and a successful message as below on your page.</p>
+      <img src={TelegramImage} alt="Sucess Message Notification" />
+      <p>Please note you have an option to opt-out of the next window. The default behaviour is for the stake amount plus the reward to automatically carry over into the next stake window.</p>
+      <p>You can choose to not opt-in at the time of staking itself.</p>
+      <p> In addition  a  window is opened towards the end of each staking period to opt-out if you want to change their original decision. This enables the user to not carry over their current stake amount and reward into the next stake window and gives them the option to withdraw when the current staking period completes</p>
+    `,
+  },
+  {
+    question: "What If I miss the window",
+    answer: `
+      <p></You can stake on the next window that will open up , but once the current window is closed , you cannot stake any more !</p>
+    `,
+  },
+  {
+    question: "How do I check on the returns from my Stake ?",
+    answer: `
+      <p>Go to the Tab “Ready To Claim”</p>
+      <p>The Account balance and the Your Stake gives a summary on what has been Staked and the rewards you are eligible for.</p>
+      <p>You will also the total amount staked by you so far.</p>
+      <img src={TelegramImage} alt="Staking Image" />
+    `,
+  },
+  {
+    question: "How do I know if my stake is approved ?",
+    answer: `
+      <p>After the submission & approval period, the accepted stakes will be available in the Incubation tab</p>
+      <img src={TelegramImage} alt="Incubation" />
+      <p>You could also go to the  Transaction history tab and would see a record with Process Status = “Approved”</p>
+      <img src={TelegramImage} alt="Transaction History" />
+      <img src={TelegramImage} alt="Incubation" />
+    `,
+  },
+  {
+    question: "How long does it take for the stake to be approved?",
+    answer: `
+      <p>Stake Window Approval kicks off Immediately after the submission end date and is usually within 8 hrs after submission period ends.</p>
+    `,
+  },
+  {
+    question: "What if I DO NOT want to Auto renew my Stake ?",
+    answer: `
+      <p>You could  perform the same at two places:</p>
+      <ol>
+        <li>During the initial stake<p>Unselect the option shown below when you stake.</p></li>
+        <img src={} alt="Stake Renew" />
+        <li>During the Last week of the stake window completion (in the incubation tab)</li>
+    `,
+  },
+  {
+    question: "How do I know when I can withdraw my stake?",
+    answer: `
+      <p>On the incubating tab , you could see when would you be eligible to withdraw your stake.</p>
+      <img src={} alt="Incubation" />
+      <p>Please note Withdraw/Claim can happen from Ready To Claim tab only. If the Auto Renewal is not opted after the stake window any time user can claim the Stake.</p>
+    `,
+  },
+  {
+    question: "How will the rewards be transferred or how do I know which stakes are ready to be claimed?",
+    answer: `
+      <p>Click on the Ready to Claim Tab and you will see the details of the ones which are ready.
+      Please note that stake along with the reward will be transferred when the user claims.</p>
+      <img src={} alt="Staking" />  
+    `,
+  },
+  {
+    question: "I have staked some tokens and now have changed my mind and want to withdraw. What should I do?",
+    answer: `
+      <p>Users can withdraw the stake on the amount deposited in the respective stake window before submission closes.</p>
+      <p>If the submission period is closed then the user needs to wait for the stake window to complete and need to opt out of auto renewal.</p>
+    `,
+  },
+];
+
 export const generalFAQ = [
   {
     question: "What browser and wallet combination is supported?",
@@ -71,7 +179,7 @@ export const metamaskFAQ = [
   },
 ];
 
-export const stakingFAQ = [
+export const troubleShootingFAQ = [
   {
     question: "How does partial withdrawals work?",
     answer: `<p>In order to withdraw your stake (staked amount along with the earned reward) you first need to opt out from auto renewal. 
