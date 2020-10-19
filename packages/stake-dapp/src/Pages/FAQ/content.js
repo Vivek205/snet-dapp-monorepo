@@ -35,22 +35,22 @@ export const stakingFAQ = [
       <li>You will see the details once you login in to the portal</li>
       <li>You would see the timer telling you till when the next staking window will open.</li>
     </ul>
-    <img src={TelegramImage} alt="Staking Window" />
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/openStaking.png" alt="Staking Window" />
     <p> Once the window opens</p>
     <p>You will see the below screen</p>
-    <h1>Open Staking</h1>
-    <img src={TelegramImage} alt="Open Staking" />
+    <h3>Open Staking</h3>
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/openStaking_01.png" alt="Open Staking" />
     <p>Click on the Add Stake Amount button</p>
-    <h1>Add Stake</h1>
-    <img src={TelegramImage} alt="Add Stake Amount" />
-    <img src={TelegramImage} alt="Add Stake Amount" />
-    <h1>Submit Stake ( Initiate transactions on block chain) </h1>
+    <h3>Add Stake</h3>
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/addStakeAmt_01.png" alt="Add Stake Amount" />
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/addStakeAmt.png" alt="Add Stake Amount" />
+    <h3>Submit Stake ( Initiate transactions on block chain) </h3>
     <p>Once you hit the Submit Stake button , you will be connected to the metamask asking you to authorize the deposit </p>
-    <img src={TelegramImage} alt="Submitting Stake" />
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/metamaskNotification.png" alt="Submitting Stake" />
     <h2>Transaction / Gas Fee</h2>
     <p>Click on the Edit option and you would see the below options , this is to help one with the speed of acceptance of transaction on blockchain,</p>
     <p>You would be presented with the options shown below</p>
-    <img src={TelegramImage} alt="Customizing Gas" />
+    <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/customizeGas.png" alt="Customizing Gas" />
     <h2>Block chain transaction</h2>
     <p>Once the block chain transaction is successfully completed , you will see a  confirmation message in green ( show below) saying </p>
     `,
@@ -61,7 +61,7 @@ export const stakingFAQ = [
       <p>Please attempt again as your AGIs have not been Staked yet.</p>
       <p>You could see the Balance of Your account on the landing page itself </p>
       <p>You will see the same account balance and a successful message as below on your page.</p>
-      <img src={TelegramImage} alt="Sucess Message Notification" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/successMsg.png" alt="Sucess Message Notification" />
       <p>Please note you have an option to opt-out of the next window. The default behaviour is for the stake amount plus the reward to automatically carry over into the next stake window.</p>
       <p>You can choose to not opt-in at the time of staking itself.</p>
       <p> In addition  a  window is opened towards the end of each staking period to opt-out if you want to change their original decision. This enables the user to not carry over their current stake amount and reward into the next stake window and gives them the option to withdraw when the current staking period completes</p>
@@ -70,7 +70,7 @@ export const stakingFAQ = [
   {
     question: "What If I miss the window",
     answer: `
-      <p></You can stake on the next window that will open up , but once the current window is closed , you cannot stake any more !</p>
+      <p>You can stake on the next window that will open up , but once the current window is closed , you cannot stake any more !</p>
     `,
   },
   {
@@ -79,17 +79,17 @@ export const stakingFAQ = [
       <p>Go to the Tab “Ready To Claim”</p>
       <p>The Account balance and the Your Stake gives a summary on what has been Staked and the rewards you are eligible for.</p>
       <p>You will also the total amount staked by you so far.</p>
-      <img src={TelegramImage} alt="Staking Image" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/staking.png" alt="Staking Image" />
     `,
   },
   {
     question: "How do I know if my stake is approved ?",
     answer: `
       <p>After the submission & approval period, the accepted stakes will be available in the Incubation tab</p>
-      <img src={TelegramImage} alt="Incubation" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/incubation.png" alt="Incubation" />
       <p>You could also go to the  Transaction history tab and would see a record with Process Status = “Approved”</p>
-      <img src={TelegramImage} alt="Transaction History" />
-      <img src={TelegramImage} alt="Incubation" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/transactionHistory.png" alt="Transaction History" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/incubation_01.png" alt="Incubation" />
     `,
   },
   {
@@ -104,7 +104,7 @@ export const stakingFAQ = [
       <p>You could  perform the same at two places:</p>
       <ol>
         <li>During the initial stake<p>Unselect the option shown below when you stake.</p></li>
-        <img src={} alt="Stake Renew" />
+        <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/autoRenew.png" alt="Stake Renew" />
         <li>During the Last week of the stake window completion (in the incubation tab)</li>
     `,
   },
@@ -112,7 +112,7 @@ export const stakingFAQ = [
     question: "How do I know when I can withdraw my stake?",
     answer: `
       <p>On the incubating tab , you could see when would you be eligible to withdraw your stake.</p>
-      <img src={} alt="Incubation" />
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/incubation.png" alt="Incubation" />
       <p>Please note Withdraw/Claim can happen from Ready To Claim tab only. If the Auto Renewal is not opted after the stake window any time user can claim the Stake.</p>
     `,
   },
@@ -121,7 +121,7 @@ export const stakingFAQ = [
     answer: `
       <p>Click on the Ready to Claim Tab and you will see the details of the ones which are ready.
       Please note that stake along with the reward will be transferred when the user claims.</p>
-      <img src={} alt="Staking" />  
+      <img src="https://d16o4vcu292x9v.cloudfront.net/staking/images/faq/staking.png" alt="Staking" />  
     `,
   },
   {
