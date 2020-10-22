@@ -30,10 +30,10 @@ export const stakingFAQ = [
     question: "How long is a Staking window?",
     answer: `
     <ul>
-      <li>Every 30 days a stake window open for 7 days</li>
-      <li>You can reference the dates at the portal</li>
-      <li>You will see the details once you login in to the portal</li>
-      <li>You would see the timer telling you till when the next staking window will open.</li>
+      <li>Every 30 days a stake window opens for 7 days</li>
+      <li>You can refer the dates at the portal</li>
+      <li>You will see the details once you login to the portal</li>
+      <li>You would see the timer telling you till when the next staking window will   open.</li>
     </ul>
     <img src=${process.env.REACT_APP_CDN_LINK}/openStaking.png alt="Staking Window" />
     <p> Once the window opens</p>
@@ -45,14 +45,15 @@ export const stakingFAQ = [
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt_01.png alt="Add Stake Amount" />
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt.png alt="Add Stake Amount" />
     <h3>Submit Stake ( Initiate transactions on block chain) </h3>
-    <p>Once you hit the Submit Stake button , you will be connected to the metamask asking you to authorize the deposit </p>
+    <p>Once you hit the Submit Stake button, you will be connected to the metamask asking you to authorize the deposit </p>
     <img src=${process.env.REACT_APP_CDN_LINK}/metamaskNotification.png alt="Submitting Stake" />
-    <h2>Transaction / Gas Fee</h2>
-    <p>Click on the Edit option and you would see the below options , this is to help one with the speed of acceptance of transaction on blockchain,</p>
+    <h3>Transaction / Gas Fee</h3>
+    <p>Click on the Edit option and you would see the below options, this is to help one with the speed of acceptance of transaction on blockchain,</p>
     <p>You would be presented with the options shown below</p>
     <img src=${process.env.REACT_APP_CDN_LINK}/customizeGas.png alt="Customizing Gas" />
-    <h2>Block chain transaction</h2>
-    <p>Once the block chain transaction is successfully completed , you will see a  confirmation message in green ( show below) saying </p>
+    <h3>Block chain transaction</h3>
+    <p>Once the block chain transaction is successfully completed, you will see a  confirmation message in green ( show below) saying </p>
+    <img src=${process.env.REACT_APP_CDN_LINK}/successMsg.png alt="Sucess Message Notification" />
     `,
   },
   {
