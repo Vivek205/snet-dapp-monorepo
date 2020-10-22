@@ -79,7 +79,7 @@ export const stakingFAQ = [
     answer: `
       <p>Go to the Tab “Ready To Claim”</p>
       <p>The Account balance and the Your Stake gives a summary on what has been Staked and the rewards you are eligible for.</p>
-      <p>You will also the total amount staked by you so far.</p>
+      <p>You will also see the total amount staked by you so far.</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/staking.png alt="Staking Image" />
     `,
   },
@@ -88,7 +88,7 @@ export const stakingFAQ = [
     answer: `
       <p>After the submission & approval period, the accepted stakes will be available in the Incubation tab</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/incubation.png alt="Incubation" />
-      <p>You could also go to the  Transaction history tab and would see a record with Process Status = “Approved”</p>
+      <p>You could also go to the Transaction history tab and would see a record with Process Status = “Approved”</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/transactionHistory.png alt="Transaction History" />
       <img src=${process.env.REACT_APP_CDN_LINK}/incubation_01.png alt="Incubation" />
     `,
@@ -102,7 +102,7 @@ export const stakingFAQ = [
   {
     question: "What if I DO NOT want to Auto renew my Stake ?",
     answer: `
-      <p>You could  perform the same at two places:</p>
+      <p>You could perform the same at two places:</p>
       <ol>
         <li>During the initial stake<p>Unselect the option shown below when you stake.</p></li>
         <img src=${process.env.REACT_APP_CDN_LINK}/autoRenew.png alt="Stake Renew" />
