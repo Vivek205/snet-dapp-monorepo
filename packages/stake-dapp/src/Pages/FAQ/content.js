@@ -44,15 +44,15 @@ export const stakingFAQ = [
     <h3>Add Stake</h3>
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt_01.png alt="Add Stake Amount" />
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt.png alt="Add Stake Amount" />
-    <h3>Submit Stake ( Initiate transactions on block chain) </h3>
+    <h3>Submit Stake ( Initiate transactions on blockchain) </h3>
     <p>Once you hit the Submit Stake button, you will be connected to the metamask asking you to authorize the deposit </p>
     <img src=${process.env.REACT_APP_CDN_LINK}/metamaskNotification.png alt="Submitting Stake" />
     <h3>Transaction / Gas Fee</h3>
     <p>Click on the Edit option and you would see the below options, this is to help one with the speed of acceptance of transaction on blockchain,</p>
     <p>You would be presented with the options shown below</p>
     <img src=${process.env.REACT_APP_CDN_LINK}/customizeGas.png alt="Customizing Gas" />
-    <h3>Block chain transaction</h3>
-    <p>Once the block chain transaction is successfully completed, you will see a  confirmation message in green ( show below) saying </p>
+    <h3>Blockchain transaction</h3>
+    <p>Once the blockchain transaction is successfully completed, you will see a  confirmation message in green ( show below) saying </p>
     <img src=${process.env.REACT_APP_CDN_LINK}/successMsg.png alt="Sucess Message Notification" />
     `,
   },
