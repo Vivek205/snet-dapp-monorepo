@@ -30,10 +30,10 @@ export const stakingFAQ = [
     question: "How long is a Staking window?",
     answer: `
     <ul>
-      <li>Every 30 days a stake window open for 7 days</li>
-      <li>You can reference the dates at the portal</li>
-      <li>You will see the details once you login in to the portal</li>
-      <li>You would see the timer telling you till when the next staking window will open.</li>
+      <li>Every 30 days a stake window opens for 7 days</li>
+      <li>You can refer the dates at the portal</li>
+      <li>You will see the details once you login to the portal</li>
+      <li>You would see the timer telling you till when the next staking window will   open.</li>
     </ul>
     <img src=${process.env.REACT_APP_CDN_LINK}/openStaking.png alt="Staking Window" />
     <p> Once the window opens</p>
@@ -44,15 +44,16 @@ export const stakingFAQ = [
     <h3>Add Stake</h3>
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt_01.png alt="Add Stake Amount" />
     <img src=${process.env.REACT_APP_CDN_LINK}/addStakeAmt.png alt="Add Stake Amount" />
-    <h3>Submit Stake ( Initiate transactions on block chain) </h3>
-    <p>Once you hit the Submit Stake button , you will be connected to the metamask asking you to authorize the deposit </p>
+    <h3>Submit Stake ( Initiate transactions on blockchain) </h3>
+    <p>Once you hit the Submit Stake button, you will be connected to the metamask asking you to authorize the deposit </p>
     <img src=${process.env.REACT_APP_CDN_LINK}/metamaskNotification.png alt="Submitting Stake" />
-    <h2>Transaction / Gas Fee</h2>
-    <p>Click on the Edit option and you would see the below options , this is to help one with the speed of acceptance of transaction on blockchain,</p>
+    <h3>Transaction / Gas Fee</h3>
+    <p>Click on the Edit option and you would see the below options, this is to help one with the speed of acceptance of transaction on blockchain,</p>
     <p>You would be presented with the options shown below</p>
     <img src=${process.env.REACT_APP_CDN_LINK}/customizeGas.png alt="Customizing Gas" />
-    <h2>Block chain transaction</h2>
-    <p>Once the block chain transaction is successfully completed , you will see a  confirmation message in green ( show below) saying </p>
+    <h3>Blockchain transaction</h3>
+    <p>Once the blockchain transaction is successfully completed, you will see a  confirmation message in green ( show below) saying </p>
+    <img src=${process.env.REACT_APP_CDN_LINK}/successMsg.png alt="Sucess Message Notification" />
     `,
   },
   {
@@ -78,7 +79,7 @@ export const stakingFAQ = [
     answer: `
       <p>Go to the Tab “Ready To Claim”</p>
       <p>The Account balance and the Your Stake gives a summary on what has been Staked and the rewards you are eligible for.</p>
-      <p>You will also the total amount staked by you so far.</p>
+      <p>You will also see the total amount staked by you so far.</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/staking.png alt="Staking Image" />
     `,
   },
@@ -87,7 +88,7 @@ export const stakingFAQ = [
     answer: `
       <p>After the submission & approval period, the accepted stakes will be available in the Incubation tab</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/incubation.png alt="Incubation" />
-      <p>You could also go to the  Transaction history tab and would see a record with Process Status = “Approved”</p>
+      <p>You could also go to the Transaction history tab and would see a record with Process Status = “Approved”</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/transactionHistory.png alt="Transaction History" />
       <img src=${process.env.REACT_APP_CDN_LINK}/incubation_01.png alt="Incubation" />
     `,
@@ -101,7 +102,7 @@ export const stakingFAQ = [
   {
     question: "What if I DO NOT want to Auto renew my Stake ?",
     answer: `
-      <p>You could  perform the same at two places:</p>
+      <p>You could perform the same at two places:</p>
       <ol>
         <li>During the initial stake<p>Unselect the option shown below when you stake.</p></li>
         <img src=${process.env.REACT_APP_CDN_LINK}/autoRenew.png alt="Stake Renew" />
