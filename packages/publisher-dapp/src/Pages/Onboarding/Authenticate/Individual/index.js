@@ -36,6 +36,7 @@ class Individual extends Component {
     } else {
       this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
     }
+    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   };
 
   componentDidUpdate(prevProps) {
@@ -50,6 +51,7 @@ class Individual extends Component {
       }
       this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
     }
+    this.props.history.push(AuthenticateRoutes.INDIVIDUAL_STATUS.path);
   }
 
   handleVerify = async () => {
