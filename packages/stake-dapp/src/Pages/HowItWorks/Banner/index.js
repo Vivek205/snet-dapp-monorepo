@@ -205,7 +205,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
           </Typography>
           <Typography className={classes.bannerDescPara2}>
             Vest your AGI tokens in 180 day staking sessions. Tokens staked in this way will be used to fulfill
-            blockchain transactions on the SingularityNET platform. At the end of the 30 day period you can either
+            blockchain transactions on the SingularityNET platform. At the end of the 180 day period you can either
             continue to allow your tokens to vest or withdraw them along with any reward earned during the staking
             period.
           </Typography>
