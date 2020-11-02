@@ -30,7 +30,7 @@ export const stakingFAQ = [
     question: "Staking window",
     answer: `
     <ul>
-      <li>Every 180 days a stake window opens for 7 days</li>
+      <li>Every 30 days a stake window opens for 7 days</li>
       <li>You can refer the dates at the <a href="https://staking.singularitynet.io/howitworks" target="_blank" rel="noopener noreferrer">portal</a></li>
       <li>You will see the details once you login to the portal</li>
       <li>You would see the timer telling you till when the next staking window will   open.</li>
@@ -194,7 +194,7 @@ export const troubleShootingFAQ = [
   },
   {
     question: "When does the next stake window open?",
-    answer: `<p>In our current schedule the next stake window (period when you can stake) opens during the last seven days of the stake period. Each stake period is for 180 days.</p>`,
+    answer: `<p>In our current schedule the next stake window (period when you can stake) opens during the last seven days of the stake period. Each stake period is for 30 days.</p>`,
   },
   {
     question: "When can I claim my rewards?",
