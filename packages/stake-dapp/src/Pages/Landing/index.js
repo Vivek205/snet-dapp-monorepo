@@ -14,18 +14,25 @@ import NotificationBar, { notificationBarTypes } from "shared/dist/components/No
 import StakeTab from "../../Components/StakeTab";
 
 const stateSelector = state => ({
-  activeStake: state.stakeReducer.activeStake,
-  // incubationStakes: state.stakeReducer.incubationStakes,
+  incubationStakes: state.stakeReducer.incubationStakes,
 });
 
 const RFAILanding = ({ classes }) => {
   const currentTime = moment().unix();
   const [showReminder, setShowReminder] = useState(false);
 
-  const { activeStake } = useSelector(state => stateSelector(state));
+  const { incubationStakes } = useSelector(state => stateSelector(state));
 
-  if (currentTime > activeStake.submissionEndPeriod && currentTime < activeStake.requestWithdrawStartPeriod) {
-    setShowReminder(true);
+  if (incubationStakes) {
+    for (var i = 0; i < incubationStakes.length; i++) {
+      if (
+        currentTime >= incubationStakes[i].requestWithdrawStartPeriod &&
+        currentTime <= incubationStakes[i].endPeriod
+      ) {
+        setShowReminder(true);
+        break;
+      }
+    }
   }
 
   const generateNotificationMessage = () => {
