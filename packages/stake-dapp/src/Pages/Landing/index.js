@@ -1,4 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +13,21 @@ import NotificationBar, { notificationBarTypes } from "shared/dist/components/No
 
 import StakeTab from "../../Components/StakeTab";
 
+const stateSelector = state => ({
+  activeStake: state.stakeReducer.activeStake,
+  // incubationStakes: state.stakeReducer.incubationStakes,
+});
+
 const RFAILanding = ({ classes }) => {
+  const currentTime = moment().unix();
+  const [showReminder, setShowReminder] = useState(false);
+
+  const { activeStake } = useSelector(state => stateSelector(state));
+
+  if (currentTime > activeStake.submissionEndPeriod && currentTime < activeStake.requestWithdrawStartPeriod) {
+    setShowReminder(true);
+  }
+
   const generateNotificationMessage = () => {
     return (
       <p>
@@ -39,14 +55,16 @@ const RFAILanding = ({ classes }) => {
             <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
               <Typography variant="h3">Staking</Typography>
             </Grid>
-            <Grid item xs={12} sm={9} md={9} lg={9}>
-              <NotificationBar
-                type={notificationBarTypes.REMINDER}
-                message={generateNotificationMessage()}
-                icon={NotificationsActiveIcon}
-                showNotification={true}
-              />
-            </Grid>
+            {showReminder ? (
+              <Grid item xs={12} sm={9} md={9} lg={9}>
+                <NotificationBar
+                  type={notificationBarTypes.REMINDER}
+                  message={generateNotificationMessage()}
+                  icon={NotificationsActiveIcon}
+                  showNotification={true}
+                />
+              </Grid>
+            ) : null}
           </Grid>
           <div>
             <StakeTab />
