@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/styles";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 
+import { GlobalRoutes } from "../../GlobalRouter/Routes";
 import { useStyles } from "./styles";
 import Notification from "../../Components/Notification";
 import NotificationBar, { notificationBarTypes } from "shared/dist/components/NotificationBar";
@@ -29,8 +30,10 @@ const RFAILanding = ({ classes }) => {
         currentTime >= incubationStakes[i].requestWithdrawStartPeriod &&
         currentTime <= incubationStakes[i].endPeriod
       ) {
-        setShowReminder(true);
-        break;
+        if (showReminder === false) {
+          setShowReminder(true);
+          break;
+        }
       }
     }
   }
@@ -38,12 +41,8 @@ const RFAILanding = ({ classes }) => {
   const generateNotificationMessage = () => {
     return (
       <p>
-        <span>Auto renewal </span>options are currently avaliable in your{" "}
-        <a href="#" alt="Incubation">
-          Incubation.{" "}
-        </a>
-        For more information visit the{" "}
-        <a href="/faq" alt="FAQ">
+        <span>Auto renewal </span>options are currently avaliable in your Incubation. For more information visit the{" "}
+        <a href={GlobalRoutes.FAQ.path} alt="FAQ" target="_blank" rel="noopener noreferrer">
           FAQ.
         </a>{" "}
       </p>
