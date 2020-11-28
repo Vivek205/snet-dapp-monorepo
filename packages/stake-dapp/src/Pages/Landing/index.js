@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -20,23 +20,8 @@ const stateSelector = state => ({
 
 const RFAILanding = ({ classes }) => {
   const currentTime = moment().unix();
-  const [showReminder, setShowReminder] = useState(false);
 
   const { incubationStakes } = useSelector(state => stateSelector(state));
-
-  if (incubationStakes) {
-    for (var i = 0; i < incubationStakes.length; i++) {
-      if (
-        currentTime >= incubationStakes[i].requestWithdrawStartPeriod &&
-        currentTime <= incubationStakes[i].endPeriod
-      ) {
-        if (showReminder === false) {
-          setShowReminder(true);
-          break;
-        }
-      }
-    }
-  }
 
   const generateNotificationMessage = () => {
     return (
@@ -47,6 +32,35 @@ const RFAILanding = ({ classes }) => {
         </a>{" "}
       </p>
     );
+  };
+
+  const ShowAutoRewalNotification = () => {
+    let displayMsg = false;
+    if (incubationStakes) {
+      for (var i = 0; i < incubationStakes.length; i++) {
+        if (
+          currentTime >= incubationStakes[i].requestWithdrawStartPeriod &&
+          currentTime <= incubationStakes[i].endPeriod
+        ) {
+          displayMsg = true;
+          break;
+        }
+      }
+    }
+
+    if (displayMsg) {
+      return (
+        <Grid item xs={12} sm={9} md={9} lg={9}>
+          <NotificationBar
+            type={notificationBarTypes.REMINDER}
+            message={generateNotificationMessage()}
+            icon={NotificationsActiveIcon}
+            showNotification={true}
+          />
+        </Grid>
+      );
+    }
+    return null;
   };
 
   return (
@@ -61,16 +75,7 @@ const RFAILanding = ({ classes }) => {
             <Grid item xs={12} sm={3} md={3} lg={3} className={classes.titleContainer}>
               <Typography variant="h3">Staking</Typography>
             </Grid>
-            {showReminder ? (
-              <Grid item xs={12} sm={9} md={9} lg={9}>
-                <NotificationBar
-                  type={notificationBarTypes.REMINDER}
-                  message={generateNotificationMessage()}
-                  icon={NotificationsActiveIcon}
-                  showNotification={true}
-                />
-              </Grid>
-            ) : null}
+            <ShowAutoRewalNotification />
           </Grid>
           <div>
             <StakeTab />
