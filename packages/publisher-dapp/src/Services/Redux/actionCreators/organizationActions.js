@@ -257,6 +257,8 @@ const parseOrgData = selectedOrg => {
     uuid: selectedOrg.org_uuid,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
+    registrationId: selectedOrg.registration_id,
+    registrationType: selectedOrg.registration_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
