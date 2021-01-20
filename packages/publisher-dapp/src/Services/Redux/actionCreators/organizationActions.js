@@ -452,7 +452,11 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
           resolve(hash);
         })
-        .once(blockChainEvents.CONFIRMATION, async () => {
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (!receipt.status) {
+            method.off();
+            return reject(receipt);
+          }
           dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
           await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           await dispatch(setOrgFoundInBlockchain(true));
@@ -481,7 +485,11 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
         dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
         resolve(hash);
       })
-      .once(blockChainEvents.CONFIRMATION, async () => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          method.off();
+          return reject(receipt);
+        }
         dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
