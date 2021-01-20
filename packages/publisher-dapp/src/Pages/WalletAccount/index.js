@@ -177,7 +177,7 @@ class WalletAccount extends React.Component {
       method.once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
         if (!receipt.status) {
           method.off();
-          throw new MetamaskError("User has changed the gasPrice during the transaction");
+          throw new MetamaskError("Blockchain operation failed, please try again");
         }
 
         const { unclaimedPayments, pendingPayments, selectedChannels } = this.state;
