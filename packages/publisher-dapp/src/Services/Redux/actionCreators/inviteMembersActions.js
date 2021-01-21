@@ -193,7 +193,11 @@ export const addAndPublishMembers = (members, orgId, uuid, ownerAddress) => asyn
         .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
           await dispatch(publishMembers(members, uuid, txnHash));
         })
-        .once(blockChainEvents.CONFIRMATION, async () => {
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (!receipt.status) {
+            method.off();
+            return reject(receipt);
+          }
           dispatch(loaderActions.stopAppLoader());
           resolve();
           await method.off();
