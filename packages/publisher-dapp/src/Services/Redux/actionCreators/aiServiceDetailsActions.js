@@ -485,7 +485,12 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
-      .once(blockChainEvents.CONFIRMATION, async () => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          reject(receipt);
+          method.off();
+          return;
+        }
         await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
@@ -533,11 +538,15 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
-      .once(blockChainEvents.CONFIRMATION, async hash => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          method.off();
+          return reject(receipt);
+        }
         await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
-        resolve(hash);
+        resolve(_confirmationNumber);
         await method.off();
       })
       .on(blockChainEvents.ERROR, error => {

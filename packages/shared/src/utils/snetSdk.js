@@ -7,7 +7,7 @@ export const ethereumMethods = {
 const DEFAULT_GAS_LIMIT = undefined;
 const DEFAULT_GAS_PRICE = undefined;
 const ON_ACCOUNT_CHANGE = "accountsChanged";
-const ON_NETWORK_CHANGE = "networkChanged";
+const ON_NETWORK_CHANGE = "chainChanged";
 
 export const initSDK = async () => {
   let sdk;
@@ -27,9 +27,9 @@ export const initSDK = async () => {
   };
 
   const hasEth = typeof window.ethereum !== "undefined";
-  const hasWeb3 = typeof window.web3 !== "undefined";
+  // const hasWeb3 = typeof window.web3 !== "undefined";
   try {
-    if (hasEth && hasWeb3) {
+    if (hasEth) {
       web3Provider = window.ethereum;
       await web3Provider.request({ method: ethereumMethods.REQUEST_ACCOUNTS });
       // eslint-disable-next-line require-atomic-updates
