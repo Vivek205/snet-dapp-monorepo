@@ -37,8 +37,8 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
           changeDemoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
-        } catch (error) {
-          setAlert({ type: alertTypes.ERROR, message: "Unable to upload due to missing index.js file" });
+        } catch ({ message }) {
+          setAlert({ type: alertTypes.ERROR, message });
         }
       }
     },
@@ -46,16 +46,30 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
   );
   const validateIndexFile = uploadedFile => {
     const fileToBePresent = "index.js";
+
+    // eslint-disable-next-line no-useless-escape
+    const fileInsideFolderRegex = `^(.+)\/${fileToBePresent}$`;
+
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        const indexFileFound = Object.values(entry.files).some(file => {
-          return file.name === fileToBePresent;
+        const indexFileInsideSomeFolder = Object.values(entry.files).some(file => {
+          return file.name.match(fileInsideFolderRegex);
         });
-        if (!indexFileFound) {
-          reject(new ValidationError("The zip file should contain index.js file"));
+
+        if (indexFileInsideSomeFolder) {
+          reject(new ValidationError("The index.js file should not be in a folder"));
+        } else {
+          const indexFileFound = Object.values(entry.files).some(file => {
+            return file.name === fileToBePresent;
+          });
+
+          if (!indexFileFound) {
+            reject(new ValidationError("The zip file should contain index.js file"));
+          }
+
+          resolve();
         }
-        resolve();
       });
     });
   };
