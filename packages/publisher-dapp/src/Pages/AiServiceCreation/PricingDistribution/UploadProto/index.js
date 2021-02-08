@@ -4,7 +4,7 @@ import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import JSZip from "jszip";
-import last from "lodash/last";
+import { validateCompressedFiles } from "../../../../Utils/ValidateCompressedFiles";
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
@@ -31,18 +31,24 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
   }, [alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
-    const protoFilesExtn = "proto";
+    const protoServiceRegexPattern = "(pb_service.js?)";
+    const protoFileExtensionRegexPattern = "(pb.js?)";
+    const protoFilesInsideFolder = "^(.+)/([^/]+)$";
+
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        const someFileIsNotAProto = Object.values(entry.files).some(file => {
-          const fileExtn = last(file.name.split("."));
-          return fileExtn !== protoFilesExtn;
-        });
-        if (someFileIsNotAProto) {
-          reject(new ValidationError("The zip file should contain only proto files"));
+        const filesInsideSomeFolder = validateCompressedFiles(protoFilesInsideFolder, entry);
+
+        if (filesInsideSomeFolder) {
+          reject(new ValidationError("Proto files should not be in a folder"));
+        } else if (!validateCompressedFiles(protoServiceRegexPattern, entry)) {
+          reject(new ValidationError("Proto service file not found"));
+        } else if (!validateCompressedFiles(protoFileExtensionRegexPattern, entry)) {
+          reject(new ValidationError("Proto file not found"));
+        } else {
+          resolve();
         }
-        resolve();
       });
     });
   };

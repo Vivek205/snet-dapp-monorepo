@@ -8,6 +8,7 @@ import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
 import JSZip from "jszip";
 import ValidationError from "shared/dist/utils/validationError";
+import { validateCompressedFiles } from "../../../Utils/ValidateCompressedFiles";
 
 const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles, error }) => {
   const [alert, setAlert] = useState({});
@@ -47,15 +48,12 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
   const validateIndexFile = uploadedFile => {
     const fileToBePresent = "index.js";
 
-    // eslint-disable-next-line no-useless-escape
-    const fileInsideFolderRegex = `^(.+)\/${fileToBePresent}$`;
+    const fileInsideFolderRegex = "^(.+)/([^/]+)$";
 
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        const indexFileInsideSomeFolder = Object.values(entry.files).some(file => {
-          return file.name.match(fileInsideFolderRegex);
-        });
+        const indexFileInsideSomeFolder = validateCompressedFiles(fileInsideFolderRegex, entry);
 
         if (indexFileInsideSomeFolder) {
           reject(new ValidationError("The index.js file should not be in a folder"));
