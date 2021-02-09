@@ -47,7 +47,9 @@ const SNETFileUpload = props => {
         <Typography>
           Drag and drop image here or<span> click</span>
         </Typography>
-        <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
+        <Typography>* Compress only the individual files with no parent folders</Typography>
+        <Typography>* Package must be under {maxSize}mb</Typography>
+        <Typography>* Make sure the extension is .zip</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <FileStats

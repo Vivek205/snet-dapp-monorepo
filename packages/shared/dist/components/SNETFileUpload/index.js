@@ -65,7 +65,7 @@ var SNETFileUpload = function SNETFileUpload(props) {
     md: 6,
     lg: 6,
     className: classes.grayBox
-  }, getRootProps()), /*#__PURE__*/_react.default.createElement(_Backup.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", null, " click")), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "(Package must be under ", maxSize, "mb. Make sure the extension is .zip or .tar)")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, getRootProps()), /*#__PURE__*/_react.default.createElement(_Backup.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", null, " click")), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "* Compress only the individual files with no parent folders"), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "* Package must be under ", maxSize, "mb"), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "* Make sure the extension is .zip")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
