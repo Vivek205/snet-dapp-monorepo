@@ -103,6 +103,13 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         accept={acceptedFileTypes}
         multiple={false}
         showFileDetails
+        helperText={
+          <>
+            <Typography>* Compress only the individual files with no parent folders</Typography>
+            <Typography>* Package must be under 2mb</Typography>
+            <Typography>* Make sure the extension is .zip</Typography>
+          </>
+        }
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
         fileDownloadURL={protoFilesUrl}

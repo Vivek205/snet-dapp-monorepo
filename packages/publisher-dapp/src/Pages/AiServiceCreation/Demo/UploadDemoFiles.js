@@ -90,6 +90,13 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
         fileDownloadURL={demoFilesUrl}
         uploadSuccess={Boolean(demoFilesUrl)}
         error={error}
+        helperText={
+          <>
+            <Typography>* Compress only the individual files with no parent folders</Typography>
+            <Typography>* Package must be under 2mb</Typography>
+            <Typography>* Make sure the extension is .zip</Typography>
+          </>
+        }
       />
       <AlertBox type={alert.type} message={alert.message} />
     </div>
