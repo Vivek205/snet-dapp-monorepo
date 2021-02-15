@@ -8,6 +8,7 @@ import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
 import JSZip from "jszip";
 import ValidationError from "shared/dist/utils/validationError";
+import { validateCompressedFiles } from "../../../Utils/ValidateCompressedFiles";
 
 const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles, error }) => {
   const [alert, setAlert] = useState({});
@@ -37,8 +38,8 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
           changeDemoFiles(url);
           dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
           return setAlert({ type: alertTypes.SUCCESS, message: "File accepted" });
-        } catch (error) {
-          setAlert({ type: alertTypes.ERROR, message: "Unable to upload due to missing index.js file" });
+        } catch ({ message }) {
+          setAlert({ type: alertTypes.ERROR, message });
         }
       }
     },
@@ -46,16 +47,27 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
   );
   const validateIndexFile = uploadedFile => {
     const fileToBePresent = "index.js";
+
+    const fileInsideFolderRegex = "^(.+)/([^/]+)$";
+
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        const indexFileFound = Object.values(entry.files).some(file => {
-          return file.name === fileToBePresent;
-        });
-        if (!indexFileFound) {
-          reject(new ValidationError("The zip file should contain index.js file"));
+        const indexFileInsideSomeFolder = validateCompressedFiles(fileInsideFolderRegex, entry);
+
+        if (indexFileInsideSomeFolder) {
+          reject(new ValidationError("The index.js file should not be in a folder"));
+        } else {
+          const indexFileFound = Object.values(entry.files).some(file => {
+            return file.name === fileToBePresent;
+          });
+
+          if (!indexFileFound) {
+            reject(new ValidationError("The zip file should contain index.js file"));
+          }
+
+          resolve();
         }
-        resolve();
       });
     });
   };
@@ -78,6 +90,13 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
         fileDownloadURL={demoFilesUrl}
         uploadSuccess={Boolean(demoFilesUrl)}
         error={error}
+        helperText={
+          <>
+            <Typography>* Compress only the individual files with no parent folders</Typography>
+            <Typography>* Package must be under 2mb</Typography>
+            <Typography>* Make sure the extension is .zip</Typography>
+          </>
+        }
       />
       <AlertBox type={alert.type} message={alert.message} />
     </div>

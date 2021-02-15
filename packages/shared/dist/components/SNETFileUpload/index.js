@@ -39,7 +39,8 @@ var SNETFileUpload = function SNETFileUpload(props) {
       fileSize = props.fileSize,
       fileDownloadURL = props.fileDownloadURL,
       uploadSuccess = props.uploadSuccess,
-      error = props.error;
+      error = props.error,
+      helperText = props.helperText;
   var classes = (0, _styles.useStyles)(); // eslint-disable-next-line no-unused-vars
 
   var _useDropzone = (0, _reactDropzone.useDropzone)({
@@ -65,7 +66,7 @@ var SNETFileUpload = function SNETFileUpload(props) {
     md: 6,
     lg: 6,
     className: classes.grayBox
-  }, getRootProps()), /*#__PURE__*/_react.default.createElement(_Backup.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", null, " click")), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "(Package must be under ", maxSize, "mb. Make sure the extension is .zip or .tar)")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, getRootProps()), /*#__PURE__*/_react.default.createElement(_Backup.default, null), /*#__PURE__*/_react.default.createElement(_Typography.default, null, "Drag and drop image here or", /*#__PURE__*/_react.default.createElement("span", null, " click")), helperText === null ? /*#__PURE__*/_react.default.createElement(_Typography.default, null, "(Package must be under ", maxSize, "mb. Make sure the extension is .zip or .tar)") : helperText), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 12,
     sm: 12,
@@ -96,7 +97,11 @@ SNETFileUpload.prototypes = {
   fileName: _propTypes.default.string,
   fileSize: _propTypes.default.number,
   fileDownloadURL: _propTypes.default.string,
-  uploadSuccess: _propTypes.default.bool
+  uploadSuccess: _propTypes.default.bool,
+  helperText: _propTypes.default.any
+};
+SNETFileUpload.defaultProps = {
+  helperText: null
 };
 var _default = SNETFileUpload;
 exports.default = _default;
