@@ -31,8 +31,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
   }, [alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
-    const protoServiceRegexPattern = "(pb_service.js?)";
-    const protoFileExtensionRegexPattern = "(pb.js?)";
+    const protoFileRegexPattern = "(proto)";
     const protoFilesInsideFolder = "^(.+)/([^/]+)$";
 
     return new Promise((resolve, reject) => {
@@ -42,9 +41,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
 
         if (filesInsideSomeFolder) {
           reject(new ValidationError("Proto files should not be in a folder"));
-        } else if (!validateCompressedFiles(protoServiceRegexPattern, entry)) {
-          reject(new ValidationError("Proto service file not found"));
-        } else if (!validateCompressedFiles(protoFileExtensionRegexPattern, entry)) {
+        } else if (!validateCompressedFiles(protoFileRegexPattern, entry)) {
           reject(new ValidationError("Proto file not found"));
         } else {
           resolve();
