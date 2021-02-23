@@ -480,7 +480,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
-      .send()
+      .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
