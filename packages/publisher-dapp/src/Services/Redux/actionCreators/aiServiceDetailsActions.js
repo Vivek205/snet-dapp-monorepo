@@ -530,10 +530,11 @@ export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async d
 const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   const sdk = await initSDK();
   const address = await sdk.account.getAddress();
+
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .updateServiceRegistration(organization.id, serviceDetails.id, serviceMetadataURI)
-      .send()
+      .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
