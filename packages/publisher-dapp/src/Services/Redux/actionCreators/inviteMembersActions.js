@@ -186,10 +186,11 @@ export const addAndPublishMembers = (members, orgId, uuid, ownerAddress) => asyn
     }
     const newMembersAddress = filterAdressFromMembers(members);
     dispatch(loaderActions.startAppLoader(LoaderContent.ADD_MEMBERS_TO_BLOCKCHAIN));
+
     return new Promise((resolve, reject) => {
       const method = sdk._registryContract
         .addOrganizationMembers(orgId, newMembersAddress)
-        .send()
+        .send({ from: address })
         .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
           await dispatch(publishMembers(members, uuid, txnHash));
         })

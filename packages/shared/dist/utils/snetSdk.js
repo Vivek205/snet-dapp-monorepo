@@ -31,7 +31,7 @@ var initSDK = /*#__PURE__*/function () {
           case 0:
             updateSDK = /*#__PURE__*/function () {
               var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var chainIdHex, networkId, config;
+                var chainIdHex, networkId, config, address;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
@@ -49,6 +49,14 @@ var initSDK = /*#__PURE__*/function () {
                         return sdk.setupAccount();
 
                       case 6:
+                        _context.next = 8;
+                        return sdk.account.getAddress();
+
+                      case 8:
+                        address = _context.sent;
+                        sdk._web3.eth.defaultAccount = address;
+
+                      case 10:
                       case "end":
                         return _context.stop();
                     }
