@@ -446,12 +446,11 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
-  const address = await sdk.account.getAddress();
   return new Promise((resolve, reject) => {
     try {
       const method = sdk._registryContract
         .createOrganization(orgId, orgMetadataURI, members)
-        .send({ from: address })
+        .send()
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
