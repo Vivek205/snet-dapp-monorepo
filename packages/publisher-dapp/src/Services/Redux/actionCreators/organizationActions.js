@@ -484,13 +484,10 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
-
-  const address = await sdk.account.getAddress();
-
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .changeOrganizationMetadataURI(orgId, orgMetadataURI)
-      .send({ from: address })
+      .send()
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
         dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
