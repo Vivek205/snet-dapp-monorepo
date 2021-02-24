@@ -28,7 +28,6 @@ export const SET_ORG_SAME_MAILING_ADDRESS = "SET_ORG_SAME_MAILING_ADDRESS";
 export const SET_ORG_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
 export const SET_ORG_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
 export const SET_ORG_OWNER = "SET_ORG_OWNER";
-export const SET_ORG_OWNER_ADDRESS = "SET_ORG_OWNER_ADDRESS";
 export const SET_ORG_STATE_ALL = "SET_ORG_STATE_ALL";
 export const SET_ORG_STATE_STATE = "SET_ORG_STATE_STATE";
 export const SET_ORG_STATE_UPDATED_ON = "SET_ORG_STATE_UPDATED_ON";
@@ -64,8 +63,6 @@ export const setOrgMailingAddressDetail = (name, value) => ({
 });
 
 export const setOrgOwner = owner => ({ type: SET_ORG_OWNER, payload: owner });
-
-export const setOrgOwnerAddress = owner => ({ type: SET_ORG_OWNER_ADDRESS, payload: owner });
 
 export const setOrgStateAll = state => ({ type: SET_ORG_STATE_ALL, payload: state });
 
@@ -541,7 +538,7 @@ const getMembersAPI = (uuid, role) => async dispatch => {
 
 export const getOwner = uuid => async dispatch => {
   const { data } = await dispatch(getMembersAPI(uuid, userRoles.OWNER));
-  await Promise.all([dispatch(setOrgOwner(data[0].username)), dispatch(setOrgOwnerAddress(data[0].address))]);
+  await dispatch(setOrgOwner(data[0].username));
   return data;
 };
 
