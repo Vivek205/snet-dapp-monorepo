@@ -480,12 +480,17 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
-      .send()
+      .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
-      .once(blockChainEvents.CONFIRMATION, async () => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          reject(receipt);
+          method.off();
+          return;
+        }
         await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         await dispatch(setServiceDetailsFoundInBlockchain(true));
@@ -528,16 +533,20 @@ const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, hi
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .updateServiceRegistration(organization.id, serviceDetails.id, serviceMetadataURI)
-      .send()
+      .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
         dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_BLOCKCHAIN));
       })
-      .once(blockChainEvents.CONFIRMATION, async hash => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          method.off();
+          return reject(receipt);
+        }
         await dispatch(aiServiceListActions.setRecentlyPublishedService(serviceDetails.name));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
-        resolve(hash);
+        resolve(_confirmationNumber);
         await method.off();
       })
       .on(blockChainEvents.ERROR, error => {

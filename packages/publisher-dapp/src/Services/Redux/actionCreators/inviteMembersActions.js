@@ -181,7 +181,7 @@ export const addAndPublishMembers = (members, orgId, uuid, ownerAddress) => asyn
   try {
     const sdk = await initSDK();
     const address = await sdk.account.getAddress();
-    if (address !== ownerAddress) {
+    if (!address || address.toLowerCase() !== ownerAddress.toLowerCase()) {
       throw new ValidationError("The account selected in the Metamask is not the owner of this organization");
     }
     const newMembersAddress = filterAdressFromMembers(members);
@@ -189,11 +189,15 @@ export const addAndPublishMembers = (members, orgId, uuid, ownerAddress) => asyn
     return new Promise((resolve, reject) => {
       const method = sdk._registryContract
         .addOrganizationMembers(orgId, newMembersAddress)
-        .send()
+        .send({ from: address })
         .on(blockChainEvents.TRANSACTION_HASH, async txnHash => {
           await dispatch(publishMembers(members, uuid, txnHash));
         })
-        .once(blockChainEvents.CONFIRMATION, async () => {
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (!receipt.status) {
+            method.off();
+            return reject(receipt);
+          }
           dispatch(loaderActions.stopAppLoader());
           resolve();
           await method.off();

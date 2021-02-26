@@ -174,7 +174,12 @@ class WalletAccount extends React.Component {
         // TODO call daemon start claims
         this.props.startAppLoader(LoaderContent.CLAIMING_CHANNELS_IN_BLOCKCHAIN);
       });
-      method.once(blockChainEvents.CONFIRMATION, async () => {
+      method.once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          method.off();
+          throw new MetamaskError("Blockchain operation failed, please try again");
+        }
+
         const { unclaimedPayments, pendingPayments, selectedChannels } = this.state;
         await this.initEscrow();
 
