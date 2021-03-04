@@ -27,7 +27,6 @@ export const initSDK = async () => {
   };
 
   const hasEth = typeof window.ethereum !== "undefined";
-  // const hasWeb3 = typeof window.web3 !== "undefined";
   try {
     if (hasEth) {
       web3Provider = window.ethereum;

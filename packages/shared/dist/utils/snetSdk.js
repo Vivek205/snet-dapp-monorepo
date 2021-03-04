@@ -20,11 +20,11 @@ exports.ethereumMethods = ethereumMethods;
 var DEFAULT_GAS_LIMIT = undefined;
 var DEFAULT_GAS_PRICE = undefined;
 var ON_ACCOUNT_CHANGE = "accountsChanged";
-var ON_NETWORK_CHANGE = "networkChanged";
+var ON_NETWORK_CHANGE = "chainChanged";
 
 var initSDK = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-    var sdk, web3Provider, updateSDK, hasEth, hasWeb3;
+    var sdk, web3Provider, updateSDK, hasEth;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -62,21 +62,20 @@ var initSDK = /*#__PURE__*/function () {
             }();
 
             hasEth = typeof window.ethereum !== "undefined";
-            hasWeb3 = typeof window.web3 !== "undefined";
-            _context2.prev = 3;
+            _context2.prev = 2;
 
-            if (!(hasEth && hasWeb3)) {
-              _context2.next = 13;
+            if (!hasEth) {
+              _context2.next = 12;
               break;
             }
 
             web3Provider = window.ethereum;
-            _context2.next = 8;
+            _context2.next = 7;
             return web3Provider.request({
               method: ethereumMethods.REQUEST_ACCOUNTS
             });
 
-          case 8:
+          case 7:
             // eslint-disable-next-line require-atomic-updates
             web3Provider.addListener(ON_ACCOUNT_CHANGE, function (accounts) {
               var event = new CustomEvent("snetMMAccountChanged", {
@@ -94,27 +93,27 @@ var initSDK = /*#__PURE__*/function () {
               });
               window.dispatchEvent(event);
             });
-            _context2.next = 12;
+            _context2.next = 11;
             return updateSDK();
 
-          case 12:
+          case 11:
             return _context2.abrupt("return", sdk);
 
-          case 13:
-            _context2.next = 18;
+          case 12:
+            _context2.next = 17;
             break;
 
-          case 15:
-            _context2.prev = 15;
-            _context2.t0 = _context2["catch"](3);
+          case 14:
+            _context2.prev = 14;
+            _context2.t0 = _context2["catch"](2);
             throw _context2.t0;
 
-          case 18:
+          case 17:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[3, 15]]);
+    }, _callee2, null, [[2, 14]]);
   }));
 
   return function initSDK() {
