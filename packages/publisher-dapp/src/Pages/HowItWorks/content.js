@@ -74,7 +74,7 @@ export const howItWorksContent = [
   },
   {
     icon: CollectAGIIcon,
-    title: "Collect AGI Tokens",
+    title: "Collect AGIX Tokens",
     description: "and transfer them to your preferred wallet and team members.",
     btnTitle: "learn more",
     linkTo: "https://dev.singularitynet.io/docs/ai-developers/claim/",
