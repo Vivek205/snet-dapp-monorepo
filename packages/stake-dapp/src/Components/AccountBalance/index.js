@@ -31,7 +31,7 @@ const AccountBalance = ({ classes }) => {
               <a href="https://metamask.io/" target="_new">
                 Click here{" "}
               </a>
-              to install and learn more about how to use Metamask and your AGI credits with SingularityNet AI
+              to install and learn more about how to use Metamask and your AGIX credits with SingularityNet AI
               Marketplace.
             </Typography>
           </div>

@@ -18,7 +18,7 @@ const Benefits = ({ classes }) => {
           <img src={benefitsImage} alt="Benefits" />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.benefitsContent}>
-          <Typography variant="h2">Benefits of Staking AGI tokens</Typography>
+          <Typography variant="h2">Benefits of Staking AGIX tokens</Typography>
           <ul>
             <li>
               <CheckIcon />
@@ -43,7 +43,7 @@ const Benefits = ({ classes }) => {
               <CheckIcon />
               <div>
                 <Typography>Earn Rewards - </Typography>
-                <Typography>Earn more AGI tokens in reward for putting your tokens to use.</Typography>
+                <Typography>Earn more AGIX tokens in reward for putting your tokens to use.</Typography>
               </div>
             </li>
           </ul>

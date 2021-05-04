@@ -111,7 +111,7 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Allows staking contract to authorize higher amount of AGI for efficient and fast staking. This saves
+                  Allows staking contract to authorize higher amount of AGIX for efficient and fast staking. This saves
                   you gas cost (ETH) for every stake you submit. Recommended if you are planning to stake more than
                   once. See FAQ for more information.
                 </p>
@@ -149,7 +149,7 @@ class MetaMaskAccountBalance extends Component {
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Number of AGI tokens currently available in your wallet.</p>
+                <p>Number of AGIX tokens currently available in your wallet.</p>
               </div>
               <span>Total Tokens</span>
             </div>
@@ -161,7 +161,7 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Number of AGI tokens that you have staked across all sessions. This includes pending and active
+                  Number of AGIX tokens that you have staked across all sessions. This includes pending and active
                   staking amounts.
                 </p>
               </div>

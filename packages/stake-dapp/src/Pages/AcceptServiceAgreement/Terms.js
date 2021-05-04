@@ -47,7 +47,7 @@ const Terms = () => {
       <p>
         (<strong>i</strong>) AI Store (&ldquo;<strong>AI Store</strong>&rdquo;) &ndash; a decentralized marketplace for
         Artificial Intelligence (&ldquo;<strong>AI</strong>&rdquo;). Through the AI Store AI developers can exchange
-        their tools and services for SingularityNET&rsquo;s AGI token (&ldquo;<strong>AGI</strong>&rdquo;) or even for
+        their tools and services for SingularityNET&rsquo;s AGIX token (&ldquo;<strong>AGIX</strong>&rdquo;) or even for
         other tools and services. To make these transactions as simple as possible, SingularityNET provides APIs to
         incorporate standard AI services, like image and language processing, into smart contracts.
       </p>
@@ -68,8 +68,8 @@ const Terms = () => {
         ID for anyone other than yourself.
       </p>
       <p>
-        <strong>2.5</strong> When you hold AGI you may be given the option to &ldquo;stake&rdquo; AGI and earn a reward
-        (please visit our <u>staking information page</u> for further details).
+        <strong>2.5</strong> When you hold AGIX you may be given the option to &ldquo;stake&rdquo; AGIX and earn a
+        reward (please visit our <u>staking information page</u> for further details).
       </p>
       <p>
         <strong>3. Use of Services and Content</strong>
