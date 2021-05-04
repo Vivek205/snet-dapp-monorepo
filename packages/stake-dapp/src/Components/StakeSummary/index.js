@@ -102,7 +102,7 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>The number of people who have contributed AGI tokens to this stake session</Typography>
+                    <Typography>The number of people who have contributed AGIX tokens to this stake session</Typography>
                   </div>
                   <Typography className={classes.title}>Stakers</Typography>
                 </div>
@@ -115,13 +115,13 @@ const StakeSummary = ({ classes }) => {
                 <div className={classes.iconTooltipContainer}>
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
-                    <Typography>The total amount of AGI tokens that have been contributed by all stakers</Typography>
+                    <Typography>The total amount of AGIX tokens that have been contributed by all stakers</Typography>
                   </div>
                   <Typography className={classes.title}>Final Pool Size</Typography>
                 </div>
                 <div className={classes.stakeSessionValues}>
                   <Typography className={classes.value}>{toDisplayFormat(stakeWindow.windowTotalStake)}</Typography>
-                  <Typography className={classes.unit}>AGI</Typography>
+                  <Typography className={classes.unit}>AGIX</Typography>
                 </div>
               </Grid>
               <Grid item xs={12} sm={6} md={3} lg={3}>
@@ -129,14 +129,15 @@ const StakeSummary = ({ classes }) => {
                   <div className={classes.toolTipContainer}>
                     <InfoIcon />
                     <Typography>
-                      Number of AGI tokens that will be divided amongst all stakers as the reward for the current window
+                      Number of AGIX tokens that will be divided amongst all stakers as the reward for the current
+                      window
                     </Typography>
                   </div>
                   <Typography className={classes.title}>Reward Pool</Typography>
                 </div>
                 <div className={classes.stakeSessionValues}>
                   <Typography className={classes.value}>{toDisplayFormat(stakeWindow.rewardAmount)}</Typography>
-                  <Typography className={classes.unit}>AGI</Typography>
+                  <Typography className={classes.unit}>AGIX</Typography>
                 </div>
               </Grid>
               <Grid item xs={12} sm={6} md={3} lg={3}>
