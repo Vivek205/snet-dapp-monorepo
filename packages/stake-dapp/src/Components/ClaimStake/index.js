@@ -173,7 +173,7 @@ const ClaimStake = () => {
       if (
         stakeDetails.autoRenewal === false &&
         currentTimestamp > stakeDetails.endPeriod &&
-        stakeDetails.approvedAmount !== 0
+        stakeDetails.claimableAmount !== 0
       ) {
         return false;
       } else if (

@@ -12,8 +12,7 @@ const computeReward = activeStake => {
   const windowRewardAmount = new BigNumber(activeStake.rewardAmount);
   const windowMaxCap = new BigNumber(activeStake.windowMaxCap);
   let totalStakedAmount = new BigNumber(activeStake.totalStakedAmount);
-  const windowTotalStake = new BigNumber(activeStake.windowTotalStake);
-  const totalAutoRenewAmount = new BigNumber(activeStake.totalAutoRenewAmount);
+  //const windowTotalStake = new BigNumber(activeStake.windowTotalStake);
 
   if (myStake.gt(myStakeProcessed)) {
     totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -31,8 +30,6 @@ const computeReward = activeStake => {
   // Add AutoRenewed State
   myStake = myStake.plus(myStakeAutoRenewed);
 
-  // Considering Auto Renewed Stake For calculation
-  totalStakedAmount = totalStakedAmount.plus(windowTotalStake).plus(totalAutoRenewAmount);
   if (totalStakedAmount.lt(windowMaxCap)) {
     rewardAmount = myStake.times(windowRewardAmount).div(totalStakedAmount);
   } else {
@@ -80,9 +77,7 @@ export const sessionDetails = activeStake => [
   },
   {
     title: "Current Pool Size",
-    value: fromWei(
-      BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake, activeStake.totalAutoRenewAmount)
-    ),
+    value: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
     unit: "AGI",
     toolTip: "Total amount of AGI tokens staked in the pool currently",
   },

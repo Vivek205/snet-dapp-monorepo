@@ -139,39 +139,77 @@ export const fetchCurrentActiveStakeWindow = metamaskDetails => async dispatch =
 };
 
 const parseAndTransformStakeWindow = data => {
-  if (data.length === 0) {
+  // if (data.length === 0) {
+  //   return {};
+  // }
+
+  if (!data.window_id) {
     return {};
   }
 
   // There should be only one active window at a given time
-  const stakeWindow = data[0];
+  //const stakeWindow = data[0];
+
+  const stakeWindow = data;
+
+  // const stakeWindowDetails = {
+  //   stakeMapIndex: stakeWindow.window_id,
+  //   startPeriod: stakeWindow.start_period,
+  //   submissionEndPeriod: stakeWindow.submission_end_period,
+  //   approvalEndPeriod: stakeWindow.approval_end_period,
+  //   requestWithdrawStartPeriod: stakeWindow.request_withdraw_start_period,
+  //   endPeriod: stakeWindow.end_period,
+  //   minStake: stakeWindow.min_stake,
+  //   maxStake: stakeWindow.max_stake,
+  //   windowMaxCap: stakeWindow.window_max_cap,
+  //   openForExternal: stakeWindow.open_for_external,
+  //   windowTotalStake: stakeWindow.total_stake,
+  //   rewardAmount: stakeWindow.reward_amount,
+  //   tokenOperator: stakeWindow.token_operator,
+  //   totalStakers: stakeWindow.no_of_stakers,
+  //   totalStakedAmount: stakeWindow.total_stake_deposited,
+  //   myStake: stakeWindow.pending_stake_amount_for_staker,
+  //   myStakeProcessed: stakeWindow.pending_stake_amount_for_staker,
+  //   myStakeAutoRenewed: BigNumber.sum(
+  //     stakeWindow.auto_renew_amount_for_staker,
+  //     stakeWindow.approved_stake_amount_for_staker
+  //   ).toString(),
+  //   totalAutoRenewAmount: stakeWindow.total_auto_renew_amount,
+  // };
+  // //myStake: stakeWindow.stake_amount_for_given_staker_address,
+  // //myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
+
+  let pendingApprovalAmount = 0;
+  let approvedAmount = 0;
+
+  if (stakeWindow.amount_pending_for_approval) {
+    pendingApprovalAmount = stakeWindow.amount_pending_for_approval;
+  }
+
+  if (stakeWindow.amount_approved) {
+    approvedAmount = stakeWindow.amount_approved;
+  }
 
   const stakeWindowDetails = {
-    stakeMapIndex: stakeWindow.blockchain_id,
+    stakeMapIndex: stakeWindow.window_id,
     startPeriod: stakeWindow.start_period,
     submissionEndPeriod: stakeWindow.submission_end_period,
     approvalEndPeriod: stakeWindow.approval_end_period,
     requestWithdrawStartPeriod: stakeWindow.request_withdraw_start_period,
     endPeriod: stakeWindow.end_period,
     minStake: stakeWindow.min_stake,
-    maxStake: stakeWindow.max_stake,
-    windowMaxCap: stakeWindow.window_max_cap,
+    maxStake: "10000000000000000",
+    windowMaxCap: "100000000000000000",
     openForExternal: stakeWindow.open_for_external,
     windowTotalStake: stakeWindow.total_stake,
-    rewardAmount: stakeWindow.reward_amount,
+    rewardAmount: stakeWindow.window_reward_amount,
     tokenOperator: stakeWindow.token_operator,
     totalStakers: stakeWindow.no_of_stakers,
-    totalStakedAmount: stakeWindow.total_stake_deposited,
-    myStake: stakeWindow.pending_stake_amount_for_staker,
-    myStakeProcessed: stakeWindow.pending_stake_amount_for_staker,
-    myStakeAutoRenewed: BigNumber.sum(
-      stakeWindow.auto_renew_amount_for_staker,
-      stakeWindow.approved_stake_amount_for_staker
-    ).toString(),
-    totalAutoRenewAmount: stakeWindow.total_auto_renew_amount,
+    totalStakedAmount: stakeWindow.total_amount_staked,
+    myStake: pendingApprovalAmount,
+    myStakeProcessed: pendingApprovalAmount,
+    myStakeAutoRenewed: BigNumber.sum(0, approvedAmount).toString(),
   };
-  //myStake: stakeWindow.stake_amount_for_given_staker_address,
-  //myStakeProcessed: stakeWindow.stake_amount_for_given_staker_address,
 
   return stakeWindowDetails;
 };
@@ -221,16 +259,56 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
     }
 
     //console.log("fetchActiveStakes - ", data);
-    const activeStakes = parseAndTransformStakes(data);
+    const activeStakes = parseAndTransformActiveStakes(data);
 
     dispatch(setActiveStakes(activeStakes));
-    dispatch(setStakeSummary({ incubatingCount: data.length }));
+    dispatch(setStakeSummary({ incubatingCount: activeStakes.length }));
 
     dispatch(loaderActions.stopActiveStakeLoader());
   } catch (error) {
     dispatch(loaderActions.stopActiveStakeLoader());
     throw error;
   }
+};
+
+const parseAndTransformActiveStakes = data => {
+  if (!data.window_id) {
+    return [];
+  }
+
+  // First Section of transformation for the Stake Window
+  // Second Section of transformation for the Stake Holder
+  const stakeDetails = {
+    stakeMapIndex: data.window_id,
+    startPeriod: data.start_period,
+    submissionEndPeriod: data.submission_end_period,
+    approvalEndPeriod: data.approval_end_period,
+    requestWithdrawStartPeriod: data.request_withdraw_start_period,
+    endPeriod: data.end_period,
+    minStake: data.min_stake,
+    maxStake: "10000000000000000",
+    windowMaxCap: "100000000000000000",
+    openForExternal: data.open_for_external,
+    windowTotalStake: data.total_stake,
+    rewardAmount: data.window_reward_amount,
+    tokenOperator: data.token_operator,
+    numOfStakers: data.no_of_stakers,
+    totalStakedAmount: data.total_amount_staked,
+
+    staker: data.staker,
+    pendingForApprovalAmount: data.amount_pending_for_approval,
+    approvedAmount: data.amount_approved,
+    autoRenewal: data.amount_approved > 0 || data.amount_pending_for_approval > 0 ? true : false,
+    stakedBlockNumber: data.block_no_created,
+    refundAmount: data.refund_amount ? data.refund_amount : 0,
+    claimableAmount: data.claimable_amount ? data.claimable_amount : 0,
+    stakeRewardAmount: data.reward_amount ? data.reward_amount : 0,
+  };
+
+  const stakes = [];
+  stakes.push(stakeDetails);
+
+  return stakes;
 };
 
 // **************************
@@ -279,28 +357,30 @@ const parseAndTransformStakes = data => {
   // First Section of transformation for the Stake Window
   // Second Section of transformation for the Stake Holder
   const stakes = data.map(stake => ({
-    stakeMapIndex: stake.stake_window.blockchain_id,
-    startPeriod: stake.stake_window.start_period,
-    submissionEndPeriod: stake.stake_window.submission_end_period,
-    approvalEndPeriod: stake.stake_window.approval_end_period,
-    requestWithdrawStartPeriod: stake.stake_window.request_withdraw_start_period,
-    endPeriod: stake.stake_window.end_period,
-    minStake: stake.stake_window.min_stake,
-    maxStake: stake.stake_window.max_stake,
-    windowMaxCap: stake.stake_window.window_max_cap,
-    openForExternal: stake.stake_window.open_for_external,
-    windowTotalStake: stake.stake_window.total_stake,
-    rewardAmount: stake.stake_window.reward_amount,
-    tokenOperator: stake.stake_window.token_operator,
-    numOfStakers: stake.stake_window.no_of_stakers,
-    totalStakedAmount: stake.stake_window.total_stake_deposited,
+    stakeMapIndex: stake.window_id,
+    startPeriod: stake.start_period,
+    submissionEndPeriod: stake.submission_end_period,
+    approvalEndPeriod: stake.approval_end_period,
+    requestWithdrawStartPeriod: stake.request_withdraw_start_period,
+    endPeriod: stake.end_period,
+    minStake: stake.min_stake,
+    maxStake: "10000000000000000",
+    windowMaxCap: "100000000000000000",
+    openForExternal: stake.open_for_external,
+    windowTotalStake: stake.total_stake,
+    rewardAmount: stake.window_reward_amount,
+    tokenOperator: stake.token_operator,
+    numOfStakers: stake.no_of_stakers,
+    totalStakedAmount: stake.total_stake_deposited,
 
-    staker: stake.stake_holder.staker,
-    pendingForApprovalAmount: stake.stake_holder.amount_pending_for_approval,
-    approvedAmount: stake.stake_holder.amount_approved,
-    autoRenewal: stake.stake_holder.auto_renewal,
-    stakedBlockNumber: stake.stake_holder.block_no_created,
-    refundAmount: stake.stake_holder.refund_amount,
+    staker: stake.staker,
+    pendingForApprovalAmount: stake.amount_pending_for_approval,
+    approvedAmount: stake.amount_approved,
+    autoRenewal: stake.auto_renewal,
+    stakedBlockNumber: stake.block_no_created,
+    refundAmount: stake.refund_amount,
+    claimableAmount: stake.claimable_amount,
+    stakeRewardAmount: stake.reward_amount,
   }));
 
   return stakes;
@@ -351,18 +431,18 @@ const parseAndTransformStakeTransactions = data => {
   // First Section of transformation for the Stake Window
   // Second Section of transformation for the Stake Holder
   const stakes = data.map(stake => ({
-    stakeMapIndex: stake.stake_window.blockchain_id,
+    stakeMapIndex: stake.stake_window.window_id,
     startPeriod: stake.stake_window.start_period,
     submissionEndPeriod: stake.stake_window.submission_end_period,
     approvalEndPeriod: stake.stake_window.approval_end_period,
     requestWithdrawStartPeriod: stake.stake_window.request_withdraw_start_period,
     endPeriod: stake.stake_window.end_period,
     minStake: stake.stake_window.min_stake,
-    maxStake: stake.stake_window.max_stake,
-    windowMaxCap: stake.stake_window.window_max_cap,
+    maxStake: "10000000000000000",
+    windowMaxCap: "100000000000000000",
     openForExternal: stake.stake_window.open_for_external,
     windowTotalStake: stake.stake_window.total_stake,
-    rewardAmount: stake.stake_window.reward_amount,
+    rewardAmount: stake.stake_window.window_reward_amount,
     tokenOperator: stake.stake_window.token_operator,
     numOfStakers: stake.stake_window.no_of_stakers,
     totalStakedAmount: stake.stake_window.total_stake_deposited,
@@ -424,13 +504,12 @@ export const fetchStakeCalculatorDetails = () => async dispatch => {
       requestWithdrawStartPeriod: data.request_withdraw_start_period,
       endPeriod: data.end_period,
       minStake: data.min_stake,
-      maxStake: data.max_stake,
-      windowMaxCap: data.window_max_cap,
+      maxStake: "10000000000000000",
+      windowMaxCap: "100000000000000000",
       openForExternal: data.open_for_external,
       windowTotalStake: data.total_stake,
-      windowRewardAmount: data.reward_amount,
-      totalPendingApprovalStake: data.total_stake_pending_for_approval,
-      totalAutoRenewAmount: data.total_auto_renew_amount,
+      windowRewardAmount: data.window_reward_amount,
+      totalAmountStaked: data.total_amount_staked,
     };
 
     dispatch(setRecentStakeWindow(recentStakeWindowDetails));
@@ -509,18 +588,18 @@ const parseAndTransformStakeWindows = data => {
   }
 
   const stakeWindows = data.map(stakeWindow => ({
-    stakeMapIndex: stakeWindow.blockchain_id,
+    stakeMapIndex: stakeWindow.window_id,
     startPeriod: stakeWindow.start_period,
     submissionEndPeriod: stakeWindow.submission_end_period,
     approvalEndPeriod: stakeWindow.approval_end_period,
     requestWithdrawStartPeriod: stakeWindow.request_withdraw_start_period,
     endPeriod: stakeWindow.end_period,
     minStake: stakeWindow.min_stake,
-    maxStake: stakeWindow.max_stake,
-    windowMaxCap: stakeWindow.window_max_cap,
+    maxStake: "10000000000000000",
+    windowMaxCap: "100000000000000000",
     openForExternal: stakeWindow.open_for_external,
     windowTotalStake: stakeWindow.total_stake,
-    rewardAmount: stakeWindow.reward_amount,
+    rewardAmount: stakeWindow.window_reward_amount,
     tokenOperator: stakeWindow.token_operator,
     numOfStakers: stakeWindow.no_of_stakers,
     totalStakedAmount: stakeWindow.total_stake_deposited,
