@@ -46,7 +46,7 @@ export const TermsHTML = () => (
             &rdquo;). Through you can exchange your AI applications, tools and services (&ldquo;
           </span>
           <strong>AI TApp</strong>
-          <span style="font-weight: 400;">&rdquo;) for SingularityNET&rsquo;s AGI token (&ldquo;</span>
+          <span style="font-weight: 400;">&rdquo;) for SingularityNET&rsquo;s AGIX token (&ldquo;</span>
           <strong>AGI</strong>
           <span style="font-weight: 400;">&rdquo;) or even for other tools and services.&nbsp;</span>
         </p>

@@ -24,6 +24,7 @@ const SNETFileUpload = props => {
     fileDownloadURL,
     uploadSuccess,
     error,
+    helperText,
   } = props;
   const classes = useStyles();
 
@@ -47,7 +48,11 @@ const SNETFileUpload = props => {
         <Typography>
           Drag and drop image here or<span> click</span>
         </Typography>
-        <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
+        {helperText === null ? (
+          <Typography>(Package must be under {maxSize}mb. Make sure the extension is .zip or .tar)</Typography>
+        ) : (
+          helperText
+        )}
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <FileStats
@@ -78,6 +83,11 @@ SNETFileUpload.prototypes = {
   fileSize: PropTypes.number,
   fileDownloadURL: PropTypes.string,
   uploadSuccess: PropTypes.bool,
+  helperText: PropTypes.any,
+};
+
+SNETFileUpload.defaultProps = {
+  helperText: null,
 };
 
 export default SNETFileUpload;

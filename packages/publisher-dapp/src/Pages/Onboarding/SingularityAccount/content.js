@@ -7,7 +7,7 @@ export const entityTypeDetails = {
 };
 
 export const loggedInDetails = {
-  subtitle: "This is your Singularlity account that will be associated with your AI Publisher account.",
+  subtitle: "This is your Singularity account that will be associated with your AI Publisher account.",
   description:
     "If you are an organization, it is advisable to register a corresponding SingularityNET account rather using a personal account.",
 };
