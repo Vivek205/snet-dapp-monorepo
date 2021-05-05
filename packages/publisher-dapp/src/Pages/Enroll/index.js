@@ -101,7 +101,7 @@ const Enroll = ({ classes, history }) => {
             {" "}
             set up and install a Metamask Wallet{" "}
           </a>
-          account to enable publishing actions to the blockchain as well as collect AGI tokens that your AI services
+          account to enable publishing actions to the blockchain as well as collect AGIX tokens that your AI services
           gained from customers purchases.
         </Typography>
         <Typography variant="body2">
