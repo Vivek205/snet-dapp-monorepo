@@ -15,7 +15,8 @@ const computeReward = stakeDetails => {
   if (
     currentTimestamp > stakeDetails.submissionEndPeriod &&
     stakeDetails.approvedAmount === 0 &&
-    stakeDetails.pendingForApprovalAmount === 0
+    stakeDetails.pendingForApprovalAmount === 0 &&
+    stakeDetails.claimableAmount === 0
   )
     return 0;
 
