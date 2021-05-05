@@ -14,7 +14,7 @@ export const communityDetails = [
     image: DocumentationImage,
     title: "Full Staking Documentation",
     description:
-      "Learn more about the stages of the staking process and what happens to your AGI tokens whilst they are staked.",
+      "Learn more about the stages of the staking process and what happens to your AGIX tokens whilst they are staked.",
   },
   {
     to: "https://telegram.me/singularitynet",
@@ -27,11 +27,11 @@ export const communityDetails = [
 
 export const stakingFAQ = [
   {
-    question: "How long is a Staking window to reflect the 180 days?",
+    question: "Staking window",
     answer: `
     <ul>
       <li>Every 30 days a stake window opens for 7 days</li>
-      <li>You can refer the dates at the portal</li>
+      <li>You can refer the dates at the <a href="https://staking.singularitynet.io/howitworks" target="_blank" rel="noopener noreferrer">portal</a></li>
       <li>You will see the details once you login to the portal</li>
       <li>You would see the timer telling you till when the next staking window will   open.</li>
     </ul>
@@ -59,7 +59,7 @@ export const stakingFAQ = [
   {
     question: "What happens if my transaction fails ?",
     answer: `
-      <p>Please attempt again as your AGIs have not been Staked yet.</p>
+      <p>Please attempt again as your AGIXs have not been Staked yet.</p>
       <p>You could see the Balance of Your account on the landing page itself </p>
       <p>You will see the same account balance and a successful message as below on your page.</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/successMsg.png alt="Sucess Message Notification" />
@@ -185,7 +185,7 @@ export const troubleShootingFAQ = [
     question: "How does partial withdrawals work?",
     answer: `<p>In order to withdraw your stake (staked amount along with the earned reward) you first need to opt out from auto renewal. 
     <br/><span>This option can be selected either at the point of staking or when the opt out window opens. Only opted out stakers will have an option to claim the stake. Note that this is no partial withdrawal as such.</span>
-    <br/><span>For example if you have staked 100 AGI and have earned 10 AGI, when you opt out the entire 110 AGI is available for claim and <b>will not be carried into the next stake window</b>. So if you want to claim only 50 AGI and want the remaining 60 AGI to continue in the stake window you will have to stake the 60 AGI during the next stake window.</span>
+    <br/><span>For example if you have staked 100 AGIX and have earned 10 AGIX, when you opt out the entire 110 AGIX is available for claim and <b>will not be carried into the next stake window</b>. So if you want to claim only 50 AGIX and want the remaining 60 AGIX to continue in the stake window you will have to stake the 60 AGIX during the next stake window.</span>
     </p>`,
   },
   {

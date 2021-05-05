@@ -28,7 +28,7 @@ const ValidateConfig = props => {
     <div className={classes.validateConfigContainer}>
       <Typography variant="h6">Insert Testing Configuration File</Typography>
       <Typography className={classes.submitDescription}>
-        In order for SingularityNET reviewers to test your service, you will need to update your configuration file with
+        In order for SingularityNET reviewers to test your service, you will need to append your configuration file with
         a <span>Testing Configuration File.</span> This allows only SingularityNET reviewers access to your service in a
         non-blockchain mode. After you insert the testing configuration file, please validate the endpoint to continue
         to submission process.

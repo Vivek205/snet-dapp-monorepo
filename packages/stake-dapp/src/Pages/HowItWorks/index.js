@@ -71,7 +71,7 @@ const HowItWorks = ({ classes }) => {
               <img src={BankImage} alt="Bank" />
               <Typography variant="h4">What is Staking</Typography>
               <Typography>
-                Learn more about how staking works in our ecosystem of products and why staking your AGI tokens is
+                Learn more about how staking works in our ecosystem of products and why staking your AGIX tokens is
                 important for the AI community.
               </Typography>
             </a>
@@ -86,7 +86,7 @@ const HowItWorks = ({ classes }) => {
               <img src={PiggyBankImage} alt="Piggy Bank" />
               <Typography variant="h4">Stages of Staking</Typography>
               <Typography>
-                Learn more about the stages of the staking process and what happens to your AGI tokens whilst they are
+                Learn more about the stages of the staking process and what happens to your AGIX tokens whilst they are
                 staked.
               </Typography>
             </a>
