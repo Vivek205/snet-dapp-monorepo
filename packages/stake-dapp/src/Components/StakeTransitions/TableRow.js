@@ -66,9 +66,10 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     const windowRewardAmount = new BigNumber(stakeWindow.rewardAmount);
 
     let windowTotalStake = new BigNumber(stakeWindow.windowTotalStake);
-    if (currentTimestamp < stakeWindow.approvalEndPeriod) {
-      windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
-    }
+    // No need for the following condition as taken care in the API
+    // if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+    //   windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
+    // }
 
     const windowMaxCap = new BigNumber(stakeWindow.windowMaxCap);
 
