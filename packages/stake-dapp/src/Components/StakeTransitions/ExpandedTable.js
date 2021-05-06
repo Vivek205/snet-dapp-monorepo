@@ -15,6 +15,7 @@ const processState = {
   AutoRenewStake: "Auto Renewal",
   RenewStake: "Renew",
   WithdrawStake: "Withdraw",
+  AddReward: "AddReward",
 };
 
 const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
@@ -48,6 +49,9 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         break;
       case "WithdrawStake":
         stakeAmount = "-" + fromWei(eventData.stakeAmount);
+        break;
+      case "AddReward":
+        stakeAmount = "+" + fromWei(eventData.rewardAmount);
         break;
       default:
         stakeAmount = "0";
@@ -92,6 +96,10 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         break;
       case "WithdrawStake":
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";
+        break;
+      case "AddReward":
+        txnDetails = "Renewed to new Stake Id: " + eventData.stakeIndex;
+        txnDetails += " With the reward " + fromWei(eventData.rewardAmount) + " AGI";
         break;
       default:
         txnDetails = "";

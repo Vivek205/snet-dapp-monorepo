@@ -19,6 +19,13 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
+    const rewardStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "AddReward");
+    // Check for the AddReward Event
+    if (rewardStakeEvent.length > 0) {
+      const transaction = rewardStakeEvent[0];
+      return new BigNumber(transaction.eventData.totalStakeAmount).minus(transaction.eventData.rewardAmount);
+    }
+
     // Check if the approved Amount exists
     const autoRenewStakeEvent = stakeWindow.transactionList.filter(
       t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
@@ -71,6 +78,13 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
+    const rewardStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "AddReward");
+    // Check for the AddReward Event
+    if (rewardStakeEvent.length > 0) {
+      const transaction = rewardStakeEvent[0];
+      return new BigNumber(transaction.eventData.rewardAmount);
+    }
+
     // Check if Claim Event exists to get the Reward Amount
     const claimStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ClaimStake");
     if (claimStakeEvent.length > 0) {
@@ -112,7 +126,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
-      if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+      if (currentTimestamp < stakeWindow.endPeriod) {
         stakeAmount = new BigNumber(
           submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
         );
