@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
@@ -22,18 +22,15 @@ const SNETHeader = ({
   mobileNavLinks,
   mobileDropDown,
   onLogoClick,
+  showNotification,
+  onCloseClick,
 }) => {
   const classes = useStyles();
-  const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
-
-  const onUpdateCloseClick = () => {
-    setShowUpdateNotificationBar(false);
-  };
   return (
     <div>
       <header className={`${classes.snetHeader} ${color === "purple" ? classes.purpleHeader : null}`}>
         <div className={classes.updateNotificationBar}>
-          <UpdateNotificationBar showNotification={showUpdateNotification} onCloseClick={onUpdateCloseClick} />
+          <UpdateNotificationBar showNotification={showNotification} onCloseClick={onCloseClick} />
         </div>
         <SNETAppBar
           position="static"
