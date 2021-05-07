@@ -98,7 +98,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";
         break;
       case "AddReward":
-        txnDetails = "Renewed to new Stake Id: " + eventData.stakeIndex;
+        txnDetails = "Reward updated for Stake Id: " + eventData.stakeIndex;
         txnDetails += " With the reward " + fromWei(eventData.rewardAmount) + " AGI";
         break;
       default:

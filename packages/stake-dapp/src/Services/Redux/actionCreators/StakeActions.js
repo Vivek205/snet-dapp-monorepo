@@ -216,26 +216,32 @@ const parseAndTransformStakeWindow = data => {
 
 export const fetchUserStakeFromBlockchain = (metamaskDetails, stakeMapIndex) => async dispatch => {
   if (metamaskDetails.isTxnsAllowed) {
-    const { found, pendingForApprovalAmount, approvedAmount, autoRenewal } = await getStakeInfo(
+    const { found, pendingForApprovalAmount, approvedAmount, rewardComputeIndex, claimableAmount } = await getStakeInfo(
       metamaskDetails,
       stakeMapIndex
     );
 
+    let autoRenewal = true;
+    if (new BigNumber(claimableAmount).gt(0)) {
+      autoRenewal = false;
+    }
+
     const stakeWindowDetails = {
       myStake: pendingForApprovalAmount,
-      autoRenewal: found ? autoRenewal : true,
+      autoRenewal,
       approvedAmount,
+      rewardComputeIndex,
+      claimableAmount,
       userExist: found,
     };
     dispatch(setActiveStakeWindowDetailsFromBlockchain(stakeWindowDetails));
   }
 };
 
-// *********************************
-// Active User Stakes Functionality
-// *********************************
+// **************************************************
+// Active User Stakes Functionality - Incubating Tab
+// **************************************************
 
-// TODO - Change the address to 0x0 after API error fixes...
 const fetchActiveStakesAPI = metamaskDetails => async dispatch => {
   let staker = "0x0";
   if (metamaskDetails.isTxnsAllowed) {
@@ -263,6 +269,11 @@ export const fetchActiveStakes = metamaskDetails => async dispatch => {
 
     dispatch(setActiveStakes(activeStakes));
     dispatch(setStakeSummary({ incubatingCount: activeStakes.length }));
+
+    // Update the Auto Renew Flag based on the latest state from Blockchain
+    if (activeStakes.length > 0) {
+      dispatch(UpdateRequestForClaimFromBlockchain(metamaskDetails, activeStakes[0].stakeMapIndex));
+    }
 
     dispatch(loaderActions.stopActiveStakeLoader());
   } catch (error) {
@@ -309,6 +320,23 @@ const parseAndTransformActiveStakes = data => {
   stakes.push(stakeDetails);
 
   return stakes;
+};
+
+const UpdateRequestForClaimFromBlockchain = (metamaskDetails, stakeMapIndex) => async dispatch => {
+  try {
+    if (metamaskDetails.isTxnsAllowed) {
+      const { claimableAmount } = await getStakeInfo(metamaskDetails, stakeMapIndex);
+
+      let autoRenewal = true;
+      if (new BigNumber(claimableAmount).gt(0)) {
+        autoRenewal = false;
+      }
+
+      dispatch(updateIncubatingStakeAutoRenewal({ stakeMapIndex, autoRenewal }));
+    }
+  } catch (_error) {
+    // In case of error leave it to the State from APIs
+  }
 };
 
 // **************************
