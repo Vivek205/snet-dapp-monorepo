@@ -14,6 +14,7 @@ import GlobalLoader from "./Components/GlobalLoader";
 import initQuantcast from "shared/dist/scripts/quantcast";
 import initHotjar from "shared/dist/scripts/hotjar";
 import UserFeedbackSlack from "./Components/UserFeedbackSlack";
+import NetworkChangeOverlay from "./Components/NetworkChangeOverlay";
 
 Amplify.configure(aws_config);
 
@@ -37,6 +38,7 @@ function App() {
         <DefaultHelmet />
         <GlobalRouter />
         <GlobalLoader />
+        <NetworkChangeOverlay />
         <UserFeedbackSlack />
       </MUIThemeProvider>
     </ReactReduxProvider>
