@@ -16,13 +16,6 @@ const Networks = {
   3: "ropsten",
 };
 
-// const accountChangeAlert = {
-//   header: "Incorrect Metamask Account",
-//   type: alertTypes.WARNING,
-//   message: `Kindly check the Address which you have set on Metamask.
-//   Please switch it to the registered address to continue using the services.`,
-// };
-
 const networkChangeAlert = {
   header: "Incorrect Metamask Network",
   type: alertTypes.WARNING,
