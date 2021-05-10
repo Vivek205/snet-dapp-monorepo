@@ -46,7 +46,7 @@ export const waitForTransaction = async hash => {
   });
 };
 
-// Approve AGI Token for the Staking Contract Address
+// Approve AGIX Token for the Staking Contract Address
 export const approveTokenV2 = (metamaskDetails, amountBN) => {
   const tokenContractAddress = getTokenContractAddress();
   const stakingContractAddress = getStakingContractAddress();

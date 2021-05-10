@@ -78,7 +78,7 @@ const ClaimStake = () => {
         })
       );
 
-      // Update the AGI Token Balances
+      // Update the AGIX Token Balances
       dispatch(tokenActions.updateTokenBalance(metamaskDetails));
       dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
 
@@ -111,7 +111,7 @@ const ClaimStake = () => {
         })
       );
 
-      // Update the AGI Token Balances
+      // Update the AGIX Token Balances
       dispatch(tokenActions.updateTokenBalance(metamaskDetails));
       dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
 

@@ -1,7 +1,7 @@
 import { fromWei } from "../../Utils/GenHelperFunctions";
 import BigNumber from "bignumber.js";
 
-// Do the Calculation in AGI rather than wei
+// Do the Calculation in AGIX rather than wei
 const computeReward = activeStake => {
   let myStake = new BigNumber(activeStake.myStake);
   const myStakeAutoRenewed = new BigNumber(activeStake.myStakeAutoRenewed);
@@ -79,7 +79,7 @@ export const sessionDetails = activeStake => [
     title: "Current Pool Size",
     value: fromWei(BigNumber.sum(activeStake.totalStakedAmount, activeStake.windowTotalStake)),
     unit: "AGIX",
-    toolTip: "Total amount of AGI tokens staked in the pool currently",
+    toolTip: "Total amount of AGIX tokens staked in the pool currently",
   },
   {
     title: "Reward Pool",

@@ -142,7 +142,7 @@ class MetaMaskAccountBalance extends Component {
               </div>
               <span>Authorized Tokens</span>
             </div>
-            <span>{fromWei(tokenAllowance)} AGI</span>
+            <span>{fromWei(tokenAllowance)} AGIX</span>
           </div> */}
 
           <div className={classes.bgBox}>
@@ -153,7 +153,7 @@ class MetaMaskAccountBalance extends Component {
               </div>
               <span>Total Tokens</span>
             </div>
-            <span>{fromWei(tokenBalance)} AGI</span>
+            <span>{fromWei(tokenBalance)} AGIX</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -167,7 +167,7 @@ class MetaMaskAccountBalance extends Component {
               </div>
               <span>Total Staked</span>
             </div>
-            <span>{fromWei(stakeBalance)} AGI</span>
+            <span>{fromWei(stakeBalance)} AGIX</span>
           </div>
         </div>
       </div>

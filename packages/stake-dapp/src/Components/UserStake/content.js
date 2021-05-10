@@ -101,7 +101,7 @@ export const stakeSessionDetails = stakeDetails => [
       stakeDetails.windowTotalStake === 0 ? stakeDetails.totalStakedAmount : stakeDetails.windowTotalStake
     ),
     unit: "AGIX",
-    toolTip: "Total amount of AGI tokens staked in the pool currently",
+    toolTip: "Total amount of AGIX tokens staked in the pool currently",
   },
   {
     title: "Reward Pool",

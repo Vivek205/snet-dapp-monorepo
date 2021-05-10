@@ -106,7 +106,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
         // Disable the submit operation
         setDisableAction(true);
 
-        // Update the AGI Token Balances
+        // Update the AGIX Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
         dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
