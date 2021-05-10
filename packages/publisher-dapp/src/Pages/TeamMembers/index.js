@@ -99,8 +99,8 @@ class TeamMembers extends Component {
 
   handleAddToBlockChain = async () => {
     try {
-      const { members, orgId, uuid, addAndPublishMembers, ownerAddress } = this.props;
-      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, uuid, ownerAddress);
+      const { members, orgId, orgUuid, addAndPublishMembers, ownerAddress } = this.props;
+      await addAndPublishMembers(members[memberStatus.ACCEPTED], orgId, orgUuid, ownerAddress);
       this.setState({
         addBlockChainAlert: { type: alertTypes.SUCCESS, message: "Members have been added to blockchain" },
       });

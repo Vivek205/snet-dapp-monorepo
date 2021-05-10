@@ -530,7 +530,6 @@ export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async d
 const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   const sdk = await initSDK();
   const address = await sdk.account.getAddress();
-
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .updateServiceRegistration(organization.id, serviceDetails.id, serviceMetadataURI)
