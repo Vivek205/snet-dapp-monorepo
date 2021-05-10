@@ -4,7 +4,7 @@ import isEmpty from "lodash/isEmpty";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import JSZip from "jszip";
-import last from "lodash/last";
+import { validateCompressedFiles } from "../../../../Utils/ValidateCompressedFiles";
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
@@ -31,18 +31,21 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
   }, [alert.message, protoFilesUrl]);
 
   const validateProtoFile = uploadedFile => {
-    const protoFilesExtn = "proto";
+    const protoFileRegexPattern = "(proto)";
+    const protoFilesInsideFolder = "^(.+)/([^/]+)$";
+
     return new Promise((resolve, reject) => {
       const zip = new JSZip();
       zip.loadAsync(uploadedFile).then(entry => {
-        const someFileIsNotAProto = Object.values(entry.files).some(file => {
-          const fileExtn = last(file.name.split("."));
-          return fileExtn !== protoFilesExtn;
-        });
-        if (someFileIsNotAProto) {
-          reject(new ValidationError("The zip file should contain only proto files"));
+        const filesInsideSomeFolder = validateCompressedFiles(protoFilesInsideFolder, entry);
+
+        if (filesInsideSomeFolder) {
+          reject(new ValidationError("Proto files should not be in a folder"));
+        } else if (!validateCompressedFiles(protoFileRegexPattern, entry)) {
+          reject(new ValidationError("Proto file not found"));
+        } else {
+          resolve();
         }
-        resolve();
       });
     });
   };
@@ -85,7 +88,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         Services define their API using protocol buffers. This allows SingularityNET clients to determine the
         request/response schema programmatically. Read more &nbsp;
         <a
-          href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
+          href="https://dev.singularitynet.io/docs/ai-developers/service-setup/"
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -97,6 +100,13 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         accept={acceptedFileTypes}
         multiple={false}
         showFileDetails
+        helperText={
+          <>
+            <Typography>* Compress only the individual files with no parent folders</Typography>
+            <Typography>* Package must be under 2mb</Typography>
+            <Typography>* Make sure the extension is .zip</Typography>
+          </>
+        }
         fileName={selectedFile.name}
         fileSize={selectedFile.size}
         fileDownloadURL={protoFilesUrl}

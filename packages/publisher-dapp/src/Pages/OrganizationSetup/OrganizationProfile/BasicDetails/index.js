@@ -100,6 +100,7 @@ const BasicDetails = ({ classes, invalidFields }) => {
           label="Organization Website URL"
           description="Your organization’s website must be publicly available and the domain name must be associated with your organization."
           error={"website" in invalidFields}
+          disabled={foundInBlockchain}
         />
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>

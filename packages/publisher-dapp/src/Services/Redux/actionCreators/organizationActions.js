@@ -28,6 +28,7 @@ export const SET_ORG_SAME_MAILING_ADDRESS = "SET_ORG_SAME_MAILING_ADDRESS";
 export const SET_ORG_HQ_ADDRESS_DETAIL = "SET_HQ_ADDRES_DETAIL";
 export const SET_ORG_MAILING_ADDRESS_DETAIL = "SET_MAILING_ADDRESS_DETAIL";
 export const SET_ORG_OWNER = "SET_ORG_OWNER";
+export const SET_ORG_OWNER_ADDRESS = "SET_ORG_OWNER_ADDRESS";
 export const SET_ORG_STATE_ALL = "SET_ORG_STATE_ALL";
 export const SET_ORG_STATE_STATE = "SET_ORG_STATE_STATE";
 export const SET_ORG_STATE_UPDATED_ON = "SET_ORG_STATE_UPDATED_ON";
@@ -63,6 +64,8 @@ export const setOrgMailingAddressDetail = (name, value) => ({
 });
 
 export const setOrgOwner = owner => ({ type: SET_ORG_OWNER, payload: owner });
+
+export const setOrgOwnerAddress = owner => ({ type: SET_ORG_OWNER_ADDRESS, payload: owner });
 
 export const setOrgStateAll = state => ({ type: SET_ORG_STATE_ALL, payload: state });
 
@@ -135,7 +138,7 @@ export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
-    contacts, assets, orgAddress } = organization;
+    contacts, assets, orgAddress, registrationId, registrationType } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
@@ -145,6 +148,8 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
+    registration_id: registrationId || "",
+    registration_type: registrationType || "",
     metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
@@ -255,6 +260,8 @@ const parseOrgData = selectedOrg => {
     uuid: selectedOrg.org_uuid,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
+    registrationId: selectedOrg.registration_id,
+    registrationType: selectedOrg.registration_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
@@ -442,17 +449,22 @@ const registerOrganizationInBlockChain = (organization, metadataIpfsUri, history
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
   const members = [organization.ownerAddress];
+  const address = await sdk.account.getAddress();
   return new Promise((resolve, reject) => {
     try {
       const method = sdk._registryContract
         .createOrganization(orgId, orgMetadataURI, members)
-        .send()
+        .send({ from: address })
         .on(blockChainEvents.TRANSACTION_HASH, async hash => {
           await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
           dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
           resolve(hash);
         })
-        .once(blockChainEvents.CONFIRMATION, async () => {
+        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+          if (!receipt.status) {
+            method.off();
+            return reject(receipt);
+          }
           dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
           await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
           await dispatch(setOrgFoundInBlockchain(true));
@@ -472,16 +484,21 @@ const updateOrganizationInBlockChain = (organization, metadataIpfsUri, history) 
   const sdk = await initSDK();
   const orgId = organization.id;
   const orgMetadataURI = metadataIpfsUri;
+  const address = await sdk.account.getAddress();
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .changeOrganizationMetadataURI(orgId, orgMetadataURI)
-      .send()
+      .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, hash, organization.ownerAddress));
         dispatch(loaderActions.startAppLoader(LoaderContent.BLOCKHAIN_SUBMISSION));
         resolve(hash);
       })
-      .once(blockChainEvents.CONFIRMATION, async () => {
+      .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+        if (!receipt.status) {
+          method.off();
+          return reject(receipt);
+        }
         dispatch(setOrgStateState(organizationSetupStatuses.PUBLISH_IN_PROGRESS));
         await history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", organization.uuid));
         dispatch(loaderActions.stopAppLoader());
@@ -526,7 +543,7 @@ const getMembersAPI = (uuid, role) => async dispatch => {
 
 export const getOwner = uuid => async dispatch => {
   const { data } = await dispatch(getMembersAPI(uuid, userRoles.OWNER));
-  await dispatch(setOrgOwner(data[0].username));
+  await Promise.all([dispatch(setOrgOwner(data[0].username)), dispatch(setOrgOwnerAddress(data[0].address))]);
   return data;
 };
 

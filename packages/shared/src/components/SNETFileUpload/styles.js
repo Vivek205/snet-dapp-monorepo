@@ -24,7 +24,7 @@ export const useStyles = makeStyles(MUITheme => ({
         fontSize: 14,
         "& span": { color: MUITheme.palette.primary.main },
       },
-      "&:last-of-type": {
+      "&": {
         color: "#4a4a4a",
         fontSize: 12,
       },

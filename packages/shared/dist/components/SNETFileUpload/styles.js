@@ -36,7 +36,7 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
             color: MUITheme.palette.primary.main
           }
         },
-        "&:last-of-type": {
+        "&": {
           color: "#4a4a4a",
           fontSize: 12
         }
