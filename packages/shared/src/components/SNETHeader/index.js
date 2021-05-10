@@ -10,6 +10,7 @@ import { useStyles } from "./styles";
 import HeaderActions from "./HeaderActions";
 import Navbar from "./Navbar";
 import MobileHeader from "./MobileHeader";
+import UpdateNotificationBar from "../UpdateNotificationBar";
 
 const SNETHeader = ({
   isLoggedIn,
@@ -21,13 +22,18 @@ const SNETHeader = ({
   mobileNavLinks,
   mobileDropDown,
   onLogoClick,
+  showNotification,
+  onCloseClick,
 }) => {
   const classes = useStyles();
   return (
     <div>
-      <header>
+      <header className={`${classes.snetHeader} ${color === "purple" ? classes.purpleHeader : null}`}>
+        <div className={classes.updateNotificationBar}>
+          <UpdateNotificationBar showNotification={showNotification} onCloseClick={onCloseClick} />
+        </div>
         <SNETAppBar
-          position="fixed"
+          position="static"
           color={color}
           className={`${classes.appBar} ${color === "purple" ? classes.purple : null}`}
         >
