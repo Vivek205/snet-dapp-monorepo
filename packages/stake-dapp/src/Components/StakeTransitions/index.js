@@ -85,17 +85,6 @@ const StakeTransitions = () => {
           </div>
         ))}
       </div>
-      {/* TODO - Will Add the Pagination Functionality based on the need */}
-      {/* <div className={classes.pagination}>
-        <SNETPagination
-          itemsPerPageOptions={itemsPerPageOptions}
-          itemsPerPage="50"
-          onItemsPerPageChange="0"
-          limit="4"
-          offset="1"
-          totalCount="100"
-        />
-      </div> */}
     </div>
   );
 };

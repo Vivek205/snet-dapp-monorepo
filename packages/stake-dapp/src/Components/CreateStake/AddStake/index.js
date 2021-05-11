@@ -33,7 +33,8 @@ const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
-const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, autoRenewal }) => {
+// , autoRenewal -- Default is set to true and no need to explicitly to follow
+const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -92,7 +93,8 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         }
 
         // Initiate the SubmitStake Operation
-        await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
+        //await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
+        await submitStakeV2(metamaskDetails, stakeAmountBN);
 
         setAlert({
           type: alertTypes.SUCCESS,
@@ -104,7 +106,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         // Disable the submit operation
         setDisableAction(true);
 
-        // Update the AGI Token Balances
+        // Update the AGIX Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
         dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
@@ -153,8 +155,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
     let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
-    const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
-    const totalAutoRenewAmount = new BigNumber(stakeDetails.totalAutoRenewAmount);
+    //const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
 
     if (myStake.gt(myStakeProcessed)) {
       totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -172,9 +173,6 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
 
     let _rewardAmount = new BigNumber(0);
-
-    // Considering Auto Renewed Stake For calculation
-    totalStakedAmount = totalStakedAmount.plus(windowTotalStake).plus(totalAutoRenewAmount);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
