@@ -1,6 +1,13 @@
 import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(MUITheme => ({
+  snetHeader: {
+    width: "100%",
+    position: "fixed",
+    top: 0,
+    zIndex: 1100,
+  },
+  purpleHeader: { backgroundColor: "rgb(34, 13, 58)" },
   appBar: {
     padding: "14px 60px",
     flexDirection: "row",
