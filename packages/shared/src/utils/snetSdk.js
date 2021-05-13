@@ -2,6 +2,11 @@ import SnetSDK from "snet-sdk-web";
 
 export const ethereumMethods = {
   REQUEST_ACCOUNTS: "eth_requestAccounts",
+  REQUEST_CHAIN_ID: "eth_chainId",
+};
+
+export const ethereumEvents = {
+  CHAIN_CHANGED: "chainChanged",
 };
 
 const DEFAULT_GAS_LIMIT = undefined;

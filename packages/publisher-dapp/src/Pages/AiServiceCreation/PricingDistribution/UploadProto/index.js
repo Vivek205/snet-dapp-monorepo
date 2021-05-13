@@ -88,7 +88,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         Services define their API using protocol buffers. This allows SingularityNET clients to determine the
         request/response schema programmatically. Read more &nbsp;
         <a
-          href="https://dev.singularitynet.io/docs/ai-developers/service-setup//"
+          href="https://dev.singularitynet.io/docs/ai-developers/service-setup/"
           rel="noopener noreferrer"
           target="_blank"
         >

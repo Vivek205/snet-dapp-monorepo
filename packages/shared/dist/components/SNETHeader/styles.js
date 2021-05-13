@@ -13,6 +13,15 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
   var _appBar;
 
   return {
+    snetHeader: {
+      width: "100%",
+      position: "fixed",
+      top: 0,
+      zIndex: 1
+    },
+    purpleHeader: {
+      backgroundColor: "rgb(34, 13, 58)"
+    },
     appBar: (_appBar = {
       padding: "14px 60px",
       flexDirection: "row",

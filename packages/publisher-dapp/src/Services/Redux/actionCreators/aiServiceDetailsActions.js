@@ -335,22 +335,22 @@ const parseServiceDetails = (data, serviceUuid) => {
       type: "",
     },
     assets: {
-      heroImage: data.assets.hero_image
+      heroImage: data.media.hero_image
         ? {
-            url: data.assets.hero_image.url,
+            url: data.media.hero_image.url,
             ipfsHash: "",
           }
         : {},
-      demoFiles: data.assets.demo_files
+      demoFiles: data.media.demo_files
         ? {
-            url: data.assets.demo_files.url,
-            ipfsHash: data.assets.demo_files.ipfs_hash,
+            url: data.media.demo_files.url,
+            ipfsHash: data.media.demo_files.ipfs_hash,
           }
         : {},
-      protoFiles: data.assets.proto_files
+      protoFiles: data.media.proto_files
         ? {
-            url: data.assets.proto_files.url,
-            ipfsHash: data.assets.proto_files.ipfs_hash,
+            url: data.media.proto_files.url,
+            ipfsHash: data.media.proto_files.ipfs_hash,
           }
         : {},
     },
@@ -530,7 +530,6 @@ export const uploadFile = (assetType, fileBlob, orgUuid, serviceUuid) => async d
 const updateInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   const sdk = await initSDK();
   const address = await sdk.account.getAddress();
-
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
       .updateServiceRegistration(organization.id, serviceDetails.id, serviceMetadataURI)
