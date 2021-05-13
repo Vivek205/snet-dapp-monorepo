@@ -151,7 +151,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                     <div className={classes.iconTooltipContainer}>
                       <InfoIcon />
                       <p>
-                        This is the amount of AGIX tokens that were auto renewed from a previous stake session. You will
+                        This is the amount of AGI tokens that were auto renewed from a previous stake session. You will
                         not be able to withdraw these tokens until the incubation period complete and auto renewed is
                         turned off. See Transactions for session details.
                       </p>
@@ -188,7 +188,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
                   If you want to cancel your stake then please withdraw the entire amount. Partial withdrawals are only
-                  allowed if the minimum stake amount of {fromWei(stakeDetails.minStake)} AGIX is maintained.
+                  allowed if the minimum stake amount of {fromWei(stakeDetails.minStake)} AGI is maintained.
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />
