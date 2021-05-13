@@ -36,7 +36,7 @@ const IncubationProgressDetails = ({ details }) => {
           <div className={classes.label}>
             <div className={classes.iconTooltipContainer}>
               <InfoIcon />
-              <p>Total AGI tokens that are staked so far.</p>
+              <p>Total AGIX tokens that are staked so far.</p>
             </div>
             <span className={classes.incubationText}>Incubation Progress</span>
           </div>
