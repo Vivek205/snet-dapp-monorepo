@@ -27,15 +27,15 @@ export const yourStakeDetails = stakeDetails => [
   {
     title: "Total Claim Amount",
     value: parseInt(fromWei(stakeDetails.approvedAmount)) + parseInt(fromWei(stakeDetails.pendingForApprovalAmount)),
-    unit: "AGI",
+    unit: "AGIX",
     toolTip:
-      "Total AGI tokens you can claim for this stake session. This includes the original accepted stake amount plus the reward earnings amount.",
+      "Total AGIX tokens you can claim for this stake session. This includes the original accepted stake amount plus the reward earnings amount.",
   },
   {
     title: "Reward Earnings",
     value: fromWei(computeReward(stakeDetails)),
-    unit: "AGI",
-    toolTip: "The amount of AGI tokens you’ll earn as reward for your stake during this incubation period",
+    unit: "AGIX",
+    toolTip: "The amount of AGIX tokens you’ll earn as reward for your stake during this incubation period",
   },
   {
     title: "Incubating Ended",
@@ -50,19 +50,19 @@ export const sessionDetails = stakeDetails => [
     title: "Stakers",
     value: stakeDetails.numOfStakers,
     unit: "people",
-    toolTip: "Current number of participants who have contributed AGI tokens to the stake",
+    toolTip: "Current number of participants who have contributed AGIX tokens to the stake",
   },
   {
     title: "Stake Pool Size",
     value: fromWei(stakeDetails.windowTotalStake),
-    unit: "AGI",
-    toolTip: "The total amount of AGI tokens that have been contributed by all stakers",
+    unit: "AGIX",
+    toolTip: "The total amount of AGIX tokens that have been contributed by all stakers",
   },
   {
     title: "Reward Pool",
     value: fromWei(stakeDetails.rewardAmount),
-    unit: "AGI",
-    toolTip: "Number of AGI tokens that will be divided amongst all stakers as the reward for the current window",
+    unit: "AGIX",
+    toolTip: "Number of AGIX tokens that will be divided amongst all stakers as the reward for the current window",
   },
 ];
 
