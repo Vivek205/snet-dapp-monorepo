@@ -470,7 +470,7 @@ const saveTransaction = (orgUuid, serviceUuid, hash, ownerAddress) => async disp
   }
 };
 
-const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
+const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   const orgId = organization.id;
   const serviceId = serviceDetails.id;
   const sdk = await initSDK();
@@ -479,7 +479,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
   dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
-      .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
+      .createServiceRegistration(orgId, serviceId, serviceMetadataURI)
       .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
@@ -561,11 +561,11 @@ const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
   return await registry.getServiceRegistrationById(orgId, serviceId).call();
 };
 
-export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
+export const publishService = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   try {
     const serviceDetailsFromBlockchain = await getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
     if (!serviceDetailsFromBlockchain.found) {
-      return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, tags, history));
+      return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, history));
     }
     return await dispatch(updateInBlockchain(organization, serviceDetails, serviceMetadataURI, history));
   } catch (error) {
