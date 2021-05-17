@@ -27,6 +27,8 @@ var _Navbar = _interopRequireDefault(require("./Navbar"));
 
 var _MobileHeader = _interopRequireDefault(require("./MobileHeader"));
 
+var _UpdateNotificationBar = _interopRequireDefault(require("../UpdateNotificationBar"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SNETHeader = function SNETHeader(_ref) {
@@ -38,10 +40,19 @@ var SNETHeader = function SNETHeader(_ref) {
       portalName = _ref.portalName,
       mobileNavLinks = _ref.mobileNavLinks,
       mobileDropDown = _ref.mobileDropDown,
-      onLogoClick = _ref.onLogoClick;
+      onLogoClick = _ref.onLogoClick,
+      showNotification = _ref.showNotification,
+      onCloseClick = _ref.onCloseClick;
   var classes = (0, _styles.useStyles)();
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement(_SNETAppBar.default, {
-    position: "fixed",
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("header", {
+    className: "".concat(classes.snetHeader, " ").concat(color === "purple" ? classes.purpleHeader : null)
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.updateNotificationBar
+  }, /*#__PURE__*/_react.default.createElement(_UpdateNotificationBar.default, {
+    showNotification: showNotification,
+    onCloseClick: onCloseClick
+  })), /*#__PURE__*/_react.default.createElement(_SNETAppBar.default, {
+    position: "static",
     color: color,
     className: "".concat(classes.appBar, " ").concat(color === "purple" ? classes.purple : null)
   }, /*#__PURE__*/_react.default.createElement("div", {
