@@ -27,6 +27,7 @@ export const useStyles = MUITheme => ({
     "& .PrivateTabIndicator-colorPrimary-289": {
       backgroundColor: MUITheme.palette.text.primary,
     },
+    zIndex: 0,
   },
   tabDetailsContainer: {
     minHeight: 200,

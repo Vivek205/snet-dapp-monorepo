@@ -46,7 +46,7 @@ export const waitForTransaction = async hash => {
   });
 };
 
-// Approve AGI Token for the Staking Contract Address
+// Approve AGIX Token for the Staking Contract Address
 export const approveTokenV2 = (metamaskDetails, amountBN) => {
   const tokenContractAddress = getTokenContractAddress();
   const stakingContractAddress = getStakingContractAddress();
@@ -132,7 +132,7 @@ export const createStakePeriod = (
 };
 
 // Function to create a new stake in the Current Stake Window
-export const submitStakeV2 = (metamaskDetails, stakeAmount, autoRenewal) => {
+export const submitStakeV2 = (metamaskDetails, stakeAmount) => {
   const accountAddress = metamaskDetails.account;
 
   try {
@@ -140,7 +140,7 @@ export const submitStakeV2 = (metamaskDetails, stakeAmount, autoRenewal) => {
 
     return new Promise((resolve, reject) => {
       const method = stakingInstance.methods
-        .submitStake(stakeAmount.toString(), autoRenewal)
+        .submitStake(stakeAmount.toString())
         .send({ from: accountAddress })
         .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
           if (receipt.status === true) {
@@ -222,9 +222,10 @@ export const updateAutoRenewalV2 = (metamaskDetails, stakeMapIndex, autoRenew) =
   try {
     const stakingInstance = getStakingInstance();
 
+    // Note - updateAutoRenewal function name is changed to requestForClaim in the Contract
     return new Promise((resolve, reject) => {
       const method = stakingInstance.methods
-        .updateAutoRenewal(stakeMapIndex, autoRenew)
+        .requestForClaim(stakeMapIndex, autoRenew)
         .send({ from: accountAddress })
         .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
           if (receipt.status === true) {
@@ -331,61 +332,61 @@ export const depositToken = (metamaskDetails, amountBN) => {
 };
 
 // Only for the token Operator
-export const autoRenewStake = (metamaskDetails, existingStakeMapIndex, staker, approvedAmountBN) => {
-  const accountAddress = metamaskDetails.account;
+// export const autoRenewStake = (metamaskDetails, existingStakeMapIndex, staker, approvedAmountBN) => {
+//   const accountAddress = metamaskDetails.account;
 
-  try {
-    const stakingInstance = getStakingInstance();
+//   try {
+//     const stakingInstance = getStakingInstance();
 
-    return new Promise((resolve, reject) => {
-      const method = stakingInstance.methods
-        .autoRenewStake(existingStakeMapIndex, staker, approvedAmountBN.toString())
-        .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
-          if (receipt.status === true) {
-            resolve(receipt);
-          } else {
-            reject(receipt);
-          }
-          //resolve();
-          await method.off();
-        })
-        .on(blockChainEvents.ERROR, error => {
-          reject(error);
-        });
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+//     return new Promise((resolve, reject) => {
+//       const method = stakingInstance.methods
+//         .autoRenewStake(existingStakeMapIndex, staker, approvedAmountBN.toString())
+//         .send({ from: accountAddress })
+//         .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+//           if (receipt.status === true) {
+//             resolve(receipt);
+//           } else {
+//             reject(receipt);
+//           }
+//           //resolve();
+//           await method.off();
+//         })
+//         .on(blockChainEvents.ERROR, error => {
+//           reject(error);
+//         });
+//     });
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
-export const renewStake = (metamaskDetails, existingStakeMapIndex, stakeAmountBN, autoRenewal) => {
-  const accountAddress = metamaskDetails.account;
+// export const renewStake = (metamaskDetails, existingStakeMapIndex, stakeAmountBN, autoRenewal) => {
+//   const accountAddress = metamaskDetails.account;
 
-  try {
-    const stakingInstance = getStakingInstance();
+//   try {
+//     const stakingInstance = getStakingInstance();
 
-    return new Promise((resolve, reject) => {
-      const method = stakingInstance.methods
-        .renewStake(existingStakeMapIndex, stakeAmountBN.toString(), autoRenewal)
-        .send({ from: accountAddress })
-        .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
-          if (receipt.status === true) {
-            resolve(receipt);
-          } else {
-            reject(receipt);
-          }
-          //resolve();
-          await method.off();
-        })
-        .on(blockChainEvents.ERROR, error => {
-          reject(error);
-        });
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+//     return new Promise((resolve, reject) => {
+//       const method = stakingInstance.methods
+//         .renewStake(existingStakeMapIndex, stakeAmountBN.toString(), autoRenewal)
+//         .send({ from: accountAddress })
+//         .once(blockChainEvents.CONFIRMATION, async (_confirmationNumber, receipt) => {
+//           if (receipt.status === true) {
+//             resolve(receipt);
+//           } else {
+//             reject(receipt);
+//           }
+//           //resolve();
+//           await method.off();
+//         })
+//         .on(blockChainEvents.ERROR, error => {
+//           reject(error);
+//         });
+//     });
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const withdrawStakeV2 = (metamaskDetails, existingStakeMapIndex, stakeAmountBN) => {
   const accountAddress = metamaskDetails.account;
@@ -497,7 +498,10 @@ export const getRecentStakeWindow = async () => {
 
   const currentStakeMapIndex = await stakingInstance.methods.currentStakeMapIndex().call();
 
-  const totalPendingApprovalStake = await stakingInstance.methods.totalPendingApprovalStake().call();
+  //const totalPendingApprovalStake = await stakingInstance.methods.totalPendingApprovalStake().call();
+  // All the stakes are going to be auto approved. This attribute is no more available in the contract.
+  // To make the less impact on the code we can go with zero
+  const totalPendingApprovalStake = 0;
 
   const result = await stakingInstance.methods.stakeMap(currentStakeMapIndex).call();
 

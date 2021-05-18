@@ -8,7 +8,7 @@ const PrimaryFooterLeft = [
 
 const PrimaryFooterMain = [
   {
-    title: "AGI Staking",
+    title: "AGIX Staking",
     children: [
       { label: "How it Works", link: "/howitworks" },
       { label: "Stake Calculator", link: "/howitworks" },
