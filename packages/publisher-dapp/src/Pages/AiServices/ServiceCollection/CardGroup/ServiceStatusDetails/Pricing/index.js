@@ -30,7 +30,7 @@ const Pricing = ({ classes, groups }) => {
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <span className={classes.title}>Price:</span>
-          <span className={classes.value}>{parsePrice()} AGI</span>
+          <span className={classes.value}>{parsePrice()} AGIX</span>
         </Grid>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.pendingClaimsAndTotalContainer}>

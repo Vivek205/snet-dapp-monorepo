@@ -189,7 +189,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     if (isNotValid) {
       return setPriceValidation({
         type: alertTypes.ERROR,
-        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)} AGI.`,
+        message: `Price of the service should be greater than or equal to ${cogsToAgi(1)} AGIX.`,
       });
     }
     return setPriceValidation({ type: alertTypes.SUCCESS, message: "" });
@@ -233,7 +233,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
                 icon
                 name="price"
                 defaultValue={selectedServicePricing && cogsToAgi(selectedServicePricing.priceInCogs)}
-                label="AI Service Price (in AGI)"
+                label="AI Service Price (in AGIX)"
                 onChange={handlePriceChange}
                 error={!!invalidFields ? "pricing" in invalidFields : false}
               />

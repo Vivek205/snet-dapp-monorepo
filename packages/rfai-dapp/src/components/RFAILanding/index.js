@@ -26,8 +26,8 @@ const RFAILanding = ({ classes, isLoggedIn }) => {
                 <span>Welcome</span>
                 <p>
                   With this community portal, you can make projects requests for AI services that you think the others
-                  will want to use. In addition you can fund projects, view solutions, and submit solutions to claim AGI
-                  token rewards.
+                  will want to use. In addition you can fund projects, view solutions, and submit solutions to claim
+                  AGIX token rewards.
                 </p>
               </div>
               {isLoggedIn ? (
