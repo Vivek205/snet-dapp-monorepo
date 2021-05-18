@@ -59,7 +59,7 @@ export const stakingFAQ = [
   {
     question: "What happens if my transaction fails ?",
     answer: `
-      <p>Please attempt again as your AGIs have not been Staked yet.</p>
+      <p>Please attempt again as your AGIXs have not been Staked yet.</p>
       <p>You could see the Balance of Your account on the landing page itself </p>
       <p>You will see the same account balance and a successful message as below on your page.</p>
       <img src=${process.env.REACT_APP_CDN_LINK}/successMsg.png alt="Sucess Message Notification" />
