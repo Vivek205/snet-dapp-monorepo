@@ -29,7 +29,7 @@ const PricingDetails = ({ classes, pricing, handleTabChange, history, activeTab 
   return (
     <Grid item xs={12} sm={12} md={4} lg={4} className={classes.creditsContainer}>
       <div className={classes.creditsAndToken}>
-        <Price unit="agi tokens" value={priceInAGI} />
+        <Price unit="AGIX tokens" value={priceInAGI} />
       </div>
       <p>
         <InfoIcon className={classes.infoIcon} />

@@ -4,8 +4,8 @@ import StyledTextField from "shared/dist/components/StyledTextField";
 
 import { useStyles } from "./styles";
 
-const Deposit = ({ classes }) => {
-  return <StyledTextField label="AGI Token Amount" />;
+const Deposit = () => {
+  return <StyledTextField label="AGIX Token Amount" />;
 };
 
 export default withStyles(useStyles)(Deposit);
