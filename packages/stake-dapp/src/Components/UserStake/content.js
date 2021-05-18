@@ -11,22 +11,29 @@ export const incubationProgressDetails = stakeDetails => ({
 const computeReward = stakeDetails => {
   const currentTimestamp = momemt().unix();
 
+  // Condition for Staking V2
   if (
-    (currentTimestamp > stakeDetails.approvalEndPeriod && stakeDetails.approvedAmount === 0) ||
-    (currentTimestamp < stakeDetails.approvalEndPeriod &&
-      stakeDetails.pendingForApprovalAmount === 0 &&
-      stakeDetails.approvedAmount === 0)
+    currentTimestamp > stakeDetails.submissionEndPeriod &&
+    stakeDetails.approvedAmount === 0 &&
+    stakeDetails.pendingForApprovalAmount === 0 &&
+    stakeDetails.claimableAmount === 0
   )
     return 0;
 
-  const stakeAmount = new BigNumber(
-    stakeDetails.approvedAmount === 0 ? stakeDetails.pendingForApprovalAmount : stakeDetails.approvedAmount
-  );
+  const stakeRewardAmount = new BigNumber(stakeDetails.stakeRewardAmount);
+  if (stakeRewardAmount.gt(0)) return stakeRewardAmount;
+
+  let stakeAmount = 0;
+  if (currentTimestamp < stakeDetails.requestWithdrawStartPeriod)
+    stakeAmount = new BigNumber.sum(stakeDetails.approvedAmount, stakeDetails.pendingForApprovalAmount);
+  else stakeAmount = new BigNumber.sum(stakeDetails.approvedAmount, stakeDetails.claimableAmount);
+
   const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
 
   let windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
-  if (currentTimestamp < stakeDetails.approvalEndPeriod) {
-    windowTotalStake = windowTotalStake.plus(new BigNumber(stakeDetails.totalStakedAmount));
+
+  if (windowTotalStake.lte(0)) {
+    windowTotalStake = new BigNumber(stakeDetails.totalStakedAmount);
   }
 
   const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
@@ -42,12 +49,26 @@ const computeReward = stakeDetails => {
   return rewardAmount;
 };
 
+const getStakeAmount = stakeDetails => {
+  const currentTimestamp = momemt().unix();
+
+  let stakeAmount = 0;
+  if (currentTimestamp < stakeDetails.requestWithdrawStartPeriod)
+    stakeAmount = BigNumber.sum(stakeDetails.approvedAmount, stakeDetails.pendingForApprovalAmount).minus(
+      stakeDetails.stakeRewardAmount
+    );
+  else
+    stakeAmount = BigNumber.sum(stakeDetails.approvedAmount, stakeDetails.claimableAmount).minus(
+      stakeDetails.stakeRewardAmount
+    );
+
+  return stakeAmount;
+};
+
 export const yourStakeDetails = stakeDetails => [
   {
     title: "Accepted Stake Amount",
-    value: fromWei(
-      new BigNumber(stakeDetails.approvedAmount).plus(new BigNumber(stakeDetails.pendingForApprovalAmount))
-    ),
+    value: fromWei(getStakeAmount(stakeDetails)),
     unit: "AGIX",
     toolTip:
       "The amount of AGIX tokens that the network accepted from your stake. Any partial amounts not accepted by SNET Foundation will be automatically refunded to your account wallet.",
@@ -76,7 +97,9 @@ export const stakeSessionDetails = stakeDetails => [
   },
   {
     title: "Current Pool Size",
-    value: fromWei(stakeDetails.windowTotalStake),
+    value: fromWei(
+      stakeDetails.windowTotalStake === 0 ? stakeDetails.totalStakedAmount : stakeDetails.windowTotalStake
+    ),
     unit: "AGIX",
     toolTip: "Total amount of AGIX tokens staked in the pool currently",
   },

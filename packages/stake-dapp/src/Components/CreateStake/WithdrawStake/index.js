@@ -88,7 +88,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
         // Disable the submit operation
         setDisableAction(true);
 
-        // Update the AGI Token Balances
+        // Update the AGIX Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
 
@@ -160,7 +160,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                   </div>
                   <div className={classes.value}>
                     <Typography>{fromWei(stakeDetails.myStakeAutoRenewed)}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>AGIX</Typography>
                   </div>
                 </div>
                 <Typography>

@@ -19,6 +19,13 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
 
+    const rewardStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "AddReward");
+    // Check for the AddReward Event
+    if (rewardStakeEvent.length > 0) {
+      const transaction = rewardStakeEvent[0];
+      return new BigNumber(transaction.eventData.totalStakeAmount).minus(transaction.eventData.rewardAmount);
+    }
+
     // Check if the approved Amount exists
     const autoRenewStakeEvent = stakeWindow.transactionList.filter(
       t => t.eventName === "AutoRenewStake" && t.eventData.newStakeIndex === stakeWindow.stakeMapIndex
@@ -59,9 +66,10 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     const windowRewardAmount = new BigNumber(stakeWindow.rewardAmount);
 
     let windowTotalStake = new BigNumber(stakeWindow.windowTotalStake);
-    if (currentTimestamp < stakeWindow.approvalEndPeriod) {
-      windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
-    }
+    // No need for the following condition as taken care in the API
+    // if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+    //   windowTotalStake = windowTotalStake.plus(new BigNumber(stakeWindow.totalStakedAmount));
+    // }
 
     const windowMaxCap = new BigNumber(stakeWindow.windowMaxCap);
 
@@ -70,6 +78,13 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
     let stakeAmount = new BigNumber(0);
     let withdrawStakeAmount = new BigNumber(0);
     let autoRenewApprovedAmount = new BigNumber(0);
+
+    const rewardStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "AddReward");
+    // Check for the AddReward Event
+    if (rewardStakeEvent.length > 0) {
+      const transaction = rewardStakeEvent[0];
+      return new BigNumber(transaction.eventData.rewardAmount);
+    }
 
     // Check if Claim Event exists to get the Reward Amount
     const claimStakeEvent = stakeWindow.transactionList.filter(t => t.eventName === "ClaimStake");
@@ -112,7 +127,7 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
         .div(windowTotalStake.lt(windowMaxCap) ? windowTotalStake : windowMaxCap);
     } else if (submitStakeEvent.length > 0) {
       // Check if the stake crossed Approval Period - No Reward
-      if (currentTimestamp < stakeWindow.approvalEndPeriod) {
+      if (currentTimestamp < stakeWindow.endPeriod) {
         stakeAmount = new BigNumber(
           submitStakeEvent.map(s => parseInt(s.eventData.stakeAmount)).reduce((a, b) => a + b, 0)
         );
@@ -137,19 +152,19 @@ const TableRow = ({ handleExpandeTable, expandTable, stakeWindow }) => {
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(getStakeAmount())}</Typography>
-        <Typography className={classes.unit}>AGI</Typography>
+        <Typography className={classes.unit}>AGIX</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={3} lg={3} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(calculateReward())}</Typography>
-        <Typography className={classes.unit}>AGI</Typography>
+        <Typography className={classes.unit}>AGIX</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(stakeWindow.windowTotalStake)}</Typography>
-        <Typography className={classes.unit}>AGI</Typography>
+        <Typography className={classes.unit}>AGIX</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={2} className={classes.tableData}>
         <Typography className={classes.value}>{fromWei(stakeWindow.rewardAmount)}</Typography>
-        <Typography className={classes.unit}>AGI</Typography>
+        <Typography className={classes.unit}>AGIX</Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={1} lg={1} className={classes.tableData}>
         {expandTable ? <ArrowUpIcon /> : <ArrowDownIcon />}

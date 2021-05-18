@@ -3,30 +3,27 @@ import { fromWei } from "../../Utils/GenHelperFunctions";
 import BigNumber from "bignumber.js";
 
 const computeReward = stakeDetails => {
-  if (stakeDetails.approvedAmount === 0) return 0;
+  if (stakeDetails.approvedAmount === 0 && stakeDetails.claimableAmount === 0) return 0;
+  const stakeRewardAmount = new BigNumber(stakeDetails.stakeRewardAmount);
+  return stakeRewardAmount;
+};
 
+const getUserStake = stakeDetails => {
   const approvedAmount = new BigNumber(stakeDetails.approvedAmount);
-  const windowRewardAmount = new BigNumber(stakeDetails.rewardAmount);
-  const windowTotalStake = new BigNumber(
-    stakeDetails.windowTotalStake === 0 ? stakeDetails.approvedAmount : stakeDetails.windowTotalStake
-  );
-  const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
+  const claimableAmount = new BigNumber(stakeDetails.claimableAmount);
+  const stakeRewardAmount = new BigNumber(stakeDetails.stakeRewardAmount);
 
-  let rewardAmount = new BigNumber(0);
-
-  if (windowTotalStake.lt(windowMaxCap)) {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowTotalStake);
-  } else {
-    rewardAmount = approvedAmount.times(windowRewardAmount).div(windowMaxCap);
+  // Both claimableAmount & approvedAmount at this stage of the Stake has reward added to it
+  if (claimableAmount.gt(0)) {
+    return claimableAmount.minus(stakeRewardAmount);
   }
-
-  return rewardAmount;
+  return approvedAmount.minus(stakeRewardAmount);
 };
 
 export const yourStakeDetails = stakeDetails => [
   {
     title: "Total Claim Amount",
-    value: parseInt(fromWei(stakeDetails.approvedAmount)) + parseInt(fromWei(stakeDetails.pendingForApprovalAmount)),
+    value: fromWei(getUserStake(stakeDetails)),
     unit: "AGIX",
     toolTip:
       "Total AGIX tokens you can claim for this stake session. This includes the original accepted stake amount plus the reward earnings amount.",
@@ -73,12 +70,12 @@ export const btnDetails = [
   //   variant: "text",
   //   text: "re-stake",
   // },
-  {
-    action: "withdrawStake",
-    color: "primary",
-    variant: "contained",
-    text: "reclaim stake",
-  },
+  // {
+  //   action: "withdrawStake",
+  //   color: "primary",
+  //   variant: "contained",
+  //   text: "reclaim stake",
+  // },
   {
     action: "claimStake",
     color: "primary",

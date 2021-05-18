@@ -27,6 +27,8 @@ const InitialRequestDetails = {
     autoRenewal: true,
     myStakeAutoRenewed: 0,
     totalAutoRenewAmount: 0,
+    rewardComputeIndex: 0,
+    claimableAmount: 0,
   },
   incubationStakes: [],
   claimStakes: [],
@@ -73,6 +75,8 @@ const stakeReducer = (state = InitialRequestDetails, action) => {
           ...state.activeStake,
           myStake: action.payload.myStake,
           autoRenewal: action.payload.autoRenewal,
+          rewardComputeIndex: action.payload.rewardComputeIndex,
+          claimableAmount: action.payload.claimableAmount,
           userExist: action.payload.userExist,
         },
       };
