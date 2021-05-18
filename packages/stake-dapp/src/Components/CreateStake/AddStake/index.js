@@ -127,7 +127,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! Insufficient AGI Balance in your wallet.`,
+        message: `Oops! Insufficient AGIX Balance in your wallet.`,
       });
     }
   };
@@ -211,7 +211,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
                 value={stakeAmount}
                 onChange={handleAmountChange}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
               <img src={ApproxSymbolImg} alt="Approximate Symbol" />
@@ -221,7 +221,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
                 extraInfo="Approximate based on the current pool size"
                 value={fromWei(rewardAmount)}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
             </div>
@@ -232,7 +232,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
                     <div className={classes.iconTooltipContainer}>
                       <InfoIcon />
                       <p>
-                        This is the amount of AGI tokens that were auto renewed from a previous stake session. You will
+                        This is the amount of AGIX tokens that were auto renewed from a previous stake session. You will
                         not be able to withdraw these tokens until the incubation period complete and auto renewed is
                         turned off. See Transactions for session details.
                       </p>
@@ -241,7 +241,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
                   </div>
                   <div className={classes.value}>
                     <Typography>{fromWei(stakeDetails.myStakeAutoRenewed)}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>AGIX</Typography>
                   </div>
                 </div>
               </div>
@@ -265,7 +265,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) =>
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  Minimum stake amount is {fromWei(stakeDetails.minStake)} AGI
+                  Minimum stake amount is {fromWei(stakeDetails.minStake)} AGIX
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />
