@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <SNETHeader
       isLoggedIn={isLoggedIn}
-      portalName="AGI Staking"
+      portalName="AGIX Staking"
       color="purple"
       NavigationBar={NavigationBar}
       LoggedInActions={LoggedInActions}

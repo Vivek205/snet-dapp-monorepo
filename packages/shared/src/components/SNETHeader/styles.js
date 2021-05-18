@@ -5,7 +5,7 @@ export const useStyles = makeStyles(MUITheme => ({
     width: "100%",
     position: "fixed",
     top: 0,
-    zIndex: 1,
+    zIndex: 1100,
   },
   purpleHeader: { backgroundColor: "rgb(34, 13, 58)" },
   appBar: {
