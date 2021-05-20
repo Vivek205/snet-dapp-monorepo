@@ -25,6 +25,8 @@ var UpdateNotificationBar = function UpdateNotificationBar(_ref) {
       onCloseClick = _ref.onCloseClick;
   if (!showNotification) return null;
   return /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.parentUpdateNotificationBar
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: classes.updateNotificationBar
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _AnnoucementIcon.default,
@@ -35,7 +37,7 @@ var UpdateNotificationBar = function UpdateNotificationBar(_ref) {
   }, "Read more on our official blog post.", /*#__PURE__*/_react.default.createElement(_ArrowForwardIos.default, null))), /*#__PURE__*/_react.default.createElement(_Close.default, {
     className: classes.closeIcon,
     onClick: onCloseClick
-  }));
+  })));
 };
 
 var _default = (0, _styles.withStyles)(_styles2.useStyles)(UpdateNotificationBar);

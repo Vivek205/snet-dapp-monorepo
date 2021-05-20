@@ -1,4 +1,7 @@
 export const useStyles = theme => ({
+  parentUpdateNotificationBar: {
+    backgroundColor: "#fff",
+  },
   updateNotificationBar: {
     padding: "2px 0",
     display: "flex",
