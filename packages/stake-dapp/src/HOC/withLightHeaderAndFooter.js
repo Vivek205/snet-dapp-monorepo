@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 
 import Box from "@material-ui/core/Box";
 
@@ -8,11 +8,14 @@ import { FooterData } from "./footerContent";
 import Header from "../Components/Header";
 
 import { useStyles } from "./styles";
+import { localStorageKeys, useLocalStorage } from "shared/dist/hooks/useLocalStorage";
 
 const withLightHeaderAndFooter = Component => {
   return props => {
     const classes = useStyles();
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
+      localStorageKeys.SHOW_PHASE2_NOTIFICATION
+    );
 
     const onUpdateCloseClick = () => {
       setShowUpdateNotificationBar(false);
