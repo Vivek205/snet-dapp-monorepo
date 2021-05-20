@@ -7,6 +7,9 @@ exports.useStyles = void 0;
 
 var useStyles = function useStyles(theme) {
   return {
+    parentUpdateNotificationBar: {
+      backgroundColor: '#fff'
+    },
     updateNotificationBar: {
       padding: "2px 0",
       display: "flex",
