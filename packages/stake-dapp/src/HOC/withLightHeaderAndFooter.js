@@ -14,7 +14,8 @@ const withLightHeaderAndFooter = Component => {
   return props => {
     const classes = useStyles();
     const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
-      localStorageKeys.SHOW_PHASE2_NOTIFICATION
+      localStorageKeys.SHOW_PHASE2_NOTIFICATION,
+      true
     );
 
     const onUpdateCloseClick = () => {
