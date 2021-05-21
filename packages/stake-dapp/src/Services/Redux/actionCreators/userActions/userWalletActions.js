@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-import isEmpty from "lodash/isEmpty";
+//import isEmpty from "lodash/isEmpty";
 import { APIEndpoints, APIPaths } from "../../../AWS/APIEndpoints";
 import { initializeAPIOptions } from "../../../../Utils/API";
 import { fetchAuthenticatedUser } from "./loginActions";
@@ -37,9 +37,10 @@ export const fetchWallet = () => async dispatch => {
 };
 
 const fetchWalletSuccess = response => dispatch => {
-  if (!isEmpty(response.data.wallets)) {
-    dispatch(updateWalletList(response.data.wallets));
-  }
+  // if (!isEmpty(response.data.wallets)) {
+  //   dispatch(updateWalletList(response.data.wallets));
+  // }
+  dispatch(updateWalletList(response.data.wallets));
 };
 
 const updateWalletList = data => dispatch => {
