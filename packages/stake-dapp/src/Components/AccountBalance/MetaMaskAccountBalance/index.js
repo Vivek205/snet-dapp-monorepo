@@ -163,7 +163,7 @@ class MetaMaskAccountBalance extends Component {
                 <InfoIcon />
                 <p>
                   Number of AGIX tokens that you have staked across all sessions. This includes pending and active
-                  staking amounts along with rewards.
+                  staking amounts.
                 </p>
               </div>
               <span>Total Staked</span>

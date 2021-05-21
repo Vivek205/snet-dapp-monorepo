@@ -16,7 +16,6 @@ const processState = {
   RenewStake: "Renew",
   WithdrawStake: "Withdraw",
   AddReward: "AddReward",
-  RequestForClaim: "Request For Claim",
 };
 
 const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
