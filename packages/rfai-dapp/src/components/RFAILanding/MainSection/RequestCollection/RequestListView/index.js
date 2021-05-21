@@ -82,11 +82,11 @@ const RequestList = ({
   const classes = useStyles();
 
   // Event Functions
-  const handleChange = panel => (event, expanded) => {
+  const handleChange = panel => (_event, expanded) => {
     setExpanded(expanded ? panel : false);
   };
 
-  const handleOpenModel = async (event, modal, requestId, requestTitle) => {
+  const handleOpenModel = async (_event, modal, requestId, requestTitle) => {
     //setOpenModel(true);
     setOpenModel(modal);
     setSelectedRequestId(requestId);
@@ -116,11 +116,11 @@ const RequestList = ({
   };
 
   // TODO: To be Deleted
-  const handleClaimBack = (event, modal, requestId) => {
+  const handleClaimBack = (_event, _modal, requestId) => {
     claimBackRequest(metamaskDetails, requestId);
   };
   // TODO: To be Deleted
-  const handleClaim = (event, modal, requestId) => {
+  const handleClaim = (_event, _modal, requestId) => {
     claimRequest(metamaskDetails, requestId);
   };
 
@@ -161,7 +161,7 @@ const RequestList = ({
               <div className={classes.tokenAwardedContainer}>
                 <span className={classes.title}>Tokens Awarded:</span>
                 <p className={classes.data}>
-                  {r.fund_total > 0 ? fromWei(r.fund_total) : 0} <span>AGI</span>
+                  {r.fund_total > 0 ? fromWei(r.fund_total) : 0} <span>AGIX</span>
                 </p>
               </div>
               <div className={classes.backersContainer}>

@@ -20,7 +20,7 @@ const UserProfileClaims = ({ classes }) => {
         <div className={classes.claimsForSolutions}>
           <h4>Claims for Solutions</h4>
           <Typography className={classes.description}>
-            All AGI tokens you receieved as rewards from the solutions that you submitted will be listed here for you
+            All AGIX tokens you receieved as rewards from the solutions that you submitted will be listed here for you
             claim to your Metamask wallet.
           </Typography>
           <Grid container className={classes.tableHeader}>
@@ -60,7 +60,7 @@ const UserProfileClaims = ({ classes }) => {
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2} className={classes.centerAlign}>
               <span className={classes.responsiveHeader}>Tokens:</span>
-              <span>999 AGI</span>
+              <span>999 AGIX</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2}>
               <StyledButton disabled type="transparentBlueBorder" btnText="claim" />
@@ -97,7 +97,7 @@ const UserProfileClaims = ({ classes }) => {
             </Grid>
             <Grid xs={12} sm={3} md={3} lg={3}>
               <span className={classes.responsiveHeader}>Tokens backed:</span>
-              <span>999 AGI</span>
+              <span>999 AGIX</span>
             </Grid>
             <Grid xs={12} sm={2} md={2} lg={2}>
               <StyledButton disabled type="transparentBlueBorder" btnText="claim" />

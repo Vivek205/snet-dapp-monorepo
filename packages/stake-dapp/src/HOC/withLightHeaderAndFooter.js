@@ -33,5 +33,4 @@ const withLightHeaderAndFooter = Component => {
     );
   };
 };
-
 export default withLightHeaderAndFooter;

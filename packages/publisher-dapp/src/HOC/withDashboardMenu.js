@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
 
@@ -15,6 +15,7 @@ import { FooterData } from "./footerContent";
 import { GlobalRoutes } from "../GlobalRouter/Routes";
 
 import { useStyles } from "./styles";
+import { localStorageKeys, useLocalStorage } from "shared/dist/hooks/useLocalStorage";
 
 const selectState = state => ({ orgUuid: state.organization.uuid });
 
@@ -71,7 +72,10 @@ const withDashboardMenu = Component => {
     ];
 
     const classes = useStyles();
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
+      localStorageKeys.SHOW_PHASE2_NOTIFICATION,
+      true
+    );
 
     const onUpdateCloseClick = () => {
       setShowUpdateNotificationBar(false);

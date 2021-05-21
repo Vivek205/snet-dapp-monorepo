@@ -335,22 +335,22 @@ const parseServiceDetails = (data, serviceUuid) => {
       type: "",
     },
     assets: {
-      heroImage: data.assets.hero_image
+      heroImage: data.media.hero_image
         ? {
-            url: data.assets.hero_image.url,
+            url: data.media.hero_image.url,
             ipfsHash: "",
           }
         : {},
-      demoFiles: data.assets.demo_files
+      demoFiles: data.media.demo_files
         ? {
-            url: data.assets.demo_files.url,
-            ipfsHash: data.assets.demo_files.ipfs_hash,
+            url: data.media.demo_files.url,
+            ipfsHash: data.media.demo_files.ipfs_hash,
           }
         : {},
-      protoFiles: data.assets.proto_files
+      protoFiles: data.media.proto_files
         ? {
-            url: data.assets.proto_files.url,
-            ipfsHash: data.assets.proto_files.ipfs_hash,
+            url: data.media.proto_files.url,
+            ipfsHash: data.media.proto_files.ipfs_hash,
           }
         : {},
     },
@@ -470,7 +470,7 @@ const saveTransaction = (orgUuid, serviceUuid, hash, ownerAddress) => async disp
   }
 };
 
-const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
+const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   const orgId = organization.id;
   const serviceId = serviceDetails.id;
   const sdk = await initSDK();
@@ -479,7 +479,7 @@ const registerInBlockchain = (organization, serviceDetails, serviceMetadataURI, 
   dispatch(loaderActions.startAppLoader(LoaderContent.METAMASK_TRANSACTION));
   return new Promise((resolve, reject) => {
     const method = sdk._registryContract
-      .createServiceRegistration(orgId, serviceId, serviceMetadataURI, tags)
+      .createServiceRegistration(orgId, serviceId, serviceMetadataURI)
       .send({ from: address })
       .on(blockChainEvents.TRANSACTION_HASH, async hash => {
         await dispatch(saveTransaction(organization.uuid, serviceDetails.uuid, hash, address));
@@ -561,11 +561,11 @@ const getServiceDetailsFromBlockchain = async (orgId, serviceId) => {
   return await registry.getServiceRegistrationById(orgId, serviceId).call();
 };
 
-export const publishService = (organization, serviceDetails, serviceMetadataURI, tags, history) => async dispatch => {
+export const publishService = (organization, serviceDetails, serviceMetadataURI, history) => async dispatch => {
   try {
     const serviceDetailsFromBlockchain = await getServiceDetailsFromBlockchain(organization.id, serviceDetails.id);
     if (!serviceDetailsFromBlockchain.found) {
-      return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, tags, history));
+      return await dispatch(registerInBlockchain(organization, serviceDetails, serviceMetadataURI, history));
     }
     return await dispatch(updateInBlockchain(organization, serviceDetails, serviceMetadataURI, history));
   } catch (error) {

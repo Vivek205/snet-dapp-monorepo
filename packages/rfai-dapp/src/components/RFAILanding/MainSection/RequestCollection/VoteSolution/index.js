@@ -60,7 +60,7 @@ const VoteSolution = ({
     return isVoted;
   };
 
-  const handleVoteSubmit = async (event, solutionSubmitter) => {
+  const handleVoteSubmit = async (_event, solutionSubmitter) => {
     if (!metamaskDetails.isTxnsAllowed) {
       setAlert({ type: alertTypes.ERROR, message: `Needs connection to Metamask` });
       return;
@@ -112,10 +112,10 @@ const VoteSolution = ({
               </div>
               <div className={classes.voteSolutionDescription}>
                 <p>
-                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
-                  define which solutions will be alloted their backed AGI tokens. Backers that vote for multiple
-                  solutions will have their back AGI tokens split evening on the voted solutions. Backers who do not
-                  vote will have SingularityNet foundation vote determine their backed AGI distribution.{" "}
+                  All users must back the request with AGIX tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGIX tokens. Backers that vote for multiple
+                  solutions will have their back AGIX tokens split evening on the voted solutions. Backers who do not
+                  vote will have SingularityNet foundation vote determine their backed AGIX distribution.{" "}
                 </p>
               </div>
               {loading && (

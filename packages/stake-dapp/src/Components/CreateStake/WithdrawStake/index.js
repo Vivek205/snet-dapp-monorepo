@@ -140,7 +140,7 @@ const WithdrawStake = ({ handleClose, open, withdrawStakeAmountDetails, stakeDet
                 onChange={handleAmountChange}
                 value={withdrawAmount}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
             </div>

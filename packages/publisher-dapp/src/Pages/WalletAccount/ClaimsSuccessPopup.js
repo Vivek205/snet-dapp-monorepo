@@ -38,11 +38,11 @@ const ClaimsSuccessPopup = ({ classes, show, channelIdList, agiClaimed, escrowBa
           <div>
             <div className={classes.iconContainer}>
               <InfoIcon className={classes.infoIcon} />
-              <p>AGI Claimed</p>
+              <p>AGIX Claimed</p>
             </div>
             <p>
               {agiClaimed}
-              <span>AGI</span>
+              <span>AGIX</span>
             </p>
           </div>
           <div>
@@ -52,7 +52,7 @@ const ClaimsSuccessPopup = ({ classes, show, channelIdList, agiClaimed, escrowBa
             </div>
             <p>
               {escrowBalance}
-              <span>AGI</span>
+              <span>AGIX</span>
             </p>
           </div>
         </div>

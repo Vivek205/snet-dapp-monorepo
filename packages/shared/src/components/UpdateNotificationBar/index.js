@@ -9,6 +9,8 @@ import { useStyles } from "./styles";
 const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
   if (!showNotification) return null;
   return (
+
+    <div className={classes.parentUpdateNotificationBar}>
     <div className={classes.updateNotificationBar}>
       <img src={AnnoucementIcon} alt="Announcment" />
       <p>
@@ -25,6 +27,7 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
       </p>
       <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
     </div>
+</div>
   );
 };
 
