@@ -7,7 +7,7 @@ import LoggedInActions from "./LoggedInActions";
 import LoggedOutActions from "./LoggedOutActions";
 import { navbarItems, dropdowns } from "./NavigationBar/constant.js";
 
-const Header = () => {
+const Header = ({ showNotification, onCloseClick }) => {
   const { isLoggedIn } = useSelector(state => state.user);
 
   return (
@@ -20,6 +20,8 @@ const Header = () => {
       LoggedOutActions={LoggedOutActions}
       mobileNavLinks={navbarItems}
       mobileDropDown={dropdowns}
+      showNotification={showNotification}
+      onCloseClick={onCloseClick}
     />
   );
 };
