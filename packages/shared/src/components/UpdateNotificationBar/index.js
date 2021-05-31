@@ -14,7 +14,7 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
         <img src={AnnoucementIcon} alt="Announcment" />
         <p>
           <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
-          <a href="https://snapshot.singularitynet.io/" title="Read More">
+          <a href="https://snapshot.singularitynet.io/" title="SingularityNET Snapshot Tool" target="_blank" rel="noreferrer noopener">
           snapshot tool.
             <ArrowForwardIosIcon />
           </a>
