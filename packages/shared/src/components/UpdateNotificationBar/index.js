@@ -13,9 +13,9 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
       <div className={classes.updateNotificationBar}>
         <img src={AnnoucementIcon} alt="Announcment" />
         <p>
-          <span>Phase 2 white paper avaliable now! </span>
-          <a href="#" title="Read More">
-            Read more on our official blog post.
+          <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
+          <a href="https://snapshot.singularitynet.io/" title="Read More">
+          snapshot tool.
             <ArrowForwardIosIcon />
           </a>
         </p>
