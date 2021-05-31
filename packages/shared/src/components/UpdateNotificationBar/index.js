@@ -16,7 +16,7 @@ const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
           <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
           <a
             href="https://snapshot.singularitynet.io/"
-            title="Read More"
+            title="SingularityNET Snapshot Tool"
             target="_blank"
             rel="noreferrer noopener"
           >
