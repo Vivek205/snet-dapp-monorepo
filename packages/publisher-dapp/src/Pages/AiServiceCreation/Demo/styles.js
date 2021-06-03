@@ -44,7 +44,7 @@ export const useStyles = MUITheme => ({
     lineHeight: "24px",
   },
   demoCreationContainer: {
-    "& span": {
+    "& > span": {
       "&:first-of-type": {
         margin: "35px 0",
         color: MUITheme.palette.text.primary,
