@@ -12,13 +12,14 @@ import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
 
-const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
+const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux, changeServiceDetailsLeaf }) => {
   const { orgUuid } = useParams();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const [demoAvailableChecked, setDemoAvailableChecked] = useState(false);
 
   const handleDemoAvailableCheck = () => {
     setDemoAvailableChecked(!demoAvailableChecked);
+    changeServiceDetailsLeaf("demo_component_available", demoAvailableChecked);
   };
 
   return (
