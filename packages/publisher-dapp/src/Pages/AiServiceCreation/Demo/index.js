@@ -116,6 +116,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
           ) : null}
         </div>
       </Grid>
+
       <Actions
         classes={classes}
         serviceDetails={serviceDetails}
