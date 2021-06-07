@@ -133,7 +133,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
-      {userEntity === userEntities.INDIVIDUAL || orgDetails.type === organizationTypes.INDIVIDUAL ? (
+      {/* {userEntity === userEntities.INDIVIDUAL || orgDetails.type === organizationTypes.INDIVIDUAL ? (
         <React.Fragment>
           <SNETTextField
             {...basicDetailsFormData.REGISTRATION_ID_TYPE}
@@ -146,7 +146,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
             onChange={handleChange}
           />
         </React.Fragment>
-      ) : null}
+      ) : null} */}
     </Grid>
   );
 };
