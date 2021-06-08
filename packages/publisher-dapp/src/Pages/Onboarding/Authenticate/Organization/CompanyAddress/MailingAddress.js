@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -12,26 +12,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../../../../Services/Redux/actionCreators";
 
 const stateSelector = state => ({
-  // sameMailingAddress: state.organization.orgAddress.sameMailingAddress,
+  sameMailingAddress: state.organization.orgAddress.sameMailingAddress,
   hqAddress: state.organization.orgAddress.hqAddress,
   mailingAddress: state.organization.orgAddress.mailingAddress,
 });
 
 const MailingAddress = ({ classes }) => {
-  const { hqAddress, mailingAddress } = useSelector(stateSelector);
+  const { sameMailingAddress, hqAddress, mailingAddress } = useSelector(stateSelector);
   const { street, apartment, city, zip, country } = mailingAddress;
   const dispatch = useDispatch();
-  const [checkboxChecked, setCheckboxChecked] = useState(true);
 
   const handleMailingAddressChange = event => {
     const { name, value } = event.target;
     dispatch(organizationActions.setOrgMailingAddressDetail(name, value));
   };
 
-  const handleSameAddressChange = () => {
-    // const { checked } = event.target;
-    // dispatch(organizationActions.setOrgSameMailingAddress(checked));
-    setCheckboxChecked(!checkboxChecked);
+  const handleSameAddressChange = event => {
+    const { checked } = event.target;
+    dispatch(organizationActions.setOrgSameMailingAddress(checked));
   };
 
   return (
@@ -41,7 +39,7 @@ const MailingAddress = ({ classes }) => {
         control={
           <Checkbox
             name="sameMailingAddress"
-            checked={checkboxChecked}
+            checked={sameMailingAddress}
             onChange={handleSameAddressChange}
             color="primary"
           />
@@ -51,25 +49,25 @@ const MailingAddress = ({ classes }) => {
       />
       <StyledTextField
         {...mailingAddressFormData.STREET}
-        disabled={checkboxChecked}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={checkboxChecked ? hqAddress.street : street}
+        value={sameMailingAddress ? hqAddress.street : street}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.APARTMENT}
-        disabled={checkboxChecked}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={checkboxChecked ? hqAddress.apartment : apartment}
+        value={sameMailingAddress ? hqAddress.apartment : apartment}
         onChange={handleMailingAddressChange}
         fullWidth
       />
       <StyledTextField
         {...mailingAddressFormData.CITY}
-        disabled={checkboxChecked}
+        disabled={sameMailingAddress}
         variant="outlined"
-        value={checkboxChecked ? hqAddress.city : city}
+        value={sameMailingAddress ? hqAddress.city : city}
         onChange={handleMailingAddressChange}
         fullWidth
       />
@@ -77,9 +75,9 @@ const MailingAddress = ({ classes }) => {
         <Grid item sx={12} sm={12} md={4} lg={4} className={classes.postalCode}>
           <StyledTextField
             {...mailingAddressFormData.ZIP}
-            disabled={checkboxChecked}
+            disabled={sameMailingAddress}
             variant="outlined"
-            value={checkboxChecked ? hqAddress.zip : zip}
+            value={sameMailingAddress ? hqAddress.zip : zip}
             onChange={handleMailingAddressChange}
             fullWidth
           />
@@ -87,9 +85,9 @@ const MailingAddress = ({ classes }) => {
         <Grid item sx={12} sm={12} md={8} lg={8}>
           <StyledTextField
             {...mailingAddressFormData.COUNTRY}
-            disabled={checkboxChecked}
+            disabled={sameMailingAddress}
             variant="outlined"
-            value={checkboxChecked ? hqAddress.country : country}
+            value={sameMailingAddress ? hqAddress.country : country}
             onChange={handleMailingAddressChange}
             fullWidth
           />
