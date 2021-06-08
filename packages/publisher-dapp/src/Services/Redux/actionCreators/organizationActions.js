@@ -138,7 +138,8 @@ export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
-    contacts, assets, orgAddress, registrationId, registrationType } = organization;
+    // contacts, assets, orgAddress, registrationId, registrationType } = organization;
+    contacts, assets, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
@@ -148,8 +149,8 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
-    registration_id: registrationId || "",
-    registration_type: registrationType || "",
+    // registration_id: registrationId || "",
+    // registration_type: registrationType || "",
     metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
@@ -260,8 +261,8 @@ const parseOrgData = selectedOrg => {
     uuid: selectedOrg.org_uuid,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
-    registrationId: selectedOrg.registration_id,
-    registrationType: selectedOrg.registration_type,
+    // registrationId: selectedOrg.registration_id,
+    // registrationType: selectedOrg.registration_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,

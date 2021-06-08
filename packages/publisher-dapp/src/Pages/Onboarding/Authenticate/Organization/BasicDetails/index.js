@@ -87,7 +87,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     dispatch(organizationActions.setContacts(updatedContacts));
   };
   return (
-    <Grid container>
+    <Grid container className={classes.basicDetailsContainer}>
       {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
         <Fragment>
           <SNETTextField

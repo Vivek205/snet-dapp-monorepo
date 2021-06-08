@@ -17,6 +17,7 @@ const HQAddress = ({ classes }) => {
   const handleChange = event => {
     const { name, value } = event.target;
     dispatch(organizationActions.setOrgHqAddressDetail(name, value));
+    dispatch(organizationActions.setOrgSameMailingAddress(true));
   };
 
   return (
