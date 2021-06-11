@@ -13,11 +13,11 @@ import { orgOnboardingConstraints } from "./validationConstraints";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses, organizationTypes } from "../../../../Utils/organizationSetup";
-import { generateDetailedErrorMessageFromValidation, getEmailDomain } from "../../../../Utils/validation";
+import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 import { userEntities } from "../../../../Utils/user";
 import { individualVerificationStatusList } from "../../constant";
-import { checkIfKnownError } from "shared/dist/utils/error";
-import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
+// import { checkIfKnownError } from "shared/dist/utils/error";
+// import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
 
 const selectState = state => {
   return {
@@ -27,13 +27,13 @@ const selectState = state => {
     individualStatus: state.user.individualVerificationStatus,
   };
 };
-const domainsToBeAutoApproved = ["singularitynet.io"];
+// const domainsToBeAutoApproved = ["singularitynet.io"];
 
 const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const { organization, email, userEntity, individualStatus } = useSelector(selectState);
+  const { organization, userEntity, individualStatus } = useSelector(selectState);
   const [allowDuns, setAllowDuns] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,11 +43,12 @@ const Organization = props => {
     delete orgValidationConstraints.id;
   }
   const invalidFields = validator(organization, orgValidationConstraints, { format: "grouped" });
-  useEffect(() => {
-    if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
-    }
-  }, [history, organization.state.state, organization.uuid]);
+
+  // useEffect(() => {
+  //   if (organization.state.state === organizationSetupStatuses.APPROVAL_PENDING) {
+  //     history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
+  //   }
+  // }, [history, organization.state.state, organization.uuid]);
 
   useEffect(() => {
     setAllowDuns(organization.uuid ? (organization.duns ? true : false) : true);
@@ -75,30 +76,30 @@ const Organization = props => {
     history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
   };
 
-  const initiateIndividualVerification = async () => {
-    try {
-      const { redirect_url: redirectUrl } = await dispatch(individualVerificationActions.initiateVerification());
-      const userDomain = getEmailDomain(email);
-      if (domainsToBeAutoApproved.includes(userDomain)) {
-        await dispatch(
-          individualVerificationActions.setIndividualVerificationStatus(individualVerificationStatusList.APPROVED)
-        );
-        return history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
-      }
-      await window.location.replace(redirectUrl);
-    } catch (e) {
-      if (checkIfKnownError(e)) {
-        return setAlert({
-          type: alertTypes.ERROR,
-          message: e.message,
-        });
-      }
-      return setAlert({
-        type: alertTypes.ERROR,
-        message: "Unable to initiate ID verification. Please try again",
-      });
-    }
-  };
+  // const initiateIndividualVerification = async () => {
+  //   try {
+  //     const { redirect_url: redirectUrl } = await dispatch(individualVerificationActions.initiateVerification());
+  //     const userDomain = getEmailDomain(email);
+  //     if (domainsToBeAutoApproved.includes(userDomain)) {
+  //       await dispatch(
+  //         individualVerificationActions.setIndividualVerificationStatus(individualVerificationStatusList.APPROVED)
+  //       );
+  //       return history.push(GlobalRoutes.INDIVIDUAL_STATUS.path);
+  //     }
+  //     await window.location.replace(redirectUrl);
+  //   } catch (e) {
+  //     if (checkIfKnownError(e)) {
+  //       return setAlert({
+  //         type: alertTypes.ERROR,
+  //         message: e.message,
+  //       });
+  //     }
+  //     return setAlert({
+  //       type: alertTypes.ERROR,
+  //       message: "Unable to initiate ID verification. Please try again",
+  //     });
+  //   }
+  // };
 
   const handleFinish = async () => {
     setAlert({});
@@ -112,30 +113,10 @@ const Organization = props => {
           return setAlert({ type: alertTypes.ERROR, children: errorMessage });
         }
       }
-      let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
-      if (userEntity === userEntities.INDIVIDUAL) {
-        orgData.type = organizationTypes.INDIVIDUAL;
-        // delete orgData.duns
-      }
-      if (
-        orgData.state.state === organizationSetupStatuses.CHANGE_REQUESTED ||
-        individualStatus === individualVerificationStatusList.CHANGE_REQUESTED
-      ) {
-        const data = await dispatch(organizationActions.finishLater(orgData, "ONBOARDING"));
-        orgUuid = data.org_uuid;
-      } else {
-        const data = await dispatch(organizationActions.createOrganization(orgData));
-        if (userEntity === userEntities.INDIVIDUAL) {
-          await initiateIndividualVerification();
-        }
-        orgUuid = data.org_uuid;
-      }
-      dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
-      if (userEntity !== userEntities.INDIVIDUAL) {
-        history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
-      }
-      dispatch(organizationActions.initializeOrg(email));
+      const data = await dispatch(organizationActions.createOrganization(orgData));
+      let orgUuid = data.org_uuid;
+      history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
     } catch (error) {
       return setAlert({
         type: alertTypes.ERROR,
@@ -143,6 +124,50 @@ const Organization = props => {
       });
     }
   };
+
+  // const handleFinish = async () => {
+  //   setAlert({});
+
+  //   try {
+  //     if (invalidFields) {
+  //       const isNotValid = Object.values(invalidFields);
+  //       if (isNotValid) {
+  //         const errorMessage = generateDetailedErrorMessageFromValidation(isNotValid);
+  //         setInvalidFieldsFlag(true);
+  //         return setAlert({ type: alertTypes.ERROR, children: errorMessage });
+  //       }
+  //     }
+  //     let orgUuid;
+  //     const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
+  //     if (userEntity === userEntities.INDIVIDUAL) {
+  //       orgData.type = organizationTypes.INDIVIDUAL;
+  //       // delete orgData.duns
+  //     }
+  //     if (
+  //       orgData.state.state === organizationSetupStatuses.CHANGE_REQUESTED ||
+  //       individualStatus === individualVerificationStatusList.CHANGE_REQUESTED
+  //     ) {
+  //       const data = await dispatch(organizationActions.finishLater(orgData, "ONBOARDING"));
+  //       orgUuid = data.org_uuid;
+  //     } else {
+  //       const data = await dispatch(organizationActions.createOrganization(orgData));
+  //       if (userEntity === userEntities.INDIVIDUAL) {
+  //         await initiateIndividualVerification();
+  //       }
+  //       orgUuid = data.org_uuid;
+  //     }
+  //     dispatch(organizationActions.setOrganizationStatus(organizationSetupStatuses.ONBOARDING));
+  //     if (userEntity !== userEntities.INDIVIDUAL) {
+  //       history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+  //     }
+  //     dispatch(organizationActions.initializeOrg(email));
+  //   } catch (error) {
+  //     return setAlert({
+  //       type: alertTypes.ERROR,
+  //       message: "Unable to finish organization authentication. Please try later",
+  //     });
+  //   }
+  // };
 
   const handleCancel = () => {
     dispatch(organizationActions.resetOrganizationData());

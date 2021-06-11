@@ -30,7 +30,7 @@ export const APIPaths = {
   ORG_SETUP: "/org",
   UPDATE_ORG: uuid => `/org/${uuid}/update`,
   CREATE_ORG_INDIVIDUAL: "/org/create",
-  CREATE_ORG_ORG: "/org",
+  CREATE_ORG_ORG: "/org/create",
   GET_MEMBERS: orgUuid => `/org/${orgUuid}/member`,
   GET_MEMBER_STATUS: (orgUuid, username) => `/org/${orgUuid}/member/${username}`,
   INVITE_MEMBERS: orgUuid => `/org/${orgUuid}/member/invite`,

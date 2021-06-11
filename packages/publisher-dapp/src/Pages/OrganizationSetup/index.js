@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { progressText, organizationSetupSections } from "./constant";
 import ProgressBar from "shared/dist/components/ProgressBar";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,21 +9,21 @@ import Heading from "./Heading";
 import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { organizationActions } from "../../Services/Redux/actionCreators";
-import { organizationSetupStatuses } from "../../Utils/organizationSetup";
+// import { organizationSetupStatuses } from "../../Utils/organizationSetup";
 import { GlobalRoutes } from "../../GlobalRouter/Routes";
 
 const OrganizationSetup = ({ classes, location, history }) => {
   const organization = useSelector(state => state.organization);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (
-      organization.state.state === organizationSetupStatuses.APPROVAL_PENDING ||
-      organization.state.state === organizationSetupStatuses.ONBOARDING
-    ) {
-      history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
-    }
-  }, [organization.state.state, organization.uuid, history]);
+  // useEffect(() => {
+  //   if (
+  //     organization.state.state === organizationSetupStatuses.APPROVAL_PENDING ||
+  //     organization.state.state === organizationSetupStatuses.ONBOARDING
+  //   ) {
+  //     history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", organization.uuid));
+  //   }
+  // }, [organization.state.state, organization.uuid, history]);
 
   const handleFinishLater = async () => {
     await dispatch(organizationActions.finishLater(organization));
