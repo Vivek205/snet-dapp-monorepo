@@ -18,6 +18,7 @@ import { userEntities } from "../../../../Utils/user";
 import { individualVerificationStatusList } from "../../constant";
 // import { checkIfKnownError } from "shared/dist/utils/error";
 // import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 const selectState = state => {
   return {
@@ -35,10 +36,12 @@ const Organization = props => {
   const [alert, setAlert] = useState({});
   const { organization, userEntity, individualStatus } = useSelector(selectState);
   const [allowDuns, setAllowDuns] = useState(false);
+  const [showConfimationPopup, setShowConfimationPopup] = useState(false);
 
   const dispatch = useDispatch();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   let orgValidationConstraints = orgOnboardingConstraints;
+
   if (userEntity === userEntities.INDIVIDUAL) {
     delete orgValidationConstraints.id;
   }
@@ -101,9 +104,17 @@ const Organization = props => {
   //   }
   // };
 
-  const handleFinish = async () => {
-    setAlert({});
+  const handleFinish = () => {
+    setShowConfimationPopup(true);
+  };
 
+  const handleClosePopup = () => {
+    setShowConfimationPopup(false);
+  };
+
+  const handleContinue = async () => {
+    setShowConfimationPopup(false);
+    setAlert({});
     try {
       if (invalidFields) {
         const isNotValid = Object.values(invalidFields);
@@ -113,9 +124,10 @@ const Organization = props => {
           return setAlert({ type: alertTypes.ERROR, children: errorMessage });
         }
       }
+      let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
       const data = await dispatch(organizationActions.createOrganization(orgData));
-      let orgUuid = data.org_uuid;
+      orgUuid = data.org_uuid;
       history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
     } catch (error) {
       return setAlert({
@@ -211,6 +223,9 @@ const Organization = props => {
           disabled={organization.state.state === organizationSetupStatuses.ONBOARDING_REJECTED}
         />
       </div>
+      {showConfimationPopup ? (
+        <ConfirmationPopup open={true} handleClose={handleClosePopup} handleContinue={handleContinue} />
+      ) : null}
     </Fragment>
   );
 };
