@@ -22,7 +22,7 @@ const ConfirmationPopup = ({ classes, open, handleClose, handleContinue }) => {
       <Card className={classes.card}>
         <CardHeader
           className={classes.cardHeader}
-          title={<Typography variant="h4">Confirmation Popup</Typography>}
+          title={<Typography variant="h4">Confirm Details</Typography>}
           action={
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -30,11 +30,13 @@ const ConfirmationPopup = ({ classes, open, handleClose, handleContinue }) => {
           }
         />
         <CardContent className={classes.popupContent}>
-          <Typography className={classes.popupDescription}>some description</Typography>
+          <Typography className={classes.popupDescription}>
+            Please verify the information entered. Once submitted the details cannot be modified.
+          </Typography>
         </CardContent>
         <CardActions className={classes.btnContainer}>
-          <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
           <SNETButton children="cancel" color="primary" variant="text" onClick={handleCancel} />
+          <SNETButton children="continue" color="primary" variant="contained" onClick={handleContinue} />
         </CardActions>
       </Card>
     </Modal>

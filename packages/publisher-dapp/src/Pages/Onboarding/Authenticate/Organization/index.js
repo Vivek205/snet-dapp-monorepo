@@ -126,9 +126,14 @@ const Organization = props => {
       }
       let orgUuid;
       const orgData = { ...organization, duns: allowDuns ? organization.duns : "" };
+      if (userEntity === userEntities.INDIVIDUAL) {
+        orgData.type = organizationTypes.INDIVIDUAL;
+      }
       const data = await dispatch(organizationActions.createOrganization(orgData));
       orgUuid = data.org_uuid;
-      history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
+      if (orgData.state.state === organizationSetupStatuses.ONBOARDING_APPROVED) {
+        history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
+      }
     } catch (error) {
       return setAlert({
         type: alertTypes.ERROR,
