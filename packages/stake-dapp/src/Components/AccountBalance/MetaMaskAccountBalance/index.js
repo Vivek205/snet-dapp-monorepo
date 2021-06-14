@@ -112,7 +112,7 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Allows staking contract to authorize higher amount of AGI for efficient and fast staking. This saves
+                  Allows staking contract to authorize higher amount of AGIX for efficient and fast staking. This saves
                   you gas cost (ETH) for every stake you submit. Recommended if you are planning to stake more than
                   once. See FAQ for more information.
                 </p>
@@ -143,18 +143,18 @@ class MetaMaskAccountBalance extends Component {
               </div>
               <span>Authorized Tokens</span>
             </div>
-            <span>{fromWei(tokenAllowance)} AGI</span>
+            <span>{fromWei(tokenAllowance)} AGIX</span>
           </div> */}
 
           <div className={classes.bgBox}>
             <div className={classes.label}>
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
-                <p>Number of AGI tokens currently available in your wallet.</p>
+                <p>Number of AGIX tokens currently available in your wallet.</p>
               </div>
               <span>Total Tokens</span>
             </div>
-            <span>{fromWei(tokenBalance)} AGI</span>
+            <span>{fromWei(tokenBalance)} AGIX</span>
           </div>
 
           <div className={classes.bgBox}>
@@ -162,13 +162,13 @@ class MetaMaskAccountBalance extends Component {
               <div className={classes.iconTooltipContainer}>
                 <InfoIcon />
                 <p>
-                  Number of AGI tokens that you have staked across all sessions. This includes pending and active
-                  staking amounts.
+                  Number of AGIX tokens that you have staked across all sessions. This includes pending and active
+                  staking amounts along with rewards.
                 </p>
               </div>
               <span>Total Staked</span>
             </div>
-            <span>{fromWei(stakeBalance)} AGI</span>
+            <span>{fromWei(stakeBalance)} AGIX</span>
           </div>
         </div>
       </div>

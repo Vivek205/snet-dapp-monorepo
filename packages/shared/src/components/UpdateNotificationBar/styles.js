@@ -1,11 +1,14 @@
 export const useStyles = theme => ({
+  parentUpdateNotificationBar: {
+    backgroundColor: "#fff",
+  },
   updateNotificationBar: {
     padding: "2px 0",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    backgroundColor: "rgba(64,134,255,0.5)",
+    backgroundColor: "#800080",
     color: theme.palette.text.white,
     zIndex: 9999,
     "& img": { marginRight: 12 },

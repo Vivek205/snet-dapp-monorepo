@@ -34,7 +34,7 @@ const AccountDetails = ({ classes, mmAccDetails }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3}>
             <Typography className={classes.boxValue}>
-              {cogsToAgi(mmAccDetails.escrowBalance)} <span>AGI</span>
+              {cogsToAgi(mmAccDetails.escrowBalance)} <span>AGIX</span>
             </Typography>
           </Grid>
         </Grid>
@@ -53,7 +53,7 @@ const AccountDetails = ({ classes, mmAccDetails }) => {
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>
               <Typography className={classes.boxValue}>
-                {cogsToAgi(mmAccDetails.tokenBalance)} <span>AGI</span>
+                {cogsToAgi(mmAccDetails.tokenBalance)} <span>AGIX</span>
               </Typography>
             </Grid>
           </Grid>

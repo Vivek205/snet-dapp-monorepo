@@ -111,7 +111,7 @@ const Details = props => {
       if (orderType === orderTypes.CREATE_CHANNEL) {
         var { signature, address, currentBlockNumber } = await generateSignature();
       }
-      await initiatePayment(payType, amount, currency, "AGI", amountInAGI, signature, address, currentBlockNumber);
+      await initiatePayment(payType, amount, currency, "AGIX", amountInAGI, signature, address, currentBlockNumber);
     } catch (error) {
       setAlert({ type: alertTypes.ERROR, message: `${error.message}. Please try again` });
     }
@@ -135,7 +135,7 @@ const Details = props => {
           title="Channel Balance"
           show={!isEmpty(channelInfo)}
           value={channelInfo.balanceInAgi}
-          unit="AGI"
+          unit="AGIX"
         />
       </div>
 

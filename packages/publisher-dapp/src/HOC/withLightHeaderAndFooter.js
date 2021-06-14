@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import SNETFooter from "shared/dist/components/SNETFooter";
-
+import { localStorageKeys, useLocalStorage } from "shared/dist/hooks/useLocalStorage";
 import { FooterData } from "./footerContent";
 import Header from "../Components/Header";
 import Box from "@material-ui/core/Box";
@@ -9,7 +9,10 @@ import { useStyles } from "./styles";
 const withLightHeaderAndFooter = Component => {
   return props => {
     const classes = useStyles();
-    const [showUpdateNotification, setShowUpdateNotificationBar] = useState(true);
+    const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
+      localStorageKeys.SHOW_PHASE2_NOTIFICATION,
+      true
+    );
 
     const onUpdateCloseClick = () => {
       setShowUpdateNotificationBar(false);

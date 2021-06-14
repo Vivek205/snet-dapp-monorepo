@@ -44,7 +44,6 @@
     "react-swipeable-views": "^0.13.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "singularitynet-platform-contracts": "^0.3.4",
     "utf8": "^3.0.0",
     "validate.js": "^0.13.1"
   },

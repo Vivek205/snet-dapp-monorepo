@@ -58,7 +58,7 @@ const UnclaimedPayments = ({
             <Typography>{payment.channelNonce}</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
-            <Typography>{cogsToAgi(payment.signedAmount)} AGI</Typography>
+            <Typography>{cogsToAgi(payment.signedAmount)} AGIX</Typography>
           </Grid>
         </Grid>
       ))}

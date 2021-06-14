@@ -22,7 +22,7 @@ import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 import StyledButton from "../../../../common/StyledButton";
 
-const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails, requestStakes, loading }) => {
+const StakeList = ({ open, handleClose, requestDetails, requestStakes, loading }) => {
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -54,8 +54,8 @@ const StakeList = ({ open, handleClose, requestId, requestTitle, requestDetails,
             <Paper className={classes.root}>
               <div className={classes.viewBackersDescription}>
                 <p>
-                  All users must back the request with AGI tokens in order to gain voting privileges. Backer’s votes
-                  define which solutions will be alloted their backed AGI tokens.
+                  All users must back the request with AGIX tokens in order to gain voting privileges. Backer’s votes
+                  define which solutions will be alloted their backed AGIX tokens.
                 </p>
               </div>
               {loading && (

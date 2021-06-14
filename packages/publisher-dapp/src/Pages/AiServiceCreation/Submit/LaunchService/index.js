@@ -80,7 +80,7 @@ class LaunchService extends React.Component {
         throw new ValidationError("Service is not yet approved. Please submit for approval.");
       }
       const { metadata_ipfs_hash } = await publishToIPFS(organization.uuid, serviceDetails.uuid);
-      await publishService(organization, serviceDetails, metadata_ipfs_hash, serviceDetails.tags, history);
+      await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
     } catch (e) {
       this.props.stopAppLoader();
       if (checkIfKnownError(e)) {
@@ -161,8 +161,8 @@ const mapDispatchToProps = dispatch => ({
   getSampleDaemonConfig: (orgUuid, serviceUuid, testDaemon) =>
     dispatch(aiServiceDetailsActions.getSampleDaemonConfig(orgUuid, serviceUuid, testDaemon)),
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
-  publishService: (organization, serviceDetails, metadata_ipfs_hash, tags, history) =>
-    dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, tags, history)),
+  publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
+    dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
   getLatestOrgLoader: () => dispatch(loaderActions.startAppLoader(LoaderContent.GET_LATEST_ORG)),

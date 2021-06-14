@@ -33,7 +33,8 @@ const stateSelector = state => ({
   metamaskDetails: state.metamaskReducer.metamaskDetails,
 });
 
-const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, autoRenewal }) => {
+// , autoRenewal -- Default is set to true and no need to explicitly to follow
+const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -92,7 +93,8 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         }
 
         // Initiate the SubmitStake Operation
-        await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
+        //await submitStakeV2(metamaskDetails, stakeAmountBN, autoRenewal);
+        await submitStakeV2(metamaskDetails, stakeAmountBN);
 
         setAlert({
           type: alertTypes.SUCCESS,
@@ -104,7 +106,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
         // Disable the submit operation
         setDisableAction(true);
 
-        // Update the AGI Token Balances
+        // Update the AGIX Token Balances
         dispatch(tokenActions.updateTokenBalance(metamaskDetails));
         dispatch(tokenActions.updateTokenAllowance(metamaskDetails));
         dispatch(stakeActions.fetchUserStakeBalanceFromBlockchain(metamaskDetails));
@@ -125,7 +127,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
       // Display the alert message
       setAlert({
         type: alertTypes.ERROR,
-        message: `Oops! Insufficient AGI Balance in your wallet.`,
+        message: `Oops! Insufficient AGIX Balance in your wallet.`,
       });
     }
   };
@@ -153,8 +155,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     const windowMaxCap = new BigNumber(stakeDetails.windowMaxCap);
 
     let totalStakedAmount = new BigNumber(stakeDetails.totalStakedAmount);
-    const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
-    const totalAutoRenewAmount = new BigNumber(stakeDetails.totalAutoRenewAmount);
+    //const windowTotalStake = new BigNumber(stakeDetails.windowTotalStake);
 
     if (myStake.gt(myStakeProcessed)) {
       totalStakedAmount = totalStakedAmount.plus(myStake.minus(myStakeProcessed));
@@ -172,9 +173,6 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
     totalStakedAmount = totalStakedAmount.plus(stakeAmount);
 
     let _rewardAmount = new BigNumber(0);
-
-    // Considering Auto Renewed Stake For calculation
-    totalStakedAmount = totalStakedAmount.plus(windowTotalStake).plus(totalAutoRenewAmount);
 
     if (totalStakedAmount.lt(windowMaxCap)) {
       _rewardAmount = stakeAmount.times(windowRewardAmount).div(totalStakedAmount);
@@ -213,7 +211,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                 value={stakeAmount}
                 onChange={handleAmountChange}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
               <img src={ApproxSymbolImg} alt="Approximate Symbol" />
@@ -223,7 +221,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                 extraInfo="Approximate based on the current pool size"
                 value={fromWei(rewardAmount)}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
             </div>
@@ -234,7 +232,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                     <div className={classes.iconTooltipContainer}>
                       <InfoIcon />
                       <p>
-                        This is the amount of AGI tokens that were auto renewed from a previous stake session. You will
+                        This is the amount of AGIX tokens that were auto renewed from a previous stake session. You will
                         not be able to withdraw these tokens until the incubation period complete and auto renewed is
                         turned off. See Transactions for session details.
                       </p>
@@ -243,7 +241,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
                   </div>
                   <div className={classes.value}>
                     <Typography>{fromWei(stakeDetails.myStakeAutoRenewed)}</Typography>
-                    <Typography>AGI</Typography>
+                    <Typography>AGIX</Typography>
                   </div>
                 </div>
               </div>
@@ -267,7 +265,7 @@ const AddStake = ({ handleClose, open, addStakeAmountDetails, stakeDetails, auto
               <AlertBox type={alertTypes.INFO}>
                 <InfoIcon />
                 <Typography className={classes.infoAlertMessage}>
-                  Minimum stake amount is {fromWei(stakeDetails.minStake)} AGI
+                  Minimum stake amount is {fromWei(stakeDetails.minStake)} AGIX
                 </Typography>
               </AlertBox>
               <AlertBox type={alert.type} message={alert.message} />

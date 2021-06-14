@@ -49,18 +49,8 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
         ...stakeCalculatorFields,
         stakeRewardAmount: Math.floor(fromWei(recentStakeWindow.windowRewardAmount)),
         poolStakeAmount:
-          recentStakeWindow.windowTotalStake > 0 ||
-          recentStakeWindow.totalAutoRenewAmount > 0 ||
-          recentStakeWindow.totalPendingApprovalStake > 0
-            ? Math.floor(
-                fromWei(
-                  BigNumber.sum(
-                    recentStakeWindow.windowTotalStake,
-                    recentStakeWindow.totalAutoRenewAmount,
-                    recentStakeWindow.totalPendingApprovalStake
-                  )
-                )
-              )
+          recentStakeWindow.totalAmountStaked > 0
+            ? Math.floor(fromWei(recentStakeWindow.totalAmountStaked))
             : stakeCalculatorFields.poolStakeAmount,
         incubationPeriodInDays: Math.ceil(
           (recentStakeWindow.endPeriod - recentStakeWindow.submissionEndPeriod) / (60 * 60 * 24)
@@ -198,13 +188,13 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
     <Grid container className={classes.bannerContainer}>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.bannerDesFormContainer}>
         <Grid item xs={12} sm={12} md={6} lg={6} className={classes.bannerDescriptionContainer}>
-          <Typography className={classes.bannerTitle}>Earn more while holding AGI tokens</Typography>
+          <Typography className={classes.bannerTitle}>Earn more while holding AGIX tokens</Typography>
           <Typography className={classes.bannerDescPara1}>
-            By staking AGI tokens, you support the operations of our blockchain network and in doing so you will be
-            rewarded with more AGI tokens for your contributions.
+            By staking AGIX tokens, you support the operations of our blockchain network and in doing so you will be
+            rewarded with more AGIX tokens for your contributions.
           </Typography>
           <Typography className={classes.bannerDescPara2}>
-            Vest your AGI tokens in 30 day staking sessions. Tokens staked in this way will be used to fulfill
+            Vest your AGIX tokens in 30 day staking sessions. Tokens staked in this way will be used to fulfill
             blockchain transactions on the SingularityNET platform. At the end of the 30 day period you can either
             continue to allow your tokens to vest or withdraw them along with any reward earned during the staking
             period.
@@ -223,13 +213,13 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                 extraInfo={
                   parseInt(stakeCalculatorFields.stakeAmount) + parseInt(stakeCalculatorFields.poolStakeAmount) >
                   parseInt(stakeCalculatorFields.maxStakeAmount)
-                    ? "* Exceeding AGI Total supply"
+                    ? "* Exceeding AGIX Total supply"
                     : ""
                 }
                 value={stakeCalculatorFields.stakeAmount}
                 InputProps={{
                   inputProps: { min: 1, max: stakeCalculatorFields.poolStakeAmount },
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
                 onChange={handleDataChange}
               />
@@ -240,7 +230,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                 extraInfo="~Approximate based on pool size"
                 value={getRewardAmount()}
                 InputProps={{
-                  endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                  endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                 }}
               />
             </div>
@@ -249,7 +239,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                 <div className={classes.label}>
                   <div className={classes.iconTooltipContainer}>
                     <InfoIcon />
-                    <p>Total amount of AGI tokens staked in the pool currently</p>
+                    <p>Total amount of AGIX tokens staked in the pool currently</p>
                   </div>
                   <span>Current Pool Size</span>
                 </div>
@@ -260,7 +250,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                     value={stakeCalculatorFields.poolStakeAmount}
                     InputProps={{
                       inputProps: { min: 0, max: stakeCalculatorFields.maxStakeAmount },
-                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                      endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                     }}
                     onChange={handleDataChange}
                   />
@@ -271,7 +261,8 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                   <div className={classes.iconTooltipContainer}>
                     <InfoIcon />
                     <p>
-                      Number of AGI tokens that will be divided amongst all stakers as the reward for the current window
+                      Number of AGIX tokens that will be divided amongst all stakers as the reward for the current
+                      window
                     </p>
                   </div>
                   <span>Reward Pool</span>
@@ -283,7 +274,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                     value={stakeCalculatorFields.stakeRewardAmount}
                     InputProps={{
                       inputProps: { min: 1 },
-                      endAdornment: <InputAdornment position="start">agi</InputAdornment>,
+                      endAdornment: <InputAdornment position="start">agix</InputAdornment>,
                     }}
                     onChange={handleDataChange}
                   />
@@ -293,7 +284,7 @@ const Banner = ({ classes, recentStakeWindow, stakeOverallSummary }) => {
                 <div className={classes.label}>
                   <div className={classes.iconTooltipContainer}>
                     <InfoIcon />
-                    <p>Amount of the time that AGI tokens in the stake will be vested and locked in</p>
+                    <p>Amount of the time that AGIX tokens in the stake will be vested and locked in</p>
                   </div>
                   <span>Incubation Period</span>
                 </div>

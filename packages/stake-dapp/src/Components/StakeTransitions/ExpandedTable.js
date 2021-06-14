@@ -15,6 +15,8 @@ const processState = {
   AutoRenewStake: "Auto Renewal",
   RenewStake: "Renew",
   WithdrawStake: "Withdraw",
+  AddReward: "AddReward",
+  RequestForClaim: "Request For Claim",
 };
 
 const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
@@ -49,6 +51,9 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
       case "WithdrawStake":
         stakeAmount = "-" + fromWei(eventData.stakeAmount);
         break;
+      case "AddReward":
+        stakeAmount = "+" + fromWei(eventData.rewardAmount);
+        break;
       default:
         stakeAmount = "0";
         break;
@@ -66,13 +71,13 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         txnDetails = "New Stake";
         break;
       case "ClaimStake":
-        txnDetails = "Reward Amount: " + fromWei(eventData.rewardAmount) + " AGI";
+        txnDetails = "Reward Amount: " + fromWei(eventData.rewardAmount) + " AGIX";
         break;
       case "ApproveStake":
-        txnDetails = "Approved Stake: " + fromWei(eventData.approvedStakeAmount) + " AGI";
+        txnDetails = "Approved Stake: " + fromWei(eventData.approvedStakeAmount) + " AGIX";
         break;
       case "RejectStake":
-        txnDetails = "Transferred to Metamask: " + fromWei(eventData.returnAmount) + " AGI";
+        txnDetails = "Transferred to Metamask: " + fromWei(eventData.returnAmount) + " AGIX";
         break;
       case "AutoRenewStake":
         if (stakeMapIndex === eventData.oldStakeIndex)
@@ -80,7 +85,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
 
         txnDetails +=
-          " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGI";
+          " Approved Stake: " + fromWei(eventData.approvedAmount) + "/" + fromWei(eventData.stakeAmount) + " AGIX";
         break;
       case "RenewStake":
         if (stakeMapIndex === eventData.oldStakeIndex)
@@ -88,10 +93,14 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
         else txnDetails = "Renewed from Stake Id: " + eventData.oldStakeIndex;
 
         txnDetails +=
-          " Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGI";
+          " Stake Amount: " + fromWei(eventData.stakeAmount) + "/" + fromWei(eventData.totalAmount) + " AGIX";
         break;
       case "WithdrawStake":
-        txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGI";
+        txnDetails = "Transferred to Metamask: " + fromWei(eventData.stakeAmount) + " AGIX";
+        break;
+      case "AddReward":
+        txnDetails = "Reward updated for Stake Id: " + eventData.stakeIndex;
+        txnDetails += " With the reward " + fromWei(eventData.rewardAmount) + " AGIX";
         break;
       default:
         txnDetails = "";
@@ -143,7 +152,7 @@ const ExpandedTable = ({ showTable, stakeMapIndex, transactionList }) => {
             </Grid>
             <Grid item xs={12} sm={12} md={2} lg={2}>
               <Typography className={classes.mobileTitle}>Transaction:</Typography>
-              <Typography>{getStakeAmount(t)} AGI</Typography>
+              <Typography>{getStakeAmount(t)} AGIX</Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>
               <Typography className={classes.mobileTitle}>Detail:</Typography>

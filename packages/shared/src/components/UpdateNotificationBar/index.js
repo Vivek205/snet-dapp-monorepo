@@ -9,16 +9,23 @@ import { useStyles } from "./styles";
 const UpdateNotificationBar = ({ classes, showNotification, onCloseClick }) => {
   if (!showNotification) return null;
   return (
-    <div className={classes.updateNotificationBar}>
-      <img src={AnnoucementIcon} alt="Announcment" />
-      <p>
-        <span>Phase 2 white paper avaliable now! </span>
-        <a href="#" title="Read More">
-          Read more on our official blog post.
-          <ArrowForwardIosIcon />
-        </a>
-      </p>
-      <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
+    <div className={classes.parentUpdateNotificationBar}>
+      <div className={classes.updateNotificationBar}>
+        <img src={AnnoucementIcon} alt="Announcment" />
+        <p>
+          <span>SingularityNET Phase II has officially launched!!! Check your brand new AGIX balance on your wallets or use our </span>
+          <a
+            href="https://snapshot.singularitynet.io/"
+            title="SingularityNET Snapshot Tool"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            snapshot tool.
+            <ArrowForwardIosIcon />
+          </a>
+        </p>
+        <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
+      </div>
     </div>
   );
 };
