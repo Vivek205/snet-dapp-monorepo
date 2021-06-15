@@ -374,7 +374,7 @@ const createOrganizationAPI = payload => async dispatch => {
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const createOrganization = organization => async dispatch => {
+export const createOrganization = (organization, email) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_CREATE));
     const payload = payloadForSubmit(organization);
@@ -384,6 +384,7 @@ export const createOrganization = organization => async dispatch => {
       throw new APIError(error.message);
     }
     const createdOrganization = parseOrgData(data);
+    createdOrganization.owner = email;
     dispatch(setAllAttributes(createdOrganization));
     dispatch(setOrgFoundInBlockchain(false));
     dispatch(loaderActions.stopAppLoader());
@@ -559,6 +560,7 @@ export const initializeOrg = username => async dispatch => {
       const orgUuid = data[0].org_uuid;
       await Promise.all[(dispatch(getOwner(orgUuid)), dispatch(getMembershipDetails(orgUuid, username)))];
     }
+    return data;
   } catch (error) {
     Sentry.captureException(error);
     dispatch(errorActions.setAppError(error));

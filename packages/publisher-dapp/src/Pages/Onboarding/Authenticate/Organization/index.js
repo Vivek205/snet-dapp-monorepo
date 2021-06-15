@@ -34,7 +34,7 @@ const Organization = props => {
   const classes = useStyles();
   const { history } = props;
   const [alert, setAlert] = useState({});
-  const { organization, userEntity, individualStatus } = useSelector(selectState);
+  const { organization, email, userEntity, individualStatus } = useSelector(selectState);
   const [allowDuns, setAllowDuns] = useState(false);
   const [showConfimationPopup, setShowConfimationPopup] = useState(false);
 
@@ -129,9 +129,9 @@ const Organization = props => {
       if (userEntity === userEntities.INDIVIDUAL) {
         orgData.type = organizationTypes.INDIVIDUAL;
       }
-      const data = await dispatch(organizationActions.createOrganization(orgData));
+      const data = await dispatch(organizationActions.createOrganization(orgData, email));
       orgUuid = data.org_uuid;
-      if (orgData.state.state === organizationSetupStatuses.ONBOARDING_APPROVED) {
+      if (data.state.state === organizationSetupStatuses.ONBOARDING_APPROVED) {
         history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
       }
     } catch (error) {
