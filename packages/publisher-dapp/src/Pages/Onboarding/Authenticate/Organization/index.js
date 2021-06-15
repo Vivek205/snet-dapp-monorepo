@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import BasicDetails from "./BasicDetails";
@@ -235,4 +236,4 @@ const Organization = props => {
   );
 };
 
-export default Organization;
+export default withRouter(Organization);
