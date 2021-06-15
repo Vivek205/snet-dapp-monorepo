@@ -64,4 +64,7 @@ export const useStyles = makeStyles(MUITheme => ({
       paddingLeft: 16,
     },
   },
+  basicDetailsContainer: {
+    "& span": { marginBottom: 0 },
+  },
 }));

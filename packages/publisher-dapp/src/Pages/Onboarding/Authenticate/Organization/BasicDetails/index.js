@@ -87,7 +87,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     dispatch(organizationActions.setContacts(updatedContacts));
   };
   return (
-    <Grid container>
+    <Grid container className={classes.basicDetailsContainer}>
       {userEntity !== userEntities.INDIVIDUAL && orgDetails.type !== organizationTypes.INDIVIDUAL ? (
         <Fragment>
           <SNETTextField
@@ -133,20 +133,6 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         <AlertText type={websiteValidation.type} message={websiteValidation.message} />
       </div>
       <SNETTextField {...basicDetailsFormData.PHONE} value={phone} onChange={handleContactsChange} />
-      {userEntity === userEntities.INDIVIDUAL || orgDetails.type === organizationTypes.INDIVIDUAL ? (
-        <React.Fragment>
-          <SNETTextField
-            {...basicDetailsFormData.REGISTRATION_ID_TYPE}
-            value={orgDetails.registrationType}
-            onChange={handleChange}
-          />
-          <SNETTextField
-            {...basicDetailsFormData.REGISTRATION_ID}
-            value={orgDetails.registrationId}
-            onChange={handleChange}
-          />
-        </React.Fragment>
-      ) : null}
     </Grid>
   );
 };
