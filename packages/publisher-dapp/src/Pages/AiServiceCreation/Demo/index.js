@@ -11,15 +11,21 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 
 const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux, changeServiceDetailsLeaf }) => {
   const { orgUuid } = useParams();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const [demoAvailableChecked, setDemoAvailableChecked] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleDemoAvailableCheck = () => {
     setDemoAvailableChecked(!demoAvailableChecked);
     changeServiceDetailsLeaf("demo_component_available", demoAvailableChecked);
+  };
+
+  const showUploadNotification = type => {
+    type === alertTypes.SUCCESS ? setShowNotification(true) : setShowNotification(false);
   };
 
   return (
@@ -111,11 +117,18 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
                 demoFilesUrl={serviceDetails.assets.demoFiles.url}
                 changeDemoFiles={changeDemoFiles}
                 error={serviceDetails.assets.demoFiles.url ? "" : invalidFieldsFlag}
+                showUploadNotification={type => showUploadNotification(type)}
               />
             </div>
           ) : null}
         </div>
       </Grid>
+
+      {showNotification ? (
+        <div className={classes.uploadStatusNotification}>
+          <AlertBox type={alertTypes.SUCCESS} message="Your upload is pending..." />
+        </div>
+      ) : null}
 
       <Actions
         classes={classes}

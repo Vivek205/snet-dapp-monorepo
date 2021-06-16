@@ -175,4 +175,8 @@ export const useStyles = MUITheme => ({
       color: "rgba(0,0,0,.54)",
     },
   },
+  uploadStatusNotification: {
+    width: "100%",
+    marginTop: 25,
+  },
 });

@@ -10,7 +10,15 @@ import JSZip from "jszip";
 import ValidationError from "shared/dist/utils/validationError";
 import { validateCompressedFiles } from "../../../Utils/ValidateCompressedFiles";
 
-const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDemoFiles, error }) => {
+const UploadDemoFiles = ({
+  classes,
+  orgUuid,
+  serviceUuid,
+  demoFilesUrl,
+  changeDemoFiles,
+  error,
+  showUploadNotification,
+}) => {
   const [alert, setAlert] = useState({});
   const [selectedFile, setSelectedFile] = useState({ name: "", size: "", type: "" });
   const dispatch = useDispatch();
@@ -18,6 +26,10 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
   useEffect(() => {
     if (error) setAlert({ type: alertTypes.ERROR, message: "Please upload Demo Files" });
   }, [error]);
+
+  if (alert.type) {
+    showUploadNotification(alert.type);
+  }
 
   const handleFileDrop = useCallback(
     async (acceptedFiles, rejectedFiles) => {
@@ -45,6 +57,7 @@ const UploadDemoFiles = ({ classes, orgUuid, serviceUuid, demoFilesUrl, changeDe
     },
     [changeDemoFiles, dispatch, orgUuid, serviceUuid]
   );
+
   const validateIndexFile = uploadedFile => {
     const fileToBePresent = "index.js";
 
