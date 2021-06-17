@@ -11,7 +11,7 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
-import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
+import { progressStages, progressStatus, serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
@@ -34,6 +34,7 @@ export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
+export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -603,14 +604,24 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
   }
 };
 
-export const updateProgressStatus = (progressNumber, status, progressStatuses) => {
-  const updadedStatus = progressStatuses.map(progress => {
-    if (progress.key === progressNumber) {
+export const updateBuildStatus = (section, status, progressStatuses) => {
+  const updatedStatus = progressStatuses.map(progress => {
+    if (progress.section === section) {
       return { ...progress, status };
     }
 
     return progress;
   });
 
-  return { type: SET_PROGRESS_STATUS, payload: updadedStatus };
+  return { type: SET_BUILD_STATUS, payload: updatedStatus };
+};
+
+export const updateProgressStatus = (section, status, progressStatuses, nextSection) => {
+  const updatedStatuses = progressStatuses.map(progress => {
+    if (progress.section === section) {
+      return { ...progress, status };
+    }
+  });
+
+  return { type: SET_PROGRESS_STATUS, payload: updatedStatuses, section: nextSection };
 };

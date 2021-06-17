@@ -1,29 +1,38 @@
 export const progressStatus = {
-  PENDING: "PENDING",
-  FAILED: "FAILED",
-  SUCCESS: "SUCCESS",
-  NOT_COMPLETED: "",
+  IDLE: "idle",
+  ACTIVE: "active",
+  COMPLETED: "completed",
+  FAILED: "failed",
+  IN_PROGRESS: "in_progress",
+  STOPPED: "stopped",
+};
+
+export const sections = {
+  AI_PROFILE: "AI_PROFILE",
+  SETUP_DEMO: "SETUP_DEMO",
+  PRICING_AND_DISTRIBUTION: "PRICING_AND_DISTRIBUTION",
+  LAUNCH: "LAUNCH",
 };
 
 export const progressStages = [
   {
-    progressText: "AI Service Profile",
-    status: progressStatus.NOT_COMPLETED,
+    section: sections.AI_PROFILE,
+    status: progressStatus.IDLE,
     key: 1,
   },
   {
-    status: progressStatus.NOT_COMPLETED,
-    progressText: "Setup Demo",
+    section: sections.SETUP_DEMO,
+    status: progressStatus.IDLE,
     key: 2,
   },
   {
-    status: progressStatus.NOT_COMPLETED,
-    progressText: "Pricing & Distribution",
+    section: sections.PRICING_AND_DISTRIBUTION,
+    status: progressStatus.IDLE,
     key: 3,
   },
   {
-    status: progressStatus.NOT_COMPLETED,
-    progressText: "Launch",
+    section: sections.LAUNCH,
+    status: progressStatus.IDLE,
     key: 4,
   },
 ];
@@ -54,11 +63,13 @@ export const serviceCreationSections = {
   LAUNCH: {
     key: 4,
     heading: {
-      title: "Launch service",
-      description: "You have completed the required steps for submission",
+      title: "",
+      description: "",
     },
   },
 };
+
+export const progressText = ["AI Service Profile", "Setup Demo", "Pricing & Distribution", "Launch"];
 
 export const serviceCreationStatus = {
   NOT_STARTED: "",

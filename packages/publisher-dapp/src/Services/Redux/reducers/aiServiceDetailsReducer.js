@@ -1,7 +1,7 @@
 import { aiServiceDetailsActions } from "../actionCreators";
 import { ContactsTypes } from "../../../Utils/Contacts";
 import { serviceSetupStatuses } from "../../../Utils/serviceSetup";
-import { serviceCreationStatus, progressStages } from "../../../Pages/AiServiceCreation/constant";
+import { serviceCreationStatus, progressStages, sections } from "../../../Pages/AiServiceCreation/constant";
 
 export const defaultGroups = [
   {
@@ -69,12 +69,15 @@ export const initialAiServiceDetailsState = {
   },
   foundInBlockchain: false,
   progressStages,
+  currentSection: sections.AI_PROFILE,
 };
 
 const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
   switch (action.type) {
-    case aiServiceDetailsActions.SET_PROGRESS_STATUS:
+    case aiServiceDetailsActions.SET_BUILD_STATUS:
       return { ...state, progressStages: action.payload };
+    case aiServiceDetailsActions.SET_PROGRESS_STATUS:
+      return { ...state, progressStages: action.payload, currentSection: action.section };
     case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_TOUCHED_FLAG:

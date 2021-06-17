@@ -59,6 +59,15 @@ var useStyles = (0, _styles.makeStyles)(function (MUITheme) {
         padding: "0 !important"
       }
     },
+    errorIcon: {
+      "& svg": {
+        padding: 3,
+        borderRadius: 25,
+        background: MUITheme.palette.error.main,
+        color: MUITheme.palette.text.white,
+        fontSize: 22
+      }
+    },
     active: {
       "& div": {
         backgroundColor: MUITheme.palette.primary.main,

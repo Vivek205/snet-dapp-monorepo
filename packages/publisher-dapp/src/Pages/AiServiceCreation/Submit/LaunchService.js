@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, batch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -9,58 +10,63 @@ import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETSt
 import VerificationPending from "shared/dist/assets/images/VerificationPending.png";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import VerificationApproved from "shared/dist/assets/images/VerificationApproved.png";
-import { progressStatus } from "../constant";
+import { progressStatus, sections } from "../constant";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const selectState = state => ({
   serviceStatus: state.aiServiceDetails.progressStages,
+  aiServiceDetails: state.aiServiceDetails,
 });
 
-const LaunchService = ({ classes, handleBackToDashboard }) => {
+const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
   const [isLaunchable] = useState(false);
   const [serviceInfo, setServiceInfo] = useState({});
 
-  const { serviceStatus } = useSelector(selectState);
+  const { progressStages, orgId } = useSelector(state => state.aiServiceDetails);
+
+  const { orgUuid, serviceUuid } = useParams();
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const checkServiceStatus = () => {
-      let serviceStatusSection = {};
+  const checkServiceStatus = async () => {
+    const { assets } = await dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId));
 
-      for (const service of serviceStatus) {
-        const { status } = service;
-        if (status === progressStatus.SUCCESS) {
-          serviceStatusSection = {
-            title: "Ready to Launch",
-            description: "Please proceed to launch to complete the final step",
-            image: VerificationApproved,
-            status,
-          };
-        } else if (status === progressStatus.FAILED) {
-          serviceStatusSection = {
-            title: "Unable to Publish the Service",
-            description:
-              "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
-            image: VerificationFailed,
-            status,
-          };
-          break;
-        } else {
-          serviceStatusSection = {
-            title: "Unable to Publish the Service",
-            description:
-              "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
-            image: VerificationPending,
-            status: progressStatus.PENDING,
-          };
-          break;
-        }
+    const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
+    const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
+
+    batch(() => {
+      dispatch(aiServiceDetailsActions.updateBuildStatus(sections.SETUP_DEMO, demoFileBuildStatus, progressStages));
+      dispatch(
+        aiServiceDetailsActions.updateBuildStatus(
+          sections.PRICING_AND_DISTRIBUTION,
+          protoFileBuildStatus,
+          progressStages
+        )
+      );
+      dispatch(aiServiceDetailsActions.updateBuildStatus(sections.LAUNCH, progressStatus.ACTIVE, progressStages));
+    });
+
+    console.log(progressStages);
+    let serviceStatusSection = {};
+
+    for (const service of progressStages) {
+      const { status } = service;
+
+      if (status !== progressStatus.SUCCESS) {
+        serviceStatusSection = {
+          title: "Unable to Publish the Service",
+          description:
+            "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
+          image: VerificationFailed,
+          status,
+        };
+        break;
       }
-      setServiceInfo(serviceStatusSection);
-      // TODO: Check the build status is success / not from API
-      dispatch(aiServiceDetailsActions.updateProgressStatus(4, serviceStatusSection.status, serviceStatus));
-    };
+    }
+    setServiceInfo(serviceStatusSection);
+  };
 
+  useEffect(() => {
     checkServiceStatus();
   }, []);
 
@@ -68,14 +74,14 @@ const LaunchService = ({ classes, handleBackToDashboard }) => {
     <div className={classes.statusBannerContainer}>
       <SNETStatusBanner
         title={serviceInfo.title}
-        img={serviceInfo.image}
+        img={serviceInfo.image || VerificationPending}
         description={serviceInfo.description}
         actions={[
           {
             children: "launch ai service",
             variant: "contained",
             color: "primary",
-            onClick: handleBackToDashboard,
+            onClick: handleSubmit,
             disabled: !isLaunchable,
           },
           { children: "back to dashboard", variant: "outlined", color: "primary", onClick: handleBackToDashboard },

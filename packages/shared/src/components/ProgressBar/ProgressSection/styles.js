@@ -43,6 +43,15 @@ export const useStyles = makeStyles(MUITheme => ({
     },
     "@media(max-width:480px)": { padding: "0 !important" },
   },
+  errorIcon: {
+    "& svg": {
+      padding: 3,
+      borderRadius: 25,
+      background: MUITheme.palette.error.main,
+      color: MUITheme.palette.text.white,
+      fontSize: 22,
+    },
+  },
   active: {
     "& div": {
       backgroundColor: MUITheme.palette.primary.main,

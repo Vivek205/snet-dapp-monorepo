@@ -28,7 +28,7 @@ import { useStyles } from "./styles";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
-import { serviceIdAvailability, progressStatus } from "../constant";
+import { serviceIdAvailability, progressStatus, sections } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
@@ -118,7 +118,14 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       }
       await handleSave();
 
-      dispatch(aiServiceDetailsActions.updateProgressStatus(1, progressStatus.SUCCESS, serviceStatus));
+      dispatch(
+        aiServiceDetailsActions.updateProgressStatus(
+          sections.AI_PROFILE,
+          progressStatus.COMPLETED,
+          serviceStatus,
+          sections.SETUP_DEMO
+        )
+      );
 
       history.push(
         ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)

@@ -13,7 +13,7 @@ import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/va
 
 import { cogsToAgi } from "shared/dist/utils/Pricing";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
-import { progressStatus } from "../../constant";
+import { progressStatus, sections } from "../../constant";
 
 const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
@@ -70,8 +70,14 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
     }
     setInvalidFields("");
     await handleSave();
-    // TODO: Fetch service build status from API
-    dispatch(aiServiceDetailsActions.updateProgressStatus(3, progressStatus.FAILED, serviceStatus));
+    dispatch(
+      aiServiceDetailsActions.updateProgressStatus(
+        sections.PRICING_AND_DISTRIBUTION,
+        progressStatus.IN_PROGRESS,
+        serviceStatus,
+        sections.LAUNCH
+      )
+    );
     history.push(ServiceCreationRoutes.LAUNCH.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
   };
   const handleFinishLater = async () => {

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
-import ProgressBar from "shared/dist/components/SNETProgressBar";
+import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { serviceCreationSections, serviceCreationStatus } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -20,6 +20,8 @@ class AiServiceCreation extends Component {
   state = {
     serviceDetails: initialAiServiceDetailsState,
     demoFileUploadStatus: false,
+    progressStage: {},
+    currentSection: "",
   };
 
   navigateToSubmitIfRejected = async status => {
@@ -30,6 +32,19 @@ class AiServiceCreation extends Component {
         ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid)
       );
     }
+  };
+
+  updateServiceState = () => {
+    let progressStage = {};
+    const { progressStages, currentSection } = this.props.serviceDetails;
+
+    console.log(progressStages);
+
+    for (const stage of progressStages) {
+      progressStage = { ...progressStage, [stage.key]: stage.status };
+    }
+
+    this.setState({ ...this.state, progressStage, currentSection });
   };
 
   initData = async () => {
@@ -45,6 +60,7 @@ class AiServiceCreation extends Component {
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
+    this.updateServiceState();
     this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
@@ -70,6 +86,11 @@ class AiServiceCreation extends Component {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
     }
+
+    if (serviceDetails.currentSection !== this.state.currentSection) {
+      this.updateServiceState();
+    }
+
     if (
       serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
       serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
@@ -90,9 +111,6 @@ class AiServiceCreation extends Component {
     if (path.includes(last(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path.split("/")))) {
       return PRICING_AND_DISTRIBUTION;
     }
-    if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
-      return LAUNCH;
-    }
     if (path.includes(last(ServiceCreationRoutes.LAUNCH.path.split("/")))) {
       return LAUNCH;
     }
@@ -106,10 +124,19 @@ class AiServiceCreation extends Component {
 
   handleSubmit = async () => {
     const { serviceDetails } = this.state;
-    const { orgUuid, serviceUuid, history, location, saveServiceDetails, setServiceDetailsInRedux } = this.props;
+    const {
+      orgUuid,
+      serviceUuid,
+      history,
+      location,
+      saveServiceDetails,
+      setServiceDetailsInRedux,
+      submitServiceDetailsForReview,
+    } = this.props;
     setServiceDetailsInRedux(serviceDetails);
     await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
     if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
+      await submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails);
       history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
     }
   };
@@ -202,7 +229,8 @@ class AiServiceCreation extends Component {
   };
 
   render() {
-    const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux, serviceStatus } = this.props;
+    const { progressStage } = this.state;
+    const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
       <div className={classes.serviceCreationContainer}>
         {serviceFoundInBlockchain ? (
@@ -210,11 +238,14 @@ class AiServiceCreation extends Component {
         ) : (
           <Heading {...this.activeSection().heading} />
         )}
-         <ProgressBar
-          progress={serviceStatus || []}
+        <ProgressBar
+          activeSection={this.activeSection().key}
+          progressText={progressText}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
+          uploadStatus={progressStage}
         />
         <ServiceCreationRouter
+          handleSubmit={this.handleSubmit}
           serviceDetails={this.state.serviceDetails}
           changeServiceDetailsLeaf={this.handleServiceDetailsLeafChange}
           changeHeroImage={this.handleHeroImageChange}
@@ -252,5 +283,7 @@ const mapDispatchToProps = dispatch => ({
   saveServiceDetails: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails)),
   setServiceDetailsInRedux: serviceDetails => dispatch(aiServiceDetailsActions.setAllAttributes(serviceDetails)),
+  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

@@ -8,7 +8,7 @@ export const ProgressStatusList = {
   IDLE: "idle",
   ACTIVE: "active",
   COMPLETED: "completed",
-  FAILED: "falied",
+  FAILED: "failed",
   IN_PROGRESS: "in_progress",
   STOPPED: "stopped",
 };
