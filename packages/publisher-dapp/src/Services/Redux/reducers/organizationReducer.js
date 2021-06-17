@@ -53,7 +53,7 @@ const initialState = {
     },
   },
   orgAddress: {
-    sameMailingAddress: false,
+    sameMailingAddress: true,
     hqAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
     mailingAddress: { street: "", apartment: "", city: "", zip: "", country: "" },
   },

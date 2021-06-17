@@ -138,7 +138,7 @@ export const uploadFile = (assetType, fileBlob, orgUuid) => async dispatch => {
 const payloadForSubmit = organization => {
   // prettier-ignore
   const { id, uuid, duns, name, type, website, shortDescription, longDescription, metadataIpfsUri,
-    contacts, assets, orgAddress, registrationId, registrationType } = organization;
+    contacts, assets, orgAddress } = organization;
   const { hqAddress, mailingAddress, sameMailingAddress } = orgAddress;
 
   const payload = {
@@ -148,8 +148,6 @@ const payloadForSubmit = organization => {
     org_name: name,
     duns_no: duns,
     org_type: type,
-    registration_id: registrationId || "",
-    registration_type: registrationType || "",
     metadata_ipfs_uri: metadataIpfsUri,
     description: longDescription,
     short_description: shortDescription,
@@ -260,8 +258,6 @@ const parseOrgData = selectedOrg => {
     uuid: selectedOrg.org_uuid,
     name: selectedOrg.org_name,
     type: selectedOrg.org_type,
-    registrationId: selectedOrg.registration_id,
-    registrationType: selectedOrg.registration_type,
     longDescription: selectedOrg.description,
     shortDescription: selectedOrg.short_description,
     website: selectedOrg.url,
@@ -372,13 +368,13 @@ export const submitForApproval = organization => async dispatch => {
 
 const createOrganizationAPI = payload => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
-  const apiName = APIEndpoints.ORCHESTRATOR.name;
+  const apiName = APIEndpoints.REGISTRY.name;
   const apiPath = APIPaths.CREATE_ORG_ORG;
   const apiOptions = initializeAPIOptions(token, payload);
   return await API.post(apiName, apiPath, apiOptions);
 };
 
-export const createOrganization = organization => async dispatch => {
+export const createOrganization = (organization, email) => async dispatch => {
   try {
     dispatch(loaderActions.startAppLoader(LoaderContent.ORG_SETUP_CREATE));
     const payload = payloadForSubmit(organization);
@@ -388,6 +384,7 @@ export const createOrganization = organization => async dispatch => {
       throw new APIError(error.message);
     }
     const createdOrganization = parseOrgData(data);
+    createdOrganization.owner = email;
     dispatch(setAllAttributes(createdOrganization));
     dispatch(setOrgFoundInBlockchain(false));
     dispatch(loaderActions.stopAppLoader());
@@ -563,6 +560,7 @@ export const initializeOrg = username => async dispatch => {
       const orgUuid = data[0].org_uuid;
       await Promise.all[(dispatch(getOwner(orgUuid)), dispatch(getMembershipDetails(orgUuid, username)))];
     }
+    return data;
   } catch (error) {
     Sentry.captureException(error);
     dispatch(errorActions.setAppError(error));

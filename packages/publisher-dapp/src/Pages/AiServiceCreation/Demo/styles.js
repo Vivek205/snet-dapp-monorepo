@@ -42,9 +42,16 @@ export const useStyles = MUITheme => ({
     color: MUITheme.palette.text.primary,
     fontSize: 16,
     lineHeight: "24px",
-    "& span": {
-      marginTop: 35,
-      display: "block",
+  },
+  demoCreationContainer: {
+    "& > span": {
+      "&:first-of-type": {
+        margin: "35px 0",
+        color: MUITheme.palette.text.primary,
+        fontSize: 16,
+        lineHeight: "24px",
+        display: "block",
+      },
     },
   },
   downloadBtn: {
@@ -154,5 +161,22 @@ export const useStyles = MUITheme => ({
       padding: " 13px 60px 11px",
     },
     [MUITheme.breakpoints.down("xs")]: { flexDirection: "column" },
+  },
+  demoAvailableCheckbox: {
+    "& .MuiFormControlLabel-label": {
+      color: MUITheme.palette.text.primary,
+      fontSize: 14,
+      letterSpacing: "0.25px",
+      lineHeight: "20px",
+    },
+    "& .Mui-checked": { color: "#4086ff !important" },
+    "& .MuiCheckbox-root": {
+      padding: 7,
+      color: "rgba(0,0,0,.54)",
+    },
+  },
+  uploadStatusNotification: {
+    width: "100%",
+    marginTop: 25,
   },
 });

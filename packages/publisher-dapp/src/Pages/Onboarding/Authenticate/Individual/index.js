@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-
-import JumioLogo from "shared/dist/assets/images/jumio.png";
-import SNETButton from "shared/dist/components/SNETButton";
-import { documentList } from "./content";
 import { useStyles } from "./styles";
 import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { alertTypes } from "shared/dist/components/AlertBox";
 import { checkIfKnownError } from "shared/dist/utils/error";
 import { individualVerificationStatusList } from "../../constant";
 import { getEmailDomain } from "../../../../Utils/validation";
@@ -74,8 +68,7 @@ class Individual extends Component {
   };
 
   render() {
-    const { classes, orgStatus, status } = this.props;
-    const { alert } = this.state;
+    const { orgStatus, status } = this.props;
 
     if (
       !orgStatus ||
@@ -86,43 +79,7 @@ class Individual extends Component {
       return <Organization />;
     }
 
-    return (
-      <Grid container className={classes.individualContainer}>
-        <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-          <Typography variant="h6">Identity Verification Required</Typography>
-          <Grid item sx={12} sm={12} md={12} lg={12} className={classes.descriptionLogoSection}>
-            <Grid item sx={12} sm={12} md={8} lg={8} className={classes.description}>
-              <Typography>
-                To ensure the security and safety of our platform and to enable us to allow you to monetize your
-                services we need to verify your identification. Your privacy is paramount to us and so we have selected
-                a secured third-party service <a href="https://www.jumio.com/">Jumio</a> to verify your identity.
-                Following the completion of Jumio’s verification process, you will be redirected back to AI Publisher.
-              </Typography>
-            </Grid>
-            <Grid item sx={12} sm={12} md={4} lg={4} className={classes.jumioLogo}>
-              <img src={JumioLogo} alt="Jumio" />
-            </Grid>
-          </Grid>
-          <Grid item sx={12} sm={12} md={12} lg={12} className={classes.docListSection}>
-            <Typography>Please enable your camera and prepare any of the following documents:</Typography>
-            <ul>
-              {documentList.map(item => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </Grid>
-          <Grid item sx={12} sm={12} md={12} lg={12} className={classes.btnContainer}>
-            <SNETButton
-              children="process with jumio verification"
-              color="primary"
-              variant="contained"
-              onClick={this.handleVerify}
-            />
-          </Grid>
-          <AlertBox type={alert.type} message={alert.message} />
-        </Grid>
-      </Grid>
-    );
+    return null;
   }
 }
 
