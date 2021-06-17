@@ -62,7 +62,7 @@ const LaunchService = ({ classes, handleBackToDashboard }) => {
     };
 
     checkServiceStatus();
-  }, [dispatch, serviceStatus]);
+  }, []);
 
   return (
     <div className={classes.statusBannerContainer}>
