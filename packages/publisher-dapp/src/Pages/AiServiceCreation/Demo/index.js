@@ -126,7 +126,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
 
       {showNotification ? (
         <div className={classes.uploadStatusNotification}>
-          <AlertBox type={alertTypes.SUCCESS} message="Your upload is pending..." />
+          <AlertBox type={alertTypes.SUCCESS} message="Your demo component build is pending..." />
         </div>
       ) : null}
 
