@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
-import ProgressBar from "shared/dist/components/ProgressBar";
+import ProgressBar from "shared/dist/components/SNETProgressBar";
 
-import { progressText, serviceCreationSections, serviceCreationStatus } from "./constant";
+import { serviceCreationSections, serviceCreationStatus } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -38,12 +38,13 @@ class AiServiceCreation extends Component {
       initServiceCreationLoader,
       stopInitServiceCreationLoader,
       orgId,
+      serviceStatus,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    this.setState({ serviceDetails });
+    this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
@@ -54,6 +55,7 @@ class AiServiceCreation extends Component {
 
   componentDidUpdate = async prevProps => {
     const { orgId, orgUuid, serviceUuid, serviceTouched, serviceDetails } = this.props;
+
     if (
       orgId &&
       orgUuid &&
@@ -77,7 +79,7 @@ class AiServiceCreation extends Component {
 
   activeSection = () => {
     const path = this.props.location.pathname;
-    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
+    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, LAUNCH } = serviceCreationSections;
     if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
     }
@@ -88,7 +90,10 @@ class AiServiceCreation extends Component {
       return PRICING_AND_DISTRIBUTION;
     }
     if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
-      return SUBMIT;
+      return LAUNCH;
+    }
+    if (path.includes(last(ServiceCreationRoutes.LAUNCH.path.split("/")))) {
+      return LAUNCH;
     }
     return PROFILE;
   };
@@ -191,7 +196,7 @@ class AiServiceCreation extends Component {
   };
 
   render() {
-    const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
+    const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux, serviceStatus } = this.props;
     return (
       <div className={classes.serviceCreationContainer}>
         {serviceFoundInBlockchain ? (
@@ -200,8 +205,7 @@ class AiServiceCreation extends Component {
           <Heading {...this.activeSection().heading} />
         )}
         <ProgressBar
-          activeSection={this.activeSection().key}
-          progressText={progressText}
+          progress={serviceStatus || []}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
         />
         <ServiceCreationRouter
@@ -229,6 +233,7 @@ const mapStateToProps = state => ({
   serviceFoundInBlockchain: state.aiServiceDetails.foundInBlockchain,
   serviceTouched: state.aiServiceDetails.touched,
   serviceDetails: state.aiServiceDetails,
+  serviceStatus: state.aiServiceDetails.progressStages,
 });
 
 const mapDispatchToProps = dispatch => ({
