@@ -33,7 +33,6 @@ export const SET_SERVICE_DETAILS_PROTO_URL = "SET_SERVICE_DETAILS_PROTO_URL";
 export const SET_SERVICE_HERO_IMAGE_URL = "SET_SERVICE_HERO_IMAGE_URL";
 export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
-export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -601,16 +600,4 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
     dispatch(loaderActions.stopAppLoader());
     throw e;
   }
-};
-
-export const updateProgressStatus = (progressNumber, status, progressStatuses) => {
-  const updadedStatus = progressStatuses.map(progress => {
-    if (progress.key === progressNumber) {
-      return { ...progress, status };
-    }
-
-    return progress;
-  });
-
-  return { type: SET_PROGRESS_STATUS, payload: updadedStatus };
 };

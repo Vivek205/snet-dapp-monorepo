@@ -1,20 +1,13 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import { progressStatus } from "../constant";
-
-const selectState = state => ({
-  serviceStatus: state.aiServiceDetails.progressStages,
-});
 
 const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalidFieldsFlag }) => {
-  const { serviceStatus } = useSelector(selectState);
-
   const history = useHistory();
 
   const { orgUuid, serviceUuid } = useParams();
@@ -27,8 +20,6 @@ const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalid
   const handleSave = async () => {
     setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
-    // TODO: Fetch build status from API
-    dispatch(aiServiceDetailsActions.updateProgressStatus(2, progressStatus.FAILED, serviceStatus));
   };
 
   const handleContinue = async () => {

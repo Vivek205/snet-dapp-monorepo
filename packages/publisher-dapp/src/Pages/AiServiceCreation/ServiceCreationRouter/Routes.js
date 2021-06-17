@@ -2,7 +2,6 @@ import Profile from "../Profile";
 import Demo from "../Demo";
 import PricingDistribution from "../PricingDistribution";
 import Submit from "../Submit";
-import LaunchService from "../Submit/LaunchService";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import Default from "../_default";
 
@@ -46,11 +45,5 @@ export const ServiceCreationRoutes = {
     path: fullPath("/submit"),
     component: Submit,
     match: matchRegexPattern("/submit"),
-  },
-  LAUNCH: {
-    name: "launch",
-    path: fullPath("/launch"),
-    component: LaunchService,
-    match: matchRegexPattern("/launch"),
   },
 };
