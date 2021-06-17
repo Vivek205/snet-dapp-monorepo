@@ -8,6 +8,9 @@ export const ProgressStatusList = {
   IDLE: "idle",
   ACTIVE: "active",
   COMPLETED: "completed",
+  FAILED: "falied",
+  IN_PROGRESS: "in_progress",
+  STOPPED: "stopped",
 };
 
 const ProgressSection = ({ progressNumber, progressText, progressStatus, onSectionClick }) => {

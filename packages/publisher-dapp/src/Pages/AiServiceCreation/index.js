@@ -19,6 +19,7 @@ import { initialAiServiceDetailsState } from "../../Services/Redux/reducers/aiSe
 class AiServiceCreation extends Component {
   state = {
     serviceDetails: initialAiServiceDetailsState,
+    demoFileUploadStatus: false,
   };
 
   navigateToSubmitIfRejected = async status => {
@@ -190,6 +191,11 @@ class AiServiceCreation extends Component {
     }));
   };
 
+  changeTheProgressText = progressBarText => {
+    progressBarText.splice(1, 1, "failed");
+    return progressBarText;
+  };
+
   render() {
     const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
@@ -201,7 +207,7 @@ class AiServiceCreation extends Component {
         )}
         <ProgressBar
           activeSection={this.activeSection().key}
-          progressText={progressText}
+          progressText={this.state.demoFileUploadStatus ? this.changeTheProgressText(progressText) : progressText}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
         />
         <ServiceCreationRouter
