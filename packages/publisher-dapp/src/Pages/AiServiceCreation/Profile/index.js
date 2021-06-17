@@ -28,7 +28,7 @@ import { useStyles } from "./styles";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { base64ToArrayBuffer } from "shared/dist/utils/FileUpload";
 import ServiceIdAvailability from "./ServiceIdAvailability";
-import { serviceIdAvailability } from "../constant";
+import { serviceIdAvailability, progressStatus } from "../constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import { generateDetailedErrorMessageFromValidation } from "../../../Utils/validation";
 
@@ -36,13 +36,14 @@ let validateTimeout = "";
 
 const selectState = state => ({
   isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+  serviceStatus: state.aiServiceDetails.progressStages,
 });
 
 const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHeroImage, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orgUuid } = useParams();
-  const { isValidateServiceIdLoading } = useSelector(selectState);
+  const { isValidateServiceIdLoading, serviceStatus } = useSelector(selectState);
   const [tags, setTags] = useState(""); // Only to render in the chip comp
   const [alert, setAlert] = useState({});
   const [websiteValidation, setWebsiteValidation] = useState({});
@@ -116,6 +117,9 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
         }
       }
       await handleSave();
+
+      dispatch(aiServiceDetailsActions.updateProgressStatus(1, progressStatus.SUCCESS, serviceStatus));
+
       history.push(
         ServiceCreationRoutes.DEMO.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceDetails.uuid)
       );
