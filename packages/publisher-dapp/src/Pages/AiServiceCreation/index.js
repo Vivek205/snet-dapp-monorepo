@@ -205,14 +205,9 @@ class AiServiceCreation extends Component {
         ) : (
           <Heading {...this.activeSection().heading} />
         )}
-<<<<<<< HEAD
-         <ProgressBar
-          progress={serviceStatus || []}
-=======
         <ProgressBar
           activeSection={this.activeSection().key}
           progressText={progressText}
->>>>>>> parent of e82406c8... AI Service creation approval flow change
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
         />
         <ServiceCreationRouter
