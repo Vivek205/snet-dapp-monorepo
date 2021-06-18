@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useStyles } from "./styles";
 import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../../ServiceCreationRouter/Routes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import validator from "shared/dist/utils/validator";
@@ -13,8 +13,15 @@ import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/va
 
 import { cogsToAgi } from "shared/dist/utils/Pricing";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { progressStatus, sections } from "../../constant";
+
+const selectState = state => ({
+  isValidateServiceIdLoading: state.loader.validateServiceId.isLoading,
+  serviceStatus: state.aiServiceDetails.progressStages,
+});
 
 const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields }) => {
+  const { serviceStatus } = useSelector(selectState);
   const classes = useStyles();
   const history = useHistory();
   const { orgUuid, serviceUuid } = useParams();
@@ -63,7 +70,14 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
     }
     setInvalidFields("");
     await handleSave();
-    history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+    dispatch(
+      aiServiceDetailsActions.updateProgressStatus(
+        sections.PRICING_AND_DISTRIBUTION,
+        progressStatus.IN_PROGRESS,
+        serviceStatus
+      )
+    );
+    history.push(ServiceCreationRoutes.LAUNCH.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
   };
   const handleFinishLater = async () => {
     await handleSave();

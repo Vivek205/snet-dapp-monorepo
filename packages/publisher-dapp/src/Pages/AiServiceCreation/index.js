@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { progressText, serviceCreationSections, serviceCreationStatus } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -32,6 +32,19 @@ class AiServiceCreation extends Component {
     }
   };
 
+  progressStatus = () => {
+    let progressStage = {};
+    const { progressStages } = this.props.serviceDetails;
+
+    console.log(progressStages);
+
+    for (const stage of progressStages) {
+      progressStage = { ...progressStage, [stage.key]: stage.status };
+    }
+
+    return progressStage;
+  };
+
   initData = async () => {
     const {
       getAiServiceList,
@@ -39,12 +52,13 @@ class AiServiceCreation extends Component {
       initServiceCreationLoader,
       stopInitServiceCreationLoader,
       orgId,
+      serviceStatus,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    this.setState({ serviceDetails });
+    this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
@@ -55,6 +69,7 @@ class AiServiceCreation extends Component {
 
   componentDidUpdate = async prevProps => {
     const { orgId, orgUuid, serviceUuid, serviceTouched, serviceDetails } = this.props;
+
     if (
       orgId &&
       orgUuid &&
@@ -68,6 +83,7 @@ class AiServiceCreation extends Component {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
     }
+
     if (
       serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
       serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
@@ -78,7 +94,7 @@ class AiServiceCreation extends Component {
 
   activeSection = () => {
     const path = this.props.location.pathname;
-    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, SUBMIT } = serviceCreationSections;
+    const { PROFILE, DEMO, PRICING_AND_DISTRIBUTION, LAUNCH } = serviceCreationSections;
     if (path.includes(last(ServiceCreationRoutes.PROFILE.path.split("/")))) {
       return PROFILE;
     }
@@ -88,8 +104,8 @@ class AiServiceCreation extends Component {
     if (path.includes(last(ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path.split("/")))) {
       return PRICING_AND_DISTRIBUTION;
     }
-    if (path.includes(last(ServiceCreationRoutes.SUBMIT.path.split("/")))) {
-      return SUBMIT;
+    if (path.includes(last(ServiceCreationRoutes.LAUNCH.path.split("/")))) {
+      return LAUNCH;
     }
     return PROFILE;
   };
@@ -101,10 +117,19 @@ class AiServiceCreation extends Component {
 
   handleSubmit = async () => {
     const { serviceDetails } = this.state;
-    const { orgUuid, serviceUuid, history, location, saveServiceDetails, setServiceDetailsInRedux } = this.props;
+    const {
+      orgUuid,
+      serviceUuid,
+      history,
+      location,
+      saveServiceDetails,
+      setServiceDetailsInRedux,
+      submitServiceDetailsForReview,
+    } = this.props;
     setServiceDetailsInRedux(serviceDetails);
     await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
     if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
+      await submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails);
       history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
     }
   };
@@ -209,8 +234,10 @@ class AiServiceCreation extends Component {
           activeSection={this.activeSection().key}
           progressText={progressText}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
+          progressStatus={this.progressStatus()}
         />
         <ServiceCreationRouter
+          handleSubmit={this.handleSubmit}
           serviceDetails={this.state.serviceDetails}
           changeServiceDetailsLeaf={this.handleServiceDetailsLeafChange}
           changeHeroImage={this.handleHeroImageChange}
@@ -235,6 +262,7 @@ const mapStateToProps = state => ({
   serviceFoundInBlockchain: state.aiServiceDetails.foundInBlockchain,
   serviceTouched: state.aiServiceDetails.touched,
   serviceDetails: state.aiServiceDetails,
+  serviceStatus: state.aiServiceDetails.progressStages,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -247,5 +275,7 @@ const mapDispatchToProps = dispatch => ({
   saveServiceDetails: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails)),
   setServiceDetailsInRedux: serviceDetails => dispatch(aiServiceDetailsActions.setAllAttributes(serviceDetails)),
+  submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
+    dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

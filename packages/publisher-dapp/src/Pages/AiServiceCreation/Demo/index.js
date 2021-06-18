@@ -39,11 +39,11 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             encourage you to follow our best practices on how to properly set up your demo on our AI Marketplace.
           </Typography>
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox color="primary" checked={demoAvailableChecked} onChange={handleDemoAvailableCheck} />}
             className={classes.demoAvailableCheckbox}
             label="This service does not have a demo"
-          />
+          /> */}
 
           {!demoAvailableChecked ? (
             <div className={classes.demoCreationContainer}>

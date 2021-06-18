@@ -1,3 +1,42 @@
+export const progressStatus = {
+  IDLE: "idle",
+  ACTIVE: "active",
+  COMPLETED: "completed",
+  FAILED: "failed",
+  IN_PROGRESS: "in_progress",
+  STOPPED: "stopped",
+};
+
+export const sections = {
+  AI_PROFILE: "AI_PROFILE",
+  SETUP_DEMO: "SETUP_DEMO",
+  PRICING_AND_DISTRIBUTION: "PRICING_AND_DISTRIBUTION",
+  LAUNCH: "LAUNCH",
+};
+
+export const progressStages = [
+  {
+    section: sections.AI_PROFILE,
+    status: progressStatus.IDLE,
+    key: 1,
+  },
+  {
+    section: sections.SETUP_DEMO,
+    status: progressStatus.IDLE,
+    key: 2,
+  },
+  {
+    section: sections.PRICING_AND_DISTRIBUTION,
+    status: progressStatus.IDLE,
+    key: 3,
+  },
+  {
+    section: sections.LAUNCH,
+    status: progressStatus.IDLE,
+    key: 4,
+  },
+];
+
 export const serviceCreationSections = {
   PROFILE: {
     key: 1,
@@ -21,14 +60,16 @@ export const serviceCreationSections = {
       description: "Now you will link to your AI service to the platform",
     },
   },
-  SUBMIT: {
+  LAUNCH: {
     key: 4,
     heading: {
-      title: "Submit for Review",
-      description: "You have completed the required steps for submission",
+      title: "",
+      description: "",
     },
   },
 };
+
+export const progressText = ["AI Service Profile", "Setup Demo", "Pricing & Distribution", "Launch"];
 
 export const serviceCreationStatus = {
   NOT_STARTED: "",
@@ -41,8 +82,6 @@ export const serviceCreationStatus = {
   PUBLISH_IN_PROGRESS: "PUBLISH_IN_PROGRESS",
   PUBLISHED: "PUBLISHED",
 };
-
-export const progressText = ["AI Service Profile", "Setup Demo", "Pricing & Distribution", "Submit for Review"];
 
 export const serviceData = [
   {
