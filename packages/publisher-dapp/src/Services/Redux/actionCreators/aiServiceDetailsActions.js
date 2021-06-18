@@ -346,12 +346,14 @@ const parseServiceDetails = (data, serviceUuid) => {
       demoFiles: data.media.demo_files
         ? {
             url: data.media.demo_files.url,
+            status: data.media.demo_files?.status || "",
             ipfsHash: data.media.demo_files.ipfs_hash,
           }
         : {},
       protoFiles: data.media.proto_files
         ? {
             url: data.media.proto_files.url,
+            status: data.media.proto_files?.status || "",
             ipfsHash: data.media.proto_files.ipfs_hash,
           }
         : {},

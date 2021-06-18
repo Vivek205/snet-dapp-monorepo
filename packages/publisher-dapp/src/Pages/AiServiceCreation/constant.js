@@ -5,6 +5,7 @@ export const progressStatus = {
   FAILED: "failed",
   IN_PROGRESS: "in_progress",
   STOPPED: "stopped",
+  SUCCEEDED: "succeeded",
 };
 
 export const sections = {
