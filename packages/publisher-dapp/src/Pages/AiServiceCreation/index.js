@@ -119,16 +119,22 @@ class AiServiceCreation extends Component {
       orgUuid,
       serviceUuid,
       history,
-      location,
       saveServiceDetails,
       setServiceDetailsInRedux,
-      submitServiceDetailsForReview,
+      publishToIPFS,
+      publishService,
+      organization,
     } = this.props;
-    setServiceDetailsInRedux(serviceDetails);
-    await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
-    if (!location.pathname.match(ServiceCreationRoutes.SUBMIT.match)) {
-      await submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails);
-      history.push(ServiceCreationRoutes.SUBMIT.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));
+
+    try {
+      setServiceDetailsInRedux(serviceDetails);
+      await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
+
+      const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
+      await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
+      this.handleBackToDashboard();
+    } catch (e) {
+      throw e;
     }
   };
 
@@ -254,6 +260,7 @@ class AiServiceCreation extends Component {
 }
 
 const mapStateToProps = state => ({
+  organization: state.organization,
   orgId: state.organization.id,
   orgUuid: state.organization.uuid,
   serviceUuid: state.aiServiceDetails.uuid,
@@ -275,5 +282,8 @@ const mapDispatchToProps = dispatch => ({
   setServiceDetailsInRedux: serviceDetails => dispatch(aiServiceDetailsActions.setAllAttributes(serviceDetails)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
+  publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
+  publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
+    dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));
