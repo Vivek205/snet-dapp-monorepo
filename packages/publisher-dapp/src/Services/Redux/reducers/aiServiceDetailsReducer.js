@@ -77,7 +77,7 @@ const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => 
     case aiServiceDetailsActions.SET_BUILD_STATUS:
       return { ...state, progressStages: action.payload };
     case aiServiceDetailsActions.SET_PROGRESS_STATUS:
-      return { ...state, progressStages: action.payload, currentSection: action.section };
+      return { ...state, progressStages: action.payload };
     case aiServiceDetailsActions.SET_ALL_SERVICE_DETAILS_ATTRIBUTES:
       return { ...state, ...action.payload };
     case aiServiceDetailsActions.SET_AI_SERVICE_TOUCHED_FLAG:

@@ -616,12 +616,14 @@ export const updateBuildStatus = (section, status, progressStatuses) => {
   return { type: SET_BUILD_STATUS, payload: updatedStatus };
 };
 
-export const updateProgressStatus = (section, status, progressStatuses, nextSection) => {
+export const updateProgressStatus = (section, status, progressStatuses) => {
   const updatedStatuses = progressStatuses.map(progress => {
     if (progress.section === section) {
       return { ...progress, status };
     }
+
+    return progress;
   });
 
-  return { type: SET_PROGRESS_STATUS, payload: updatedStatuses, section: nextSection };
+  return { type: SET_PROGRESS_STATUS, payload: updatedStatuses };
 };

@@ -28,12 +28,7 @@ const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalid
     setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
     dispatch(
-      aiServiceDetailsActions.updateProgressStatus(
-        sections.SETUP_DEMO,
-        progressStatus.IN_PROGRESS,
-        serviceStatus,
-        sections.PRICING_AND_DISTRIBUTION
-      )
+      aiServiceDetailsActions.updateProgressStatus(sections.SETUP_DEMO, progressStatus.IN_PROGRESS, serviceStatus)
     );
   };
 

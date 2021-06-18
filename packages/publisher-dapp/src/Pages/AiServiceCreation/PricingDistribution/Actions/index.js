@@ -74,8 +74,7 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
       aiServiceDetailsActions.updateProgressStatus(
         sections.PRICING_AND_DISTRIBUTION,
         progressStatus.IN_PROGRESS,
-        serviceStatus,
-        sections.LAUNCH
+        serviceStatus
       )
     );
     history.push(ServiceCreationRoutes.LAUNCH.path.replace(":orgUuid", orgUuid).replace(":serviceUuid", serviceUuid));

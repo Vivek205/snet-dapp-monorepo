@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ProgressSection, { ProgressStatusList } from "./ProgressSection";
 import { useStyles } from "./styles";
 
-const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, uploadStatus }) => {
+const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, progressStatus }) => {
   const computeProgressStatus = (progressNumber, activeSection) => {
     if (progressNumber < Number(activeSection)) {
       return ProgressStatusList.COMPLETED;
@@ -19,8 +19,8 @@ const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, upl
   };
 
   const handleProgressBarStatus = (progressNumber, activeSection) => {
-    if (uploadStatus[progressNumber]) {
-      return uploadStatus[progressNumber];
+    if (progressStatus[progressNumber]) {
+      return progressStatus[progressNumber];
     }
     return computeProgressStatus(progressNumber, activeSection);
   };
@@ -46,10 +46,11 @@ ProgressBar.propTypes = {
   activeSection: PropTypes.number,
   progressText: PropTypes.arrayOf(PropTypes.string),
   onSectionClick: PropTypes.func,
+  progressStatus: PropTypes.object,
 };
 
 ProgressBar.defaultProps = {
-  uploadStatus: {},
+  progressStatus: {},
 };
 
 export default withStyles(useStyles)(ProgressBar);

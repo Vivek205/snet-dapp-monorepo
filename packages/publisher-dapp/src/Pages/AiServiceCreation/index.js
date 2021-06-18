@@ -20,8 +20,6 @@ class AiServiceCreation extends Component {
   state = {
     serviceDetails: initialAiServiceDetailsState,
     demoFileUploadStatus: false,
-    progressStage: {},
-    currentSection: "",
   };
 
   navigateToSubmitIfRejected = async status => {
@@ -34,9 +32,9 @@ class AiServiceCreation extends Component {
     }
   };
 
-  updateServiceState = () => {
+  progressStatus = () => {
     let progressStage = {};
-    const { progressStages, currentSection } = this.props.serviceDetails;
+    const { progressStages } = this.props.serviceDetails;
 
     console.log(progressStages);
 
@@ -44,7 +42,7 @@ class AiServiceCreation extends Component {
       progressStage = { ...progressStage, [stage.key]: stage.status };
     }
 
-    this.setState({ ...this.state, progressStage, currentSection });
+    return progressStage;
   };
 
   initData = async () => {
@@ -60,7 +58,6 @@ class AiServiceCreation extends Component {
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    this.updateServiceState();
     this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
@@ -85,10 +82,6 @@ class AiServiceCreation extends Component {
       if (this.state.serviceDetails.touched !== serviceTouched) {
         this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
       }
-    }
-
-    if (serviceDetails.currentSection !== this.state.currentSection) {
-      this.updateServiceState();
     }
 
     if (
@@ -229,7 +222,6 @@ class AiServiceCreation extends Component {
   };
 
   render() {
-    const { progressStage } = this.state;
     const { classes, serviceFoundInBlockchain, serviceTouched, setServiceDetailsInRedux } = this.props;
     return (
       <div className={classes.serviceCreationContainer}>
@@ -242,7 +234,7 @@ class AiServiceCreation extends Component {
           activeSection={this.activeSection().key}
           progressText={progressText}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
-          uploadStatus={progressStage}
+          progressStatus={this.progressStatus()}
         />
         <ServiceCreationRouter
           handleSubmit={this.handleSubmit}

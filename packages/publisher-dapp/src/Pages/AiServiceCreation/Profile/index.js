@@ -119,12 +119,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
       await handleSave();
 
       dispatch(
-        aiServiceDetailsActions.updateProgressStatus(
-          sections.AI_PROFILE,
-          progressStatus.COMPLETED,
-          serviceStatus,
-          sections.SETUP_DEMO
-        )
+        aiServiceDetailsActions.updateProgressStatus(sections.AI_PROFILE, progressStatus.COMPLETED, serviceStatus)
       );
 
       history.push(
