@@ -36,8 +36,6 @@ class AiServiceCreation extends Component {
     let progressStage = {};
     const { progressStages } = this.props.serviceDetails;
 
-    console.log(progressStages);
-
     for (const stage of progressStages) {
       progressStage = { ...progressStage, [stage.key]: stage.status };
     }

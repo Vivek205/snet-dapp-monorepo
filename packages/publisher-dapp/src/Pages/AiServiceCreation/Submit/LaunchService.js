@@ -19,7 +19,7 @@ const selectState = state => ({
 });
 
 const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
-  const [isLaunchable] = useState(false);
+  const [isLaunchable, setLaunchable] = useState(false);
   const [serviceInfo, setServiceInfo] = useState({});
 
   const { progressStages, orgId } = useSelector(state => state.aiServiceDetails);
@@ -34,35 +34,26 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
     const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
 
-    batch(() => {
-      dispatch(aiServiceDetailsActions.updateBuildStatus(sections.SETUP_DEMO, demoFileBuildStatus, progressStages));
-      dispatch(
-        aiServiceDetailsActions.updateBuildStatus(
-          sections.PRICING_AND_DISTRIBUTION,
-          protoFileBuildStatus,
-          progressStages
-        )
-      );
-      dispatch(aiServiceDetailsActions.updateBuildStatus(sections.LAUNCH, progressStatus.ACTIVE, progressStages));
-    });
-
-    console.log(progressStages);
     let serviceStatusSection = {};
 
-    for (const service of progressStages) {
-      const { status } = service;
+    if (demoFileBuildStatus === progressStatus.SUCCEEDED && protoFileBuildStatus === progressStatus.SUCCEEDED) {
+      setLaunchable(true);
 
-      if (status !== progressStatus.SUCCESS) {
-        serviceStatusSection = {
-          title: "Unable to Publish the Service",
-          description:
-            "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
-          image: VerificationFailed,
-          status,
-        };
-        break;
-      }
+      serviceStatusSection = {
+        title: "Ready to Launch",
+        description:
+          "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take some for your changes to be reflected on AI Marketplace.",
+        image: VerificationApproved,
+      };
+    } else {
+      serviceStatusSection = {
+        title: "Unable to Publish the Service",
+        description:
+          "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
+        image: VerificationFailed,
+      };
     }
+
     setServiceInfo(serviceStatusSection);
   };
 
