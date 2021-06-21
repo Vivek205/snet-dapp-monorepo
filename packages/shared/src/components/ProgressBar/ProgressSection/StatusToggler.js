@@ -9,7 +9,7 @@ import { ProgressStatusList } from "./";
 const StatusToggler = ({ progressNumber, progressStatus }) => {
   const classes = useStyles();
 
-  if (progressStatus === ProgressStatusList.COMPLETED) {
+  if (progressStatus === ProgressStatusList.COMPLETED || progressStatus === ProgressStatusList.SUCCEEDED) {
     return (
       <div className={classes.numberContaienr}>
         <span className={classes.completedIcon}>
@@ -29,7 +29,7 @@ const StatusToggler = ({ progressNumber, progressStatus }) => {
     );
   }
 
-  if (progressStatus === ProgressStatusList.IN_PROGRESS) {
+  if (progressStatus === ProgressStatusList.IN_PROGRESS || progressStatus === ProgressStatusList.PENDING) {
     return (
       <div className={classes.numberContaienr}>
         <span className={classes.waitingIcon}>

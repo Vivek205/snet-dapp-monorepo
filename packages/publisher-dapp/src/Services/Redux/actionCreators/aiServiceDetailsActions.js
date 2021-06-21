@@ -11,7 +11,7 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
-import { progressStages, progressStatus, serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
+import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";

@@ -11,6 +11,8 @@ export const ProgressStatusList = {
   FAILED: "failed",
   IN_PROGRESS: "in_progress",
   STOPPED: "stopped",
+  SUCCEEDED: "succeeded",
+  PENDING: "pending",
 };
 
 const ProgressSection = ({ progressNumber, progressText, progressStatus, onSectionClick }) => {

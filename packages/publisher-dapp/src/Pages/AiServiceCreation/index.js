@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { serviceCreationSections, serviceCreationStatus, progressText } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText, sections } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -34,10 +34,17 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages } = this.props.serviceDetails;
+    const { progressStages, assets } = this.props.serviceDetails;
+    const { demoFiles, protoFiles } = assets;
 
     for (const stage of progressStages) {
-      progressStage = { ...progressStage, [stage.key]: stage.status };
+      if (stage.section === sections.SETUP_DEMO && demoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: demoFiles.status };
+      } else if (stage.section === sections.PRICING_AND_DISTRIBUTION && protoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: protoFiles.status };
+      } else {
+        progressStage = { ...progressStage, [stage.key]: stage.status };
+      }
     }
 
     return progressStage;
