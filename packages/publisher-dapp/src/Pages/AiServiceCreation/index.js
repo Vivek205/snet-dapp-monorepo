@@ -19,7 +19,6 @@ import { initialAiServiceDetailsState } from "../../Services/Redux/reducers/aiSe
 class AiServiceCreation extends Component {
   state = {
     serviceDetails: initialAiServiceDetailsState,
-    demoFileUploadStatus: false,
   };
 
   navigateToSubmitIfRejected = async status => {
