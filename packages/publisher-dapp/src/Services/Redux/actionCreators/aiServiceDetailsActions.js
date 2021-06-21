@@ -11,7 +11,7 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
-import { progressStages, progressStatus, serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
+import { sections, serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
@@ -609,7 +609,7 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
 export const updateBuildStatus = (section, status, progressStatuses) => {
   const updatedStatus = progressStatuses.map(progress => {
     if (progress.section === section) {
-      return { ...progress, status };
+      return { ...progress, status: status.toLowerCase() };
     }
 
     return progress;
@@ -621,11 +621,24 @@ export const updateBuildStatus = (section, status, progressStatuses) => {
 export const updateProgressStatus = (section, status, progressStatuses) => {
   const updatedStatuses = progressStatuses.map(progress => {
     if (progress.section === section) {
-      return { ...progress, status };
+      return { ...progress, status: status.toLowerCase() };
     }
 
     return progress;
   });
 
   return { type: SET_PROGRESS_STATUS, payload: updatedStatuses };
+};
+
+export const getFileBuildStatuses = serviceDetails => dispatch => {
+  const { assets, progressStages } = serviceDetails;
+  const { demoFiles, protoFiles } = assets;
+
+  if (demoFiles.status) {
+    dispatch(updateBuildStatus(sections.SETUP_DEMO, demoFiles.status, progressStages));
+  }
+
+  if (protoFiles.status) {
+    dispatch(updateBuildStatus(sections.PRICING_AND_DISTRIBUTION, protoFiles.status, progressStages));
+  }
 };

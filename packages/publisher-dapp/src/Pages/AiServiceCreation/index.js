@@ -51,11 +51,13 @@ class AiServiceCreation extends Component {
       stopInitServiceCreationLoader,
       orgId,
       serviceStatus,
+      getFileBuildStatuses,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
+    getFileBuildStatuses(this.props.serviceDetails);
     this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
@@ -285,5 +287,6 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
+  getFileBuildStatuses: serviceDetails => dispatch(aiServiceDetailsActions.getFileBuildStatuses(serviceDetails)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));
