@@ -15,7 +15,12 @@ import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators"
 
 const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
   const [isLaunchable, setLaunchable] = useState(false);
-  const [serviceInfo, setServiceInfo] = useState({});
+  const [serviceInfo, setServiceInfo] = useState({
+    title: "Unable to Publish the Service",
+    description:
+      "We were unable to publish the service. Please check all the appropriate fields are filled and try publishing again.",
+    image: VerificationPending,
+  });
 
   const { orgId } = useSelector(state => state.aiServiceDetails);
 
@@ -27,8 +32,8 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     const checkServiceStatus = async () => {
       const { assets } = await dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId));
 
-      const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
-      const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase() || progressStatus.IN_PROGRESS;
+      const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase() || progressStatus.PENDING;
+      const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase() || progressStatus.PENDING;
 
       let serviceStatusSection = {};
 
@@ -41,13 +46,13 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
             "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take some for your changes to be reflected on AI Marketplace.",
           image: VerificationApproved,
         };
-      } else if (demoFileBuildStatus === progressStatus.IN_PROGRESS) {
+      } else if (demoFileBuildStatus === progressStatus.PENDING) {
         serviceStatusSection = {
           title: "Unable to Publish the Service",
           description: "Component build is in Progress..., please check back after sometime",
           image: VerificationPending,
         };
-      } else if (protoFileBuildStatus === progressStatus.IN_PROGRESS) {
+      } else if (protoFileBuildStatus === progressStatus.PENDING) {
         serviceStatusSection = {
           title: "Unable to Publish the Service",
           description: "Proto compilation is in progress... please check back after sometime",

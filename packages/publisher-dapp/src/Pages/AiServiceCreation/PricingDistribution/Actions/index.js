@@ -73,7 +73,7 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
     dispatch(
       aiServiceDetailsActions.updateProgressStatus(
         sections.PRICING_AND_DISTRIBUTION,
-        progressStatus.IN_PROGRESS,
+        progressStatus.PENDING,
         serviceStatus
       )
     );

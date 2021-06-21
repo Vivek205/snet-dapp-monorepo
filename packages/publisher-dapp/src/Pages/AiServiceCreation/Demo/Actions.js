@@ -6,7 +6,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { ServiceCreationRoutes } from "../ServiceCreationRouter/Routes";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
-import { progressStages, sections, progressStatus } from "../constant";
+import { sections, progressStatus } from "../constant";
 
 const selectState = state => ({
   serviceStatus: state.aiServiceDetails.progressStages,
@@ -27,9 +27,7 @@ const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalid
   const handleSave = async () => {
     setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
-    dispatch(
-      aiServiceDetailsActions.updateProgressStatus(sections.SETUP_DEMO, progressStatus.IN_PROGRESS, serviceStatus)
-    );
+    dispatch(aiServiceDetailsActions.updateProgressStatus(sections.SETUP_DEMO, progressStatus.PENDING, serviceStatus));
   };
 
   const handleContinue = async () => {

@@ -29,21 +29,11 @@ const StatusToggler = ({ progressNumber, progressStatus }) => {
     );
   }
 
-  if (progressStatus === ProgressStatusList.IN_PROGRESS || progressStatus === ProgressStatusList.PENDING) {
+  if (progressStatus === ProgressStatusList.PENDING) {
     return (
       <div className={classes.numberContaienr}>
         <span className={classes.waitingIcon}>
           <HourglassEmptyIcon />
-        </span>
-      </div>
-    );
-  }
-
-  if (progressStatus === ProgressStatusList.STOPPED) {
-    return (
-      <div className={classes.numberContaienr}>
-        <span className={classes.errorIcon}>
-          <ErrorOutlineIcon />
         </span>
       </div>
     );
