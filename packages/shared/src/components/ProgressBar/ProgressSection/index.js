@@ -9,8 +9,6 @@ export const ProgressStatusList = {
   ACTIVE: "active",
   COMPLETED: "completed",
   FAILED: "failed",
-  IN_PROGRESS: "in_progress",
-  STOPPED: "stopped",
   SUCCEEDED: "succeeded",
   PENDING: "pending",
 };
