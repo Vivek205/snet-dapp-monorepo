@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { serviceCreationSections, serviceCreationStatus, progressText } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText, sections } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -51,13 +51,12 @@ class AiServiceCreation extends Component {
       stopInitServiceCreationLoader,
       orgId,
       serviceStatus,
-      getFileBuildStatuses,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    getFileBuildStatuses(this.props.serviceDetails);
+    this.updateFileBuildStatuses(this.props.serviceDetails);
     this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
@@ -89,6 +88,19 @@ class AiServiceCreation extends Component {
       serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
     ) {
       this.handleServiceStateChange(serviceDetails.serviceState.state);
+    }
+  };
+
+  updateFileBuildStatuses = serviceDetails => {
+    const { updateBuildStatus } = this.props;
+
+    const { assets, progressStages } = serviceDetails;
+    const { demoFiles, protoFiles } = assets;
+    if (demoFiles.status) {
+      updateBuildStatus(sections.SETUP_DEMO, demoFiles.status, progressStages);
+    }
+    if (protoFiles.status) {
+      updateBuildStatus(sections.PRICING_AND_DISTRIBUTION, protoFiles.status, progressStages);
     }
   };
 
@@ -287,6 +299,7 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
-  getFileBuildStatuses: serviceDetails => dispatch(aiServiceDetailsActions.getFileBuildStatuses(serviceDetails)),
+  updateBuildStatus: (section, status, progressStages) =>
+    dispatch(aiServiceDetailsActions.updateBuildStatus(section, status, progressStages)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

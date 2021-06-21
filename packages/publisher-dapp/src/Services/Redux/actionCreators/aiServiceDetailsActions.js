@@ -11,7 +11,7 @@ import { LoaderContent } from "../../../Utils/Loader";
 import { initSDK } from "shared/dist/utils/snetSdk";
 import { blockChainEvents } from "../../../Utils/Blockchain";
 import { defaultGroups } from "../reducers/aiServiceDetailsReducer";
-import { sections, serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
+import { serviceCreationStatus } from "../../../Pages/AiServiceCreation/constant";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
@@ -628,17 +628,4 @@ export const updateProgressStatus = (section, status, progressStatuses) => {
   });
 
   return { type: SET_PROGRESS_STATUS, payload: updatedStatuses };
-};
-
-export const getFileBuildStatuses = serviceDetails => dispatch => {
-  const { assets, progressStages } = serviceDetails;
-  const { demoFiles, protoFiles } = assets;
-
-  if (demoFiles.status) {
-    dispatch(updateBuildStatus(sections.SETUP_DEMO, demoFiles.status, progressStages));
-  }
-
-  if (protoFiles.status) {
-    dispatch(updateBuildStatus(sections.PRICING_AND_DISTRIBUTION, protoFiles.status, progressStages));
-  }
 };
