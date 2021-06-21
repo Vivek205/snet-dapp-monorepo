@@ -40,7 +40,7 @@ class AiServiceCreation extends Component {
     for (const stage of progressStages) {
       if (stage.section === sections.SETUP_DEMO && demoFiles.status) {
         progressStage = { ...progressStage, [stage.key]: demoFiles.status };
-      } else if (stage.section === sections.SETUP_DEMO && protoFiles.status) {
+      } else if (stage.section === sections.PRICING_AND_DISTRIBUTION && protoFiles.status) {
         progressStage = { ...progressStage, [stage.key]: protoFiles.status };
       } else {
         progressStage = { ...progressStage, [stage.key]: stage.status };
