@@ -34,10 +34,17 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages } = this.props.serviceDetails;
+    const { progressStages, assets } = this.props.serviceDetails;
+    const { demoFiles, protoFiles } = assets;
 
     for (const stage of progressStages) {
-      progressStage = { ...progressStage, [stage.key]: stage.status };
+      if (stage.section === sections.SETUP_DEMO && demoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: demoFiles.status };
+      } else if (stage.section === sections.SETUP_DEMO && protoFiles.status) {
+        progressStage = { ...progressStage, [stage.key]: protoFiles.status };
+      } else {
+        progressStage = { ...progressStage, [stage.key]: stage.status };
+      }
     }
 
     return progressStage;
@@ -56,7 +63,6 @@ class AiServiceCreation extends Component {
     initServiceCreationLoader();
     const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
     const serviceDetails = response[1];
-    this.updateFileBuildStatuses(this.props.serviceDetails);
     this.setState({ serviceDetails, serviceStatus });
     this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
@@ -88,19 +94,6 @@ class AiServiceCreation extends Component {
       serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
     ) {
       this.handleServiceStateChange(serviceDetails.serviceState.state);
-    }
-  };
-
-  updateFileBuildStatuses = serviceDetails => {
-    const { updateBuildStatus } = this.props;
-
-    const { assets, progressStages } = serviceDetails;
-    const { demoFiles, protoFiles } = assets;
-    if (demoFiles.status) {
-      updateBuildStatus(sections.SETUP_DEMO, demoFiles.status, progressStages);
-    }
-    if (protoFiles.status) {
-      updateBuildStatus(sections.PRICING_AND_DISTRIBUTION, protoFiles.status, progressStages);
     }
   };
 
@@ -299,7 +292,5 @@ const mapDispatchToProps = dispatch => ({
   publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
-  updateBuildStatus: (section, status, progressStages) =>
-    dispatch(aiServiceDetailsActions.updateBuildStatus(section, status, progressStages)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

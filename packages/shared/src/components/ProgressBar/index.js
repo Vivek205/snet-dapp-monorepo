@@ -23,7 +23,7 @@ const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, pro
       return ProgressStatusList.ACTIVE;
     }
     if (progressStatus[progressNumber]) {
-      return progressStatus[progressNumber];
+      return progressStatus[progressNumber].toLowerCase();
     }
     return computeProgressStatus(progressNumber, activeSection);
   };

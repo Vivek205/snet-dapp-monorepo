@@ -609,7 +609,7 @@ export const getSampleDaemonConfig = (orgUuid, serviceUuid, testDaemon = false) 
 export const updateBuildStatus = (section, status, progressStatuses) => {
   const updatedStatus = progressStatuses.map(progress => {
     if (progress.section === section) {
-      return { ...progress, status: status.toLowerCase() };
+      return { ...progress, status };
     }
 
     return progress;
@@ -621,7 +621,7 @@ export const updateBuildStatus = (section, status, progressStatuses) => {
 export const updateProgressStatus = (section, status, progressStatuses) => {
   const updatedStatuses = progressStatuses.map(progress => {
     if (progress.section === section) {
-      return { ...progress, status: status.toLowerCase() };
+      return { ...progress, status };
     }
 
     return progress;
