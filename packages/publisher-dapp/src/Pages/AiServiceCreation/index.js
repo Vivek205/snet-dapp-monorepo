@@ -226,19 +226,19 @@ class AiServiceCreation extends Component {
     }));
   };
 
-  changeTheProgressText = () => {
+  getTheProgressText = () => {
     const { assets } = this.props.serviceDetails;
 
-    return progressText.map(text => {
-      if (assets.demoFiles.status === progressStatus.PENDING && text.section === sections.SETUP_DEMO) {
+    return progressText.map(progress => {
+      if (assets.demoFiles.status === progressStatus.PENDING && progress.section === sections.SETUP_DEMO) {
         return "Demo component is building";
       } else if (
         assets.protoFiles.status === progressStatus.PENDING &&
-        text.section === sections.PRICING_AND_DISTRIBUTION
+        progress.section === sections.PRICING_AND_DISTRIBUTION
       ) {
         return "Proto file is building";
       } else {
-        return text.title;
+        return progress.title;
       }
     });
   };
@@ -254,7 +254,7 @@ class AiServiceCreation extends Component {
         )}
         <ProgressBar
           activeSection={this.activeSection().key}
-          progressText={this.changeTheProgressText()}
+          progressText={this.getTheProgressText()}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
           progressStatus={this.progressStatus()}
         />
