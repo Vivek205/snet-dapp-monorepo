@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import last from "lodash/last";
 import ProgressBar from "shared/dist/components/ProgressBar";
 
-import { serviceCreationSections, serviceCreationStatus, progressText, sections } from "./constant";
+import { serviceCreationSections, serviceCreationStatus, progressText, sections, progressStatus } from "./constant";
 import { ServiceCreationRoutes } from "./ServiceCreationRouter/Routes";
 import ServiceCreationRouter from "./ServiceCreationRouter";
 import Heading from "./Heading";
@@ -226,9 +226,21 @@ class AiServiceCreation extends Component {
     }));
   };
 
-  changeTheProgressText = progressBarText => {
-    progressBarText.splice(1, 1, "failed");
-    return progressBarText;
+  changeTheProgressText = () => {
+    const { assets } = this.props.serviceDetails;
+
+    return progressText.map(text => {
+      if (assets.demoFiles.status === progressStatus.PENDING && text.section === sections.SETUP_DEMO) {
+        return "Demo component is building";
+      } else if (
+        assets.protoFiles.status === progressStatus.PENDING &&
+        text.section === sections.PRICING_AND_DISTRIBUTION
+      ) {
+        return "Proto file is building";
+      } else {
+        return text.title;
+      }
+    });
   };
 
   render() {
@@ -242,7 +254,7 @@ class AiServiceCreation extends Component {
         )}
         <ProgressBar
           activeSection={this.activeSection().key}
-          progressText={progressText}
+          progressText={this.changeTheProgressText()}
           onSectionClick={progressNumber => this.handleSectionClick(progressNumber)}
           progressStatus={this.progressStatus()}
         />

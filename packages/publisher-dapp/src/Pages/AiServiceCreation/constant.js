@@ -64,7 +64,12 @@ export const serviceCreationSections = {
   },
 };
 
-export const progressText = ["AI Service Profile", "Setup Demo", "Pricing & Distribution", "Launch"];
+export const progressText = [
+  { title: "AI Service Profile", section: sections.AI_PROFILE },
+  { title: "Setup Demo", section: sections.SETUP_DEMO },
+  { title: "Pricing & Distribution", section: sections.PRICING_AND_DISTRIBUTION },
+  { title: "Launch", section: sections.LAUNCH },
+];
 
 export const serviceCreationStatus = {
   NOT_STARTED: "",
