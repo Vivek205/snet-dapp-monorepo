@@ -66,6 +66,15 @@ export const useStyles = makeStyles(MUITheme => ({
       },
     },
   },
+  succeeded: {
+    "& > div": { background: "transparent" },
+    "& span": {
+      "&:last-of-type": {
+        paddingTop: 5,
+        color: MUITheme.palette.text.darkGrey,
+      },
+    },
+  },
   failed: {
     "& > div": { background: "transparent" },
     "& span": {
@@ -75,7 +84,7 @@ export const useStyles = makeStyles(MUITheme => ({
       },
     },
   },
-  in_progress: {
+  pending: {
     "& > div": { background: "transparent" },
     "& span": {
       "&:last-of-type": {
