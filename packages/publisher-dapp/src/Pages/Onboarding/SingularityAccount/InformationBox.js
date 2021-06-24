@@ -17,15 +17,6 @@ const InformationBox = () => {
     );
   }
 
-  if (userEntity === userEntities.INDIVIDUAL) {
-    return (
-      <AlertBox
-        type={alertTypes.INFO}
-        message="Please Note:  Signing up as Individual / Sole Proprietor / Single Person Business requires you to verify your identity."
-      />
-    );
-  }
-
   return null;
 };
 
