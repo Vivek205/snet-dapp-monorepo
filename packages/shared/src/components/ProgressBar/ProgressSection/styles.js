@@ -32,7 +32,7 @@ export const useStyles = makeStyles(MUITheme => ({
   },
   TabTitle: {
     paddingTop: 10,
-    color: MUITheme.palette.text.lightGrey,
+    color: MUITheme.palette.primary.main,
     fontFamily: MUITheme.typography.fontFamily,
     fontSize: 14,
     letterSpacing: 0.13,
