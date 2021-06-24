@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
 import isEmpty from "lodash/isEmpty";
-import { alertTypes } from "shared/dist/components/AlertBox";
+import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../Utils/FileUpload";
 import { useDispatch } from "react-redux";
@@ -111,6 +111,7 @@ const UploadDemoFiles = ({
           </>
         }
       />
+      {alert.type !== alertTypes.SUCCESS ? <AlertBox type={alert.type} message={alert.message} /> : null}
     </div>
   );
 };
