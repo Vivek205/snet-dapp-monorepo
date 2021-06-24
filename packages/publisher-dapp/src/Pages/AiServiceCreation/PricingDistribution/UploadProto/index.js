@@ -8,7 +8,7 @@ import { validateCompressedFiles } from "../../../../Utils/ValidateCompressedFil
 
 import { useStyles } from "./styles";
 import SNETFileUpload from "shared/dist/components/SNETFileUpload";
-import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../../Services/Redux/actionCreators";
 import { assetTypes } from "../../../../Utils/FileUpload";
 import ValidationError from "shared/dist/utils/validationError";
@@ -113,9 +113,6 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         uploadSuccess={Boolean(protoFilesUrl)}
         error={!!invalidFields && !Boolean(protoFilesUrl) ? "assets.protoFiles.url" in invalidFields : ""}
       />
-      <div className={classes.errorContainer}>
-        <AlertBox type={alert.type} message={alert.message} />
-      </div>
     </Fragment>
   );
 };
