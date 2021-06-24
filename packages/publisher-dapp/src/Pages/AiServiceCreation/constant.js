@@ -36,7 +36,7 @@ export const serviceCreationSections = {
   PROFILE: {
     key: 1,
     heading: {
-      title: "Create Your AI Service Profile",
+      title: "AI Service Profile",
       description: "Input information about your service on the AI Marketplace",
     },
   },

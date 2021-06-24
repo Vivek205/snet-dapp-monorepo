@@ -18,11 +18,7 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (checkUserTnCAcceptance()) {
-        history.push(GlobalRoutes.ONBOARDING.path);
-      } else {
-        history.push(GlobalRoutes.OVERVIEW.path);
-      }
+      history.push(GlobalRoutes.ONBOARDING.path);
     }
   }, [isLoggedIn, history, checkUserTnCAcceptance]);
 
