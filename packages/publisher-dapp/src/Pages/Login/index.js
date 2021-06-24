@@ -18,11 +18,6 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      // if (checkUserTnCAcceptance()) {
-      //   history.push(GlobalRoutes.ONBOARDING.path);
-      // } else {
-      //   history.push(GlobalRoutes.OVERVIEW.path);
-      // }
       history.push(GlobalRoutes.ONBOARDING.path);
     }
   }, [isLoggedIn, history, checkUserTnCAcceptance]);
@@ -35,7 +30,6 @@ const Login = ({ history }) => {
     ReactGA.event(GAEventsContent.LOGIN);
     try {
       await dispatch(loginActions.login(email, password));
-      // history.push(GlobalRoutes.ONBOARDING.path);
     } catch (error) {
       if (error.code === "PasswordResetRequiredException") {
         return history.push(GlobalRoutes.RESET_PASSWORD.path);
