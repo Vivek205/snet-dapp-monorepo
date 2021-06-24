@@ -1,8 +1,8 @@
 import Organization from "../Organization";
 import Invitee from "../Invitee";
 import Default from "../_default";
-import Individual from "../Individual";
-import IndividualStatus from "../Individual/status";
+// import Individual from "../Individual";
+// import IndividualStatus from "../Individual/status";
 
 const basePath = "/onboarding/authenticate";
 
@@ -19,17 +19,17 @@ export const AuthenticateRoutes = {
     path: fullPath("/acceptinvite"),
     component: Invitee,
   },
-  INDIVIDUAL: {
-    name: "individual",
-    path: fullPath("/individual"),
-    component: Individual,
-    exact: true,
-  },
-  INDIVIDUAL_STATUS: {
-    name: "individual status",
-    path: fullPath("/individual/status"),
-    component: IndividualStatus,
-  },
+  // INDIVIDUAL: {
+  //   name: "individual",
+  //   path: fullPath("/individual"),
+  //   component: Individual,
+  //   exact: true,
+  // },
+  // INDIVIDUAL_STATUS: {
+  //   name: "individual status",
+  //   path: fullPath("/individual/status"),
+  //   component: IndividualStatus,
+  // },
   DEFAULT: {
     name: "default",
     path: fullPath(""),

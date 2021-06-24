@@ -16,7 +16,7 @@ import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import { organizationSetupStatuses, organizationTypes } from "../../../../Utils/organizationSetup";
 import { generateDetailedErrorMessageFromValidation } from "../../../../Utils/validation";
 import { userEntities } from "../../../../Utils/user";
-import { individualVerificationStatusList } from "../../constant";
+// import { individualVerificationStatusList } from "../../constant";
 // import { checkIfKnownError } from "shared/dist/utils/error";
 // import { individualVerificationActions } from "../../../../Services/Redux/actionCreators/userActions";
 import ConfirmationPopup from "./ConfirmationPopup";
@@ -26,7 +26,7 @@ const selectState = state => {
     userEntity: state.user.entity,
     organization: state.organization,
     email: state.user.email,
-    individualStatus: state.user.individualVerificationStatus,
+    // individualStatus: state.user.individualVerificationStatus,
   };
 };
 // const domainsToBeAutoApproved = ["singularitynet.io"];
@@ -64,11 +64,7 @@ const Organization = props => {
         type: alertTypes.ERROR,
         message: "Your organization has been rejected.",
       });
-    } else if (
-      (organization.state.state === organizationSetupStatuses.CHANGE_REQUESTED ||
-        individualStatus === individualVerificationStatusList.CHANGE_REQUESTED) &&
-      !Boolean(alert.type)
-    ) {
+    } else if (organization.state.state === organizationSetupStatuses.CHANGE_REQUESTED && !Boolean(alert.type)) {
       setAlert({
         type: alertTypes.ERROR,
         message: "Please validate the details provided and submit again for approval",
