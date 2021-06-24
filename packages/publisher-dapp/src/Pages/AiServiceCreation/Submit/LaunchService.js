@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
+import isNil from "lodash/isNil";
 
 import { useStyles } from "./styles";
 
@@ -10,7 +11,7 @@ import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETSt
 import VerificationPending from "shared/dist/assets/images/VerificationPending.png";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import VerificationApproved from "shared/dist/assets/images/VerificationApproved.png";
-import { progressStatus } from "../constant";
+import { progressStatus, sections } from "../constant";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
@@ -22,7 +23,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     image: VerificationPending,
   });
 
-  const { orgId } = useSelector(state => state.aiServiceDetails);
+  const { orgId, progressStages } = useSelector(state => state.aiServiceDetails);
 
   const { orgUuid, serviceUuid } = useParams();
 
@@ -34,6 +35,10 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
 
       const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase();
       const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase();
+
+      if (isNil(demoFileBuildStatus) || isNil(protoFileBuildStatus)) {
+        dispatch(aiServiceDetailsActions.updateProgressStatus(sections.LAUNCH, progressStatus.FAILED, progressStages));
+      }
 
       let serviceStatusSection = {};
 
@@ -70,7 +75,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
       setServiceInfo(serviceStatusSection);
     };
     checkServiceStatus();
-  }, [dispatch, orgId, orgUuid, serviceUuid]);
+  }, [dispatch, orgId, orgUuid, progressStages, serviceUuid]);
 
   return (
     <div className={classes.statusBannerContainer}>

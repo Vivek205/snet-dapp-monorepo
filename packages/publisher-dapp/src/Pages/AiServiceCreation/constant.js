@@ -16,6 +16,11 @@ export const sections = {
 
 export const progressStages = [
   {
+    section: sections.AI_PROFILE,
+    status: progressStatus.IDLE,
+    key: 1,
+  },
+  {
     section: sections.SETUP_DEMO,
     status: progressStatus.IDLE,
     key: 2,

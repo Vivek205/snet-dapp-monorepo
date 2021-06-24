@@ -19,7 +19,7 @@ const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, pro
   };
 
   const handleProgressBarStatus = (progressNumber, activeSection) => {
-    if (progressNumber === Number(activeSection)) {
+    if (progressNumber === Number(activeSection) && progressStatus[progressNumber] === ProgressStatusList.IDLE) {
       return ProgressStatusList.ACTIVE;
     }
     if (progressStatus[progressNumber]) {

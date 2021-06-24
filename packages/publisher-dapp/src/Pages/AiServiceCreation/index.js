@@ -33,7 +33,8 @@ class AiServiceCreation extends Component {
 
   progressStatus = () => {
     let progressStage = {};
-    const { progressStages, assets } = this.props.serviceDetails;
+    const { progressStages, assets, shortDescription } = this.props.serviceDetails;
+
     const { demoFiles, protoFiles } = assets;
 
     for (const stage of progressStages) {
@@ -41,8 +42,25 @@ class AiServiceCreation extends Component {
         progressStage = { ...progressStage, [stage.key]: demoFiles.status };
       } else if (stage.section === sections.PRICING_AND_DISTRIBUTION && protoFiles.status) {
         progressStage = { ...progressStage, [stage.key]: protoFiles.status };
+      } else if (stage.section === sections.AI_PROFILE && shortDescription) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
       } else {
         progressStage = { ...progressStage, [stage.key]: stage.status };
+      }
+
+      if (
+        (stage.section === sections.LAUNCH && demoFiles.status === progressStatus.PENDING) ||
+        protoFiles.status === progressStatus.PENDING
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.PENDING };
+      }
+
+      if (
+        stage.section === sections.LAUNCH &&
+        demoFiles.status === progressStatus.SUCCEEDED &&
+        protoFiles.status === progressStatus.SUCCEEDED
+      ) {
+        progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
       }
     }
 

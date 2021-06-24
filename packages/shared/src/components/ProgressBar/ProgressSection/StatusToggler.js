@@ -1,6 +1,6 @@
 import React from "react";
 import CheckIcon from "@material-ui/icons/Check";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import ErrorOutlineIcon from "@material-ui/icons/PriorityHigh";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 
 import { useStyles } from "./styles";
