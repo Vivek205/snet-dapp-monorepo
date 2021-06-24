@@ -112,14 +112,14 @@ export const LoaderContent = {
     title: "Uploading...",
     content: "Just a moment. We are uploading the file",
   },
-  USER_VERIFICATION_INITIATE: {
-    title: "Initiating Verification",
-    content: "Please wait while we redirect you to the KYC portal",
-  },
-  USER_VERIFICATION_STATUS: {
-    title: "Retrieving KYC status",
-    content: "Just a moment. We're retrieving the status of your KYC",
-  },
+  // USER_VERIFICATION_INITIATE: {
+  //   title: "Initiating Verification",
+  //   content: "Please wait while we redirect you to the KYC portal",
+  // },
+  // USER_VERIFICATION_STATUS: {
+  //   title: "Retrieving KYC status",
+  //   content: "Just a moment. We're retrieving the status of your KYC",
+  // },
   SAMPLE_DAEMON_CONFIG: {
     title: "Retrieving Sample Daemon config",
     content: "Just a moment. We are retrieving the sample daemon configuration",

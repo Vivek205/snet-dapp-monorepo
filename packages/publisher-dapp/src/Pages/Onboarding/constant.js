@@ -24,15 +24,15 @@ export const onboardingSections = {
 
 export const progressText = ["Accept Service Agreement", "SingularityNet Account", "Authenticate ID"];
 
-export const individualVerificationStatusList = {
-  NOT_STARTED: undefined,
-  PENDING: "PENDING",
-  APPROVED: "APPROVED",
-  REJECTED: "REJECTED",
-  FAILED: "FAILED",
-  ERROR: "ERROR",
-  CHANGE_REQUESTED: "CHANGE_REQUESTED",
-};
+// export const individualVerificationStatusList = {
+//   NOT_STARTED: undefined,
+//   PENDING: "PENDING",
+//   APPROVED: "APPROVED",
+//   REJECTED: "REJECTED",
+//   FAILED: "FAILED",
+//   ERROR: "ERROR",
+//   CHANGE_REQUESTED: "CHANGE_REQUESTED",
+// };
 export const organizationIdAvailability = {
   AVAILABLE: "AVAILABLE",
   UNAVAILABLE: "UNAVAILABLE",
