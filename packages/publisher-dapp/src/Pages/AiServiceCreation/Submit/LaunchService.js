@@ -32,8 +32,8 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     const checkServiceStatus = async () => {
       const { assets } = await dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId));
 
-      const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase() || progressStatus.PENDING;
-      const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase() || progressStatus.PENDING;
+      const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase();
+      const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase();
 
       let serviceStatusSection = {};
 
