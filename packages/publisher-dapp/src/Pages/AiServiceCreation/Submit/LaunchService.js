@@ -43,7 +43,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
         serviceStatusSection = {
           title: "Ready to Launch",
           description:
-            "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take some for your changes to be reflected on AI Marketplace.",
+            "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take sometime for your changes to be reflected on AI Marketplace.",
           image: VerificationApproved,
         };
       } else if (demoFileBuildStatus === progressStatus.PENDING) {
