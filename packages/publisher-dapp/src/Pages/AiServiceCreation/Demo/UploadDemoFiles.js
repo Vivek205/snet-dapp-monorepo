@@ -111,7 +111,7 @@ const UploadDemoFiles = ({
           </>
         }
       />
-      {alert.type === alertTypes.ERROR ? <AlertBox type={alert.type} message={alert.message} /> : null}
+      {alert.type !== alertTypes.SUCCESS ? <AlertBox type={alert.type} message={alert.message} /> : null}
     </div>
   );
 };

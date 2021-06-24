@@ -113,7 +113,7 @@ const UploadProto = ({ changeProtoFiles, protoFilesUrl, invalidFields }) => {
         uploadSuccess={Boolean(protoFilesUrl)}
         error={!!invalidFields && !Boolean(protoFilesUrl) ? "assets.protoFiles.url" in invalidFields : ""}
       />
-      {alert.type === alertTypes.ERROR ? (
+      {alert.type !== alertTypes.SUCCESS ? (
         <div className={classes.errorContainer}>
           <AlertBox type={alert.type} message={alert.message} />
         </div>

@@ -19,6 +19,9 @@ const ProgressBar = ({ classes, activeSection, progressText, onSectionClick, pro
   };
 
   const handleProgressBarStatus = (progressNumber, activeSection) => {
+    if (progressNumber === Number(activeSection)) {
+      return ProgressStatusList.ACTIVE;
+    }
     if (progressStatus[progressNumber]) {
       return progressStatus[progressNumber].toLowerCase();
     }
