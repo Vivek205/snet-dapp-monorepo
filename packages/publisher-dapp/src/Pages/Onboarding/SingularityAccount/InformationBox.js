@@ -12,7 +12,7 @@ const InformationBox = () => {
     return (
       <AlertBox
         type={alertTypes.INFO}
-        message="Please Note:  Please Note:  In order for your company organization name to be listed on our AI Marketplace, your company must be recognized as a legal entity in your country."
+        message="Please Note:  In order for your company organization name to be listed on our AI Marketplace, your company must be recognized as a legal entity in your country."
       />
     );
   }
