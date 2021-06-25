@@ -127,14 +127,14 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
               label="Payment Address"
               description={
                 <p>
-                  The ethereum address to which payments will be processed for this group. For more information see
-                  Payment Address &nbsp;
+                  The ethereum address to which all payments will be processed for this group. See Payment Address
+                  section &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/organization-setup/"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    &nbsp;
+                    here &nbsp;
                   </a>
                   and creating ethereum identity &nbsp;
                   <a
@@ -157,13 +157,13 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
               label="ETCD Endpoint"
               description={
                 <p>
-                  Enter all the ETCD end points that will be used. For more information see{" "}
+                  Enter all the ETCD endpoints that will be used. Details &nbsp;
                   <a
                     href="http://dev.singularitynet.io/docs/ai-developers/etcd/"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    ETCD Overview
+                    here
                   </a>
                 </p>
               }
