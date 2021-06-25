@@ -45,15 +45,7 @@ const Enroll = ({ classes, history }) => {
         <Typography variant="h4">Registering as an Individual</Typography>
         <Typography variant="body2">
           If you are an individual, sole proprietor, or single person business, get started by signing in with your
-          SingularityNET account. You’ll need to provide basic personal information, including your legal name and
-          address.
-        </Typography>
-        <Typography variant="subtitle1" display="inline">
-          Valid Documents:{" "}
-        </Typography>
-        <Typography variant="body2" display="inline">
-          {" "}
-          Passport, Driving Licence, Social Security Card
+          SingularityNET account. You’ll need to provide basic personal information.
         </Typography>
       </Grid>
 
@@ -69,10 +61,10 @@ const Enroll = ({ classes, history }) => {
           </Typography>
           <Typography variant="body2" display="inline">
             {" "}
-            Your organization must have a D-U-N-S Number so that we can verify your organization’s identity and legal
-            entity status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as
-            standard business identifiers. You can check to see if your organization already has a D-U-N-S Number and
-            request one if necessary, they are free of charge in most jurisdictions.
+            Please do provide a valid D-U-N-S Number so that we can verify your organization’s identity and legal entity
+            status. These unique nine-digit numbers are assigned by Dun & Bradstreet and are widely used as standard
+            business identifiers. You can check to see if your organization already has a D-U-N-S Number and request one
+            if necessary, they are free of charge in most jurisdictions.
             <a target="_blank" rel="noopener noreferrer" href="https://www.dnb.com/duns-number/get-a-duns.html">
               {" "}
               Learn more
