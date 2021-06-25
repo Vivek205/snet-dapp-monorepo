@@ -3,7 +3,7 @@ import { userPreferenceTypes } from "../../../Utils/user";
 export const entityTypeDetails = {
   title: "Entity Type",
   description:
-    "You will be able to publish and develop as an Organization, Indivdual / Sole Proprietor / Single Person Business or join an existing approved entity with an invitation. The first two options require certain amount of information to proceed.",
+    "Please select below your organization type:  Company Organization or Individual / Sole Proprietor / Single Person Business. You can also join an existing entity with an invitation email.",
 };
 
 export const loggedInDetails = {

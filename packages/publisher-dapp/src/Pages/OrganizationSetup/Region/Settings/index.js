@@ -12,7 +12,7 @@ import { useStyles } from "./styles";
 import AdvanceSettings from "./AdvanceSettings";
 import SNETButton from "shared/dist/components/SNETButton";
 import SNETTextfield from "shared/dist/components/SNETTextfield";
-import StyledDropdown from "shared/dist/components/StyledDropdown";
+// import StyledDropdown from "shared/dist/components/StyledDropdown";
 import { useDispatch } from "react-redux";
 import { organizationActions } from "../../../../Services/Redux/actionCreators";
 import { keyCodes } from "shared/dist/utils/keyCodes";
@@ -100,7 +100,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
 
   return (
     <div className={classes.settingsContainer}>
-      <div className={classes.dropDownBtn}>
+      {/* <div className={classes.dropDownBtn}>
         <StyledDropdown
           name="id"
           value={name}
@@ -108,7 +108,7 @@ const Settings = ({ classes, groups, group, groupIndex, foundInBlockchain, inval
           labelTxt="Groups / Region"
           list={[{ value: name, label: name }]}
         />
-      </div>
+      </div> */}
       <Typography variant="subtitle1">Groups / Region Settings</Typography>
       <div className={classes.grayBoxContainer}>
         <Grid container className={classes.grayBox}>
