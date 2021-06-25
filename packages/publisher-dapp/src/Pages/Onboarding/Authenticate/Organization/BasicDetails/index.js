@@ -118,7 +118,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         <div className={classes.dunsContainer}>
           <FormControlLabel
             control={<Checkbox color="primary" checked={allowDuns} onChange={e => setAllowDuns(e.target.checked)} />}
-            label="I have my DUNS number"
+            label="I have my DUNS number (Optional)"
           />
           <SNETTextField
             {...basicDetailsFormData.DUNS}

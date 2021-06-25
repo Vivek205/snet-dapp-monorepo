@@ -12,7 +12,7 @@ const InformationBox = () => {
     return (
       <AlertBox
         type={alertTypes.INFO}
-        message="Please Note:  In order for your company organization name to be listed on AI Marketplace, your company must be recognized as a legal entity in your country.  You will need to provide a DUNS number to be validated for approval "
+        message="Please Note:  Please Note:  In order for your company organization name to be listed on our AI Marketplace, your company must be recognized as a legal entity in your country."
       />
     );
   }
