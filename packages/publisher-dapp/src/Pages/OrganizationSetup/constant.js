@@ -5,7 +5,7 @@ export const organizationSetupSections = {
     key: 1,
     heading: {
       title: "Organization Setup",
-      description: "Users will see your organization’s profile information on the AI Marketplace",
+      description: "Users will see your organization profile information for all active AI services published",
     },
     route: OrganizationSetupRoutes.ORGANIZATION_PROFILE,
   },
@@ -24,4 +24,4 @@ export const organizationSetupSections = {
   },
 };
 
-export const progressText = ["Organization Profile", "Region / Group", "Publish To Blockchain"];
+export const progressText = ["Organization Profile", "Regional Group Configuration", "Publish To Blockchain"];
