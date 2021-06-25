@@ -49,7 +49,7 @@ class Onboarding extends Component {
           }
           return;
         }
-        // history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+        history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
       } else if (orgType === organizationTypes.ORGANIZATION) {
         if (orgStatus === organizationSetupStatuses.CHANGE_REQUESTED && allowChangeRequestEdit) {
           if (location.pathname !== AuthenticateRoutes.ORGANIZATION.path) {
@@ -62,7 +62,7 @@ class Onboarding extends Component {
         ) {
           return history.push(GlobalRoutes.SERVICES.path.replace(":orgUuid", orgUuid));
         }
-        // history.push(GlobalRoutes.ORG_SETUP_STATUS.path.replace(":orgUuid", orgUuid));
+        history.push(GlobalRoutes.ORGANIZATION_SETUP.path.replace(":orgUuid", orgUuid));
       }
     } else if (publisherTnC.accepted) {
       return history.push(OnboardingRoutes.SINGULARITY_ACCOUNT.path);
