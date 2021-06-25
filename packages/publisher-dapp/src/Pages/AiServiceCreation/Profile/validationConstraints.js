@@ -2,11 +2,6 @@ export const serviceProfileValidationConstraints = {
   name: { presence: { allowEmpty: false } },
   id: {
     presence: { allowEmpty: false },
-    format: {
-      pattern: "[_a-z0-9]+",
-      flags: "i",
-      message: "Invalid characters in service id",
-    },
   },
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },

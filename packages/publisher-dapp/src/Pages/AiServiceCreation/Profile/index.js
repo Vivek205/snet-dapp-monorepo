@@ -85,7 +85,7 @@ const Profile = ({ classes, serviceDetails, changeServiceDetailsLeaf, changeHero
   const handleControlChange = event => {
     const { name, value } = event.target;
     if (name === "id") {
-      changeServiceDetailsLeaf("newId", value);
+      changeServiceDetailsLeaf("newId", value.replace(/\s/g, ""));
       debouncedValidate(value);
     }
     if (name === "projectURL") {
