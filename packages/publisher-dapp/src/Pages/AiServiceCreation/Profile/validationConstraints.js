@@ -1,6 +1,8 @@
 export const serviceProfileValidationConstraints = {
   name: { presence: { allowEmpty: false } },
-  id: { presence: { allowEmpty: false } },
+  id: {
+    presence: { allowEmpty: false },
+  },
   shortDescription: { presence: { allowEmpty: false } },
   longDescription: { presence: { allowEmpty: false } },
   tags: { presence: { allowEmpty: false, message: "^Please provide the tags for the service" } },

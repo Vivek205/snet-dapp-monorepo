@@ -72,7 +72,11 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
     if (name === basicDetailsFormData.ORG_ID.name) {
       debouncedValidate(value);
     }
-    dispatch(organizationActions.setOneBasicDetail(name, value));
+    if (name === "id") {
+      dispatch(organizationActions.setOneBasicDetail(name, value.replace(/\s/g, "")));
+    } else {
+      dispatch(organizationActions.setOneBasicDetail(name, value));
+    }
   };
 
   const handleContactsChange = event => {
