@@ -20,6 +20,7 @@ const Submit = props => {
     changeServiceDetailsLeaf,
     match,
     history,
+    handleSubmit,
   } = props;
 
   const { orgUuid, orgStatus, orgId } = useSelector(state => ({
@@ -71,7 +72,11 @@ const Submit = props => {
     ),
     [serviceCreationStatus.APPROVAL_PENDING]: <ReviewInProgress handleBackToDashboard={handleBackToDashboard} />,
     [serviceCreationStatus.APPROVED]: (
-      <LaunchService serviceDetails={serviceDetails} handleBackToDashboard={handleBackToDashboard} />
+      <LaunchService
+        handleSubmit={handleSubmit}
+        serviceDetails={serviceDetails}
+        handleBackToDashboard={handleBackToDashboard}
+      />
     ),
     [serviceCreationStatus.CHANGE_REQUESTED]: (
       <ChangeRequested
