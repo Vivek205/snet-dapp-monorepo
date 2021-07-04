@@ -1,6 +1,6 @@
 export const signupInfo = {
   title: "Sign up for your free account",
-  description: `Gain instant access to AGIX Staking as well as SingularityNET’s products including AI Marketplace and Request For AI (RFAI).`,
+  description: `Gain instant access to AGIX Staking as well as SingularityNET’s products including AI Marketplace.`,
   list: [
     "Earn Rewards - Earn more AGIX tokens in reward for putting your tokens to use.",
     "Support Adoption - Staked tokens will allow ordinary everyday businesses to use the marketplace through a fiat gateway, greatly improving platform adoption.",
