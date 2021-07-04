@@ -31,7 +31,6 @@ const PrimaryFooterMain = [
     children: [
       { label: "AI Marketplace", link: "https://beta.singularitynet.io" },
       { label: "AI Publisher", link: "#" },
-      { label: "Request For AI (RFAI)", link: "https://rfai.singularitynet.io" },
       { label: "Stake", link: "https://staking.singularitynet.io" },
     ],
   },
