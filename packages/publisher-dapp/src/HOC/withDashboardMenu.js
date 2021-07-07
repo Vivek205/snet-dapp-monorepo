@@ -74,7 +74,7 @@ const withDashboardMenu = Component => {
     const classes = useStyles();
     const [showUpdateNotification, setShowUpdateNotificationBar] = useLocalStorage(
       localStorageKeys.SHOW_PHASE2_NOTIFICATION,
-      true
+      false
     );
 
     const onUpdateCloseClick = () => {
