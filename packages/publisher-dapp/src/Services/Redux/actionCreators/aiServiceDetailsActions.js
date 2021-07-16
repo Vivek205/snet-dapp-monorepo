@@ -35,6 +35,7 @@ export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
 export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
+export const SET_DEMO_COMPONENT_AVAILABILITY = "SET_DEMO_COMPONENT_AVAILABILITY";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -194,6 +195,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
+        demo_component_required: serviceDetails.assets.demoFiles.demoComponentRequired,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
@@ -347,6 +349,7 @@ const parseServiceDetails = (data, serviceUuid) => {
         ? {
             url: data.media.demo_files.url,
             status: data.media.demo_files?.status.toLowerCase(),
+            demoComponentRequired: data.media.demo_files.demo_component_required || true,
             ipfsHash: data.media.demo_files.ipfs_hash,
           }
         : {},
@@ -628,4 +631,8 @@ export const updateProgressStatus = (section, status, progressStatuses) => {
   });
 
   return { type: SET_PROGRESS_STATUS, payload: updatedStatuses };
+};
+
+export const setDemoComponentVisibility = value => {
+  return { type: SET_DEMO_COMPONENT_AVAILABILITY, payload: value };
 };
