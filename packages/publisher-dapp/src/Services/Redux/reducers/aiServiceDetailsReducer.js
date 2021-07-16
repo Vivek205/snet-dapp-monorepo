@@ -22,7 +22,7 @@ export const defaultGroups = [
 ];
 
 export const initialAiServiceDetailsState = {
-  demoComponentRequired: 1,
+  demoComponentRequired: true,
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
   },
