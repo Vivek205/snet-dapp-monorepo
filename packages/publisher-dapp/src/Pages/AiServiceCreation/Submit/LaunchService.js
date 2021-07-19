@@ -11,7 +11,7 @@ import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETSt
 import VerificationPending from "shared/dist/assets/images/VerificationPending.png";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import VerificationApproved from "shared/dist/assets/images/VerificationApproved.png";
-import { progressStatus, sections } from "../constant";
+import { progressStatus, sections, serviceCreationStatus } from "../constant";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
@@ -31,7 +31,9 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
 
   useEffect(() => {
     const checkServiceStatus = async () => {
-      const { assets } = await dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId));
+      const { assets, serviceState } = await dispatch(
+        aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId)
+      );
 
       const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase();
       const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase();
@@ -51,12 +53,17 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
         image: VerificationApproved,
       };
 
-      if (!demoComponentAvailable && protoFileBuildStatus === progressStatus.SUCCEEDED) {
+      if (
+        !demoComponentAvailable &&
+        protoFileBuildStatus === progressStatus.SUCCEEDED &&
+        serviceState.state === serviceCreationStatus.APPROVED
+      ) {
         setLaunchable(true);
       } else if (
         demoFileBuildStatus === progressStatus.SUCCEEDED &&
         demoComponentAvailable &&
-        protoFileBuildStatus === progressStatus.SUCCEEDED
+        protoFileBuildStatus === progressStatus.SUCCEEDED &&
+        serviceState.state === serviceCreationStatus.APPROVED
       ) {
         setLaunchable(true);
       } else if (demoFileBuildStatus === progressStatus.PENDING) {

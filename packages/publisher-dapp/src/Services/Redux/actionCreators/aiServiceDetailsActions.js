@@ -200,7 +200,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
-        demo_component_available: serviceDetails.demoComponentAvailable,
+        required: serviceDetails.demoComponentAvailable,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
@@ -286,6 +286,8 @@ export const getServiceDetails = (orgUuid, serviceUuid, orgId) => async dispatch
       throw new APIError(error.message);
     }
     const service = parseServiceDetails(data, serviceUuid);
+    const demoComponentAvailable = data.media.demo_files?.required ?? true;
+    dispatch(setDemoComponentAvialble(demoComponentAvailable));
     dispatch(setAllAttributes(service));
     return service;
   } catch (error) {
@@ -355,6 +357,7 @@ const parseServiceDetails = (data, serviceUuid) => {
             url: data.media.demo_files.url,
             status: data.media.demo_files?.status.toLowerCase(),
             ipfsHash: data.media.demo_files.ipfs_hash,
+            required: data.media.demo_files?.required ?? true,
           }
         : {},
       protoFiles: data.media.proto_files
