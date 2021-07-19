@@ -355,7 +355,7 @@ const parseServiceDetails = (data, serviceUuid) => {
             url: data.media.demo_files.url,
             status: data.media.demo_files?.status.toLowerCase(),
             ipfsHash: data.media.demo_files.ipfs_hash,
-            required: data.media.demo_files.required || true,
+            required: data.media.demo_files?.required || true,
           }
         : {},
       protoFiles: data.media.proto_files
