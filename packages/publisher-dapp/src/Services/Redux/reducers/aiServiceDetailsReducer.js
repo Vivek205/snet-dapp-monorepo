@@ -21,7 +21,7 @@ export const defaultGroups = [
   },
 ];
 
-export const initialAiServiceDetailsState = {
+const initialAiServiceDetailsState = {
   demoComponentAvailable: true,
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,

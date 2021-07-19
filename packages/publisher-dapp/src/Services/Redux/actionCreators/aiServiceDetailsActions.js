@@ -59,7 +59,7 @@ export const setServiceAvailability = serviceAvailability => ({
   payload: serviceAvailability,
 });
 
-const setServiceName = serviceName => ({
+export const setServiceName = serviceName => ({
   type: SET_AI_SERVICE_NAME,
   payload: serviceName,
 });
@@ -184,7 +184,6 @@ const generateSaveServicePayload = serviceDetails => {
   };
 
   const payloadForSubmit = {
-    demo_component_available: serviceDetails.demoComponentAvailable,
     service_id: serviceDetails.newId ? serviceDetails.newId : serviceDetails.id,
     display_name: serviceDetails.name,
     short_description: serviceDetails.shortDescription,
@@ -201,6 +200,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
+        demo_component_available: serviceDetails.demoComponentAvailable,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },

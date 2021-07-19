@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -15,24 +15,18 @@ import UploadDemoFiles from "./UploadDemoFiles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
-const selectState = state => ({
-  demoComponentAvailable: state.aiServiceDetails.demoComponentAvailable,
-});
-
 const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
   const dispatch = useDispatch();
   const { orgUuid } = useParams();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
   const [showNotification, setShowNotification] = useState(false);
 
-  const { demoComponentAvailable } = useSelector(selectState);
-
   const showUploadNotification = type => {
     type === alertTypes.SUCCESS ? setShowNotification(true) : setShowNotification(false);
   };
 
   const handleCheckboxChange = () => {
-    dispatch(aiServiceDetailsActions.setDemoComponentAvialble(!demoComponentAvailable));
+    dispatch(aiServiceDetailsActions.setDemoComponentAvialble(!serviceDetails.demoComponentAvailable));
   };
 
   return (
@@ -42,7 +36,9 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
           <Typography variant="h6">Demo Setup</Typography>
           <FormControlLabel
             label="Enable Demo"
-            control={<Switch checked={demoComponentAvailable} onChange={handleCheckboxChange} color="primary" />}
+            control={
+              <Switch checked={serviceDetails.demoComponentAvailable} onChange={handleCheckboxChange} color="primary" />
+            }
           />
         </div>
         <div className={classes.wrapper}>
@@ -51,7 +47,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
             positive demo experience will encourage users to engage and integrate your AI into their applications. We
             encourage you to follow our best practices on how to properly set up your demo on our AI Marketplace.
           </Typography>
-          {demoComponentAvailable ? (
+          {serviceDetails.demoComponentAvailable ? (
             <div className={classes.demoCreationContainer}>
               <span>The steps for creating a demo UI are:</span>
               <div className={classes.stepOneContainer}>
@@ -104,7 +100,6 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
                     target="_blank"
                     rel="noopener nofollow"
                   />
-                  {/*<SNETButton children="f.a.q" color="primary" variant="text" />*/}
                   <SNETButton
                     children="contact us"
                     href="mailto:support@singularitynet.io"
@@ -141,7 +136,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
         serviceDetails={serviceDetails}
         setServiceDetailsInRedux={setServiceDetailsInRedux}
         setInvalidFieldsFlag={setInvalidFieldsFlag}
-        demoComponentAvailable={demoComponentAvailable}
+        demoComponentAvailable={serviceDetails.demoComponentAvailable}
       />
     </Grid>
   );
