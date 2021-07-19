@@ -200,7 +200,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
-        demo_component_available: serviceDetails.demoComponentAvailable,
+        required: serviceDetails.demoComponentAvailable,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },
@@ -355,6 +355,7 @@ const parseServiceDetails = (data, serviceUuid) => {
             url: data.media.demo_files.url,
             status: data.media.demo_files?.status.toLowerCase(),
             ipfsHash: data.media.demo_files.ipfs_hash,
+            required: data.media.demo_files.required || true,
           }
         : {},
       protoFiles: data.media.proto_files
