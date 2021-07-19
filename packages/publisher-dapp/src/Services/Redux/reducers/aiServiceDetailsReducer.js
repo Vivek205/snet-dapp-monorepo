@@ -21,8 +21,8 @@ export const defaultGroups = [
   },
 ];
 
-export const initialAiServiceDetailsState = {
-  demo_component_available: true,
+const initialAiServiceDetailsState = {
+  demoComponentAvailable: true,
   serviceState: {
     state: serviceCreationStatus.NOT_STARTED,
   },
@@ -74,6 +74,8 @@ export const initialAiServiceDetailsState = {
 
 const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
   switch (action.type) {
+    case aiServiceDetailsActions.SET_DEMO_COMPONENT_AVAILABLE:
+      return { ...state, demoComponentAvailable: action.payload };
     case aiServiceDetailsActions.SET_BUILD_STATUS:
       return { ...state, progressStages: action.payload };
     case aiServiceDetailsActions.SET_PROGRESS_STATUS:

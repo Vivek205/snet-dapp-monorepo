@@ -12,7 +12,13 @@ const selectState = state => ({
   serviceStatus: state.aiServiceDetails.progressStages,
 });
 
-const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalidFieldsFlag }) => {
+const Actions = ({
+  classes,
+  serviceDetails,
+  setServiceDetailsInRedux,
+  setInvalidFieldsFlag,
+  demoComponentAvailable,
+}) => {
   const { serviceStatus } = useSelector(selectState);
 
   const history = useHistory();
@@ -31,7 +37,7 @@ const Actions = ({ classes, serviceDetails, setServiceDetailsInRedux, setInvalid
   };
 
   const handleContinue = async () => {
-    if (serviceDetails.assets.demoFiles.url) {
+    if (serviceDetails.assets.demoFiles.url || !demoComponentAvailable) {
       await handleSave();
       history.push(
         ServiceCreationRoutes.PRICING_AND_DISTRIBUTION.path

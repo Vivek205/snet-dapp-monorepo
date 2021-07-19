@@ -35,8 +35,14 @@ export const SET_SERVICE_DEMO_FILES_URL = "SET_SERVICE_DEMO_FILES_URL";
 export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN";
 export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
 export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
+export const SET_DEMO_COMPONENT_AVAILABLE = "SET_DEMO_COMPONENT_AVAILABLE";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
+
+export const setDemoComponentAvialble = demoComponentAvailable => ({
+  type: SET_DEMO_COMPONENT_AVAILABLE,
+  payload: demoComponentAvailable,
+});
 
 export const setServiceTouchedFlag = touchFlag => ({
   type: SET_AI_SERVICE_TOUCHED_FLAG,
@@ -53,7 +59,7 @@ export const setServiceAvailability = serviceAvailability => ({
   payload: serviceAvailability,
 });
 
-const setServiceName = serviceName => ({
+export const setServiceName = serviceName => ({
   type: SET_AI_SERVICE_NAME,
   payload: serviceName,
 });
@@ -194,6 +200,7 @@ const generateSaveServicePayload = serviceDetails => {
         ipfs_hash: serviceDetails.assets.heroImage.ipfsHash,
       },
       demo_files: {
+        demo_component_available: serviceDetails.demoComponentAvailable,
         url: serviceDetails.assets.demoFiles.url,
         ipfs_hash: serviceDetails.assets.demoFiles.ipfsHash,
       },

@@ -1,51 +1,53 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Switch from "@material-ui/core/Switch";
 
 import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import Actions from "./Actions";
 import UploadDemoFiles from "./UploadDemoFiles";
 import AlertBox, { alertTypes } from "shared/dist/components/AlertBox";
+import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
-const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux, changeServiceDetailsLeaf }) => {
+const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRedux }) => {
+  const dispatch = useDispatch();
   const { orgUuid } = useParams();
   const [invalidFieldsFlag, setInvalidFieldsFlag] = useState();
-  const [demoAvailableChecked, setDemoAvailableChecked] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
-
-  const handleDemoAvailableCheck = () => {
-    setDemoAvailableChecked(!demoAvailableChecked);
-    changeServiceDetailsLeaf("demo_component_available", demoAvailableChecked);
-  };
 
   const showUploadNotification = type => {
     type === alertTypes.SUCCESS ? setShowNotification(true) : setShowNotification(false);
   };
 
+  const handleCheckboxChange = () => {
+    dispatch(aiServiceDetailsActions.setDemoComponentAvialble(!serviceDetails.demoComponentAvailable));
+  };
+
   return (
     <Grid container className={classes.demoContainer}>
       <Grid item sx={12} sm={12} md={12} lg={12} className={classes.box}>
-        <Typography variant="h6">Demo Setup</Typography>
+        <div className={classes.titleAndToggleContainer}>
+          <Typography variant="h6">Demo Setup</Typography>
+          <FormControlLabel
+            label="Enable Demo"
+            control={
+              <Switch checked={serviceDetails.demoComponentAvailable} onChange={handleCheckboxChange} color="primary" />
+            }
+          />
+        </div>
         <div className={classes.wrapper}>
           <Typography className={classes.demoPageDescription}>
             AI publishers can create a unique demo experience that users on the AI Marketplace can engage with. A
             positive demo experience will encourage users to engage and integrate your AI into their applications. We
             encourage you to follow our best practices on how to properly set up your demo on our AI Marketplace.
           </Typography>
-
-          {/* <FormControlLabel
-            control={<Checkbox color="primary" checked={demoAvailableChecked} onChange={handleDemoAvailableCheck} />}
-            className={classes.demoAvailableCheckbox}
-            label="This service does not have a demo"
-          /> */}
-
-          {!demoAvailableChecked ? (
+          {serviceDetails.demoComponentAvailable ? (
             <div className={classes.demoCreationContainer}>
               <span>The steps for creating a demo UI are:</span>
               <div className={classes.stepOneContainer}>
@@ -98,7 +100,6 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
                     target="_blank"
                     rel="noopener nofollow"
                   />
-                  {/*<SNETButton children="f.a.q" color="primary" variant="text" />*/}
                   <SNETButton
                     children="contact us"
                     href="mailto:support@singularitynet.io"
@@ -135,6 +136,7 @@ const Demo = ({ classes, serviceDetails, changeDemoFiles, setServiceDetailsInRed
         serviceDetails={serviceDetails}
         setServiceDetailsInRedux={setServiceDetailsInRedux}
         setInvalidFieldsFlag={setInvalidFieldsFlag}
+        demoComponentAvailable={serviceDetails.demoComponentAvailable}
       />
     </Grid>
   );

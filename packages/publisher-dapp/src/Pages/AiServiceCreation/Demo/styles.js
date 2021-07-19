@@ -12,15 +12,30 @@ export const useStyles = MUITheme => ({
     borderRadius: 4,
     backgroundColor: MUITheme.palette.background.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.2)",
+    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
+  },
+  titleAndToggleContainer: {
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    borderBottomColor: MUITheme.palette.border.primary,
+    display: "flex",
+    justifyContent: "space-between",
     "& > h6": {
       padding: "0 23px",
-      borderBottomWidth: 1,
-      borderBottomStyle: "solid",
-      borderBottomColor: MUITheme.palette.border.primary,
       fontWeight: 400,
       lineHeight: "50px !important",
     },
-    [MUITheme.breakpoints.down("sm")]: { width: "100%" },
+    "& > label": {
+      flexDirection: "row-reverse",
+      "& > span": {
+        "&:last-of-type": {
+          color: MUITheme.palette.text.darkGrey,
+          fontSize: 14,
+          letterSpacing: 0.25,
+          lineHeight: "20px",
+        },
+      },
+    },
   },
   wrapper: {
     padding: "21px 23px 21px",
