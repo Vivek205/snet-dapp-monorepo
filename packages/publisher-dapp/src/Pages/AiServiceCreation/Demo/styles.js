@@ -7,6 +7,16 @@ export const useStyles = MUITheme => ({
       padding: "0 30px 0",
     },
   },
+  demoComponentContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "25px",
+    paddingBottom: "20px",
+    borderBottom: "1px solid",
+    borderBottomColor: MUITheme.palette.text.lightGrey,
+  },
+  demoComponentFont: { color: MUITheme.palette.text.primary, fontSize: 16, lineHeight: "24px", marginRight: "12px" },
   box: {
     paddingBottom: 33,
     borderRadius: 4,
