@@ -118,8 +118,6 @@ const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => 
       return { ...state, assets: { ...state.assets, demoFiles: { ...state.assets.demoFiles, url: action.payload } } };
     case aiServiceDetailsActions.SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN:
       return { ...state, foundInBlockchain: action.payload };
-    case aiServiceDetailsActions.SET_DEMO_COMPONENT_AVAILABILITY:
-      return { ...state, demoComponentRequired: action.payload };
     default:
       return state;
   }
