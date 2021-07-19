@@ -69,15 +69,10 @@ class AiServiceCreation extends Component {
       initServiceCreationLoader,
       stopInitServiceCreationLoader,
       orgId,
-      // serviceStatus,
     } = this.props;
     const { orgUuid, serviceUuid } = this.props.match.params;
     initServiceCreationLoader();
     await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
-    // const response = await Promise.all([getAiServiceList(orgUuid), getServiceDetails(orgUuid, serviceUuid, orgId)]);
-    // const serviceDetails = response[1];
-    // this.setState({ serviceDetails, serviceStatus });
-    // this.navigateToSubmitIfRejected(serviceDetails.serviceState.state);
     stopInitServiceCreationLoader();
   };
 
@@ -97,18 +92,7 @@ class AiServiceCreation extends Component {
       (orgUuid !== prevProps.orgUuid || serviceUuid !== prevProps.serviceUuid)
     ) {
       await this.initData();
-
-      // if (this.state.serviceDetails.touched !== serviceTouched) {
-      //   // this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, touched: serviceTouched } }));
-      // }
     }
-
-    // if (
-    //   serviceDetails.serviceState.state !== prevProps.serviceDetails.serviceState.state &&
-    //   serviceDetails.serviceState.state !== this.state.serviceDetails.serviceState.state
-    // ) {
-    //   this.handleServiceStateChange(serviceDetails.serviceState.state);
-    // }
   };
 
   activeSection = () => {
@@ -135,21 +119,18 @@ class AiServiceCreation extends Component {
   };
 
   handleSubmit = async () => {
-    // const { serviceDetails } = this.state;
     const {
       serviceDetails,
       orgUuid,
       serviceUuid,
       history,
       saveServiceDetails,
-      // setServiceDetailsInRedux,
       publishToIPFS,
       publishService,
       organization,
     } = this.props;
 
     try {
-      // setServiceDetailsInRedux(serviceDetails);
       await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
 
       const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
@@ -161,9 +142,7 @@ class AiServiceCreation extends Component {
   };
 
   handleSectionClick = progressNumber => {
-    // const { serviceDetails } = this.state;
     const { history, match, serviceDetails } = this.props;
-    // setServiceDetailsInRedux(serviceDetails);
     const { orgUuid, serviceUuid } = match.params;
     if (serviceDetails.serviceState.state === serviceCreationStatus.REJECTED) {
       return;
@@ -177,82 +156,35 @@ class AiServiceCreation extends Component {
   handleServiceDetailsLeafChange = (name, value) => {
     this.props.setAiServiceDetailLeaf(name, value);
     this.props.setServiceTouchFlag(true);
-    // this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, [name]: value, touched: true } }));
   };
 
   handleHeroImageChange = url => {
     this.props.setServiceTouchFlag(true);
     this.props.setServiceHeroImageUrl(url);
-    // this.setState(prevState => ({
-    //   serviceDetails: {
-    //     ...prevState.serviceDetails,
-    //     touched: true,
-    //     assets: {
-    //       ...prevState.serviceDetails.assets,
-    //       heroImage: { ...prevState.serviceDetails.assets.heroImage, url },
-    //     },
-    //   },
-    // }));
   };
 
   handleDemoFilesChange = url => {
     this.props.setServiceTouchFlag(true);
     this.props.setServiceDemoFilesUrl(url);
-    // this.setState(prevState => ({
-    //   serviceDetails: {
-    //     ...prevState.serviceDetails,
-    //     touched: true,
-    //     assets: {
-    //       ...prevState.serviceDetails.assets,
-    //       demoFiles: { ...prevState.serviceDetails.assets.demoFiles, url },
-    //     },
-    //   },
-    // }));
   };
 
   handleProtoFilesChange = url => {
     this.props.setServiceTouchFlag(true);
     this.props.setServiceDetailsProtoUrl(url);
-    // this.setState(prevState => ({
-    //   serviceDetails: {
-    //     ...prevState.serviceDetails,
-    //     touched: true,
-    //     assets: {
-    //       ...prevState.serviceDetails.assets,
-    //       protoFiles: { ...prevState.serviceDetails.assets.protoFiles, url },
-    //     },
-    //   },
-    // }));
   };
 
   handleServiceProviderCommentsChange = comments => {
     this.props.setServiceProviderComment(comments);
-    // this.setState(prevState => ({
-    //   serviceDetails: {
-    //     ...prevState.serviceDetails,
-    //     comments: {
-    //       ...prevState.serviceDetails.comments,
-    //       SERVICE_PROVIDER: comments,
-    //     },
-    //   },
-    // }));
   };
 
   handleGroupsChange = groups => {
     this.props.setServiceTouchFlag(true);
     this.props.setAiServiceGroups(groups);
-    // this.setState(prevState => ({ serviceDetails: { ...prevState.serviceDetails, groups, touched: true } }));
   };
 
   handleServiceStateChange = updatedState => {
     this.props.setServiceTouchFlag(true);
     this.props.setAiServiceStateState(updatedState);
-    // this.setState(prevState => ({
-    //   serviceDetails: {
-    //     ...prevState.serviceDetails,
-    //     serviceState: { ...prevState.serviceDetails.serviceState, state: updatedState },
-    //   },
-    // }));
   };
 
   getTheProgressText = () => {
