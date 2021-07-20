@@ -98,6 +98,9 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
             {...basicDetailsFormData.ORG_ID}
             value={orgDetails.id}
             onChange={handleChange}
+            minCount={orgDetails.id.length}
+            maxCount={32}
+            inputProps={{ maxLength: 32 }}
             error={!!invalidFields ? "id" in invalidFields : ""}
           />
           <OrganizationIdAvailability
@@ -115,6 +118,7 @@ const BasicDetails = ({ allowDuns, setAllowDuns, invalidFields }) => {
         value={orgDetails.name}
         minCount={orgDetails.name.length}
         maxCount={50}
+        inputProps={{ maxLength: 50 }}
         onChange={handleChange}
         error={!!invalidFields ? "name" in invalidFields : ""}
       />

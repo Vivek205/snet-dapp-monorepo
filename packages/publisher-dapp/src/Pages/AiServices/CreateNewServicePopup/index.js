@@ -79,6 +79,7 @@ const CreateNewServicePopup = ({ classes, open, handleClose }) => {
               label="AI Service Name"
               icon
               maxCount="50"
+              inputProps={{ maxLength: 50 }}
               minCount={serviceName.length}
               onChange={e => setServiceName(e.target.value)}
             />
