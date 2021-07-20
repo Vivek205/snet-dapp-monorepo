@@ -11,7 +11,7 @@ import SNETStatusBanner, { statusTitleType } from "shared/dist/components/SNETSt
 import VerificationPending from "shared/dist/assets/images/VerificationPending.png";
 import VerificationFailed from "shared/dist/assets/images/VerificationFailed.png";
 import VerificationApproved from "shared/dist/assets/images/VerificationApproved.png";
-import { progressStatus, sections } from "../constant";
+import { progressStatus, sections, serviceCreationStatus } from "../constant";
 import { aiServiceDetailsActions } from "../../../Services/Redux/actionCreators";
 
 const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
@@ -23,7 +23,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
     image: VerificationPending,
   });
 
-  const { orgId, progressStages } = useSelector(state => state.aiServiceDetails);
+  const { orgId, progressStages, demoComponentAvailable } = useSelector(state => state.aiServiceDetails);
 
   const { orgUuid, serviceUuid } = useParams();
 
@@ -31,26 +31,41 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
 
   useEffect(() => {
     const checkServiceStatus = async () => {
-      const { assets } = await dispatch(aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId));
+      const { assets, serviceState } = await dispatch(
+        aiServiceDetailsActions.getServiceDetails(orgUuid, serviceUuid, orgId)
+      );
 
       const demoFileBuildStatus = assets.demoFiles.status?.toLowerCase();
       const protoFileBuildStatus = assets.protoFiles.status?.toLowerCase();
 
-      if (isNil(demoFileBuildStatus) || isNil(protoFileBuildStatus)) {
+      if (isNil(protoFileBuildStatus)) {
         dispatch(aiServiceDetailsActions.updateProgressStatus(sections.LAUNCH, progressStatus.FAILED, progressStages));
       }
 
-      let serviceStatusSection = {};
+      if (demoComponentAvailable && isNil(demoFileBuildStatus)) {
+        dispatch(aiServiceDetailsActions.updateProgressStatus(sections.LAUNCH, progressStatus.FAILED, progressStages));
+      }
 
-      if (demoFileBuildStatus === progressStatus.SUCCEEDED && protoFileBuildStatus === progressStatus.SUCCEEDED) {
+      let serviceStatusSection = {
+        title: "Ready to Launch",
+        description:
+          "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take sometime for your changes to be reflected on AI Marketplace.",
+        image: VerificationApproved,
+      };
+
+      if (
+        !demoComponentAvailable &&
+        protoFileBuildStatus === progressStatus.SUCCEEDED &&
+        serviceState.state === serviceCreationStatus.APPROVED
+      ) {
         setLaunchable(true);
-
-        serviceStatusSection = {
-          title: "Ready to Launch",
-          description:
-            "The final launch will require you to be logged into your Metamask with some ETH available to activate the service. Only the owner of the organization can launch the service. Once you launch the service, it will take sometime for your changes to be reflected on AI Marketplace.",
-          image: VerificationApproved,
-        };
+      } else if (
+        demoFileBuildStatus === progressStatus.SUCCEEDED &&
+        demoComponentAvailable &&
+        protoFileBuildStatus === progressStatus.SUCCEEDED &&
+        serviceState.state === serviceCreationStatus.APPROVED
+      ) {
+        setLaunchable(true);
       } else if (demoFileBuildStatus === progressStatus.PENDING) {
         serviceStatusSection = {
           title: "Unable to Publish the Service",
@@ -75,7 +90,7 @@ const LaunchService = ({ classes, handleBackToDashboard, handleSubmit }) => {
       setServiceInfo(serviceStatusSection);
     };
     checkServiceStatus();
-  }, [dispatch, orgId, orgUuid, progressStages, serviceUuid]);
+  }, [demoComponentAvailable, dispatch, orgId, orgUuid, progressStages, serviceUuid]);
 
   return (
     <div className={classes.statusBannerContainer}>
