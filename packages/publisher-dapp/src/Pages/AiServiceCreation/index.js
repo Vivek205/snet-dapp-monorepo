@@ -52,12 +52,18 @@ class AiServiceCreation extends Component {
         progressStage = { ...progressStage, [stage.key]: progressStatus.PENDING };
       }
 
-      if (
-        stage.section === sections.LAUNCH &&
-        demoFiles.status === progressStatus.SUCCEEDED &&
-        protoFiles.status === progressStatus.SUCCEEDED
-      ) {
-        progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
+      if (stage.section === sections.LAUNCH) {
+        if (
+          demoComponentAvailable &&
+          demoFiles.status === progressStatus.SUCCEEDED &&
+          protoFiles.status === progressStatus.SUCCEEDED
+        ) {
+          progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
+        }
+
+        if (!demoComponentAvailable && protoFiles.status === progressStatus.SUCCEEDED) {
+          progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
+        }
       }
     }
 
