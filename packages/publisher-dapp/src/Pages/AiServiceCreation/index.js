@@ -133,16 +133,23 @@ class AiServiceCreation extends Component {
       serviceUuid,
       history,
       saveServiceDetails,
-      publishToIPFS,
+      // publishToIPFS,
       publishService,
       organization,
+      launchAiService,
     } = this.props;
 
     try {
       await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
 
-      const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
-      await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
+      // const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
+      // await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
+      // this.handleBackToDashboard();
+
+      const { response } = await launchAiService(orgUuid, serviceUuid);
+      if (response.publish_to_blockchain) {
+        await publishService(organization, serviceDetails, response.service_metadata_ipfs_hash, history);
+      }
       this.handleBackToDashboard();
     } catch (e) {
       throw e;
@@ -283,5 +290,6 @@ const mapDispatchToProps = dispatch => ({
   setAiServiceGroups: groups => dispatch(aiServiceDetailsActions.setAiServiceGroups(groups)),
   setAiServiceStateState: updatedState => dispatch(aiServiceDetailsActions.setAiServiceStateState(updatedState)),
   setAiServiceDetailLeaf: (name, value) => dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value)),
+  launchAiService: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.launchAiService(orgUuid, serviceUuid)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

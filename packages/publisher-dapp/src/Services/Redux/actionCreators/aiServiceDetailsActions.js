@@ -124,6 +124,29 @@ export const createService = (orgUuid, serviceName) => async dispatch => {
   }
 };
 
+const createLaunchAiService = (orgUuid, serviceUuid) => async dispatch => {
+  const { token } = await dispatch(fetchAuthenticatedUser());
+  const apiName = APIEndpoints.REGISTRY.name;
+  const apiPath = APIPaths.LAUNCH_AI_SERVICE(orgUuid, serviceUuid);
+  const apiOptions = initializeAPIOptions(token);
+  return await API.post(apiName, apiPath, apiOptions);
+};
+
+export const launchAiService = (orgUuid, serviceUuid) => async dispatch => {
+  try {
+    dispatch(loaderActions.startAppLoader(LoaderContent.PUBLISH_SERVICE_TO_IPFS));
+    const { data, error } = await dispatch(createLaunchAiService(orgUuid, serviceUuid));
+    if (error.code) {
+      throw new APIError(error.message);
+    }
+    dispatch(loaderActions.stopAppLoader());
+    return data;
+  } catch (error) {
+    dispatch(loaderActions.stopAppLoader());
+    throw error;
+  }
+};
+
 const validateServiceIdAPI = (orgUuid, serviceId) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
   const apiName = APIEndpoints.REGISTRY.name;
