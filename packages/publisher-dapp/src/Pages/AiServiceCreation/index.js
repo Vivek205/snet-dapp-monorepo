@@ -133,16 +133,18 @@ class AiServiceCreation extends Component {
       serviceUuid,
       history,
       saveServiceDetails,
-      publishToIPFS,
       publishService,
       organization,
+      launchAiService,
     } = this.props;
 
     try {
       await saveServiceDetails(orgUuid, serviceUuid, serviceDetails);
 
-      const { metadata_ipfs_hash } = await publishToIPFS(orgUuid, serviceUuid);
-      await publishService(organization, serviceDetails, metadata_ipfs_hash, history);
+      const { publish_to_blockchain, service_metadata_ipfs_hash } = await launchAiService(orgUuid, serviceUuid);
+      if (publish_to_blockchain) {
+        await publishService(organization, serviceDetails, service_metadata_ipfs_hash, history);
+      }
       this.handleBackToDashboard();
     } catch (e) {
       throw e;
@@ -271,7 +273,6 @@ const mapDispatchToProps = dispatch => ({
   setServiceDetailsInRedux: serviceDetails => dispatch(aiServiceDetailsActions.setAllAttributes(serviceDetails)),
   submitServiceDetailsForReview: (orgUuid, serviceUuid, serviceDetails) =>
     dispatch(aiServiceDetailsActions.submitServiceDetailsForReview(orgUuid, serviceUuid, serviceDetails)),
-  publishToIPFS: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.publishToIPFS(orgUuid, serviceUuid)),
   publishService: (organization, serviceDetails, metadata_ipfs_hash, history) =>
     dispatch(aiServiceDetailsActions.publishService(organization, serviceDetails, metadata_ipfs_hash, history)),
   setServiceTouchFlag: Boolean => dispatch(aiServiceDetailsActions.setServiceTouchedFlag(Boolean)),
@@ -283,5 +284,6 @@ const mapDispatchToProps = dispatch => ({
   setAiServiceGroups: groups => dispatch(aiServiceDetailsActions.setAiServiceGroups(groups)),
   setAiServiceStateState: updatedState => dispatch(aiServiceDetailsActions.setAiServiceStateState(updatedState)),
   setAiServiceDetailLeaf: (name, value) => dispatch(aiServiceDetailsActions.setAiServiceDetailLeaf(name, value)),
+  launchAiService: (orgUuid, serviceUuid) => dispatch(aiServiceDetailsActions.launchAiService(orgUuid, serviceUuid)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AiServiceCreation));

@@ -224,7 +224,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.regionNameIdContainer}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Typography className={classes.header}>Region Name</Typography>
-              <Typography className={classes.value}>North America</Typography>
+              <Typography className={classes.value}>Default Region</Typography>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.servicePriceModelContainer}>
