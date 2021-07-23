@@ -198,10 +198,14 @@ class AiServiceCreation extends Component {
   };
 
   getTheProgressText = () => {
-    const { assets } = this.props.serviceDetails;
+    const { assets, demoComponentAvailable } = this.props.serviceDetails;
 
     return progressText.map(progress => {
-      if (assets.demoFiles.status === progressStatus.PENDING && progress.section === sections.SETUP_DEMO) {
+      if (
+        assets.demoFiles.status === progressStatus.PENDING &&
+        progress.section === sections.SETUP_DEMO &&
+        demoComponentAvailable
+      ) {
         return "Demo Component build is in progress...";
       }
 
