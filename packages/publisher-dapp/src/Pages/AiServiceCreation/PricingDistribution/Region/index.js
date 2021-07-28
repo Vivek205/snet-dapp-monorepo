@@ -59,6 +59,7 @@ const Region = ({ changeGroups, serviceGroups, invalidFields }) => {
     }
     handleNewEndpointsChange();
   };
+
   const handleNewEndpointsChange = () => {
     dispatch(aiServiceDetailsActions.setServiceTouchedFlag(true));
     const newEndpoints = endpointRef.current.value;
