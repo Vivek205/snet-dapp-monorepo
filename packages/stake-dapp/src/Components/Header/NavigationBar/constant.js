@@ -1,6 +1,7 @@
 export const navbarItems = [
   { label: "Home", type: "link", openInNewTab: false, activeLinks: ["/landing"], to: "/landing" },
   { label: "How It Works", type: "link", openInNewTab: false, activeLinks: ["/", "/howitworks"], to: "/howitworks" },
+  { label: "Schedule", type: "link", openInNewTab: false, activeLinks: ["/", "/schedule"], to: "/schedule" },
 ];
 
 export const dropdowns = [
