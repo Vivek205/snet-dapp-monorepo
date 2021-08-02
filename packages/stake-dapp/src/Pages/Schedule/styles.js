@@ -1,4 +1,44 @@
 export const useStyles = MUITheme => ({
+  scheduleMainContainer: { padding: "0 60px" },
+  // tabs styling
+  appBar: {
+    padding: "45px 22px 0",
+    borderBottom: "1px solid #E2E2E2",
+    display: "flex",
+    backgroundColor: "transparent",
+    boxShadow: "none",
+    "& .MuiTabs-indicator": { display: "none" },
+  },
+  tabsContainer: {
+    "& .MuiTabs-scrollable": {
+      "& > span": {
+        height: 4,
+        backgroundColor: "#4086ff !important",
+      },
+    },
+  },
+  tab: {
+    minWidth: "auto",
+    padding: 0,
+    marginRight: 45,
+    color: MUITheme.palette.text.lightGrey,
+    fontFamily: MUITheme.typography.fontFamily,
+    fontSize: 20,
+    letterSpacing: 0,
+    lineHeight: "25px",
+    textAlign: "center",
+    textTransform: "capitalize",
+    "&:last-of-type": { marginRight: 0 },
+    "&.MuiTab-textColorPrimary.Mui-selected": {
+      borderBottom: "2px solid #4086ff",
+      color: MUITheme.palette.primary.main,
+      fontWeight: 600,
+    },
+    "&:hover": {
+      color: MUITheme.palette.text.primary,
+      fontWeight: 600,
+    },
+  },
   // SignUp container
   signUpContainer: {
     padding: "51px 64px",
