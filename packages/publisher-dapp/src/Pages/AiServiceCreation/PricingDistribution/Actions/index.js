@@ -35,6 +35,7 @@ const Actions = ({ serviceDetails, setServiceDetailsInRedux, setInvalidFields })
   const handleSave = async () => {
     setServiceDetailsInRedux(serviceDetails);
     await dispatch(aiServiceDetailsActions.saveServiceDetails(orgUuid, serviceUuid, serviceDetails));
+    dispatch(aiServiceDetailsActions.setSavedPricingDetails(true));
   };
 
   const handleContinue = async () => {

@@ -70,6 +70,7 @@ const initialAiServiceDetailsState = {
   foundInBlockchain: false,
   progressStages,
   currentSection: sections.AI_PROFILE,
+  savedPricingDetails: false,
 };
 
 const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => {
@@ -118,6 +119,8 @@ const serviceDetailsReducer = (state = initialAiServiceDetailsState, action) => 
       return { ...state, assets: { ...state.assets, demoFiles: { ...state.assets.demoFiles, url: action.payload } } };
     case aiServiceDetailsActions.SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN:
       return { ...state, foundInBlockchain: action.payload };
+    case aiServiceDetailsActions.SET_SAVED_PRICING_DETAILS:
+      return { ...state, savedPricingDetails: action.payload };
     default:
       return state;
   }

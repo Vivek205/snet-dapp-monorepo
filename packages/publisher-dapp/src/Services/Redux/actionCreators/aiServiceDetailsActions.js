@@ -16,6 +16,7 @@ import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 import ValidationError from "shared/dist/utils/validationError";
 import RegistryContract from "../../../Utils/PlatformContracts/RegistryContract";
 import { MetamaskError } from "shared/dist/utils/error";
+import * as Sentry from "@sentry/browser";
 
 export const SET_ALL_SERVICE_DETAILS_ATTRIBUTES = "SET_ALL_SERVICE_DETAILS_ATTRIBUTES";
 export const SET_AI_SERVICE_ID = "SET_AI_SERVICE_ID";
@@ -36,6 +37,7 @@ export const SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN = "SET_SERVICE_DETAILS_FOUN
 export const SET_PROGRESS_STATUS = "SET_PROGRESS_STATUS";
 export const SET_BUILD_STATUS = "SET_BUILD_STATUS";
 export const SET_DEMO_COMPONENT_AVAILABLE = "SET_DEMO_COMPONENT_AVAILABLE";
+export const SET_SAVED_PRICING_DETAILS = "SET_SAVED_PRICING_DETAILS";
 
 export const setAllAttributes = value => ({ type: SET_ALL_SERVICE_DETAILS_ATTRIBUTES, payload: value });
 
@@ -97,6 +99,8 @@ export const setServiceDetailsFoundInBlockchain = found => ({
   type: SET_SERVICE_DETAILS_FOUND_IN_BLOCKCHAIN,
   payload: found,
 });
+
+export const setSavedPricingDetails = bool => ({ type: SET_SAVED_PRICING_DETAILS, payload: bool });
 
 const createServiceAPI = (orgUuid, serviceName) => async dispatch => {
   const { token } = await dispatch(fetchAuthenticatedUser());
@@ -261,6 +265,13 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
     }
     dispatch(loaderActions.startAppLoader(LoaderContent.SAVE_SERVICE_DETAILS));
     const serviceDetailsPayload = generateSaveServicePayload(serviceDetails);
+    if (serviceDetails.savedPricingDetails && isEmpty(serviceDetails.groups[0].endpoints)) {
+      Sentry.captureMessage(
+        `Save API: payload endpoints are empty after saving price details. 
+        Payload JSON: ${JSON.stringify(serviceDetailsPayload)}`
+      );
+      Sentry.captureException(new Error("Save API: payload endpoints are empty after saving price details."));
+    }
     const { error } = await dispatch(saveServiceDetailsAPI(orgUuid, serviceUuid, serviceDetailsPayload));
     if (error.code) {
       dispatch(loaderActions.stopAppLoader());
@@ -269,6 +280,12 @@ export const saveServiceDetails = (orgUuid, serviceUuid, serviceDetails) => asyn
     dispatch(setAiServiceStateState(serviceCreationStatus.DRAFT));
     dispatch(loaderActions.stopAppLoader());
   } catch (error) {
+    if (serviceDetails.savedPricingDetails) {
+      Sentry.captureMessage(`Save API: error after saving pricing details. 
+      ServiceDetails: ${JSON.stringify(serviceDetails)}.
+      Error: ${error.toString()}`);
+      Sentry.captureException(error);
+    }
     dispatch(loaderActions.stopAppLoader());
     throw error;
   }
