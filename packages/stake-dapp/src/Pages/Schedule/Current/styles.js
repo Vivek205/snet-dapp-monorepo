@@ -148,7 +148,6 @@ export const useStyles = MUITheme => ({
     },
   },
   activeUpcomingSessionDetails: {
-    border: "1px solid #6AA0FE",
     backgroundColor: MUITheme.palette.primary.main,
     color: MUITheme.palette.text.white,
   },

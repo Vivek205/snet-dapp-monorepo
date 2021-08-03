@@ -12,6 +12,36 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 
 const Current = ({ classes }) => {
+  const upcomingSessionDetails = [
+    {
+      window_id: 17,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 18,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 19,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 20,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 21,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 22,
+      start_period: 1628413200,
+    },
+    {
+      window_id: 23,
+      start_period: 1628413200,
+    },
+  ];
   return (
     <div className={classes.currentMainContainer}>
       <div className={classes.activeSessionContainer}>
@@ -53,100 +83,47 @@ const Current = ({ classes }) => {
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>
         <ul>
-          <li className={classes.activeUpcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #17</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-            <div className={classes.sessionOpeningTime}>
-              <p>
-                <TimerIcon />
-                Session Opens In
-              </p>
-              <div className={classes.dhmsContainer}>
-                <div>
-                  <span>06</span>
-                  <span>D</span>
-                </div>
-                <div>
-                  <span>23</span>
-                  <span>H</span>
-                </div>
-                <div>
-                  <span>14</span>
-                  <span>M</span>
-                </div>
-                <div>
-                  <span>02</span>
-                  <span>S</span>
-                </div>
+          {upcomingSessionDetails.map((data, index) => (
+            <li
+              className={index === 0 ? classes.activeUpcomingSessionDetails : classes.upcomingSessionDetails}
+              key={index}
+            >
+              <span className={classes.stakeNumber}>Stake Session #{data.window_id}</span>
+              <div className={classes.stakeDateTimeDetails}>
+                <p>
+                  <EventIcon />
+                  24 Sep 2021
+                </p>
+                <span>06:00 GMT</span>
               </div>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
-          <li className={classes.upcomingSessionDetails}>
-            <span className={classes.stakeNumber}>Stake Session #18</span>
-            <div className={classes.stakeDateTimeDetails}>
-              <p>
-                <EventIcon />
-                24 Sep 2021
-              </p>
-              <span>06:00 GMT</span>
-            </div>
-          </li>
+              {index === 0 ? (
+                <div className={classes.sessionOpeningTime}>
+                  <p>
+                    <TimerIcon />
+                    Session Opens In
+                  </p>
+                  <div className={classes.dhmsContainer}>
+                    <div>
+                      <span>06</span>
+                      <span>D</span>
+                    </div>
+                    <div>
+                      <span>23</span>
+                      <span>H</span>
+                    </div>
+                    <div>
+                      <span>14</span>
+                      <span>M</span>
+                    </div>
+                    <div>
+                      <span>02</span>
+                      <span>S</span>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </li>
+          ))}
           <li>
             <span>More to follow...</span>
           </li>
