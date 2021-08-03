@@ -198,22 +198,29 @@ export const useStyles = MUITheme => ({
     },
   },
   dhmsContainer: {
-    display: "flex",
-    justifyContent: "space-between",
     "& > div": {
       marginTop: 4,
-      "& span": {
-        "&:first-of-type": {
-          color: MUITheme.palette.text.white,
-          fontSize: 16,
-          fontWeight: 600,
-          lineHeight: "20px",
-        },
-        "&:last-of-type": {
-          color: "#BFD6FF",
-          fontSize: 12,
-          fontWeight: 300,
-          lineHeight: "15px",
+      "& > div": {
+        padding: 0,
+        justifyContent: "space-between",
+        "& > div": {
+          padding: 0,
+          display: "flex",
+          "& p": {
+            "&:first-of-type": {
+              color: MUITheme.palette.text.white,
+              fontSize: 16,
+              fontWeight: 600,
+              lineHeight: "20px",
+            },
+            "&:last-of-type": {
+              paddingLeft: 4,
+              color: "#BFD6FF",
+              fontSize: 12,
+              fontWeight: 300,
+              lineHeight: "15px",
+            },
+          },
         },
       },
     },

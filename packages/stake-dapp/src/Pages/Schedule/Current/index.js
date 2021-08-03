@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import moment from "moment";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import ErrorIcon from "@material-ui/icons/Error";
 import EventIcon from "@material-ui/icons/Event";
 import TimerIcon from "@material-ui/icons/Timer";
+
+import Timer from "../../../Components/CreateStake/SessionTime/Timer";
 
 // import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -42,6 +45,11 @@ const Current = ({ classes }) => {
       start_period: 1628413200,
     },
   ];
+  const currentTime = moment().unix();
+  const [startTime] = useState(currentTime);
+  const [endTime] = useState(upcomingSessionDetails[0].start_period);
+  const interval = 1000;
+
   return (
     <div className={classes.currentMainContainer}>
       <div className={classes.activeSessionContainer}>
@@ -92,7 +100,7 @@ const Current = ({ classes }) => {
               <div className={classes.stakeDateTimeDetails}>
                 <p>
                   <EventIcon />
-                  24 Sep 2021
+                  {moment.unix(data.start_period).format("DD MMM YYYY")}
                 </p>
                 <span>06:00 GMT</span>
               </div>
@@ -103,22 +111,7 @@ const Current = ({ classes }) => {
                     Session Opens In
                   </p>
                   <div className={classes.dhmsContainer}>
-                    <div>
-                      <span>06</span>
-                      <span>D</span>
-                    </div>
-                    <div>
-                      <span>23</span>
-                      <span>H</span>
-                    </div>
-                    <div>
-                      <span>14</span>
-                      <span>M</span>
-                    </div>
-                    <div>
-                      <span>02</span>
-                      <span>S</span>
-                    </div>
+                    <Timer key="waitToOpen" startTime={startTime} endTime={endTime} interval={interval} />
                   </div>
                 </div>
               ) : null}
