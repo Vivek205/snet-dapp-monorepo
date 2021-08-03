@@ -1,5 +1,10 @@
 export const useStyles = MUITheme => ({
-  scheduleMainContainer: { padding: "0 60px" },
+  scheduleMainContainer: {
+    backgroundColor: MUITheme.palette.background.mainContent,
+  },
+  scheduleWrapper: {
+    padding: "0 60px",
+  },
   // tabs styling
   appBar: {
     padding: "45px 22px 0",
@@ -42,6 +47,7 @@ export const useStyles = MUITheme => ({
   // SignUp container
   signUpContainer: {
     padding: "51px 64px",
+    marginTop: 64,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

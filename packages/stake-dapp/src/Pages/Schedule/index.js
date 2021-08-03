@@ -26,31 +26,33 @@ const Schedule = ({ classes }) => {
 
   return (
     <div className={classes.scheduleMainContainer}>
-      <Typography>Staking Scedule</Typography>
-      <AppBar position="static" className={classes.appBar}>
-        <Tabs
-          className={classes.tabs}
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="scrollable force tabs example"
-        >
-          <Tab className={classes.tab} label={<span>Current</span>} value={0} />
-          <Tab className={classes.tab} label={<span>Past</span>} value={1} />
-        </Tabs>
-      </AppBar>
-      {selectedTab === 0 && (
-        <div className={classes.accordionContainer}>
-          <CurrentComponent />
-        </div>
-      )}
-      {selectedTab === 1 && (
-        <div className={classes.accordionContainer}>
-          <PastComponent />
-        </div>
-      )}
+      <div className={classes.scheduleWrapper}>
+        <Typography>Staking Scedule</Typography>
+        <AppBar position="static" className={classes.appBar}>
+          <Tabs
+            className={classes.tabs}
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="scrollable force tabs example"
+          >
+            <Tab className={classes.tab} label={<span>Current</span>} value={0} />
+            <Tab className={classes.tab} label={<span>Past</span>} value={1} />
+          </Tabs>
+        </AppBar>
+        {selectedTab === 0 && (
+          <div className={classes.accordionContainer}>
+            <CurrentComponent />
+          </div>
+        )}
+        {selectedTab === 1 && (
+          <div className={classes.accordionContainer}>
+            <PastComponent />
+          </div>
+        )}
+      </div>
       <Grid item xs={12} sm={12} md={12} lg={12} className={classes.signUpContainer}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Typography variant="h2">Staking Notification</Typography>
