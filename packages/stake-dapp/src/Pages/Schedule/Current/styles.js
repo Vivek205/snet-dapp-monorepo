@@ -19,6 +19,7 @@ export const useStyles = MUITheme => ({
     alignItems: "center",
     backgroundColor: MUITheme.palette.primary.white,
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
+    "@media(max-width:960px)": { flexDirection: "column" },
   },
   activeSessionDetails: {
     "& > span": {
@@ -46,7 +47,10 @@ export const useStyles = MUITheme => ({
       paddingTop: 24,
       display: "flex",
       "& > div": {
-        "&:first-of-type": { marginRight: 73 },
+        "&:first-of-type": {
+          marginRight: "10%",
+          "@media(max-width:720px)": { margin: "0 0 20px 0" },
+        },
         "& > p": {
           margin: 0,
           display: "flex",
@@ -66,6 +70,7 @@ export const useStyles = MUITheme => ({
             color: MUITheme.palette.text.darkGrey,
             fontSize: 18,
             lineHeight: "22px",
+            "@media(max-width:1280px)": { fontSize: 16 },
             "& span": {
               paddingLeft: 5,
               color: MUITheme.palette.text.lightGrey,
@@ -75,6 +80,12 @@ export const useStyles = MUITheme => ({
           },
         },
       },
+      "@media(max-width:960px)": { justifyContent: "center" },
+      "@media(max-width:720px)": { flexDirection: "column" },
+    },
+    "@media(max-width:960px)": {
+      width: "100%",
+      textAlign: "center",
     },
   },
   activeSessionBtnContainer: {
@@ -82,6 +93,7 @@ export const useStyles = MUITheme => ({
     "& button": {
       padding: "16px 66px",
     },
+    "@media(max-width:960px)": { marginTop: 50 },
   },
   noActiveSessionContainer: {
     textAlign: "center",
@@ -100,8 +112,11 @@ export const useStyles = MUITheme => ({
       padding: 0,
       margin: 0,
       display: "flex",
+      justifyContent: "center",
       flexWrap: "wrap",
       "& li": {
+        boxSizing: "border-box",
+        width: 248,
         padding: "22px 20px 21px 21px",
         borderRadius: 4,
         margin: "24px 3.89% 0 0",
@@ -118,7 +133,6 @@ export const useStyles = MUITheme => ({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          flex: 1,
           boxShadow: "none",
           backgroundColor: "transparent",
           "& > span": {

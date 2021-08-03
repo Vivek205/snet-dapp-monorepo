@@ -2,12 +2,12 @@ import React from "react";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
-// import ErrorIcon from "@material-ui/icons/Error";
+import ErrorIcon from "@material-ui/icons/Error";
 import EventIcon from "@material-ui/icons/Event";
 import TimerIcon from "@material-ui/icons/Timer";
 
-import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
-// import SNETButton from "shared/dist/components/SNETButton";
+// import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
+import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
@@ -16,8 +16,8 @@ const Current = ({ classes }) => {
     <div className={classes.currentMainContainer}>
       <div className={classes.activeSessionContainer}>
         <span className={classes.headingText}>Active Session</span>
-        {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
-          <Grid item xs={12} sm={6} md={8} lg={8} className={classes.activeSessionDetails}>
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
+          <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
             <span>Stake Session Aug 2020 #16</span>
             <span className={classes.tag}>live</span>
             <div>
@@ -41,14 +41,14 @@ const Current = ({ classes }) => {
               </div>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={4} className={classes.activeSessionBtnContainer}>
+          <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
             <SNETButton children="view stake details" color="primary" variant="contained" />
           </Grid>
-        </Grid> */}
-        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
+        </Grid>
+        {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
           <img src={NoActiveSessionImg} alt="No Active Session" />
           <span>No Active Sessions</span>
-        </Grid>
+        </Grid> */}
       </div>
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>

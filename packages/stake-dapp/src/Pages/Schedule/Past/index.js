@@ -7,6 +7,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import ErrorIcon from "@material-ui/icons/Error";
 
 import { useStyles } from "./styles";
 
@@ -19,23 +20,23 @@ const Past = ({ classes }) => {
 
   const data = [
     {
-      question: "question 1",
+      question: "Stake Session #14 Jun 2021",
       answer: "answer 1",
     },
     {
-      question: "question 2",
+      question: "Stake Session #14 Jun 2021",
       answer: "answer 2",
     },
     {
-      question: "question 3",
+      question: "Stake Session #14 Jun 2021",
       answer: "answer 3",
     },
     {
-      question: "question 4",
+      question: "Stake Session #14 Jun 2021",
       answer: "answer 4",
     },
     {
-      question: "question 5",
+      question: "Stake Session #14 Jun 2021",
       answer: "answer 5",
     },
   ];
@@ -53,10 +54,52 @@ const Past = ({ classes }) => {
             expandIcon={expanded === index ? <RemoveIcon /> : <AddIcon />}
             className={classes.panelSummary}
           >
-            <Typography className={classes.question}>{item.question}</Typography>
+            <Typography className={classes.tabTitle}>{item.question}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div className={classes.answer}>{item.answer}</div>
+            <div className={classes.tabContent}>
+              <div>
+                <p>
+                  <ErrorIcon />
+                  Opened Date
+                </p>
+                <p>5 jan 2020</p>
+              </div>
+              <div>
+                <p>
+                  <ErrorIcon />
+                  Closed Date
+                </p>
+                <p>5 jan 2020</p>
+              </div>
+              <div>
+                <p>
+                  <ErrorIcon />
+                  Stakers
+                </p>
+                <p>
+                  1400<span>people</span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <ErrorIcon />
+                  Final Pool Size
+                </p>
+                <p>
+                  111,290,965<span>agix</span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <ErrorIcon />
+                  Reward Pool
+                </p>
+                <p>
+                  111,290,965<span>agix</span>
+                </p>
+              </div>
+            </div>
           </AccordionDetails>
         </Accordion>
       ))}
