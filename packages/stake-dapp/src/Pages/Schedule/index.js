@@ -27,7 +27,7 @@ const Schedule = ({ classes }) => {
   return (
     <div className={classes.scheduleMainContainer}>
       <div className={classes.scheduleWrapper}>
-        <Typography>Staking Scedule</Typography>
+        <Typography>Staking Schedule</Typography>
         <AppBar position="static" className={classes.appBar}>
           <Tabs
             className={classes.tabs}

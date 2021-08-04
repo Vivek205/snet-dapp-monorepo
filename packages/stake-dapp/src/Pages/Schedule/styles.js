@@ -3,7 +3,14 @@ export const useStyles = MUITheme => ({
     backgroundColor: MUITheme.palette.background.mainContent,
   },
   scheduleWrapper: {
-    padding: "0 60px",
+    padding: "51px 60px 0",
+    "& > p": {
+      color: MUITheme.palette.text.darkGrey,
+      fontSize: 32,
+      fontWeight: 600,
+      letterSpacing: -0.5,
+      lineHeight: "48px",
+    },
   },
   // tabs styling
   appBar: {
