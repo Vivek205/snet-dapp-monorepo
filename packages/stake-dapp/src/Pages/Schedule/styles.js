@@ -5,6 +5,7 @@ export const useStyles = MUITheme => ({
   scheduleWrapper: {
     padding: "51px 60px 0",
     "& > p": {
+      paddingLeft: 22,
       color: MUITheme.palette.text.darkGrey,
       fontSize: 32,
       fontWeight: 600,
