@@ -49,6 +49,12 @@ const Current = ({ classes }) => {
     },
   ];
 
+  const activeSessionDetails = {
+    window_id: 16,
+    start_period: 1628413200,
+    end_period: 1628413200,
+  };
+
   const currentTime = moment().unix();
   const [startTime] = useState(currentTime);
   const [endTime] = useState(upcomingSessionDetails[0].start_period);
@@ -70,7 +76,7 @@ const Current = ({ classes }) => {
         <span className={classes.headingText}>Active Session</span>
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
           <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
-            <span>Stake Session Aug 2020 #16</span>
+            <span>Stake Session Aug 2020 #{activeSessionDetails.window_id}</span>
             <span className={classes.tag}>live</span>
             <div>
               <div>
@@ -79,7 +85,7 @@ const Current = ({ classes }) => {
                   Opening Date
                 </p>
                 <p>
-                  24 Aug 2021 06:00 <span>GMT</span>
+                  {moment.unix(activeSessionDetails.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
                 </p>
               </div>
               <div>
@@ -88,7 +94,7 @@ const Current = ({ classes }) => {
                   Closing Date
                 </p>
                 <p>
-                  30 Aug 2021 23:30 <span>GMT</span>
+                  {moment.unix(activeSessionDetails.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
                 </p>
               </div>
             </div>
