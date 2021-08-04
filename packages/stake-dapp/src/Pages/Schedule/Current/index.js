@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
@@ -8,6 +10,7 @@ import EventIcon from "@material-ui/icons/Event";
 import TimerIcon from "@material-ui/icons/Timer";
 
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
+import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
 // import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
 import SNETButton from "shared/dist/components/SNETButton";
@@ -45,10 +48,21 @@ const Current = ({ classes }) => {
       start_period: 1628413200,
     },
   ];
+
   const currentTime = moment().unix();
   const [startTime] = useState(currentTime);
   const [endTime] = useState(upcomingSessionDetails[0].start_period);
   const interval = 1000;
+  const { isLoggedIn } = useSelector(state => state.user);
+  const history = useHistory();
+
+  const handleViewStakeDetails = () => {
+    if (isLoggedIn) {
+      history.push(GlobalRoutes.LANDING.path);
+    } else {
+      history.push(GlobalRoutes.LOGIN.path);
+    }
+  };
 
   return (
     <div className={classes.currentMainContainer}>
@@ -80,7 +94,12 @@ const Current = ({ classes }) => {
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
-            <SNETButton children="view stake details" color="primary" variant="contained" />
+            <SNETButton
+              children="view stake details"
+              color="primary"
+              variant="contained"
+              onClick={handleViewStakeDetails}
+            />
           </Grid>
         </Grid>
         {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
@@ -102,7 +121,7 @@ const Current = ({ classes }) => {
                   <EventIcon />
                   {moment.unix(data.start_period).format("DD MMM YYYY")}
                 </p>
-                <span>06:00 GMT</span>
+                {/* <span>06:00 GMT</span> */}
               </div>
               {index === 0 ? (
                 <div className={classes.sessionOpeningTime}>
