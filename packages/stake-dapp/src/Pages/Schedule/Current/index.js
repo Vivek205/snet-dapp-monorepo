@@ -121,7 +121,7 @@ const Current = ({ classes }) => {
                   <EventIcon />
                   {moment.unix(data.start_period).format("DD MMM YYYY")}
                 </p>
-                {/* <span>06:00 GMT</span> */}
+                <span>{moment.unix(data.start_period).format("hh:mm")} GMT</span>
               </div>
               {index === 0 ? (
                 <div className={classes.sessionOpeningTime}>
