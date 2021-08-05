@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
@@ -20,24 +21,59 @@ const Past = ({ classes }) => {
 
   const data = [
     {
-      question: "Stake Session #14 Jun 2021",
-      answer: "answer 1",
+      window_id: 15,
+      question: 1628413200,
+      answer: {
+        start_date: 1628413201,
+        end_date: 1628413208,
+        stakers: 1400,
+        final_pool_size: 111290964,
+        reward_pool: 111290964,
+      },
     },
     {
-      question: "Stake Session #14 Jun 2021",
-      answer: "answer 2",
+      window_id: 14,
+      question: 1628413200,
+      answer: {
+        start_date: 1628413201,
+        end_date: 1628413208,
+        stakers: 1400,
+        final_pool_size: 111290964,
+        reward_pool: 111290964,
+      },
     },
     {
-      question: "Stake Session #14 Jun 2021",
-      answer: "answer 3",
+      window_id: 13,
+      question: 1628413200,
+      answer: {
+        start_date: 1628413201,
+        end_date: 1628413208,
+        stakers: 1400,
+        final_pool_size: 111290964,
+        reward_pool: 111290964,
+      },
     },
     {
-      question: "Stake Session #14 Jun 2021",
-      answer: "answer 4",
+      window_id: 12,
+      question: 1628413200,
+      answer: {
+        start_date: 1628413201,
+        end_date: 1628413208,
+        stakers: 1400,
+        final_pool_size: 111290964,
+        reward_pool: 111290964,
+      },
     },
     {
-      question: "Stake Session #14 Jun 2021",
-      answer: "answer 5",
+      window_id: 11,
+      question: 1628413200,
+      answer: {
+        start_date: 1628413201,
+        end_date: 1628413208,
+        stakers: 1400,
+        final_pool_size: 111290964,
+        reward_pool: 111290964,
+      },
     },
   ];
 
@@ -54,7 +90,10 @@ const Past = ({ classes }) => {
             expandIcon={expanded === index ? <RemoveIcon /> : <AddIcon />}
             className={classes.panelSummary}
           >
-            <Typography className={classes.tabTitle}>{item.question}</Typography>
+            <Typography className={classes.tabTitle}>
+              Stake Session #{item.window_id}
+              <span> {moment.unix(item.question).format("MM YYYY")}</span>
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <div className={classes.tabContent}>
@@ -63,14 +102,14 @@ const Past = ({ classes }) => {
                   <ErrorIcon />
                   Opened Date
                 </p>
-                <p>5 jan 2020</p>
+                <p>{moment.unix(item.answer.start_date).format("DD MMM YYYY")}</p>
               </div>
               <div>
                 <p>
                   <ErrorIcon />
                   Closed Date
                 </p>
-                <p>5 jan 2020</p>
+                <p>{moment.unix(item.answer.end_date).format("DD MMM YYYY")}</p>
               </div>
               <div>
                 <p>
@@ -78,7 +117,8 @@ const Past = ({ classes }) => {
                   Stakers
                 </p>
                 <p>
-                  1400<span>people</span>
+                  {item.answer.stakers}
+                  <span>people</span>
                 </p>
               </div>
               <div>
@@ -87,7 +127,8 @@ const Past = ({ classes }) => {
                   Final Pool Size
                 </p>
                 <p>
-                  111,290,965<span>agix</span>
+                  {item.answer.final_pool_size}
+                  <span>AGIX</span>
                 </p>
               </div>
               <div>
@@ -96,7 +137,8 @@ const Past = ({ classes }) => {
                   Reward Pool
                 </p>
                 <p>
-                  111,290,965<span>agix</span>
+                  {item.answer.reward_pool}
+                  <span>AGIX</span>
                 </p>
               </div>
             </div>

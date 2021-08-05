@@ -89,7 +89,6 @@ export const useStyles = MUITheme => ({
             color: MUITheme.palette.text.lightGrey,
             fontSize: 12,
             lineHeight: "15px",
-            textTransform: "uppercase",
           },
         },
       },
