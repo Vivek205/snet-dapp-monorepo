@@ -24,6 +24,7 @@ const stateSelector = state => ({
 const Schedule = ({ classes }) => {
   const [value, setValue] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [upcomingSession, setUpcomingSession] = useState([]);
   const dispatch = useDispatch();
   const { stakeWindowsSummary } = useSelector(state => stateSelector(state));
 
@@ -34,7 +35,7 @@ const Schedule = ({ classes }) => {
 
   const fetchUpcomingSessions = useCallback(async () => {
     try {
-      await dispatch(scheduleActions.fetchUpcomingSessions());
+      setUpcomingSession(await dispatch(scheduleActions.fetchUpcomingSessions()));
     } catch (error) {
       // Ignore as we show appropriate error
     }
@@ -73,7 +74,7 @@ const Schedule = ({ classes }) => {
         </AppBar>
         {selectedTab === 0 && (
           <div className={classes.accordionContainer}>
-            <CurrentComponent activeSessionDetail={stakeWindowsSummary[0]} />
+            <CurrentComponent activeSessionDetail={stakeWindowsSummary[0]} upcomingSessions={upcomingSession} />
           </div>
         )}
         {selectedTab === 1 && (
