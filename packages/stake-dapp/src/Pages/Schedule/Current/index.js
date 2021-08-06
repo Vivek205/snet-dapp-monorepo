@@ -12,12 +12,12 @@ import TimerIcon from "@material-ui/icons/Timer";
 import Timer from "../../../Components/CreateStake/SessionTime/Timer";
 import { GlobalRoutes } from "../../../GlobalRouter/Routes";
 
-// import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
+import NoActiveSessionImg from "shared/dist/assets/images/NoActiveSession.png";
 import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const Current = ({ classes }) => {
+const Current = ({ classes, activeSessionDetail }) => {
   const upcomingSessionDetails = [
     {
       window_id: 17,
@@ -49,12 +49,6 @@ const Current = ({ classes }) => {
     },
   ];
 
-  const activeSessionDetails = {
-    window_id: 16,
-    start_period: 1628413200,
-    end_period: 1628413200,
-  };
-
   const currentTime = moment().unix();
   const [startTime] = useState(currentTime);
   const [endTime] = useState(upcomingSessionDetails[0].start_period);
@@ -70,48 +64,61 @@ const Current = ({ classes }) => {
     }
   };
 
+  const submissionEndPeriod = moment
+    .unix(activeSessionDetail ? activeSessionDetail.submissionEndPeriod : "")
+    .format("DD MMM YYYY hh:ss");
+
+  const currentTimeInDMY = moment.unix(currentTime).format("DD MMM YYYY hh:ss");
+
   return (
     <div className={classes.currentMainContainer}>
       <div className={classes.activeSessionContainer}>
         <span className={classes.headingText}>Active Session</span>
-        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
-          <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
-            <span>Stake Session Aug 2020 #{activeSessionDetails.window_id}</span>
-            <span className={classes.tag}>live</span>
-            <div>
+        {currentTimeInDMY < submissionEndPeriod ? (
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
+            <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
+              <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.stakeMapIndex : ""}</span>
+              <span className={classes.tag}>live</span>
               <div>
-                <p>
-                  <ErrorIcon />
-                  Opening Date
-                </p>
-                <p>
-                  {moment.unix(activeSessionDetails.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
-                </p>
+                <div>
+                  <p>
+                    <ErrorIcon />
+                    Opening Date
+                  </p>
+                  <p>
+                    {moment
+                      .unix(activeSessionDetail ? activeSessionDetail.startPeriod : "")
+                      .format("DD MMM YYYY hh:ss")}{" "}
+                    <span>GMT</span>
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    <ErrorIcon />
+                    Closing Date
+                  </p>
+                  <p>
+                    {moment.unix(activeSessionDetail ? activeSessionDetail.endPeriod : "").format("DD MMM YYYY hh:ss")}{" "}
+                    <span>GMT</span>
+                  </p>
+                </div>
               </div>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Closing Date
-                </p>
-                <p>
-                  {moment.unix(activeSessionDetails.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
-                </p>
-              </div>
-            </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
+              <SNETButton
+                children="view stake details"
+                color="primary"
+                variant="contained"
+                onClick={handleViewStakeDetails}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
-            <SNETButton
-              children="view stake details"
-              color="primary"
-              variant="contained"
-              onClick={handleViewStakeDetails}
-            />
+        ) : (
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
+            <img src={NoActiveSessionImg} alt="No Active Session" />
+            <span>No Active Sessions</span>
           </Grid>
-        </Grid>
-        {/* <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
-          <img src={NoActiveSessionImg} alt="No Active Session" />
-          <span>No Active Sessions</span>
-        </Grid> */}
+        )}
       </div>
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>

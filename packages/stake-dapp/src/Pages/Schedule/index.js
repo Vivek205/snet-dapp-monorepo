@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,20 +10,48 @@ import { withStyles } from "@material-ui/styles";
 
 import CurrentComponent from "./Current";
 import PastComponent from "./Past";
+import { scheduleActions, stakeActions } from "../../Services/Redux/actionCreators";
 
 import SNETTextfield from "shared/dist/components/SNETTextfield";
 import SNETButton from "shared/dist/components/SNETButton";
 import ComputeMailsImage from "shared/dist/assets/images/ComputeMails.png";
 import { useStyles } from "./styles";
 
+const stateSelector = state => ({
+  stakeWindowsSummary: state.stakeReducer.stakeWindowsSummary,
+});
+
 const Schedule = ({ classes }) => {
   const [value, setValue] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
+  const dispatch = useDispatch();
+  const { stakeWindowsSummary } = useSelector(state => stateSelector(state));
 
   const handleChange = (_event, newValue) => {
     setValue(newValue);
     setSelectedTab(newValue);
   };
+
+  const fetchUpcomingSessions = useCallback(async () => {
+    try {
+      await dispatch(scheduleActions.fetchUpcomingSessions());
+    } catch (error) {
+      // Ignore as we show appropriate error
+    }
+  }, [dispatch]);
+
+  const fetchStakeWindowsSummary = useCallback(() => {
+    try {
+      dispatch(stakeActions.fetchStakeWindowsSummary());
+    } catch (_error) {
+      // Ignore as we show appropriate error
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchUpcomingSessions();
+    fetchStakeWindowsSummary();
+  }, [fetchUpcomingSessions, fetchStakeWindowsSummary]);
 
   return (
     <div className={classes.scheduleMainContainer}>
@@ -44,12 +73,12 @@ const Schedule = ({ classes }) => {
         </AppBar>
         {selectedTab === 0 && (
           <div className={classes.accordionContainer}>
-            <CurrentComponent />
+            <CurrentComponent activeSessionDetail={stakeWindowsSummary[0]} />
           </div>
         )}
         {selectedTab === 1 && (
           <div className={classes.accordionContainer}>
-            <PastComponent />
+            <PastComponent pasSessiontData={stakeWindowsSummary} />
           </div>
         )}
       </div>

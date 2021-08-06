@@ -12,74 +12,16 @@ import ErrorIcon from "@material-ui/icons/Error";
 
 import { useStyles } from "./styles";
 
-const Past = ({ classes }) => {
+const Past = ({ classes, pasSessiontData }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = panel => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const data = [
-    {
-      window_id: 15,
-      question: 1628413200,
-      answer: {
-        start_date: 1628413201,
-        end_date: 1628413208,
-        stakers: 1400,
-        final_pool_size: 111290964,
-        reward_pool: 111290964,
-      },
-    },
-    {
-      window_id: 14,
-      question: 1628413200,
-      answer: {
-        start_date: 1628413201,
-        end_date: 1628413208,
-        stakers: 1400,
-        final_pool_size: 111290964,
-        reward_pool: 111290964,
-      },
-    },
-    {
-      window_id: 13,
-      question: 1628413200,
-      answer: {
-        start_date: 1628413201,
-        end_date: 1628413208,
-        stakers: 1400,
-        final_pool_size: 111290964,
-        reward_pool: 111290964,
-      },
-    },
-    {
-      window_id: 12,
-      question: 1628413200,
-      answer: {
-        start_date: 1628413201,
-        end_date: 1628413208,
-        stakers: 1400,
-        final_pool_size: 111290964,
-        reward_pool: 111290964,
-      },
-    },
-    {
-      window_id: 11,
-      question: 1628413200,
-      answer: {
-        start_date: 1628413201,
-        end_date: 1628413208,
-        stakers: 1400,
-        final_pool_size: 111290964,
-        reward_pool: 111290964,
-      },
-    },
-  ];
-
   return (
     <div className={classes.accordionContainer}>
-      {data.map((item, index) => (
+      {pasSessiontData.map((pastSessions, index) => (
         <Accordion
           expanded={expanded === index}
           onChange={handleChange(index)}
@@ -91,8 +33,8 @@ const Past = ({ classes }) => {
             className={classes.panelSummary}
           >
             <Typography className={classes.tabTitle}>
-              Stake Session #{item.window_id}
-              <span> {moment.unix(item.question).format("MM YYYY")}</span>
+              Stake Session #{pastSessions.stakeMapIndex}
+              <span> {moment.unix(pastSessions.startPeriod).format("MMM YYYY")}</span>
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -102,14 +44,14 @@ const Past = ({ classes }) => {
                   <ErrorIcon />
                   Opened Date
                 </p>
-                <p>{moment.unix(item.answer.start_date).format("DD MMM YYYY")}</p>
+                <p>{moment.unix(pastSessions.startPeriod).format("DD MMM YYYY")}</p>
               </div>
               <div>
                 <p>
                   <ErrorIcon />
                   Closed Date
                 </p>
-                <p>{moment.unix(item.answer.end_date).format("DD MMM YYYY")}</p>
+                <p>{moment.unix(pastSessions.endPeriod).format("DD MMM YYYY")}</p>
               </div>
               <div>
                 <p>
@@ -117,7 +59,7 @@ const Past = ({ classes }) => {
                   Stakers
                 </p>
                 <p>
-                  {item.answer.stakers}
+                  {pastSessions.numOfStakers}
                   <span>people</span>
                 </p>
               </div>
@@ -127,7 +69,7 @@ const Past = ({ classes }) => {
                   Final Pool Size
                 </p>
                 <p>
-                  {item.answer.final_pool_size}
+                  {pastSessions.windowTotalStake}
                   <span>AGIX</span>
                 </p>
               </div>
@@ -137,7 +79,7 @@ const Past = ({ classes }) => {
                   Reward Pool
                 </p>
                 <p>
-                  {item.answer.reward_pool}
+                  {pastSessions.rewardAmount}
                   <span>AGIX</span>
                 </p>
               </div>
