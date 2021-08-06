@@ -13,15 +13,15 @@ const fetchUpcomingSessionsAPI = () => async () => {
 
 export const fetchUpcomingSessions = () => async dispatch => {
   try {
-    dispatch(loaderActions.startSessionLoader());
+    dispatch(loaderActions.startTxnStakeLoader());
     const { data, error } = await dispatch(fetchUpcomingSessionsAPI());
     if (error.code) {
       throw new APIError(error.message);
     }
-    dispatch(loaderActions.stopSessionLoader());
+    dispatch(loaderActions.stopTxnStakeLoader());
     return data;
   } catch (error) {
-    dispatch(loaderActions.stopSessionLoader());
+    dispatch(loaderActions.stopTxnStakeLoader());
     throw error;
   }
 };

@@ -596,14 +596,16 @@ const fetchStakeWindowsSummaryAPI = () => async () => {
 
 export const fetchStakeWindowsSummary = () => async dispatch => {
   try {
+    dispatch(loaderActions.startTxnStakeLoader());
     const { data, error } = await dispatch(fetchStakeWindowsSummaryAPI());
     if (error.code) {
       throw new APIError(error.message);
     }
-
+    dispatch(loaderActions.stopTxnStakeLoader());
     const allStakeWindows = parseAndTransformStakeWindows(data);
     dispatch(setAllStakeWindowsSummary(allStakeWindows));
   } catch (error) {
+    dispatch(loaderActions.stopTxnStakeLoader());
     throw error;
   }
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import moment from "moment";
 
 import { withStyles } from "@material-ui/styles";
@@ -11,13 +12,23 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import ErrorIcon from "@material-ui/icons/Error";
 
 import { useStyles } from "./styles";
+import InlineLoader from "../../../Components/InlineLoader";
+
+const stateSelector = state => ({
+  isLoading: state.loader.txnList.isLoading,
+});
 
 const Past = ({ classes, pasSessiontData }) => {
   const [expanded, setExpanded] = useState(false);
+  const { isLoading } = useSelector(state => stateSelector(state));
 
   const handleChange = panel => (_event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  if (isLoading) {
+    return <InlineLoader />;
+  }
 
   return (
     <div className={classes.accordionContainer}>
