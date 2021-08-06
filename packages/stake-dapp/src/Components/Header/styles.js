@@ -52,6 +52,10 @@ export const useStyles = MUITheme => ({
     letterSpacinng: 1.43,
     lineHeight: "16px",
     textTransform: "uppercase",
+    "@media(max-width:1280px)": {
+      padding: "7px 10px",
+      marginLeft: 15,
+    },
   },
   faqLink: {
     marginRight: 21,

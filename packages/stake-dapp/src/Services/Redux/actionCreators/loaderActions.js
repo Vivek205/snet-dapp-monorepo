@@ -7,6 +7,8 @@ export const SET_STAKE_ACTIVE_LOADER = "SET_STAKE_ACTIVE_LOADER";
 export const SET_STAKE_CLAIM_LOADER = "SET_STAKE_CLAIM_LOADER";
 export const SET_STAKE_TXN_LOADER = "SET_STAKE_TXN_LOADER";
 
+export const SET_UPCOMING_SESSION_LOADER = "SET_UPCOMING_SESSION_LOADER";
+
 export const startAppLoader = loaderContent => ({
   type: SET_APP_LOADER,
   payload: { isLoading: true, title: loaderContent.title, content: loaderContent.content },
@@ -54,5 +56,15 @@ export const startTxnStakeLoader = () => ({
 
 export const stopTxnStakeLoader = () => ({
   type: SET_STAKE_TXN_LOADER,
+  payload: { isLoading: false },
+});
+
+export const startSessionLoader = () => ({
+  type: SET_UPCOMING_SESSION_LOADER,
+  payload: { isLoading: true },
+});
+
+export const stopSessionLoader = () => ({
+  type: SET_UPCOMING_SESSION_LOADER,
   payload: { isLoading: false },
 });
