@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -17,41 +17,8 @@ import SNETButton from "shared/dist/components/SNETButton";
 
 import { useStyles } from "./styles";
 
-const Current = ({ classes, activeSessionDetail }) => {
-  const upcomingSessionDetails = [
-    {
-      window_id: 17,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 18,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 19,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 20,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 21,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 22,
-      start_period: 1628413200,
-    },
-    {
-      window_id: 23,
-      start_period: 1628413200,
-    },
-  ];
-
+const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
   const currentTime = moment().unix();
-  const [startTime] = useState(currentTime);
-  const [endTime] = useState(upcomingSessionDetails[0].start_period);
   const interval = 1000;
   const { isLoggedIn } = useSelector(state => state.user);
   const history = useHistory();
@@ -69,6 +36,10 @@ const Current = ({ classes, activeSessionDetail }) => {
     .format("DD MMM YYYY hh:ss");
 
   const currentTimeInDMY = moment.unix(currentTime).format("DD MMM YYYY hh:ss");
+
+  const handleTimerCompletion = () => {
+    // console.log("Timer is completed");
+  };
 
   return (
     <div className={classes.currentMainContainer}>
@@ -123,18 +94,18 @@ const Current = ({ classes, activeSessionDetail }) => {
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>
         <ul>
-          {upcomingSessionDetails.map((data, index) => (
+          {upcomingSessions.map((upcomingSession, index) => (
             <li
               className={index === 0 ? classes.activeUpcomingSessionDetails : classes.upcomingSessionDetails}
               key={index}
             >
-              <span className={classes.stakeNumber}>Stake Session #{data.window_id}</span>
+              <span className={classes.stakeNumber}>Stake Session #{upcomingSession.window_id}</span>
               <div className={classes.stakeDateTimeDetails}>
                 <p>
                   <EventIcon />
-                  {moment.unix(data.start_period).format("DD MMM YYYY")}
+                  {moment.unix(upcomingSession.start_period).format("DD MMM YYYY")}
                 </p>
-                <span>{moment.unix(data.start_period).format("hh:mm")} GMT</span>
+                <span>{moment.unix(upcomingSession.start_period).format("hh:mm")} GMT</span>
               </div>
               {index === 0 ? (
                 <div className={classes.sessionOpeningTime}>
@@ -143,7 +114,13 @@ const Current = ({ classes, activeSessionDetail }) => {
                     Session Opens In
                   </p>
                   <div className={classes.dhmsContainer}>
-                    <Timer key="waitToOpen" startTime={startTime} endTime={endTime} interval={interval} />
+                    <Timer
+                      key="waitToOpen"
+                      startTime={currentTime}
+                      endTime={upcomingSession.start_period}
+                      interval={interval}
+                      handleTimerCompletion={handleTimerCompletion}
+                    />
                   </div>
                 </div>
               ) : null}

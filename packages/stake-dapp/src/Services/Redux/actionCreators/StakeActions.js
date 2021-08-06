@@ -588,12 +588,10 @@ export const fetchStakeOverallSummary = () => async dispatch => {
 // All Stake Window Summary
 // *************************************************
 
-const fetchStakeWindowsSummaryAPI = () => async dispatch => {
-  const { token } = await dispatch(fetchAuthenticatedUser());
+const fetchStakeWindowsSummaryAPI = () => async () => {
   const apiName = APIEndpoints.STAKE.name;
   const apiPath = APIPaths.STAKE_WINDOWS_SUMMARY;
-  const apiOptions = initializeAPIOptions(token);
-  return await API.get(apiName, apiPath, apiOptions);
+  return await API.get(apiName, apiPath);
 };
 
 export const fetchStakeWindowsSummary = () => async dispatch => {
