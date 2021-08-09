@@ -112,14 +112,13 @@ export const useStyles = MUITheme => ({
       padding: 0,
       margin: 0,
       display: "flex",
-      justifyContent: "center",
       flexWrap: "wrap",
       "& li": {
         boxSizing: "border-box",
         width: 248,
         padding: "22px 20px 21px 21px",
         borderRadius: 4,
-        margin: "24px 3.89% 0 0",
+        margin: "24px 4.79% 0 0",
         backgroundColor: MUITheme.palette.primary.white,
         boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
         listStyle: "none",
@@ -144,6 +143,10 @@ export const useStyles = MUITheme => ({
             lineHeight: "18px",
           },
         },
+        // "&:nth-child(4n)": {
+        //   marginRight: 0,
+        //   "@media(max-width:1515px)":{ marginRight: }
+        // },
       },
     },
   },

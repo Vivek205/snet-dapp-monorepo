@@ -54,13 +54,9 @@ export const useStyles = MUITheme => ({
   },
   // SignUp container
   signUpContainer: {
-    padding: "51px 64px",
+    padding: "51px 60px",
     marginTop: 64,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#f1f1f1",
-    textAlign: "center",
     "& h2": { textAlign: "left" },
     "& p": {
       padding: "32px 0",
@@ -98,7 +94,7 @@ export const useStyles = MUITheme => ({
       "@media(max-width: 420px)": { marginTop: 15 },
     },
     "& img": {
-      width: 478,
+      width: 410,
       "@media(max-width: 1098px)": { width: "100%" },
       "@media(max-width: 960px)": {
         width: 487,
@@ -106,8 +102,21 @@ export const useStyles = MUITheme => ({
       },
       "@media(max-width: 600px)": { width: "100%" },
     },
-    [MUITheme.breakpoints.down("sm")]: {
-      padding: "51px 15px",
+  },
+  signUpWrapper: {
+    width: "84%",
+    margin: "0 auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    "& > div": {
+      "&:last-of-type": {
+        "@media(max-width:1280px)": {
+          marginTop: 25,
+        },
+      },
+    },
+    "@media(max-width:1280px)": {
       flexDirection: "column",
     },
   },
