@@ -32,72 +32,74 @@ const Past = ({ classes, pasSessiontData }) => {
 
   return (
     <div className={classes.accordionContainer}>
-      {pasSessiontData.map((pastSessions, index) => (
-        <Accordion
-          expanded={expanded === index}
-          onChange={handleChange(index)}
-          className={classes.expansionPanel}
-          key={index}
-        >
-          <AccordionSummary
-            expandIcon={expanded === index ? <RemoveIcon /> : <AddIcon />}
-            className={classes.panelSummary}
-          >
-            <Typography className={classes.tabTitle}>
-              Stake Session #{pastSessions.stakeMapIndex}
-              <span> {moment.unix(pastSessions.startPeriod).format("MMM YYYY")}</span>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.tabContent}>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Opened Date
-                </p>
-                <p>{moment.unix(pastSessions.startPeriod).format("DD MMM YYYY")}</p>
-              </div>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Closed Date
-                </p>
-                <p>{moment.unix(pastSessions.endPeriod).format("DD MMM YYYY")}</p>
-              </div>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Stakers
-                </p>
-                <p>
-                  {pastSessions.numOfStakers}
-                  <span>people</span>
-                </p>
-              </div>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Final Pool Size
-                </p>
-                <p>
-                  {pastSessions.windowTotalStake}
-                  <span>AGIX</span>
-                </p>
-              </div>
-              <div>
-                <p>
-                  <ErrorIcon />
-                  Reward Pool
-                </p>
-                <p>
-                  {pastSessions.rewardAmount}
-                  <span>AGIX</span>
-                </p>
-              </div>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+      {pasSessiontData
+        ? pasSessiontData.map((pastSessions, index) => (
+            <Accordion
+              expanded={expanded === index}
+              onChange={handleChange(index)}
+              className={classes.expansionPanel}
+              key={index}
+            >
+              <AccordionSummary
+                expandIcon={expanded === index ? <RemoveIcon /> : <AddIcon />}
+                className={classes.panelSummary}
+              >
+                <Typography className={classes.tabTitle}>
+                  Stake Session #{pastSessions.window_id}
+                  <span> {moment.unix(pastSessions.start_period).format("MMM YYYY")}</span>
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.tabContent}>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Opened Date
+                    </p>
+                    <p>{moment.unix(pastSessions.start_period).format("DD MMM YYYY")}</p>
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Closed Date
+                    </p>
+                    <p>{moment.unix(pastSessions.end_period).format("DD MMM YYYY")}</p>
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Stakers
+                    </p>
+                    <p>
+                      {pastSessions.no_of_stakers}
+                      <span>people</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Final Pool Size
+                    </p>
+                    <p>
+                      {pastSessions.total_stake}
+                      <span>AGIX</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Reward Pool
+                    </p>
+                    <p>
+                      {pastSessions.window_reward_amount}
+                      <span>AGIX</span>
+                    </p>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        : null}
     </div>
   );
 };

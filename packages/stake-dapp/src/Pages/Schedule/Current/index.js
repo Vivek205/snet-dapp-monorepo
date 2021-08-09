@@ -51,7 +51,9 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
     return <InlineLoader />;
   }
 
-  const highlightedIndex = upcomingSessions.findIndex(session => currentTime < session.start_period);
+  const hightlightedIndex = upcomingSessions
+    ? upcomingSessions.findIndex(session => currentTime < session.start_period)
+    : null;
 
   return (
     <div className={classes.currentMainContainer}>
@@ -60,7 +62,7 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
         {currentTimeInDMY < submissionEndPeriod ? (
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
             <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
-              <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.stakeMapIndex : ""}</span>
+              <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.window_id : ""}</span>
               <span className={classes.tag}>live</span>
               <div>
                 <div>
@@ -70,7 +72,7 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
                   </p>
                   <p>
                     {moment
-                      .unix(activeSessionDetail ? activeSessionDetail.startPeriod : "")
+                      .unix(activeSessionDetail ? activeSessionDetail.start_period : "")
                       .format("DD MMM YYYY hh:ss")}{" "}
                     <span>GMT</span>
                   </p>
@@ -81,7 +83,7 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
                     Closing Date
                   </p>
                   <p>
-                    {moment.unix(activeSessionDetail ? activeSessionDetail.endPeriod : "").format("DD MMM YYYY hh:ss")}{" "}
+                    {moment.unix(activeSessionDetail ? activeSessionDetail.end_period : "").format("DD MMM YYYY hh:ss")}{" "}
                     <span>GMT</span>
                   </p>
                 </div>
@@ -106,42 +108,46 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>
         <ul>
-          {upcomingSessions.map((upcomingSession, index) =>
-            currentTime < upcomingSession.start_period ? (
-              <li
-                className={
-                  index === highlightedIndex ? classes.activeUpcomingSessionDetails : classes.upcomingSessionDetails
-                }
-                key={index}
-              >
-                <span className={classes.stakeNumber}>Stake Session #{upcomingSession.window_id}</span>
-                <div className={classes.stakeDateTimeDetails}>
-                  <p>
-                    <EventIcon />
-                    {moment.unix(upcomingSession.start_period).format("DD MMM YYYY")}
-                  </p>
-                  <span>{moment.unix(upcomingSession.start_period).format("hh:mm")} GMT</span>
-                </div>
-                {index === 0 ? (
-                  <div className={classes.sessionOpeningTime}>
-                    <p>
-                      <TimerIcon />
-                      Session Opens In
-                    </p>
-                    <div className={classes.dhmsContainer}>
-                      <Timer
-                        key="waitToOpen"
-                        startTime={currentTime}
-                        endTime={upcomingSession.start_period}
-                        interval={interval}
-                        handleTimerCompletion={handleTimerCompletion}
-                      />
+          {upcomingSessions
+            ? upcomingSessions.map((upcomingSession, index) =>
+                currentTime < upcomingSession.start_period ? (
+                  <li
+                    className={
+                      index === hightlightedIndex
+                        ? classes.activeUpcomingSessionDetails
+                        : classes.upcomingSessionDetails
+                    }
+                    key={index}
+                  >
+                    <span className={classes.stakeNumber}>Stake Session #{upcomingSession.window_id}</span>
+                    <div className={classes.stakeDateTimeDetails}>
+                      <p>
+                        <EventIcon />
+                        {moment.unix(upcomingSession.start_period).format("DD MMM YYYY")}
+                      </p>
+                      <span>{moment.unix(upcomingSession.start_period).format("hh:mm")} GMT</span>
                     </div>
-                  </div>
-                ) : null}
-              </li>
-            ) : null
-          )}
+                    {index === hightlightedIndex && upcomingSession.start_period ? (
+                      <div className={classes.sessionOpeningTime}>
+                        <p>
+                          <TimerIcon />
+                          Session Opens In
+                        </p>
+                        <div className={classes.dhmsContainer}>
+                          <Timer
+                            key="waitToOpen"
+                            startTime={currentTime}
+                            endTime={upcomingSession.start_period}
+                            interval={interval}
+                            handleTimerCompletion={handleTimerCompletion}
+                          />
+                        </div>
+                      </div>
+                    ) : null}
+                  </li>
+                ) : null
+              )
+            : null}
           <li>
             <span>More to follow...</span>
           </li>
