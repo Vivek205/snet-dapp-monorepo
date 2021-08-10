@@ -153,6 +153,9 @@ export const useStyles = MUITheme => ({
   activeUpcomingSessionDetails: {
     backgroundColor: MUITheme.palette.primary.main,
     color: MUITheme.palette.text.white,
+    "&::after": {
+      border: "1px solid red",
+    },
   },
   upcomingSessionDetails: {
     color: MUITheme.palette.text.primary,

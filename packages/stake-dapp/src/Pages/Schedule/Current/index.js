@@ -57,51 +57,55 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
     <div className={classes.currentMainContainer}>
       <div className={classes.activeSessionContainer}>
         <span className={classes.headingText}>Active Session</span>
-        {currentTimeInDMY < submissionEndPeriod ? (
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
-            <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
-              <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.stakeMapIndex : ""}</span>
-              <span className={classes.tag}>live</span>
-              <div>
+        <div>
+          {currentTimeInDMY < submissionEndPeriod ? (
+            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
+              <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
+                <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.stakeMapIndex : ""}</span>
+                <span className={classes.tag}>live</span>
                 <div>
-                  <p>
-                    <ErrorIcon />
-                    Opening Date
-                  </p>
-                  <p>
-                    {moment
-                      .unix(activeSessionDetail ? activeSessionDetail.startPeriod : "")
-                      .format("DD MMM YYYY hh:ss")}{" "}
-                    <span>GMT</span>
-                  </p>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Opening Date
+                    </p>
+                    <p>
+                      {moment
+                        .unix(activeSessionDetail ? activeSessionDetail.startPeriod : "")
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Closing Date
+                    </p>
+                    <p>
+                      {moment
+                        .unix(activeSessionDetail ? activeSessionDetail.endPeriod : "")
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p>
-                    <ErrorIcon />
-                    Closing Date
-                  </p>
-                  <p>
-                    {moment.unix(activeSessionDetail ? activeSessionDetail.endPeriod : "").format("DD MMM YYYY hh:ss")}{" "}
-                    <span>GMT</span>
-                  </p>
-                </div>
-              </div>
+              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
+                <SNETButton
+                  children="view stake details"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleViewStakeDetails}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
-              <SNETButton
-                children="view stake details"
-                color="primary"
-                variant="contained"
-                onClick={handleViewStakeDetails}
-              />
+          ) : (
+            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
+              <img src={NoActiveSessionImg} alt="No Active Session" />
+              <span>No Active Sessions</span>
             </Grid>
-          </Grid>
-        ) : (
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
-            <img src={NoActiveSessionImg} alt="No Active Session" />
-            <span>No Active Sessions</span>
-          </Grid>
-        )}
+          )}
+        </div>
       </div>
       <div className={classes.upcomingSessionContainer}>
         <span className={classes.headingText}>Upcoming Sessions</span>
