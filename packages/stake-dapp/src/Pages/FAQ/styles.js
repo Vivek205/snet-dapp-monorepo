@@ -6,7 +6,8 @@ export const useStyles = MUITheme => ({
     },
   },
   appBar: {
-    paddingLeft: "10%",
+    maxWidth: 1215,
+    margin: "0 auto",
     background: MUITheme.palette.background.mainContent,
     boxShadow: "none",
     "& .MuiTab-wrapper": {
@@ -25,6 +26,7 @@ export const useStyles = MUITheme => ({
       alignItems: "center",
       padding: "0 15px",
     },
+    "@media(max-width: 1280px)": { maxWidth: "95%" },
   },
   tabs: {
     "& .MuiTabs-flexContainer": {
@@ -68,7 +70,10 @@ export const useStyles = MUITheme => ({
     "@media(max-width: 480px)": { marginRight: 0 },
   },
   accordionContainer: {
-    padding: "32px 10% 0",
+    maxWidth: 1215,
+    margin: "0 auto",
+    padding: "32px 0 0",
+    "@media(max-width: 1280px)": { maxWidth: "95%" },
   },
   // Learn and Share Community
   learnAndShareContainer: {

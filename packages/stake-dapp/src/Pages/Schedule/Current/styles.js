@@ -1,8 +1,21 @@
 export const useStyles = MUITheme => ({
   currentMainContainer: {
-    width: "84%",
+    maxWidth: 1215,
     margin: "32px auto 0",
     fontFamily: MUITheme.typography.fontFamily,
+    "& > span": {
+      width: "100%",
+      marginTop: 50,
+      display: "inline-block",
+      color: MUITheme.palette.text.primary,
+      fontSize: 16,
+      fontStyle: "italic",
+      fontWeight: 300,
+      letterSpacing: 0.25,
+      lineHeight: "18px",
+      textAlign: "center",
+    },
+    "@media(max-width:1280px)": { maxWidth: "95%" },
   },
   headingText: {
     color: MUITheme.palette.text.darkGrey,
@@ -11,6 +24,17 @@ export const useStyles = MUITheme => ({
     lineHeight: "25px",
   },
   activeSessionBox: {
+    padding: "24px 40px",
+    border: "3px solid #6F106A",
+    borderRadius: 4,
+    marginTop: 24,
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: MUITheme.palette.primary.white,
+    boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
+    "@media(max-width:960px)": { flexDirection: "column" },
+  },
+  openSessionBox: {
     padding: "24px 40px",
     border: "3px solid #00C48C",
     borderRadius: 4,
@@ -21,7 +45,13 @@ export const useStyles = MUITheme => ({
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
     "@media(max-width:960px)": { flexDirection: "column" },
   },
-  activeSessionDetails: {
+  activeTag: {
+    backgroundColor: "#6F106A",
+  },
+  liveTag: {
+    backgroundColor: "#00C48C",
+  },
+  activeOpenSessionDetails: {
     "& > span": {
       "&:first-of-type": {
         color: MUITheme.palette.text.darkGrey,
@@ -34,7 +64,6 @@ export const useStyles = MUITheme => ({
         borderRadius: 4,
         marginLeft: 12,
         color: MUITheme.palette.text.white,
-        backgroundColor: MUITheme.palette.success.main,
         fontSize: 14,
         fontStyle: "italic",
         fontWeight: 800,
@@ -88,14 +117,16 @@ export const useStyles = MUITheme => ({
       textAlign: "center",
     },
   },
-  activeSessionBtnContainer: {
+  activeOpenSessionBtnContainer: {
     textAlign: "right",
     "& button": {
-      padding: "16px 66px",
+      width: 300,
+      padding: "16px 0",
     },
     "@media(max-width:960px)": { marginTop: 50 },
   },
   noActiveSessionContainer: {
+    marginTop: 24,
     textAlign: "center",
     "& span": {
       paddingTop: 15,
@@ -112,14 +143,15 @@ export const useStyles = MUITheme => ({
       padding: 0,
       margin: 0,
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
       flexWrap: "wrap",
       "& li": {
         boxSizing: "border-box",
         width: 248,
         padding: "22px 20px 21px 21px",
         borderRadius: 4,
-        margin: "24px 3.89% 0 0",
+        margin: "24px 24px 0 0",
+        display: "inline-block",
         backgroundColor: MUITheme.palette.primary.white,
         boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
         listStyle: "none",
@@ -130,11 +162,7 @@ export const useStyles = MUITheme => ({
           lineHeight: "24px",
         },
         "&:last-of-type": {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           boxShadow: "none",
-          backgroundColor: "transparent",
           "& > span": {
             color: MUITheme.palette.text.primary,
             fontSize: 14,
@@ -142,14 +170,27 @@ export const useStyles = MUITheme => ({
             fontWeight: 300,
             letterSpacing: 0.25,
             lineHeight: "18px",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           },
         },
+        "&:nth-child(4n)": {
+          marginRight: 0,
+          position: "relative",
+          "@media(max-width:1140px)": { marginRight: 24 },
+        },
       },
+      "@media(max-width:1140px)": { justifyContent: "center" },
     },
   },
   activeUpcomingSessionDetails: {
     backgroundColor: MUITheme.palette.primary.main,
     color: MUITheme.palette.text.white,
+    "&::after": {
+      border: "1px solid red",
+    },
   },
   upcomingSessionDetails: {
     color: MUITheme.palette.text.primary,

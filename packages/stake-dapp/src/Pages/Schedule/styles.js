@@ -3,11 +3,11 @@ export const useStyles = MUITheme => ({
     backgroundColor: MUITheme.palette.background.mainContent,
   },
   scheduleWrapper: {
-    padding: "51px 60px 0",
+    padding: "0 62px",
     "& > p": {
-      paddingLeft: 22,
+      padding: "52px 20px 32px",
       color: MUITheme.palette.text.darkGrey,
-      fontSize: 32,
+      fontSize: 36,
       fontWeight: 600,
       letterSpacing: -0.5,
       lineHeight: "48px",
@@ -15,7 +15,7 @@ export const useStyles = MUITheme => ({
   },
   // tabs styling
   appBar: {
-    padding: "45px 22px 0",
+    padding: "0 22px 0",
     borderBottom: "1px solid #E2E2E2",
     display: "flex",
     backgroundColor: "transparent",
@@ -54,13 +54,9 @@ export const useStyles = MUITheme => ({
   },
   // SignUp container
   signUpContainer: {
-    padding: "51px 64px",
+    padding: "51px 0",
     marginTop: 64,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#f1f1f1",
-    textAlign: "center",
     "& h2": { textAlign: "left" },
     "& p": {
       padding: "32px 0",
@@ -98,17 +94,34 @@ export const useStyles = MUITheme => ({
       "@media(max-width: 420px)": { marginTop: 15 },
     },
     "& img": {
-      width: 478,
-      "@media(max-width: 1098px)": { width: "100%" },
-      "@media(max-width: 960px)": {
-        width: 487,
-        marginTop: 25,
-      },
-      "@media(max-width: 600px)": { width: "100%" },
+      width: 410,
     },
-    [MUITheme.breakpoints.down("sm")]: {
-      padding: "51px 15px",
+  },
+  signUpWrapper: {
+    maxWidth: 1215,
+    margin: "0 auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    "& > div": {
+      width: "100%",
+      "&:last-of-type": {
+        "@media(max-width:1024px)": {
+          marginTop: 25,
+        },
+      },
+      "@media(max-width:1024px)": {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      },
+    },
+    "@media(max-width:1280px)": {
+      maxWidth: "95%",
+    },
+    "@media(max-width:1024px)": {
       flexDirection: "column",
+      justifyContent: "center",
     },
   },
 });
