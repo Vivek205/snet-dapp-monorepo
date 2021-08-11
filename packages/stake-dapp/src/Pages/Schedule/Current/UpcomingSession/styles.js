@@ -134,4 +134,14 @@ export const useStyles = MUITheme => ({
       },
     },
   },
+  noUpcomingSessionTxt: {
+    marginTop: 50,
+    display: "block",
+    color: "#666",
+    fontStyle: "italic",
+    fontSize: 24,
+    fontWeight: 200,
+    lineHeight: "30px",
+    textAlign: "center",
+  },
 });

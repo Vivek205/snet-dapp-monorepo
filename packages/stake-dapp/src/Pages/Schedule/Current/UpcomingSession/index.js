@@ -72,7 +72,7 @@ const Current = ({ classes, upcomingSessions, currentTime, hightlightedIndex, in
           </li>
         </ul>
       ) : (
-        <span>No upcoming sessions</span>
+        <span className={classes.noUpcomingSessionTxt}>No upcoming sessions</span>
       )}
     </div>
   );
