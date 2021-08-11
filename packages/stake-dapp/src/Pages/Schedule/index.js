@@ -61,7 +61,8 @@ const Schedule = ({ classes }) => {
       {selectedTab === 0 && (
         <div className={classes.accordionContainer}>
           <CurrentComponent
-            activeSessionDetail={scheduleSession.current}
+            activeSessionDetail={scheduleSession.current ? scheduleSession.current.active : {}}
+            openSessionDetails={scheduleSession.current ? scheduleSession.current.open : {}}
             upcomingSessions={scheduleSession ? scheduleSession.upcoming : []}
           />
         </div>

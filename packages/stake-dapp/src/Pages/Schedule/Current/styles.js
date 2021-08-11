@@ -3,6 +3,18 @@ export const useStyles = MUITheme => ({
     maxWidth: 1215,
     margin: "32px auto 0",
     fontFamily: MUITheme.typography.fontFamily,
+    "& > span": {
+      width: "100%",
+      marginTop: 50,
+      display: "inline-block",
+      color: MUITheme.palette.text.primary,
+      fontSize: 16,
+      fontStyle: "italic",
+      fontWeight: 300,
+      letterSpacing: 0.25,
+      lineHeight: "18px",
+      textAlign: "center",
+    },
     "@media(max-width:1280px)": { maxWidth: "95%" },
   },
   headingText: {
@@ -13,6 +25,17 @@ export const useStyles = MUITheme => ({
   },
   activeSessionBox: {
     padding: "24px 40px",
+    border: "3px solid #6F106A",
+    borderRadius: 4,
+    marginTop: 24,
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: MUITheme.palette.primary.white,
+    boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
+    "@media(max-width:960px)": { flexDirection: "column" },
+  },
+  openSessionBox: {
+    padding: "24px 40px",
     border: "3px solid #00C48C",
     borderRadius: 4,
     marginTop: 24,
@@ -22,7 +45,13 @@ export const useStyles = MUITheme => ({
     boxShadow: "0 1px 1px 0 rgba(0,0,0,0.07), 0 2px 1px -1px rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.1)",
     "@media(max-width:960px)": { flexDirection: "column" },
   },
-  activeSessionDetails: {
+  activeTag: {
+    backgroundColor: "#6F106A",
+  },
+  liveTag: {
+    backgroundColor: "#00C48C",
+  },
+  activeOpenSessionDetails: {
     "& > span": {
       "&:first-of-type": {
         color: MUITheme.palette.text.darkGrey,
@@ -35,7 +64,6 @@ export const useStyles = MUITheme => ({
         borderRadius: 4,
         marginLeft: 12,
         color: MUITheme.palette.text.white,
-        backgroundColor: MUITheme.palette.success.main,
         fontSize: 14,
         fontStyle: "italic",
         fontWeight: 800,
@@ -89,14 +117,16 @@ export const useStyles = MUITheme => ({
       textAlign: "center",
     },
   },
-  activeSessionBtnContainer: {
+  activeOpenSessionBtnContainer: {
     textAlign: "right",
     "& button": {
-      padding: "16px 66px",
+      width: 300,
+      padding: "16px 0",
     },
     "@media(max-width:960px)": { marginTop: 50 },
   },
   noActiveSessionContainer: {
+    marginTop: 24,
     textAlign: "center",
     "& span": {
       paddingTop: 15,

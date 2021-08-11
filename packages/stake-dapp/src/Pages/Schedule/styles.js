@@ -110,12 +110,18 @@ export const useStyles = MUITheme => ({
           marginTop: 25,
         },
       },
+      "@media(max-width:1024px)": {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      },
     },
     "@media(max-width:1280px)": {
       maxWidth: "95%",
     },
     "@media(max-width:1024px)": {
       flexDirection: "column",
+      justifyContent: "center",
     },
   },
 });

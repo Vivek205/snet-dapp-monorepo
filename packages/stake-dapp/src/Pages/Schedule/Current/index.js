@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import isEmpty from "lodash/isEmpty";
 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
@@ -22,14 +23,14 @@ const stateSelector = state => ({
   isLoading: state.loader.txnList.isLoading,
 });
 
-const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
+const Current = ({ classes, activeSessionDetail, openSessionDetails, upcomingSessions }) => {
   const currentTime = moment().unix();
   const interval = 1000;
   const { isLoggedIn } = useSelector(state => state.user);
   const history = useHistory();
   const { isLoading } = useSelector(state => stateSelector(state));
 
-  const handleViewStakeDetails = () => {
+  const handlebtnClick = () => {
     if (isLoggedIn) {
       history.push(GlobalRoutes.LANDING.path);
     } else {
@@ -60,58 +61,106 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
       <div className={classes.activeSessionContainer}>
         <span className={classes.headingText}>Active Session</span>
         <div>
-          {currentTimeInDMY < submissionEndPeriod ? (
+          {currentTimeInDMY < submissionEndPeriod && !isEmpty(activeSessionDetail) ? (
             <Grid item xs={12} sm={12} md={12} lg={12} className={classes.activeSessionBox}>
-              <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeSessionDetails}>
+              <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeOpenSessionDetails}>
                 <span>Stake Session Aug 2020 #{activeSessionDetail ? activeSessionDetail.stakeMapIndex : ""}</span>
-                <span className={classes.tag}>live</span>
+                <span className={classes.activeTag}>incubation</span>
                 <div>
                   <div>
                     <p>
                       <ErrorIcon />
                       Opening Date
                     </p>
-                    <p>
-                      {moment
-                        .unix(activeSessionDetail ? activeSessionDetail.startPeriod : "")
-                        .format("DD MMM YYYY hh:ss")}{" "}
-                      <span>GMT</span>
-                    </p>
+                    {activeSessionDetail ? (
+                      <p>
+                        {moment.unix(activeSessionDetail.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <p>
                       <ErrorIcon />
                       Closing Date
                     </p>
-                    <p>
-                      {moment
-                        .unix(activeSessionDetail ? activeSessionDetail.endPeriod : "")
-                        .format("DD MMM YYYY hh:ss")}{" "}
-                      <span>GMT</span>
-                    </p>
+                    {activeSessionDetail ? (
+                      <p>
+                        {moment.unix(activeSessionDetail.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeSessionBtnContainer}>
+              <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeOpenSessionBtnContainer}>
+                <SNETButton children="View Incubation" color="primary" variant="contained" onClick={handlebtnClick} />
+              </Grid>
+            </Grid>
+          ) : (
+            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
+              <img src={NoActiveSessionImg} alt="No Active Session" />
+              <span>No Incubation Sessions</span>
+            </Grid>
+          )}
+        </div>
+        <div>
+          {currentTimeInDMY < submissionEndPeriod && !isEmpty(openSessionDetails) ? (
+            <Grid item xs={12} sm={12} md={12} lg={12} className={classes.openSessionBox}>
+              <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeOpenSessionDetails}>
+                <span>Stake Session Aug 2020 #{openSessionDetails ? openSessionDetails.window_id : ""}</span>
+                <span className={classes.liveTag}>live</span>
+                <div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Opening Date
+                    </p>
+                    {openSessionDetails ? (
+                      <p>
+                        {moment.unix(openSessionDetails.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div>
+                    <p>
+                      <ErrorIcon />
+                      Closing Date
+                    </p>
+                    {openSessionDetails ? (
+                      <p>
+                        {moment.unix(openSessionDetails.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeOpenSessionBtnContainer}>
                 <SNETButton
                   children="view stake details"
                   color="primary"
                   variant="contained"
-                  onClick={handleViewStakeDetails}
+                  onClick={handlebtnClick}
                 />
               </Grid>
             </Grid>
           ) : (
             <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
               <img src={NoActiveSessionImg} alt="No Active Session" />
-              <span>No Active Sessions</span>
+              <span>No Live Sessions</span>
             </Grid>
           )}
         </div>
       </div>
-      {upcomingSessions ? (
-        <div className={classes.upcomingSessionContainer}>
-          <span className={classes.headingText}>Upcoming Sessions</span>
+      <div className={classes.upcomingSessionContainer}>
+        <span className={classes.headingText}>Upcoming Sessions</span>
+        {!isEmpty(upcomingSessions) ? (
           <ul>
             {upcomingSessions.map((upcomingSession, index) =>
               currentTime < upcomingSession.start_period ? (
@@ -153,8 +202,10 @@ const Current = ({ classes, activeSessionDetail, upcomingSessions }) => {
               <span>More to follow...</span>
             </li>
           </ul>
-        </div>
-      ) : null}
+        ) : (
+          <span>No upcoming sessions</span>
+        )}
+      </div>
     </div>
   );
 };
