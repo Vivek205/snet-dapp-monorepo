@@ -14,6 +14,7 @@ import SNETButton from "shared/dist/components/SNETButton";
 import { useStyles } from "./styles";
 import { GlobalRoutes } from "../../../../GlobalRouter/Routes";
 import InlineLoader from "../../../../Components/InlineLoader";
+import { Fragment } from "react";
 
 const stateSelector = state => ({
   isLoading: state.loader.txnList.isLoading,
@@ -42,6 +43,18 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
 
   if (isLoading) {
     return <InlineLoader />;
+  }
+
+  if (isEmpty(activeSessionDetail && isEmpty(openSessionDetails))) {
+    return (
+      <Fragment>
+        <span className={classes.headingText}>Active Session</span>
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
+          <img src={NoActiveSessionImg} alt="No Active Session" />
+          <span>No Sessions</span>
+        </Grid>
+      </Fragment>
+    );
   }
 
   return (
@@ -91,12 +104,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
               />
             </Grid>
           </Grid>
-        ) : (
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
-            <img src={NoActiveSessionImg} alt="No Active Session" />
-            <span>No Incubation Sessions</span>
-          </Grid>
-        )}
+        ) : null}
       </div>
       <div>
         {currentTimeInDMY < submissionEndPeriod && !isEmpty(openSessionDetails) ? (
@@ -137,12 +145,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
               <SNETButton children="view stake details" color="primary" variant="contained" onClick={handleViewStake} />
             </Grid>
           </Grid>
-        ) : (
-          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noActiveSessionContainer}>
-            <img src={NoActiveSessionImg} alt="No Active Session" />
-            <span>No Live Sessions</span>
-          </Grid>
-        )}
+        ) : null}
       </div>
     </div>
   );
