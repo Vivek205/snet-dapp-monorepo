@@ -84,7 +84,7 @@ export const GlobalRoutes = {
   },
   LANDING: {
     name: "landing",
-    path: "/landing",
+    path: "/landing/:activetab?",
     component: LandingComponent,
   },
   ACCEPT_AGREEMENT: {

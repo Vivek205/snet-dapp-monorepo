@@ -26,6 +26,14 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
 
   const handleViewIncubation = () => {
     if (isLoggedIn) {
+      history.push(GlobalRoutes.LANDING.path.replace(":activetab", "incubating"));
+    } else {
+      history.push(GlobalRoutes.LOGIN.path);
+    }
+  };
+
+  const handleViewStake = () => {
+    if (isLoggedIn) {
       history.push(GlobalRoutes.LANDING.path);
     } else {
       history.push(GlobalRoutes.LOGIN.path);
@@ -126,12 +134,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
               </div>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4} className={classes.activeOpenSessionBtnContainer}>
-              <SNETButton
-                children="view stake details"
-                color="primary"
-                variant="contained"
-                onClick={handleViewIncubation}
-              />
+              <SNETButton children="view stake details" color="primary" variant="contained" onClick={handleViewStake} />
             </Grid>
           </Grid>
         ) : (

@@ -1,6 +1,7 @@
 import { stakeActions } from "../actionCreators";
 
 const InitialRequestDetails = {
+  selectedTab: 0,
   stakeBalance: 0,
   stakeSummary: {
     incubatingCount: 0,
