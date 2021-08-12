@@ -115,6 +115,7 @@ export const useStyles = MUITheme => ({
         "& > div": {
           padding: 0,
           display: "flex",
+          alignItems: "flex-end",
           "& p": {
             "&:first-of-type": {
               color: MUITheme.palette.text.white,
