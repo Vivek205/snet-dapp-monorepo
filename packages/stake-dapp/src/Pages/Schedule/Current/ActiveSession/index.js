@@ -35,7 +35,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
 
   const handleViewStake = () => {
     if (isLoggedIn) {
-      history.push(GlobalRoutes.LANDING.path);
+      history.push(GlobalRoutes.LANDING.path.replace(":activetab", "openstake"));
     } else {
       history.push(GlobalRoutes.LOGIN.path);
     }
@@ -45,7 +45,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
     return <InlineLoader />;
   }
 
-  if (isEmpty(activeSessionDetail && isEmpty(openSessionDetails))) {
+  if (isEmpty(activeSessionDetail) && isEmpty(openSessionDetails)) {
     return (
       <Fragment>
         <span className={classes.headingText}>Active Session</span>
