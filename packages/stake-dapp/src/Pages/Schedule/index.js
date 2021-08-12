@@ -88,7 +88,7 @@ const Schedule = ({ classes }) => {
               <SNETButton type="submit" children="subscribe" color="primary" variant="contained" />
             </form>
           </div>
-          <div>
+          <div className={classes.imgContainer}>
             <img src={ComputeMailsImage} alt="Computer And Mails" />
           </div>
         </div>

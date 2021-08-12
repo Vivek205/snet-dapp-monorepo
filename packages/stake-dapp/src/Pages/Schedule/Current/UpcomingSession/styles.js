@@ -16,7 +16,6 @@ export const useStyles = MUITheme => ({
       "& li": {
         boxSizing: "border-box",
         width: 248,
-        padding: "22px 20px 21px 21px",
         borderRadius: 4,
         margin: "24px 24px 0 0",
         display: "inline-block",
@@ -59,6 +58,7 @@ export const useStyles = MUITheme => ({
     "&::after": {
       border: "1px solid red",
     },
+    "& svg": { color: "#BFD6FF !important" },
   },
   upcomingSessionDetails: {
     color: MUITheme.palette.text.primary,
@@ -78,7 +78,7 @@ export const useStyles = MUITheme => ({
       fontWeight: "bold",
       lineHeight: "33px",
       "& svg": {
-        paddingRight: 13,
+        paddingRight: 11,
         color: MUITheme.palette.border.secondary,
       },
     },
@@ -143,5 +143,14 @@ export const useStyles = MUITheme => ({
     fontWeight: 200,
     lineHeight: "30px",
     textAlign: "center",
+  },
+  addBorder: {
+    border: "1px solid #6AA0FE",
+    padding: "22px 24px 21px 21px",
+    margin: 2,
+    borderRadius: 4,
+  },
+  addPadding: {
+    padding: "22px 24px 21px 21px",
   },
 });

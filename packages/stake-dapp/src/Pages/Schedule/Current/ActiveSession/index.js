@@ -74,7 +74,11 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
                   </p>
                   {activeSessionDetail ? (
                     <p>
-                      {moment.unix(activeSessionDetail.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      {moment
+                        .unix(activeSessionDetail.start_period)
+                        .utc()
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
                     </p>
                   ) : (
                     ""
@@ -87,7 +91,11 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
                   </p>
                   {activeSessionDetail ? (
                     <p>
-                      {moment.unix(activeSessionDetail.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      {moment
+                        .unix(activeSessionDetail.end_period)
+                        .utc()
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
                     </p>
                   ) : (
                     ""
@@ -111,7 +119,7 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
           <Grid item xs={12} sm={12} md={12} lg={12} className={classes.openSessionBox}>
             <Grid item xs={12} sm={12} md={8} lg={8} className={classes.activeOpenSessionDetails}>
               <span>Stake Session Aug 2020 #{openSessionDetails ? openSessionDetails.window_id : ""}</span>
-              <span className={classes.liveTag}>live</span>
+              <span className={classes.liveTag}>open</span>
               <div>
                 <div>
                   <p>
@@ -120,7 +128,11 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
                   </p>
                   {openSessionDetails ? (
                     <p>
-                      {moment.unix(openSessionDetails.start_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      {moment
+                        .unix(openSessionDetails.start_period)
+                        .utc()
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
                     </p>
                   ) : (
                     ""
@@ -133,7 +145,11 @@ const ActiveSession = ({ classes, activeSessionDetail, openSessionDetails, curre
                   </p>
                   {openSessionDetails ? (
                     <p>
-                      {moment.unix(openSessionDetails.end_period).format("DD MMM YYYY hh:ss")} <span>GMT</span>
+                      {moment
+                        .unix(openSessionDetails.end_period)
+                        .utc()
+                        .format("DD MMM YYYY hh:ss")}{" "}
+                      <span>GMT</span>
                     </p>
                   ) : (
                     ""

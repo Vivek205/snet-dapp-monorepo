@@ -39,31 +39,39 @@ const Current = ({ classes, upcomingSessions, currentTime, hightlightedIndex, in
                 }
                 key={index}
               >
-                <span className={classes.stakeNumber}>Stake Session #{upcomingSession.window_id}</span>
-                <div className={classes.stakeDateTimeDetails}>
-                  <p>
-                    <EventIcon />
-                    {moment.unix(upcomingSession.start_period).format("DD MMM YYYY")}
-                  </p>
-                  <span>{moment.unix(upcomingSession.start_period).format("hh:mm")} GMT</span>
-                </div>
-                {index === hightlightedIndex && upcomingSession.start_period ? (
-                  <div className={classes.sessionOpeningTime}>
+                <div className={index === hightlightedIndex ? classes.addBorder : classes.addPadding}>
+                  <span className={classes.stakeNumber}>Stake Session #{upcomingSession.window_id}</span>
+                  <div className={classes.stakeDateTimeDetails}>
                     <p>
-                      <TimerIcon />
-                      Session Opens In
+                      <EventIcon />
+                      {moment.unix(upcomingSession.start_period).format("DD MMM YYYY")}
                     </p>
-                    <div className={classes.dhmsContainer}>
-                      <Timer
-                        key="waitToOpen"
-                        startTime={currentTime}
-                        endTime={upcomingSession.start_period}
-                        interval={interval}
-                        handleTimerCompletion={handleTimerCompletion}
-                      />
-                    </div>
+                    <span>
+                      {moment
+                        .unix(upcomingSession.start_period)
+                        .utc()
+                        .format("h:mm")}{" "}
+                      GMT
+                    </span>
                   </div>
-                ) : null}
+                  {index === hightlightedIndex && upcomingSession.start_period ? (
+                    <div className={classes.sessionOpeningTime}>
+                      <p>
+                        <TimerIcon />
+                        Session Opens In
+                      </p>
+                      <div className={classes.dhmsContainer}>
+                        <Timer
+                          key="waitToOpen"
+                          startTime={currentTime}
+                          endTime={upcomingSession.start_period}
+                          interval={interval}
+                          handleTimerCompletion={handleTimerCompletion}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               </li>
             ) : null
           )}

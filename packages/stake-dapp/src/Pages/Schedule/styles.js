@@ -124,4 +124,8 @@ export const useStyles = MUITheme => ({
       justifyContent: "center",
     },
   },
+  imgContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 });
