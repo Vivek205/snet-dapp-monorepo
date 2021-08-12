@@ -42,7 +42,7 @@ export const useStyles = MUITheme => ({
         lineHeight: "50px",
       },
       "&:last-of-type": {
-        padding: "0 7px",
+        padding: "1px 8px",
         borderRadius: 4,
         marginLeft: 12,
         color: MUITheme.palette.text.white,
