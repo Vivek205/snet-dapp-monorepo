@@ -312,8 +312,8 @@ export const getStatus = async dispatch => {
     const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
     dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
     dispatch(setAllAttributes(organization));
-    return data;
   }
+  return data;
 };
 
 const finishLaterAPI = payload => async dispatch => {
