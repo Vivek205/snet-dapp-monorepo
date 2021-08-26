@@ -306,14 +306,13 @@ const parseOrgData = selectedOrg => {
 
 export const getStatus = async dispatch => {
   const { data } = await dispatch(getStatusAPI());
-  if (isEmpty(data)) {
-    return data;
+  if (!isEmpty(data)) {
+    const selectedOrg = selectOrg(data);
+    const organization = parseOrgData(selectedOrg);
+    const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
+    dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
+    dispatch(setAllAttributes(organization));
   }
-  const selectedOrg = selectOrg(data);
-  const organization = parseOrgData(selectedOrg);
-  const orgDetailsInBlockchain = await findOrganizationInBlockchain(organization.id);
-  dispatch(setOrgFoundInBlockchain(orgDetailsInBlockchain.found));
-  dispatch(setAllAttributes(organization));
   return data;
 };
 
