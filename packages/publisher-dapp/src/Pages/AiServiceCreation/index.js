@@ -27,7 +27,7 @@ class AiServiceCreation extends Component {
   };
  validateservicemetadata = () => {
     const {shortDescription,longDescription,tags,projectURL,contributors} = this.props.serviceDetails;
-    return (shortDescription.length && longDescription.length && tags.length && !projectURL  && contributors.length);
+    return (shortDescription.length && longDescription.length && tags.length && projectURL.length  && contributors.length);
   };
   progressStatus = () => {
     let progressStage = {};
