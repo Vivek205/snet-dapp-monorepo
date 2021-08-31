@@ -25,7 +25,10 @@ class AiServiceCreation extends Component {
       );
     }
   };
-
+ validateservicemetadata = () => {
+    const {shortDescription,longDescription,tags,projectURL,contributors} = this.props.serviceDetails;
+    return (shortDescription.length && longDescription.length && tags.length && projectURL.length  && contributors.length);
+  };
   progressStatus = () => {
     let progressStage = {};
     const { progressStages, assets, shortDescription, demoComponentAvailable } = this.props.serviceDetails;
@@ -39,7 +42,7 @@ class AiServiceCreation extends Component {
         progressStage = { ...progressStage, [stage.key]: demoFiles.status };
       } else if (stage.section === sections.PRICING_AND_DISTRIBUTION && protoFiles.status) {
         progressStage = { ...progressStage, [stage.key]: protoFiles.status };
-      } else if (stage.section === sections.AI_PROFILE && shortDescription) {
+      } else if (stage.section === sections.AI_PROFILE && this.validateservicemetadata()) {
         progressStage = { ...progressStage, [stage.key]: progressStatus.COMPLETED };
       } else {
         progressStage = { ...progressStage, [stage.key]: stage.status };
