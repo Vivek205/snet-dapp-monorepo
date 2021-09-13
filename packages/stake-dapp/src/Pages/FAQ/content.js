@@ -75,8 +75,8 @@ export const stakingFAQ = [
     `,
   },
   {
-    question: "What happens to stake after disabling auto renew?",
-    answer: `After disabling auto renew the stake will not appear until the incubation period is over.`,
+    question: "What happens to stake after opt out from auto renewal?",
+    answer: `After opt out from auto renewal the stake will automatically appear  in "Ready to claim" tab after the respective window is closed. Users can claim from ready to claim tab.`,
   },
   {
     question: "How do I check on the returns from my Stake ?",
