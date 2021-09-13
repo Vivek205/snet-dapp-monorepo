@@ -69,10 +69,14 @@ export const stakingFAQ = [
     `,
   },
   {
-    question: "What If I miss the window",
+    question: "What If I miss the window?",
     answer: `
       <p>You can stake on the next window that will open up , but once the current window is closed , you cannot stake any more !</p>
     `,
+  },
+  {
+    question: "What happens to stake after opt out from auto renewal?",
+    answer: `After opt out from auto renewal the stake will automatically appear  in "Ready to claim" tab after the respective window is closed. Users can claim from ready to claim tab.`,
   },
   {
     question: "How do I check on the returns from my Stake ?",
