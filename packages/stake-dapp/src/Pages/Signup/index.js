@@ -16,7 +16,7 @@ const Signup = props => {
       await dispatch(signupActions.signup(nickname, email, password));
       history.push(GlobalRoutes.SIGNUP_CONFIRM.path);
     } catch (error) {
-      if (error.name === "AuthError") {
+      if (error.name === "AuthError" || error.name === "UsernameExistsException") {
         setSignupError(error.message);
         return;
       }
