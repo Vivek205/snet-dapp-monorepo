@@ -109,7 +109,14 @@ class StakeTab extends Component {
         <Grid item xs={12} sm={12} md={12} lg={12} className={classes.servieMainContainer}>
           <div className={classes.tabsContainer}>
             <AppBar position="static" color="default" className={classes.header}>
-              <Tabs value={selectedTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
+              <Tabs
+                value={selectedTab}
+                onChange={this.handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                scrollButtons="on"
+                variant="scrollable"
+              >
                 <Tab className="singularity-tab" label="Open Staking" value={0} />
                 <Tab className="singularity-tab" label={`Incubating (${stakeSummary.incubatingCount})`} value={1} />
                 <Tab
