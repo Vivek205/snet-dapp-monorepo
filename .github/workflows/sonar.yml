@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - master
+      - development
+
+name: Sonar Analysis Workflow
+jobs:
+  publisher-sonarQubeTrigger:
+    name: Publisher Dapp SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@master
+        with:
+          host: ${{ secrets.SONAR_HOST }}
+          login: ${{ secrets.SONAR_TOKEN }}
+          projectBaseDir: "packages/publisher-dapp"
+          projectKey: "publisher-dapp"
+          projectName: "publisher-dapp"
+          projectVersion: "v0.0.1"
+  stake-sonarQubeTrigger:
+    name: Stake Dapp SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@master
+        with:
+          host: ${{ secrets.SONAR_HOST }}
+          login: ${{ secrets.SONAR_TOKEN }}
+          projectBaseDir: "packages/stake-dapp"
+          projectKey: "stake-dapp"
+          projectName: "stake-dapp"
+          projectVersion: "v0.0.1"
+
+
